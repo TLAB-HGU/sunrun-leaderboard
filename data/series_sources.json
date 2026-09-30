@@ -1,0 +1,77 @@
+{
+ "last_hour": "2026-09-30T08:00:00Z",
+ "rows": 10209,
+ "sources": [
+  {
+   "month": "202508",
+   "file": "analysis/naive_baselines/raw/202508_ace_swepam_1h.txt",
+   "sha256": "1505c4cbc79f1d318ca4fc319b93902e86130648ee7e40302e576a639d5be703"
+  },
+  {
+   "month": "202509",
+   "file": "analysis/naive_baselines/raw/202509_ace_swepam_1h.txt",
+   "sha256": "520b91b021630b756fad7b81c2d35ed6651f87c90325dcabd7a27f1cc0dcfd0d"
+  },
+  {
+   "month": "202510",
+   "file": "analysis/naive_baselines/raw/202510_ace_swepam_1h.txt",
+   "sha256": "83bed457c575419d18f13ca0365d34e3158f6630e9f6ccf41b02a522d2eca086"
+  },
+  {
+   "month": "202511",
+   "file": "analysis/naive_baselines/raw/202511_ace_swepam_1h.txt",
+   "sha256": "ab916c3ef35c9ea7f4a7230c0e9ac0885ca513afb1cce116115812a4ea8e6edf"
+  },
+  {
+   "month": "202512",
+   "file": "analysis/naive_baselines/raw/202512_ace_swepam_1h.txt",
+   "sha256": "80420c32c50cd195a45f6a6ba32a8f927a9226831a3cb48258ecd6661f81c54c"
+  },
+  {
+   "month": "202601",
+   "file": "analysis/naive_baselines/raw/202601_ace_swepam_1h.txt",
+   "sha256": "42cfc9b552df7340b8407802ec7b3c75edebbe7698b54563d091b077cd693acf"
+  },
+  {
+   "month": "202602",
+   "file": "analysis/naive_baselines/raw/202602_ace_swepam_1h.txt",
+   "sha256": "bfbf56653db0eb59642c98ce31de9d2d0f4a937c6daa794f4ba74c1e9eda191d"
+  },
+  {
+   "month": "202603",
+   "file": "analysis/naive_baselines/raw/202603_ace_swepam_1h.txt",
+   "sha256": "a616f6c265a7089ad4bdc947806339eeff578a729fed93b4b93f1da9b12a5547"
+  },
+  {
+   "month": "202604",
+   "file": "analysis/naive_baselines/raw/202604_ace_swepam_1h.txt",
+   "sha256": "8c7554602c5ac2dfe7bd1b48dde4efc21bf618ee09886aca5569b6a111d810a1"
+  },
+  {
+   "month": "202605",
+   "file": "analysis/naive_baselines/raw/202605_ace_swepam_1h.txt",
+   "sha256": "4df8f54806d62aa986d3352d90a888693c2bd5d801d1fd2d6eb22946525800c7"
+  },
+  {
+   "month": "202606",
+   "file": "analysis/naive_baselines/raw/202606_ace_swepam_1h.txt",
+   "sha256": "646c5dae7d49c58c44408a601cd73ee20bc55cacb1601429987d3f104f162c2f"
+  },
+  {
+   "month": "202607",
+   "file": "analysis/naive_baselines/raw/202607_ace_swepam_1h.txt",
+   "sha256": "2887baef0781aa2b93e1811b01c26a749126755bdfa7eb3ef2bb223fa6f56e2b"
+  },
+  {
+   "month": "202608",
+   "file": "analysis/naive_baselines/raw/202608_ace_swepam_1h.txt",
+   "sha256": "0eded83c4b8f928eb3fc2f40e8a215f5fbd712840baf4568928d90edfe1d0965"
+  },
+  {
+   "month": "202609",
+   "file": "data/raw/202609_ace_swepam_1h_20260930T0952Z.txt",
+   "sha256": "7cc7c327dc4caed3d539979318f675f5604ed9815897b0b8715bfe4282d16523",
+   "issued": ":Issued: 2026 Sep 30 0910 UT"
+  }
+ ]
+}
