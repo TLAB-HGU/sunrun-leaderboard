@@ -1,8 +1,10 @@
 """Score a predictions file locally against the private HF store, record it, refresh the static leaderboard.
 
-    python submit.py predictions.parquet meta.yaml
+    export HF_TOKEN=hf_...            # token handed out by the maintainer; no HF account or org membership needed
+    python submit.py predictions.parquet meta.yaml [--dry-run]
+    python submit.py --show           # print the current leaderboard in the terminal
 
-Needs `hf auth login` with access to the dataset (default tlabtlab/sunrun-lb-store).
+The token only needs read/write on the dataset (default tlabtlab/sunrun-lb-store) and the static Space.
 """
 from __future__ import annotations
 
@@ -18,12 +20,27 @@ from huggingface_hub import HfApi, hf_hub_download
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE)]
-from board import render  # noqa: E402
+from board import _latest, render  # noqa: E402
 from scoring import score, validate  # noqa: E402
 
 DATASET = "tlabtlab/sunrun-lb-store"
 SPACE = "tlabtlab/sunrun-leaderboard"
 REQUIRED_META = ("team_member", "experiment", "description", "no_future_leakage")
+
+
+def require_token() -> None:
+    from huggingface_hub import get_token
+    if not get_token():
+        raise SystemExit("No Hugging Face token found. Set it first:  export HF_TOKEN=<token from the maintainer>")
+
+
+def text_table(results: list[dict]) -> str:
+    rows = sorted(_latest(results), key=lambda r: r["mse"])
+    out = [f"{'#':>2} {'experiment':<28} {'member':<12} {'MSE':>10} {'skill':>8} {'beats naive':>11}"]
+    for i, r in enumerate(rows, 1):
+        beat = (r.get("vs_naive") or {}).get("beats_reference")
+        out.append(f"{i:>2} {r['experiment'][:28]:<28} {r['team_member'][:12]:<12} {r['mse']:>10,.1f} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11}")
+    return "\n".join(out)
 
 
 def _download(repo: str, name: str, tries: int = 4) -> str:
@@ -61,6 +78,7 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
     missing = [k for k in REQUIRED_META if not meta.get(k)]
     if missing:
         raise SystemExit(f"meta needs: {missing} (no_future_leakage must be true)")
+    require_token()
     api = HfApi()
     pred = pd.read_parquet(pred_path) if str(pred_path).endswith(".parquet") else pd.read_csv(pred_path)
     folds, truth, naive = (_store(n, dataset) for n in ("folds.parquet", "truth.parquet", "naive.parquet"))
@@ -82,15 +100,23 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("predictions")
-    ap.add_argument("meta")
+    ap.add_argument("predictions", nargs="?")
+    ap.add_argument("meta", nargs="?")
     ap.add_argument("--dataset", default=DATASET)
     ap.add_argument("--space", default=SPACE)
     ap.add_argument("--dry-run", action="store_true", help="validate and score only; upload nothing")
+    ap.add_argument("--show", action="store_true", help="print the current leaderboard and exit")
     a = ap.parse_args()
+    if a.show:
+        require_token()
+        print(text_table(all_results(HfApi(), a.dataset)))
+        raise SystemExit(0)
+    if not (a.predictions and a.meta):
+        ap.error("predictions and meta are required (or use --show)")
     r = submit(a.predictions, yaml.safe_load(Path(a.meta).read_text()), a.dataset, a.space, a.dry_run)
     vs = r["vs_naive"]
     print(f"MSE={r['mse']:.1f}  MSE(obs)={r['mse_observed']:.1f}  skill vs naive={r['skill_vs_naive']:+.3f}  "
           f"beats naive (95% CI)={vs['beats_reference']}  diff CI={[round(x, 1) for x in vs['ci95']]}")
     if "_leaderboard" in r:
-        print("leaderboard:", r["_leaderboard"])
+        print("\n" + text_table(all_results(HfApi(), a.dataset)))
+        print("\npage (needs an HF login of an org member):", r["_leaderboard"])

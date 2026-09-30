@@ -4,19 +4,21 @@ Evaluation (**fixed 2026-09-30**): targets **2026-06-01 00:00 – 2026-09-30 00:
 2,833 origins × 72 = 203,976 rows. Origins run from `2026-05-31T23:00:00Z` to `2026-09-26T23:00:00Z`.
 Rank = overall MSE. Regime columns are diagnostic.
 
-- Private data store (truth, folds, results): `tlabtlab/sunrun-lb-store` — needs membership in the `tlabtlab` HF org
-- Leaderboard page: https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard (private static Space, org members)
+- Private data store (truth, folds, results): `tlabtlab/sunrun-lb-store`
+- Leaderboard page: https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard (private; needs an HF login of an org member).
+  Without an account, `python submit.py --show` prints the same ranking in the terminal.
 
 ## Setup (once)
 ```bash
 uv venv .venv && uv pip install -p .venv/bin/python -r requirements.txt
-.venv/bin/hf auth login        # token with write access to tlabtlab repos
+export HF_TOKEN=<token from the maintainer>   # no HF account / org membership needed; never commit or paste it
 ```
 
 ## Submit
 ```bash
 .venv/bin/python submit.py my_predictions.parquet meta.yaml --dry-run   # validate + score, upload nothing
 .venv/bin/python submit.py my_predictions.parquet meta.yaml             # real submission
+.venv/bin/python submit.py --show                                       # current ranking
 ```
 Scoring runs on your machine with truth/folds downloaded from the private dataset; the result JSON and your raw file
 are stored in the dataset and the leaderboard page is regenerated.
