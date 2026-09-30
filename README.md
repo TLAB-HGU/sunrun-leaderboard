@@ -37,6 +37,17 @@ origins = folds["origin_last_input_utc"]   # ignore the regime columns
 **meta.yaml**: see `meta.example.yaml`. `no_future_leakage: true` means only data with timestamp ≤ `origin_last_input_utc`
 was used for that origin. The truth is public NASA/ACE data, so this is an honour statement, not a technical guarantee.
 
+## Input data
+Model inputs come from the shared Drive folder **sun-db**
+(https://drive.google.com/drive/folders/1fOOjTHYUiwIGSLaWXeDr5uIUxttFJWw7): `timeseries/ace_solar/year=YYYY/part.parquet`
+(ACE solar wind, hourly, one file per year) and `timeseries/suvi_hourly/year=YYYY/`.
+- The scoring truth is the ACE SWEPAM bulk speed. It was checked against `ace_speed_kms` of the collector's `spaceweather/solar.csv`:
+  identical on all 2,328 originally observed evaluation hours (max abs diff 0.0). The `sun-db` parquet files themselves were not compared.
+- The files keep updating and contain hours **after** your origin. For origin `t` use only rows with `timestamp_utc <= t`
+  (`point_in_time_vintage_verified` is 0 for every row: values are latest-vintage, not as-of).
+- 19.8% of the evaluation targets are missing hours; the scoring truth forward-fills them with the last valid speed (`MSE obs.` ignores them).
+  Predict as if every hour had a value; do not drop missing hours.
+
 ## Read the numbers
 - `MSE` counts forward-filled targets (19.8% of the evaluation targets); `MSE obs.` only originally observed targets.
 - `beats naive (95% CI)`: paired MSE difference vs Naive, bootstrapped over 72h blocks (folds overlap 71/72, so ~120 effective blocks, not 2,833 folds).
