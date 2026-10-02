@@ -62,6 +62,22 @@ To intentionally replace an existing result with the same three-part key:
 - [`baseline / mean_reversion`](scripts/baseline/mean_reversion/095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66.py):
   648-hour rolling mean with 48-hour exponential decay. The script generates all 72-hour forecasts and reports its
   measured inference seconds per fold.
+- [`baseline / naive`](scripts/baseline/naive/a73b16dda3144747a5589cd0a34ba56512df8b0e626125c65bdb1e940bc5cb02.py):
+  repeats the last available speed for all 72 horizons.
+- [`baseline / seasonal_naive_648`](scripts/baseline/seasonal_naive_648/e82281cb844fb18079acceb7579f554d639a65f8e9bba5fd1016b32713f72f77.py):
+  uses the value from the same horizon in the previous 648-hour solar-rotation window.
+- [`baseline / ses`](scripts/baseline/ses/1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f.py):
+  refits optimized simple exponential smoothing on the latest 648 hours at each fold.
+- [`baseline / auto_arima`](scripts/baseline/auto_arima/e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f.py):
+  refits the published non-seasonal AutoARIMA configuration on the latest 648 hours at each fold.
+
+SES and AutoARIMA were reproduced with the pinned environment in `requirements-baselines.txt`. Their scripts report
+fit time separately and use only the post-fit 72-hour `predict()` call for `inference_seconds_per_fold`.
+The locked baseline environment uses Python 3.12.3 (also recorded in `scripts/baseline/.python-version`):
+```bash
+uv venv --python 3.12.3 .venv-baselines
+uv pip install -p .venv-baselines/bin/python -r requirements-baselines.txt
+```
 
 ## Input data
 Model inputs come from the shared Drive folder **sun-db**
