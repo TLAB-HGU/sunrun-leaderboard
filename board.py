@@ -27,11 +27,11 @@ document.querySelectorAll('th').forEach((th,i)=>th.addEventListener('click',()=>
 
 
 def _latest(results: list[dict]) -> list[dict]:
-    """Newest result per (member, experiment); attach how many times it was submitted."""
+    """One row per experiment identity; collapse duplicate legacy records only."""
     by = {}
     for r in sorted(results, key=lambda r: r["submitted_utc"]):
-        k = (r["team_member"], r["experiment"])
-        by[k] = {**r, "n_submissions": by.get(k, {}).get("n_submissions", 0) + 1}
+        k = (r["team_member"], r["experiment"], r.get("config_sha256", "legacy"))
+        by[k] = r
     return list(by.values())
 
 
@@ -41,18 +41,26 @@ def _num(x, d=1):
 
 def render(results: list[dict], note: str = "") -> str:
     rows = sorted(_latest(results), key=lambda r: r["mse"])
-    head = ["#", "experiment", "member", "MSE", "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE", "n subm.", "submitted (UTC)"] + REGIMES
-    th = "".join(f'<th class="{"l" if i in (1, 2, 9) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
+    head = ["#", "experiment", "member", "config", "sec/fold", "code", "MSE", "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE", "submitted (UTC)"] + REGIMES
+    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 5, 11) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
     body = []
     for i, r in enumerate(rows, 1):
         vs = r.get("vs_naive") or {}
         beat = vs.get("beats_reference")
+        config_sha = r.get("config_sha256")
+        config_label = config_sha[:12] if config_sha else "legacy"
+        seconds = r.get("inference_seconds_per_fold")
+        code_url = r.get("code_url")
+        code = (f'<a href="{html.escape(code_url, quote=True)}" target="_blank" rel="noopener">script</a>'
+                if code_url else '<span class="dash">–</span>')
         cells = [
             f"<td>{i}</td>", f'<td class="l">{html.escape(r["experiment"])}</td>', f'<td class="l">{html.escape(r["team_member"])}</td>',
+            f'<td class="l" title="{html.escape(config_sha or "legacy")}"><code>{config_label}</code></td>',
+            f'<td data-v="{seconds if seconds is not None else ""}">{_num(seconds, 6)}</td>', f'<td class="l">{code}</td>',
             f'<td data-v="{r["mse"]}">{r["mse"]:,.1f}</td>', f'<td>{_num(r.get("mse_observed"))}</td>',
             f'<td data-v="{r.get("skill_vs_naive") or 0}">{(r.get("skill_vs_naive") or 0):+.1%}</td>',
             f'<td class="{"ok" if beat else "no"}">{"yes" if beat else "no"}</td>',
-            f'<td>{_num(r.get("regime_balanced_mse"))}</td>', f'<td>{r["n_submissions"]}</td>',
+            f'<td>{_num(r.get("regime_balanced_mse"))}</td>',
             f'<td class="l">{html.escape(r["submitted_utc"][:15])}</td>',
         ]
         for g in REGIMES:
@@ -70,7 +78,12 @@ diagnostic and hidden when a cell has fewer than 3 non-overlapping 72h blocks. C
 </main><script>{JS}</script></body></html>"""
 
 
+def load_results(root) -> list[dict]:
+    """Load legacy flat and keyed nested result files for local previews."""
+    from pathlib import Path
+    return [json.loads(p.read_text()) for p in sorted(Path(root).rglob("*.json"))]
+
+
 if __name__ == "__main__":  # quick local preview: python board.py results_dir > index.html
     import sys
-    from pathlib import Path
-    print(render([json.loads(p.read_text()) for p in sorted(Path(sys.argv[1]).glob("*.json"))]))
+    print(render(load_results(sys.argv[1])))

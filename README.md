@@ -37,6 +37,32 @@ origins = folds["origin_last_input_utc"]   # ignore the regime columns
 **meta.yaml**: see `meta.example.yaml`. `no_future_leakage: true` means only data with timestamp ≤ `origin_last_input_utc`
 was used for that origin. The truth is public NASA/ACE data, so this is an honour statement, not a technical guarantee.
 
+Every new result is uniquely identified by `(team_member, experiment, config_sha256)`. `config_sha256` is computed by
+`submit.py` from the canonical JSON form of `config.data` and `config.hyperparameters`; YAML key order does not affect it.
+The same key cannot be submitted twice unless `--replace` is explicitly supplied.
+
+`inference_seconds_per_fold` is the mean wall-clock time needed to produce one 72-hour forecast after data loading,
+training/model initialization, feature preparation, and output writing have been excluded. Measure the inference section
+with `time.perf_counter()` over multiple folds.
+
+Each config must have one reproducible script at:
+```text
+scripts/<team_member>/<experiment>/<config_sha256>.py
+```
+`--dry-run` checks the local path. A real submission checks that the script is already available on this repository's
+`main` branch, so push the script before uploading the result. Existing entries without config, timing, or code metadata
+remain visible as `legacy` records.
+
+To intentionally replace an existing result with the same three-part key:
+```bash
+.venv/bin/python submit.py my_predictions.parquet meta.yaml --replace
+```
+
+## Experiment scripts
+- [`baseline / mean_reversion`](scripts/baseline/mean_reversion/095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66.py):
+  648-hour rolling mean with 48-hour exponential decay. The script generates all 72-hour forecasts and reports its
+  measured inference seconds per fold.
+
 ## Input data
 Model inputs come from the shared Drive folder **sun-db**
 (https://drive.google.com/drive/folders/1fOOjTHYUiwIGSLaWXeDr5uIUxttFJWw7): `timeseries/ace_solar/year=YYYY/part.parquet`

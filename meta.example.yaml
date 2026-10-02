@@ -2,3 +2,13 @@ team_member: alice
 experiment: lgbm-lags-v1
 description: LightGBM on 168h lags + solar-cycle features, direct multi-horizon
 no_future_leakage: true   # only data with timestamp <= origin_last_input_utc was used
+config:
+  data:
+    source: sun-db/timeseries/ace_solar
+    features: [ace_speed_kms]
+    lookback_hours: 168
+  hyperparameters:
+    num_leaves: 31
+    learning_rate: 0.05
+    n_estimators: 500
+inference_seconds_per_fold: 0.012345  # mean time to produce one 72h forecast; excludes load/train/init/save
