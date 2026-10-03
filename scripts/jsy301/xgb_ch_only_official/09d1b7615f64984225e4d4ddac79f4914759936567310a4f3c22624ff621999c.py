@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
-from scripts.jsy301.ch_xgboost_runner import run  # noqa: E402
+from scripts.jsy301.ch_xgboost_runner import run
 
 CONFIG = {
     "data": {"source": "pinned sun-db SUVI Fe195 numeric features",

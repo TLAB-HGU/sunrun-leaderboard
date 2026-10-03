@@ -16,7 +16,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
-from experiments.xgboost_suvi_fusion.ch_hpo import _predict_task  # noqa: E402
+from experiments.xgboost_suvi_fusion.ch_hpo import _predict_task
 
 
 def run(config: dict) -> None:
