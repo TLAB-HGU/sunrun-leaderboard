@@ -1,0 +1,67 @@
+{
+  "arms": [
+    "baseline",
+    "image",
+    "video"
+  ],
+  "config": {
+    "id": "champion",
+    "max_train_origins": 6000,
+    "params": {
+      "colsample_bytree": 0.9,
+      "learning_rate": 0.07,
+      "max_depth": 5,
+      "min_child_weight": 2.0,
+      "n_estimators": 100,
+      "reg_lambda": 0.5,
+      "subsample": 0.7
+    },
+    "seed": 42
+  },
+  "identities": {
+    "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2022/part.parquet": "512e1512d0b0341e82ab73c93edb40a51551abe7942dcf9dc4c0167229efdb7c",
+    "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2023/part.parquet": "90b35a4657a587d984cf94816ef843e9992972afef76c5e100336e19c2ec03a0",
+    "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2024/part.parquet": "9d7f0138eab13db42383b9f5f7bf42a6042b9244ca7d8e116287372784fcc559",
+    "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2025/part.parquet": "3234862cba5b3f4a7c45eab280e24a360b826ec3936e21e2579cb2421b000b39",
+    "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2026/part.parquet": "94a472986ed3b956f1cb99d86b7200ac2cc7c8ee5aa35c28e03d6e940a167b98",
+    "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ace.parquet": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af",
+    "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ch-hourly.parquet": "96f38e2728211345fcbbd2bb119e526cb429b74cae5370a5b41b864599a0870a"
+  },
+  "official_truth_access": false,
+  "retrospective_exploratory": true,
+  "schedule": {
+    "audit": {
+      "eval": 2064,
+      "train": 6000
+    },
+    "development": {
+      "eval": 464,
+      "train": 6000
+    },
+    "selection": {
+      "eval": 2016,
+      "train": 6000
+    }
+  },
+  "selection_rule": "development ranks fixed arms, no tuning; selection lowest full-grid MSE among baseline and visual arms that do not regress selection precision or recall; freeze before audit; audit baseline and winner",
+  "source_metadata": null,
+  "splits": {
+    "audit": {
+      "cutoff": "2026-02-28T23:00:00Z",
+      "end": "2026-05-31T23:00:00Z",
+      "step": 1
+    },
+    "development": {
+      "cutoff": "2025-07-31T23:00:00Z",
+      "end": "2025-11-30T23:00:00Z",
+      "step": 6
+    },
+    "selection": {
+      "cutoff": "2025-11-30T23:00:00Z",
+      "end": "2026-02-28T23:00:00Z",
+      "step": 1
+    }
+  },
+  "visual_transform": "PCA16 randomized seed42, train-mean imputation; fit only matching train origins, no per-arm HPO",
+  "pre_execution_alignment": "Root protocol rule clarification, before any real comparison fits/results"
+}
