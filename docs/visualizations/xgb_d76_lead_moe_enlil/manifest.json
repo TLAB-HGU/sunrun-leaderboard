@@ -2,12 +2,12 @@
   "model": "xgb_d76_lead_moe_enlil",
   "experiment": "E0471",
   "seed": 0,
-  "created_at_utc": "2026-10-08T11:18:26.891091+00:00",
-  "script_sha256": "bbb754f9cebdce8d5d16c56bfcfb301f4d70567ddc4ad6ce5c9c0c4c9dcad433",
+  "created_at_utc": "2026-10-08T11:29:57.462646+00:00",
+  "script_sha256": "4a6c94ae571f4ce1a506c66f981d699588895787c8d46a2577b14f9fe9582772",
   "config": {
     "width": 1000,
     "height": 500,
-    "frame_ms": 200,
+    "frame_ms": 100,
     "input_hours": 168,
     "forecast_hours": 72,
     "x_hours": [
@@ -56,7 +56,8 @@
     "complete": true,
     "all_gifs_decoded": true,
     "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
-    "input_window": "168 existing hourly samples ending at origin; no added filling"
+    "input_window": "168 existing hourly samples ending at origin; no added filling",
+    "timing_update": "200ms -> 100ms; only GIF graphic-control delay bytes changed; every frame decoded"
   },
   "notes": [
     "Display shows seven days, not the model's complete 26-28 day feature history.",
@@ -72,9 +73,9 @@
       "last_fold": 720,
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-30T22:00:00+00:00",
-      "duration_ms": 144000,
+      "duration_ms": 72000,
       "bytes": 21753987,
-      "sha256": "7677a60535eb2fa5a99b1bae28cba17b983af3bc2ac16e6f4f5ac5772255f9c5"
+      "sha256": "e9bf4e01d58822f6b9ba62cf60b28c74e7ffff001ba1252742bc144f69decd39"
     },
     {
       "month": "2026-07",
@@ -84,9 +85,9 @@
       "last_fold": 1464,
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
-      "duration_ms": 148800,
+      "duration_ms": 74400,
       "bytes": 22906891,
-      "sha256": "d7e45b0891e9e2fdaa2cbca36fcb66e56aad72bbb285bf7030aebf763b862b20"
+      "sha256": "815a2e635678f193fc722b577fb447e50f5c53bf1313455258b2f255d85ec78a"
     },
     {
       "month": "2026-08",
@@ -96,9 +97,9 @@
       "last_fold": 2208,
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
-      "duration_ms": 148800,
+      "duration_ms": 74400,
       "bytes": 22328133,
-      "sha256": "eb3bf5d6e4f8b72530674fc3dca991df193560b9857fd1d88ac1f55e3e4eca90"
+      "sha256": "e0b8a6d4944e60fc0a3888abbf6c0a3d50d0fe400954415b2198c1bc372e7adc"
     },
     {
       "month": "2026-09",
@@ -108,11 +109,11 @@
       "last_fold": 2833,
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
-      "duration_ms": 125000,
+      "duration_ms": 62500,
       "bytes": 19351206,
-      "sha256": "88aea2b29a976124b5e97540aa4b82d464a977abf48464bf7cc3ace7a41e9f19"
+      "sha256": "0ff2feb8a6c863a47dfafc1c4b88ba2d403fb34eac58338a187b762c7ffdc515"
     }
   ],
   "model_config_sha256": "6d169ff2b12085f3639b812884cef17324e1b096fb644410e18bd074103d3b54",
-  "rendering_config_sha256": "1b419f0f4ebcaea656d3e02a594591b74559ab0d59ff2fff0933057e2f12d0bd"
+  "rendering_config_sha256": "2ad8b63108fb717a5d2d4e87d02dfe56f07b60c826ea6f99407a854a5afdc8ed"
 }

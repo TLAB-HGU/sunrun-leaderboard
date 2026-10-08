@@ -196,7 +196,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("predictions", "folds", "truth", "history", "output-dir"):
         parser.add_argument(f"--{name}", type=Path, required=True)
-    parser.add_argument("--frame-ms", type=int, default=200)
+    parser.add_argument("--frame-ms", type=int, default=100)
     parser.add_argument("--width", type=int, default=1000)
     parser.add_argument("--height", type=int, default=500)
     parser.add_argument("--limit", type=int, help="Smoke test: render only this many folds per month")
