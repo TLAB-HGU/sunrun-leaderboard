@@ -1,0 +1,118 @@
+{
+  "model": "xgb_d76_lead_moe_resid_dv_enlil",
+  "model_config_sha256": "b8ae672fdb6ff9a6dc85bc5c3f2d8b2acbc9207c98126d39ad1913f24581962c",
+  "experiment": "E0472",
+  "seed": 0,
+  "created_at_utc": "2026-10-08T12:15:55.955717+00:00",
+  "script_sha256": "984924797c8901155131277f071580aa3253d401228b8ac03a2eb414198e3339",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "y_limits_kms": [
+      200.0,
+      800.0
+    ],
+    "limit_per_month": null,
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "RGB cube + greys; no dithering"
+  },
+  "rendering_config_sha256": "2ad8b63108fb717a5d2d4e87d02dfe56f07b60c826ea6f99407a854a5afdc8ed",
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/research/expos/runs/E0472/predictions_official_s0.parquet",
+      "sha256": "1ff86c55e06e4839d2a7d36f33f30d396de831b1c8e3ced1567dbed66f64bf4b"
+    },
+    "folds": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/blobs/6c/6c0c868968a028f35c58039662f5abb6a5ab0606306cebd4ead5d02b0916a253",
+      "sha256": "9c8f24f2cd82009cd7d071e99f45c9e15179326f7cccb4f46eb6805788332daf"
+    },
+    "truth": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/blobs/e0/e0a4ab5117a25b0be4535df27c264ef7de73cd2ae7e1ba5f59690151cfd950d0",
+      "sha256": "ed02280b78f0ffe0512adb2a51cc92da79058e9abfa6882d5a2e736c62b1d430"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    }
+  },
+  "verification": {
+    "folds": 2833,
+    "pairs": 203976,
+    "mse": 3248.6812422215053,
+    "expected_mse": 3248.6812422215053,
+    "mse_tolerance": 1e-07,
+    "expected_month_counts": {
+      "2026-06": 720,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 2833,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 existing hourly samples ending at origin; no added filling"
+  },
+  "notes": [
+    "Display shows seven days, not the model's complete 26-28 day feature history.",
+    "Hollow markers identify filled observations according to source was_missing flags.",
+    "All validation truth, including filled observations, contributes to displayed RMSE."
+  ],
+  "outputs": [
+    {
+      "month": "2026-06",
+      "file": "validation_2026-06.gif",
+      "frames": 720,
+      "first_fold": 1,
+      "last_fold": 720,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 21915264,
+      "sha256": "b6898b7ab00ab93145762214855e8ebdbdcbe47b1611dd37626ac81246ac76f9"
+    },
+    {
+      "month": "2026-07",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 721,
+      "last_fold": 1464,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23066071,
+      "sha256": "b2e9bf5c9f6af2a39ed1ced13dc5b81460f659734ed0d2620e57bbef3e9d05ee"
+    },
+    {
+      "month": "2026-08",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 1465,
+      "last_fold": 2208,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 22462390,
+      "sha256": "67907cd9ee0cedfc887f2d2fa66d1720663c60f6447fd224c9b1b06e36a7217d"
+    },
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 2209,
+      "last_fold": 2833,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 19497833,
+      "sha256": "070edfefc995b47238a2b74cdf7780804818101875ca4eaf9d8b4c20f69c4852"
+    }
+  ]
+}

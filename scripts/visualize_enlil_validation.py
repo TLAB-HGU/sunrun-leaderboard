@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the frozen E0471 seed-0 leaderboard forecasts; never fit a model."""
+"""Render frozen E0471 or E0472 seed-0 leaderboard forecasts; never fit a model."""
 from __future__ import annotations
 
 import argparse
@@ -15,11 +15,20 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-MODEL = "xgb_d76_lead_moe_enlil"
-MODEL_CONFIG_SHA256 = "6d169ff2b12085f3639b812884cef17324e1b096fb644410e18bd074103d3b54"
+EXPERIMENTS = {
+    "E0471": {
+        "model": "xgb_d76_lead_moe_enlil",
+        "model_config_sha256": "6d169ff2b12085f3639b812884cef17324e1b096fb644410e18bd074103d3b54",
+        "expected_mse": 3489.9620220435354,
+    },
+    "E0472": {
+        "model": "xgb_d76_lead_moe_resid_dv_enlil",
+        "model_config_sha256": "b8ae672fdb6ff9a6dc85bc5c3f2d8b2acbc9207c98126d39ad1913f24581962c",
+        "expected_mse": 3248.6812422215053,
+    },
+}
 ORIGIN = "origin_last_input_utc"
 KEY = [ORIGIN, "horizon_hours"]
-EXPECTED_MSE = 3489.9620220435354
 EXPECTED_MONTHS = {"2026-06": 720, "2026-07": 744, "2026-08": 744, "2026-09": 625}
 
 
@@ -37,6 +46,7 @@ def sha256(path):
 
 
 def load_data(args):
+    expected_mse = EXPERIMENTS[args.experiment]["expected_mse"]
     folds = pd.read_parquet(args.folds)
     pred = pd.read_parquet(args.predictions)
     truth = pd.read_parquet(args.truth)
@@ -57,7 +67,7 @@ def load_data(args):
             "Non-finite forecast or truth")
     require(paired.was_missing.isin([0, 1]).all(), "Invalid truth missing flags")
     mse = float(np.mean((paired.target_kms - paired.pred_kms) ** 2))
-    require(abs(mse - EXPECTED_MSE) <= 1e-7, f"Frozen leaderboard MSE mismatch: {mse}")
+    require(abs(mse - expected_mse) <= 1e-7, f"Frozen leaderboard MSE mismatch: {mse}")
     months = (origins + pd.Timedelta(hours=1)).strftime("%Y-%m")
     counts = pd.Series(months).value_counts().sort_index().to_dict()
     require(counts == EXPECTED_MONTHS, f"Unexpected month counts: {counts}")
@@ -94,6 +104,7 @@ def fixed_palette():
 
 
 def render(args, data):
+    experiment = EXPERIMENTS[args.experiment]
     origins, months, inputs, input_missing, actual, predicted, actual_missing, mse, ylim = data
     output = args.output_dir
     output.mkdir(parents=True, exist_ok=True)
@@ -133,7 +144,7 @@ def render(args, data):
                         np.concatenate([history_x[input_missing[index]], future_x[actual_missing[index]]]),
                         np.concatenate([inputs[index][input_missing[index]], actual[index][actual_missing[index]]]))
                     rmse = float(np.sqrt(np.mean((actual[index] - predicted[index]) ** 2)))
-                    heading.set_text(f"{MODEL}  |  Fold {index + 1:,} / {len(origins):,}\n"
+                    heading.set_text(f"{experiment['model']}  |  Fold {index + 1:,} / {len(origins):,}\n"
                                      f"Origin {origins[index]:%Y-%m-%d %H:%M UTC}  |  72 h RMSE {rmse:.2f} km/s")
                     fig.canvas.draw()
                     rgb = Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[:, :, :3])
@@ -170,15 +181,15 @@ def render(args, data):
               "y_limits_kms": list(ylim), "limit_per_month": args.limit,
               "month_grouping": "UTC month of origin + 1 hour", "palette": "RGB cube + greys; no dithering"}
     manifest = {
-        "model": MODEL, "model_config_sha256": MODEL_CONFIG_SHA256,
-        "experiment": "E0471", "seed": 0,
+        "model": experiment["model"], "model_config_sha256": experiment["model_config_sha256"],
+        "experiment": args.experiment, "seed": 0,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "script_sha256": sha256(__file__), "config": config,
         "rendering_config_sha256": hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest(),
         "sources": {name: {"file": str(getattr(args, name).resolve()), "sha256": sha256(getattr(args, name))}
                     for name in ("predictions", "folds", "truth", "history")},
         "verification": {"folds": len(origins), "pairs": len(origins) * 72,
-                         "mse": mse, "expected_mse": EXPECTED_MSE, "mse_tolerance": 1e-7,
+                         "mse": mse, "expected_mse": experiment["expected_mse"], "mse_tolerance": 1e-7,
                          "expected_month_counts": EXPECTED_MONTHS,
                          "rendered_frames": sum(item["frames"] for item in results),
                          "complete": args.limit is None, "all_gifs_decoded": True,
@@ -194,6 +205,7 @@ def render(args, data):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--experiment", choices=EXPERIMENTS, default="E0471")
     for name in ("predictions", "folds", "truth", "history", "output-dir"):
         parser.add_argument(f"--{name}", type=Path, required=True)
     parser.add_argument("--frame-ms", type=int, default=100)
