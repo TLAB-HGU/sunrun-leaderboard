@@ -1,0 +1,118 @@
+{
+  "model": "xgb_d76_lead_moe_enlil",
+  "experiment": "E0471",
+  "seed": 0,
+  "created_at_utc": "2026-10-08T11:18:26.891091+00:00",
+  "script_sha256": "bbb754f9cebdce8d5d16c56bfcfb301f4d70567ddc4ad6ce5c9c0c4c9dcad433",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 200,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "y_limits_kms": [
+      200.0,
+      800.0
+    ],
+    "limit_per_month": null,
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "RGB cube + greys; no dithering"
+  },
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/research/expos/runs/E0471/predictions_official_s0.parquet",
+      "sha256": "e59e154d0a436033bca6992ab635bcfe882fa8db0a9e0f44384c0919df7440de"
+    },
+    "folds": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/blobs/6c/6c0c868968a028f35c58039662f5abb6a5ab0606306cebd4ead5d02b0916a253",
+      "sha256": "9c8f24f2cd82009cd7d071e99f45c9e15179326f7cccb4f46eb6805788332daf"
+    },
+    "truth": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/blobs/e0/e0a4ab5117a25b0be4535df27c264ef7de73cd2ae7e1ba5f59690151cfd950d0",
+      "sha256": "ed02280b78f0ffe0512adb2a51cc92da79058e9abfa6882d5a2e736c62b1d430"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    }
+  },
+  "verification": {
+    "folds": 2833,
+    "pairs": 203976,
+    "mse": 3489.9620220435354,
+    "expected_mse": 3489.9620220435354,
+    "mse_tolerance": 1e-07,
+    "expected_month_counts": {
+      "2026-06": 720,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 2833,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 existing hourly samples ending at origin; no added filling"
+  },
+  "notes": [
+    "Display shows seven days, not the model's complete 26-28 day feature history.",
+    "Hollow markers identify filled observations according to source was_missing flags.",
+    "All validation truth, including filled observations, contributes to displayed RMSE."
+  ],
+  "outputs": [
+    {
+      "month": "2026-06",
+      "file": "validation_2026-06.gif",
+      "frames": 720,
+      "first_fold": 1,
+      "last_fold": 720,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-30T22:00:00+00:00",
+      "duration_ms": 144000,
+      "bytes": 21753987,
+      "sha256": "7677a60535eb2fa5a99b1bae28cba17b983af3bc2ac16e6f4f5ac5772255f9c5"
+    },
+    {
+      "month": "2026-07",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 721,
+      "last_fold": 1464,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 148800,
+      "bytes": 22906891,
+      "sha256": "d7e45b0891e9e2fdaa2cbca36fcb66e56aad72bbb285bf7030aebf763b862b20"
+    },
+    {
+      "month": "2026-08",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 1465,
+      "last_fold": 2208,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 148800,
+      "bytes": 22328133,
+      "sha256": "eb3bf5d6e4f8b72530674fc3dca991df193560b9857fd1d88ac1f55e3e4eca90"
+    },
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 2209,
+      "last_fold": 2833,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 125000,
+      "bytes": 19351206,
+      "sha256": "88aea2b29a976124b5e97540aa4b82d464a977abf48464bf7cc3ace7a41e9f19"
+    }
+  ],
+  "model_config_sha256": "6d169ff2b12085f3639b812884cef17324e1b096fb644410e18bd074103d3b54",
+  "rendering_config_sha256": "1b419f0f4ebcaea656d3e02a594591b74559ab0d59ff2fff0933057e2f12d0bd"
+}

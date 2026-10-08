@@ -4,6 +4,8 @@ Evaluation (**fixed 2026-09-30**): targets **2026-06-01 00:00 – 2026-09-30 00:
 2,833 origins × 72 = 203,976 rows. Origins run from `2026-05-31T23:00:00Z` to `2026-09-26T23:00:00Z`.
 Rank = overall MSE. Regime columns are diagnostic.
 
+- [월별 검증 폴드 GIF: xgb_d76_lead_moe_enlil](docs/visualizations/xgb_d76_lead_moe_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 폴드.
+
 - Private data store (truth, folds, results): `tlabtlab/sunrun-lb-store`
 - Leaderboard page: https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard (private; needs an HF login of an org member).
   Without an account, `python submit.py --show` prints the same ranking in the terminal.
