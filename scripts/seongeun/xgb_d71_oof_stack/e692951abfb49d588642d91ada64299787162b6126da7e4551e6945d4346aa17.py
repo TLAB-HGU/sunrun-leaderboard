@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d71_oof_stack_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1z3HeS67MyWt2HFl4MGvg5YdcAmWi8gMQ
+# SHA-256: 33b1f1a5bbf775ea191b848ccd645637e2371e97543b061726c16faa328c6d4c
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """Direct 72h XGBoost ensemble: three members built on E0003 features (ACE speed/plasma/IMF/EPAM + CH + 26-28d ...
 
 Reproduces ExpOS experiment E0141 (D71 full, 3h grid) and official run E0146. Requires this repository's experiments/ code plus the pinned local inputs listed in CONFIG

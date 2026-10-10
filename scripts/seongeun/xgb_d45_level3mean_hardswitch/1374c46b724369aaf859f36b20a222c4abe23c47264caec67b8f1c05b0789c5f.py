@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d45_level3mean_hardswitch_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1B9TTErU9A9VWJouvJEtn0FTfIIq3Ef6T
+# SHA-256: 18062cd4051f08703f31d7c0c7a414330a7be69af2aaf45b9bb703598e2d5b4c
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """Direct 72h XGBoost: ACE speed/plasma/IMF/EPAM + CH + 26-28d recurrence + 17 forecast-time-aligned SUVI Fe195 ...
 
 Reproduces ExpOS official run E0105 pilot (6h grid) / official run E0107. Requires this repository's experiments/ code plus the pinned local inputs listed in CONFIG

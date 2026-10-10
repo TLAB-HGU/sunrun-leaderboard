@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d76_lead_moe_resid_dv_enlil_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1ScZv1ix7IZQb70kWMZQcy8zOja6cmbJE
+# SHA-256: 2ae26f2c21a18fc6f59c330267b98e4414b64962380c94b41138ffebca2090d2
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """E0408-structure per-lead mixture with an analog residual corrector (standardised scenario distance) plus DONKI WSA-Enlil CME features.
 
 Reproduces ExpOS experiment E0472 (direction D148), seed cell 0. It is E0466 (the E0421 recipe with each scenario subspace divided by its

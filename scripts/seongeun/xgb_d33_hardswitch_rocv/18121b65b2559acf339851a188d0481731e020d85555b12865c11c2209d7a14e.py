@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d33_hardswitch_rocv_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1POAalgzvaxM5T1DDgy5M65pdGYvMEqI0
+# SHA-256: d31a72c801069744b824db2aee11ab6eec7428c0f0eb38551d034a08d72a0d22
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """Direct 72h XGBoost hard switch (D33/E0102 line): two short band experts (1-6h, 7-24h) for h<=24 and one long ...
 
 Reproduces ExpOS experiment E0207 (rolling-origin 8 folds x 3 seeds) / official run E0221. Requires this repository's experiments/ code plus the pinned local inputs listed in CONFIG

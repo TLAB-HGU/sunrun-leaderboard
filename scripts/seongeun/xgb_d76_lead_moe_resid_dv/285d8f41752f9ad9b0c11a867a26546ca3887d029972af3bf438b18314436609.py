@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d76_lead_moe_resid_dv_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1kv6pQBohWk-E2nj6EWEzgADsv19CNPCW
+# SHA-256: 4053c88093269179bf31fa8b15060241ceaef4e7ddd9e08a4030f293f1effdff
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """E0408-structure per-lead mixture (depth 3) with an analog residual corrector (dv = y - yhat_base).
 
 Reproduces ExpOS experiment E0421 (direction D143, axis A2b), seed cell 0. Requires this repository's experiments/ code plus the

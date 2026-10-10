@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_existing_all_suvi_strips_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1OutlICY2qPW_9umhI-L5jwuz-hWQAA6b
+# SHA-256: c408999e7c6c4a04c6d5c263384f9bf0d58dcaed25cfe67bedf68967186ffc0a
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """existing_all direct XGBoost + forecast-time-aligned SUVI Fe195 longitude strips: official 72h forecasts.
 
 Reproduces ExpOS experiment E0040 (recipe of E0003, which passed the preofficial three-period gate and review).

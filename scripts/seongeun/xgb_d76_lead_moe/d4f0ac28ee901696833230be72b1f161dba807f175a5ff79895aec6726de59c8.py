@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d76_lead_moe_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1r0VEgPnyNRxWCOxECG3LQ1at8gXEHYMI
+# SHA-256: 0034d62d087918aa6bb41c4976e567cc0038f249117f572631c3104384cf8108
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """Same three E0003-recipe members as the D71 stack (E0003-line, D33 hard-switch hybrid, D45 level-mean hybrid), ...
 
 Reproduces ExpOS experiment E0145 (D76 full, 3h grid) and official run E0147. Requires this repository's experiments/ code plus the pinned local inputs listed in CONFIG

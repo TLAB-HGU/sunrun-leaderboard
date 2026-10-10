@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d76_lead_moe_enlil_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=1anwxW0Fu9dMXLSusn6iZe8MMJCRE0Xv0
+# SHA-256: 2ca18e80697cc63398c5f021fedd3aa955e7cc97b6bb61c0a8300fd4128345af
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """E0147 per-lead mixture (E0003-line + D33 hard-switch hybrid + D45 level-mean hybrid) plus DONKI WSA-Enlil CME arrival features.
 
 Reproduces ExpOS experiment E0471 (direction D148), seed cell 0: level seeds 0/1/2 and event seed 1. The model inputs add six features

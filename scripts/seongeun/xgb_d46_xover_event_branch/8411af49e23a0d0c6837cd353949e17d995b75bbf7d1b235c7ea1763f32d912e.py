@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d46_xover_event_branch_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=15uvLnw_4n3O9iJWMk9KbbssWUI7SB-YI
+# SHA-256: e865f9c99853f4d9a53701c1ed4d26df2acb1eb946fe92d8b5a8668a8eb83829
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """Direct 72h XGBoost level model (E0003 features + SUVI longitude strips, horizon hard switch at h=24, 3-seed ...
 
 Reproduces ExpOS official run E0106 pilot (6h grid) / official run E0108. Requires this repository's experiments/ code plus the pinned local inputs listed in CONFIG

@@ -1,3 +1,10 @@
+# MODEL RELEASE (seongeun, 2026-10-10)
+# Fitted model: xgb_d76_lead_moe_depth4_seongeun.pkl
+# Google Drive: https://drive.google.com/open?id=10ZU-n5HKXoPqYFhYerryGzGJ3o1mCUAI
+# SHA-256: 22333026148ea4f9cb1dcf9e2490dfac1fe9fb46de8735250553616df9674647
+# Standalone inference package: https://drive.google.com/open?id=1n0yjiDE7vBNwqBimtC8T3hlBGLCTQak2
+# Access: anyone with the link. See package README for numeric inputs and usage.
+
 """E0147 per-lead mixture (E0003-line + D33 hard-switch hybrid + D45 level-mean hybrid) with XGBoost max_depth 4.
 
 Reproduces ExpOS experiment E0368 (direction D141, arm depth4), seed cell 0: level seeds 0/1/2 and event seed 1, the same seed set
