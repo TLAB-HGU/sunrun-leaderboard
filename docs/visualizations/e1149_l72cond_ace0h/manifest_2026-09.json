@@ -1,0 +1,640 @@
+{
+  "model": "E1149_NO_DELAY",
+  "parent_recipe_code_sha256": "d8271c4c9bbb02734abaf1399393183143cfe318e7551e35f6119e0086105eb9",
+  "experiment": "E1149_ACE0H",
+  "seed": 0,
+  "created_at_utc": "2026-10-17T06:42:36.724820+00:00",
+  "script_sha256": "f12e78c178570c97cb329b1f791df6c0eeb104cf03b7462ef3e6213ee38ab2cb",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "ace_latency_hours": 0,
+    "input_x_hours": [
+      -167,
+      0
+    ],
+    "y_limits_kms": [
+      200.0,
+      800.0
+    ],
+    "limit_per_month": null,
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "RGB cube + greys; no dithering"
+  },
+  "rendering_config_sha256": "7038cb7480bd8188e629a94676c5af1f9ce63da58dfce8a97fa6a2acda61bbdc",
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/render_inputs/predictions_2026-09.parquet",
+      "sha256": "a6b3db674b36722a88850ca9de86f5d197cf5a041aeb1f6d545156abbcfb9c03"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    },
+    "model_file": {
+      "file": "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/final_model_state.joblib",
+      "sha256": "5945489357f0a84e96468932dfabc81780e3acaf14aabcae7f67ad14e2647606"
+    },
+    "provenance": {
+      "file": "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/render_inputs/provenance_2026-09.json",
+      "sha256": "87bd64264e0a23335e4e8005ac256eb222bd1899afb655fd6fdae2f7a27cb3fc"
+    }
+  },
+  "verification": {
+    "pairs": 45000,
+    "mse": 2642.252863928349,
+    "rendered_frames": 625,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 existing hourly samples ending at origin minus 0 hours; no added filling",
+    "origins": 625,
+    "actual_window": "72 existing hourly samples after origin; no added filling"
+  },
+  "notes": [
+    "Display shows 168 hours of model-available ACE observations, not the complete feature and analog history.",
+    "Hollow markers identify filled observations according to source was_missing flags.",
+    "All reference actuals, including filled observations, contribute to displayed RMSE; excluded from official leaderboard score."
+  ],
+  "outputs": [
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 20111253,
+      "sha256": "8a9382c5f7654afa6eb2533706d2546dedb9790ab97dc017fca4af20be657f46",
+      "first_frame": 1,
+      "last_frame": 625
+    }
+  ],
+  "comparison_status": "Unsubmitted no-delay comparator; parent recipe identity is not a training-config hash",
+  "evaluation_scope": "non-official reference replay",
+  "reference_month": "2026-09",
+  "provenance": {
+    "ace_latency_h": 0,
+    "seed": 0,
+    "source_access": {
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/95e8f5a544fd4141_ace.parquet": {
+        "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ace.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/c8049f284c7792af_part.parquet": {
+        "sha256": "fca5e255e89fe9c3a68c83ed37246d40d8806723886ee3b1d56ea7cc8b463fcb",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/.local/state/sundb/stage/suvi_hourly/year=2022/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/5da20ca1081bcd16_part.parquet": {
+        "sha256": "89ba1fb6948229e7fddf1bb84886ad9d989a69693f32f7736618d534d056d2c9",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/.local/state/sundb/stage/suvi_hourly/year=2023/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/013b653458ed9f10_part.parquet": {
+        "sha256": "eed2c8f5c53f23fc79703035b8678051829454149d6d9338e3a169b4ce1869ae",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/.local/state/sundb/stage/suvi_hourly/year=2024/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/961cba7e1ec37042_part.parquet": {
+        "sha256": "d93f51d61d4722c0aa4c4a5000baf2ad430df840c547595a817ca28953cf1f9f",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/.local/state/sundb/stage/suvi_hourly/year=2025/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/4c8d71adab6ca8c2_part.parquet": {
+        "sha256": "0a9ea0775af37580c81749c33b6d6ee41a18d0afa8dc8c09e039a8d8840203a8",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/.local/state/sundb/stage/suvi_hourly/year=2026/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/d68a81892cbe48a2_suvi-hourly-v2.parquet": {
+        "sha256": "33cbe243e552ab794ea9eaad7d858b7c1908942765ce55f0160baf6df764f746",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/suvi-fusion/suvi-hourly-v2.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/6ae56c169118d838_part.parquet": {
+        "sha256": "512e1512d0b0341e82ab73c93edb40a51551abe7942dcf9dc4c0167229efdb7c",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2022/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/ce6e5742873f7d53_part.parquet": {
+        "sha256": "90b35a4657a587d984cf94816ef843e9992972afef76c5e100336e19c2ec03a0",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2023/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/8188392dee1e54bf_part.parquet": {
+        "sha256": "9d7f0138eab13db42383b9f5f7bf42a6042b9244ca7d8e116287372784fcc559",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2024/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/4d1319749dd5db2a_part.parquet": {
+        "sha256": "3234862cba5b3f4a7c45eab280e24a360b826ec3936e21e2579cb2421b000b39",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2025/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/ccda797b6ecadddc_part.parquet": {
+        "sha256": "94a472986ed3b956f1cb99d86b7200ac2cc7c8ee5aa35c28e03d6e940a167b98",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2026/part.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/342752a4dbae8fa9_ch-hourly.parquet": {
+        "sha256": "96f38e2728211345fcbbd2bb119e526cb429b74cae5370a5b41b864599a0870a",
+        "cap": "2026-09-26 23:00:00+00:00",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ch-hourly.parquet"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/a95281c1ce1096dd_WSAEnlilSimulations_2024-11.json": {
+        "sha256": "0ba90f17e008f9dd3d3c498e2dca39571f1bf0ed10947720b5ef0f74702e652c",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-11.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/a8525a3d7fb97e42_WSAEnlilSimulations_2022-12.json": {
+        "sha256": "4ac44be70fc1d56d91bedac74251ebceb53b0e67904120b44c3c70987cbf7186",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2022-12.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/ae66c9033f48eb0e_WSAEnlilSimulations_2026-06.json": {
+        "sha256": "6fd759ca51be0c24cc070956a2fba9a20d4ec80e77c8316081f64e68f9914c3b",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2026-06.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/4020e92a02164f4c_WSAEnlilSimulations_2023-01.json": {
+        "sha256": "c9cda6dde0c506ecc94bb26c444ca608615a66ebc807039142d94d504a1d9a0f",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-01.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/f0d39bdf9278fe08_WSAEnlilSimulations_2025-09.json": {
+        "sha256": "690e1357fb095672edaaf3162150b4896385d8991093652e167b114041c1c4b8",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-09.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/bf2ebeacd1285a9c_WSAEnlilSimulations_2022-08.json": {
+        "sha256": "0a77103177456d65b6a2d79c7d8ca082048189965bfc5ad1ac199c3933b354d2",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2022-08.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/f1d2c26cbc425d44_WSAEnlilSimulations_2026-05.json": {
+        "sha256": "e0772347f1cf102372d8985b219e34ba1a704ff26a644a4dd57e6cf7db5ae7e4",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2026-05.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/9ce18c7ea1ec4417_WSAEnlilSimulations_2024-09.json": {
+        "sha256": "49200527bfedafe5b15aa165fe47832cc45fe744f557e65824fa23e0ac18a9a0",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-09.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/1a3152922853852d_WSAEnlilSimulations_2025-04.json": {
+        "sha256": "4971c92b902fad6c715e34e4498363a9acdb2f5479ac522b9b6d8c75cf9a9fdb",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-04.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/27b0cb68922748e3_WSAEnlilSimulations_2026-02.json": {
+        "sha256": "32fd0cdfd5508251fbd8c74299ff36a57ca8bf64ddee5a0d89af7d9d13f86988",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2026-02.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/c076b580d32a9c0f_WSAEnlilSimulations_2023-04.json": {
+        "sha256": "ac4eb65818fa56f37115f06d7f3bc45582dcd5356d75bf5d8f8bf0b4e33f6a30",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-04.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/a0898da42e50eab4_WSAEnlilSimulations_2023-09.json": {
+        "sha256": "d07a2f3662138a9444876c1f27da287b7021670995d5f4f99735c49cf69033b0",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-09.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/053e48e85c3959f1_WSAEnlilSimulations_2024-12.json": {
+        "sha256": "25854c559ba3c2d7f8ab5faaefa82ee153938cbb2a181fb1d6a6314dcf11696d",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-12.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/7b7c91e76ffcf68e_WSAEnlilSimulations_2024-02.json": {
+        "sha256": "1eb0096746b7391470bc7adde98a234ff37700f379be5d8b8f4d71c0f361d28d",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-02.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/dcced9a5d69fff10_WSAEnlilSimulations_2023-11.json": {
+        "sha256": "8a5cfc78ce47072b9f4018853f9addce68420d4862c60adedecad0326a1be26e",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-11.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/537b9adf28f15ed1_WSAEnlilSimulations_2023-06.json": {
+        "sha256": "c5f04fb126642778aefce18f94326081081c184c9a4773df2656195851eb942e",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-06.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/bc30cb400ab8066b_WSAEnlilSimulations_2023-12.json": {
+        "sha256": "3d5e9061efb15fc20ddb831be6fa6f2689f1be10a52ce74f28e0d72b88eadf91",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-12.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/6fce586d81d2a0ca_WSAEnlilSimulations_2025-05.json": {
+        "sha256": "2f385946146369b77ded3b2583e9f570fabcbd47cd73c234bd373ef416b7b369",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-05.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/12a419f2a03011ce_WSAEnlilSimulations_2024-03.json": {
+        "sha256": "28c836c8e4ca0fbc511b4f0baf85a68c07427dd906ad8829cfa9919877ce8a80",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-03.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/669b2f05f095bbd1_WSAEnlilSimulations_2025-10.json": {
+        "sha256": "d88761e7aa624c916fe4c82b8dcc28974c3962a7fc4947fe3170d059b303a8a7",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-10.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/5fa7054a66195daf_WSAEnlilSimulations_2025-01.json": {
+        "sha256": "829228deca8a26edbe93a0c85041d44846d601c425389fcc79d41f30c9319e4b",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-01.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/e54a9f059a040ddf_WSAEnlilSimulations_2023-07.json": {
+        "sha256": "0ccb6d10727e0735328ffacb7b0d7265804ef6dc696bafa0eed9751479ba6f88",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-07.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/5a7ba78d4969c50e_WSAEnlilSimulations_2025-02.json": {
+        "sha256": "ff7366cf78ae63e7e5e98bb7ef16d127254a5a8557ffcedef573ceed8297bfa4",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-02.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/86c09c5482b40d9d_WSAEnlilSimulations_2023-05.json": {
+        "sha256": "58c838e647e04119182f860a6d317311640af4809062d753fc11a2e6d69395b2",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-05.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/317a01372a076c25_WSAEnlilSimulations_2026-01.json": {
+        "sha256": "fc57e4afdfa2c3139e614182a7f5e726e15185f341def74a32a71bccfb7177db",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2026-01.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/d49aabd0a07bef31_WSAEnlilSimulations_2025-03.json": {
+        "sha256": "dfbd220a97242752170c2044c463b66e61c54b06f5d39cf0fcdbebdb31dd19de",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-03.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/591189d2f2bb5b3d_WSAEnlilSimulations_2025-11.json": {
+        "sha256": "2131ec135a16d481b5ea80dcc2d515aa480b644878c202ea8fab76cb2e346615",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-11.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/66cf0df781f7066a_WSAEnlilSimulations_2022-10.json": {
+        "sha256": "e4cbda15594b20cefd4ac76ae1dfd0872ec82f67f764fc70d392b89726548115",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2022-10.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/73d7c1143a8f90b2_WSAEnlilSimulations_2023-08.json": {
+        "sha256": "6c4cf15f91cd07d9acb2e31de0456847dca07ee94063bc85300fc4dbe4bd8ab3",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-08.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/4970c3005a14c621_WSAEnlilSimulations_2024-05.json": {
+        "sha256": "9d89f37f2c36297314eebc15aadbc8cc53067820965f366fbc0ea4edc548fa65",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-05.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/1d5fa92af8c20d84_WSAEnlilSimulations_2023-10.json": {
+        "sha256": "aa478943ef34653db009d3e986463be738912aa67b34eb9439dd99d57d98f86c",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-10.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/5f2e5af627bd3d30_WSAEnlilSimulations_2022-11.json": {
+        "sha256": "4268acea52ba0b61964ab0927668169b1cdb0489fcc6d0b56063287dcb25e0b7",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2022-11.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/78c055a1900ed993_WSAEnlilSimulations_2024-04.json": {
+        "sha256": "a33575054e58148a7c60b612a0aba590b512b3e3573b42e6299ea2f9a4531e78",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-04.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/028e68d0b6780d2a_WSAEnlilSimulations_2025-08.json": {
+        "sha256": "bbaa6df473a35eccb982c0ee061e61e809819144401ef1b9cb5cc8ef7b6b872f",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-08.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/3bd669e215978efe_WSAEnlilSimulations_2026-03.json": {
+        "sha256": "1e20e608cb359e7997d11af120ae9efad0b85c6fa32fc206bf3c5b83578f436a",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2026-03.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/7fc5e5e941774688_WSAEnlilSimulations_2025-06.json": {
+        "sha256": "8bcb92b91dc7380d785a35796ae2e6b6aa6068f4852fc23c34c16815fc0e3f14",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-06.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/86fca3191e24a754_WSAEnlilSimulations_2024-06.json": {
+        "sha256": "b15b08276d3d52ab9dbb2d405729f63441de2bf6aec0783f9c511cb83c133c84",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-06.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/f58a37a391d3ea5e_WSAEnlilSimulations_2022-07.json": {
+        "sha256": "b86d3cfe16594e7e0900a057ca3c770ae3994e5bb3ba92f2d595389048924d7d",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2022-07.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/b3bdeed89a03e643_WSAEnlilSimulations_2023-03.json": {
+        "sha256": "addfd06fce37a461c64936fa1ba8cc589ac6c866ca29cd1c8cbdc0692a262119",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-03.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/97b22a9180c2a341_WSAEnlilSimulations_2025-07.json": {
+        "sha256": "3f6a82bd7ce8edafd46e30167c839ef81d7af71252428956de808e3bf603bedc",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-07.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/55dc952ea95c3cad_WSAEnlilSimulations_2025-12.json": {
+        "sha256": "2a1fe4096abe6213f6cabed2bf811db0abd8657a9d4c8b12ff3467cfd63ad90f",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2025-12.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/3ddabe27e72aa042_WSAEnlilSimulations_2024-10.json": {
+        "sha256": "a2d57d6444753651924a6e96f838ff4985131a01866b75436e89f04ec5709c8e",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-10.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/7477753efee21ab1_WSAEnlilSimulations_2024-01.json": {
+        "sha256": "48c02a2c97eecdd332d9ef58bcb159e23c45b2bb34dea9163c642212b31af861",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-01.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/3b03014387f6de3d_WSAEnlilSimulations_2024-08.json": {
+        "sha256": "cca491af7c909529e9621433fd1abc6f4d7ddbfb6cf0ba971915b10ab4ac8809",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-08.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/5b40320143ee902e_WSAEnlilSimulations_2023-02.json": {
+        "sha256": "fd9a82533404b3ec07ef31214a8a3838e921bd5f7f20e26b2815e68dcd29fa81",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2023-02.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/209c20496004dac9_WSAEnlilSimulations_2024-07.json": {
+        "sha256": "6b4f92b575c2bd9c255766d1e977a060cce5e17079d5317bba0e6acdaa59c285",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2024-07.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/b58777c815b96ccc_WSAEnlilSimulations_2026-04.json": {
+        "sha256": "39c8ea50b654c48c441c9567f473cb3266e0ea996b809d1588880ddda23155f1",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2026-04.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/6ea4e59323fe5be7_WSAEnlilSimulations_2022-09.json": {
+        "sha256": "c15dc129dc96a00f17351bea1546e851b9b9aab4cb2db40e339f9e11d5476f0c",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/headroom-audit/donki/WSAEnlilSimulations_2022-09.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/8a150d9fa7750f33_WSAEnlilSimulations_2026-06.json": {
+        "sha256": "6fd759ca51be0c24cc070956a2fba9a20d4ec80e77c8316081f64e68f9914c3b",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/donki-live/WSAEnlilSimulations_2026-06.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/a68538de382e7257_WSAEnlilSimulations_2026-07.json": {
+        "sha256": "3ea6eddaaff34f09924407fd54899eed555e0b51fa27be955d6224acb30ac85d",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/donki-live/WSAEnlilSimulations_2026-07.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/aaaf48c12f39c70b_WSAEnlilSimulations_2026-09.json": {
+        "sha256": "461367afd2465404bc816fcfeccc2e7ad1f4ed3a7418b71235085ca1aa6dd6a5",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/donki-live/WSAEnlilSimulations_2026-09.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/d700492624e434f1_WSAEnlilSimulations_2026-08.json": {
+        "sha256": "26ab65a67f11add62976f09cbcd40f7bc8e439e814ffd914e6a798252e7742fd",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/donki-live/WSAEnlilSimulations_2026-08.json"
+      },
+      "/home/t-lab01/sunrun/visualization-e1149-20261017-ace0h/training_snapshot/ab0e9ad3443c105f_WSAEnlilSimulations_2026-10.json": {
+        "sha256": "b59e8f090a70ceb8beb01bbfc23cd20528f96829ab160048cfaa3120e04dfe4b",
+        "original_path": "/home/t-lab01/sunrun/leaderboard/store/donki-live/WSAEnlilSimulations_2026-10.json"
+      }
+    },
+    "code_hashes": {
+      "/home/t-lab01/sunrun/leaderboard/experiments/e0472_ablation_hpo/recipe.py": "8f9aa430352bf671b32afb9cbbec4a47ba174c956620d0635a30d0b711e0b67e",
+      "/home/t-lab01/sunrun/leaderboard/experiments/gjc_inc_l72cond_20261014/run_proxy.py": "d8271c4c9bbb02734abaf1399393183143cfe318e7551e35f6119e0086105eb9",
+      "/home/t-lab01/sunrun/research/e0472-ablation-hpo/campaign/configs/baseline.json": "a8904153f8d828332629b064f0087a5a31b9f86eb328597c3a797dfafba941b4",
+      "/home/t-lab01/sunrun/leaderboard/experiments/e0472_ablation_hpo/configs.py": "46fca7bb80fdbd87f4c6eca284c18ffc51aea84b6d1e3bf59beaed646120e02c",
+      "/home/t-lab01/sunrun/leaderboard/experiments/d148_enlil_live/lean_enlil.py": "20ad7d4ee78ae762b6781aea6fd8e88169c95fd67770a7680ccea49f72e5be96",
+      "/home/t-lab01/sunrun/leaderboard/experiments/d147_e0421_lean/lean.py": "8f2ba0b9c9dba52879683ff770810e5272a216e9eba67422a08b6bf5f8c5972b",
+      "/home/t-lab01/sunrun/leaderboard/experiments/d143_axisA_analog/a2b/run_official_a2b.py": "63abb966de263697e0d6bdef51dfd2cf717d8565bb24a222a03b046e6f2f4575",
+      "/home/t-lab01/sunrun/leaderboard/experiments/d143_axisA_analog/a2b/resid_lib_a2b.py": "f3fbb52216280ac1a158699a60f74f6bc8541a01c9d207f61b163de892ba92c4",
+      "/home/t-lab01/sunrun/leaderboard/experiments/d143_axisA_analog/a2b/spec_a2b.py": "7d6a131138b6f9e17348e269d695a3ffae37428e2398ca0dd18eb65af6b710d2",
+      "/home/t-lab01/sunrun/leaderboard/experiments/headroom_audit/headroom.py": "2a553f6dc02dc80a79c8ae9c67632b3a4f588f7385e19ec1b7392a283abbd19f",
+      "/home/t-lab01/sunrun/leaderboard/experiments/d1_longitude_strips/strips.py": "50224ed06ae71bc04e87581901097dcdd9d68dcf91b4a42222bdd9cc7d7a1023",
+      "/home/t-lab01/sunrun/leaderboard/experiments/headroom_audit/info_ablation.py": "85cf734480900f135ed6a052f44564012ab8faccfcfdacce9089e53dd972e199"
+    },
+    "script_sha256": "acdceeb58de0feb1a79bcfa4f4aa262a498313b67fc1ad6a8cd776440839d27e",
+    "config": {
+      "name": "baseline",
+      "drop_groups": [],
+      "drop_columns": [],
+      "members": [
+        "e0003_line",
+        "d33_hsplit",
+        "d45_lvlmean"
+      ],
+      "equal_weights": false,
+      "residual": true,
+      "standardize": true,
+      "k": 15,
+      "analog_weighting": "uniform",
+      "lookback_days": 365,
+      "window": "CAL",
+      "xgb": {
+        "max_depth": 3,
+        "n_estimators": 900,
+        "learning_rate": 0.03,
+        "min_child_weight": 20,
+        "reg_lambda": 5,
+        "subsample": 0.8,
+        "colsample_bytree": 0.7
+      }
+    },
+    "experiment": "E1149_NO_DELAY",
+    "purpose": "Seed-0 reference visualization; no registration or official scoring",
+    "refit_from_training": true,
+    "model_sha256": "5945489357f0a84e96468932dfabc81780e3acaf14aabcae7f67ad14e2647606",
+    "threads": 4,
+    "label_cutoff": "2026-05-29 00:00:00+00:00",
+    "label_maturity_hours": 144,
+    "hindcast_lag_hours": 12,
+    "oof": {
+      "folds": [
+        {
+          "start": "2023-01-01 00:00:00+00:00",
+          "end": "2023-04-01 00:00:00+00:00",
+          "n_origins": 2160,
+          "head_train_n": 0,
+          "level_nonmissing": 0,
+          "observed_hours_min": 24,
+          "observed_hours_mean": 51.7912037037037,
+          "label_proxy54_coverage": 0.5833333333333334,
+          "complete72_count": 0
+        },
+        {
+          "start": "2023-04-01 00:00:00+00:00",
+          "end": "2023-07-01 00:00:00+00:00",
+          "n_origins": 2184,
+          "head_train_n": 1117,
+          "level_nonmissing": 2184,
+          "observed_hours_min": 49,
+          "observed_hours_mean": 57.148809523809526,
+          "label_proxy54_coverage": 0.8507326007326007,
+          "complete72_count": 0
+        },
+        {
+          "start": "2023-07-01 00:00:00+00:00",
+          "end": "2024-01-01 00:00:00+00:00",
+          "n_origins": 4416,
+          "head_train_n": 3026,
+          "level_nonmissing": 4416,
+          "observed_hours_min": 24,
+          "observed_hours_mean": 54.27626811594203,
+          "label_proxy54_coverage": 0.6741394927536232,
+          "complete72_count": 0
+        },
+        {
+          "start": "2024-01-01 00:00:00+00:00",
+          "end": "2024-07-01 00:00:00+00:00",
+          "n_origins": 4368,
+          "head_train_n": 6095,
+          "level_nonmissing": 4368,
+          "observed_hours_min": 25,
+          "observed_hours_mean": 55.953067765567766,
+          "label_proxy54_coverage": 0.7570970695970696,
+          "complete72_count": 0
+        },
+        {
+          "start": "2024-07-01 00:00:00+00:00",
+          "end": "2025-01-01 00:00:00+00:00",
+          "n_origins": 4416,
+          "head_train_n": 9259,
+          "level_nonmissing": 4416,
+          "observed_hours_min": 46,
+          "observed_hours_mean": 59.96467391304348,
+          "label_proxy54_coverage": 0.9569746376811594,
+          "complete72_count": 0
+        },
+        {
+          "start": "2025-01-01 00:00:00+00:00",
+          "end": "2025-07-01 00:00:00+00:00",
+          "n_origins": 4344,
+          "head_train_n": 13485,
+          "level_nonmissing": 4344,
+          "observed_hours_min": 48,
+          "observed_hours_mean": 59.558241252302025,
+          "label_proxy54_coverage": 0.9592541436464088,
+          "complete72_count": 0
+        },
+        {
+          "start": "2025-07-01 00:00:00+00:00",
+          "end": "2026-01-01 00:00:00+00:00",
+          "n_origins": 4416,
+          "head_train_n": 17652,
+          "level_nonmissing": 4416,
+          "observed_hours_min": 40,
+          "observed_hours_mean": 61.33899456521739,
+          "label_proxy54_coverage": 0.9408967391304348,
+          "complete72_count": 0
+        },
+        {
+          "start": "2026-01-01 00:00:00+00:00",
+          "end": "2026-05-29 00:00:00+00:00",
+          "n_origins": 3552,
+          "head_train_n": 21807,
+          "level_nonmissing": 3552,
+          "observed_hours_min": 0,
+          "observed_hours_mean": 57.802083333333336,
+          "label_proxy54_coverage": 0.8375563063063063,
+          "complete72_count": 0
+        }
+      ],
+      "mature_proxy54_labels": 24925,
+      "oof_correlation": 0.715647843649701,
+      "oof_correlation_n": 23665,
+      "level_feature_coverage": 0.927652733118971,
+      "cold_start": "Initial missing chronological Ridge OOF rows excluded"
+    },
+    "replay": {
+      "cutoff": "2026-05-29 00:00:00+00:00",
+      "cal_fit": "2026-03-01 00:00:00+00:00",
+      "alpha": 0.1,
+      "train": {
+        "rows": 535003,
+        "latest_target": "2026-05-26 00:00:00+00:00",
+        "key_sha256": "f1d871c6e61da6df1b6b49b7893b7f78599afe079bae4e396da23bc9c2ecc4fb"
+      },
+      "cal_train": {
+        "rows": 494251,
+        "latest_target": "2026-02-26 00:00:00+00:00",
+        "key_sha256": "5d13ebf46df71263973c71710cc9b71ef028a54c3163a75fd7509dd011889479"
+      }
+    },
+    "poison": {
+      "raw_ace_future_invariant": true,
+      "raw_ace_positive_control": true,
+      "passed": true,
+      "future_invariant": true,
+      "positive_control": true,
+      "origin": "2026-07-29 23:00:00+00:00",
+      "control_scope": "full feature graph (even if intervention drops speed columns)",
+      "level_head_tests": [
+        {
+          "cutoff": "2025-01-01 00:00:00+00:00",
+          "immature_label_feature_delta": 0.0,
+          "mature_positive_delta": 99.99999999999994,
+          "source_summary_delta": 0.0,
+          "source_level_delta": 0.0,
+          "train_n": 13485
+        },
+        {
+          "cutoff": "2026-05-29 00:00:00+00:00",
+          "immature_label_feature_delta": 0.0,
+          "mature_positive_delta": 100.00000000000006,
+          "source_summary_delta": 0.0,
+          "source_level_delta": 0.0,
+          "train_n": 24925
+        }
+      ],
+      "source_prediction_delta": 0.0,
+      "immature_label_prediction_delta": 0.0
+    },
+    "original_comparison": null,
+    "official_origins": 2833,
+    "october": {
+      "origins": 264,
+      "first_origin_utc": "2026-09-30T23:00:00+00:00",
+      "last_origin_utc": "2026-10-11T22:00:00+00:00",
+      "last_actual_utc": "2026-10-14T22:00:00+00:00",
+      "suvi_stale_origins": 0,
+      "input_migration_status": "pending_validation; reference use",
+      "sources": {
+        "CHAMPION_READY.json": "6e0e69878426a1fa9d8a823d2a852478a79bc4f3bd35c4d255fa2939f2062fe9",
+        "ace-snapshot/year=2022/part.parquet": "512e1512d0b0341e82ab73c93edb40a51551abe7942dcf9dc4c0167229efdb7c",
+        "ace-snapshot/year=2023/part.parquet": "90b35a4657a587d984cf94816ef843e9992972afef76c5e100336e19c2ec03a0",
+        "ace-snapshot/year=2024/part.parquet": "9d7f0138eab13db42383b9f5f7bf42a6042b9244ca7d8e116287372784fcc559",
+        "ace-snapshot/year=2025/part.parquet": "3234862cba5b3f4a7c45eab280e24a360b826ec3936e21e2579cb2421b000b39",
+        "ace-snapshot/year=2026/part.parquet": "a8e35293c89f10d60d3ec720f7d892bdc8d0539c6555a68070f37559dc239cc4",
+        "ch/ace.parquet": "3ce886254bedd842d71a48e542479ed4a82b1db08b4d3e68b05b74d339426de4",
+        "ch/ch-hourly.parquet": "fdeb7389048b5e06924d1be7e7abcc6e9f6ae50661b36152dacbd4a6f6449cbe",
+        "donki/WSAEnlilSimulations_2022-07.json": "5ba4cc9ab5f23d36f96ff34b234b120dc7f24ccfeddcaf87186f75f89e87861b",
+        "donki/WSAEnlilSimulations_2022-08.json": "680b2e3d7015966fc70b1ce8351111559cdf6fbc0c9d1aecdfe1116323b0d64c",
+        "donki/WSAEnlilSimulations_2022-09.json": "7c580fd806175684fc3a10a60f0c777483dfafdcf9f51f9ff01eaa35da8fa27e",
+        "donki/WSAEnlilSimulations_2022-10.json": "5a144f6c5a45951d27d0c068c3f4e753fb02413ef734f9304a4da0f486bd70db",
+        "donki/WSAEnlilSimulations_2022-11.json": "79408dedc0dec3c2c27dc893b5457c7886786c9ee3429878fd055eb2e1a9aa58",
+        "donki/WSAEnlilSimulations_2022-12.json": "a2728258c99efff2e5ceb18f08d49cb923e9d950554a26ffc3fd7d90696ed9ed",
+        "donki/WSAEnlilSimulations_2023-01.json": "42e4d203b4be587a652c0ff834f1d5e13d99d7008047156e2cd76204c36de301",
+        "donki/WSAEnlilSimulations_2023-02.json": "59917a652d44aebaecf815f747662bfe3d92e93406e2f05a62191e1d3ef6aa3e",
+        "donki/WSAEnlilSimulations_2023-03.json": "82b8da1449b4d5bda833bda74f1ecc009ec779a3171fc25e50bfee7e55517457",
+        "donki/WSAEnlilSimulations_2023-04.json": "89c09f50b3cc2a167e4f96f80bd0dc736aecec296f72c16042fb88e0ef7b97e7",
+        "donki/WSAEnlilSimulations_2023-05.json": "9c4b52e8f4cc60f5ec3ffdfca8662efe49f7b64b9f9f1fbb9f1b77d35385c9c5",
+        "donki/WSAEnlilSimulations_2023-06.json": "d646c9f536458487112131f2fdf40cd6ee2846ce6014b20f7da728888df2a170",
+        "donki/WSAEnlilSimulations_2023-07.json": "453be5ba1ef42bea5b6f2fce5e2388d24d53265a3b3db284fd1336094d3349c7",
+        "donki/WSAEnlilSimulations_2023-08.json": "72bb02a24b70cacdeb96f3cfa30088a56c18f640b0d8973fdcc4abb63d46e1b7",
+        "donki/WSAEnlilSimulations_2023-09.json": "ee34737035eadedad81e45e1125cb33e2ea0232b9887d15b999f23f3cceb27a2",
+        "donki/WSAEnlilSimulations_2023-10.json": "9df6888ba22b98826449fad28956e4714007cf75a70328f3acd77daf139ea2f1",
+        "donki/WSAEnlilSimulations_2023-11.json": "9f7fda6dcaa57a9908fd07b2065f71ec481c6940abbf194bf57d56a0fa756d08",
+        "donki/WSAEnlilSimulations_2023-12.json": "87ff995f671b00c175ac393b25d344449d683ab39af98290d82e80190600ef77",
+        "donki/WSAEnlilSimulations_2024-01.json": "b9b05501aa1879bcc8abfd4a7f41d72b99de4257102643ff16b86a4dbe4cbcbc",
+        "donki/WSAEnlilSimulations_2024-02.json": "b9f91dcb13ddfe0aebd21e21f8effc8f1827f508c344a1322433c15d8e107658",
+        "donki/WSAEnlilSimulations_2024-03.json": "82b0bce8b8b7fcf8e0c5a32c72edd05465d795f02cef9d7e8b19d7b1b474a529",
+        "donki/WSAEnlilSimulations_2024-04.json": "0e47e7b1ef034d4849b405286829c077ddc38100c018a8e551e9e68c7976398a",
+        "donki/WSAEnlilSimulations_2024-05.json": "9ba795a895cf8544547233105da900a6ccc44c398045a0e0016c1a35a08d9c73",
+        "donki/WSAEnlilSimulations_2024-06.json": "bcc9d07b119d635702f7816b2dd9f05017d22029d73fd1a29bf36af012af5652",
+        "donki/WSAEnlilSimulations_2024-07.json": "3de74b2b666d38ba0af445942068b2f0b853817446700eba28f6dd9cf6d69f00",
+        "donki/WSAEnlilSimulations_2024-08.json": "07961f76e41b748739ecbd46e15b562829b163c2562977469d60c8b9b400e6ed",
+        "donki/WSAEnlilSimulations_2024-09.json": "1bd5dd41390ce6f1847a863267e54fc5c1575f0184a62d5515b7583c944747a3",
+        "donki/WSAEnlilSimulations_2024-10.json": "b6c40bb3de5e1b1f9699f4c2feb5a26bce1e9cf539f34d2752c4171c6e6736d8",
+        "donki/WSAEnlilSimulations_2024-11.json": "155336e86cc49f8773eb88939fc6230bf7e5eebed4380b4f42c2aa862bb3bc9e",
+        "donki/WSAEnlilSimulations_2024-12.json": "3bd38706f3606075ac9bbf1c853abaffa788363974f815116a86139041324266",
+        "donki/WSAEnlilSimulations_2025-01.json": "901b0894e30c6162a45c6aa334f3c2c46c4415e28d82cf9ef133fda0886d482f",
+        "donki/WSAEnlilSimulations_2025-02.json": "fd1446c4b510fa34d2a994f74e1746e97c2104e61c94ece330ebe480825ba55b",
+        "donki/WSAEnlilSimulations_2025-03.json": "0ee97329f7b5ee1be21d2e8c42c4fc431a55b4fc8e06ae0683b369c89e36087d",
+        "donki/WSAEnlilSimulations_2025-04.json": "5c0fd5507ec82726512fc5fef3852d70498248bd9a3a150004ac1cf8e772476d",
+        "donki/WSAEnlilSimulations_2025-05.json": "6893ff53475981a1d5ead4a105cef3e70a7a529ee95509b1da9bc3a72cf0365b",
+        "donki/WSAEnlilSimulations_2025-06.json": "375f354ba6c8d2db3c349ef7333e2d03b9f173eb10e6a76735f5299df15ddf44",
+        "donki/WSAEnlilSimulations_2025-07.json": "137e62b9cb67ad260ba16e63b0c7757fc3beb6266822d7eb4e2e508cfd97ce5b",
+        "donki/WSAEnlilSimulations_2025-08.json": "454312991d572dbdc151e0b76c3d897479d8c935b90ab8fcf2da4aa5c2f542a2",
+        "donki/WSAEnlilSimulations_2025-09.json": "690e1357fb095672edaaf3162150b4896385d8991093652e167b114041c1c4b8",
+        "donki/WSAEnlilSimulations_2025-10.json": "64ddf831e70cabb5acefdea718041ddfe22983019108e7a3bbc56e6059c86706",
+        "donki/WSAEnlilSimulations_2025-11.json": "a3bed78c4d47565e55440936c6c0430d3b128bdd3878e41b2eca48e8a8b5fb57",
+        "donki/WSAEnlilSimulations_2025-12.json": "0d2c757131b07e23701b145ef3a896a76fcf8bc8dabfca8c02030648e983a06b",
+        "donki/WSAEnlilSimulations_2026-01.json": "e9735693a926e8e6da0258f983dd46bbacb44ac87082c3ebf2056d299d0839be",
+        "donki/WSAEnlilSimulations_2026-02.json": "e72ed6198c5b8126741b2b5c7122097e2ff0a8e8635877593cbdac8cff8da972",
+        "donki/WSAEnlilSimulations_2026-03.json": "1bd357f4fd9d324e2e8fc2afd5404c03310efe6bfefc5bf13cb61db5de625220",
+        "donki/WSAEnlilSimulations_2026-04.json": "465a9ff0d0094af1575a7da72d6193d39badfd1a75053afd0c00336a0bbfa657",
+        "donki/WSAEnlilSimulations_2026-05.json": "61f87e6deb1de6b18bc2fe48908e82264a1ced69c10259cf757abc31842d168b",
+        "donki/WSAEnlilSimulations_2026-06.json": "1feafe4eabd111695af9c24518e89eff145bf0c6a59a5ab71d5e9a22ec938e28",
+        "donki/WSAEnlilSimulations_2026-07.json": "a19d8dbdc4597a61fd47d324246a83c01f877fe10b2a3333c858e040870158c9",
+        "donki/WSAEnlilSimulations_2026-08.json": "fc4713f4e819f15b61292966fb20f42a6e68642548530ebaa61d9c66b2034e28",
+        "donki/WSAEnlilSimulations_2026-09.json": "431c91d75d966080970227cacba78ecc6b11eb68f4d2758bee6460a89aa4eb16",
+        "donki/WSAEnlilSimulations_2026-10.json": "fb854dd4ee4a7b7b70d12aa5780c37b02632bc71fa0387b43525671ea7891afc",
+        "suvi-fusion/suvi-hourly-v2.parquet": "b074a4bf74d0419db7d1b8fa427333e6755c93ea6f77f6bcdd24e9f42cc142e9",
+        "suvi-meta/year=2022/part.parquet": "fca5e255e89fe9c3a68c83ed37246d40d8806723886ee3b1d56ea7cc8b463fcb",
+        "suvi-meta/year=2023/part.parquet": "89ba1fb6948229e7fddf1bb84886ad9d989a69693f32f7736618d534d056d2c9",
+        "suvi-meta/year=2024/part.parquet": "eed2c8f5c53f23fc79703035b8678051829454149d6d9338e3a169b4ce1869ae",
+        "suvi-meta/year=2025/part.parquet": "d93f51d61d4722c0aa4c4a5000baf2ad430df840c547595a817ca28953cf1f9f",
+        "suvi-meta/year=2026/part.parquet": "787848cf48b2c7190f1b8c4414e7600a9966014d8d95bf82a438bda40fae3613",
+        "suvi_availability.parquet": "60971b10808236cc95cc7bdd82d667d79fc929e42af5031196b35b9d6fdd8245"
+      }
+    },
+    "train_feature_coverage": 0.8730908384725728,
+    "excluded_initial_training_rows": 77766,
+    "predictions_sha256": "a6b3db674b36722a88850ca9de86f5d197cf5a041aeb1f6d545156abbcfb9c03",
+    "parent_predictions_sha256": "4782c2ae44d82772359c8a914236b86ac9734a65ba0f525c1a1b9e9a0225f3af",
+    "rendered_month": "2026-09"
+  }
+}
