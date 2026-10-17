@@ -93,6 +93,44 @@ def load_data(args):
     return origins, months, inputs, input_missing, actual, predicted, actual_missing, mse, (lower, upper)
 
 
+def load_reference_data(args):
+    """Validate monthly replay without applying official score gates."""
+    month = args.reference_month
+    require(len(month) == 7 and pd.Period(month, freq="M").strftime("%Y-%m") == month,
+            "reference-month must be YYYY-MM")
+    pred = pd.read_parquet(args.predictions)
+    pred[ORIGIN] = pd.to_datetime(pred[ORIGIN], utc=True)
+    origins = pd.DatetimeIndex(pred[ORIGIN].unique()).sort_values()
+    require(len(origins) > 0 and not origins.hasnans, "No valid reference origins")
+    require((origins == origins.floor("h")).all(), "Reference origins must be hourly")
+    months = (origins + pd.Timedelta(hours=1)).strftime("%Y-%m")
+    require((months == month).all(), "Reference origins fall outside requested month")
+    expected = pd.MultiIndex.from_product([origins, range(1, 73)], names=KEY)
+    keys = pd.MultiIndex.from_frame(pred[KEY])
+    require(keys.is_unique and len(keys) == len(expected)
+            and expected.difference(keys).empty and keys.difference(expected).empty,
+            "predictions: expected exactly one row for every origin and horizon 1..72")
+    predicted = pred.sort_values(KEY).pred_kms.to_numpy().reshape(-1, 72)
+    require(np.isfinite(predicted).all(), "Non-finite forecast")
+    history = pd.read_parquet(args.history)
+    history.index = pd.to_datetime(history.pop("timestamp_utc"), utc=True)
+    require(history.index.is_unique, "Duplicate history timestamps")
+    slots = (origins.tz_localize(None).to_numpy()[:, None]
+             + pd.to_timedelta(np.arange(-167, 73), unit="h").to_numpy())
+    selected = history.reindex(pd.DatetimeIndex(slots.ravel(), tz="UTC"))
+    require(np.isfinite(selected.filled_speed_kms.to_numpy()).all(),
+            "History is missing required input or future actual hours")
+    require(selected.was_missing.isin([0, 1]).all(), "Invalid history missing flags")
+    values = selected.filled_speed_kms.to_numpy().reshape(-1, 240)
+    missing = selected.was_missing.to_numpy(dtype=bool).reshape(-1, 240)
+    inputs, actual = values[:, :168], values[:, 168:]
+    all_values = np.concatenate([values.ravel(), predicted.ravel()])
+    lower = 200. if all_values.min() >= 200 else float(np.floor((all_values.min() - 25) / 50) * 50)
+    upper = 800. if all_values.max() <= 800 else float(np.ceil((all_values.max() + 25) / 50) * 50)
+    mse = float(np.mean((actual - predicted) ** 2))
+    return origins, months, inputs, missing[:, :168], actual, predicted, missing[:, 168:], mse, (lower, upper)
+
+
 def fixed_palette():
     # Shared RGB cube plus greys keeps color identities consistent across frames.
     colors = [(r, g, b) for r in range(0, 256, 51)
@@ -106,7 +144,19 @@ def fixed_palette():
 def render(args, data):
     experiment = EXPERIMENTS[args.experiment]
     origins, months, inputs, input_missing, actual, predicted, actual_missing, mse, ylim = data
+    reference_month = getattr(args, "reference_month", None)
+    render_months = [reference_month] if reference_month else list(EXPECTED_MONTHS)
+    manifest_name = f"manifest_{reference_month}.json" if reference_month else "manifest.json"
+    provenance = None
+    if reference_month and getattr(args, "provenance", None):
+        require(getattr(args, "model_file", None) is not None, "--provenance requires --model-file")
+        provenance = json.loads(args.provenance.read_text())
+        require(provenance.get("model_sha256") == sha256(args.model_file), "Provenance model hash mismatch")
+        require(provenance.get("predictions_sha256") == sha256(args.predictions), "Provenance predictions hash mismatch")
     output = args.output_dir
+    if reference_month:
+        for name in [manifest_name, f"validation_{reference_month}.gif"]:
+            require(not (output / name).exists(), f"Refusing to overwrite existing reference output: {name}")
     output.mkdir(parents=True, exist_ok=True)
     fig, ax = plt.subplots(figsize=(args.width / 100, args.height / 100), dpi=100)
     fig.subplots_adjust(left=.085, right=.98, bottom=.17, top=.80)
@@ -126,11 +176,12 @@ def render(args, data):
                            label="Filled / missing observation")
     ax.legend(loc="upper center", bbox_to_anchor=(.5, 1.16), ncol=2, fontsize=8, frameon=False)
     heading = fig.suptitle("", fontsize=12, y=.97)
-    fig.text(.085, .035, "Input: -167 to 0 h  |  Forecast: +1 to +72 h  |  Fixed scale across all folds", fontsize=8)
+    scale_label = "reference frames" if reference_month else "folds"
+    fig.text(.085, .035, f"Input: -167 to 0 h  |  Forecast: +1 to +72 h  |  Fixed scale across all {scale_label}", fontsize=8)
     palette = fixed_palette()
     results = []
     try:
-        for month in EXPECTED_MONTHS:
+        for month in render_months:
             indices = np.flatnonzero(months == month)
             if args.limit is not None:
                 indices = indices[:args.limit]
@@ -144,7 +195,8 @@ def render(args, data):
                         np.concatenate([history_x[input_missing[index]], future_x[actual_missing[index]]]),
                         np.concatenate([inputs[index][input_missing[index]], actual[index][actual_missing[index]]]))
                     rmse = float(np.sqrt(np.mean((actual[index] - predicted[index]) ** 2)))
-                    heading.set_text(f"{experiment['model']}  |  Fold {index + 1:,} / {len(origins):,}\n"
+                    frame_label = "Reference (non-official)" if reference_month else "Fold"
+                    heading.set_text(f"{experiment['model']}  |  {frame_label} {index + 1:,} / {len(origins):,}\n"
                                      f"Origin {origins[index]:%Y-%m-%d %H:%M UTC}  |  72 h RMSE {rmse:.2f} km/s")
                     fig.canvas.draw()
                     rgb = Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[:, :, :3])
@@ -180,6 +232,11 @@ def render(args, data):
               "input_hours": 168, "forecast_hours": 72, "x_hours": [-167, 72],
               "y_limits_kms": list(ylim), "limit_per_month": args.limit,
               "month_grouping": "UTC month of origin + 1 hour", "palette": "RGB cube + greys; no dithering"}
+    source_names = ["predictions", "history"] if reference_month else ["predictions", "folds", "truth", "history"]
+    if reference_month and getattr(args, "model_file", None):
+        source_names.append("model_file")
+    if provenance is not None:
+        source_names.append("provenance")
     manifest = {
         "model": experiment["model"], "model_config_sha256": experiment["model_config_sha256"],
         "experiment": args.experiment, "seed": 0,
@@ -187,7 +244,7 @@ def render(args, data):
         "script_sha256": sha256(__file__), "config": config,
         "rendering_config_sha256": hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest(),
         "sources": {name: {"file": str(getattr(args, name).resolve()), "sha256": sha256(getattr(args, name))}
-                    for name in ("predictions", "folds", "truth", "history")},
+                    for name in source_names},
         "verification": {"folds": len(origins), "pairs": len(origins) * 72,
                          "mse": mse, "expected_mse": experiment["expected_mse"], "mse_tolerance": 1e-7,
                          "expected_month_counts": EXPECTED_MONTHS,
@@ -200,14 +257,32 @@ def render(args, data):
                   "All validation truth, including filled observations, contributes to displayed RMSE."],
         "outputs": results,
     }
-    (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    if reference_month:
+        manifest["evaluation_scope"] = "non-official reference replay; v2 transition validation pending"
+        manifest["reference_month"] = reference_month
+        if provenance is not None:
+            manifest["provenance"] = provenance
+        for key in ("expected_mse", "mse_tolerance", "expected_month_counts"):
+            del manifest["verification"][key]
+        manifest["verification"]["origins"] = manifest["verification"].pop("folds")
+        manifest["verification"]["actual_window"] = "72 existing hourly samples after origin; no added filling"
+        manifest["notes"][-1] = "All reference actuals, including filled observations, contribute to displayed RMSE; excluded from official leaderboard score."
+        for result in results:
+            result["first_frame"] = result.pop("first_fold")
+            result["last_frame"] = result.pop("last_fold")
+    (output / manifest_name).write_text(json.dumps(manifest, indent=2) + "\n")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--experiment", choices=EXPERIMENTS, default="E0471")
-    for name in ("predictions", "folds", "truth", "history", "output-dir"):
+    for name in ("predictions", "history", "output-dir"):
         parser.add_argument(f"--{name}", type=Path, required=True)
+    parser.add_argument("--folds", type=Path)
+    parser.add_argument("--truth", type=Path)
+    parser.add_argument("--reference-month", help="Non-official replay month YYYY-MM (origin + 1 h)")
+    parser.add_argument("--provenance", type=Path, help="Reference inference receipt with model and prediction hashes")
+    parser.add_argument("--model-file", type=Path, help="Frozen model file to hash for reference provenance")
     parser.add_argument("--frame-ms", type=int, default=100)
     parser.add_argument("--width", type=int, default=1000)
     parser.add_argument("--height", type=int, default=500)
@@ -216,7 +291,13 @@ def main():
     require(args.frame_ms > 0 and args.frame_ms % 10 == 0, "GIF frame-ms must be a positive multiple of 10")
     require(args.width >= 600 and args.height >= 350, "Use width >=600 and height >=350 for readable plots")
     require(args.limit is None or args.limit > 0, "limit must be positive")
-    render(args, load_data(args))
+    if args.reference_month:
+        data = load_reference_data(args)
+    else:
+        require(args.provenance is None, "--provenance is only available with --reference-month")
+        require(args.folds is not None and args.truth is not None, "Official mode requires --folds and --truth")
+        data = load_data(args)
+    render(args, data)
 
 
 if __name__ == "__main__":
