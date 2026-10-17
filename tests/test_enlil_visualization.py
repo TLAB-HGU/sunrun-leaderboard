@@ -114,3 +114,59 @@ def test_reference_provenance_hashes_are_checked(replay, key):
     with pytest.raises(ValueError, match="Provenance .* hash mismatch"):
         MODULE.render(args, MODULE.load_reference_data(args))
     assert not args.output_dir.exists()
+
+
+def test_latency_shifts_only_available_history(replay):
+    args, pred, history = replay
+    zero = MODULE.load_reference_data(args)
+    early = history.iloc[:2].copy()
+    early.timestamp_utc -= pd.Timedelta(hours=2)
+    early.filled_speed_kms = [280., 290.]
+    history = pd.concat([early, history], ignore_index=True)
+    # At +2h latency these observations are not available to the model.
+    history = history[~history.timestamp_utc.isin([pred[MODULE.ORIGIN][0], pred[MODULE.ORIGIN][0] - pd.Timedelta(hours=1)])]
+    history.to_parquet(args.history)
+    args.experiment, args.ace_latency_hours = "E1149", 2
+    delayed = MODULE.load_reference_data(args)
+    np.testing.assert_array_equal(delayed[2][0], np.r_[280., 290., np.arange(166) + 300.])
+    np.testing.assert_array_equal(delayed[0], zero[0])
+    np.testing.assert_array_equal(delayed[4], zero[4])
+    np.testing.assert_array_equal(delayed[5], zero[5])
+    MODULE.render(args, delayed)
+    manifest = json.loads((args.output_dir / "manifest_2026-10.json").read_text())
+    assert manifest["config"]["input_x_hours"] == [-169, -2]
+    assert manifest["config"]["ace_latency_hours"] == 2
+    assert "model_config_sha256" not in manifest
+    assert manifest["recipe_code_sha256"] == MODULE.EXPERIMENTS["E1149"]["recipe_code_sha256"]
+
+
+def test_no_delay_comparator_is_reference_only(replay):
+    args, _, _ = replay
+    args.experiment = "E1149_ACE0H"
+    with pytest.raises(ValueError, match="Unsubmitted comparator requires"):
+        MODULE.load_data(args)
+    MODULE.render(args, MODULE.load_reference_data(args))
+    manifest = json.loads((args.output_dir / "manifest_2026-10.json").read_text())
+    assert manifest["model"] == "E1149_NO_DELAY"
+    assert "Unsubmitted" in manifest["comparison_status"]
+    assert "model_config_sha256" not in manifest
+
+
+def test_e1149_requires_correct_latency(replay):
+    args, _, _ = replay
+    args.experiment = "E1149"
+    with pytest.raises(ValueError, match="requires --ace-latency-hours 2"):
+        MODULE.load_reference_data(args)
+
+
+@pytest.mark.parametrize("experiment", ["E0471", "E0472"])
+def test_original_official_score_guard_unchanged(replay, experiment):
+    args, _, _ = replay
+    args.experiment = experiment
+    origins = pd.date_range("2026-05-31T23:00Z", periods=2833, freq="h")
+    keys = pd.MultiIndex.from_product([origins, range(1, 73)], names=MODULE.KEY).to_frame(index=False)
+    pd.DataFrame({MODULE.ORIGIN: origins}).to_parquet(args.folds)
+    keys.assign(pred_kms=400.).to_parquet(args.predictions)
+    keys.assign(target_kms=400., was_missing=0).to_parquet(args.truth)
+    with pytest.raises(ValueError, match="Frozen leaderboard MSE mismatch"):
+        MODULE.load_data(args)

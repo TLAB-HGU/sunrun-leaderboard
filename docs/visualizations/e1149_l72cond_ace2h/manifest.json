@@ -1,0 +1,123 @@
+{
+  "model": "E1149_L72_COND",
+  "recipe_code_sha256": "d8271c4c9bbb02734abaf1399393183143cfe318e7551e35f6119e0086105eb9",
+  "experiment": "E1149",
+  "seed": 0,
+  "created_at_utc": "2026-10-17T05:37:06.492497+00:00",
+  "script_sha256": "f12e78c178570c97cb329b1f791df6c0eeb104cf03b7462ef3e6213ee38ab2cb",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -169,
+      72
+    ],
+    "ace_latency_hours": 2,
+    "input_x_hours": [
+      -169,
+      -2
+    ],
+    "y_limits_kms": [
+      200.0,
+      800.0
+    ],
+    "limit_per_month": null,
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "RGB cube + greys; no dithering"
+  },
+  "rendering_config_sha256": "a47b913256e66596cddf06af455a97afa2dba9d687a0b18b43a5677d59f1cef9",
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/research/expos/runs/E1149/predictions_official_s0.parquet",
+      "sha256": "2c52b14bcf47dd2816d2ec6422ac5fa53caffc8248b7c4b5e2afde9ec9bd41b5"
+    },
+    "folds": {
+      "file": "/home/t-lab01/.local/state/research-dispatch/recovery-20261014/hf-restore-cache/datasets--tlabtlab--sunrun-lb-store/blobs/9c8f24f2cd82009cd7d071e99f45c9e15179326f7cccb4f46eb6805788332daf",
+      "sha256": "9c8f24f2cd82009cd7d071e99f45c9e15179326f7cccb4f46eb6805788332daf"
+    },
+    "truth": {
+      "file": "/home/t-lab01/.local/state/research-dispatch/recovery-20261014/hf-restore-cache/datasets--tlabtlab--sunrun-lb-store/blobs/ed02280b78f0ffe0512adb2a51cc92da79058e9abfa6882d5a2e736c62b1d430",
+      "sha256": "ed02280b78f0ffe0512adb2a51cc92da79058e9abfa6882d5a2e736c62b1d430"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/leaderboard/store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    }
+  },
+  "verification": {
+    "folds": 2833,
+    "pairs": 203976,
+    "mse": 3383.173808352058,
+    "expected_mse": 3383.173808352058,
+    "mse_tolerance": 1e-07,
+    "expected_month_counts": {
+      "2026-06": 720,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 2833,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 existing hourly samples ending at origin minus 2 hours; no added filling"
+  },
+  "notes": [
+    "Display shows 168 hours of model-available ACE observations, not the complete feature and analog history.",
+    "Hollow markers identify filled observations according to source was_missing flags.",
+    "All validation truth, including filled observations, contributes to displayed RMSE."
+  ],
+  "outputs": [
+    {
+      "month": "2026-06",
+      "file": "validation_2026-06.gif",
+      "frames": 720,
+      "first_fold": 1,
+      "last_fold": 720,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 22261394,
+      "sha256": "7de3b964f0bd9be261f9f85f75dc9044f7763327cec2642951b8b57e65082640"
+    },
+    {
+      "month": "2026-07",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 721,
+      "last_fold": 1464,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23418921,
+      "sha256": "19504d7a9c034880634443f2389a7de43a16ad01d817bbc216bd3010ce5dd758"
+    },
+    {
+      "month": "2026-08",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 1465,
+      "last_fold": 2208,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 22815959,
+      "sha256": "9acf8c4445f7dab354be292436ea5bcf643b63a06d931a626993df39a1b73d4e"
+    },
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 2209,
+      "last_fold": 2833,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 19785878,
+      "sha256": "906919082dcdc50bcdcaf0e0d67889b3f5ef3292f5080c756462416abf74cccd"
+    }
+  ]
+}

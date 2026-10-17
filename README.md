@@ -5,6 +5,7 @@ Evaluation (**fixed 2026-09-30**): targets **2026-06-01 00:00 – 2026-09-30 00:
 Rank = overall MSE. Regime columns are diagnostic.
 
 - [월별 검증 폴드 GIF: E0472 / xgb_d76_lead_moe_resid_dv_enlil](docs/visualizations/xgb_d76_lead_moe_resid_dv_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 공식 폴드 및 별도 10월 참고 추론 264개, 2배속.
+- [월별 검증 폴드 GIF: E1149 L72-COND / ACE+2시간](docs/visualizations/e1149_l72cond_ace2h/README.md) — 원 실험 seed 0의 전체 2,833개 공식 폴드, 최근 7일 가용 관측과 이후 72시간 실제값·예측.
 
 - [월별 검증 폴드 GIF: xgb_d76_lead_moe_enlil](docs/visualizations/xgb_d76_lead_moe_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 폴드.
 
