@@ -1,0 +1,43 @@
+{
+  "seed": 2,
+  "cfg": {
+    "width": 512,
+    "dropout": 0.15,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "batch": 1024,
+    "max_epochs": 80,
+    "patience": 8,
+    "val_frac": 0.1,
+    "members": 3,
+    "train_start": "2000-03-01",
+    "gate_halfwidth": 3
+  },
+  "code": {
+    "/home/t-lab01/sunrun/leaderboard/experiments/solar_lhx72_omni2_20261018/run_cal.py": "f7f28a85459a91a9b23505cfbe9ba213c7523521b63cb77aa5596d09aeb0e4ac",
+    "/home/t-lab01/sunrun/leaderboard/experiments/solar_lhx72_omni2_20261018/lhx.py": "12bfb2cde6d8e99cfb589e061c8d18b81c2b84d68d649ce1555c60d4dec962b8"
+  },
+  "ace_latency_h": 2,
+  "official_train": {
+    "cutoff": "2026-05-29 00:00:00+00:00",
+    "train_rows": 229969,
+    "train_first": "2000-03-01 00:00:00+00:00",
+    "train_last": "2026-05-26 00:00:00+00:00",
+    "epochs": [
+      9,
+      9,
+      9
+    ],
+    "best_val": [
+      0.6081852118174235,
+      0.613582561413447,
+      0.6210334698359171
+    ]
+  },
+  "official_poison": {
+    "origin": "2026-07-29 23:00:00+00:00",
+    "future_delta": 0.0,
+    "past_delta": 513.1834831237798,
+    "passed": true
+  }
+}

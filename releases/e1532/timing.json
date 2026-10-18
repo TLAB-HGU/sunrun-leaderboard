@@ -1,0 +1,11 @@
+{
+  "inference_seconds_per_fold": 8.31924638197012e-06,
+  "origins_measured": 2833,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "scope": "3 residual-head predictions plus seed mean; upstream E1149/E1506/HUXt products are frozen input features",
+  "rows": 203976
+}
