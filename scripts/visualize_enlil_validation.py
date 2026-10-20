@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render frozen seed-0 forecasts and explicitly labeled reference comparators; never fit a model."""
+"""Render frozen submitted forecasts and explicitly labeled reference comparators; never fit a model."""
 from __future__ import annotations
 
 import argparse
@@ -16,6 +16,22 @@ import pandas as pd
 from PIL import Image
 
 EXPERIMENTS = {
+    "E1604": {
+        "model": "e1604_hsspeak25",
+        "title": "E1604 HSSPEAK25 (3-seed mean)",
+        "model_config_sha256": "4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b",
+        "expected_mse": 3222.882998440603,
+        "seeds": [0, 1, 2],
+        "aggregation": "equal prediction mean",
+    },
+    "E1593": {
+        "model": "hsspeak72",
+        "title": "E1593 HSSPEAK72 (3-seed mean)",
+        "model_config_sha256": "eef5f301b253b41369b1b18821e685dc95b5cc9d80d766f5fa06d78d8f5cf965",
+        "expected_mse": 3225.3843694024536,
+        "seeds": [0, 1, 2],
+        "aggregation": "equal prediction mean",
+    },
     "E0471": {
         "model": "xgb_d76_lead_moe_enlil",
         "model_config_sha256": "6d169ff2b12085f3639b812884cef17324e1b096fb644410e18bd074103d3b54",
@@ -271,7 +287,9 @@ def render(args, data):
     manifest = {
         "model": experiment["model"],
         **{key: experiment[key] for key in ("model_config_sha256", "recipe_code_sha256", "parent_recipe_code_sha256") if key in experiment},
-        "experiment": args.experiment, "seed": 0,
+        "experiment": args.experiment,
+        **({"seeds": experiment["seeds"], "aggregation": experiment["aggregation"]}
+           if "seeds" in experiment else {"seed": 0}),
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "script_sha256": sha256(__file__), "config": config,
         "rendering_config_sha256": hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest(),
