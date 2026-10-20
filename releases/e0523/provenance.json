@@ -1,0 +1,46 @@
+{
+  "id": "E0523",
+  "hypothesis": "[axes: feat=enlil-ext] Arm D second pending on E0472: enlil_second_arr_h of the second pending CME plus enlil_kp18 plus enlil_minor flag; vintage modelCompletionTime<=origin joined by CME key; new columns enlil_second_arr_h enlil_kp18 enlil_minor; CPU base identical otherwise.",
+  "command": ".venv-fusion/bin/python experiments/d151_enlil_ext/run.py --arm D",
+  "registered_code_sha256": {
+    "experiments/d151_enlil_ext/ext_lib.py": "5ac9a6768051f72864529112597586a62a860fe7c6be3a85949d7ea3fd94f8e2",
+    "experiments/d151_enlil_ext/run.py": "4d52c3f36966653946d26e017ef58a8804143d24622ff649f0bf6ab5d166aea7",
+    "experiments/d151_enlil_ext/spec.py": "713836f568574a4442cda2fe2002749bd8bfd3fdbef6c90dcd5e7aeb9a610470"
+  },
+  "original_prediction_sha256": {
+    "predictions_official_s0.parquet": "23d7ea583d824409e1202db9f1fc61ec4278976fc9a0ed9a3da1cc59e8fd88f6",
+    "predictions_official_s1.parquet": "7a5324a502fd7d9c5c03a07468a4d3a34cbe142b2a7b65ba25a981ed7ebfedd9",
+    "predictions_official_s2.parquet": "f0753a8ac736dab007002d7549e2383e501484d38540dda38273b0114c622858"
+  },
+  "audit": {
+    "contract": "Historical E0472 origin-hour ACE contract, not ACE+2; May29 cutoff. ENLIL second pending arrival, kp18 and minor flag, completed by origin. Original poison passes. Retrospective comparator.",
+    "provenance": "d151_enlil_ext/spec.py,run.py,ext_lib.py; E0523/poison.json; registered output hashes",
+    "blocker": null
+  },
+  "seed_mean_mse": 3292.796233311978,
+  "internal_gate": {
+    "best_before": {
+      "cells_seedmean": {
+        "high_high_high": 3220.428671465173,
+        "high_low_high": 2969.6880241203776,
+        "low_high_high": 4022.479909429623,
+        "low_low_high": 3772.796456601283
+      },
+      "id": "E0481",
+      "mse_seedmean": 2594.2096329585456,
+      "seq": 2501
+    },
+    "champion_f1": 0.08333333333333333,
+    "pass": false,
+    "reasons": [
+      "seed-mean MSE 3292.80 >= current best 2594.21 (E0481)",
+      "3/3 seeds not below current best 2594.21",
+      "high cell low_low_high 5055.3 worse than current best 3772.8",
+      "high cell low_high_high 4562.1 worse than current best 4022.5",
+      "high cell high_low_high 3932.4 worse than current best 2969.7",
+      "high cell high_high_high 4157.7 worse than current best 3220.4"
+    ],
+    "rel_vs_best": 0.2692868731493896
+  },
+  "evaluation_timestamp": "2026-10-09T04:52:13+00:00"
+}

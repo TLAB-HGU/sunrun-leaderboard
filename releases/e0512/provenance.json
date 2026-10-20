@@ -1,0 +1,46 @@
+{
+  "id": "E0512",
+  "hypothesis": "E0472 audit, availability-lag sensitivity (reference E0472 3281.31, CPU): identical recipe (D148 lean+ENLIL s3_std: per-lead mixture + std_equal residual-analog + 5 DONKI WSA-Enlil features plus enlil_dt_target) with ONE change: every ENLIL run becomes available at modelCompletionTime + 12 h instead of modelCompletionTime, for training and official origins alike. DONKI posts a run some time after completion and one API snapshot cannot show that lag; the loss against E0472 measures how much the E0472 gain depends on prompt posting. Not a selection candidate; judged as a robustness bound. [axes: feat=enlil-lag]",
+  "command": "ENLIL_LAG_H=12 .venv-fusion/bin/python experiments/d151_e0472_audit/lean_enlil_lag.py",
+  "registered_code_sha256": {
+    "experiments/d147_e0421_lean/lean.py": "8f2ba0b9c9dba52879683ff770810e5272a216e9eba67422a08b6bf5f8c5972b",
+    "experiments/d148_enlil_live/lean_enlil.py": "20ad7d4ee78ae762b6781aea6fd8e88169c95fd67770a7680ccea49f72e5be96",
+    "experiments/d151_e0472_audit/lean_enlil_lag.py": "87f06b56a1c01007825c6127aaa5d582dd3cf0e5effe026f5c5a70000ffdf089"
+  },
+  "original_prediction_sha256": {
+    "predictions_official_s0.parquet": "160917d1f96563413a2970e5d8aeb96dfb70a22e072c8e6862210b921071776c",
+    "predictions_official_s1.parquet": "40a89ae43a77b788ff8060968030ee3c4bb9d620a8825037595f23c4dce0d0aa",
+    "predictions_official_s2.parquet": "32d9ad449837f81902639500d2f40c1b3a5503695565ac774e4ef4b240311e4d"
+  },
+  "audit": {
+    "contract": "Historical E0472 origin-hour ACE contract, not ACE+2; training cutoff May29. Robustness/sensitivity bound, not an adoption candidate: ENLIL completion+12h availability. Successful run2 and poison passes. Retrospective comparator.",
+    "provenance": "d151_e0472_audit/lean_enlil_lag.py; E0512 run2/poison; registered output hashes",
+    "blocker": null
+  },
+  "seed_mean_mse": 3287.058657080055,
+  "internal_gate": {
+    "best_before": {
+      "cells_seedmean": {
+        "high_high_high": 3220.428671465173,
+        "high_low_high": 2969.6880241203776,
+        "low_high_high": 4022.479909429623,
+        "low_low_high": 3772.796456601283
+      },
+      "id": "E0481",
+      "mse_seedmean": 2594.2096329585456,
+      "seq": 2501
+    },
+    "champion_f1": 0.08333333333333333,
+    "pass": false,
+    "reasons": [
+      "seed-mean MSE 3287.06 >= current best 2594.21 (E0481)",
+      "3/3 seeds not below current best 2594.21",
+      "high cell low_low_high 4862.2 worse than current best 3772.8",
+      "high cell low_high_high 4621.2 worse than current best 4022.5",
+      "high cell high_low_high 3914.9 worse than current best 2969.7",
+      "high cell high_high_high 4163.7 worse than current best 3220.4"
+    ],
+    "rel_vs_best": 0.2670751874941406
+  },
+  "evaluation_timestamp": "2026-10-09T08:36:19+00:00"
+}

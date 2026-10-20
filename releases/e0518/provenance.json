@@ -1,0 +1,46 @@
+{
+  "id": "E0518",
+  "hypothesis": "[axes: feat=enlil-ext] Arm A latest-run arrival on E0472: keep earliest in enlil_next_arr_h and add enlil_next_arr_latest_h plus enlil_n_runs plus enlil_revision_h (latest minus first) for the pending CME with vintage modelCompletionTime<=origin joined by CME key; new columns enlil_next_arr_latest_h enlil_n_runs enlil_revision_h; CPU base identical otherwise.",
+  "command": ".venv-fusion/bin/python experiments/d151_enlil_ext/run.py --arm A",
+  "registered_code_sha256": {
+    "experiments/d151_enlil_ext/ext_lib.py": "256b7c5667b360b0c58cfd1268213839f36722e783f9497232831ea838e43dec",
+    "experiments/d151_enlil_ext/run.py": "a75f36cf4cbb24d23a6035561900f84cf75b01d389d93e37e0acaab72646d786",
+    "experiments/d151_enlil_ext/spec.py": "713836f568574a4442cda2fe2002749bd8bfd3fdbef6c90dcd5e7aeb9a610470"
+  },
+  "original_prediction_sha256": {
+    "predictions_official_s0.parquet": "4562ea08d1180ff5c94f6e547bdd267254b156688540fce41acdb856aa01961c",
+    "predictions_official_s1.parquet": "829a39ebac474f87f45d69c3534b733c1de8a28b714ef296463aa8b1b3ad2ebf",
+    "predictions_official_s2.parquet": "eddb22208f1045015846bec5e8bd202e6abf7af6b99d19487edcd372b2815ce7"
+  },
+  "audit": {
+    "contract": "Historical E0472 origin-hour ACE contract, not ACE+2; training cutoff May29. Latest same-CME ENLIL arrival revision/run count; completion <= origin. Original poison passes. Retrospective comparator.",
+    "provenance": "d151_enlil_ext/ext_lib.py; E0518/poison.json; registered output hashes",
+    "blocker": null
+  },
+  "seed_mean_mse": 3285.035680689911,
+  "internal_gate": {
+    "best_before": {
+      "cells_seedmean": {
+        "high_high_high": 3220.428671465173,
+        "high_low_high": 2969.6880241203776,
+        "low_high_high": 4022.479909429623,
+        "low_low_high": 3772.796456601283
+      },
+      "id": "E0481",
+      "mse_seedmean": 2594.2096329585456,
+      "seq": 2501
+    },
+    "champion_f1": 0.08333333333333333,
+    "pass": false,
+    "reasons": [
+      "seed-mean MSE 3285.04 >= current best 2594.21 (E0481)",
+      "3/3 seeds not below current best 2594.21",
+      "high cell low_low_high 5041.1 worse than current best 3772.8",
+      "high cell low_high_high 4605.3 worse than current best 4022.5",
+      "high cell high_low_high 3968.9 worse than current best 2969.7",
+      "high cell high_high_high 4160.0 worse than current best 3220.4"
+    ],
+    "rel_vs_best": 0.26629538297701805
+  },
+  "evaluation_timestamp": "2026-10-09T03:19:13+00:00"
+}

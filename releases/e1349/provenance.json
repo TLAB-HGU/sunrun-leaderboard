@@ -1,0 +1,48 @@
+{
+  "id": "E1349",
+  "hypothesis": "GRIDFREE72 E1149 all native hourly origins; positive Gibbs weights with entropy temperature selected by chronological Ridge implicit-gradient validation, full72 varying state retained; XGB/analog/L72 graph unchanged; recovery E1348 [axes: data=native-hourly, loss=learned-origin-measure]",
+  "command": "taskset -c 21-23 .venv-fusion/bin/python -m experiments.solar_pivot_gridfree72_20261015.run",
+  "registered_code_sha256": {
+    "experiments/e0472_ablation_hpo/configs.py": "46fca7bb80fdbd87f4c6eca284c18ffc51aea84b6d1e3bf59beaed646120e02c",
+    "experiments/e0472_ablation_hpo/recipe.py": "8f9aa430352bf671b32afb9cbbec4a47ba174c956620d0635a30d0b711e0b67e",
+    "experiments/solar_pivot_gridfree72_20261015/preregistration.json": "1029efa5b56443a004973ac8bbd9878ad77ef1f792296c69c76a9403859395cd",
+    "experiments/solar_pivot_gridfree72_20261015/run.py": "02d1b1a68d5470865bd979d373e1d38ed7becdc718bfec40f2d04d2289bbcb07",
+    "experiments/solar_pivot_gridfree72_20261015/training.py": "5577042ba55d08d99405353271999f863b8e428b58c7c1d7815464be4ab0abfb"
+  },
+  "original_prediction_sha256": {
+    "predictions_official_s0.parquet": "5aa6503b9b4ecbcf47eea77c8f994a9a1df5bd4c187e8c51406ff2e013b1fb31",
+    "predictions_official_s1.parquet": "994f4dbe4963f2ea3532e6b1d17bc94285ed980ede9acbedc351b7fc710908b7",
+    "predictions_official_s2.parquet": "122055d8f254c5f9f34eed157ecf2b7ef747f7567c5edd3887e6d6ced934e006"
+  },
+  "audit": {
+    "contract": "Documented ACE+2, May29 cutoff and passed poison; train-only native-hourly entropy/Gibbs weights. E1367 repairs receipt schema, not a distinct scientific recipe. Extra normalized-weight poison future delta0 and positive>0, seed0 scope. Retrospective archive.",
+    "provenance": "solar_pivot_gridfree72_20261015/run.py; E1349/weight_audit/normalized_weight_poison.json; E1367 repair",
+    "blocker": null
+  },
+  "seed_mean_mse": 3373.3429664748587,
+  "internal_gate": {
+    "best_before": {
+      "cells_seedmean": {
+        "high_high_high": 4174.357209135357,
+        "high_low_high": 3862.6873942211623,
+        "low_high_high": 4598.209818477717,
+        "low_low_high": 5037.116902009131
+      },
+      "id": "E0472",
+      "mse_seedmean": 3281.30713749811,
+      "seq": 2416
+    },
+    "champion_f1": 0.08333333333333333,
+    "goal_target_mse": 2953.176423748299,
+    "pass": false,
+    "reasons": [
+      "seed-mean MSE 3373.34 >= current best 3281.31 (E0472)",
+      "3/3 seeds not below current best 3281.31",
+      "high cell low_high_high 4818.6 worse than current best 4598.2",
+      "high cell high_low_high 3965.5 worse than current best 3862.7",
+      "high cell high_high_high 4365.5 worse than current best 4174.4"
+    ],
+    "rel_vs_best": 0.02804852612697606
+  },
+  "evaluation_timestamp": "2026-10-14T22:11:39+00:00"
+}
