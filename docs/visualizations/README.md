@@ -1,5 +1,9 @@
 # 리더보드 예측 GIF
 
+## 2026-10-26 추가
+
+[E1813 Direct HUXt XGBoost의 라운드별 train·validation MSE](e1813_direct_huxt/)를 추가했습니다. 공식 MSE 시드별 3285.89 / 3239.88 / 3305.58(평균 3277.12)이며, 저장된 공식 학습 모델 9개(3시드 × short/mid/long)를 고정한 사후 재구성입니다. 마지막 라운드가 리더보드 시드별 MSE와 일치합니다. validation은 약 300 round 이후 평탄해지고 train만 감소하며, 남은 오차는 대부분 long head(h25–72)입니다.
+
 ## 2026-10-25 추가
 
 [E1466 TD-WSA HUXt72 GIF와 공식창 검증 오차 진단](e1466_td_wsa_huxt72/)을 추가했습니다. 공식 MSE **3246.254994**, 제출 당시 비앙상블 단일 모형 최고 기록입니다. XGBoost backbone은 고정 900 rounds로 train/validation loss history가 없고, field encoder의 `curves_s*.json`은 원 run 디렉터리 삭제로 남아 있지 않습니다. 등록 해시와 학습 시간은 [loss_history_audit.json](e1466_td_wsa_huxt72/loss_history_audit.json)에 보존했으며 곡선을 합성하지 않았습니다. 2026-10-26에는 생존 hourly snapshot으로 seed 0 6-fold 재현을 수행해 [epoch loss 곡선](e1466_td_wsa_huxt72/epoch_repro_seed0/)을 추가했습니다. 원본 9-fold 곡선은 아닙니다.

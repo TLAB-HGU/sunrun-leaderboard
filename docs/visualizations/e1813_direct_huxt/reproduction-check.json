@@ -1,0 +1,15 @@
+{
+ "s0_max_abs_diff_vs_saved_kms": 0.00031704473718718873,
+ "s0_validation_mse_final_round": 3285.893382078011,
+ "s1_max_abs_diff_vs_saved_kms": 0.00028821205216900125,
+ "s1_validation_mse_final_round": 3239.8816778409405,
+ "s2_max_abs_diff_vs_saved_kms": 0.0003075724696373072,
+ "s2_validation_mse_final_round": 3305.5762899431606,
+ "seedmean_validation_mse_final_round": 3271.0864446454843,
+ "lbeval_reference": {
+  "seedmean": 3277.1166,
+  "s0": 3285.89,
+  "s1": 3239.88,
+  "s2": 3305.58
+ }
+}
