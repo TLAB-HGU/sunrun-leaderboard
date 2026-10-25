@@ -2,6 +2,8 @@
 
 ## 2026-10-25 추가
 
+[Exa 기반 실험의 실제 train·validation 곡선](exa_earlystop_20261025/)을 추가했습니다. E1901의 9개 실제 학습 이력, 272회 선택 과정과 E1900/E1904 외부 비교를 포함합니다. 내부 검증 개선은 외부 MSE 개선으로 이어지지 않아 후보는 미채택입니다.
+
 [Train·validation 두 곡선](e1789_core5_prediction_mean/component_losses/paired_train_validation/)을 추가했습니다. E1789 계보의 E1725·E1711 저장 모델을 고정한 과거 fold 3의 단계별 재평가 결과입니다.
 
 [E1789 구성 모델별 loss 기록](e1789_core5_prediction_mean/component_losses/)과 [E1769 하위 E1725의 실제 3시드 학습 곡선](e1789_core5_prediction_mean/component_losses/upstream_E1725/)도 추가했습니다. 각 자료에서 학습 objective, OOF 검증 MSE, 공식/test MSE를 구분했습니다.
