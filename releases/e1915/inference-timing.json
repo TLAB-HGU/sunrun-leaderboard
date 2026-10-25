@@ -1,0 +1,141 @@
+{
+  "candidate": "E1915",
+  "publication_execution": "E1940",
+  "n_origins": 2833,
+  "n_rows": 203976,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "batch_seconds": [
+    2.2796074250072706,
+    2.2892033370007994,
+    2.4065581250033574
+  ],
+  "inference_seconds_per_fold": 0.0008207281900237001,
+  "scope": "Actual predictions of nine loaded CPU stable-UWR ensembles and the equal mean of three seeds",
+  "excluded": [
+    "data loading",
+    "training",
+    "model initialization/loading",
+    "feature preparation",
+    "output writing"
+  ],
+  "n_jobs_per_model": 2,
+  "checkpoints": [
+    {
+      "seed": 0,
+      "band": [
+        1,
+        6
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/6783f08015f0c5d8ef4acad83bdba0b6c08e4ef5bbec7701cc1416d9a67310d3.model",
+      "sha256": "9a28796ff8634b81738fad7ba5799512bc242e5f8429148b239e69da5791e841",
+      "identity": "6783f08015f0c5d8ef4acad83bdba0b6c08e4ef5bbec7701cc1416d9a67310d3",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 0,
+      "band": [
+        7,
+        24
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/e27c513587ed23c1f48d7d218cf6c814848aeda39b9f7f46f41c489b33fb4f46.model",
+      "sha256": "c14a8af13d3859697e4beb7f0bc419d673644bd4f0e50cc22a77ca3cbffec40d",
+      "identity": "e27c513587ed23c1f48d7d218cf6c814848aeda39b9f7f46f41c489b33fb4f46",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 0,
+      "band": [
+        25,
+        72
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/d2e2a10b42b158c5740caa78bdf82eea4d394972a55dea284a4feaa99d9c2345.model",
+      "sha256": "0c20a77e76f95dc3a7b7bb88198dc5151535e0f9d73ab06a2155ca05b46fa179",
+      "identity": "d2e2a10b42b158c5740caa78bdf82eea4d394972a55dea284a4feaa99d9c2345",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 1,
+      "band": [
+        1,
+        6
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/7893dbb2c84c191ca86c3a60ae2d78a9cde3c3721c211c1be93be3e326c6258f.model",
+      "sha256": "f0c72ddac0a94e7c0c4f13dad9fb0699bff60658c6eac499c358ef40a5dc5b9d",
+      "identity": "7893dbb2c84c191ca86c3a60ae2d78a9cde3c3721c211c1be93be3e326c6258f",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 1,
+      "band": [
+        7,
+        24
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/474ed71f41ad0a3ee113fbd604d0c134ce411a4f2b23b289b0efda7baba0a820.model",
+      "sha256": "e5418eeba2de9df09901c20f8e0ba89bce4513f8db3ebab89853957c79c37ea8",
+      "identity": "474ed71f41ad0a3ee113fbd604d0c134ce411a4f2b23b289b0efda7baba0a820",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 1,
+      "band": [
+        25,
+        72
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/a37f11b816090965647082c754d0397a44e490bb2627c5cf52b859e423bea239.model",
+      "sha256": "734ee1924a28948754dfcb6a4105ca5559ed7bb3297ce44162441966dd05b577",
+      "identity": "a37f11b816090965647082c754d0397a44e490bb2627c5cf52b859e423bea239",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 2,
+      "band": [
+        1,
+        6
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/d7c0d81b7309618b47122e534519ba6d380c8337f8609e7dafecfe0355f7ab73.model",
+      "sha256": "1b850da6848d17ff799b82ab90bbbfa16875b70607b2127b61387df6c38475b4",
+      "identity": "d7c0d81b7309618b47122e534519ba6d380c8337f8609e7dafecfe0355f7ab73",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 2,
+      "band": [
+        7,
+        24
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/cd08b8a0ab6da18e527a16a17e7bc39dfd3b4aa40b2c6a356feed0469445386f.model",
+      "sha256": "275649925c4eb5bda7b63659898ac3dea494abeab9223db1976e8fc692f51cda",
+      "identity": "cd08b8a0ab6da18e527a16a17e7bc39dfd3b4aa40b2c6a356feed0469445386f",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    },
+    {
+      "seed": 2,
+      "band": [
+        25,
+        72
+      ],
+      "path": "/home/t-lab01/sunrun/research/expos/runs/E1915/checkpoints/ff441db09610f219707d026d8ff64037f7acee76b7d4f0c482e6fa0e8099b17c.model",
+      "sha256": "b884e94b798f4882043249cee26be82aa61578ac0506621f8f2dce37417ee8a0",
+      "identity": "ff441db09610f219707d026d8ff64037f7acee76b7d4f0c482e6fa0e8099b17c",
+      "actual_rounds": 900,
+      "prior_rounds": 900
+    }
+  ],
+  "prediction_reproduction_max_abs_diff": 0.0,
+  "per_stage_rounds": {
+    "earlier_snapshot": 900,
+    "final_single_learner": 900
+  }
+}

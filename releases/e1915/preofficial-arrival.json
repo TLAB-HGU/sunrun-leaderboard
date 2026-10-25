@@ -1,0 +1,116 @@
+{
+  "baseline": false,
+  "candidate": {
+    "by_kind": {
+      "CME-shock": {
+        "capped_mae": 18.439655172413794,
+        "events": 29,
+        "hit_rate": 0.26149425287356326
+      },
+      "HSS/SIR": {
+        "capped_mae": 19.836666666666666,
+        "events": 25,
+        "hit_rate": 0.19
+      },
+      "IPS-other": {
+        "capped_mae": 16.181372549019606,
+        "events": 17,
+        "hit_rate": 0.357843137254902
+      }
+    },
+    "by_lead": {
+      "12": {
+        "capped_mae": 13.004761904761905,
+        "hit_rate": 0.5285714285714286
+      },
+      "24": {
+        "capped_mae": 16.176190476190477,
+        "hit_rate": 0.3
+      },
+      "36": {
+        "capped_mae": 20.738095238095237,
+        "hit_rate": 0.19047619047619047
+      },
+      "48": {
+        "capped_mae": 23.323809523809523,
+        "hit_rate": 0.03333333333333333
+      }
+    },
+    "capped_mae": 18.390845070422536,
+    "events": 71,
+    "hit_rate": 0.25938967136150237,
+    "mae_hits": 5.366515837104072,
+    "miss_rate": 0.49047619047619045
+  },
+  "control": "E1914",
+  "control_summary": {
+    "by_kind": {
+      "CME-shock": {
+        "capped_mae": 18.61494252873563,
+        "events": 29,
+        "hit_rate": 0.2413793103448276
+      },
+      "HSS/SIR": {
+        "capped_mae": 20.006666666666664,
+        "events": 25,
+        "hit_rate": 0.17666666666666664
+      },
+      "IPS-other": {
+        "capped_mae": 15.705882352941176,
+        "events": 17,
+        "hit_rate": 0.36764705882352944
+      }
+    },
+    "by_lead": {
+      "12": {
+        "capped_mae": 13.780952380952382,
+        "hit_rate": 0.45714285714285713
+      },
+      "24": {
+        "capped_mae": 16.419047619047618,
+        "hit_rate": 0.2904761904761905
+      },
+      "36": {
+        "capped_mae": 20.057142857142857,
+        "hit_rate": 0.22380952380952382
+      },
+      "48": {
+        "capped_mae": 23.057142857142857,
+        "hit_rate": 0.0380952380952381
+      }
+    },
+    "capped_mae": 18.408450704225352,
+    "events": 71,
+    "hit_rate": 0.24882629107981222,
+    "mae_hits": 5.372641509433962,
+    "miss_rate": 0.4773809523809524
+  },
+  "event": "arrival",
+  "gate": {
+    "capped_ci95": [
+      -0.48477112676056344,
+      0.424911971830986
+    ],
+    "d_capped_mae": -0.017605633802816913,
+    "d_hit_rate": 0.01056338028169014,
+    "events": 71,
+    "hit_ci95": [
+      -0.018779342723004692,
+      0.04225352112676056
+    ],
+    "pass": false,
+    "reasons": [
+      "no timing gain: capped-MAE diff CI -0.48..+0.42h, hit-rate diff CI -0.019..+0.042"
+    ]
+  },
+  "hash": "cd110882ddd2aeb634c21a7f04ae9d3fe9d40dadc9e742c55f87f35843fcc5c3",
+  "id": "E1915",
+  "labels": {
+    "sha256": "928231f18b8752713c5bc620fcd261240698fcfadd30b5f79aa487758bd2d14d",
+    "status": "draft",
+    "version": 1
+  },
+  "prev": "68fa9aac7301f146a9fd3c21bcaeeb2db1c75a543bab9166751bb3758e298d79",
+  "seq": 7507,
+  "ts": "2026-10-25T11:44:29+00:00"
+}

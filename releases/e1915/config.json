@@ -1,0 +1,98 @@
+{
+  "data": {
+    "candidate": "E1915",
+    "publication_execution": "E1940",
+    "assets": [
+      {
+        "seed": 0,
+        "filename": "forecast_s0.npz",
+        "sha256": "83810b4d6a094e84b1856ae2a44d8c940ebff6bac8750092b2023437328bd1d7"
+      },
+      {
+        "seed": 1,
+        "filename": "forecast_s1.npz",
+        "sha256": "477ecf7dd15c9873fdf912d9e14ea165787ce0989728516bd24143df3b2ec308"
+      },
+      {
+        "seed": 2,
+        "filename": "forecast_s2.npz",
+        "sha256": "96b0f7bbcb0c02cc76d6caf84afc594b8f40a58cb78a1780f89a0923b62b31e2"
+      }
+    ],
+    "original_predictions": [
+      {
+        "seed": 0,
+        "filename": "predictions_official_s0.parquet",
+        "sha256": "5f9acb55545ff269fde420512bd52c7399d0686afa6f1efccf690f527ea035f6"
+      },
+      {
+        "seed": 1,
+        "filename": "predictions_official_s1.parquet",
+        "sha256": "6914a54f58016ace5e44e6cd24a02f445590f02581436af381858745939e5b6b"
+      },
+      {
+        "seed": 2,
+        "filename": "predictions_official_s2.parquet",
+        "sha256": "698e6317ec2a00d9c5cac7d281eee7ce1c31fc5328016136890d9a91b953e733"
+      }
+    ],
+    "original_registration_hash": "6fcf5eca40299e5429564f631e687ea0701839f884dad1c5306bcc9803f81549",
+    "manifest_sha256": "374146c5abc012d2a4e2e7a69ba40db910cc0a97eefd04738060a3054abf2366",
+    "inputs_sha256": "2b88611af564fed1401aad1f79fdc5d725f59b0786aae5bdf9d9fd8ea2569bcf",
+    "feature_block": "base111",
+    "feature_count": 111,
+    "training_target_cutoff_utc": "2026-05-29T00:00:00Z",
+    "availability": "Inherited admitted base111 source availability receipts (SW-004, SW-003, SW-005, SW-006, SW-007, SW-010) with the ACE observation+2h contract; publication does not independently re-audit historical issue times",
+    "preofficial_selection_gate_pass": false,
+    "preofficial_arrival_gate_pass": false,
+    "publication": "Explicit user-requested one-time submission; administrative execution E1940; no accepted-parent promotion and no passing-gate claim",
+    "artifact_scope": "Archived seed forecasts only; no labels, truth or raw observations published",
+    "origins_start_utc": "2026-05-31 23:00:00+00:00",
+    "origins_end_utc": "2026-09-26 23:00:00+00:00",
+    "origin_count": 2833,
+    "horizons": 72
+  },
+  "hyperparameters": {
+    "recipe": {
+      "colsample_bytree": 0.9,
+      "feature_block": "base111",
+      "head_count": 3,
+      "learning_rate": 0.03,
+      "long_head_training_scope": "all",
+      "max_depth": 3,
+      "min_child_weight": 20,
+      "model": "stable_uwr",
+      "n_estimators": 900,
+      "reg_lambda": 5,
+      "stable_alpha": 0.0,
+      "stable_beta": 0.6,
+      "stable_blocks": 2,
+      "stable_eps_rel": 0.01,
+      "stable_gamma_cap": 10.0,
+      "stable_update": "uwr",
+      "stable_var_depth": 6,
+      "stable_var_min_leaf": 300,
+      "subsample": 0.8,
+      "tail_hours": 0,
+      "target": "absolute"
+    },
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "seed_aggregation": "equal_prediction_mean",
+    "actual_fit_rounds_per_head": 900,
+    "rounds_per_stage": {
+      "earlier_snapshot": 900,
+      "final_single_learner": 900
+    },
+    "stable_update": "uwr",
+    "stable_beta": 0.6,
+    "stable_alpha": 0.0,
+    "update_schedule": "two chronological blocks",
+    "output_correction": "none; the final ensemble is the direct forecast",
+    "n_jobs_per_model": 2,
+    "timing_scope": "Actual prediction from nine loaded CPU stable-UWR ensembles plus the equal mean of three seeds; excludes loading, training, feature preparation and output writing"
+  }
+}

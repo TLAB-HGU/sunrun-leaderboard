@@ -1,0 +1,33 @@
+{
+  "cmd": "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python /home/t-lab01/sunrun/research/e1915-user-publication-20261025/official_publication.py --n-jobs 2",
+  "code": {
+    "/home/t-lab01/sunrun/leaderboard/experiments/cumulative_lane12_20261024/prepare_base111_v3.py": "ec96ab1e24715015125d37276ac4268f195bf031c1dc56ef470c498320510bee",
+    "/home/t-lab01/sunrun/leaderboard/experiments/headroom_audit/headroom.py": "2a553f6dc02dc80a79c8ae9c67632b3a4f588f7385e19ec1b7392a283abbd19f",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/build_inputs.py": "a51fe9a23b137b756a13d975a57dfa74d8f0f0e38918a21f6ffb04fa3fb74dfd",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/contracts.py": "425ba44af63a7aa63f072d623dc96e3d5da235e9d0624d1930fbd403cefa41f2",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/evidence.py": "625dd69bd097ef0dca030f17d335cd1bbf6f0594735f194e35c313eafe77cb73",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/gate.py": "2ccfd4c58d1608173b737f96e721f1d6c6c6bae67a2d94dc4978c63859c3e916",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/launch.py": "3b2e885e9ad93baf54df8015417fa1c8ed3ae71479d7d027a19962a6f0c7433e",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/poison.py": "a4def07e0288b81f7613a4b1ef9ee1952ce19b71a2c886fe0e4d7174fb21bf51",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/runner.py": "1caa9d519d322d945cf4b19dc1ce113a770864b0e829f65d4676dfe3b86c6083",
+    "/home/t-lab01/sunrun/research/e1915-user-publication-20261025/USER-REQUEST.md": "141bd6e543a01a19224d893e650a560751421f87b202b901d18015728134c7fe",
+    "/home/t-lab01/sunrun/research/e1915-user-publication-20261025/official_publication.py": "10f95ea7af5e6b988147a4f0b4eb648621c0366ba29561837170aea21e40a00e",
+    "/home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/inputs.json": "f801eae7606a8a10f5002c4f20f698343b170039297c6419edf4ca9006105f68",
+    "/home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/intent.json": "fceccf5aa9a38ba22927b1f47e16181f875b78203b255838a8855963d0228b16",
+    "/home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/parent.json": "bd471683f64cbb5eead03c0c8db24a9e3b6237b0edb67ad176ae821ca949df74",
+    "/home/t-lab01/sunrun/research/sun-gjc-restart-20261024T145738Z/shared/receipts/poison-receipt-v1.json": "f2207285231f55519455c36978dd77a684ef8f801821b8457b45f6446b104ed4"
+  },
+  "direction": "D_CUMULATIVE_20261024",
+  "event": "register",
+  "experience": [],
+  "flags": [],
+  "hash": "14bc10f745b8acfaf9ab7db32a5d965c124817a6f6c37f6b15052c607a781fdf",
+  "hypothesis": "Administrative one-time official-window execution of unchanged frozen E1915 (stable UWR regression-tree update, arXiv:2402.13655 CPU adaptation) after the user explicitly requested leaderboard publication with the recorded ROLL3 (pooled -1.21%, CI [-3.85%,+1.39%]) and arrival gate failures disclosed. No scientific adoption, promotion or retuning; original E1915 code/data/features/source receipts/target codec/seeds 0/1/2/official grid/900-round budgets and the single final direct learner are fixed.",
+  "id": "E1940",
+  "kind": "reference",
+  "owner": "gjc-publication",
+  "prev": "cf1034ced9cf0a1e092618eead148dc17c4f4d71e3a53625b7f3f80557d2fbf3",
+  "reference": "E1915",
+  "seq": 7558,
+  "ts": "2026-10-25T13:53:25+00:00"
+}

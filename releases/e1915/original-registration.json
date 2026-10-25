@@ -1,0 +1,31 @@
+{
+  "cmd": "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python /home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/launch.py execute --intent /home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/intent.json --inputs /home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/inputs.json --state /home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/state.json --parent /home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/parent.json",
+  "code": {
+    "/home/t-lab01/sunrun/leaderboard/experiments/cumulative_lane12_20261024/prepare_base111_v3.py": "ec96ab1e24715015125d37276ac4268f195bf031c1dc56ef470c498320510bee",
+    "/home/t-lab01/sunrun/leaderboard/experiments/headroom_audit/headroom.py": "2a553f6dc02dc80a79c8ae9c67632b3a4f588f7385e19ec1b7392a283abbd19f",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/build_inputs.py": "a51fe9a23b137b756a13d975a57dfa74d8f0f0e38918a21f6ffb04fa3fb74dfd",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/contracts.py": "425ba44af63a7aa63f072d623dc96e3d5da235e9d0624d1930fbd403cefa41f2",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/evidence.py": "625dd69bd097ef0dca030f17d335cd1bbf6f0594735f194e35c313eafe77cb73",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/gate.py": "2ccfd4c58d1608173b737f96e721f1d6c6c6bae67a2d94dc4978c63859c3e916",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/launch.py": "3b2e885e9ad93baf54df8015417fa1c8ed3ae71479d7d027a19962a6f0c7433e",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/poison.py": "a4def07e0288b81f7613a4b1ef9ee1952ce19b71a2c886fe0e4d7174fb21bf51",
+    "/home/t-lab01/sunrun/leaderboard/experiments/stable_uwr_worker4_20261025/runner.py": "1caa9d519d322d945cf4b19dc1ce113a770864b0e829f65d4676dfe3b86c6083",
+    "/home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/inputs.json": "f801eae7606a8a10f5002c4f20f698343b170039297c6419edf4ca9006105f68",
+    "/home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/intent.json": "fceccf5aa9a38ba22927b1f47e16181f875b78203b255838a8855963d0228b16",
+    "/home/t-lab01/sunrun/research/literature-transfer-r4-20261025T102156Z/worker-4/campaign/bundle-uwr/parent.json": "bd471683f64cbb5eead03c0c8db24a9e3b6237b0edb67ad176ae821ca949df74",
+    "/home/t-lab01/sunrun/research/sun-gjc-restart-20261024T145738Z/shared/receipts/poison-receipt-v1.json": "f2207285231f55519455c36978dd77a684ef8f801821b8457b45f6446b104ed4"
+  },
+  "direction": "D_CUMULATIVE_20261024",
+  "event": "register",
+  "experience": [],
+  "flags": [],
+  "hash": "6fcf5eca40299e5429564f631e687ea0701839f884dad1c5306bcc9803f81549",
+  "hypothesis": "Ablation of the control on exactly one axis (stable_update: off -> uwr): boosted regression trees trained with the stable loss of arXiv:2402.13655, i.e. per-row penalty gamma_i = beta * phi(x_i) with phi from the inverse local residual variance of the earlier snapshot f0 on the older half of the same chronological prefix. f0 only shapes the training objective; the reported model is the single new ensemble.",
+  "id": "E1915",
+  "kind": "full",
+  "owner": "gjc-cumulative",
+  "prev": "7d6f427bff38510dac8034c51812d34cf726e06ad05fd13851c98b4cdc5c5fcb",
+  "reference": "E1914",
+  "seq": 7459,
+  "ts": "2026-10-25T10:42:09+00:00"
+}
