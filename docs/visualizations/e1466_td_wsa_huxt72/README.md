@@ -5,7 +5,7 @@ E1466 `e1466_td_wsa_huxt72`의 공식 리더보드 제출 예측(3-seed equal me
 ## 기록
 
 - 공식 점수: **MSE 3,246.255** (2833 origins × 72 h, 203,976 rows, seed-averaged prediction).
-- 제출 당시 전체 **rank 3**, 비앙상블 단일 모형 중 최고 기록.
+- 제출 당시 전체 **rank 3**, 예측 블렌드·후처리 변환을 제외한 단일 학습 모형 중 최고 기록.
 - 내부 lbeval은 seed-mean MSE **3,356.99**로 E0472의 3,281.31을 넘지 못했습니다. `high_high_high` 셀도 4,569.3으로 4,174.4보다 나빴습니다. 이 GIF는 그 판정을 바꾸지 않습니다.
 - lead band 변화: 25–48 h **−2.30%**, 49–72 h **−0.59%**, 1–6 h **+2.62%**, 7–24 h **+0.73%**.
 - 2026-10-20 제출된 historical official-exposed record입니다. 새 holdout이나 현재 계약의 비교 챔피언(E1813)이 아닙니다.
