@@ -1,0 +1,81 @@
+{
+  "data": {
+    "candidate": "E1908",
+    "publication_execution": "E1910",
+    "assets": [
+      {
+        "seed": 0,
+        "filename": "forecast_s0.npz",
+        "sha256": "829298d536746e5ea281f7e021cdf0209d2352963d138d9dc70b8b4377b9f227"
+      },
+      {
+        "seed": 1,
+        "filename": "forecast_s1.npz",
+        "sha256": "c2c2cfbac429ded2484e5ac43771d47a17e68d694b26344fe73a8b6092b97ab2"
+      },
+      {
+        "seed": 2,
+        "filename": "forecast_s2.npz",
+        "sha256": "affd24165c59cce236cb34ee7378fdb35ecdb0ea7893617b052a5fd96869badd"
+      }
+    ],
+    "original_predictions": [
+      {
+        "seed": 0,
+        "filename": "predictions_official_s0.parquet",
+        "sha256": "28a082da50716f30d3ea1d3f83b3415e33739e62f18d3545036f76ff7879bf57"
+      },
+      {
+        "seed": 1,
+        "filename": "predictions_official_s1.parquet",
+        "sha256": "b860bdeb74ee62cb1b07f1bcbc5c8448be9de5481114f9695028841a32bdaf99"
+      },
+      {
+        "seed": 2,
+        "filename": "predictions_official_s2.parquet",
+        "sha256": "26a417b3574d5c206fc7090ab019919dd65b7f86eb13cb9bc747559dc967bf2e"
+      }
+    ],
+    "original_registration_hash": "21d0ba245b6319356dbfe7da45f51f6e6517fd0f19e23d3a2e44870196f9f89d",
+    "manifest_sha256": "d5b0746b6876e4cd4ea5e753c3c7dfef079bd8413f3e67f494e98078bcc8373c",
+    "inputs_sha256": "2b88611af564fed1401aad1f79fdc5d725f59b0786aae5bdf9d9fd8ea2569bcf",
+    "feature_block": "base111",
+    "feature_count": 111,
+    "training_target_cutoff_utc": "2026-05-29T00:00:00Z",
+    "availability": "Existing admitted base111 source receipts and ACE observation+2h contract; historical source-byte availability not independently re-audited for publication",
+    "preofficial_selection_gate_pass": false,
+    "publication": "Explicit user-requested one-time submission; no accepted-parent promotion",
+    "artifact_scope": "Archived seed forecasts only; no truth or raw observations published",
+    "origins_start_utc": "2026-05-31 23:00:00+00:00",
+    "origins_end_utc": "2026-09-26 23:00:00+00:00",
+    "origin_count": 2833,
+    "horizons": 72
+  },
+  "hyperparameters": {
+    "recipe": {
+      "aug_policy": "{\"k\":3,\"magnitude\":0.3767618851048803,\"n\":2,\"subpolicy_seed\":20261631,\"version\":1,\"weights\":{\"identity\":0.23860648615723185,\"jitter\":0.6801483321957893,\"mixup\":0.8569118246711263,\"scale\":0.018297660255115818,\"seasonality\":0.029459737430008553,\"trend\":0.03610935780022182}}",
+      "colsample_bytree": 0.9,
+      "feature_block": "base111",
+      "head_count": 3,
+      "learning_rate": 0.03,
+      "long_head_training_scope": "all",
+      "max_depth": 3,
+      "min_child_weight": 20,
+      "model": "xgboost",
+      "n_estimators": 900,
+      "reg_lambda": 5,
+      "subsample": 0.8,
+      "tail_hours": 0,
+      "target": "absolute"
+    },
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "seed_aggregation": "equal_prediction_mean",
+    "actual_fit_rounds_per_head": 900,
+    "n_jobs_per_model": 2,
+    "timing_scope": "Actual prediction from nine loaded CPU heads plus equal mean of three seeds; excludes loading/training/feature preparation/output writing"
+  }
+}

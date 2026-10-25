@@ -1,0 +1,32 @@
+{
+  "cmd": "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python /home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/launch.py execute --intent /home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/candidate/intent.json --inputs /home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/candidate/inputs.json --state /home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/state.json --parent /home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/candidate/parent.json",
+  "code": {
+    "/home/t-lab01/sunrun/leaderboard/experiments/cumulative_lane12_20261024/prepare_base111_v3.py": "ec96ab1e24715015125d37276ac4268f195bf031c1dc56ef470c498320510bee",
+    "/home/t-lab01/sunrun/leaderboard/experiments/headroom_audit/headroom.py": "2a553f6dc02dc80a79c8ae9c67632b3a4f588f7385e19ec1b7392a283abbd19f",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/candidate/inputs.json": "f801eae7606a8a10f5002c4f20f698343b170039297c6419edf4ca9006105f68",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/candidate/intent.json": "27f5874ae3877dcd0139c1fa2b4f40f6489a3885297b7edf777db20bc19f3977",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/campaign/candidate/parent.json": "48c4589750ae53a36f1e1ddeac84323e034226e365e904514732c325c764db83",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/augment.py": "2089a8a095b767d3cb3280ce1235d1a7d7230e67353a0eafc57d6eb35fef73a9",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/build_inputs.py": "499d143db15d597574a1dca866507f717889ca582a23698d632829ba8897f804",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/contracts.py": "de3c8dbb1b36852f6bc7c45a19de6946e89fc680d1c0fd2667d6d6c2c3960407",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/evidence.py": "488fdac9d1b9307c93e5b820bf5743c158e018fadb791701e7a153f3d6ec4d1c",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/gate.py": "2ccfd4c58d1608173b737f96e721f1d6c6c6bae67a2d94dc4978c63859c3e916",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/launch.py": "bde2ed5f172e2dd88b41cf3bf202a66279a877369f2233309c481724f0b12c49",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/poison.py": "a4def07e0288b81f7613a4b1ef9ee1952ce19b71a2c886fe0e4d7174fb21bf51",
+    "/home/t-lab01/sunrun/research/literature-transfer-r3-20261025T082601Z/worker-3/tsaa/code/runner.py": "6b1546a867c1ca05094bc5af21615c76e523673668796b101331f170116fba55",
+    "/home/t-lab01/sunrun/research/sun-gjc-restart-20261024T145738Z/shared/receipts/poison-receipt-v1.json": "f2207285231f55519455c36978dd77a684ef8f801821b8457b45f6446b104ed4"
+  },
+  "direction": "D_CUMULATIVE_20261024",
+  "event": "register",
+  "experience": [],
+  "flags": [],
+  "hash": "21d0ba245b6319356dbfe7da45f51f6e6517fd0f19e23d3a2e44870196f9f89d",
+  "hypothesis": "TSAA augmentation-policy arm (arXiv:2405.00319): a TPE/EI outer search selected a k=3,n=2 sub-policy distribution by the same 3-head XGBoost direct forecaster on a chronological internal validation (2024-09-01..2025-02-28, raw-unit seed-mean MSE). Selected policy is mixup+jitter dominated (inner -2.68% vs no augmentation); the internal 72h-block CI included zero, so ROLL3 is the transfer test. Single axis: aug_policy none -> frozen JSON policy. Frozen base111 v3 envelope; no new sources, official scoring, upload or promotion.",
+  "id": "E1908",
+  "kind": "full",
+  "owner": "gjc-cumulative",
+  "prev": "cc9388b48bb81831cee9242e0917cac6289f44d100501dcba0a47850ac54d88a",
+  "reference": "E1897",
+  "seq": 7417,
+  "ts": "2026-10-25T09:27:56+00:00"
+}

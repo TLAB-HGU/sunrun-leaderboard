@@ -1,0 +1,88 @@
+{
+  "campaign_id": "tsaa_policy_v1_20261025",
+  "champion": {
+    "aggregation": "mean_seed_mse",
+    "contract_sha256": "8b8cef63ba5fb4f3fde0a37c8065a8256f01193735bcf7f4c2b4d571b9ad6c36",
+    "experiment_id": "E1813",
+    "mse": 3277.116626610928,
+    "source_sha256": "f153bed6c7e5e2ca448ec00de3c7e6a28ac11d5c469507f9350a7c18f6c28a1d"
+  },
+  "change_kind": "ablation",
+  "code_sha256": "570a3a5754a646178c862b058edb843e73dbe6f2b555dd52adabfb2615450cd1",
+  "contract": {
+    "aggregation": "mean_seed_mse",
+    "cutoff": "2026-05-29T00:00:00+00:00",
+    "evaluation_sha256": "67e3450d20b1b0b010b4f2450664bcc6b1784a33edb0d19b120d44c986018ef0",
+    "folds": [
+      "1",
+      "2",
+      "3"
+    ],
+    "grid_sha256": "643a413e920bd32d5a9b82c05ce84614654a5491537ed52a9858c460bce52ac7",
+    "inputs_sha256": "2b88611af564fed1401aad1f79fdc5d725f59b0786aae5bdf9d9fd8ea2569bcf",
+    "mask_sha256": "d164af9272964e635e07554d2e92e6045503cbf4dd6bca95a354db4e7a23fac0",
+    "requires_arrival": true,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "selection_aggregation": "seed_mean_prediction_mse",
+    "sources": [
+      {
+        "availability_sha256": "c772aa2cc08b9f31c8914d21098ac6192a054fd6a6544ae5f76c73294e1f48e3",
+        "id": "SW-004",
+        "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      },
+      {
+        "availability_sha256": "0212c1f71c2e343eddec83679222136850304a4a3214940f1c09a1863d9f934b",
+        "id": "SW-003",
+        "sha256": "bc08a2499e121e7b2d15a8950579839ead81881f0b9e0552bc58896f69e0ee23"
+      },
+      {
+        "availability_sha256": "783c7b689b2d69907249391aa4aac66419e8814ccb4ea250fa3d2d5693266085",
+        "id": "SW-005",
+        "sha256": "96f38e2728211345fcbbd2bb119e526cb429b74cae5370a5b41b864599a0870a"
+      },
+      {
+        "availability_sha256": "bbbce6355b74f526c068891aba2cb468d4f5cd85720043229a54f1b26853db6b",
+        "id": "SW-006",
+        "sha256": "33cbe243e552ab794ea9eaad7d858b7c1908942765ce55f0160baf6df764f746"
+      },
+      {
+        "availability_sha256": "5e252a63fd5503da5d8b53cc28aa834d029568ec16f5cfef555e8ab2aa915f2a",
+        "id": "SW-007",
+        "sha256": "b13a1777312ff1b0208d2b0199e0841d229cb28f6e403bfe77cc5c628c7c9950"
+      },
+      {
+        "availability_sha256": "5fc0bffa753082cf53eb6976f27b27334e8939ff0ad481e963e75b3402372f20",
+        "id": "SW-010",
+        "sha256": "c4e9f65f2d8179ae6d577997558cb5716722873c2bc0665b71cbc436852cc5ce"
+      }
+    ]
+  },
+  "declared_changes": [
+    "aug_policy"
+  ],
+  "experiment_id": "E1908",
+  "method_class": "direct",
+  "parent_sha256": "2abe16011c156f75103d28917588127b7afa61d2a1ce18e2d6233eb2b1426fb1",
+  "rationale": "TSAA augmentation-policy arm (arXiv:2405.00319): a TPE/EI outer search selected a k=3,n=2 sub-policy distribution by the same 3-head XGBoost direct forecaster on a chronological internal validation (2024-09-01..2025-02-28, raw-unit seed-mean MSE). Selected policy is mixup+jitter dominated (inner -2.68% vs no augmentation); the internal 72h-block CI included zero, so ROLL3 is the transfer test. Single axis: aug_policy none -> frozen JSON policy. Frozen base111 v3 envelope; no new sources, official scoring, upload or promotion.",
+  "recipe": {
+    "aug_policy": "{\"k\":3,\"magnitude\":0.3767618851048803,\"n\":2,\"subpolicy_seed\":20261631,\"version\":1,\"weights\":{\"identity\":0.23860648615723185,\"jitter\":0.6801483321957893,\"mixup\":0.8569118246711263,\"scale\":0.018297660255115818,\"seasonality\":0.029459737430008553,\"trend\":0.03610935780022182}}",
+    "colsample_bytree": 0.9,
+    "feature_block": "base111",
+    "head_count": 3,
+    "learning_rate": 0.03,
+    "long_head_training_scope": "all",
+    "max_depth": 3,
+    "min_child_weight": 20,
+    "model": "xgboost",
+    "n_estimators": 900,
+    "reg_lambda": 5,
+    "subsample": 0.8,
+    "tail_hours": 0,
+    "target": "absolute"
+  },
+  "schema_version": 1
+}
