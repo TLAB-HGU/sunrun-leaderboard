@@ -1,0 +1,19 @@
+{
+  "cmd": ".venv-fusion/bin/python experiments/solar_topblend_20261024/run.py --arm core5",
+  "code": {
+    "experiments/solar_topblend_20261024/run.py": "169f1e3cd70d271336e8238c925caa4772e575870b95f7f27d65fc3f6f89be5a"
+  },
+  "direction": "D_TOPMIX_20261024",
+  "event": "register",
+  "experience": [],
+  "flags": [],
+  "hash": "b19fd1bdb97f531efef02c1ae8b4440f2323423f9b6c8a507c5ac9619d0e41c2",
+  "hypothesis": "Core5 blend: E1604 public 2 + E1593 1 + E1595 2 + E0472 1 + E1769 1. Drops only E1609; tests whether the E1733 anchor helps while E1608 dilutes. Weights fixed before the run; no truth read.",
+  "id": "E1789",
+  "kind": "full",
+  "owner": "gjc-main",
+  "prev": "35295cc755d4aea8f2fc8255c1371dfc59bfc95ee7a9b6136b4b411cdee7714a",
+  "reference": "E1788",
+  "seq": 6945,
+  "ts": "2026-10-24T09:05:07+00:00"
+}

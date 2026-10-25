@@ -1,0 +1,65 @@
+{
+  "data": {
+    "candidate": "E1789",
+    "assets": [
+      {
+        "seed": 0,
+        "filename": "forecast_s0.npz",
+        "sha256": "230e34af8c4d749152f6a99201bed5a4f395a89b30e6a51fd65503709b81c545"
+      },
+      {
+        "seed": 1,
+        "filename": "forecast_s1.npz",
+        "sha256": "34c1b7cedc7cd84747700b34ee16129f70f9da67bcb6f586c30c5251a9a7b0f2"
+      },
+      {
+        "seed": 2,
+        "filename": "forecast_s2.npz",
+        "sha256": "836ba6f36d7d293a15eabb5fa9579b69ae891c3111b84a78209965b41d2742da"
+      }
+    ],
+    "original_predictions": [
+      {
+        "seed": 0,
+        "filename": "predictions_official_s0.parquet",
+        "sha256": "ede22bbaa75c15377f946b31be3d23d5ab6ab9ff6a55a75f5d07d55f2c0a7535"
+      },
+      {
+        "seed": 1,
+        "filename": "predictions_official_s1.parquet",
+        "sha256": "ff7667ae1d5f392eeab460baef5e633b0b5eeee50409f7be95b26e3bde7f65a0"
+      },
+      {
+        "seed": 2,
+        "filename": "predictions_official_s2.parquet",
+        "sha256": "adb257627e63356ec033f389060e2423ca4794778857b36e163742cc2db58daf"
+      }
+    ],
+    "original_code_sha256": {
+      "experiments/solar_topblend_20261024/run.py": "169f1e3cd70d271336e8238c925caa4772e575870b95f7f27d65fc3f6f89be5a"
+    },
+    "original_registration_hash": "b19fd1bdb97f531efef02c1ae8b4440f2323423f9b6c8a507c5ac9619d0e41c2",
+    "contract": "Historical retrospective timestamp<=origin comparator; not certified under current latency/availability rules",
+    "current_contract_causality_verified": false,
+    "limitations": "Historical Core5 forecast blend, weights 2:1:2:1:1 for E1604-public/E1593/E1595/E0472/E1769. Includes origin-hour ACE and historical upstream training cutoffs. Ensemble is ineligible under the current direct-only research contract.",
+    "artifact_scope": "Archived forecast replay on the fixed official grid only; no truth labels; not model retraining or inference for new origins",
+    "origins_start_utc": "2026-05-31 23:00:00+00:00",
+    "origins_end_utc": "2026-09-26 23:00:00+00:00",
+    "origin_count": 2833,
+    "horizons": 72
+  },
+  "hyperparameters": {
+    "sources": [
+      "E1789"
+    ],
+    "alpha": 1.0,
+    "combine": "mean",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "seed_aggregation": "equal_prediction_mean",
+    "timing_scope": "Cached seed averaging only; excludes all upstream/model inference, I/O, training and feature preparation"
+  }
+}

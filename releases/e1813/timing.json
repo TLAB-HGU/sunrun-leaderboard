@@ -1,0 +1,41 @@
+{
+  "inference_seconds_per_fold": 5.81423578712122e-07,
+  "batch_seconds": [
+    0.004605255002388731,
+    0.001838167998357676,
+    0.0013931949943071231,
+    0.00130641799478326,
+    0.001635513996006921,
+    0.0014179459976730868,
+    0.0015220549976220354,
+    0.001421364999259822,
+    0.0013085969985695556,
+    0.0013192000042181462,
+    0.0020472839969443157,
+    0.0015744530101073906,
+    0.0020195219985907897,
+    0.0013216989900683984,
+    0.0015895819960860536,
+    0.001319900999078527,
+    0.0013011120026931167,
+    0.0013794889964628965,
+    0.0013114000030327588,
+    0.0013113049935782328
+  ],
+  "repeats": 20,
+  "clock": "time.perf_counter",
+  "scope": "Frozen member combination and equal mean of three seeds only.",
+  "excluded": [
+    "I/O",
+    "training",
+    "feature preparation",
+    "upstream member inference"
+  ],
+  "not_end_to_end_or_new_origin_inference": true,
+  "poison": {
+    "passed": true,
+    "power": true,
+    "locality": true,
+    "scope": "Combination only; upstream causal provenance must be reviewed separately."
+  }
+}

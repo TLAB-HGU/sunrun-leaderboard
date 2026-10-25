@@ -1,0 +1,101 @@
+{
+ "arm": "core5",
+ "method": "weighted blend of stored official forecasts",
+ "weights_fixed_before_run": true,
+ "stored_forecasts_read": true,
+ "official_truth_used": false,
+ "selection_on_official": false,
+ "seeds": [
+  {
+   "seed": 0,
+   "components": [
+    "E1604_public",
+    "E1593",
+    "E1595",
+    "E0472",
+    "E1769"
+   ],
+   "paths": [
+    "/home/t-lab01/sunrun/research/submissions/E1604/predictions.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1593/predictions_official_s0.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1595/predictions_official_s0.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E0472/predictions_official_s0.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1769/predictions_official_s0.parquet"
+   ],
+   "weights": {
+    "E1604_public": 0.2857142857142857,
+    "E1593": 0.14285714285714285,
+    "E1595": 0.2857142857142857,
+    "E0472": 0.14285714285714285,
+    "E1769": 0.14285714285714285
+   },
+   "rows": 203976,
+   "output_sha256": "ede22bbaa75c15377f946b31be3d23d5ab6ab9ff6a55a75f5d07d55f2c0a7535"
+  },
+  {
+   "seed": 1,
+   "components": [
+    "E1604_public",
+    "E1593",
+    "E1595",
+    "E0472",
+    "E1769"
+   ],
+   "paths": [
+    "/home/t-lab01/sunrun/research/submissions/E1604/predictions.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1593/predictions_official_s1.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1595/predictions_official_s1.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E0472/predictions_official_s1.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1769/predictions_official_s1.parquet"
+   ],
+   "weights": {
+    "E1604_public": 0.2857142857142857,
+    "E1593": 0.14285714285714285,
+    "E1595": 0.2857142857142857,
+    "E0472": 0.14285714285714285,
+    "E1769": 0.14285714285714285
+   },
+   "rows": 203976,
+   "output_sha256": "ff7667ae1d5f392eeab460baef5e633b0b5eeee50409f7be95b26e3bde7f65a0"
+  },
+  {
+   "seed": 2,
+   "components": [
+    "E1604_public",
+    "E1593",
+    "E1595",
+    "E0472",
+    "E1769"
+   ],
+   "paths": [
+    "/home/t-lab01/sunrun/research/submissions/E1604/predictions.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1593/predictions_official_s2.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1595/predictions_official_s2.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E0472/predictions_official_s2.parquet",
+    "/home/t-lab01/sunrun/research/expos/runs/E1769/predictions_official_s2.parquet"
+   ],
+   "weights": {
+    "E1604_public": 0.2857142857142857,
+    "E1593": 0.14285714285714285,
+    "E1595": 0.2857142857142857,
+    "E0472": 0.14285714285714285,
+    "E1769": 0.14285714285714285
+   },
+   "rows": 203976,
+   "output_sha256": "adb257627e63356ec033f389060e2423ca4794778857b36e163742cc2db58daf"
+  }
+ ],
+ "poison": {
+  "passed": true,
+  "changed": 1,
+  "index": 101988,
+  "components": [
+   "E1604_public",
+   "E1593",
+   "E1595",
+   "E0472",
+   "E1769"
+  ]
+ },
+ "note": "explicit ensemble method class per 2026-10-24 user direction"
+}
