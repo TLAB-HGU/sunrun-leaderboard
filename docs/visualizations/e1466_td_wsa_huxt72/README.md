@@ -25,6 +25,8 @@ E1466 `e1466_td_wsa_huxt72`의 공식 리더보드 제출 예측(3-seed equal me
 
 **E1466의 XGBoost backbone은 고정 900 rounds로 학습되어 eval_set·early stopping·per-round train/validation loss history가 없습니다.** 유일한 epoch 단위 곡선은 TD-WSA field encoder의 self-supervised reconstruction loss(`curves_s0/s1/s2.json`)였는데, 해당 파일은 원 run 디렉터리(`research/expos/runs/E1466`)와 함께 삭제되어 현재 남아 있지 않습니다. 등록된 SHA256과 학습 시간은 [loss_history_audit.json](loss_history_audit.json)에 보존했습니다. **곡선을 재구성하거나 합성하지 않았습니다.**
 
+2026-10-26에는 남아 있는 hourly GONG snapshot으로 **seed 0 하나만** 다시 학습해 epoch별 train/validation reconstruction loss를 생성했습니다. 원본 9-fold 곡선이 아니라 2025-11 이후 6개 단축 fold의 재현이며, [epoch_repro_seed0/](epoch_repro_seed0/)에 있습니다. production poison probe는 단축 fold보다 이른 dense probe 때문에 완료되지 않았습니다.
+
 대신 저장된 예측과 고정 truth로 계산한 validation 오차 진단을 게시합니다.
 
 - [validation_mse_by_lead.png](validation_mse_by_lead.png) — lead 1–72별 MSE

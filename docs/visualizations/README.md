@@ -2,7 +2,7 @@
 
 ## 2026-10-25 추가
 
-[E1466 TD-WSA HUXt72 GIF와 공식창 검증 오차 진단](e1466_td_wsa_huxt72/)을 추가했습니다. 공식 MSE **3246.254994**, 제출 당시 비앙상블 단일 모형 최고 기록입니다. XGBoost backbone은 고정 900 rounds로 train/validation loss history가 없고, field encoder의 `curves_s*.json`은 원 run 디렉터리 삭제로 남아 있지 않습니다. 등록 해시와 학습 시간은 [loss_history_audit.json](e1466_td_wsa_huxt72/loss_history_audit.json)에 보존했으며 곡선을 합성하지 않았습니다.
+[E1466 TD-WSA HUXt72 GIF와 공식창 검증 오차 진단](e1466_td_wsa_huxt72/)을 추가했습니다. 공식 MSE **3246.254994**, 제출 당시 비앙상블 단일 모형 최고 기록입니다. XGBoost backbone은 고정 900 rounds로 train/validation loss history가 없고, field encoder의 `curves_s*.json`은 원 run 디렉터리 삭제로 남아 있지 않습니다. 등록 해시와 학습 시간은 [loss_history_audit.json](e1466_td_wsa_huxt72/loss_history_audit.json)에 보존했으며 곡선을 합성하지 않았습니다. 2026-10-26에는 생존 hourly snapshot으로 seed 0 6-fold 재현을 수행해 [epoch loss 곡선](e1466_td_wsa_huxt72/epoch_repro_seed0/)을 추가했습니다. 원본 9-fold 곡선은 아닙니다.
 
 [Exa 기반 실험의 실제 train·validation 곡선](exa_earlystop_20261025/)을 추가했습니다. E1901의 9개 실제 학습 이력, 272회 선택 과정과 E1900/E1904 외부 비교를 포함합니다. 내부 검증 개선은 외부 MSE 개선으로 이어지지 않아 후보는 미채택입니다.
 

@@ -1,0 +1,74 @@
+{
+  "encoder_cutoff_20251115.pt": {
+    "fold": 0,
+    "train_origins": 115,
+    "validation_origins": 29,
+    "normalization_mean_kms": 399.2963236599566,
+    "normalization_std_kms": 44.44411588791579,
+    "epochs": 82,
+    "best_epoch": 68,
+    "best_valid_loss": 0.35665470858414966,
+    "seconds": 241.76106093500857,
+    "stopped_on": "time-split validation convergence after 240s minimum"
+  },
+  "encoder_cutoff_20251215.pt": {
+    "fold": 1,
+    "train_origins": 144,
+    "validation_origins": 120,
+    "normalization_mean_kms": 398.0557621578206,
+    "normalization_std_kms": 44.373322731381805,
+    "epochs": 90,
+    "best_epoch": 78,
+    "best_valid_loss": 0.5962589830160141,
+    "seconds": 255.95980780999525,
+    "stopped_on": "time-split validation convergence after 240s minimum"
+  },
+  "encoder_cutoff_20260201.pt": {
+    "fold": 2,
+    "train_origins": 264,
+    "validation_origins": 192,
+    "normalization_mean_kms": 400.0477363129966,
+    "normalization_std_kms": 48.60502401155639,
+    "epochs": 85,
+    "best_epoch": 28,
+    "best_valid_loss": 0.5296951234340668,
+    "seconds": 241.961005612,
+    "stopped_on": "time-split validation convergence after 240s minimum"
+  },
+  "encoder_cutoff_20260315.pt": {
+    "fold": 3,
+    "train_origins": 456,
+    "validation_origins": 168,
+    "normalization_mean_kms": 398.53613412101726,
+    "normalization_std_kms": 52.879936239723065,
+    "epochs": 84,
+    "best_epoch": 22,
+    "best_valid_loss": 0.45091815789540607,
+    "seconds": 240.50041477099876,
+    "stopped_on": "time-split validation convergence after 240s minimum"
+  },
+  "encoder_cutoff_20260415.pt": {
+    "fold": 4,
+    "train_origins": 624,
+    "validation_origins": 124,
+    "normalization_mean_kms": 393.5459319742317,
+    "normalization_std_kms": 54.45511755206545,
+    "epochs": 87,
+    "best_epoch": 4,
+    "best_valid_loss": 0.2811262061198552,
+    "seconds": 241.14376330000232,
+    "stopped_on": "time-split validation convergence after 240s minimum"
+  },
+  "encoder_cutoff_20260529.pt": {
+    "fold": 5,
+    "train_origins": 748,
+    "validation_origins": 176,
+    "normalization_mean_kms": 394.24252945772264,
+    "normalization_std_kms": 52.01023651116476,
+    "epochs": 84,
+    "best_epoch": 14,
+    "best_valid_loss": 0.31859761973222095,
+    "seconds": 242.59591285399802,
+    "stopped_on": "time-split validation convergence after 240s minimum"
+  }
+}
