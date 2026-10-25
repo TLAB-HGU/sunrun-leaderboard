@@ -1,0 +1,42 @@
+{
+  "experiment": "E1711",
+  "fold": 3,
+  "seed": 0,
+  "diagnostic": "newly reconstructed frozen-model staged inference; not original logged history",
+  "historical_validation_exposed": true,
+  "fitting": false,
+  "tuning": false,
+  "official_evaluation": false,
+  "target": "raw residual y-control, before calibration",
+  "metric": "unweighted observed-row MSE in (km/s)^2",
+  "stages": 301,
+  "boosted_rounds": 300,
+  "stage0_base_score": 8.997169,
+  "leads": [
+    25,
+    72
+  ],
+  "train_rows": 193442,
+  "validation_rows": 106503,
+  "validation_origins": 2808,
+  "train_cutoff": "2026-01-29 00:00:00+00:00",
+  "train_max_target": "2026-01-26 00:00:00+00:00",
+  "validation_origin_start": "2026-02-01 00:00:00+00:00",
+  "validation_origin_end": "2026-05-28 23:00:00+00:00",
+  "validation_target_cap_exclusive": "2026-05-29 00:00:00+00:00",
+  "training_sha256": "63c0b15b2d7a0438fe39b447809f0bb867d886c6b12a091b5389aea61e76a812",
+  "original_training_sha256_match": true,
+  "model_sha256": "5351f75ed09c3614176440d814418248baf27fef39e0f1f95acb89b572d01936",
+  "raw_sha256": "186faa8449909070ca3a604a460ef25989bb6d549554d2bc55b6c2524e9ae20e",
+  "final_raw_grid_exact": true,
+  "final_train_wrapper_prediction_exact": true,
+  "raw_max_abs_error": 0.0,
+  "csv_sha256": "082fecb2709816442ba495e28673c41470bac57552434c36c311059171456810",
+  "script_sha256": "3bc82241f7fc8e5234cb1cabbcee158cabfa293d3d67012929b336994f39a7d9",
+  "xgboost_version": "2.1.4",
+  "final_losses": {
+    "round": 300,
+    "train_mse": 3596.151705152873,
+    "validation_mse": 7070.693317924584
+  }
+}

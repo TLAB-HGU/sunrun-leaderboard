@@ -1,5 +1,7 @@
 # E1769 하위 모델 E1725 — 실제 공식 학습 loss
 
+**Train·validation 두 곡선은 [별도 페이지](../paired_train_validation/)에 있습니다.** 그 페이지는 validation이 분리된 과거 fold 3 모델의 사후 단계별 재평가입니다. 아래의 공식 최종 refit 모델과 구분합니다.
+
 E1789 → E1769 → E1725 계보의 **실제 공식 예측에 사용된 학습 모델**에서 `trace`를 읽었습니다. Seed 0·1은 E1745에서 학습 후 E1759가 검증해 재사용했고, seed 2는 E1759에서 학습했습니다. 각 시드 **300 rounds**, 학습 행 수 **230,626**입니다. 모델 재학습이나 추론은 하지 않았습니다.
 
 ![저장 모델에서 추출한 실제 training objective](training_loss.png)

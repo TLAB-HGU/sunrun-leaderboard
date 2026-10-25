@@ -4,6 +4,8 @@
 
 ## Train / validation loss 이력
 
+**[Train·validation 두 곡선 함께 보기](component_losses/paired_train_validation/):** E1725·E1711의 저장된 과거 fold 3 모델을 단계별 재평가해 train/validation MSE를 같은 그림에 추가했습니다. 재학습이나 단계 선택 없이 재생한 사후 진단이며 당시 저장된 로그와 구분했습니다.
+
 **추가 조사:** [구성 모델별 원본 loss 이력](component_losses/)을 각각 게시했습니다. 직접 구성 모델의 로그·평가 기록뿐 아니라, E1769의 하위 E1725에서 **실제 공식 학습 모델의 300-round × 3시드 training objective trace**를 찾아 [학습 그래프와 JSON/CSV](component_losses/upstream_E1725/)로 추가했습니다. 반복별 validation loss는 저장되어 있지 않습니다.
 
 **E1789에는 별도 학습 단계가 없어 train/validation 학습 곡선이 존재하지 않습니다.** 이미 저장된 E1604-public, E1593, E1595, E0472, E1769 예측을 고정 가중치 **2:1:2:1:1**로 합칩니다. 학습 반복, optimizer, epoch가 없으며, 원본 실행 로그에는 결합 완료 요약만 있습니다. 구성 실험의 원본 실행 자료에서도 당시의 반복별 train/validation loss 이력을 찾지 못했습니다.

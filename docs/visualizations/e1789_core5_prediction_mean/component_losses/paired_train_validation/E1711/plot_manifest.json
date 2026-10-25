@@ -1,0 +1,22 @@
+{
+  "model": "E1711 XGBoost late head",
+  "type": "Retrospective frozen-model staged reevaluation, not original logged curves",
+  "same_metric": "Raw residual-head MSE for train and validation",
+  "plot_sha256": "b41d1e795be4aab029723e7e325068e1f8f9f22c7d7713ec9ef0f051b3e0b3ed",
+  "final_mean_train_mse": 3605.7853100266566,
+  "final_mean_validation_mse": 7206.4531190321295,
+  "seed_curves": [
+    {
+      "file": "curves_s0.csv",
+      "sha256": "082fecb2709816442ba495e28673c41470bac57552434c36c311059171456810"
+    },
+    {
+      "file": "curves_s1.csv",
+      "sha256": "5e7c87b99b6be6703d86492def482e5dd4c48c1e32e91c07863805b1db98d66e"
+    },
+    {
+      "file": "curves_s2.csv",
+      "sha256": "d658b485cd857d0c37f7a4c7fd7a3718b4b424ca2493587147ee33ca01bafa18"
+    }
+  ]
+}
