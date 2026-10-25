@@ -23,6 +23,13 @@
   "run_directory": "/home/t-lab01/sunrun/research/expos/runs/E1466",
   "run_directory_present": false,
   "deletion_context": "During the 2026-10-25 literature-transfer round the shared Python runtime and leaderboard/store were externally deleted. The runtime and ch-v1/ace.parquet were restored from exact-hash snapshots, but the E1466 run directory and the rest of the store were not restored. The registered hashes above are retained in research/expos/graph.jsonl.",
+  "single_seed_validation": {
+    "seed": 0,
+    "official_mse": 3310.831426765449,
+    "source": "releases/e1466/member_forecasts.npz",
+    "source_sha256": "af75003f35102373813dba11fbfe677f017cc642efd32bd61c4f3483e23bbc5b",
+    "artifacts": ["validation_mse_by_lead_seed0.png", "validation_mse_by_month_seed0.png"]
+  },
   "retraining": false,
   "new_scoring": false,
   "scope": "This visualization uses archived official predictions and the frozen folds/truth snapshot. It does not retrain the model, does not read official truth during fitting, and does not change the recorded gate failures."

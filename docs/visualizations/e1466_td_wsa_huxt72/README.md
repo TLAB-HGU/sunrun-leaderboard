@@ -31,6 +31,15 @@ E1466 `e1466_td_wsa_huxt72`의 공식 리더보드 제출 예측(3-seed equal me
 - [validation_mse_by_month.png](validation_mse_by_month.png) — 2026-06~09 월별 MSE
 - [validation_mse_by_lead.csv](validation_mse_by_lead.csv), [validation_mse_by_month.csv](validation_mse_by_month.csv), [validation_mse_by_band.csv](validation_mse_by_band.csv)
 
+## 단일 시드(seed 0) validation
+
+`releases/e1466/member_forecasts.npz`의 seed 0 예측으로 계산한 공식창 검증 오차입니다. 전체 MSE는 **3,310.831**로 3-seed mean 3,246.255보다 2.0% 높습니다.
+
+- [validation_mse_by_lead_seed0.png](validation_mse_by_lead_seed0.png) / [CSV](validation_mse_by_lead_seed0.csv)
+- [validation_mse_by_month_seed0.png](validation_mse_by_month_seed0.png) / [CSV](validation_mse_by_month_seed0.csv)
+
+이것은 **validation MSE**이며 training loss가 아닙니다. seed 0의 train loss 곡선은 원 run 디렉터리 삭제로 남아 있지 않습니다.
+
 ## Sources
 
 | 입력 | SHA256 |
@@ -39,6 +48,7 @@ E1466 `e1466_td_wsa_huxt72`의 공식 리더보드 제출 예측(3-seed equal me
 | folds snapshot `bcf5d541…` | `9c8f24f2cd82009cd7d071e99f45c9e15179326f7cccb4f46eb6805788332daf` |
 | truth snapshot `bcf5d541…` | `ed02280b78f0ffe0512adb2a51cc92da79058e9abfa6882d5a2e736c62b1d430` |
 | history `leaderboard/store/ch-v1/ace.parquet` | `700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af` |
+| per-seed forecasts `releases/e1466/member_forecasts.npz` | `af75003f35102373813dba11fbfe677f017cc642efd32bd61c4f3483e23bbc5b` |
 
 ## 재현
 
