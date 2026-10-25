@@ -1,0 +1,29 @@
+{
+  "experiment": "E1466",
+  "model": "e1466_td_wsa_huxt72",
+  "train_loss_history": "not_recorded",
+  "validation_iteration_history": "not_recorded",
+  "train_loss_values_exported": 0,
+  "reason": "The E1149/E0421 XGBoost backbone was fitted with a fixed 900-round budget and no eval_set or early-stopping history. The only per-epoch curves were the TD-WSA field-encoder self-supervised reconstruction curves (curves_s*.json), which were registered run outputs but are absent because the original run directory is missing. No curve was reconstructed or fabricated.",
+  "encoder_training_budget_seconds": {
+    "seed0": 2181.41,
+    "seed1": 2167.84,
+    "seed2": 2170.42
+  },
+  "registered_encoder_curves": {
+    "curves_s0.json": "13784d889f78346c3b98cb5517661478568d2622050ddf821e44b469183d887b",
+    "curves_s1.json": "0d49ddc2b8c7847ce1264ca2bf97249c3ff41b7242261f675d567f80f864b36e",
+    "curves_s2.json": "76259d1e6bba301d967a20b5cc3b51201a28c8bb093d6bb0653141c2e8261046"
+  },
+  "registered_encoder_receipts": {
+    "td_encoder_receipt_s0.json": "8b0bfa65dacf3f5855c07a5da463d44871adf54fe2c330abae49fbb655c6ca37",
+    "td_encoder_receipt_s1.json": "fdf3f52f5fd0f11b3f09a4ebef5b0a7c6bf092e1ed75e46028a2179070f09664",
+    "td_encoder_receipt_s2.json": "963d4f1e7503891461ae45589d4a18c61b0fd334493ceaf0a36fa98cc6495181"
+  },
+  "run_directory": "/home/t-lab01/sunrun/research/expos/runs/E1466",
+  "run_directory_present": false,
+  "deletion_context": "During the 2026-10-25 literature-transfer round the shared Python runtime and leaderboard/store were externally deleted. The runtime and ch-v1/ace.parquet were restored from exact-hash snapshots, but the E1466 run directory and the rest of the store were not restored. The registered hashes above are retained in research/expos/graph.jsonl.",
+  "retraining": false,
+  "new_scoring": false,
+  "scope": "This visualization uses archived official predictions and the frozen folds/truth snapshot. It does not retrain the model, does not read official truth during fitting, and does not change the recorded gate failures."
+}

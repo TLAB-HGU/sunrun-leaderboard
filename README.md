@@ -7,6 +7,7 @@ Rank = overall MSE. Regime columns are diagnostic.
 - [월별 검증 폴드 GIF: E0472 / xgb_d76_lead_moe_resid_dv_enlil](docs/visualizations/xgb_d76_lead_moe_resid_dv_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 공식 폴드 및 별도 10월 참고 추론 264개, 2배속.
 - [E1149 L72-COND / ACE+2시간 GIF](docs/visualizations/e1149_l72cond_ace2h/README.md) — 원 실험의 6~9월 저장 예측과 10월 참고 추론.
 - [E1149 L72-COND / ACE 지연 없는 재학습 GIF](docs/visualizations/e1149_l72cond_ace0h/README.md) — 학습부터 +2시간을 제거한 미제출 비교, 6~10월.
+- [E1466 TD-WSA HUXt72 GIF](docs/visualizations/e1466_td_wsa_huxt72/README.md) — 공식 MSE 3,246.255, 비앙상블 단일 모형 최고, 6~9월 GIF와 검증 오차 진단.
 
 - [월별 검증 폴드 GIF: xgb_d76_lead_moe_enlil](docs/visualizations/xgb_d76_lead_moe_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 폴드.
 

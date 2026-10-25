@@ -16,6 +16,14 @@ import pandas as pd
 from PIL import Image
 
 EXPERIMENTS = {
+    "E1466": {
+        "model": "e1466_td_wsa_huxt72",
+        "title": "E1466 TD-WSA HUXt72 (3-seed mean)",
+        "expected_mse": 3246.254993999773,
+        "seeds": [0, 1, 2],
+        "aggregation": "equal prediction mean",
+        "ace_latency_hours": 2,
+    },
     "E1604": {
         "model": "e1604_hsspeak25",
         "title": "E1604 HSSPEAK25 (3-seed mean)",
