@@ -1,0 +1,16 @@
+{
+ "arm": "official",
+ "champion": "E0472",
+ "shrink": 0.15,
+ "width": 12.0,
+ "min_lead": 41,
+ "train_rows": 17448,
+ "train_last_origin": "2026-05-28 23:00:00+00:00",
+ "origins": 2833,
+ "files": {
+  "predictions_official_s0.parquet": "da95ed475b18ecbaeb9d32720aab5cfa0492233b908c5839a7b290a58aeeea46",
+  "predictions_official_s1.parquet": "5a4ca42b19043df87aca3915aee56802c88e6bdcf574d92f398d81e419966ab8",
+  "predictions_official_s2.parquet": "73596cd074ec1198cf031d10e25f123624be4664e65419f315d844943ebf26e2"
+ },
+ "code_sha256": "8b126229d93ea5cd015b4bbc1a8753aa7fd7c074a500808fe1521381875f34af"
+}

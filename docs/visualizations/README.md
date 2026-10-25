@@ -2,6 +2,8 @@
 
 ## 2026-10-25 추가
 
+[E1789 구성 모델별 loss 기록](e1789_core5_prediction_mean/component_losses/)과 [E1769 하위 E1725의 실제 3시드 학습 곡선](e1789_core5_prediction_mean/component_losses/upstream_E1725/)도 추가했습니다. 각 자료에서 학습 objective, OOF 검증 MSE, 공식/test MSE를 구분했습니다.
+
 [E1789 Core5 · 공식 평가 오차 그래프 및 월별 GIF](e1789_core5_prediction_mean/)를 추가했습니다. 게시 기준 리더보드 1위, 공식 MSE **3177.232884**이며 실제 제출한 세 시드 예측 평균을 사용합니다. 고정 예측 결합이므로 E1789 자체의 train/validation 학습 곡선은 없습니다. 대신 공식/test 오차를 명확히 구분해 표시했습니다.
 
 ## 기존 시각화

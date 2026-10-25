@@ -1,0 +1,2102 @@
+[
+  {
+    "round": 0,
+    "before": 922259301.1499479,
+    "after": 911208031.128232,
+    "leaves": 8,
+    "leaf_gradient_norm": 5270149.274604721
+  },
+  {
+    "round": 1,
+    "before": 911208031.128232,
+    "after": 901266210.7817702,
+    "leaves": 8,
+    "leaf_gradient_norm": 4232846.006279522
+  },
+  {
+    "round": 2,
+    "before": 901266210.7817702,
+    "after": 891616721.6913785,
+    "leaves": 8,
+    "leaf_gradient_norm": 5012434.716180968
+  },
+  {
+    "round": 3,
+    "before": 891616721.6913785,
+    "after": 882294756.4596585,
+    "leaves": 8,
+    "leaf_gradient_norm": 5008506.019897818
+  },
+  {
+    "round": 4,
+    "before": 882294756.4596585,
+    "after": 872699810.2047346,
+    "leaves": 8,
+    "leaf_gradient_norm": 4048669.518381487
+  },
+  {
+    "round": 5,
+    "before": 872699810.2047346,
+    "after": 863690438.5280038,
+    "leaves": 8,
+    "leaf_gradient_norm": 3905790.965101978
+  },
+  {
+    "round": 6,
+    "before": 863690438.5280038,
+    "after": 855464308.205429,
+    "leaves": 8,
+    "leaf_gradient_norm": 3517634.93672994
+  },
+  {
+    "round": 7,
+    "before": 855464308.205429,
+    "after": 846846389.7969129,
+    "leaves": 8,
+    "leaf_gradient_norm": 3902127.5470276936
+  },
+  {
+    "round": 8,
+    "before": 846846389.7969129,
+    "after": 838961431.5381231,
+    "leaves": 8,
+    "leaf_gradient_norm": 3938562.821855004
+  },
+  {
+    "round": 9,
+    "before": 838961431.5381231,
+    "after": 831105802.3244004,
+    "leaves": 8,
+    "leaf_gradient_norm": 3717497.3836348583
+  },
+  {
+    "round": 10,
+    "before": 831105802.3244004,
+    "after": 823919176.3833834,
+    "leaves": 8,
+    "leaf_gradient_norm": 3201582.4503845084
+  },
+  {
+    "round": 11,
+    "before": 823919176.3833834,
+    "after": 816601854.4941393,
+    "leaves": 8,
+    "leaf_gradient_norm": 3415982.698734664
+  },
+  {
+    "round": 12,
+    "before": 816601854.4941393,
+    "after": 808432814.4861145,
+    "leaves": 8,
+    "leaf_gradient_norm": 3084201.432289878
+  },
+  {
+    "round": 13,
+    "before": 808432814.4861145,
+    "after": 801776485.49508,
+    "leaves": 8,
+    "leaf_gradient_norm": 3296463.3307397584
+  },
+  {
+    "round": 14,
+    "before": 801776485.49508,
+    "after": 795245769.586889,
+    "leaves": 8,
+    "leaf_gradient_norm": 2981965.5031313333
+  },
+  {
+    "round": 15,
+    "before": 795245769.586889,
+    "after": 788817218.5331106,
+    "leaves": 8,
+    "leaf_gradient_norm": 2805748.007096846
+  },
+  {
+    "round": 16,
+    "before": 788817218.5331106,
+    "after": 781724158.0805788,
+    "leaves": 8,
+    "leaf_gradient_norm": 2802645.950302848
+  },
+  {
+    "round": 17,
+    "before": 781724158.0805788,
+    "after": 776315508.936104,
+    "leaves": 8,
+    "leaf_gradient_norm": 2339333.9177010152
+  },
+  {
+    "round": 18,
+    "before": 776315508.936104,
+    "after": 769863017.700221,
+    "leaves": 8,
+    "leaf_gradient_norm": 2710507.133188012
+  },
+  {
+    "round": 19,
+    "before": 769863017.700221,
+    "after": 764556034.3213519,
+    "leaves": 8,
+    "leaf_gradient_norm": 2665008.5084277648
+  },
+  {
+    "round": 20,
+    "before": 764556034.3213519,
+    "after": 759460128.8454825,
+    "leaves": 8,
+    "leaf_gradient_norm": 2369799.4974452374
+  },
+  {
+    "round": 21,
+    "before": 759460128.8454825,
+    "after": 754632076.9553473,
+    "leaves": 8,
+    "leaf_gradient_norm": 2307190.709520509
+  },
+  {
+    "round": 22,
+    "before": 754632076.9553473,
+    "after": 749993737.2158345,
+    "leaves": 8,
+    "leaf_gradient_norm": 2267712.0139789307
+  },
+  {
+    "round": 23,
+    "before": 749993737.2158345,
+    "after": 745368455.7763326,
+    "leaves": 8,
+    "leaf_gradient_norm": 2336706.222580789
+  },
+  {
+    "round": 24,
+    "before": 745368455.7763326,
+    "after": 740901109.6415681,
+    "leaves": 8,
+    "leaf_gradient_norm": 2259058.5592885
+  },
+  {
+    "round": 25,
+    "before": 740901109.6415681,
+    "after": 736462962.2745001,
+    "leaves": 8,
+    "leaf_gradient_norm": 2070912.3134398262
+  },
+  {
+    "round": 26,
+    "before": 736462962.2745001,
+    "after": 732737903.241329,
+    "leaves": 8,
+    "leaf_gradient_norm": 2944576.2460088315
+  },
+  {
+    "round": 27,
+    "before": 732737903.241329,
+    "after": 728861103.7150592,
+    "leaves": 8,
+    "leaf_gradient_norm": 2123875.2420434942
+  },
+  {
+    "round": 28,
+    "before": 728861103.7150592,
+    "after": 724576897.1663028,
+    "leaves": 8,
+    "leaf_gradient_norm": 2018498.456718861
+  },
+  {
+    "round": 29,
+    "before": 724576897.1663028,
+    "after": 720423086.4939698,
+    "leaves": 8,
+    "leaf_gradient_norm": 1997025.9659081392
+  },
+  {
+    "round": 30,
+    "before": 720423086.4939698,
+    "after": 715951787.5996045,
+    "leaves": 8,
+    "leaf_gradient_norm": 2133737.161568864
+  },
+  {
+    "round": 31,
+    "before": 715951787.5996045,
+    "after": 712282532.8507806,
+    "leaves": 8,
+    "leaf_gradient_norm": 1861678.8695443368
+  },
+  {
+    "round": 32,
+    "before": 712282532.8507806,
+    "after": 708582247.4827332,
+    "leaves": 8,
+    "leaf_gradient_norm": 1708816.1695310082
+  },
+  {
+    "round": 33,
+    "before": 708582247.4827332,
+    "after": 705257194.3300365,
+    "leaves": 8,
+    "leaf_gradient_norm": 1684867.237832588
+  },
+  {
+    "round": 34,
+    "before": 705257194.3300365,
+    "after": 701657530.127334,
+    "leaves": 8,
+    "leaf_gradient_norm": 1363892.3753184073
+  },
+  {
+    "round": 35,
+    "before": 701657530.127334,
+    "after": 698008957.6855183,
+    "leaves": 8,
+    "leaf_gradient_norm": 1505673.9437103695
+  },
+  {
+    "round": 36,
+    "before": 698008957.6855183,
+    "after": 694513548.585808,
+    "leaves": 8,
+    "leaf_gradient_norm": 1624500.2099357294
+  },
+  {
+    "round": 37,
+    "before": 694513548.585808,
+    "after": 691043422.287528,
+    "leaves": 8,
+    "leaf_gradient_norm": 1613642.5833870564
+  },
+  {
+    "round": 38,
+    "before": 691043422.287528,
+    "after": 688168222.0252337,
+    "leaves": 8,
+    "leaf_gradient_norm": 1945139.0468248348
+  },
+  {
+    "round": 39,
+    "before": 688168222.0252337,
+    "after": 684689942.0755122,
+    "leaves": 8,
+    "leaf_gradient_norm": 1698890.526856089
+  },
+  {
+    "round": 40,
+    "before": 684689942.0755122,
+    "after": 681643591.7947147,
+    "leaves": 8,
+    "leaf_gradient_norm": 1767519.2114509079
+  },
+  {
+    "round": 41,
+    "before": 681643591.7947147,
+    "after": 678187969.2101586,
+    "leaves": 8,
+    "leaf_gradient_norm": 1724493.0635593282
+  },
+  {
+    "round": 42,
+    "before": 678187969.2101586,
+    "after": 675011923.8690057,
+    "leaves": 8,
+    "leaf_gradient_norm": 1560286.7201179347
+  },
+  {
+    "round": 43,
+    "before": 675011923.8690057,
+    "after": 672230926.2405354,
+    "leaves": 8,
+    "leaf_gradient_norm": 1195274.902364812
+  },
+  {
+    "round": 44,
+    "before": 672230926.2405354,
+    "after": 669489607.4759517,
+    "leaves": 8,
+    "leaf_gradient_norm": 1421505.9587741157
+  },
+  {
+    "round": 45,
+    "before": 669489607.4759517,
+    "after": 666883541.732193,
+    "leaves": 8,
+    "leaf_gradient_norm": 1604250.2579886618
+  },
+  {
+    "round": 46,
+    "before": 666883541.732193,
+    "after": 663993799.2867917,
+    "leaves": 8,
+    "leaf_gradient_norm": 1343025.6994700297
+  },
+  {
+    "round": 47,
+    "before": 663993799.2867917,
+    "after": 661176220.1307912,
+    "leaves": 8,
+    "leaf_gradient_norm": 1061132.0674010334
+  },
+  {
+    "round": 48,
+    "before": 661176220.1307912,
+    "after": 658857116.009857,
+    "leaves": 8,
+    "leaf_gradient_norm": 1425100.451736231
+  },
+  {
+    "round": 49,
+    "before": 658857116.009857,
+    "after": 656410599.8522158,
+    "leaves": 8,
+    "leaf_gradient_norm": 1284843.3543644894
+  },
+  {
+    "round": 50,
+    "before": 656410599.8522158,
+    "after": 653878705.5030357,
+    "leaves": 8,
+    "leaf_gradient_norm": 1633088.3175778757
+  },
+  {
+    "round": 51,
+    "before": 653878705.5030357,
+    "after": 650855939.2047981,
+    "leaves": 8,
+    "leaf_gradient_norm": 1171540.3254584402
+  },
+  {
+    "round": 52,
+    "before": 650855939.2047981,
+    "after": 648317685.4825287,
+    "leaves": 8,
+    "leaf_gradient_norm": 1342319.2675849316
+  },
+  {
+    "round": 53,
+    "before": 648317685.4825287,
+    "after": 646004510.966499,
+    "leaves": 8,
+    "leaf_gradient_norm": 1433286.3497049126
+  },
+  {
+    "round": 54,
+    "before": 646004510.966499,
+    "after": 643939058.6895895,
+    "leaves": 8,
+    "leaf_gradient_norm": 1556164.4216321972
+  },
+  {
+    "round": 55,
+    "before": 643939058.6895895,
+    "after": 641689308.4324533,
+    "leaves": 8,
+    "leaf_gradient_norm": 1373862.9750898439
+  },
+  {
+    "round": 56,
+    "before": 641689308.4324533,
+    "after": 639478556.6654794,
+    "leaves": 8,
+    "leaf_gradient_norm": 928511.3970254249
+  },
+  {
+    "round": 57,
+    "before": 639478556.6654794,
+    "after": 637670778.6241344,
+    "leaves": 8,
+    "leaf_gradient_norm": 741731.5928286968
+  },
+  {
+    "round": 58,
+    "before": 637670778.6241344,
+    "after": 634971006.8673422,
+    "leaves": 8,
+    "leaf_gradient_norm": 1146734.5875005114
+  },
+  {
+    "round": 59,
+    "before": 634971006.8673422,
+    "after": 632622378.0934491,
+    "leaves": 8,
+    "leaf_gradient_norm": 947920.9226385142
+  },
+  {
+    "round": 60,
+    "before": 632622378.0934491,
+    "after": 630835573.443618,
+    "leaves": 8,
+    "leaf_gradient_norm": 1795853.0442431916
+  },
+  {
+    "round": 61,
+    "before": 630835573.443618,
+    "after": 628603238.0082018,
+    "leaves": 8,
+    "leaf_gradient_norm": 1230171.760944033
+  },
+  {
+    "round": 62,
+    "before": 628603238.0082018,
+    "after": 626853693.2983128,
+    "leaves": 8,
+    "leaf_gradient_norm": 1130746.3565889255
+  },
+  {
+    "round": 63,
+    "before": 626853693.2983128,
+    "after": 625269693.7542683,
+    "leaves": 8,
+    "leaf_gradient_norm": 1027415.4771730339
+  },
+  {
+    "round": 64,
+    "before": 625269693.7542683,
+    "after": 623443441.9616985,
+    "leaves": 8,
+    "leaf_gradient_norm": 1191265.0874013882
+  },
+  {
+    "round": 65,
+    "before": 623443441.9616985,
+    "after": 620968219.0808821,
+    "leaves": 8,
+    "leaf_gradient_norm": 771035.3095649972
+  },
+  {
+    "round": 66,
+    "before": 620968219.0808821,
+    "after": 619308187.3400838,
+    "leaves": 8,
+    "leaf_gradient_norm": 828164.3000915992
+  },
+  {
+    "round": 67,
+    "before": 619308187.3400838,
+    "after": 617645425.0153536,
+    "leaves": 8,
+    "leaf_gradient_norm": 1286578.8426050371
+  },
+  {
+    "round": 68,
+    "before": 617645425.0153536,
+    "after": 616207239.4817413,
+    "leaves": 8,
+    "leaf_gradient_norm": 664134.7098971972
+  },
+  {
+    "round": 69,
+    "before": 616207239.4817413,
+    "after": 614505552.3820944,
+    "leaves": 8,
+    "leaf_gradient_norm": 1164989.8753561764
+  },
+  {
+    "round": 70,
+    "before": 614505552.3820944,
+    "after": 612462702.4133924,
+    "leaves": 8,
+    "leaf_gradient_norm": 1248091.5900670323
+  },
+  {
+    "round": 71,
+    "before": 612462702.4133924,
+    "after": 610350858.1132593,
+    "leaves": 8,
+    "leaf_gradient_norm": 1126683.9131633802
+  },
+  {
+    "round": 72,
+    "before": 610350858.1132593,
+    "after": 608841153.8872151,
+    "leaves": 8,
+    "leaf_gradient_norm": 652161.589868325
+  },
+  {
+    "round": 73,
+    "before": 608841153.8872151,
+    "after": 606962282.7541922,
+    "leaves": 8,
+    "leaf_gradient_norm": 1118271.8260644854
+  },
+  {
+    "round": 74,
+    "before": 606962282.7541922,
+    "after": 605586829.7656598,
+    "leaves": 8,
+    "leaf_gradient_norm": 959659.1202615337
+  },
+  {
+    "round": 75,
+    "before": 605586829.7656598,
+    "after": 604188570.9239237,
+    "leaves": 8,
+    "leaf_gradient_norm": 1328998.2373314847
+  },
+  {
+    "round": 76,
+    "before": 604188570.9239237,
+    "after": 602894059.6358652,
+    "leaves": 8,
+    "leaf_gradient_norm": 1057555.7271478954
+  },
+  {
+    "round": 77,
+    "before": 602894059.6358652,
+    "after": 600810560.966709,
+    "leaves": 8,
+    "leaf_gradient_norm": 704848.4628057183
+  },
+  {
+    "round": 78,
+    "before": 600810560.966709,
+    "after": 599539865.6803596,
+    "leaves": 8,
+    "leaf_gradient_norm": 697008.3923024106
+  },
+  {
+    "round": 79,
+    "before": 599539865.6803596,
+    "after": 597995561.2900213,
+    "leaves": 8,
+    "leaf_gradient_norm": 543264.7224104514
+  },
+  {
+    "round": 80,
+    "before": 597995561.2900213,
+    "after": 596287905.5393611,
+    "leaves": 8,
+    "leaf_gradient_norm": 827734.291414571
+  },
+  {
+    "round": 81,
+    "before": 596287905.5393611,
+    "after": 595095590.3947186,
+    "leaves": 8,
+    "leaf_gradient_norm": 542404.2453051561
+  },
+  {
+    "round": 82,
+    "before": 595095590.3947186,
+    "after": 594033473.7385343,
+    "leaves": 8,
+    "leaf_gradient_norm": 1003276.5712615594
+  },
+  {
+    "round": 83,
+    "before": 594033473.7385343,
+    "after": 592314899.420462,
+    "leaves": 8,
+    "leaf_gradient_norm": 808338.9226355378
+  },
+  {
+    "round": 84,
+    "before": 592314899.420462,
+    "after": 590771029.5524554,
+    "leaves": 8,
+    "leaf_gradient_norm": 1603552.485917721
+  },
+  {
+    "round": 85,
+    "before": 590771029.5524554,
+    "after": 589412171.7878776,
+    "leaves": 8,
+    "leaf_gradient_norm": 492498.24905937363
+  },
+  {
+    "round": 86,
+    "before": 589412171.7878776,
+    "after": 587683217.9921802,
+    "leaves": 8,
+    "leaf_gradient_norm": 573790.4604020453
+  },
+  {
+    "round": 87,
+    "before": 587683217.9921802,
+    "after": 586361671.6109407,
+    "leaves": 8,
+    "leaf_gradient_norm": 352608.4324787925
+  },
+  {
+    "round": 88,
+    "before": 586361671.6109407,
+    "after": 585091736.2655215,
+    "leaves": 8,
+    "leaf_gradient_norm": 888590.2912273287
+  },
+  {
+    "round": 89,
+    "before": 585091736.2655215,
+    "after": 583376086.3780242,
+    "leaves": 8,
+    "leaf_gradient_norm": 827649.2774915226
+  },
+  {
+    "round": 90,
+    "before": 583376086.3780242,
+    "after": 582349732.2312884,
+    "leaves": 8,
+    "leaf_gradient_norm": 1064630.4900766395
+  },
+  {
+    "round": 91,
+    "before": 582349732.2312884,
+    "after": 581327529.135999,
+    "leaves": 8,
+    "leaf_gradient_norm": 1048822.263633442
+  },
+  {
+    "round": 92,
+    "before": 581327529.135999,
+    "after": 579799727.6553566,
+    "leaves": 8,
+    "leaf_gradient_norm": 847098.0799494309
+  },
+  {
+    "round": 93,
+    "before": 579799727.6553566,
+    "after": 578203739.4876618,
+    "leaves": 8,
+    "leaf_gradient_norm": 589130.0707326351
+  },
+  {
+    "round": 94,
+    "before": 578203739.4876618,
+    "after": 577131290.3688751,
+    "leaves": 8,
+    "leaf_gradient_norm": 816135.4626801157
+  },
+  {
+    "round": 95,
+    "before": 577131290.3688751,
+    "after": 575770342.613339,
+    "leaves": 8,
+    "leaf_gradient_norm": 793396.1700743706
+  },
+  {
+    "round": 96,
+    "before": 575770342.613339,
+    "after": 574604609.9304346,
+    "leaves": 8,
+    "leaf_gradient_norm": 454896.7070010906
+  },
+  {
+    "round": 97,
+    "before": 574604609.9304346,
+    "after": 573640143.58221,
+    "leaves": 8,
+    "leaf_gradient_norm": 814481.1897504221
+  },
+  {
+    "round": 98,
+    "before": 573640143.58221,
+    "after": 572124788.277021,
+    "leaves": 8,
+    "leaf_gradient_norm": 747695.2072961817
+  },
+  {
+    "round": 99,
+    "before": 572124788.277021,
+    "after": 570660198.8710084,
+    "leaves": 8,
+    "leaf_gradient_norm": 752710.4622256182
+  },
+  {
+    "round": 100,
+    "before": 570660198.8710084,
+    "after": 569605323.9070555,
+    "leaves": 8,
+    "leaf_gradient_norm": 965118.9890837808
+  },
+  {
+    "round": 101,
+    "before": 569605323.9070555,
+    "after": 568676556.8616633,
+    "leaves": 8,
+    "leaf_gradient_norm": 702839.6853755206
+  },
+  {
+    "round": 102,
+    "before": 568676556.8616633,
+    "after": 567685678.9641804,
+    "leaves": 8,
+    "leaf_gradient_norm": 440282.140806948
+  },
+  {
+    "round": 103,
+    "before": 567685678.9641804,
+    "after": 566537777.2002941,
+    "leaves": 8,
+    "leaf_gradient_norm": 373861.3825606728
+  },
+  {
+    "round": 104,
+    "before": 566537777.2002941,
+    "after": 565547579.985471,
+    "leaves": 8,
+    "leaf_gradient_norm": 954550.2427511625
+  },
+  {
+    "round": 105,
+    "before": 565547579.985471,
+    "after": 564202967.0592684,
+    "leaves": 8,
+    "leaf_gradient_norm": 719215.2018795683
+  },
+  {
+    "round": 106,
+    "before": 564202967.0592684,
+    "after": 563160337.8416297,
+    "leaves": 8,
+    "leaf_gradient_norm": 877645.8268100993
+  },
+  {
+    "round": 107,
+    "before": 563160337.8416297,
+    "after": 561722373.4567393,
+    "leaves": 8,
+    "leaf_gradient_norm": 998868.3529953528
+  },
+  {
+    "round": 108,
+    "before": 561722373.4567393,
+    "after": 560853972.2021798,
+    "leaves": 8,
+    "leaf_gradient_norm": 969951.0144230184
+  },
+  {
+    "round": 109,
+    "before": 560853972.2021798,
+    "after": 559052361.7162603,
+    "leaves": 8,
+    "leaf_gradient_norm": 939308.3365877629
+  },
+  {
+    "round": 110,
+    "before": 559052361.7162603,
+    "after": 558091768.7996995,
+    "leaves": 8,
+    "leaf_gradient_norm": 521361.0655841325
+  },
+  {
+    "round": 111,
+    "before": 558091768.7996995,
+    "after": 557056880.4231031,
+    "leaves": 8,
+    "leaf_gradient_norm": 513098.5379184037
+  },
+  {
+    "round": 112,
+    "before": 557056880.4231031,
+    "after": 556158537.6072891,
+    "leaves": 8,
+    "leaf_gradient_norm": 471124.8379871002
+  },
+  {
+    "round": 113,
+    "before": 556158537.6072891,
+    "after": 554765154.5018088,
+    "leaves": 8,
+    "leaf_gradient_norm": 995373.4965328191
+  },
+  {
+    "round": 114,
+    "before": 554765154.5018088,
+    "after": 554013608.5016662,
+    "leaves": 8,
+    "leaf_gradient_norm": 640779.9262554873
+  },
+  {
+    "round": 115,
+    "before": 554013608.5016662,
+    "after": 552787748.7308027,
+    "leaves": 8,
+    "leaf_gradient_norm": 583675.0039026918
+  },
+  {
+    "round": 116,
+    "before": 552787748.7308027,
+    "after": 551488265.9747155,
+    "leaves": 8,
+    "leaf_gradient_norm": 963858.0435766487
+  },
+  {
+    "round": 117,
+    "before": 551488265.9747155,
+    "after": 550608002.0914853,
+    "leaves": 8,
+    "leaf_gradient_norm": 809035.5709747092
+  },
+  {
+    "round": 118,
+    "before": 550608002.0914853,
+    "after": 549906500.6845093,
+    "leaves": 8,
+    "leaf_gradient_norm": 785777.4715597406
+  },
+  {
+    "round": 119,
+    "before": 549906500.6845093,
+    "after": 548901349.0847822,
+    "leaves": 8,
+    "leaf_gradient_norm": 713642.2416014357
+  },
+  {
+    "round": 120,
+    "before": 548901349.0847822,
+    "after": 548264828.062003,
+    "leaves": 8,
+    "leaf_gradient_norm": 253236.24200482262
+  },
+  {
+    "round": 121,
+    "before": 548264828.062003,
+    "after": 547196365.0833371,
+    "leaves": 8,
+    "leaf_gradient_norm": 406425.7344985937
+  },
+  {
+    "round": 122,
+    "before": 547196365.0833371,
+    "after": 546476039.283124,
+    "leaves": 8,
+    "leaf_gradient_norm": 760447.6659929613
+  },
+  {
+    "round": 123,
+    "before": 546476039.283124,
+    "after": 545474117.2945104,
+    "leaves": 8,
+    "leaf_gradient_norm": 411084.69959641807
+  },
+  {
+    "round": 124,
+    "before": 545474117.2945104,
+    "after": 544515155.4382197,
+    "leaves": 8,
+    "leaf_gradient_norm": 415908.64720503014
+  },
+  {
+    "round": 125,
+    "before": 544515155.4382197,
+    "after": 543011883.3710295,
+    "leaves": 8,
+    "leaf_gradient_norm": 1038008.2884018815
+  },
+  {
+    "round": 126,
+    "before": 543011883.3710295,
+    "after": 542192371.9758722,
+    "leaves": 8,
+    "leaf_gradient_norm": 403175.3584120487
+  },
+  {
+    "round": 127,
+    "before": 542192371.9758722,
+    "after": 541481248.941091,
+    "leaves": 8,
+    "leaf_gradient_norm": 863011.3180886944
+  },
+  {
+    "round": 128,
+    "before": 541481248.941091,
+    "after": 540257414.9291445,
+    "leaves": 8,
+    "leaf_gradient_norm": 842337.4640013768
+  },
+  {
+    "round": 129,
+    "before": 540257414.9291445,
+    "after": 538904810.2983242,
+    "leaves": 8,
+    "leaf_gradient_norm": 776667.7566200221
+  },
+  {
+    "round": 130,
+    "before": 538904810.2983242,
+    "after": 538146839.7348739,
+    "leaves": 8,
+    "leaf_gradient_norm": 276791.62807906425
+  },
+  {
+    "round": 131,
+    "before": 538146839.7348739,
+    "after": 536995572.9880302,
+    "leaves": 8,
+    "leaf_gradient_norm": 898095.5544500572
+  },
+  {
+    "round": 132,
+    "before": 536995572.9880302,
+    "after": 536155311.78508,
+    "leaves": 8,
+    "leaf_gradient_norm": 720120.2735621857
+  },
+  {
+    "round": 133,
+    "before": 536155311.78508,
+    "after": 535190178.70172185,
+    "leaves": 8,
+    "leaf_gradient_norm": 387446.78938631405
+  },
+  {
+    "round": 134,
+    "before": 535190178.70172185,
+    "after": 534454269.7082674,
+    "leaves": 8,
+    "leaf_gradient_norm": 785683.0062260544
+  },
+  {
+    "round": 135,
+    "before": 534454269.7082674,
+    "after": 533548267.90689856,
+    "leaves": 8,
+    "leaf_gradient_norm": 711624.7361154108
+  },
+  {
+    "round": 136,
+    "before": 533548267.90689856,
+    "after": 532402131.8937811,
+    "leaves": 8,
+    "leaf_gradient_norm": 1015595.9853257627
+  },
+  {
+    "round": 137,
+    "before": 532402131.8937811,
+    "after": 531711202.00736636,
+    "leaves": 8,
+    "leaf_gradient_norm": 759991.9752960366
+  },
+  {
+    "round": 138,
+    "before": 531711202.00736636,
+    "after": 530772623.37705857,
+    "leaves": 8,
+    "leaf_gradient_norm": 787703.5844921898
+  },
+  {
+    "round": 139,
+    "before": 530772623.37705857,
+    "after": 529916813.69035256,
+    "leaves": 8,
+    "leaf_gradient_norm": 415425.3162179245
+  },
+  {
+    "round": 140,
+    "before": 529916813.69035256,
+    "after": 529365142.48567945,
+    "leaves": 7,
+    "leaf_gradient_norm": 755079.8387555518
+  },
+  {
+    "round": 141,
+    "before": 529365142.48567945,
+    "after": 528302368.136375,
+    "leaves": 8,
+    "leaf_gradient_norm": 1143836.4796944053
+  },
+  {
+    "round": 142,
+    "before": 528302368.136375,
+    "after": 527690752.0074254,
+    "leaves": 8,
+    "leaf_gradient_norm": 235075.24601526288
+  },
+  {
+    "round": 143,
+    "before": 527690752.0074254,
+    "after": 526679746.62067515,
+    "leaves": 8,
+    "leaf_gradient_norm": 486107.4524657558
+  },
+  {
+    "round": 144,
+    "before": 526679746.62067515,
+    "after": 525738214.2575697,
+    "leaves": 8,
+    "leaf_gradient_norm": 836540.8885987089
+  },
+  {
+    "round": 145,
+    "before": 525738214.2575697,
+    "after": 525027502.3863404,
+    "leaves": 8,
+    "leaf_gradient_norm": 539080.6305102955
+  },
+  {
+    "round": 146,
+    "before": 525027502.3863404,
+    "after": 524429409.8724482,
+    "leaves": 8,
+    "leaf_gradient_norm": 255733.3315983539
+  },
+  {
+    "round": 147,
+    "before": 524429409.8724482,
+    "after": 523481720.58485866,
+    "leaves": 8,
+    "leaf_gradient_norm": 569827.3466216197
+  },
+  {
+    "round": 148,
+    "before": 523481720.58485866,
+    "after": 522678072.51365596,
+    "leaves": 8,
+    "leaf_gradient_norm": 695484.5843956766
+  },
+  {
+    "round": 149,
+    "before": 522678072.51365596,
+    "after": 522043119.52130115,
+    "leaves": 8,
+    "leaf_gradient_norm": 466021.5359971361
+  },
+  {
+    "round": 150,
+    "before": 522043119.52130115,
+    "after": 521533933.69589114,
+    "leaves": 7,
+    "leaf_gradient_norm": 742069.5698938416
+  },
+  {
+    "round": 151,
+    "before": 521533933.69589114,
+    "after": 520442114.0381521,
+    "leaves": 8,
+    "leaf_gradient_norm": 608468.9230352688
+  },
+  {
+    "round": 152,
+    "before": 520442114.0381521,
+    "after": 519862463.40330553,
+    "leaves": 8,
+    "leaf_gradient_norm": 461677.2645216967
+  },
+  {
+    "round": 153,
+    "before": 519862463.40330553,
+    "after": 519140258.30739856,
+    "leaves": 8,
+    "leaf_gradient_norm": 650201.180775617
+  },
+  {
+    "round": 154,
+    "before": 519140258.30739856,
+    "after": 518491154.22024155,
+    "leaves": 8,
+    "leaf_gradient_norm": 559014.6565708945
+  },
+  {
+    "round": 155,
+    "before": 518491154.22024155,
+    "after": 517444285.3036909,
+    "leaves": 8,
+    "leaf_gradient_norm": 761756.3462337579
+  },
+  {
+    "round": 156,
+    "before": 517444285.3036909,
+    "after": 516630030.7147861,
+    "leaves": 8,
+    "leaf_gradient_norm": 610408.80239758
+  },
+  {
+    "round": 157,
+    "before": 516630030.7147861,
+    "after": 515741979.83380306,
+    "leaves": 8,
+    "leaf_gradient_norm": 637035.4605557361
+  },
+  {
+    "round": 158,
+    "before": 515741979.83380306,
+    "after": 514783534.6241983,
+    "leaves": 8,
+    "leaf_gradient_norm": 1090408.0280324481
+  },
+  {
+    "round": 159,
+    "before": 514783534.6241983,
+    "after": 513834431.65385616,
+    "leaves": 8,
+    "leaf_gradient_norm": 820200.2547208869
+  },
+  {
+    "round": 160,
+    "before": 513834431.65385616,
+    "after": 512959556.85328287,
+    "leaves": 8,
+    "leaf_gradient_norm": 1025022.0949023358
+  },
+  {
+    "round": 161,
+    "before": 512959556.85328287,
+    "after": 512161764.00442594,
+    "leaves": 8,
+    "leaf_gradient_norm": 424713.5446210436
+  },
+  {
+    "round": 162,
+    "before": 512161764.00442594,
+    "after": 511251798.0524602,
+    "leaves": 8,
+    "leaf_gradient_norm": 767185.1572421136
+  },
+  {
+    "round": 163,
+    "before": 511251798.0524602,
+    "after": 510819924.06294537,
+    "leaves": 8,
+    "leaf_gradient_norm": 303048.09887713176
+  },
+  {
+    "round": 164,
+    "before": 510819924.06294537,
+    "after": 510221729.7884997,
+    "leaves": 8,
+    "leaf_gradient_norm": 633671.1436787215
+  },
+  {
+    "round": 165,
+    "before": 510221729.7884997,
+    "after": 509736997.5675253,
+    "leaves": 7,
+    "leaf_gradient_norm": 267722.9618662118
+  },
+  {
+    "round": 166,
+    "before": 509736997.5675253,
+    "after": 509136190.1976585,
+    "leaves": 8,
+    "leaf_gradient_norm": 804677.866694957
+  },
+  {
+    "round": 167,
+    "before": 509136190.1976585,
+    "after": 508399338.34945893,
+    "leaves": 8,
+    "leaf_gradient_norm": 317029.12338905653
+  },
+  {
+    "round": 168,
+    "before": 508399338.34945893,
+    "after": 507644082.39168173,
+    "leaves": 8,
+    "leaf_gradient_norm": 594014.5312566161
+  },
+  {
+    "round": 169,
+    "before": 507644082.39168173,
+    "after": 506948774.1107768,
+    "leaves": 8,
+    "leaf_gradient_norm": 306010.6888987844
+  },
+  {
+    "round": 170,
+    "before": 506948774.1107768,
+    "after": 506199030.0749798,
+    "leaves": 8,
+    "leaf_gradient_norm": 687973.9745041226
+  },
+  {
+    "round": 171,
+    "before": 506199030.0749798,
+    "after": 505586534.8691324,
+    "leaves": 8,
+    "leaf_gradient_norm": 475568.79589909315
+  },
+  {
+    "round": 172,
+    "before": 505586534.8691324,
+    "after": 504523748.60038227,
+    "leaves": 8,
+    "leaf_gradient_norm": 714234.9411109282
+  },
+  {
+    "round": 173,
+    "before": 504523748.60038227,
+    "after": 503949874.43833077,
+    "leaves": 8,
+    "leaf_gradient_norm": 586874.6062918556
+  },
+  {
+    "round": 174,
+    "before": 503949874.43833077,
+    "after": 503139723.1253788,
+    "leaves": 8,
+    "leaf_gradient_norm": 997508.0096473643
+  },
+  {
+    "round": 175,
+    "before": 503139723.1253788,
+    "after": 502604713.6461411,
+    "leaves": 8,
+    "leaf_gradient_norm": 656639.1580290799
+  },
+  {
+    "round": 176,
+    "before": 502604713.6461411,
+    "after": 502223375.8118025,
+    "leaves": 7,
+    "leaf_gradient_norm": 442017.4466048991
+  },
+  {
+    "round": 177,
+    "before": 502223375.8118025,
+    "after": 501562754.6245374,
+    "leaves": 8,
+    "leaf_gradient_norm": 599192.4739710576
+  },
+  {
+    "round": 178,
+    "before": 501562754.6245374,
+    "after": 500752712.4372568,
+    "leaves": 8,
+    "leaf_gradient_norm": 428462.5886197996
+  },
+  {
+    "round": 179,
+    "before": 500752712.4372568,
+    "after": 499800866.28567004,
+    "leaves": 8,
+    "leaf_gradient_norm": 829242.6939677479
+  },
+  {
+    "round": 180,
+    "before": 499800866.28567004,
+    "after": 499373270.7119248,
+    "leaves": 8,
+    "leaf_gradient_norm": 633527.9974731911
+  },
+  {
+    "round": 181,
+    "before": 499373270.7119248,
+    "after": 498899954.986283,
+    "leaves": 7,
+    "leaf_gradient_norm": 166626.38748202304
+  },
+  {
+    "round": 182,
+    "before": 498899954.986283,
+    "after": 497674915.32420117,
+    "leaves": 8,
+    "leaf_gradient_norm": 622065.0733813565
+  },
+  {
+    "round": 183,
+    "before": 497674915.32420117,
+    "after": 497169298.89139336,
+    "leaves": 8,
+    "leaf_gradient_norm": 425674.5301524649
+  },
+  {
+    "round": 184,
+    "before": 497169298.89139336,
+    "after": 496406884.19980216,
+    "leaves": 8,
+    "leaf_gradient_norm": 977846.8078407601
+  },
+  {
+    "round": 185,
+    "before": 496406884.19980216,
+    "after": 495795352.5425738,
+    "leaves": 8,
+    "leaf_gradient_norm": 729474.4219768856
+  },
+  {
+    "round": 186,
+    "before": 495795352.5425738,
+    "after": 495202518.68064344,
+    "leaves": 8,
+    "leaf_gradient_norm": 477466.9023610039
+  },
+  {
+    "round": 187,
+    "before": 495202518.68064344,
+    "after": 494765467.9030659,
+    "leaves": 8,
+    "leaf_gradient_norm": 740363.3622283499
+  },
+  {
+    "round": 188,
+    "before": 494765467.9030659,
+    "after": 493578147.37388283,
+    "leaves": 8,
+    "leaf_gradient_norm": 824611.2866880812
+  },
+  {
+    "round": 189,
+    "before": 493578147.37388283,
+    "after": 492909892.58298606,
+    "leaves": 8,
+    "leaf_gradient_norm": 674835.0434003327
+  },
+  {
+    "round": 190,
+    "before": 492909892.58298606,
+    "after": 492081583.57409596,
+    "leaves": 8,
+    "leaf_gradient_norm": 758089.8786245242
+  },
+  {
+    "round": 191,
+    "before": 492081583.57409596,
+    "after": 491350652.61326545,
+    "leaves": 8,
+    "leaf_gradient_norm": 449183.6563633539
+  },
+  {
+    "round": 192,
+    "before": 491350652.61326545,
+    "after": 490380665.8969752,
+    "leaves": 8,
+    "leaf_gradient_norm": 773725.6577610311
+  },
+  {
+    "round": 193,
+    "before": 490380665.8969752,
+    "after": 489874513.5856402,
+    "leaves": 8,
+    "leaf_gradient_norm": 751820.6461090816
+  },
+  {
+    "round": 194,
+    "before": 489874513.5856402,
+    "after": 489235983.46576047,
+    "leaves": 8,
+    "leaf_gradient_norm": 385149.6629850124
+  },
+  {
+    "round": 195,
+    "before": 489235983.46576047,
+    "after": 488673076.67172575,
+    "leaves": 8,
+    "leaf_gradient_norm": 478442.34440892824
+  },
+  {
+    "round": 196,
+    "before": 488673076.67172575,
+    "after": 488044842.09860516,
+    "leaves": 8,
+    "leaf_gradient_norm": 279363.02213002794
+  },
+  {
+    "round": 197,
+    "before": 488044842.09860516,
+    "after": 487574918.52195233,
+    "leaves": 8,
+    "leaf_gradient_norm": 587959.3262717818
+  },
+  {
+    "round": 198,
+    "before": 487574918.52195233,
+    "after": 486902440.3438723,
+    "leaves": 8,
+    "leaf_gradient_norm": 496253.4742458721
+  },
+  {
+    "round": 199,
+    "before": 486902440.3438723,
+    "after": 486065139.43400186,
+    "leaves": 8,
+    "leaf_gradient_norm": 502676.2576076368
+  },
+  {
+    "round": 200,
+    "before": 486065139.43400186,
+    "after": 485405135.32014716,
+    "leaves": 8,
+    "leaf_gradient_norm": 659391.2707844148
+  },
+  {
+    "round": 201,
+    "before": 485405135.32014716,
+    "after": 484721159.2542608,
+    "leaves": 8,
+    "leaf_gradient_norm": 541481.9090468475
+  },
+  {
+    "round": 202,
+    "before": 484721159.2542608,
+    "after": 484109810.6487423,
+    "leaves": 8,
+    "leaf_gradient_norm": 392536.915929679
+  },
+  {
+    "round": 203,
+    "before": 484109810.6487423,
+    "after": 483401150.014857,
+    "leaves": 8,
+    "leaf_gradient_norm": 912795.014641692
+  },
+  {
+    "round": 204,
+    "before": 483401150.014857,
+    "after": 482834609.78752357,
+    "leaves": 8,
+    "leaf_gradient_norm": 519322.4592113619
+  },
+  {
+    "round": 205,
+    "before": 482834609.78752357,
+    "after": 482154056.669127,
+    "leaves": 8,
+    "leaf_gradient_norm": 551127.9571244724
+  },
+  {
+    "round": 206,
+    "before": 482154056.669127,
+    "after": 481705672.3452898,
+    "leaves": 8,
+    "leaf_gradient_norm": 309925.2296626529
+  },
+  {
+    "round": 207,
+    "before": 481705672.3452898,
+    "after": 481036100.81624097,
+    "leaves": 8,
+    "leaf_gradient_norm": 592938.0004944319
+  },
+  {
+    "round": 208,
+    "before": 481036100.81624097,
+    "after": 480445550.889204,
+    "leaves": 8,
+    "leaf_gradient_norm": 421399.9915753513
+  },
+  {
+    "round": 209,
+    "before": 480445550.889204,
+    "after": 479825916.544078,
+    "leaves": 8,
+    "leaf_gradient_norm": 492871.0355909682
+  },
+  {
+    "round": 210,
+    "before": 479825916.544078,
+    "after": 479466307.743683,
+    "leaves": 8,
+    "leaf_gradient_norm": 476833.2823354345
+  },
+  {
+    "round": 211,
+    "before": 479466307.743683,
+    "after": 478975194.89897203,
+    "leaves": 8,
+    "leaf_gradient_norm": 444994.6337168072
+  },
+  {
+    "round": 212,
+    "before": 478975194.89897203,
+    "after": 478331785.2430634,
+    "leaves": 8,
+    "leaf_gradient_norm": 415136.0814402996
+  },
+  {
+    "round": 213,
+    "before": 478331785.2430634,
+    "after": 477786471.50969946,
+    "leaves": 8,
+    "leaf_gradient_norm": 269785.6360142887
+  },
+  {
+    "round": 214,
+    "before": 477786471.50969946,
+    "after": 477312085.54201776,
+    "leaves": 8,
+    "leaf_gradient_norm": 314459.23566167796
+  },
+  {
+    "round": 215,
+    "before": 477312085.54201776,
+    "after": 476638809.75898665,
+    "leaves": 8,
+    "leaf_gradient_norm": 908006.328496525
+  },
+  {
+    "round": 216,
+    "before": 476638809.75898665,
+    "after": 476059141.7756025,
+    "leaves": 8,
+    "leaf_gradient_norm": 650961.2818479289
+  },
+  {
+    "round": 217,
+    "before": 476059141.7756025,
+    "after": 475746729.6737791,
+    "leaves": 7,
+    "leaf_gradient_norm": 443311.8149823402
+  },
+  {
+    "round": 218,
+    "before": 475746729.6737791,
+    "after": 474664961.11292505,
+    "leaves": 8,
+    "leaf_gradient_norm": 784989.8990389319
+  },
+  {
+    "round": 219,
+    "before": 474664961.11292505,
+    "after": 474264061.341679,
+    "leaves": 8,
+    "leaf_gradient_norm": 558786.8636131848
+  },
+  {
+    "round": 220,
+    "before": 474264061.341679,
+    "after": 473863687.3981138,
+    "leaves": 8,
+    "leaf_gradient_norm": 540216.3187358243
+  },
+  {
+    "round": 221,
+    "before": 473863687.3981138,
+    "after": 473543089.23207206,
+    "leaves": 8,
+    "leaf_gradient_norm": 325244.88185484154
+  },
+  {
+    "round": 222,
+    "before": 473543089.23207206,
+    "after": 472905605.77606934,
+    "leaves": 8,
+    "leaf_gradient_norm": 505737.7518858232
+  },
+  {
+    "round": 223,
+    "before": 472905605.77606934,
+    "after": 472112355.0271601,
+    "leaves": 8,
+    "leaf_gradient_norm": 496356.58555912017
+  },
+  {
+    "round": 224,
+    "before": 472112355.0271601,
+    "after": 471549664.7833097,
+    "leaves": 8,
+    "leaf_gradient_norm": 533590.7476989054
+  },
+  {
+    "round": 225,
+    "before": 471549664.7833097,
+    "after": 471201408.72463447,
+    "leaves": 8,
+    "leaf_gradient_norm": 366422.0365996546
+  },
+  {
+    "round": 226,
+    "before": 471201408.72463447,
+    "after": 470223634.66355,
+    "leaves": 8,
+    "leaf_gradient_norm": 570621.6414723574
+  },
+  {
+    "round": 227,
+    "before": 470223634.66355,
+    "after": 469759383.2491435,
+    "leaves": 8,
+    "leaf_gradient_norm": 448121.97606633604
+  },
+  {
+    "round": 228,
+    "before": 469759383.2491435,
+    "after": 469386113.799655,
+    "leaves": 8,
+    "leaf_gradient_norm": 488649.1637403728
+  },
+  {
+    "round": 229,
+    "before": 469386113.799655,
+    "after": 468984821.4243946,
+    "leaves": 8,
+    "leaf_gradient_norm": 178402.80540394125
+  },
+  {
+    "round": 230,
+    "before": 468984821.4243946,
+    "after": 468704237.89868,
+    "leaves": 8,
+    "leaf_gradient_norm": 537179.5708499061
+  },
+  {
+    "round": 231,
+    "before": 468704237.89868,
+    "after": 468106594.6153868,
+    "leaves": 8,
+    "leaf_gradient_norm": 884000.6943859775
+  },
+  {
+    "round": 232,
+    "before": 468106594.6153868,
+    "after": 467596206.6515434,
+    "leaves": 8,
+    "leaf_gradient_norm": 278166.11269180174
+  },
+  {
+    "round": 233,
+    "before": 467596206.6515434,
+    "after": 467000958.289751,
+    "leaves": 8,
+    "leaf_gradient_norm": 620633.341630405
+  },
+  {
+    "round": 234,
+    "before": 467000958.289751,
+    "after": 466318130.625323,
+    "leaves": 8,
+    "leaf_gradient_norm": 358770.92806885944
+  },
+  {
+    "round": 235,
+    "before": 466318130.625323,
+    "after": 465732451.7643009,
+    "leaves": 8,
+    "leaf_gradient_norm": 206613.48140027872
+  },
+  {
+    "round": 236,
+    "before": 465732451.7643009,
+    "after": 465257366.8913136,
+    "leaves": 8,
+    "leaf_gradient_norm": 506050.4958361693
+  },
+  {
+    "round": 237,
+    "before": 465257366.8913136,
+    "after": 464890156.81492406,
+    "leaves": 8,
+    "leaf_gradient_norm": 277490.84282566514
+  },
+  {
+    "round": 238,
+    "before": 464890156.81492406,
+    "after": 464250783.65718544,
+    "leaves": 8,
+    "leaf_gradient_norm": 475077.1828905312
+  },
+  {
+    "round": 239,
+    "before": 464250783.65718544,
+    "after": 463417693.8634027,
+    "leaves": 8,
+    "leaf_gradient_norm": 259889.19096387777
+  },
+  {
+    "round": 240,
+    "before": 463417693.8634027,
+    "after": 462960897.39811766,
+    "leaves": 8,
+    "leaf_gradient_norm": 573864.4597594123
+  },
+  {
+    "round": 241,
+    "before": 462960897.39811766,
+    "after": 462546087.014419,
+    "leaves": 8,
+    "leaf_gradient_norm": 648287.354161477
+  },
+  {
+    "round": 242,
+    "before": 462546087.014419,
+    "after": 461965944.6640766,
+    "leaves": 8,
+    "leaf_gradient_norm": 552157.5242370862
+  },
+  {
+    "round": 243,
+    "before": 461965944.6640766,
+    "after": 461445523.54197055,
+    "leaves": 8,
+    "leaf_gradient_norm": 249649.5761633637
+  },
+  {
+    "round": 244,
+    "before": 461445523.54197055,
+    "after": 460953692.35155296,
+    "leaves": 8,
+    "leaf_gradient_norm": 240597.63930480907
+  },
+  {
+    "round": 245,
+    "before": 460953692.35155296,
+    "after": 460609017.27643067,
+    "leaves": 8,
+    "leaf_gradient_norm": 479189.40548974165
+  },
+  {
+    "round": 246,
+    "before": 460609017.27643067,
+    "after": 459975591.2338301,
+    "leaves": 8,
+    "leaf_gradient_norm": 715699.5783373257
+  },
+  {
+    "round": 247,
+    "before": 459975591.2338301,
+    "after": 459559442.25502795,
+    "leaves": 8,
+    "leaf_gradient_norm": 353149.2213702146
+  },
+  {
+    "round": 248,
+    "before": 459559442.25502795,
+    "after": 458997980.45745915,
+    "leaves": 8,
+    "leaf_gradient_norm": 450170.91811027174
+  },
+  {
+    "round": 249,
+    "before": 458997980.45745915,
+    "after": 458131711.7706168,
+    "leaves": 8,
+    "leaf_gradient_norm": 552336.1748062274
+  },
+  {
+    "round": 250,
+    "before": 458131711.7706168,
+    "after": 457860886.9833689,
+    "leaves": 7,
+    "leaf_gradient_norm": 241533.71664761147
+  },
+  {
+    "round": 251,
+    "before": 457860886.9833689,
+    "after": 457322758.41469437,
+    "leaves": 8,
+    "leaf_gradient_norm": 608564.4877932653
+  },
+  {
+    "round": 252,
+    "before": 457322758.41469437,
+    "after": 457028192.0339252,
+    "leaves": 8,
+    "leaf_gradient_norm": 468320.2111652291
+  },
+  {
+    "round": 253,
+    "before": 457028192.0339252,
+    "after": 456554949.5053922,
+    "leaves": 8,
+    "leaf_gradient_norm": 291559.0059555901
+  },
+  {
+    "round": 254,
+    "before": 456554949.5053922,
+    "after": 456133054.48350745,
+    "leaves": 8,
+    "leaf_gradient_norm": 538140.999049512
+  },
+  {
+    "round": 255,
+    "before": 456133054.48350745,
+    "after": 455786078.0671605,
+    "leaves": 8,
+    "leaf_gradient_norm": 555123.9508164615
+  },
+  {
+    "round": 256,
+    "before": 455786078.0671605,
+    "after": 455448314.2275379,
+    "leaves": 8,
+    "leaf_gradient_norm": 539862.6475404439
+  },
+  {
+    "round": 257,
+    "before": 455448314.2275379,
+    "after": 455205513.2344224,
+    "leaves": 7,
+    "leaf_gradient_norm": 287557.1975229824
+  },
+  {
+    "round": 258,
+    "before": 455205513.2344224,
+    "after": 454833417.40227634,
+    "leaves": 8,
+    "leaf_gradient_norm": 414460.7156797814
+  },
+  {
+    "round": 259,
+    "before": 454833417.40227634,
+    "after": 454263974.32990605,
+    "leaves": 8,
+    "leaf_gradient_norm": 405224.3103680107
+  },
+  {
+    "round": 260,
+    "before": 454263974.32990605,
+    "after": 453657384.8724317,
+    "leaves": 8,
+    "leaf_gradient_norm": 554239.0683264976
+  },
+  {
+    "round": 261,
+    "before": 453657384.8724317,
+    "after": 453345107.00594616,
+    "leaves": 8,
+    "leaf_gradient_norm": 520158.1967977648
+  },
+  {
+    "round": 262,
+    "before": 453345107.00594616,
+    "after": 453026228.806995,
+    "leaves": 8,
+    "leaf_gradient_norm": 479912.09646065254
+  },
+  {
+    "round": 263,
+    "before": 453026228.806995,
+    "after": 452699090.8731235,
+    "leaves": 8,
+    "leaf_gradient_norm": 268523.8641322196
+  },
+  {
+    "round": 264,
+    "before": 452699090.8731235,
+    "after": 452334044.0773591,
+    "leaves": 8,
+    "leaf_gradient_norm": 205776.18006797033
+  },
+  {
+    "round": 265,
+    "before": 452334044.0773591,
+    "after": 451869932.24759954,
+    "leaves": 8,
+    "leaf_gradient_norm": 497954.8821280979
+  },
+  {
+    "round": 266,
+    "before": 451869932.24759954,
+    "after": 451143047.31445414,
+    "leaves": 8,
+    "leaf_gradient_norm": 556712.1389027544
+  },
+  {
+    "round": 267,
+    "before": 451143047.31445414,
+    "after": 450912202.8963908,
+    "leaves": 7,
+    "leaf_gradient_norm": 536433.4206553284
+  },
+  {
+    "round": 268,
+    "before": 450912202.8963908,
+    "after": 450553199.79042554,
+    "leaves": 8,
+    "leaf_gradient_norm": 183833.87218327943
+  },
+  {
+    "round": 269,
+    "before": 450553199.79042554,
+    "after": 450210467.5756732,
+    "leaves": 8,
+    "leaf_gradient_norm": 286824.25757968967
+  },
+  {
+    "round": 270,
+    "before": 450210467.5756732,
+    "after": 449692184.3782732,
+    "leaves": 8,
+    "leaf_gradient_norm": 514072.584111882
+  },
+  {
+    "round": 271,
+    "before": 449692184.3782732,
+    "after": 449355204.06135553,
+    "leaves": 8,
+    "leaf_gradient_norm": 207209.94624710848
+  },
+  {
+    "round": 272,
+    "before": 449355204.06135553,
+    "after": 448894445.6177939,
+    "leaves": 8,
+    "leaf_gradient_norm": 227602.27459375974
+  },
+  {
+    "round": 273,
+    "before": 448894445.6177939,
+    "after": 448676649.7564751,
+    "leaves": 8,
+    "leaf_gradient_norm": 306901.9649686992
+  },
+  {
+    "round": 274,
+    "before": 448676649.7564751,
+    "after": 448224270.51348,
+    "leaves": 8,
+    "leaf_gradient_norm": 243920.2626642658
+  },
+  {
+    "round": 275,
+    "before": 448224270.51348,
+    "after": 447797330.4776924,
+    "leaves": 8,
+    "leaf_gradient_norm": 589763.0083908351
+  },
+  {
+    "round": 276,
+    "before": 447797330.4776924,
+    "after": 447171053.7912416,
+    "leaves": 8,
+    "leaf_gradient_norm": 605905.90307554
+  },
+  {
+    "round": 277,
+    "before": 447171053.7912416,
+    "after": 446793403.7210129,
+    "leaves": 8,
+    "leaf_gradient_norm": 510105.2347171838
+  },
+  {
+    "round": 278,
+    "before": 446793403.7210129,
+    "after": 446351429.6379184,
+    "leaves": 8,
+    "leaf_gradient_norm": 314266.3341630586
+  },
+  {
+    "round": 279,
+    "before": 446351429.6379184,
+    "after": 445770258.316085,
+    "leaves": 8,
+    "leaf_gradient_norm": 521257.87607257365
+  },
+  {
+    "round": 280,
+    "before": 445770258.316085,
+    "after": 445435687.69042754,
+    "leaves": 7,
+    "leaf_gradient_norm": 256877.2954702285
+  },
+  {
+    "round": 281,
+    "before": 445435687.69042754,
+    "after": 444888369.97016233,
+    "leaves": 8,
+    "leaf_gradient_norm": 530476.520476817
+  },
+  {
+    "round": 282,
+    "before": 444888369.97016233,
+    "after": 444685513.4367575,
+    "leaves": 7,
+    "leaf_gradient_norm": 235592.90927514405
+  },
+  {
+    "round": 283,
+    "before": 444685513.4367575,
+    "after": 444312248.29102826,
+    "leaves": 8,
+    "leaf_gradient_norm": 178066.87500751464
+  },
+  {
+    "round": 284,
+    "before": 444312248.29102826,
+    "after": 444060676.30454195,
+    "leaves": 8,
+    "leaf_gradient_norm": 188360.91004570122
+  },
+  {
+    "round": 285,
+    "before": 444060676.30454195,
+    "after": 443781221.5525104,
+    "leaves": 8,
+    "leaf_gradient_norm": 595150.3061747414
+  },
+  {
+    "round": 286,
+    "before": 443781221.5525104,
+    "after": 443275389.4356766,
+    "leaves": 8,
+    "leaf_gradient_norm": 284360.1939856522
+  },
+  {
+    "round": 287,
+    "before": 443275389.4356766,
+    "after": 442533742.1227268,
+    "leaves": 8,
+    "leaf_gradient_norm": 777816.7497266937
+  },
+  {
+    "round": 288,
+    "before": 442533742.1227268,
+    "after": 442129028.20878375,
+    "leaves": 8,
+    "leaf_gradient_norm": 549557.826618179
+  },
+  {
+    "round": 289,
+    "before": 442129028.20878375,
+    "after": 441737939.8428297,
+    "leaves": 8,
+    "leaf_gradient_norm": 253464.4858223983
+  },
+  {
+    "round": 290,
+    "before": 441737939.8428297,
+    "after": 441335270.55652654,
+    "leaves": 8,
+    "leaf_gradient_norm": 521343.8938200862
+  },
+  {
+    "round": 291,
+    "before": 441335270.55652654,
+    "after": 441047576.1254251,
+    "leaves": 8,
+    "leaf_gradient_norm": 409169.5587848469
+  },
+  {
+    "round": 292,
+    "before": 441047576.1254251,
+    "after": 440492904.40650403,
+    "leaves": 8,
+    "leaf_gradient_norm": 362940.2712536969
+  },
+  {
+    "round": 293,
+    "before": 440492904.40650403,
+    "after": 440138218.082481,
+    "leaves": 8,
+    "leaf_gradient_norm": 344013.2131128177
+  },
+  {
+    "round": 294,
+    "before": 440138218.082481,
+    "after": 439732781.48591894,
+    "leaves": 8,
+    "leaf_gradient_norm": 240097.05570783716
+  },
+  {
+    "round": 295,
+    "before": 439732781.48591894,
+    "after": 439336612.87579656,
+    "leaves": 8,
+    "leaf_gradient_norm": 273752.17830996064
+  },
+  {
+    "round": 296,
+    "before": 439336612.87579656,
+    "after": 439009304.1591199,
+    "leaves": 8,
+    "leaf_gradient_norm": 202022.72798291355
+  },
+  {
+    "round": 297,
+    "before": 439009304.1591199,
+    "after": 438804210.6806459,
+    "leaves": 6,
+    "leaf_gradient_norm": 469559.01754658937
+  },
+  {
+    "round": 298,
+    "before": 438804210.6806459,
+    "after": 438475166.17981774,
+    "leaves": 8,
+    "leaf_gradient_norm": 326377.870555881
+  },
+  {
+    "round": 299,
+    "before": 438475166.17981774,
+    "after": 437513969.3152882,
+    "leaves": 8,
+    "leaf_gradient_norm": 378862.83588520123
+  }
+]

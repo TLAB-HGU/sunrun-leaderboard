@@ -4,6 +4,8 @@
 
 ## Train / validation loss 이력
 
+**추가 조사:** [구성 모델별 원본 loss 이력](component_losses/)을 각각 게시했습니다. 직접 구성 모델의 로그·평가 기록뿐 아니라, E1769의 하위 E1725에서 **실제 공식 학습 모델의 300-round × 3시드 training objective trace**를 찾아 [학습 그래프와 JSON/CSV](component_losses/upstream_E1725/)로 추가했습니다. 반복별 validation loss는 저장되어 있지 않습니다.
+
 **E1789에는 별도 학습 단계가 없어 train/validation 학습 곡선이 존재하지 않습니다.** 이미 저장된 E1604-public, E1593, E1595, E0472, E1769 예측을 고정 가중치 **2:1:2:1:1**로 합칩니다. 학습 반복, optimizer, epoch가 없으며, 원본 실행 로그에는 결합 완료 요약만 있습니다. 구성 실험의 원본 실행 자료에서도 당시의 반복별 train/validation loss 이력을 찾지 못했습니다.
 
 따라서 아래 그림은 **공식 평가 구간의 예측 오차**이며 학습 곡선이 아닙니다. 재학습하거나 과거 학습 곡선을 추정해 그리지 않았습니다. [이력 확인 결과](loss_history_audit.json)와 원래 [결합 영수증](../../../releases/e1789/original-combination-receipt.json)을 함께 보존했습니다.

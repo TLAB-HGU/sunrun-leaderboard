@@ -1,0 +1,59 @@
+{
+ "experiment": "HSSPEAK72",
+ "width": 12.0,
+ "shrink": 0.15,
+ "min_lead": 25,
+ "control": {
+  "1": [
+   "E1508",
+   "roll3"
+  ],
+  "2": [
+   "E1508",
+   "roll3"
+  ],
+  "3": [
+   "E1508",
+   "roll3"
+  ],
+  "4": [
+   "E1529",
+   "roll3x"
+  ],
+  "5": [
+   "E1529",
+   "roll3x"
+  ],
+  "6": [
+   "E1529",
+   "roll3x"
+  ]
+ },
+ "cache_sha256": "41e963a3c1331e34d3c45cd02ef8e4f341d6129436da1925b5f4242d969d2d27",
+ "folds_corrected": [
+  1,
+  2,
+  3,
+  6
+ ],
+ "files": {
+  "roll3/f1_s0.parquet": "af21444440034ace30e541f05e73b4d5cfbff5138e073d6035f4a8f2febac4e6",
+  "roll3/f1_s1.parquet": "376a40169d517740b514f557145e3c585556affd520b27dec601e22a2d0e92ef",
+  "roll3/f1_s2.parquet": "e53ad708c91fe2dccf3413ce4bd51ab6c4db237e8cd7ab0f3ef4fc09ca77fde5",
+  "roll3/f2_s0.parquet": "b567f6b6add62a4f22aaf0181ca6422302e6238bf016662ebae0f7b95f33cd29",
+  "roll3/f2_s1.parquet": "d0d9cbb6089fedaf66cf2d8888b7200198440d3154cc044f7aaa1f097aa6d862",
+  "roll3/f2_s2.parquet": "5f0d5cf467069bee570d39a9f917bcc00728ef1c2ef10671c9af9d840509c5a3",
+  "roll3/f3_s0.parquet": "fdc1b19d71e7ee2f597c5805ddc5b7b4760483b61750d05e6e661b60a6e06614",
+  "roll3/f3_s1.parquet": "0345d89a0fa9ccbd9ac22ca8af21b9ba53672d4c2d58304255fda4d1ebff154e",
+  "roll3/f3_s2.parquet": "3441bfb96db496a19778bc276a4aaab1e56befd83b6e900027aa9faad749f161",
+  "roll3x/f4_s0.parquet": "cc3b229dfc2e3fafdcc697fa26665d302b84ad25d007f04ca0cfaf1647ba2904",
+  "roll3x/f4_s1.parquet": "4f154d00c28fff3658fc07db6b2091792fdb9ec157d82bc4d00c92279ed7d76a",
+  "roll3x/f4_s2.parquet": "6570aa7222482284c71fc9e5a7fc28e398e47e81a63aa5e71fd772058e888523",
+  "roll3x/f5_s0.parquet": "cbadad193a404244295bc57ff2071c1376b64cf7f52d4b154ec45f3fd866636d",
+  "roll3x/f5_s1.parquet": "1dce8c84e14ab145855af132351c333b7b0f251da39207164c6bb19976dbbeae",
+  "roll3x/f5_s2.parquet": "ccc472f623fc3774ccc7ea5b26226df328d3bfecc851b878529f9be82c706962",
+  "roll3x/f6_s0.parquet": "5b90319a46041dd045119225d1c96c9fd66f670671471ef447471ec6a11fe5ae",
+  "roll3x/f6_s1.parquet": "6ef76d6d871056b08211bc37ccf436259f76cdc8304440b54df958546e87f69e",
+  "roll3x/f6_s2.parquet": "31cea86892fc0fbd97711c9a283e8535ee831075779b8aaf1e9c2deaba5d260e"
+ }
+}

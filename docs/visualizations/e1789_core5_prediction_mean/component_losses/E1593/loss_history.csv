@@ -1,0 +1,9 @@
+experiment,evaluation_event,graph_seq,evaluated_at_utc,split,aggregation,seed,mse_kms2,mse_observed_kms2,latest_archived_event,is_training_iteration
+E1593,1,6243,2026-10-19T08:33:39+00:00,official_test,individual_seed_mse,0,3199.582259660386,3217.4268063486784,False,False
+E1593,1,6243,2026-10-19T08:33:39+00:00,official_test,individual_seed_mse,1,3256.7238723213245,3272.7628352946067,False,False
+E1593,1,6243,2026-10-19T08:33:39+00:00,official_test,individual_seed_mse,2,3249.8813776530546,3267.073284815528,False,False
+E1593,1,6243,2026-10-19T08:33:39+00:00,official_test,arithmetic_mean_of_seed_mse,mean,3235.3958365449216,3252.420975486271,False,False
+E1593,2,6244,2026-10-19T08:33:51+00:00,official_test,individual_seed_mse,0,3199.582259660386,3217.4268063486784,True,False
+E1593,2,6244,2026-10-19T08:33:51+00:00,official_test,individual_seed_mse,1,3256.7238723213245,3272.7628352946067,True,False
+E1593,2,6244,2026-10-19T08:33:51+00:00,official_test,individual_seed_mse,2,3249.8813776530546,3267.073284815528,True,False
+E1593,2,6244,2026-10-19T08:33:51+00:00,official_test,arithmetic_mean_of_seed_mse,mean,3235.3958365449216,3252.420975486271,True,False
