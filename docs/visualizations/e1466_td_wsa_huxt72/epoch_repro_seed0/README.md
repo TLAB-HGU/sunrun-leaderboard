@@ -40,6 +40,31 @@
 - 각 fold는 별도 모델로 순차 학습되며, epoch은 fold마다 1부터 다시 시작합니다.
 - fold 1의 validation loss가 가장 높은 것은 2025-11~12 창의 분포 차이와 작은 train set(144 origins)에 기인합니다.
 
+## 왜 validation이 안 떨어지는가
+
+진단 그림은 [validation_diagnostics.png](validation_diagnostics.png), 수치는 [validation_diagnostics.csv](validation_diagnostics.csv)에 있습니다. 결론부터 말하면 **버그가 아니라 (1) 미래 시간 블록의 분포 shift, (2) 작은 train set 대비 큰 모델의 overfitting, (3) 이미 강한 constant baseline, (4) 240초 floor 이후의 overtrain**입니다.
+
+| fold | train origins | train model | val model | val baseline | Δ (model−baseline) | val z mean / std |
+|---:|---:|---:|---:|---:|---:|---:|
+| 0 | 115 | 0.2942 | 0.3537 | 0.4026 | −0.0488 | −0.071 / 0.959 |
+| 1 | 144 | 0.1462 | 0.5729 | 0.5312 | **+0.0418** | +0.097 / 1.218 |
+| 2 | 264 | 0.1833 | 0.5281 | 0.5928 | −0.0647 | −0.096 / 1.200 |
+| 3 | 456 | 0.2345 | 0.4179 | 0.4694 | −0.0515 | −0.275 / 0.982 |
+| 4 | 624 | 0.2849 | 0.2836 | 0.3084 | −0.0248 | −0.020 / 0.837 |
+| 5 | 748 | 0.2364 | 0.3347 | 0.3977 | −0.0630 | −0.088 / 0.935 |
+
+1. **Validation은 미래 시간 블록이라 분포가 다릅니다.** fold 1은 validation field std가 53.7 km/s로 train 44.0보다 크고 q99도 564 vs 508입니다. fold 3은 validation 평균이 383.3 km/s로 train 397.8보다 낮습니다(z mean −0.275). fold 2는 validation z std가 1.20입니다. train의 global mean/std로 정규화한 validation 입력이 이미 off-distribution입니다.
+
+2. **Constant baseline이 이미 강합니다.** validation에서 train 평균(정규화 공간의 0)만 예측해도 Smooth L1이 0.31–0.59입니다. model은 5개 fold에서 0.025–0.065만 개선하고, fold 1에서는 baseline보다 **0.042 더 나쁩니다**. 즉 loss의 대부분은 field 자체의 공간 분산과 계절 shift이며, model이 줄일 수 있는 부분이 작습니다.
+
+3. **Overfitting입니다.** train model loss는 0.146–0.285까지 내려가지만 validation은 0.284–0.573입니다. 모델은 178,353 params인데 train origins는 115–748개뿐입니다. fold 1은 train 0.146 vs validation 0.573으로 train을 사실상 외웠고, train origins가 많은 fold 4/5에서 validation이 상대적으로 낮습니다.
+
+4. **240초 floor 때문에 best epoch 이후에도 계속 학습합니다.** best epoch는 68, 78, 28, 22, 4, 14입니다. fold 2–5는 epoch 4–28에서 best인데 84–90까지 학습하므로 곡선의 validation은 그 이후 상승하거나 정체합니다. 최종 checkpoint는 best state를 복원하지만, 그려진 곡선은 overfitting 구간을 포함합니다.
+
+5. **학습 loop의 validation sample은 12개**라 epoch 곡선이 noisy합니다. 다만 full validation(32–176 origins)으로 다시 계산해도 같은 패턴이 나옵니다([model_lead_diagnostics.json](model_lead_diagnostics.json)).
+
+6. **fold 1이 worst인 이유**는 train window(2025-10-01~11-14, 144 origins)가 validation window(11-15~12-15)의 고속 stream(q99 564 km/s)을 보지 못했기 때문입니다. 이 fold는 모든 72 lead에서 model이 baseline보다 나쁩니다.
+
 ## 상태와 한계
 
 - state build: 671.8초, field shape `(3761, 72, 130, 128)`, official 2,833 origins coverage 확인.
@@ -55,5 +80,8 @@
 - [code/plot_epoch_loss.py](code/plot_epoch_loss.py) — 그림 재생성
 - [encoder_curves_s0.json](encoder_curves_s0.json) — 4 epoch 간격으로 기록된 원본 curve
 - [encoder_receipts.json](encoder_receipts.json) — fold별 checkpoint receipt (best epoch/loss 포함)
+- [code/diagnose_validation.py](code/diagnose_validation.py) — fold별 field 분포·constant baseline 진단
+- [code/diagnose_model.py](code/diagnose_model.py) — checkpoint별 per-lead model vs baseline 진단
+- [validation_diagnostics.csv](validation_diagnostics.csv) / [model_lead_diagnostics.json](model_lead_diagnostics.json) — 위 진단의 수치
 
 이 재현은 원본 E1466의 학습 곡선을 대체하지 않습니다.
