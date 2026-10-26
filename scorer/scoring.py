@@ -8,6 +8,8 @@ HORIZON = 72
 MIN_BLOCKS_PER_REGIME = 3  # non-overlapping 72h windows needed before a regime cell is reported
 N_BOOT = 1000
 REGIMES = [f"{t}_{s}_{f}" for t in ("low", "high") for s in ("low", "high") for f in ("low", "high")]
+PERIODS = ("F1", "F2")  # F1 targets 2026-03-01..06-01, F2 2026-06-01..09-30 (UTC, end exclusive)
+HSS_KMS = 550.0  # high-speed subset: targets with target_kms >= HSS_KMS
 KEY = ["origin_last_input_utc", "horizon_hours"]
 
 
@@ -73,23 +75,32 @@ def validate(pred: pd.DataFrame, folds: pd.DataFrame) -> list[str]:
 
 
 def score(pred: pd.DataFrame, truth: pd.DataFrame, folds: pd.DataFrame, naive: pd.DataFrame | None = None) -> dict:
-    """Returns overall / per-horizon / per-regime metrics. Assumes validate() passed."""
+    """Returns overall / per-period / >=550 / per-horizon / per-regime metrics. Assumes validate() passed."""
+    if "period" not in folds:  # folds from before the F1/F2 split are all F2
+        folds = folds.assign(period="F2")
     m = truth.merge(pred[KEY + ["pred_kms"]], on=KEY, how="inner").merge(
-        folds[["origin_last_input_utc", "regime"]], on="origin_last_input_utc")
+        folds[["origin_last_input_utc", "regime", "period"]], on="origin_last_input_utc")
     if "was_missing" not in m:
         m["was_missing"] = 0
     m["se"] = (m["target_kms"] - m["pred_kms"]) ** 2
     m["ae"] = (m["target_kms"] - m["pred_kms"]).abs()
+    subsets = {}  # overall, per period, and each restricted to target_kms >= HSS_KMS
+    for name, sel in [("", pd.Series(True, index=m.index))] + [(f"_{p.lower()}", m["period"] == p) for p in PERIODS]:
+        subsets[name] = sel
+        subsets[f"{name}_ge550"] = sel & (m["target_kms"] >= HSS_KMS)
+    by_period = {f"mse{k}": float(m.loc[sel, "se"].mean()) if sel.any() else None for k, sel in subsets.items()}
+    by_period.update({f"n_pairs{k}": int(sel.sum()) for k, sel in subsets.items() if k})
     by_regime = {}
+    f2 = m[m["period"] == "F2"]  # regime rows stay F2-only: thresholds were frozen on the F2 folds
     for r in REGIMES:
-        g = m[m["regime"] == r]
+        g = f2[f2["regime"] == r]
         n = int(g["origin_last_input_utc"].nunique())
         nb = n_blocks(g["origin_last_input_utc"].unique()) if n else 0
         by_regime[r] = {"n_folds": n, "n_blocks": nb, "mse": float(g["se"].mean()) if n else None,
                         "reliable": nb >= MIN_BLOCKS_PER_REGIME}
     reliable = [v["mse"] for v in by_regime.values() if v["reliable"]]
     out = {
-        "mse": float(m["se"].mean()),
+        **by_period,
         "rmse": float(np.sqrt(m["se"].mean())),
         "mae": float(m["ae"].mean()),
         "mse_observed": float(m.loc[m["was_missing"] == 0, "se"].mean()) if (m["was_missing"] == 0).any() else None,

@@ -35,16 +35,37 @@ def _latest(results: list[dict]) -> list[dict]:
     return list(by.values())
 
 
+def has_f1(r: dict) -> bool:
+    """Scored on F1 + F2; older results hold only the F2 (2026-06..09) evaluation, whose MSE is `mse`."""
+    return r.get("mse_f1") is not None
+
+
+def f2_mse(r: dict) -> float:
+    return r["mse_f2"] if has_f1(r) else r["mse"]
+
+
+def ranked(results: list[dict]) -> list[dict]:
+    """F1+F2 results by overall MSE, then F2-only results by F2 MSE."""
+    rows = _latest(results)
+    return (sorted([r for r in rows if has_f1(r)], key=lambda r: r["mse"])
+            + sorted([r for r in rows if not has_f1(r)], key=f2_mse))
+
+
 def _num(x, d=1):
     return '<span class="dash">–</span>' if x is None else f"{x:,.{d}f}"
 
 
 def render(results: list[dict], note: str = "") -> str:
-    rows = sorted(_latest(results), key=lambda r: r["mse"])
-    head = ["#", "experiment", "member", "config", "sec/fold", "code", "MSE", "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE", "submitted (UTC)"] + REGIMES
-    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 5, 11) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
+    rows = ranked(results)
+    head = (["#", "experiment", "member", "config", "sec/fold", "code", "MSE", "F1 MSE", "F2 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550",
+             "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE (F2)", "submitted (UTC)"] + REGIMES)
+    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 5, 16) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
     body = []
     for i, r in enumerate(rows, 1):
+        full = has_f1(r)
+        rank = f"<td>{i}</td>" if full else '<td data-v="9999" title="scored on F2 (2026-06..09) only; resubmit with F1 predictions to be ranked">F2 only</td>'
+        metrics = [r.get(k) if full else None for k in ("mse", "mse_f1", "mse_f2", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550")]
+        metrics[2] = f2_mse(r)
         vs = r.get("vs_naive") or {}
         beat = vs.get("beats_reference")
         config_sha = r.get("config_sha256")
@@ -54,10 +75,10 @@ def render(results: list[dict], note: str = "") -> str:
         code = (f'<a href="{html.escape(code_url, quote=True)}" target="_blank" rel="noopener">script</a>'
                 if code_url else '<span class="dash">–</span>')
         cells = [
-            f"<td>{i}</td>", f'<td class="l">{html.escape(r["experiment"])}</td>', f'<td class="l">{html.escape(r["team_member"])}</td>',
+            rank, f'<td class="l">{html.escape(r["experiment"])}</td>', f'<td class="l">{html.escape(r["team_member"])}</td>',
             f'<td class="l" title="{html.escape(config_sha or "legacy")}"><code>{config_label}</code></td>',
             f'<td data-v="{seconds if seconds is not None else ""}">{_num(seconds, 6)}</td>', f'<td class="l">{code}</td>',
-            f'<td data-v="{r["mse"]}">{r["mse"]:,.1f}</td>', f'<td>{_num(r.get("mse_observed"))}</td>',
+            *(f'<td data-v="{"" if x is None else x}">{_num(x)}</td>' for x in metrics), f'<td>{_num(r.get("mse_observed"))}</td>',
             f'<td data-v="{r.get("skill_vs_naive") or 0}">{(r.get("skill_vs_naive") or 0):+.1%}</td>',
             f'<td class="{"ok" if beat else "no"}">{"yes" if beat else "no"}</td>',
             f'<td>{_num(r.get("regime_balanced_mse"))}</td>',
@@ -70,11 +91,14 @@ def render(results: list[dict], note: str = "") -> str:
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Solar wind 72h leaderboard</title><style>{CSS}</style></head><body><main>
 <h1>Solar wind 72h leaderboard</h1>
-<p class="sub">Hourly origins, 72h windows, targets 2026-06-01 00:00 .. 2026-09-29 23:00 UTC (2,833 folds; fixed). Lower MSE (km/s)² is better. {html.escape(note)}</p>
+<p class="sub">Hourly origins, 72h windows. <b>F1</b> targets 2026-03-01 00:00 .. 2026-05-31 23:00 UTC (2,137 folds),
+<b>F2</b> targets 2026-06-01 00:00 .. 2026-09-29 23:00 UTC (2,833 folds). Rank = MSE over F1 + F2. Lower MSE (km/s)² is better. {html.escape(note)}</p>
 <div class="wrap"><table><thead><tr>{th}</tr></thead><tbody>{"".join(body)}</tbody></table></div>
-<footer>Rank = overall MSE (fills forward-filled targets, same as the baseline study). <b>MSE obs.</b> scores only originally observed targets.
+<footer>Rank = overall MSE over F1 + F2 (counts forward-filled targets, same as the baseline study). <b>≥550</b> columns score only targets whose true speed is ≥ 550 km/s.
+F1 predictions must come from models trained on data before 2026-02-26 00:00 UTC. <b>F2 only</b> rows were scored before F1 was added: they are listed below the ranking by F2 MSE,
+and their MSE obs. / skill / beats naive are F2 values. <b>MSE obs.</b> scores only originally observed targets.
 <b>beats naive</b> = block-bootstrap (72h blocks) 95% CI of the paired MSE difference is below 0. Regime columns (trend/seasonal-27d/forecastability, low/high) are
-diagnostic and hidden when a cell has fewer than 3 non-overlapping 72h blocks. Click a header to sort.<br>Generated from {len(results)} scored submissions.</footer>
+diagnostic, computed on F2 folds only, and hidden when a cell has fewer than 3 non-overlapping 72h blocks. Click a header to sort.<br>Generated from {len(results)} scored submissions.</footer>
 </main><script>{JS}</script></body></html>"""
 
 

@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from board import _latest, load_results, render
+from board import _latest, load_results, ranked, render
 from submit import canonical_config, script_location, store_submission, validate_meta
 
 
@@ -18,6 +18,7 @@ def meta(**overrides):
         "experiment": "mean_reversion",
         "description": "test",
         "no_future_leakage": True,
+        "f1_training_data_end_utc": "2026-02-26T00:00:00Z",
         "config": CONFIG,
         "inference_seconds_per_fold": 0.001,
     }
@@ -48,6 +49,25 @@ def test_config_hash_changes_with_data_or_hyperparameters():
 def test_timing_must_be_positive_and_finite(value):
     with pytest.raises(SystemExit, match="positive finite"):
         validate_meta(meta(inference_seconds_per_fold=value))
+
+
+@pytest.mark.parametrize("value", ["2026-02-26T00:00:00Z", "2026-02-25", "2026-02-26T09:00:00+09:00",
+                                   __import__("datetime").datetime(2026, 2, 1)])
+def test_f1_training_end_on_or_before_cutoff_is_accepted(value):
+    assert validate_meta(meta(f1_training_data_end_utc=value))[3] <= "2026-02-26T00:00:00Z"
+
+
+@pytest.mark.parametrize("value", ["2026-02-26T01:00:00Z", "2026-05-31", "not a date"])
+def test_f1_training_end_after_cutoff_or_invalid_is_rejected(value):
+    with pytest.raises(SystemExit, match="f1_training_data_end_utc"):
+        validate_meta(meta(f1_training_data_end_utc=value))
+
+
+def test_meta_requires_f1_training_end():
+    value = meta()
+    del value["f1_training_data_end_utc"]
+    with pytest.raises(SystemExit, match="f1_training_data_end_utc"):
+        validate_meta(value)
 
 
 def test_meta_requires_structured_config_and_safe_names():
@@ -97,6 +117,24 @@ def test_board_renders_new_and_legacy_metadata():
     assert "legacy" in page
     assert "0.001234" in page
     assert "https://example.com/code.py" in page
+
+
+def test_f2_only_results_rank_below_f1_f2_results():
+    regimes = {name: {"mse": None, "reliable": False} for name in __import__("board").REGIMES}
+    base = {"team_member": "alice", "submitted_utc": "20261026T000000Z", "skill_vs_naive": 0.1,
+            "vs_naive": {"beats_reference": True}, "by_regime": regimes}
+    full = {"mse_f1": 5000.0, "mse_f2": 3000.0, "mse_ge550": 9000.0, "mse_f1_ge550": 9500.0, "mse_f2_ge550": 8500.0}
+    rows = [
+        {**base, "experiment": "old_good", "config_sha256": "a" * 64, "mse": 1000.0},
+        {**base, "experiment": "new_worse", "config_sha256": "b" * 64, "mse": 4100.0, **full},
+        {**base, "experiment": "new_better", "config_sha256": "c" * 64, "mse": 4000.0, **full},
+        {**base, "experiment": "old_bad", "config_sha256": "d" * 64, "mse": 2000.0},
+    ]
+    assert [r["experiment"] for r in ranked(rows)] == ["new_better", "new_worse", "old_good", "old_bad"]
+    page = render(rows)
+    assert page.index("new_better") < page.index("new_worse") < page.index("old_good") < page.index("old_bad")
+    assert "F2 only" in page and "9,500.0" in page
+    assert '<td data-v="1000.0">1,000.0</td>' in page  # an F2-only row's old MSE is shown as its F2 MSE
 
 
 def test_local_preview_loads_flat_and_nested_results(tmp_path):

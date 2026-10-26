@@ -1,8 +1,22 @@
 # Solar wind 72h — team leaderboard (submit client)
 
-Evaluation (**fixed 2026-09-30**): targets **2026-06-01 00:00 – 2026-09-30 00:00 UTC (exclusive)**, hourly origins, 72h windows:
-2,833 origins × 72 = 203,976 rows. Origins run from `2026-05-31T23:00:00Z` to `2026-09-26T23:00:00Z`.
-Rank = overall MSE. Regime columns are diagnostic.
+Evaluation (**two periods since 2026-10-26**), hourly origins, 72h windows, all target times UTC, end exclusive:
+
+| period | targets | origins | folds |
+|---|---|---|---|
+| **F1** | 2026-03-01 00:00 – 2026-06-01 00:00 | `2026-02-28T23:00:00Z` .. `2026-05-28T23:00:00Z` | 2,137 |
+| **F2** | 2026-06-01 00:00 – 2026-09-30 00:00 | `2026-05-31T23:00:00Z` .. `2026-09-26T23:00:00Z` | 2,833 |
+
+4,970 origins × 72 = 357,840 rows. Origins whose 72h window straddles the boundary (2026-05-29..05-31) are in neither period.
+Rank = overall MSE over F1 + F2. The board also shows F1 MSE, F2 MSE, and the same three MSEs over targets whose true speed
+is ≥ 550 km/s (`MSE ≥550`, `F1 ≥550`, `F2 ≥550`; forward-filled targets count, as in `MSE`). Regime columns are diagnostic.
+
+**F1 training cutoff:** F1 predictions must come from a model trained (and tuned) only on data before
+**2026-02-26 00:00 UTC** (F1 start − 72h). Declare it in `meta.yaml` as `f1_training_data_end_utc` (≤ that time);
+`submit.py` rejects later values. Like `no_future_leakage`, this is an honour statement.
+
+Results submitted before 2026-10-26 hold only F2 (their MSE is the F2 MSE). They are listed below the ranking as
+`F2 only`, sorted by F2 MSE, until they are resubmitted with F1 + F2 predictions (`--replace` keeps the same key).
 
 - [월별 검증 폴드 GIF: E0472 / xgb_d76_lead_moe_resid_dv_enlil](docs/visualizations/xgb_d76_lead_moe_resid_dv_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 공식 폴드 및 별도 10월 참고 추론 264개, 2배속.
 - [E1149 L72-COND / ACE+2시간 GIF](docs/visualizations/e1149_l72cond_ace2h/README.md) — 원 실험의 6~9월 저장 예측과 10월 참고 추론.
@@ -32,13 +46,13 @@ are stored in the dataset and the leaderboard page is regenerated.
 
 **predictions** (`.parquet` or `.csv`): one row per (origin, horizon), columns
 `origin_last_input_utc` (e.g. `2026-06-01T05:00:00Z`, the last timestamp your model may use),
-`horizon_hours` (1..72), `pred_kms`. Every origin/horizon of the evaluation set must be present exactly once.
+`horizon_hours` (1..72), `pred_kms`. Every origin/horizon of the evaluation set (F1 and F2) must be present exactly once.
 List the origins from the dataset:
 ```python
 import pandas as pd
 from huggingface_hub import hf_hub_download
 folds = pd.read_parquet(hf_hub_download("tlabtlab/sunrun-lb-store", "folds.parquet", repo_type="dataset"))
-origins = folds["origin_last_input_utc"]   # ignore the regime columns
+origins = folds["origin_last_input_utc"]   # `period` is F1 or F2; ignore the regime columns
 ```
 
 **meta.yaml**: see `meta.example.yaml`. `no_future_leakage: true` means only data with timestamp ≤ `origin_last_input_utc`
@@ -94,14 +108,19 @@ Model inputs come from the shared Drive folder **sun-db**
   identical on all 2,328 originally observed evaluation hours (max abs diff 0.0). The `sun-db` parquet files themselves were not compared.
 - The files keep updating and contain hours **after** your origin. For origin `t` use only rows with `timestamp_utc <= t`
   (`point_in_time_vintage_verified` is 0 for every row: values are latest-vintage, not as-of).
-- 19.8% of the evaluation targets are missing hours; the scoring truth forward-fills them with the last valid speed (`MSE obs.` ignores them).
+- 19.8% of the F2 targets (21.3% of F1) are missing hours; the scoring truth forward-fills them with the last valid speed (`MSE obs.` ignores them).
   Predict as if every hour had a value; do not drop missing hours.
 
 ## Read the numbers
-- `MSE` counts forward-filled targets (19.8% of the evaluation targets); `MSE obs.` only originally observed targets.
+- `MSE` counts forward-filled targets; `MSE obs.` only originally observed targets.
+- `≥550` columns use only targets with true speed ≥ 550 km/s (F1 24,480 pairs, F2 23,976): high-speed streams, where most of the squared error is.
 - `beats naive (95% CI)`: paired MSE difference vs Naive, bootstrapped over 72h blocks (folds overlap 71/72, so ~120 effective blocks, not 2,833 folds).
-- Regime cells with < 3 non-overlapping 72h blocks are hidden. Do not tune on regime rows.
+- Regime cells are computed on F2 folds only (thresholds were frozen on them); cells with < 3 non-overlapping 72h blocks are hidden. Do not tune on regime rows.
 - The bar is **mean_reversion** (Naive → 648h mean, decay 48h, tuned only on data before June), not Naive: it is ~36% better.
-- Evaluation covers every day from June on: tune on 2025-08 .. 2026-05 only and submit finished models.
+- Evaluation covers every day from March on. F1 models: train/tune before 2026-02-26 00:00 UTC. F2 models: tune on 2025-08 ..
+  2026-05 only, as before. A model trained once before 2026-02-26 can produce both periods.
+- The `mean_reversion` decay (48h) was tuned on 2025-09 .. 2026-05; retuned before 2026-02-26 it would be 24h, with dev MSE
+  within 0.13% of 48h, so the baseline was kept unchanged for F1 (team decision 2026-10-26).
 
-Maintenance code (data refresh, fold/label building, baseline generation, Gradio app) is kept at git tag `full-2026-09-30`.
+Maintenance code (data refresh, fold/label building, baseline generation, Gradio app) is kept at git tag `full-2026-09-30`;
+the F1 + F2 store build is on branch `maint-f1f2` (its F2 folds/truth/naive are bit-identical to the 2026-09-30 store).

@@ -2,6 +2,7 @@ team_member: alice
 experiment: lgbm-lags-v1
 description: LightGBM on 168h lags + solar-cycle features, direct multi-horizon
 no_future_leakage: true   # only data with timestamp <= origin_last_input_utc was used
+f1_training_data_end_utc: 2026-02-01T00:00:00Z   # end of the data used to train/tune the model behind F1 predictions; must be <= 2026-02-26T00:00:00Z
 config:
   data:
     source: sun-db/timeseries/ace_solar
