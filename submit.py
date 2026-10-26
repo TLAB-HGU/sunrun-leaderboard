@@ -27,7 +27,7 @@ from huggingface_hub.utils import HfHubHTTPError
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE)]
-from board import f2_mse, has_f1, ranked, render  # noqa: E402
+from board import event_value, f2_mse, has_f1, ranked, render  # noqa: E402
 from scoring import score, validate  # noqa: E402
 
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -51,18 +51,20 @@ def text_table(results: list[dict]) -> str:
         return f"{x:,.1f}" if x is not None else "-"
 
     out = [f"{'#':>4} {'experiment':<24} {'member':<12} {'config':<12} {'sec/fold':>10} {'MSE':>10} {'F1':>10} {'F2':>10} "
-           f"{'MSE>=550':>10} {'F1>=550':>10} {'F2>=550':>10} {'skill':>8} {'beats naive':>11} code"]
+           f"{'MSE>=550':>10} {'F1>=550':>10} {'F2>=550':>10} {'CSI':>6} {'TmMAE':>6} {'skill':>8} {'beats naive':>11} code"]
     for i, r in enumerate(ranked(results), 1):
         full = has_f1(r)
         metrics = [r.get(k) if full else None for k in ("mse", "mse_f1", "mse_f2", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550")]
         metrics[2] = f2_mse(r)
         periods = " ".join(f"{num(x):>10}" for x in metrics)
+        csi, tmae = event_value(r, "csi"), event_value(r, "timing_mae_h")
+        events = f"{f'{csi:.3f}' if csi is not None else '-':>6} {num(tmae):>6}"
         beat = (r.get("vs_naive") or {}).get("beats_reference")
         config = r.get("config_sha256", "legacy")[:12]
         seconds = r.get("inference_seconds_per_fold")
         seconds_text = f"{seconds:.6f}" if seconds is not None else "-"
         out.append(f"{i if full else 'F2':>4} {r['experiment'][:24]:<24} {r['team_member'][:12]:<12} {config:<12} {seconds_text:>10} "
-                   f"{periods} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
+                   f"{periods} {events} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
                    f"{r.get('code_url') or '-'}")
     return "\n".join(out)
 
@@ -254,6 +256,8 @@ if __name__ == "__main__":
     vs = r["vs_naive"]
     print(f"MSE={r['mse']:.1f}  F1={r['mse_f1']:.1f}  F2={r['mse_f2']:.1f}  "
           f"MSE>=550={r['mse_ge550']:.1f}  F1>=550={r['mse_f1_ge550']:.1f}  F2>=550={r['mse_f2_ge550']:.1f}")
+    tm = "-" if r["timing_mae_h"] is None else f"{r['timing_mae_h']:.1f}h (bias {r['timing_bias_h']:+.1f}h)"
+    print(f"HSS events: CSI={'-' if r['csi'] is None else format(r['csi'], '.3f')}  timing MAE={tm}  (TP/FP/FN={r['events']['']['tp']}/{r['events']['']['fp']}/{r['events']['']['fn']})")
     print(f"MSE(obs)={r['mse_observed']:.1f}  skill vs naive={r['skill_vs_naive']:+.3f}  "
           f"beats naive (95% CI)={vs['beats_reference']}  diff CI={[round(x, 1) for x in vs['ci95']]}")
     if "_leaderboard" in r:

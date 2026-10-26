@@ -44,6 +44,11 @@ def f2_mse(r: dict) -> float:
     return r["mse_f2"] if has_f1(r) else r["mse"]
 
 
+def event_value(r: dict, key: str):
+    """HSS event metric shown on the board: over F1 + F2, or the F2 value for F2-only results (None if not scored)."""
+    return r.get(key) if has_f1(r) else r.get(f"{key}_f2", r.get(key))
+
+
 def ranked(results: list[dict]) -> list[dict]:
     """F1+F2 results by overall MSE, then F2-only results by F2 MSE."""
     rows = _latest(results)
@@ -58,8 +63,8 @@ def _num(x, d=1):
 def render(results: list[dict], note: str = "") -> str:
     rows = ranked(results)
     head = (["#", "experiment", "member", "config", "sec/fold", "code", "MSE", "F1 MSE", "F2 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550",
-             "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE (F2)", "submitted (UTC)"] + REGIMES)
-    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 5, 16) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
+             "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE (F2)", "submitted (UTC)"] + REGIMES)
+    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 5, 18) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
     body = []
     for i, r in enumerate(rows, 1):
         full = has_f1(r)
@@ -67,6 +72,8 @@ def render(results: list[dict], note: str = "") -> str:
         metrics = [r.get(k) if full else None for k in ("mse", "mse_f1", "mse_f2", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550")]
         metrics[2] = f2_mse(r)
         vs = r.get("vs_naive") or {}
+        csi, tmae, bias = (event_value(r, k) for k in ("csi", "timing_mae_h", "timing_bias_h"))
+        bias_title = "" if bias is None else f"mean timing error {bias:+.1f} h (+ = forecast peak late)"
         beat = vs.get("beats_reference")
         config_sha = r.get("config_sha256")
         config_label = config_sha[:12] if config_sha else "legacy"
@@ -78,7 +85,10 @@ def render(results: list[dict], note: str = "") -> str:
             rank, f'<td class="l">{html.escape(r["experiment"])}</td>', f'<td class="l">{html.escape(r["team_member"])}</td>',
             f'<td class="l" title="{html.escape(config_sha or "legacy")}"><code>{config_label}</code></td>',
             f'<td data-v="{seconds if seconds is not None else ""}">{_num(seconds, 6)}</td>', f'<td class="l">{code}</td>',
-            *(f'<td data-v="{"" if x is None else x}">{_num(x)}</td>' for x in metrics), f'<td>{_num(r.get("mse_observed"))}</td>',
+            *(f'<td data-v="{"" if x is None else x}">{_num(x)}</td>' for x in metrics),
+            f'<td data-v="{"" if csi is None else csi}">{_num(csi, 3)}</td>',
+            f'<td data-v="{"" if tmae is None else tmae}" title="{bias_title}">{_num(tmae)}</td>',
+            f'<td>{_num(r.get("mse_observed"))}</td>',
             f'<td data-v="{r.get("skill_vs_naive") or 0}">{(r.get("skill_vs_naive") or 0):+.1%}</td>',
             f'<td class="{"ok" if beat else "no"}">{"yes" if beat else "no"}</td>',
             f'<td>{_num(r.get("regime_balanced_mse"))}</td>',
@@ -97,6 +107,9 @@ def render(results: list[dict], note: str = "") -> str:
 <footer>Rank = overall MSE over F1 + F2 (counts forward-filled targets, same as the baseline study). <b>≥550</b> columns score only targets whose true speed is ≥ 550 km/s.
 F1 predictions must come from models trained on data before 2026-02-26 00:00 UTC. <b>F2 only</b> rows were scored before F1 was added: they are listed below the ranking by F2 MSE,
 and their MSE obs. / skill / beats naive are F2 values. <b>MSE obs.</b> scores only originally observed targets.
+<b>CSI</b> (threat score) = TP / (TP + FP + FN) for HSS events in each 72h window: a run of hours ≥ 550 km/s (quiet gaps ≤ 6h merged; runs touching
+hour 1 or 72 are not counted), forecast and true peaks matched one-to-one within 12h, summed over all windows. <b>timing MAE</b> = mean |forecast − true
+peak hour| of matched events (hover: signed bias, + = late). Both are diagnostic; F2-only rows show F2 values.
 <b>beats naive</b> = block-bootstrap (72h blocks) 95% CI of the paired MSE difference is below 0. Regime columns (trend/seasonal-27d/forecastability, low/high) are
 diagnostic, computed on F2 folds only, and hidden when a cell has fewer than 3 non-overlapping 72h blocks. Click a header to sort.<br>Generated from {len(results)} scored submissions.</footer>
 </main><script>{JS}</script></body></html>"""

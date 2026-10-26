@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+from scipy.optimize import linear_sum_assignment
 
 HORIZON = 72
 MIN_BLOCKS_PER_REGIME = 3  # non-overlapping 72h windows needed before a regime cell is reported
@@ -10,6 +11,8 @@ N_BOOT = 1000
 REGIMES = [f"{t}_{s}_{f}" for t in ("low", "high") for s in ("low", "high") for f in ("low", "high")]
 PERIODS = ("F1", "F2")  # F1 targets 2026-03-01..06-01, F2 2026-06-01..09-30 (UTC, end exclusive)
 HSS_KMS = 550.0  # high-speed subset: targets with target_kms >= HSS_KMS
+EVENT_GAP_H = 6  # HSS event: hours >= HSS_KMS, runs separated by <= this many quiet hours are one event
+EVENT_TOL_H = 12  # forecast and true event peaks match one-to-one when they are at most this far apart
 KEY = ["origin_last_input_utc", "horizon_hours"]
 
 
@@ -49,6 +52,67 @@ def _paired_ci(m: pd.DataFrame, ref: pd.DataFrame, seed: int = 0) -> dict:
     boot = g["sum"].to_numpy()[idx].sum(1) / g["count"].to_numpy()[idx].sum(1)
     lo, hi = np.percentile(boot, [2.5, 97.5])
     return {"mse_diff": float(d["diff"].mean()), "ci95": [float(lo), float(hi)], "beats_reference": bool(hi < 0)}
+
+
+def _events(values: np.ndarray) -> list[int]:
+    """Peak hour index of each HSS event in one 72h window; events touching hour 1 or 72 are censored (extent unknown)."""
+    active = np.flatnonzero(values >= HSS_KMS)
+    if not len(active):
+        return []
+    peaks = []
+    for run in np.split(active, np.flatnonzero(np.diff(active) > EVENT_GAP_H + 1) + 1):
+        a, b = int(run[0]), int(run[-1])
+        if a > 0 and b < len(values) - 1:
+            peaks.append(a + int(np.argmax(values[a:b + 1])))
+    return peaks
+
+
+def _match(true: list[int], pred: list[int]) -> list[tuple[int, int]]:
+    """One-to-one peak matches within EVENT_TOL_H: as many matches as possible, then the smallest total timing error."""
+    n, k = len(true), len(pred)
+    if not n or not k:
+        return []
+    cost = np.zeros((n + k, n + k))  # dummy rows/columns let any event stay unmatched
+    cost[:n, :k] = 1e9
+    bonus = (n + k + 1) * (EVENT_TOL_H + 1)
+    for i, t in enumerate(true):
+        for j, p in enumerate(pred):
+            if abs(p - t) <= EVENT_TOL_H:
+                cost[i, j] = abs(p - t) - bonus
+    rows, cols = linear_sum_assignment(cost)
+    return [(true[i], pred[j]) for i, j in zip(rows, cols) if i < n and j < k and cost[i, j] < 0]
+
+
+def _event_summary(tp: int, fp: int, fn: int, dt: list[int], n_windows: int) -> dict:
+    return {"tp": tp, "fp": fp, "fn": fn, "n_windows": n_windows,
+            "csi": tp / (tp + fp + fn) if tp + fp + fn else None,
+            "pod": tp / (tp + fn) if tp + fn else None,
+            "far": fp / (tp + fp) if tp + fp else None,
+            "timing_mae_h": float(np.mean(np.abs(dt))) if dt else None,
+            "timing_bias_h": float(np.mean(dt)) if dt else None}
+
+
+def event_scores(m: pd.DataFrame) -> dict:
+    """HSS event skill per 72h window (truth as scored, i.e. forward-filled), summed over windows, overall and per period.
+
+    csi = TP / (TP + FP + FN); timing error = forecast peak hour - true peak hour of a matched event (+ = late).
+    """
+    m = m.sort_values(KEY)
+    n = int(m["origin_last_input_utc"].nunique())
+    y = m["target_kms"].to_numpy(float).reshape(n, HORIZON)
+    p = m["pred_kms"].to_numpy(float).reshape(n, HORIZON)
+    period = m["period"].to_numpy()[::HORIZON]
+    acc = {}
+    for i in range(n):
+        true, pred = _events(y[i]), _events(p[i])
+        pairs = _match(true, pred)
+        acc[i] = (len(pairs), len(pred) - len(pairs), len(true) - len(pairs), [b - a for a, b in pairs])
+    out = {}
+    for name, sel in [("", np.ones(n, bool))] + [(f"_{q.lower()}", period == q) for q in PERIODS]:
+        rows = [acc[i] for i in np.flatnonzero(sel)]
+        out[name] = _event_summary(sum(r[0] for r in rows), sum(r[1] for r in rows), sum(r[2] for r in rows),
+                                   [d for r in rows for d in r[3]], len(rows))
+    return out
 
 
 def validate(pred: pd.DataFrame, folds: pd.DataFrame) -> list[str]:
@@ -99,8 +163,11 @@ def score(pred: pd.DataFrame, truth: pd.DataFrame, folds: pd.DataFrame, naive: p
         by_regime[r] = {"n_folds": n, "n_blocks": nb, "mse": float(g["se"].mean()) if n else None,
                         "reliable": nb >= MIN_BLOCKS_PER_REGIME}
     reliable = [v["mse"] for v in by_regime.values() if v["reliable"]]
+    events = event_scores(m)
     out = {
         **by_period,
+        **{f"{k}{p}": events[p][k] for p in events for k in ("csi", "timing_mae_h", "timing_bias_h")},
+        "events": events,
         "rmse": float(np.sqrt(m["se"].mean())),
         "mae": float(m["ae"].mean()),
         "mse_observed": float(m.loc[m["was_missing"] == 0, "se"].mean()) if (m["was_missing"] == 0).any() else None,

@@ -114,6 +114,12 @@ Model inputs come from the shared Drive folder **sun-db**
 ## Read the numbers
 - `MSE` counts forward-filled targets; `MSE obs.` only originally observed targets.
 - `≥550` columns use only targets with true speed ≥ 550 km/s (F1 24,480 pairs, F2 23,976): high-speed streams, where most of the squared error is.
+- `CSI` and `timing MAE (h)` score HSS **events** in each 72h window, for truth and forecast alike: an event is a run of hours
+  ≥ 550 km/s (quiet gaps ≤ 6h merged; runs touching hour 1 or 72 are cut by the window and not counted), timed at its peak.
+  Forecast and true peaks are matched one-to-one within 12h. Summed over all windows, `CSI` (threat score) = TP / (TP + FP + FN):
+  did the forecast catch the HSS at all. `timing MAE` = mean |forecast − true peak hour| of matched events: how many hours early or
+  late a caught HSS was (the result JSON also holds the signed `timing_bias_h`, + = late, and POD/FAR/TP/FP/FN per period).
+  Windows overlap, so one HSS counts once per window that contains it. Both are diagnostic; rank stays MSE.
 - `beats naive (95% CI)`: paired MSE difference vs Naive, bootstrapped over 72h blocks (folds overlap 71/72, so ~120 effective blocks, not 2,833 folds).
 - Regime cells are computed on F2 folds only (thresholds were frozen on them); cells with < 3 non-overlapping 72h blocks are hidden. Do not tune on regime rows.
 - The bar is **mean_reversion** (Naive → 648h mean, decay 48h, tuned only on data before June), not Naive: it is ~36% better.
