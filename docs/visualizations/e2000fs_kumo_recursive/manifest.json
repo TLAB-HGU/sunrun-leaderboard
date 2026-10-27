@@ -1,0 +1,165 @@
+{
+  "model": "e2000fs_kumo_recursive",
+  "model_config_sha256": "ff1e0b492145a9a32a9971c0d42a396aac3eebf7791a39ac8884aa1cb03992f3",
+  "experiment": "E2000FS_KUMO_RECURSIVE",
+  "seeds": [
+    42
+  ],
+  "aggregation": "single model",
+  "created_at_utc": "2026-10-27T13:34:48.101746+00:00",
+  "script_sha256": "8e97593f13a2fc2d69aac2a5f8f828f536cf7e588d13cb3699610c960419a621",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "ace_latency_hours": 0,
+    "input_x_hours": [
+      -167,
+      0
+    ],
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "limit_per_month": null,
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "RGB cube + greys; no dithering"
+  },
+  "rendering_config_sha256": "aecd19d2a677db2743733d8b566fb55bf16438545f37706af9ad5e5b645886e7",
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/e2000fs_kumo_recursive.parquet",
+      "sha256": "7e2d64769f55281c76ffe24e502100457eb2a4a26903d9f9d4dff95a22db2fc4"
+    },
+    "folds": {
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/folds.parquet",
+      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+    },
+    "truth": {
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/truth.parquet",
+      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    }
+  },
+  "verification": {
+    "folds": 4970,
+    "pairs": 357840,
+    "mse": 18306.617946122104,
+    "expected_mse": 18306.617946122104,
+    "mse_tolerance": 1e-07,
+    "expected_month_counts": {
+      "2026-03": 744,
+      "2026-04": 720,
+      "2026-05": 673,
+      "2026-06": 720,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 4970,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 existing hourly samples ending at origin minus 0 hours; no added filling"
+  },
+  "notes": [
+    "Display shows seven days, not the model's complete 26-28 day feature history.",
+    "Hollow markers identify filled observations according to source was_missing flags.",
+    "All validation truth, including filled observations, contributes to displayed RMSE."
+  ],
+  "outputs": [
+    {
+      "month": "2026-03",
+      "file": "validation_2026-03.gif",
+      "frames": 744,
+      "first_fold": 1,
+      "last_fold": 744,
+      "first_origin_utc": "2026-02-28T23:00:00+00:00",
+      "last_origin_utc": "2026-03-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23501680,
+      "sha256": "cf625413bc4b57418daeeea4fc50eb8c3db9f43a2d93c57350b50ffcbcf0428e"
+    },
+    {
+      "month": "2026-04",
+      "file": "validation_2026-04.gif",
+      "frames": 720,
+      "first_fold": 745,
+      "last_fold": 1464,
+      "first_origin_utc": "2026-03-31T23:00:00+00:00",
+      "last_origin_utc": "2026-04-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 23125507,
+      "sha256": "111291a00214a89125948c774c99154af0cd010c8fb777fc2a68fd83ec85f417"
+    },
+    {
+      "month": "2026-05",
+      "file": "validation_2026-05.gif",
+      "frames": 673,
+      "first_fold": 1465,
+      "last_fold": 2137,
+      "first_origin_utc": "2026-04-30T23:00:00+00:00",
+      "last_origin_utc": "2026-05-28T23:00:00+00:00",
+      "duration_ms": 67300,
+      "bytes": 21477885,
+      "sha256": "45b4ebbb34f3e4ef3c4084a57ab85af69b3c45f0636eb2a7becd443a9e1d29a3"
+    },
+    {
+      "month": "2026-06",
+      "file": "validation_2026-06.gif",
+      "frames": 720,
+      "first_fold": 2138,
+      "last_fold": 2857,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 22758401,
+      "sha256": "13ea76be257e759575fc787026be2d5c6485b4e6b7d6a9e19bd16acce7d36bc9"
+    },
+    {
+      "month": "2026-07",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 2858,
+      "last_fold": 3601,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23861403,
+      "sha256": "be7000d944274c5ecb5ae35ff802f3a41e7781032f8f1e410f5f8e17e8f05f1b"
+    },
+    {
+      "month": "2026-08",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 3602,
+      "last_fold": 4345,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23367141,
+      "sha256": "4a09814f0fb9d462b5c4fa1141036e76152461b1b4ef1a2259447423c0742fef"
+    },
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 4346,
+      "last_fold": 4970,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 20160407,
+      "sha256": "3f1779df8b5778945f1d9df32f67527fa2bf96a1ece57c323fa17525ec83a188"
+    }
+  ]
+}
