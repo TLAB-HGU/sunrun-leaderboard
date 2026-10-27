@@ -1,0 +1,44 @@
+{
+  "strategy": "DirRecMO-6",
+  "canonical": "DirRecMO-6",
+  "experiment": "e2000fs_dirrecmo_6",
+  "config_sha256": "c9dd83a2ebd684551c60c551951f4f98188c6effd0984666fe00882738498c50",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3925.123782643304,
+    "leaderboard_mse": 3925.123782643304,
+    "origins": 2137,
+    "boosters": 12,
+    "refit_seconds": 202.37982630729675,
+    "total_splits": 72846,
+    "permutation_seconds": 64.91258263587952
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3365.8952362262207,
+    "leaderboard_mse": 3365.8952362262207,
+    "origins": 2833,
+    "boosters": 12,
+    "refit_seconds": 199.53208541870117,
+    "total_splits": 73140,
+    "permutation_seconds": 79.54575967788696
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 12,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}
