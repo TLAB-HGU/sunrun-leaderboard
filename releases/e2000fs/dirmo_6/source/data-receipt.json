@@ -1,0 +1,46 @@
+{
+  "f1_lag2_parity": {
+    "mismatch": 0,
+    "origins": 256
+  },
+  "f1_origins": 2137,
+  "inputs": {
+    "f1": {
+      "path": "/home/t-lab01/sunrun/research/e2000/publication/f1/inputs/features_f1.parquet",
+      "sha256": "399f1cb615ea0312cf7bc859571c72f928fcb8c875a1881c5779c0d020c900cf"
+    },
+    "features": {
+      "path": "/home/t-lab01/sunrun/leaderboard/experiments/cumulative_lane12_20261024/materialized_v3/features_v3.json",
+      "sha256": "d7cb6e16403ea83d1437cf3fc077fb09790c55666567a767b107e7f89a74ad27"
+    },
+    "official": {
+      "path": "/home/t-lab01/sunrun/research/e0472-multioutput-s42-20261026/relocated-v1/official_causal.parquet",
+      "sha256": "1aabe775c8dc8194973faf112aa5cb3db0c7a4a4421be59c90d54f6051273f9c"
+    },
+    "train": {
+      "path": "/home/t-lab01/sunrun/research/e0472-multioutput-s42-20261026/relocated-v1/train_complete_causal.parquet",
+      "sha256": "969e2070c9b90dd83ed4c7c6a94b0ed6472095e135740a826df54098d4bfdc86"
+    }
+  },
+  "lag_hours": 0,
+  "nan_after_prefill": {
+    "f1_C": 0,
+    "f1_E": 0,
+    "official_C": 0,
+    "official_E": 0,
+    "train_C": 13149,
+    "train_E": 457920
+  },
+  "official_lag2_parity": {
+    "mismatch": 0,
+    "origins": 256
+  },
+  "official_origins": 2833,
+  "prefill": "ffill along origin",
+  "source_root": "/home/t-lab01/sunrun/data-v2/raw-store/v2/solar-pivot-noanalog72-20261015/pinned-v1/repo/leaderboard/store",
+  "train_lag2_parity": {
+    "mismatch": 0,
+    "origins": 256
+  },
+  "train_origins": 10688
+}
