@@ -69,8 +69,8 @@ def _num(x, d=1):
 def render(results: list[dict], note: str = "") -> str:
     rows = ranked(results)
     head = (["#", "experiment", "member", "config", "sec/fold", "end-to-end (h)", "code", "MSE", "F1 MSE", "F2 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550",
-             "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE (F2)", "submitted (UTC)"] + REGIMES)
-    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 6, 19) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
+             "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive", "beats naive (95% CI)"] + REGIMES)
+    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 6) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
     body = []
     for i, r in enumerate(rows, 1):
         full = has_f1(r)
@@ -101,8 +101,6 @@ def render(results: list[dict], note: str = "") -> str:
             f'<td>{_num(r.get("mse_observed"))}</td>',
             f'<td data-v="{r.get("skill_vs_naive") or 0}">{(r.get("skill_vs_naive") or 0):+.1%}</td>',
             f'<td class="{"ok" if beat else "no"}">{"yes" if beat else "no"}</td>',
-            f'<td>{_num(r.get("regime_balanced_mse"))}</td>',
-            f'<td class="l">{html.escape(r["submitted_utc"][:15])}</td>',
         ]
         for g in REGIMES:
             c = r["by_regime"][g]
