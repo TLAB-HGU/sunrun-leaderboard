@@ -1,0 +1,223 @@
+stage,feature,kind,split_count,perm_delta_mse_mean,perm_delta_mse_sd
+f1,rec26,27-day recurrence,271,27.2335,5.46018
+f1,rec27,27-day recurrence,70,-10.2313,5.0695
+f1,rec28,27-day recurrence,132,-17.247,4.9012
+f1,rec_mean,27-day recurrence,306,316.702,37.4477
+f1,v_lag0,recent speed,135,699.765,40.337
+f1,v_lag1,recent speed,13,-14.678,2.41043
+f1,v_lag3,recent speed,5,1.04195,0.0874892
+f1,v_lag6,recent speed,5,-0.973315,0.550839
+f1,v_lag12,recent speed,3,0.722418,0.166768
+f1,v_lag24,recent speed,14,-1.49151,0.932245
+f1,v_lag48,recent speed,34,-13.3695,2.7024
+f1,v_lag72,recent speed,34,-9.01668,1.25307
+f1,v_lag120,recent speed,43,-6.7612,2.43818
+f1,v_m6,recent speed,33,-18.4705,1.32502
+f1,v_sd6,recent speed,7,-0.803009,1.25084
+f1,v_m24,recent speed,33,-1.90183,1.01765
+f1,v_sd24,recent speed,21,0.716241,2.65701
+f1,v_m72,recent speed,71,-25.8899,2.84968
+f1,v_sd72,recent speed,59,2.22829,2.56016
+f1,ace_speed_kms_last,ACE plasma / field / particles,56,-0.701662,4.29295
+f1,ace_speed_kms_m6,ACE plasma / field / particles,21,-20.9709,2.55761
+f1,ace_speed_kms_m24,ACE plasma / field / particles,22,0.280192,1.46919
+f1,ace_density_cm3_last,ACE plasma / field / particles,52,14.4359,14.8157
+f1,ace_density_cm3_m6,ACE plasma / field / particles,19,8.23361,1.90441
+f1,ace_density_cm3_m24,ACE plasma / field / particles,68,-5.52523,1.75799
+f1,ace_temperature_k_last,ACE plasma / field / particles,45,-4.45589,6.5704
+f1,ace_temperature_k_m6,ACE plasma / field / particles,24,27.0795,1.94133
+f1,ace_temperature_k_m24,ACE plasma / field / particles,60,40.2018,3.80376
+f1,ace_bt_nt_last,ACE plasma / field / particles,71,57.7607,17.7631
+f1,ace_bt_nt_m6,ACE plasma / field / particles,64,10.3948,9.90485
+f1,ace_bt_nt_m24,ACE plasma / field / particles,51,-23.1446,3.1057
+f1,ace_bz_gsm_nt_last,ACE plasma / field / particles,0,0,0
+f1,ace_bz_gsm_nt_m6,ACE plasma / field / particles,26,-0.380295,1.86501
+f1,ace_bz_gsm_nt_m24,ACE plasma / field / particles,53,-1.84828,1.89425
+f1,ace_by_gsm_nt_last,ACE plasma / field / particles,7,2.09875,0.766239
+f1,ace_by_gsm_nt_m6,ACE plasma / field / particles,22,-2.19885,0.83797
+f1,ace_by_gsm_nt_m24,ACE plasma / field / particles,74,-23.5808,5.92541
+f1,ace_epam_e_channel1_last,ACE plasma / field / particles,26,3.26735,0.558306
+f1,ace_epam_e_channel1_m6,ACE plasma / field / particles,29,11.1287,2.44274
+f1,ace_epam_e_channel1_m24,ACE plasma / field / particles,70,-2.7708,0.715916
+f1,ace_epam_e_channel2_last,ACE plasma / field / particles,45,-8.33524,2.66295
+f1,ace_epam_e_channel2_m6,ACE plasma / field / particles,16,-0.252647,0.209132
+f1,ace_epam_e_channel2_m24,ACE plasma / field / particles,65,17.1377,2.41409
+f1,ace_epam_p_channel1_last,ACE plasma / field / particles,74,-1.07908,3.55458
+f1,ace_epam_p_channel1_m6,ACE plasma / field / particles,16,6.09493,2.8032
+f1,ace_epam_p_channel1_m24,ACE plasma / field / particles,49,-1.44094,1.10902
+f1,ace_epam_p_channel3_last,ACE plasma / field / particles,27,1.03379,0.970962
+f1,ace_epam_p_channel3_m6,ACE plasma / field / particles,19,-1.22789,0.988445
+f1,ace_epam_p_channel3_m24,ACE plasma / field / particles,45,16.8562,5.08821
+f1,ace_epam_p_channel5_last,ACE plasma / field / particles,35,-1.10888,1.90759
+f1,ace_epam_p_channel5_m6,ACE plasma / field / particles,68,31.3105,2.18867
+f1,ace_epam_p_channel5_m24,ACE plasma / field / particles,57,-14.9491,3.05158
+f1,ace_sis_gt10_flux_last,ACE plasma / field / particles,56,23.0264,21.1776
+f1,ace_sis_gt10_flux_m6,ACE plasma / field / particles,48,16.0072,2.87427
+f1,ace_sis_gt10_flux_m24,ACE plasma / field / particles,112,-22.3111,2.94262
+f1,speed_d24,recent speed,56,38.2754,3.5467
+f1,epam_p1_d6,ACE plasma / field / particles,4,0.546397,0.346121
+f1,ch_ch_t035_area,SUVI strips / coronal holes,23,-0.585336,0.622955
+f1,ch_ch_t035_max_area,SUVI strips / coronal holes,59,-5.94484,4.72338
+f1,ch_ch_t035_top1_area,SUVI strips / coronal holes,17,-2.66629,0.555629
+f1,ch_ch_t035_top2_area,SUVI strips / coronal holes,57,38.1146,14.8171
+f1,ch_ch_t035_top3_area,SUVI strips / coronal holes,16,-3.40252,1.13256
+f1,ch_ch_t035_meridian15_area,SUVI strips / coronal holes,32,6.65326,2.21109
+f1,ch_ch_t035_meridian15_equatorial_area,SUVI strips / coronal holes,72,116.763,10.3817
+f1,ch_ch_t035_meridian30_area,SUVI strips / coronal holes,37,36.0083,2.38359
+f1,ch_ch_t035_meridian30_equatorial_area,SUVI strips / coronal holes,89,117.364,7.84728
+f1,ch_ch_t035_equatorial_area,SUVI strips / coronal holes,98,70.7698,26.2264
+f1,ch_ch_t045_area,SUVI strips / coronal holes,21,-0.259834,0.703133
+f1,ch_ch_t045_max_area,SUVI strips / coronal holes,32,-16.0359,3.98124
+f1,ch_ch_t045_top1_area,SUVI strips / coronal holes,6,-8.29059,1.05103
+f1,ch_ch_t045_top2_area,SUVI strips / coronal holes,40,17.02,3.08057
+f1,ch_ch_t045_top3_area,SUVI strips / coronal holes,41,-15.5201,1.58706
+f1,ch_ch_t045_meridian15_area,SUVI strips / coronal holes,9,-3.06785,1.55161
+f1,ch_ch_t045_meridian15_equatorial_area,SUVI strips / coronal holes,10,0.675522,0.580575
+f1,ch_ch_t045_meridian30_area,SUVI strips / coronal holes,27,6.27984,0.933708
+f1,ch_ch_t045_meridian30_equatorial_area,SUVI strips / coronal holes,13,10.6953,2.01569
+f1,ch_ch_t045_equatorial_area,SUVI strips / coronal holes,32,22.7163,1.45002
+f1,ch_ch_t055_area,SUVI strips / coronal holes,53,9.3758,2.61343
+f1,ch_ch_t055_max_area,SUVI strips / coronal holes,22,0.450283,0.651973
+f1,ch_ch_t055_top1_area,SUVI strips / coronal holes,10,0.659629,0.50455
+f1,ch_ch_t055_top2_area,SUVI strips / coronal holes,41,-15.5923,5.24976
+f1,ch_ch_t055_top3_area,SUVI strips / coronal holes,31,4.97324,0.81144
+f1,ch_ch_t055_meridian15_area,SUVI strips / coronal holes,26,2.40438,2.17247
+f1,ch_ch_t055_meridian15_equatorial_area,SUVI strips / coronal holes,9,0.811413,0.680503
+f1,ch_ch_t055_meridian30_area,SUVI strips / coronal holes,51,13.6863,8.42008
+f1,ch_ch_t055_meridian30_equatorial_area,SUVI strips / coronal holes,44,70.363,5.63772
+f1,ch_ch_t055_equatorial_area,SUVI strips / coronal holes,80,181.053,12.6225
+f1,strip_v350_logmed,SUVI strips / coronal holes,210,-29.898,6.32928
+f1,strip_v350_dark,SUVI strips / coronal holes,127,-35.9456,5.3686
+f1,strip_v350_cover,SUVI strips / coronal holes,11,-9.08447,1.97089
+f1,strip_v450_logmed,SUVI strips / coronal holes,160,-36.2582,9.43838
+f1,strip_v450_dark,SUVI strips / coronal holes,121,-45.0553,5.77747
+f1,strip_v450_cover,SUVI strips / coronal holes,14,-16.3915,2.60627
+f1,strip_v550_logmed,SUVI strips / coronal holes,105,-37.9961,7.07231
+f1,strip_v550_dark,SUVI strips / coronal holes,78,9.60339,9.50711
+f1,strip_v550_cover,SUVI strips / coronal holes,26,-13.9778,3.22114
+f1,strip_v650_logmed,SUVI strips / coronal holes,117,-24.6524,6.01158
+f1,strip_v650_dark,SUVI strips / coronal holes,85,-33.8704,3.83522
+f1,strip_v650_cover,SUVI strips / coronal holes,25,-8.87427,4.38426
+f1,strip_v750_logmed,SUVI strips / coronal holes,87,-26.6416,3.86122
+f1,strip_v750_dark,SUVI strips / coronal holes,50,7.2011,4.61718
+f1,strip_v750_cover,SUVI strips / coronal holes,7,-10.1379,0.923403
+f1,img_age_h,SUVI strips / coronal holes,62,-7.1361,1.2541
+f1,img_stale,SUVI strips / coronal holes,0,0,0
+f1,enlil_next_arr_h,WSA-ENLIL,24,0.964427,1.01084
+f1,enlil_since_arr_h,WSA-ENLIL,33,-20.9979,2.57013
+f1,enlil_n_pending,WSA-ENLIL,81,-0.0258984,2.19296
+f1,enlil_kp,WSA-ENLIL,125,164.188,10.7818
+f1,enlil_glancing,WSA-ENLIL,10,3.47844,2.03002
+f1,enlil_dt_target,WSA-ENLIL,2,0.879546,0.0761963
+f1,lead,model-internal (not permuted),672,,
+final,rec26,27-day recurrence,294,80.5938,7.18353
+final,rec27,27-day recurrence,75,14.7233,0.81569
+final,rec28,27-day recurrence,103,-3.8979,2.54185
+final,rec_mean,27-day recurrence,316,289.865,30.9912
+final,v_lag0,recent speed,122,906.916,52.5234
+final,v_lag1,recent speed,20,14.5232,5.1234
+final,v_lag3,recent speed,7,2.95687,0.383463
+final,v_lag6,recent speed,8,1.03323,0.324211
+final,v_lag12,recent speed,4,1.66051,0.245306
+final,v_lag24,recent speed,18,1.84242,0.631234
+final,v_lag48,recent speed,35,-7.20503,2.02315
+final,v_lag72,recent speed,42,0.410121,1.30712
+final,v_lag120,recent speed,34,-0.796345,0.977379
+final,v_m6,recent speed,21,2.93941,0.682094
+final,v_sd6,recent speed,2,2.35456,0.216557
+final,v_m24,recent speed,19,2.69768,0.749616
+final,v_sd24,recent speed,18,-12.9721,2.21035
+final,v_m72,recent speed,78,-11.161,4.43079
+final,v_sd72,recent speed,47,-5.6928,1.52644
+final,ace_speed_kms_last,ACE plasma / field / particles,71,191.799,7.38651
+final,ace_speed_kms_m6,ACE plasma / field / particles,23,8.3352,0.925597
+final,ace_speed_kms_m24,ACE plasma / field / particles,24,2.05049,2.68162
+final,ace_density_cm3_last,ACE plasma / field / particles,56,65.0629,9.04372
+final,ace_density_cm3_m6,ACE plasma / field / particles,25,9.36293,1.21214
+final,ace_density_cm3_m24,ACE plasma / field / particles,83,-6.33538,2.14835
+final,ace_temperature_k_last,ACE plasma / field / particles,37,62.4615,5.66726
+final,ace_temperature_k_m6,ACE plasma / field / particles,27,20.068,0.896559
+final,ace_temperature_k_m24,ACE plasma / field / particles,67,50.7951,7.54753
+final,ace_bt_nt_last,ACE plasma / field / particles,72,256.904,13.1301
+final,ace_bt_nt_m6,ACE plasma / field / particles,68,148.968,10.0324
+final,ace_bt_nt_m24,ACE plasma / field / particles,27,18.2156,3.06389
+final,ace_bz_gsm_nt_last,ACE plasma / field / particles,0,0,0
+final,ace_bz_gsm_nt_m6,ACE plasma / field / particles,27,-2.89072,0.886592
+final,ace_bz_gsm_nt_m24,ACE plasma / field / particles,63,-14.1043,2.30851
+final,ace_by_gsm_nt_last,ACE plasma / field / particles,10,10.3336,2.07902
+final,ace_by_gsm_nt_m6,ACE plasma / field / particles,29,11.9984,2.68065
+final,ace_by_gsm_nt_m24,ACE plasma / field / particles,62,35.3482,4.08139
+final,ace_epam_e_channel1_last,ACE plasma / field / particles,38,-6.67535,1.22135
+final,ace_epam_e_channel1_m6,ACE plasma / field / particles,26,-5.09464,1.1992
+final,ace_epam_e_channel1_m24,ACE plasma / field / particles,78,22.6743,2.1504
+final,ace_epam_e_channel2_last,ACE plasma / field / particles,48,-6.51642,0.940352
+final,ace_epam_e_channel2_m6,ACE plasma / field / particles,20,-0.436192,0.764998
+final,ace_epam_e_channel2_m24,ACE plasma / field / particles,71,3.54348,1.62831
+final,ace_epam_p_channel1_last,ACE plasma / field / particles,66,8.77257,4.88982
+final,ace_epam_p_channel1_m6,ACE plasma / field / particles,20,1.83282,0.66023
+final,ace_epam_p_channel1_m24,ACE plasma / field / particles,45,-2.36686,0.34605
+final,ace_epam_p_channel3_last,ACE plasma / field / particles,31,-5.18828,1.57057
+final,ace_epam_p_channel3_m6,ACE plasma / field / particles,18,-8.20122,1.8201
+final,ace_epam_p_channel3_m24,ACE plasma / field / particles,48,-61.9975,2.83759
+final,ace_epam_p_channel5_last,ACE plasma / field / particles,46,-0.261707,1.7503
+final,ace_epam_p_channel5_m6,ACE plasma / field / particles,60,-3.80811,4.85711
+final,ace_epam_p_channel5_m24,ACE plasma / field / particles,49,-21.375,3.52661
+final,ace_sis_gt10_flux_last,ACE plasma / field / particles,57,-1.17826,0.134796
+final,ace_sis_gt10_flux_m6,ACE plasma / field / particles,57,-0.223255,0.185437
+final,ace_sis_gt10_flux_m24,ACE plasma / field / particles,96,-2.89389,0.93838
+final,speed_d24,recent speed,59,18.8941,2.57349
+final,epam_p1_d6,ACE plasma / field / particles,2,0,0
+final,ch_ch_t035_area,SUVI strips / coronal holes,28,5.19938,0.89859
+final,ch_ch_t035_max_area,SUVI strips / coronal holes,48,2.61086,1.99192
+final,ch_ch_t035_top1_area,SUVI strips / coronal holes,13,-0.354244,0.844364
+final,ch_ch_t035_top2_area,SUVI strips / coronal holes,52,9.58948,2.49744
+final,ch_ch_t035_top3_area,SUVI strips / coronal holes,22,-6.47734,1.11889
+final,ch_ch_t035_meridian15_area,SUVI strips / coronal holes,26,-10.6655,0.519468
+final,ch_ch_t035_meridian15_equatorial_area,SUVI strips / coronal holes,74,69.8501,1.17776
+final,ch_ch_t035_meridian30_area,SUVI strips / coronal holes,31,-4.14598,2.26514
+final,ch_ch_t035_meridian30_equatorial_area,SUVI strips / coronal holes,96,179.643,7.47349
+final,ch_ch_t035_equatorial_area,SUVI strips / coronal holes,147,172.326,15.6786
+final,ch_ch_t045_area,SUVI strips / coronal holes,14,4.81032,0.745312
+final,ch_ch_t045_max_area,SUVI strips / coronal holes,17,-9.03844,0.409168
+final,ch_ch_t045_top1_area,SUVI strips / coronal holes,4,-6.54087,0.481512
+final,ch_ch_t045_top2_area,SUVI strips / coronal holes,34,-5.76794,1.54996
+final,ch_ch_t045_top3_area,SUVI strips / coronal holes,53,-15.2857,2.73186
+final,ch_ch_t045_meridian15_area,SUVI strips / coronal holes,10,1.57546,0.507559
+final,ch_ch_t045_meridian15_equatorial_area,SUVI strips / coronal holes,9,2.59174,0.421117
+final,ch_ch_t045_meridian30_area,SUVI strips / coronal holes,21,5.67013,0.754101
+final,ch_ch_t045_meridian30_equatorial_area,SUVI strips / coronal holes,15,-1.75301,0.332155
+final,ch_ch_t045_equatorial_area,SUVI strips / coronal holes,40,-37.8247,3.1476
+final,ch_ch_t055_area,SUVI strips / coronal holes,43,0.713475,1.64302
+final,ch_ch_t055_max_area,SUVI strips / coronal holes,26,-1.68255,0.512838
+final,ch_ch_t055_top1_area,SUVI strips / coronal holes,10,-0.137292,0.291156
+final,ch_ch_t055_top2_area,SUVI strips / coronal holes,31,0.778502,4.20293
+final,ch_ch_t055_top3_area,SUVI strips / coronal holes,30,-4.99076,0.521062
+final,ch_ch_t055_meridian15_area,SUVI strips / coronal holes,44,6.60562,1.27771
+final,ch_ch_t055_meridian15_equatorial_area,SUVI strips / coronal holes,5,-1.07448,0.419359
+final,ch_ch_t055_meridian30_area,SUVI strips / coronal holes,42,15.5649,2.12482
+final,ch_ch_t055_meridian30_equatorial_area,SUVI strips / coronal holes,33,14.9932,8.72183
+final,ch_ch_t055_equatorial_area,SUVI strips / coronal holes,94,-39.0276,3.15567
+final,strip_v350_logmed,SUVI strips / coronal holes,237,50.8056,3.80031
+final,strip_v350_dark,SUVI strips / coronal holes,153,7.32316,2.76671
+final,strip_v350_cover,SUVI strips / coronal holes,9,7.35811,2.81294
+final,strip_v450_logmed,SUVI strips / coronal holes,115,16.913,3.05174
+final,strip_v450_dark,SUVI strips / coronal holes,99,28.0689,1.88331
+final,strip_v450_cover,SUVI strips / coronal holes,17,2.27603,3.22478
+final,strip_v550_logmed,SUVI strips / coronal holes,127,15.6966,2.0941
+final,strip_v550_dark,SUVI strips / coronal holes,70,27.7886,3.06988
+final,strip_v550_cover,SUVI strips / coronal holes,16,21.01,3.36261
+final,strip_v650_logmed,SUVI strips / coronal holes,106,18.1799,3.45842
+final,strip_v650_dark,SUVI strips / coronal holes,72,19.4986,2.93663
+final,strip_v650_cover,SUVI strips / coronal holes,13,6.34851,1.38662
+final,strip_v750_logmed,SUVI strips / coronal holes,108,2.55489,2.30389
+final,strip_v750_dark,SUVI strips / coronal holes,59,8.78576,2.41316
+final,strip_v750_cover,SUVI strips / coronal holes,4,-0.0164867,0.151128
+final,img_age_h,SUVI strips / coronal holes,74,16.187,2.36405
+final,img_stale,SUVI strips / coronal holes,0,0,0
+final,enlil_next_arr_h,WSA-ENLIL,14,2.74272,0.851638
+final,enlil_since_arr_h,WSA-ENLIL,28,4.36852,1.17835
+final,enlil_n_pending,WSA-ENLIL,88,20.0933,3.28845
+final,enlil_kp,WSA-ENLIL,126,267.317,15.4123
+final,enlil_glancing,WSA-ENLIL,1,0.551405,0.0942241
+final,enlil_dt_target,WSA-ENLIL,10,1.63978,0.171302
+final,lead,model-internal (not permuted),656,,

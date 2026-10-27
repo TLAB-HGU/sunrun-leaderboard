@@ -1,0 +1,165 @@
+{
+  "model": "e2000_horizon_conditioned_s42",
+  "model_config_sha256": "e8a8ea38c97e84381ba467a0244e11a63e8b053eaa77e2086f5ab25940bba85f",
+  "experiment": "E2000_HORIZON_CONDITIONED_S42",
+  "seeds": [
+    42
+  ],
+  "aggregation": "single model",
+  "created_at_utc": "2026-10-27T13:10:25.824722+00:00",
+  "script_sha256": "8e97593f13a2fc2d69aac2a5f8f828f536cf7e588d13cb3699610c960419a621",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "ace_latency_hours": 0,
+    "input_x_hours": [
+      -167,
+      0
+    ],
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "limit_per_month": null,
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "RGB cube + greys; no dithering"
+  },
+  "rendering_config_sha256": "aecd19d2a677db2743733d8b566fb55bf16438545f37706af9ad5e5b645886e7",
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/e2000_horizon_conditioned_s42.parquet",
+      "sha256": "577f1cc0ba3eb2c30bf4123cb8f8c52cdd8b471f5127290a29c6a49fb9a862fa"
+    },
+    "folds": {
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/folds.parquet",
+      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+    },
+    "truth": {
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/truth.parquet",
+      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    }
+  },
+  "verification": {
+    "folds": 4970,
+    "pairs": 357840,
+    "mse": 4266.967935084032,
+    "expected_mse": 4266.967935084032,
+    "mse_tolerance": 1e-07,
+    "expected_month_counts": {
+      "2026-03": 744,
+      "2026-04": 720,
+      "2026-05": 673,
+      "2026-06": 720,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 4970,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 existing hourly samples ending at origin minus 0 hours; no added filling"
+  },
+  "notes": [
+    "Display shows seven days, not the model's complete 26-28 day feature history.",
+    "Hollow markers identify filled observations according to source was_missing flags.",
+    "All validation truth, including filled observations, contributes to displayed RMSE."
+  ],
+  "outputs": [
+    {
+      "month": "2026-03",
+      "file": "validation_2026-03.gif",
+      "frames": 744,
+      "first_fold": 1,
+      "last_fold": 744,
+      "first_origin_utc": "2026-02-28T23:00:00+00:00",
+      "last_origin_utc": "2026-03-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23003809,
+      "sha256": "cd36c60424c1f952c001b5d09cce7f0bd46b1543face6158ba426e881359b981"
+    },
+    {
+      "month": "2026-04",
+      "file": "validation_2026-04.gif",
+      "frames": 720,
+      "first_fold": 745,
+      "last_fold": 1464,
+      "first_origin_utc": "2026-03-31T23:00:00+00:00",
+      "last_origin_utc": "2026-04-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 22678699,
+      "sha256": "56b24351533f565771399f1764fc97e8f9e1e8c52002582eb293626b04e78cca"
+    },
+    {
+      "month": "2026-05",
+      "file": "validation_2026-05.gif",
+      "frames": 673,
+      "first_fold": 1465,
+      "last_fold": 2137,
+      "first_origin_utc": "2026-04-30T23:00:00+00:00",
+      "last_origin_utc": "2026-05-28T23:00:00+00:00",
+      "duration_ms": 67300,
+      "bytes": 20984794,
+      "sha256": "4f4b004749276427da0a690948c965551a57a1bbf0e69ce0f6395eb995803b62"
+    },
+    {
+      "month": "2026-06",
+      "file": "validation_2026-06.gif",
+      "frames": 720,
+      "first_fold": 2138,
+      "last_fold": 2857,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 22479421,
+      "sha256": "e7c4e27c4aa3a96f017a3050ca5442ca10259e5e062ed79f3650e305f76b38db"
+    },
+    {
+      "month": "2026-07",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 2858,
+      "last_fold": 3601,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23578662,
+      "sha256": "fd25095bbc21c56f71dabf493a92fb413f87de1adf143c7dfce9100f627da22a"
+    },
+    {
+      "month": "2026-08",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 3602,
+      "last_fold": 4345,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 23055111,
+      "sha256": "6b623d5b04b041e8f8af8cc6ab122a2dab59ed39637be9779453e4c1d78e9792"
+    },
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 4346,
+      "last_fold": 4970,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 19930446,
+      "sha256": "428973dae3df5fdeb0450611c0fa0b19817f2387e176a40c9c7adb13e5f8a458"
+    }
+  ]
+}
