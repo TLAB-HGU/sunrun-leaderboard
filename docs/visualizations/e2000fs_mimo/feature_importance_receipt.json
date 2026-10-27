@@ -1,0 +1,44 @@
+{
+  "strategy": "MIMO",
+  "canonical": "MIMO",
+  "experiment": "e2000fs_mimo",
+  "config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 4071.7847861386495,
+    "leaderboard_mse": 4071.7847861386495,
+    "origins": 2137,
+    "boosters": 1,
+    "refit_seconds": 10135.369094371796,
+    "total_splits": 6138,
+    "permutation_seconds": 31.608375549316406
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3162.6398686254433,
+    "leaderboard_mse": 3162.6398686254433,
+    "origins": 2833,
+    "boosters": 1,
+    "refit_seconds": 6527.569375991821,
+    "total_splits": 6142,
+    "permutation_seconds": 21.796635150909424
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 12,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}
