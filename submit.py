@@ -27,7 +27,7 @@ from huggingface_hub.utils import HfHubHTTPError
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE)]
-from board import event_value, f2_mse, has_f1, ranked, render  # noqa: E402
+from board import end_to_end_hours, event_value, f2_mse, has_f1, ranked, render  # noqa: E402
 from scoring import score, validate  # noqa: E402
 
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -50,7 +50,7 @@ def text_table(results: list[dict]) -> str:
     def num(x):
         return f"{x:,.1f}" if x is not None else "-"
 
-    out = [f"{'#':>4} {'experiment':<24} {'member':<12} {'config':<12} {'sec/fold':>10} {'MSE':>10} {'F1':>10} {'F2':>10} "
+    out = [f"{'#':>4} {'experiment':<24} {'member':<12} {'config':<12} {'sec/fold':>10} {'e2e(h)':>7} {'MSE':>10} {'F1':>10} {'F2':>10} "
            f"{'MSE>=550':>10} {'F1>=550':>10} {'F2>=550':>10} {'CSI':>6} {'TmMAE':>6} {'skill':>8} {'beats naive':>11} code"]
     for i, r in enumerate(ranked(results), 1):
         full = has_f1(r)
@@ -63,8 +63,10 @@ def text_table(results: list[dict]) -> str:
         config = r.get("config_sha256", "legacy")[:12]
         seconds = r.get("inference_seconds_per_fold")
         seconds_text = f"{seconds:.6f}" if seconds is not None else "-"
+        e2e = end_to_end_hours(r)
+        e2e_text = f"{e2e:.2f}" if e2e is not None else "-"
         out.append(f"{i if full else 'F2':>4} {r['experiment'][:24]:<24} {r['team_member'][:12]:<12} {config:<12} {seconds_text:>10} "
-                   f"{periods} {events} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
+                   f"{e2e_text:>7} {periods} {events} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
                    f"{r.get('code_url') or '-'}")
     return "\n".join(out)
 
@@ -166,6 +168,20 @@ def all_results(api: HfApi, repo: str, revision: str | None = None) -> list[dict
     return [json.loads(Path(_download(repo, f, revision=revision)).read_text()) for f in files]
 
 
+def with_extras(api: HfApi, repo: str, results: list[dict], revision: str | None = None) -> list[dict]:
+    """Attach optional display-only extras (``extras/<member>/<experiment>/<config_sha256>.json``) as ``r["extras"]``.
+
+    Extras are facts added after scoring, such as end-to-end compute time; the scored result files stay untouched.
+    """
+    files = {f for f in api.list_repo_files(repo, repo_type="dataset", revision=revision) if f.startswith("extras/")}
+    out = []
+    for r in results:
+        path = f"extras/{r['team_member']}/{r['experiment']}/{r.get('config_sha256', 'legacy')}.json"
+        out.append({**r, "extras": json.loads(Path(_download(repo, path, revision=revision)).read_text())}
+                   if path in files else r)
+    return out
+
+
 def publish(api: HfApi, results: list[dict], space: str) -> str:
     try:
         api.create_repo(space, repo_type="space", space_sdk="static", private=True, exist_ok=True)
@@ -232,7 +248,7 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
         buf = io.BytesIO()
         pred.to_parquet(buf, index=False)
         store_submission(api, dataset, rec, buf.getvalue(), replace)
-        rec["_leaderboard"] = publish(api, all_results(api, dataset), space)
+        rec["_leaderboard"] = publish(api, with_extras(api, dataset, all_results(api, dataset)), space)
     return rec
 
 
@@ -248,7 +264,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     if a.show:
         require_token()
-        print(text_table(all_results(HfApi(), a.dataset)))
+        print(text_table(with_extras(HfApi(), a.dataset, all_results(HfApi(), a.dataset))))
         raise SystemExit(0)
     if not (a.predictions and a.meta):
         ap.error("predictions and meta are required (or use --show)")
@@ -261,5 +277,5 @@ if __name__ == "__main__":
     print(f"MSE(obs)={r['mse_observed']:.1f}  skill vs naive={r['skill_vs_naive']:+.3f}  "
           f"beats naive (95% CI)={vs['beats_reference']}  diff CI={[round(x, 1) for x in vs['ci95']]}")
     if "_leaderboard" in r:
-        print("\n" + text_table(all_results(HfApi(), a.dataset)))
+        print("\n" + text_table(with_extras(HfApi(), a.dataset, all_results(HfApi(), a.dataset))))
         print("\npage (needs an HF login of an org member):", r["_leaderboard"])

@@ -49,6 +49,12 @@ def event_value(r: dict, key: str):
     return r.get(key) if has_f1(r) else r.get(f"{key}_f2", r.get(key))
 
 
+def end_to_end_hours(r: dict):
+    """Optional end-to-end compute time (training through the submitted F1 + F2 forecasts), from result extras."""
+    seconds = (r.get("extras") or {}).get("end_to_end_seconds")
+    return None if seconds is None else seconds / 3600
+
+
 def ranked(results: list[dict]) -> list[dict]:
     """F1+F2 results by overall MSE, then F2-only results by F2 MSE."""
     rows = _latest(results)
@@ -62,9 +68,9 @@ def _num(x, d=1):
 
 def render(results: list[dict], note: str = "") -> str:
     rows = ranked(results)
-    head = (["#", "experiment", "member", "config", "sec/fold", "code", "MSE", "F1 MSE", "F2 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550",
+    head = (["#", "experiment", "member", "config", "sec/fold", "end-to-end (h)", "code", "MSE", "F1 MSE", "F2 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550",
              "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive", "beats naive (95% CI)", "regime-bal. MSE (F2)", "submitted (UTC)"] + REGIMES)
-    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 5, 18) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
+    th = "".join(f'<th class="{"l" if i in (1, 2, 3, 6, 19) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
     body = []
     for i, r in enumerate(rows, 1):
         full = has_f1(r)
@@ -78,13 +84,17 @@ def render(results: list[dict], note: str = "") -> str:
         config_sha = r.get("config_sha256")
         config_label = config_sha[:12] if config_sha else "legacy"
         seconds = r.get("inference_seconds_per_fold")
+        e2e = end_to_end_hours(r)
+        e2e_title = html.escape((r.get("extras") or {}).get("end_to_end_note", ""), quote=True)
         code_url = r.get("code_url")
         code = (f'<a href="{html.escape(code_url, quote=True)}" target="_blank" rel="noopener">script</a>'
                 if code_url else '<span class="dash">–</span>')
         cells = [
             rank, f'<td class="l">{html.escape(r["experiment"])}</td>', f'<td class="l">{html.escape(r["team_member"])}</td>',
             f'<td class="l" title="{html.escape(config_sha or "legacy")}"><code>{config_label}</code></td>',
-            f'<td data-v="{seconds if seconds is not None else ""}">{_num(seconds, 6)}</td>', f'<td class="l">{code}</td>',
+            f'<td data-v="{seconds if seconds is not None else ""}">{_num(seconds, 6)}</td>',
+            f'<td data-v="{"" if e2e is None else e2e}" title="{e2e_title}">{_num(e2e, 2)}</td>',
+            f'<td class="l">{code}</td>',
             *(f'<td data-v="{"" if x is None else x}">{_num(x)}</td>' for x in metrics),
             f'<td data-v="{"" if csi is None else csi}">{_num(csi, 3)}</td>',
             f'<td data-v="{"" if tmae is None else tmae}" title="{bias_title}">{_num(tmae)}</td>',
@@ -110,7 +120,8 @@ and their MSE obs. / skill / beats naive are F2 values. <b>MSE obs.</b> scores o
 <b>CSI</b> (threat score) = TP / (TP + FP + FN) for HSS events in each 72h window: a run of hours ≥ 550 km/s (quiet gaps ≤ 6h merged; runs touching
 hour 1 or 72 are not counted), forecast and true peaks matched one-to-one within 12h, summed over all windows. <b>timing MAE</b> = mean |forecast − true
 peak hour| of matched events (hover: signed bias, + = late). Both are diagnostic; F2-only rows show F2 values.
-<b>beats naive</b> = block-bootstrap (72h blocks) 95% CI of the paired MSE difference is below 0. Regime columns (trend/seasonal-27d/forecastability, low/high) are
+<b>end-to-end (h)</b> = wall-clock compute from training through the submitted F1 + F2 forecasts, as reported by the submitter
+(optional, shown only where provided; hover for its scope). <b>beats naive</b> = block-bootstrap (72h blocks) 95% CI of the paired MSE difference is below 0. Regime columns (trend/seasonal-27d/forecastability, low/high) are
 diagnostic, computed on F2 folds only, and hidden when a cell has fewer than 3 non-overlapping 72h blocks. Click a header to sort.<br>Generated from {len(results)} scored submissions.</footer>
 </main><script>{JS}</script></body></html>"""
 
