@@ -1,0 +1,44 @@
+{
+  "strategy": "RecMO-12",
+  "canonical": "RecMO-12",
+  "experiment": "e2000fs_recmo_12",
+  "config_sha256": "63ef09306aa8dc587edd4910b2283fe9ea8c15fc898a2e5a0fe8aee2d6a3dd24",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3962.0895173592976,
+    "leaderboard_mse": 3962.0895173592976,
+    "origins": 2137,
+    "boosters": 1,
+    "refit_seconds": 202.107679605484,
+    "total_splits": 6236,
+    "permutation_seconds": 27.343276023864746
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3295.1026064403904,
+    "leaderboard_mse": 3295.1026064403904,
+    "origins": 2833,
+    "boosters": 1,
+    "refit_seconds": 220.56077647209167,
+    "total_splits": 6236,
+    "permutation_seconds": 34.53840374946594
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 12,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}
