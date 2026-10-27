@@ -235,6 +235,24 @@ EXPERIMENTS = {
         "aggregation": "single model",
         "periods": ("F1", "F2"),
     },
+    "E2000FS_KUMO_DIRECT": {
+        "model": "e2000fs_kumo_direct",
+        "title": "E2000FS Kumo Direct (seed 42)",
+        "model_config_sha256": "5a6766bb74faa72233e6188a9a2139c1cff1d19cd4e3395b91309135cfc67caf",
+        "expected_mse": 4391.086418030659,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_KUMO_POOLED": {
+        "model": "e2000fs_kumo_pooled",
+        "title": "E2000FS Kumo pooled (seed 42)",
+        "model_config_sha256": "e278fbdf5292061d8782e6f177a11d25892e7f2ab58f80325b782fbd6f8ea61a",
+        "expected_mse": 13844.759176454909,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
 }
 ORIGIN = "origin_last_input_utc"
 KEY = [ORIGIN, "horizon_hours"]
