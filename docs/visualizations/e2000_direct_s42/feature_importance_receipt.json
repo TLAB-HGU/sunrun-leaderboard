@@ -1,0 +1,27 @@
+{
+  "experiment": "e2000_direct_s42",
+  "run": "E1987",
+  "source": "saved",
+  "config_sha256": "b8ddde1b8d358459784749cb5c918f38b1259d839d3f0e87b57841be2266b43e",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 4240.156930547298,
+    "leaderboard_mse": 4240.156930547298,
+    "origins": 2137,
+    "boosters": 72,
+    "total_splits": 412664,
+    "features_sha256": "399f1cb615ea0312cf7bc859571c72f928fcb8c875a1881c5779c0d020c900cf"
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3500.111744597929,
+    "leaderboard_mse": 3500.111744597929,
+    "origins": 2833,
+    "boosters": 72,
+    "total_splits": 413124,
+    "features_sha256": "1aabe775c8dc8194973faf112aa5cb3db0c7a4a4421be59c90d54f6051273f9c"
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "permutation_groups": 110
+}
