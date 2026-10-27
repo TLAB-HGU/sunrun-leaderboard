@@ -1,0 +1,44 @@
+{
+  "strategy": "Stratify-DirRecMO-DirRecMO-24",
+  "canonical": "Stratify-DirRecMO-DirRecMO-24",
+  "experiment": "e2000fs_stratify_dirrecmo_dirrecmo_24",
+  "config_sha256": "061bf043c4514322ea11157e58a314cb08d93ec7eafd569cd4b0b3c52ba4a622",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 4014.050771174031,
+    "leaderboard_mse": 4014.050771174031,
+    "origins": 2137,
+    "boosters": 6,
+    "refit_seconds": 7053.060958147049,
+    "total_splits": 36746,
+    "permutation_seconds": 72.98335123062134
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3415.1485204892488,
+    "leaderboard_mse": 3415.1485204892488,
+    "origins": 2833,
+    "boosters": 6,
+    "refit_seconds": 5065.995823144913,
+    "total_splits": 36764,
+    "permutation_seconds": 64.73254609107971
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 12,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}
