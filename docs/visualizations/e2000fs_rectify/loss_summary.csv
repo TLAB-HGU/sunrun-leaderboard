@@ -1,0 +1,5 @@
+stage,role,boosters,rounds,train_min,train_median,train_max,validation_min,validation_median,validation_max
+f1,"base, purged OOF folds",4,900,180.746,193.859,208.311,204.119,206.692,978.961
+f1,residual,72,900,221.337,2091.82,2721.54,653.838,3026.21,3642.61
+final,"base, purged OOF folds",4,900,185.981,195.905,212.93,207.185,208.486,827.526
+final,residual,72,900,228.981,2204.79,2827.28,421.683,3509.09,4156.31

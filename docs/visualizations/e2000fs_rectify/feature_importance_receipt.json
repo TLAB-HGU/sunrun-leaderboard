@@ -1,0 +1,44 @@
+{
+  "strategy": "Rectify",
+  "canonical": "Rectify",
+  "experiment": "e2000fs_rectify",
+  "config_sha256": "f0142d38c7dddd7668e9d5f87fd702dcad5ff729ecf064d9533d3564f8bba207",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 4002.5582863416353,
+    "leaderboard_mse": 4002.5582863416353,
+    "origins": 2137,
+    "boosters": 73,
+    "refit_seconds": 781.9665052890778,
+    "total_splits": 422475,
+    "permutation_seconds": 286.15079855918884
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3345.087285555955,
+    "leaderboard_mse": 3345.087285555955,
+    "origins": 2833,
+    "boosters": 73,
+    "refit_seconds": 821.3984770774841,
+    "total_splits": 422889,
+    "permutation_seconds": 385.4079384803772
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 12,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}
