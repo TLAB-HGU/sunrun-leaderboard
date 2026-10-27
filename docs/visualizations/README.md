@@ -6,6 +6,33 @@
 
 같은 모델의 [feature importance](e2000fs_dirmo_24/#feature-importance)(permutation + split 횟수)도 추가했습니다. 제출 모델을 다시 학습해 제출 예측과 완전히 같은 것을 확인한 뒤 계산했습니다.
 
+### e2000fs 전체 시각화
+
+E2000FS 전략 비교(XGBoost)와 Kumo 비교의 나머지 리더보드 기록도 같은 형식으로 추가했습니다. XGBoost 기록은 train·validation loss, feature importance, F1+F2 월별 GIF를, Kumo 기록은 학습 round와 tree가 없어 GIF만 담았습니다. 순위는 각 폴더를 게시한 시점 기준입니다.
+
+| 게시 시점 순위 | 실험 | 공식 MSE (F1 + F2) | 폴더 |
+| ---: | --- | ---: | --- |
+| 3 | E2000FS DirRecMO-12 | 3534.223345 | [e2000fs_dirrecmo_12](e2000fs_dirrecmo_12/) |
+| 4 | E2000FS DirMO-12 | 3553.341592 | [e2000fs_dirmo_12](e2000fs_dirmo_12/) |
+| 5 | E2000FS MIMO | 3553.553891 | [e2000fs_mimo](e2000fs_mimo/) |
+| 6 | E2000FS DirMO-6 | 3568.334464 | [e2000fs_dirmo_6](e2000fs_dirmo_6/) |
+| 7 | E2000FS DirRecMO-24 | 3580.432193 | [e2000fs_dirrecmo_24](e2000fs_dirrecmo_24/) |
+| 8 | E2000FS RecMO-12 | 3581.893558 | [e2000fs_recmo_12](e2000fs_recmo_12/) |
+| 9 | E2000FS RectifyMO-24 | 3596.842904 | [e2000fs_rectifymo_24](e2000fs_rectifymo_24/) |
+| 10 | E2000FS DirRecMO-6 | 3606.352259 | [e2000fs_dirrecmo_6](e2000fs_dirrecmo_6/) |
+| 11 | E2000FS RecMO-24 | 3608.390614 | [e2000fs_recmo_24](e2000fs_recmo_24/) |
+| 12 | E2000FS Rectify | 3627.786587 | [e2000fs_rectify](e2000fs_rectify/) |
+| 13 | E2000FS RecMO-6 | 3652.003202 | [e2000fs_recmo_6](e2000fs_recmo_6/) |
+| 15 | E2000FS Stratify-DirRecMO-DirRecMO-24 | 3672.664438 | [e2000fs_stratify_dirrecmo_dirrecmo_24](e2000fs_stratify_dirrecmo_dirrecmo_24/) |
+| 18 | E2000 Direct-multioutput | 3818.316284 | [e2000_direct_s42](e2000_direct_s42/) |
+| 18 | E2000FS Kumo DirRec | 4259.032058 | [e2000fs_kumo_dirrec](e2000fs_kumo_dirrec/) |
+| 19 | E2000 Direct-pooled | 4266.967935 | [e2000_horizon_conditioned_s42](e2000_horizon_conditioned_s42/) |
+| 21 | E2000FS DirRec | 4347.016897 | [e2000fs_dirrec](e2000fs_dirrec/) |
+| 22 | E2000FS Kumo Direct | 4391.086418 | [e2000fs_kumo_direct](e2000fs_kumo_direct/) |
+| 22 | E2000FS Recursive | 6043.244806 | [e2000fs_recursive](e2000fs_recursive/) |
+| 31 | E2000FS Kumo pooled | 13844.759176 | [e2000fs_kumo_pooled](e2000fs_kumo_pooled/) |
+| 27 | E2000FS Kumo Recursive | 18306.617946 | [e2000fs_kumo_recursive](e2000fs_kumo_recursive/) |
+
 ## 기존 시각화
 
 공식 평가 기간인 2026년 6~9월의 예측을 월별 GIF로 확인할 수 있습니다. 아래 순위는 **2026-10-20** 게시 상태 기준이며, 각 그림은 리더보드에 실제 제출한 예측을 사용합니다.
