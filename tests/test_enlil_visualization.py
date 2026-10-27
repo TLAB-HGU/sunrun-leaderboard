@@ -170,3 +170,20 @@ def test_original_official_score_guard_unchanged(replay, experiment):
     keys.assign(target_kms=400., was_missing=0).to_parquet(args.truth)
     with pytest.raises(ValueError, match="Frozen leaderboard MSE mismatch"):
         MODULE.load_data(args)
+
+
+def test_f1_f2_experiment_requires_all_seven_months(replay):
+    args, _, _ = replay
+    args.experiment = "E2000FS_DIRMO24"
+    assert list(MODULE.expected_months("E0472")) == ["2026-06", "2026-07", "2026-08", "2026-09"]
+    months = MODULE.expected_months(args.experiment)
+    assert list(months)[0] == "2026-03" and sum(months.values()) == 4970
+    f2 = pd.date_range("2026-05-31T23:00Z", periods=2833, freq="h")
+    origins = pd.date_range("2026-02-28T23:00Z", periods=2137, freq="h").append(f2)
+    for folds, error in ((f2, "4,970 unique folds"), (origins, "Frozen leaderboard MSE mismatch")):
+        keys = pd.MultiIndex.from_product([folds, range(1, 73)], names=MODULE.KEY).to_frame(index=False)
+        pd.DataFrame({MODULE.ORIGIN: folds}).to_parquet(args.folds)
+        keys.assign(pred_kms=400.).to_parquet(args.predictions)
+        keys.assign(target_kms=400., was_missing=0).to_parquet(args.truth)
+        with pytest.raises(ValueError, match=error):
+            MODULE.load_data(args)

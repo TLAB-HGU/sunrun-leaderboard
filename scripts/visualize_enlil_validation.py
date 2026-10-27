@@ -64,10 +64,25 @@ EXPERIMENTS = {
         "reference_only": True,
         "ace_latency_hours": 0,
     },
+    "E2000FS_DIRMO24": {
+        "model": "e2000fs_dirmo_24",
+        "title": "E2000FS DirMO-24 (seed 42)",
+        "model_config_sha256": "6fc76b1836f3a22669108823c6bf6833082b4d9a74bedf80edd8199f66183037",
+        "expected_mse": 3480.2701508981454,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
 }
 ORIGIN = "origin_last_input_utc"
 KEY = [ORIGIN, "horizon_hours"]
 EXPECTED_MONTHS = {"2026-06": 720, "2026-07": 744, "2026-08": 744, "2026-09": 625}
+F1_MONTHS = {"2026-03": 744, "2026-04": 720, "2026-05": 673}
+
+
+def expected_months(name):
+    """Official fold counts per UTC month (origin + 1 h); F2 only unless the experiment was scored on F1 + F2."""
+    return {**F1_MONTHS, **EXPECTED_MONTHS} if "F1" in EXPERIMENTS[name].get("periods", ()) else EXPECTED_MONTHS
 
 
 def require(condition, message):
@@ -96,13 +111,15 @@ def load_data(args):
             "Unsubmitted comparator requires --reference-month")
     input_hours = history_hours(args)
     expected_mse = EXPERIMENTS[args.experiment]["expected_mse"]
+    month_counts = expected_months(args.experiment)
+    n_folds = sum(month_counts.values())
     folds = pd.read_parquet(args.folds)
     pred = pd.read_parquet(args.predictions)
     truth = pd.read_parquet(args.truth)
     for frame in (folds, pred, truth):
         frame[ORIGIN] = pd.to_datetime(frame[ORIGIN], utc=True)
     origins = pd.DatetimeIndex(folds[ORIGIN]).sort_values()
-    require(len(origins) == 2833 and origins.is_unique, "Expected 2,833 unique folds")
+    require(len(origins) == n_folds and origins.is_unique, f"Expected {n_folds:,} unique folds")
     expected = pd.MultiIndex.from_product([origins, range(1, 73)], names=KEY)
     for name, frame in (("predictions", pred), ("truth", truth)):
         keys = pd.MultiIndex.from_frame(frame[KEY])
@@ -119,7 +136,7 @@ def load_data(args):
     require(abs(mse - expected_mse) <= 1e-7, f"Frozen leaderboard MSE mismatch: {mse}")
     months = (origins + pd.Timedelta(hours=1)).strftime("%Y-%m")
     counts = pd.Series(months).value_counts().sort_index().to_dict()
-    require(counts == EXPECTED_MONTHS, f"Unexpected month counts: {counts}")
+    require(counts == month_counts, f"Unexpected month counts: {counts}")
 
     history = pd.read_parquet(args.history)
     history.index = pd.to_datetime(history.pop("timestamp_utc"), utc=True)
@@ -198,7 +215,7 @@ def render(args, data):
     title = experiment.get("title", experiment["model"])
     origins, months, inputs, input_missing, actual, predicted, actual_missing, mse, ylim = data
     reference_month = getattr(args, "reference_month", None)
-    render_months = [reference_month] if reference_month else list(EXPECTED_MONTHS)
+    render_months = [reference_month] if reference_month else list(expected_months(args.experiment))
     manifest_name = f"manifest_{reference_month}.json" if reference_month else "manifest.json"
     provenance = None
     if reference_month and getattr(args, "provenance", None):
@@ -305,7 +322,7 @@ def render(args, data):
                     for name in source_names},
         "verification": {"folds": len(origins), "pairs": len(origins) * 72,
                          "mse": mse, "expected_mse": experiment.get("expected_mse"), "mse_tolerance": 1e-7,
-                         "expected_month_counts": EXPECTED_MONTHS,
+                         "expected_month_counts": expected_months(args.experiment),
                          "rendered_frames": sum(item["frames"] for item in results),
                          "complete": args.limit is None, "all_gifs_decoded": True,
                          "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
