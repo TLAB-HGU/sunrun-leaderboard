@@ -1,0 +1,44 @@
+{
+  "strategy": "RectifyMO-24",
+  "canonical": "RectifyMO-24",
+  "experiment": "e2000fs_rectifymo_24",
+  "config_sha256": "bd171fb6322878beb6b473aaffe811ae3d783483b1b142ed7ec387cfbca7a092",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 4050.898245466135,
+    "leaderboard_mse": 4050.898245466135,
+    "origins": 2137,
+    "boosters": 4,
+    "refit_seconds": 3751.7828962802887,
+    "total_splits": 24740,
+    "permutation_seconds": 39.95754790306091
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 3254.3380446051747,
+    "leaderboard_mse": 3254.3380446051747,
+    "origins": 2833,
+    "boosters": 4,
+    "refit_seconds": 3195.484523296356,
+    "total_splits": 24708,
+    "permutation_seconds": 40.97731375694275
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 12,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}

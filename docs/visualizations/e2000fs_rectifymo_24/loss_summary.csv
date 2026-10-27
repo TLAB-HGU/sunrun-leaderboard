@@ -1,0 +1,7 @@
+stage,role,boosters,rounds,train_min,train_median,train_max,validation_min,validation_median,validation_max
+f1,"base, full fit",1,900,1732.44,1732.44,1732.44,2036.46,2036.46,2036.46
+f1,"base, purged OOF folds",4,900,1413.96,1593.5,1703.07,1766.32,1900.35,4690.94
+f1,residual,3,900,1318.36,2293.19,2665.31,1892.4,3126.38,3770.88
+final,"base, full fit",1,900,1749.35,1749.35,1749.35,2083.58,2083.58,2083.58
+final,"base, purged OOF folds",4,900,1512.39,1604.39,1636.72,1821.44,1914.54,4627
+final,residual,3,900,1360.81,2453.43,2804.6,1761.12,2940.73,3616.29
