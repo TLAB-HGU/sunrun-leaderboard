@@ -73,6 +73,168 @@ EXPERIMENTS = {
         "aggregation": "single model",
         "periods": ("F1", "F2"),
     },
+    "E2000FS_RECURSIVE": {
+        "model": "e2000fs_recursive",
+        "title": "E2000FS Recursive (seed 42)",
+        "model_config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32",
+        "expected_mse": 6043.244805566084,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_DIRREC": {
+        "model": "e2000fs_dirrec",
+        "title": "E2000FS DirRec (seed 42)",
+        "model_config_sha256": "59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04",
+        "expected_mse": 4347.016897171334,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000_DIRECT_S42": {
+        "model": "e2000_direct_s42",
+        "title": "E2000 Direct-multioutput (seed 42)",
+        "model_config_sha256": "b8ddde1b8d358459784749cb5c918f38b1259d839d3f0e87b57841be2266b43e",
+        "expected_mse": 3818.3162843109676,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000_HORIZON_CONDITIONED_S42": {
+        "model": "e2000_horizon_conditioned_s42",
+        "title": "E2000 Direct-pooled (seed 42)",
+        "model_config_sha256": "e8a8ea38c97e84381ba467a0244e11a63e8b053eaa77e2086f5ab25940bba85f",
+        "expected_mse": 4266.967935084032,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_MIMO": {
+        "model": "e2000fs_mimo",
+        "title": "E2000FS MIMO (seed 42)",
+        "model_config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa",
+        "expected_mse": 3553.5538905018466,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_RECMO_6": {
+        "model": "e2000fs_recmo_6",
+        "title": "E2000FS RecMO-6 (seed 42)",
+        "model_config_sha256": "6de2ce593d600e2cfad77bde4b84c02b371a9cadf38fe38145bfccfd163b0afa",
+        "expected_mse": 3652.003201942434,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_RECMO_12": {
+        "model": "e2000fs_recmo_12",
+        "title": "E2000FS RecMO-12 (seed 42)",
+        "model_config_sha256": "63ef09306aa8dc587edd4910b2283fe9ea8c15fc898a2e5a0fe8aee2d6a3dd24",
+        "expected_mse": 3581.8935578757428,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_RECMO_24": {
+        "model": "e2000fs_recmo_24",
+        "title": "E2000FS RecMO-24 (seed 42)",
+        "model_config_sha256": "12418deb76bdcda19a8fedf60ba443922464b62580a4861f023738966e232e66",
+        "expected_mse": 3608.3906137288723,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_DIRMO_6": {
+        "model": "e2000fs_dirmo_6",
+        "title": "E2000FS DirMO-6 (seed 42)",
+        "model_config_sha256": "64526874161d3ea0e652784646a16cde9b9e82ce060cfc2158c3934121abb520",
+        "expected_mse": 3568.3344643459395,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_DIRMO_12": {
+        "model": "e2000fs_dirmo_12",
+        "title": "E2000FS DirMO-12 (seed 42)",
+        "model_config_sha256": "dd80390251b9dffe723176a7b3c0fda7d29dcf8ae99561cbb9e8ef38396754f4",
+        "expected_mse": 3553.3415924719216,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_DIRRECMO_6": {
+        "model": "e2000fs_dirrecmo_6",
+        "title": "E2000FS DirRecMO-6 (seed 42)",
+        "model_config_sha256": "c9dd83a2ebd684551c60c551951f4f98188c6effd0984666fe00882738498c50",
+        "expected_mse": 3606.352259102138,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_DIRRECMO_12": {
+        "model": "e2000fs_dirrecmo_12",
+        "title": "E2000FS DirRecMO-12 (seed 42)",
+        "model_config_sha256": "4550ff58ae3d9f7468bd9a971b8c1876affcf6380d0c039b35bfe47aca5054bf",
+        "expected_mse": 3534.223344502351,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_DIRRECMO_24": {
+        "model": "e2000fs_dirrecmo_24",
+        "title": "E2000FS DirRecMO-24 (seed 42)",
+        "model_config_sha256": "be8ce039fed4d3d3c40a2495337c17b3e9b34692e8c3818ab5e757a2624a565f",
+        "expected_mse": 3580.4321932111106,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_RECTIFY": {
+        "model": "e2000fs_rectify",
+        "title": "E2000FS Rectify (seed 42)",
+        "model_config_sha256": "f0142d38c7dddd7668e9d5f87fd702dcad5ff729ecf064d9533d3564f8bba207",
+        "expected_mse": 3627.7865871010245,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_RECTIFYMO_24": {
+        "model": "e2000fs_rectifymo_24",
+        "title": "E2000FS RectifyMO-24 (seed 42)",
+        "model_config_sha256": "bd171fb6322878beb6b473aaffe811ae3d783483b1b142ed7ec387cfbca7a092",
+        "expected_mse": 3596.842903607161,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_STRATIFY_DIRRECMO_DIRRECMO_24": {
+        "model": "e2000fs_stratify_dirrecmo_dirrecmo_24",
+        "title": "E2000FS Stratify-DirRecMO-DirRecMO-24 (seed 42)",
+        "model_config_sha256": "061bf043c4514322ea11157e58a314cb08d93ec7eafd569cd4b0b3c52ba4a622",
+        "expected_mse": 3672.6644379366094,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_KUMO_RECURSIVE": {
+        "model": "e2000fs_kumo_recursive",
+        "title": "E2000FS Kumo Recursive (seed 42)",
+        "model_config_sha256": "ff1e0b492145a9a32a9971c0d42a396aac3eebf7791a39ac8884aa1cb03992f3",
+        "expected_mse": 18306.617946122104,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
+    "E2000FS_KUMO_DIRREC": {
+        "model": "e2000fs_kumo_dirrec",
+        "title": "E2000FS Kumo DirRec (seed 42)",
+        "model_config_sha256": "e39be4ab896b5f8eb24ba207999739fa9eba29a89d1e5705afe41959e60ce8dd",
+        "expected_mse": 4259.032058051013,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
 }
 ORIGIN = "origin_last_input_utc"
 KEY = [ORIGIN, "horizon_hours"]

@@ -1,0 +1,44 @@
+{
+  "strategy": "Recursive",
+  "canonical": "Recursive",
+  "experiment": "e2000fs_recursive",
+  "config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32",
+  "f1": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 6490.14204677113,
+    "leaderboard_mse": 6490.14204677113,
+    "origins": 2137,
+    "boosters": 1,
+    "refit_seconds": 188.47053503990173,
+    "total_splits": 6193,
+    "permutation_seconds": 165.1164951324463
+  },
+  "final": {
+    "max_abs_diff_kms": 0.0,
+    "mse": 5706.139473954654,
+    "leaderboard_mse": 5706.139473954654,
+    "origins": 2833,
+    "boosters": 1,
+    "refit_seconds": 217.083838224411,
+    "total_splits": 6209,
+    "permutation_seconds": 261.73534321784973
+  },
+  "repeats": 5,
+  "seed": 20261027,
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "n_jobs": 8,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "permutation_groups": 134
+}
