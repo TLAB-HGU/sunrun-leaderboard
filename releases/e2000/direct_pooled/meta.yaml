@@ -1,0 +1,93 @@
+{
+  "team_member": "seongeun",
+  "experiment": "e2000_horizon_conditioned_s42",
+  "description": "E2000 one horizon-conditioned XGBoost on the same wide features plus the horizon: F2 forecasts from E1988 (targets before 2026-05-29), F1 forecasts from the refit E1994 with the unchanged frozen recipe on targets before 2026-02-26 (900 rounds, depth 3, lr 0.03, seed 42; 111 E0472 inputs, 1,530 wide features, ACE at origin-2h). Disclosure: the E2000 campaign compared its multioutput and pooled arms on internal validation 2026-03-04..05-25, inside the F1 window, and the inherited feature set/recipe come from earlier research that used later data; there was no HPO and both arms are published so neither is selected on that comparison. Single seed. Script replays the hash-pinned archived forecast.",
+  "no_future_leakage": true,
+  "f1_training_data_end_utc": "2026-02-26T00:00:00Z",
+  "config": {
+    "data": {
+      "study": "E2000 Direct arm (E2000 publication session), released alongside the E2000 strategy study",
+      "executions": {
+        "F2": "E1988",
+        "F1": "E1994"
+      },
+      "prediction_sha256": {
+        "combined": "577f1cc0ba3eb2c30bf4123cb8f8c52cdd8b471f5127290a29c6a49fb9a862fa",
+        "F1": "3f35fde8d8832b4dd5eaaa0f8b83a08b41ae6a5691f994589a4db4aa5658d430",
+        "F2": "b5a237af1e110956258813d6d0342962595d2e0f91f8acb47c29e8048403ad68"
+      },
+      "features_sha256": {
+        "F2": "1aabe775c8dc8194973faf112aa5cb3db0c7a4a4421be59c90d54f6051273f9c",
+        "F1": "399f1cb615ea0312cf7bc859571c72f928fcb8c875a1881c5779c0d020c900cf"
+      },
+      "feature_names_sha256": "1035b3282be970f3c14a69b55bdbd788102eaf8caed2f292da2caa49801ee221",
+      "ace_lag_hours": 2,
+      "f1_model_training_target_end_utc": "2026-02-26T00:00:00Z",
+      "f2_model_training_target_end_utc": "2026-05-29T00:00:00Z",
+      "prior_f1_window_exposure": "arm comparison on internal validation 2026-03-04..05-25 (no HPO)",
+      "periods": {
+        "F1": {
+          "origins_start_utc": "2026-02-28T23:00:00Z",
+          "origins_end_utc": "2026-05-28T23:00:00Z",
+          "origin_count": 2137
+        },
+        "F2": {
+          "origins_start_utc": "2026-05-31T23:00:00Z",
+          "origins_end_utc": "2026-09-26T23:00:00Z",
+          "origin_count": 2833
+        }
+      },
+      "asset": {
+        "filename": "forecast.npz",
+        "sha256": "4a36d65566a8d2f3b3d90b16c16269470214f9b7a5c631f769f5cdd297fa9293"
+      },
+      "source_sha256": {
+        "e2000_njobs_all/__init__.py": "540b2bc7987271ddf964bf6ed91fa0b1aee96c27949b88e335371833a8966142",
+        "e2000_njobs_all/availability_rebuild.py": "95e047192f0ee1e0977b56365ebf40cd13075601982b1fa4549ef2862ea8d2d2",
+        "e2000_njobs_all/finalize_inputs.py": "880e937503ee8156f8b70dd45322a811b3b03e362f8173b09fa8bfaa3d365a96",
+        "e2000_njobs_all/inputs.py": "783aed4289460a41f8aa2b7ada6b212a595fe778a1ec2f16b220cddbc194e352",
+        "e2000_njobs_all/launch.py": "7e3d44e2506b835d452c79ce0a43e0e204bceadb9f18904be93afd19aa5a7a42",
+        "e2000_njobs_all/model.py": "3e9b1b810ba59644aec905195826f7bb63adfd21f73547fcb06b60ed3b474e1c",
+        "e2000_njobs_all/prepare.py": "9fdc13c5d1d3a6ff329bef68c8cfa2524653b9e247204b6d00284e9a05d4d0ab",
+        "e2000_njobs_all/probes.py": "964f29863592c47cf59a541c3b9f38e738b026f66863d7dee203c38b9a71160e",
+        "e2000_njobs_all/runner.py": "1598b08269b1af350de95379c8304e3e2516456573cb66925f0f9a656f7a5164",
+        "e2000_njobs_all/source_proof.py": "9da604eee3dff2e6c4c99c786e75bce0e552796243fb22fe10286266333efc75",
+        "e2000_njobs_all/test_availability_rebuild.py": "277b12b13b0966f048a23d660c0320834f072f20d5c29834ef3402e170bb82b7",
+        "e2000_njobs_all/test_inputs.py": "1c5179a13ab0e9e96d7fb46e6c426ad580fda5c7f3700cd5f0db2b02dc8db864",
+        "e2000_njobs_all/test_model.py": "6b913c90d29341d884fc9178abf59a0744e7c5b8ccc0f2f7bbf8446d082f0850",
+        "e2000_njobs_all/test_prepare.py": "5f0958a6ab238e447c19b7dfbc2999a1b2d431f3cce0c9cdbbcae4e4d9cb1654",
+        "e2000_njobs_all/test_runner.py": "a0095985b98ec78ea7e6aba9299633b594f22bd29f6fee217d7d33aa1dc38f76",
+        "e2000_njobs_all/test_source_proof.py": "362d0f352b951c98f63921a01af9798b83ebf122817d9bcdbd252c4854187d4f",
+        "e2000_pooled_official/__init__.py": "d17ce48bc3f2c05ff55b6f3635f05cbc5aa994d3e806364ca8837372f0d04518",
+        "e2000_pooled_official/launch.py": "62b81fbe358018d8ce73b5f3af106237137bd06032916933cd31171e0423ea1c",
+        "e2000_pooled_official/test_launch.py": "bb3153f7ae812bfc2ab3fc20e3d9caa798d823df49f73424286c30afe427bf9a",
+        "e2000_f1_release_v3/__init__.py": "78cab3fd4ef00c9172ed5e3d7bf7d024d9ee5f790298fcc667fc5b336cfb72d5",
+        "e2000_f1_release_v3/launch.py": "522130a7219de2b90d8b5648ea2aa8a2c753a4ad03dc174fb75fa673f0dcbf88",
+        "e2000_f1_release_v3/model.py": "d360180f9d382ee982771bfa915b61b67c86fb43e2b129d5cefdc952cfab3d9a",
+        "e2000_f1_release_v3/prepare.py": "7d9e98cfe46156a387aad580221b5c8c59bb6e156d61a133b043892ea0f7e85f",
+        "e2000_f1_release_v3/test_launch.py": "cc4a0406d6d94dbfed48a0a0676f1c058c54b624cccd8846e5b1697708c0d03a",
+        "e2000_f1_release_v3/test_memory.py": "cb4eaffb79a9994418f1255557e506d3b798b7b86d4a2e05f496545e37be69e1",
+        "combined.json": "04f9bc580b6e7bfdbf5fac888db4cffafee934f5c5aba281327c58df804ae175",
+        "inference.py": "a1c040499d2af8a1ea87d5c2ee95346fcbe78ddc6632f6111cfcec59fcbda363"
+      }
+    },
+    "hyperparameters": {
+      "seed": 42,
+      "n_estimators_per_model": 900,
+      "max_depth": 3,
+      "learning_rate": 0.03,
+      "model_count": 1,
+      "architecture": "horizon_conditioned",
+      "subsample": 0.8,
+      "colsample_bytree": 0.7,
+      "min_child_weight": 20,
+      "reg_lambda": 5,
+      "tree_method": "hist",
+      "objective": "reg:squarederror",
+      "device": "cpu",
+      "n_jobs": -1,
+      "strategy": "Direct-pooled"
+    }
+  },
+  "inference_seconds_per_fold": 0.0043219176881269215
+}
