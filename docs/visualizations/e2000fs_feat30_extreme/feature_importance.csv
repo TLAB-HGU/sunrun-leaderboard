@@ -1,0 +1,61 @@
+stage,feature,kind,split_count,perm_delta_mse_mean,perm_delta_mse_sd
+f1,v_lag0,recent speed,717,1630.3453,17.909824
+f1,rec_mean,27-day recurrence,789,215.78162,20.022031
+f1,enlil_kp,WSA-ENLIL,477,134.40827,16.353279
+f1,ch_ch_t035_meridian30_equatorial_area,SUVI strips / coronal holes,344,222.15545,9.1966269
+f1,ace_bt_nt_last,ACE plasma / field / particles,336,96.092952,17.115133
+f1,ace_speed_kms_last,recent speed,234,97.302652,14.843744
+f1,ch_ch_t035_equatorial_area,SUVI strips / coronal holes,607,287.1293,27.538746
+f1,ch_ch_t035_meridian15_equatorial_area,SUVI strips / coronal holes,344,237.49598,13.015313
+f1,ace_bt_nt_m6,ACE plasma / field / particles,381,17.327574,16.775241
+f1,rec26,27-day recurrence,1295,149.03329,13.906396
+f1,strip_v450_logmed,SUVI strips / coronal holes,1186,89.680478,10.777984
+f1,strip_v350_logmed,SUVI strips / coronal holes,1203,35.513964,13.835678
+f1,ch_ch_t055_equatorial_area,SUVI strips / coronal holes,506,332.84354,26.486077
+f1,rec27,27-day recurrence,891,34.227256,5.9525916
+f1,ace_density_cm3_last,ACE plasma / field / particles,233,28.234764,7.7066674
+f1,ch_ch_t055_meridian30_equatorial_area,SUVI strips / coronal holes,363,71.3877,12.015336
+f1,ace_by_gsm_nt_m24,ACE plasma / field / particles,564,24.11213,7.3632231
+f1,ace_density_cm3_m6,ACE plasma / field / particles,288,6.6426313,3.1592949
+f1,ace_temperature_k_last,ACE plasma / field / particles,250,-31.817033,5.0691416
+f1,enlil_n_pending,WSA-ENLIL,373,7.2208474,4.0169044
+f1,ace_temperature_k_m24,ACE plasma / field / particles,455,-21.732689,7.8331647
+f1,strip_v750_logmed,SUVI strips / coronal holes,1061,217.9956,22.350744
+f1,ch_ch_t055_meridian15_area,SUVI strips / coronal holes,408,-13.347498,8.6787683
+f1,ch_ch_t035_top2_area,SUVI strips / coronal holes,504,22.293059,3.1849932
+f1,strip_v550_dark,SUVI strips / coronal holes,609,104.32709,12.959011
+f1,strip_v650_dark,SUVI strips / coronal holes,777,61.306685,8.5614918
+f1,ace_sis_gt10_flux_last,ACE plasma / field / particles,840,127.75302,13.90288
+f1,ace_epam_p_channel3_last,ACE plasma / field / particles,595,108.98597,8.3078018
+f1,img_age_h,SUVI strips / coronal holes,610,-29.893674,7.0294627
+f1,rec28,27-day recurrence,1038,64.841042,8.963212
+final,v_lag0,recent speed,747,1758.5364,44.459241
+final,rec_mean,27-day recurrence,808,186.20705,20.885214
+final,enlil_kp,WSA-ENLIL,444,438.05256,24.472598
+final,ch_ch_t035_meridian30_equatorial_area,SUVI strips / coronal holes,390,204.3295,8.7416853
+final,ace_bt_nt_last,ACE plasma / field / particles,345,187.91413,10.436635
+final,ace_speed_kms_last,recent speed,240,198.64788,11.225383
+final,ch_ch_t035_equatorial_area,SUVI strips / coronal holes,601,276.98773,13.770322
+final,ch_ch_t035_meridian15_equatorial_area,SUVI strips / coronal holes,370,87.803764,12.710486
+final,ace_bt_nt_m6,ACE plasma / field / particles,355,135.01724,8.8758249
+final,rec26,27-day recurrence,1247,193.10337,17.047252
+final,strip_v450_logmed,SUVI strips / coronal holes,1183,126.93363,11.110117
+final,strip_v350_logmed,SUVI strips / coronal holes,1218,163.91506,15.844876
+final,ch_ch_t055_equatorial_area,SUVI strips / coronal holes,589,-35.525868,4.9467851
+final,rec27,27-day recurrence,827,73.91888,7.6035987
+final,ace_density_cm3_last,ACE plasma / field / particles,241,25.306409,2.8697192
+final,ch_ch_t055_meridian30_equatorial_area,SUVI strips / coronal holes,370,75.281849,11.660799
+final,ace_by_gsm_nt_m24,ACE plasma / field / particles,529,52.450433,14.224415
+final,ace_density_cm3_m6,ACE plasma / field / particles,251,22.665491,2.4307808
+final,ace_temperature_k_last,ACE plasma / field / particles,244,55.533879,7.1707217
+final,enlil_n_pending,WSA-ENLIL,348,8.0435778,3.8268699
+final,ace_temperature_k_m24,ACE plasma / field / particles,471,79.135247,6.5813888
+final,strip_v750_logmed,SUVI strips / coronal holes,1131,107.61917,10.593346
+final,ch_ch_t055_meridian15_area,SUVI strips / coronal holes,413,35.051884,2.6622313
+final,ch_ch_t035_top2_area,SUVI strips / coronal holes,509,-13.308651,4.4688309
+final,strip_v550_dark,SUVI strips / coronal holes,579,149.75653,14.772907
+final,strip_v650_dark,SUVI strips / coronal holes,736,35.246784,6.3711697
+final,ace_sis_gt10_flux_last,ACE plasma / field / particles,874,-15.952503,1.5419017
+final,ace_epam_p_channel3_last,ACE plasma / field / particles,628,-0.685105,7.6657474
+final,img_age_h,SUVI strips / coronal holes,553,13.976854,5.5661512
+final,rec28,27-day recurrence,1062,73.263577,9.2847762

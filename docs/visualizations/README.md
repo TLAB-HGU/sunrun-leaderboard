@@ -1,5 +1,9 @@
 # 리더보드 예측 GIF
 
+## 2026-10-28 추가
+
+[E2000FS Feat30 Extreme의 train·validation loss, feature importance, F1+F2 월별 예측 GIF](e2000fs_feat30_extreme/)를 추가했습니다. 게시 기준 리더보드 14위, MSE **3585.635750**(F1 4025.01 / F2 3254.20)이며 실제 제출 예측과 저장 booster를 검증해 사용했습니다. 30개 특징은 공식 F1/F2 permutation importance를 본 뒤 사후 선택한 집합이므로 fresh holdout 결과가 아니라는 점을 명시했습니다.
+
 ## 2026-10-27 추가
 
 [E2000FS DirMO-24의 train·validation loss와 F1+F2 월별 예측 GIF](e2000fs_dirmo_24/)를 추가했습니다. 게시 기준 리더보드 1위, MSE **3480.270151**(F1 3878.88 / F2 3179.59)이며 실제 제출한 단일 seed 42 예측을 사용합니다. GIF는 2026-03~09 7개월, 4,970개 시작점 전체입니다. loss는 제출 F1·F2 모델의 학습 중 기록이며, validation 구간이 학습 구간 안에 있으므로 진단용입니다.

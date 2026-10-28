@@ -187,3 +187,13 @@ def test_f1_f2_experiment_requires_all_seven_months(replay):
         keys.assign(target_kms=400., was_missing=0).to_parquet(args.truth)
         with pytest.raises(ValueError, match=error):
             MODULE.load_data(args)
+
+
+def test_feat30_extreme_identity_is_frozen():
+    experiment = MODULE.EXPERIMENTS["E2000FS_FEAT30_EXTREME"]
+    assert experiment["model"] == "e2000fs_feat30_extreme"
+    assert experiment["model_config_sha256"] == (
+        "b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1"
+    )
+    assert experiment["expected_mse"] == 3585.6357500367762
+    assert sum(MODULE.expected_months("E2000FS_FEAT30_EXTREME").values()) == 4970

@@ -73,6 +73,15 @@ EXPERIMENTS = {
         "aggregation": "single model",
         "periods": ("F1", "F2"),
     },
+    "E2000FS_FEAT30_EXTREME": {
+        "model": "e2000fs_feat30_extreme",
+        "title": "E2000FS Feat30 Extreme (seed 42)",
+        "model_config_sha256": "b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1",
+        "expected_mse": 3585.6357500367762,  # overall F1 + F2
+        "seeds": [42],
+        "aggregation": "single model",
+        "periods": ("F1", "F2"),
+    },
     "E2000FS_RECURSIVE": {
         "model": "e2000fs_recursive",
         "title": "E2000FS Recursive (seed 42)",

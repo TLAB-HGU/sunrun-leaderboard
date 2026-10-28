@@ -1,0 +1,7 @@
+stage,block,rounds,train_mse,validation_mse,validation_is_held_out
+f1,h1–24,900,1452.3204,1661.5383,False
+f1,h25–48,900,2789.2955,2746.7841,False
+f1,h49–72,900,3497.3237,3072.5396,False
+final,h1–24,900,1467.3028,1687.9978,False
+final,h25–48,900,2837.9887,2838.3517,False
+final,h49–72,900,3479.1702,3239.1386,False

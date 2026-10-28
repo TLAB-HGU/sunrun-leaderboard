@@ -1,0 +1,34 @@
+{
+  "experiment": "e2000fs_feat30_extreme",
+  "config_sha256": "b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1",
+  "source": "saved submitted boosters",
+  "repeats": 5,
+  "seed": 20261028,
+  "selection_disclosure": "Post-hoc official F1/F2 permutation importance, weighted 2137:2833. Official-exposed; not a fresh holdout.",
+  "f1": {
+    "origins": 2137,
+    "boosters": 3,
+    "max_abs_diff_kms": 0.0,
+    "mse": 4025.0112329567164,
+    "leaderboard_mse": 4025.0112329567164,
+    "total_splits": 18278,
+    "model_sha256": [
+      "949e90e515e0f6a55b37100e21f451c348baed499e59d2f0f1314cad593f280c",
+      "1fe8d1d045fee26852bc583fee2fb67e54ca79b558c360c7d24243037fd5d0c7",
+      "971f6db762337eed1dfaf259619804e3ac0bc3319fcfd2b0b2606dcc3d846830"
+    ]
+  },
+  "final": {
+    "origins": 2833,
+    "boosters": 3,
+    "max_abs_diff_kms": 0.0,
+    "mse": 3254.204261508744,
+    "leaderboard_mse": 3254.204261508744,
+    "total_splits": 18303,
+    "model_sha256": [
+      "97334a24f70bd88ed930acf510b75a51e6f7e26ac9919338762568f33c52ac88",
+      "2bc4f578fc0492a17ca4e45dd1eea1f6a898612782f50f39488690133f56709f",
+      "bf9064f21564e55f3a1f619310a0221b0b5cdb9c9596f3ad6aa7f5a34e51b96a"
+    ]
+  }
+}
