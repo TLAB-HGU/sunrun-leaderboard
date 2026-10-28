@@ -1,0 +1,1476 @@
+{
+  "decoder_missing_recurrence": 0,
+  "dev0": {
+    "n_origins": 648,
+    "n_pairs": 46656,
+    "mse": 6027.224152591342,
+    "mae": 57.08198060359726,
+    "peak_mae": 80.2330968752375,
+    "peak_bias": -68.42636940875384,
+    "ramp6_mae": 51.08402935009809,
+    "peak_timing_mae_h": 18.554012345679013,
+    "mse_ge550": 19510.120965922604,
+    "bias_ge550": -113.66347135014362,
+    "n_pairs_ge550": 7248,
+    "mse_by_band": {
+      "h1-24": 2577.9892235062885,
+      "h25-48": 6923.173246074981,
+      "h49-72": 8580.50998819276
+    },
+    "events": {
+      "tp": 1,
+      "fp": 26,
+      "fn": 144,
+      "n_windows": 648,
+      "csi": 0.005847953216374269,
+      "pod": 0.006896551724137931,
+      "far": 0.9629629629629629,
+      "timing_mae_h": 7.0,
+      "timing_bias_h": -7.0
+    },
+    "tp": 1,
+    "fp": 26,
+    "fn": 144,
+    "csi": 0.005847953216374269,
+    "timing_mae_h": 7.0,
+    "timing_bias_h": -7.0,
+    "mse_lt550": 3547.4221808337047,
+    "n_pairs_lt550": 39408,
+    "bias_lt550": 8.718841709315766,
+    "training": {
+      "rows": 6336,
+      "high_target_count": 37206,
+      "last_origin": "2024-11-30 21:00:00+00:00",
+      "last_target": "2024-12-03 21:00:00+00:00",
+      "horizon_details": [
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1944.7937242387798
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1942.892911216521
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1941.7524554581807
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1938.332641156094
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1939.5056133326957
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1938.3718228203115
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1937.2551766059069
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1936.9498752691354
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1936.0743203452878
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1932.7662035467913
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1934.0613231807702
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1933.5439324793724
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1933.7116182041314
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1932.6110230112633
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1931.442003126279
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1931.0087125246198
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1932.4790819953137
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1931.1183566300847
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1925.9792401274128
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1928.6117238258282
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1925.611842337892
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1919.5951532625663
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1920.1205520768249
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1919.0183520887392
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1915.4960232509984
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1920.0168936460848
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1920.1911583927483
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1919.1838444296802
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1922.4614114987478
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1923.7060887359419
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1924.1709549396169
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1927.1475610237953
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1930.349922913939
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1931.93134682303
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1933.5360535090867
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1936.5856868915305
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1939.2263941657861
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1942.5623468198112
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1945.8883169295714
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1945.81608746422
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1948.7414192144756
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1951.4367000942214
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1945.253120640164
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1945.4013307192668
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1949.881420727066
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1948.1750910544843
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1948.3610675731584
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1951.6698463334735
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1950.8739836627258
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1952.1908713678097
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1956.5560110988113
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1962.8278246836983
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1964.3919522159658
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1968.0097517294844
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1973.4891799530644
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1973.6727927425009
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1978.5074676539546
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1985.7878509771517
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1986.2610652339781
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1990.1564525922233
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1996.201280678336
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 1997.4600379087528
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2000.9123442615357
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2006.294373178723
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2012.3949664775844
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2014.513379380429
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2012.3422761199665
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2017.1004651408377
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2019.1858297812075
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2016.78948835506
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2022.14934484512
+        },
+        {
+          "rows": 6336,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2025.5850911630848
+        }
+      ]
+    }
+  },
+  "dev1": {
+    "n_origins": 640,
+    "n_pairs": 46080,
+    "mse": 6687.98748993384,
+    "mae": 57.35070481071171,
+    "peak_mae": 83.00320832654951,
+    "peak_bias": -77.19041303014231,
+    "ramp6_mae": 60.822445430347216,
+    "peak_timing_mae_h": 18.3171875,
+    "mse_ge550": 21522.032722791253,
+    "bias_ge550": -109.17336684568643,
+    "n_pairs_ge550": 9936,
+    "mse_by_band": {
+      "h1-24": 3428.621334909923,
+      "h25-48": 7641.670959079712,
+      "h49-72": 8993.670175811882
+    },
+    "events": {
+      "tp": 13,
+      "fp": 19,
+      "fn": 202,
+      "n_windows": 640,
+      "csi": 0.05555555555555555,
+      "pod": 0.06046511627906977,
+      "far": 0.59375,
+      "timing_mae_h": 6.538461538461538,
+      "timing_bias_h": 1.6153846153846154
+    },
+    "tp": 13,
+    "fp": 19,
+    "fn": 202,
+    "csi": 0.05555555555555555,
+    "timing_mae_h": 6.538461538461538,
+    "timing_bias_h": 1.6153846153846154,
+    "mse_lt550": 2610.1025454431565,
+    "n_pairs_lt550": 36144,
+    "bias_lt550": 13.466101800505234,
+    "training": {
+      "rows": 7056,
+      "high_target_count": 46161,
+      "last_origin": "2025-02-28 21:00:00+00:00",
+      "last_target": "2025-03-03 21:00:00+00:00",
+      "horizon_details": [
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2205.8279573976783
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2203.2861227930402
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2205.0142369762566
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2202.6412930406964
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2201.926374343415
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2203.575780509513
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2203.154266884331
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2201.655131371958
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2203.6891668623284
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2200.4113627014913
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2199.8807286572005
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2201.5622580848626
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2201.4749891877163
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2197.969540329814
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2199.472046050012
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2199.567880341932
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2198.315429541858
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2200.378768981583
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2194.6671859632825
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2196.073195501874
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2196.473627632987
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2189.8400490297095
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2189.256567526821
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2191.10241770716
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2187.528274379463
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2190.6889383991675
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2194.3490049338557
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2192.321586451
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2193.0336383451263
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2197.449931436221
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2196.447721777573
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2197.099382997658
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2203.347844245439
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2202.9355153421157
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2201.5397605200355
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2207.4850196493003
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2208.39236947168
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2208.270746259697
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2215.133406527616
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2213.347759895307
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2213.037650924764
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2219.0778326284412
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2211.4407772115555
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2209.7148992007565
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2217.322520159522
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2213.574262472186
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2212.383202707172
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2219.0357576605593
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2216.2175733688427
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2217.345191132999
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2225.1563419702147
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2229.1375604076256
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2230.4239329885627
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2238.0265587875515
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2239.7358024295213
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2240.3362576713657
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2249.4774480158812
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2253.3847495104546
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2252.998828003413
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2261.8499602909765
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2265.8313564018517
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2265.6298453030017
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2274.4611300619267
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2277.4250959728133
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2281.7041766193274
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2288.699404434928
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2285.165983243473
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2288.689802941554
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2295.248071621538
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2291.46784905735
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2295.9493545357695
+        },
+        {
+          "rows": 7056,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2304.5136306348677
+        }
+      ]
+    }
+  },
+  "dev2": {
+    "n_origins": 640,
+    "n_pairs": 46080,
+    "mse": 10290.433754225975,
+    "mae": 69.15486139170622,
+    "peak_mae": 101.29507674753395,
+    "peak_bias": -92.07018322146783,
+    "ramp6_mae": 82.86414182266822,
+    "peak_timing_mae_h": 17.6109375,
+    "mse_ge550": 27204.184128078497,
+    "bias_ge550": -105.04784907399926,
+    "n_pairs_ge550": 12939,
+    "mse_by_band": {
+      "h1-24": 4973.58519566815,
+      "h25-48": 11404.026442414088,
+      "h49-72": 14493.689624595683
+    },
+    "events": {
+      "tp": 15,
+      "fp": 52,
+      "fn": 200,
+      "n_windows": 640,
+      "csi": 0.056179775280898875,
+      "pod": 0.06976744186046512,
+      "far": 0.7761194029850746,
+      "timing_mae_h": 5.466666666666667,
+      "timing_bias_h": 2.4
+    },
+    "tp": 15,
+    "fp": 52,
+    "fn": 200,
+    "csi": 0.056179775280898875,
+    "timing_mae_h": 5.466666666666667,
+    "timing_bias_h": 2.4,
+    "mse_lt550": 3686.9210030332574,
+    "n_pairs_lt550": 33141,
+    "bias_lt550": 19.108722626012174,
+    "training": {
+      "rows": 8528,
+      "high_target_count": 69621,
+      "last_origin": "2025-08-31 21:00:00+00:00",
+      "last_target": "2025-09-03 21:00:00+00:00",
+      "horizon_details": [
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2658.151798438593
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2653.2744706291146
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2657.3578143729887
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2661.4496862841083
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2658.628592598658
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2662.133647241007
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2666.893705619422
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.5599704447736
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2665.7101082613226
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.286176538187
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2662.979489836708
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.7084089983487
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2665.1608043455803
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2662.4937825754537
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.6197528060384
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.8616604201866
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2661.794870756106
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.8469517308386
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2657.9176102750966
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2656.725049841895
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2656.439622525003
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2649.924365646844
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2646.036659689675
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2648.3768140647894
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2645.695105519532
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2645.911402257442
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2649.8109125875794
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2647.847490163541
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2647.2111638887322
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2651.442619300863
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2654.019014177772
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2652.3451225507283
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2657.0200955095866
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2656.580008183822
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2654.734361031309
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2658.9363087979764
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2659.2996752158474
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2661.157494033262
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2666.2024981553072
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2662.74804303625
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2663.5325772049905
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2669.014583582303
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2661.249981060337
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2661.7300937499776
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2669.340601917688
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2667.187757572973
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2665.5457447756894
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2672.9507565098265
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2671.3789084952305
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2672.388296857731
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2679.405532393667
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2687.0866101697648
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2688.9977902992373
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2696.539265391866
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2703.4674884662923
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2702.837394175971
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2711.579054768448
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2718.505583446066
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2720.6584319642675
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2728.743167404791
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2737.0855383562944
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2739.304813611696
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2748.0836297048986
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2753.35281365365
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2761.651370803274
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2768.9062656715787
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2770.3751293513956
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2778.479993360633
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2784.8670663639787
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2784.917926180362
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2793.397722933344
+        },
+        {
+          "rows": 8528,
+          "weight_min": 2500.0,
+          "weight_max": 90000.0,
+          "effective_sample_size": 2801.5596271282143
+        }
+      ]
+    }
+  },
+  "pooled": {
+    "n_origins": 1928,
+    "n_pairs": 138816,
+    "mse": 7661.73799125595,
+    "mae": 61.178778942260635,
+    "peak_mae": 88.14416453452661,
+    "peak_bias": -79.18416440762601,
+    "ramp6_mae": 64.86611351700904,
+    "peak_timing_mae_h": 18.16234439834025,
+    "mse_ge550": 23478.644634593787,
+    "bias_ge550": -108.4816762106383,
+    "n_pairs_ge550": 30123,
+    "mse_by_band": {
+      "h1-24": 3655.5753093371586,
+      "h25-48": 8649.098859135176,
+      "h49-72": 10680.539805295513
+    },
+    "events": {
+      "tp": 29,
+      "fp": 97,
+      "fn": 546,
+      "n_windows": 1928,
+      "csi": 0.043154761904761904,
+      "pod": 0.050434782608695654,
+      "far": 0.7698412698412699,
+      "timing_mae_h": 6.0,
+      "timing_bias_h": 1.7241379310344827
+    },
+    "tp": 29,
+    "fp": 97,
+    "fn": 546,
+    "csi": 0.043154761904761904,
+    "timing_mae_h": 6.0,
+    "timing_bias_h": 1.7241379310344827,
+    "mse_lt550": 3278.2663894300204,
+    "n_pairs_lt550": 108693,
+    "bias_lt550": 13.465384837173014
+  },
+  "development_passed": false
+}

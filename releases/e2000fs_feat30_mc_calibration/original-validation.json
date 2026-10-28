@@ -1,0 +1,1806 @@
+{
+  "decoder_missing_recurrence": 0,
+  "dev0": {
+    "n_origins": 648,
+    "n_pairs": 46656,
+    "mse": 5015.361787313525,
+    "mae": 52.98332465565373,
+    "peak_mae": 61.81590155644883,
+    "peak_bias": -42.47133758574709,
+    "ramp6_mae": 51.04593159159529,
+    "peak_timing_mae_h": 20.375,
+    "mse_ge550": 13783.584362014466,
+    "bias_ge550": -85.97815947289332,
+    "n_pairs_ge550": 7248,
+    "mse_by_band": {
+      "h1-24": 2396.186620752172,
+      "h25-48": 5828.148213367455,
+      "h49-72": 6821.75052782095
+    },
+    "events": {
+      "tp": 28,
+      "fp": 43,
+      "fn": 117,
+      "n_windows": 648,
+      "csi": 0.14893617021276595,
+      "pod": 0.19310344827586207,
+      "far": 0.6056338028169014,
+      "timing_mae_h": 6.142857142857143,
+      "timing_bias_h": 1.7142857142857142
+    },
+    "tp": 28,
+    "fp": 43,
+    "fn": 117,
+    "csi": 0.14893617021276595,
+    "timing_mae_h": 6.142857142857143,
+    "timing_bias_h": 1.7142857142857142,
+    "mse_lt550": 3402.692349092038,
+    "n_pairs_lt550": 39408,
+    "bias_lt550": 22.786119209759786,
+    "training": {
+      "rows": 6336,
+      "high_target_count": 37206,
+      "last_origin": "2024-11-30 21:00:00+00:00",
+      "last_target": "2024-12-03 21:00:00+00:00",
+      "horizon_details": [
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        },
+        {
+          "rows": 6336,
+          "prefix_rows": 5044,
+          "calibration_rows": 1268,
+          "prefix_last_target": "2024-06-25 09:00:00+00:00",
+          "calibration_first_origin": "2024-06-25 12:00:00+00:00"
+        }
+      ]
+    },
+    "prefix_base_only": {
+      "n_origins": 648,
+      "n_pairs": 46656,
+      "mse": 5242.340308700329,
+      "mae": 54.8955132608205,
+      "peak_mae": 58.85228039018133,
+      "peak_bias": -34.378251180241506,
+      "ramp6_mae": 49.50105323660018,
+      "peak_timing_mae_h": 20.441358024691358,
+      "mse_ge550": 12213.234340303221,
+      "bias_ge550": -76.8025383203624,
+      "n_pairs_ge550": 7248,
+      "mse_by_band": {
+        "h1-24": 2563.4674826452933,
+        "h25-48": 6123.569728724994,
+        "h49-72": 7039.983714730701
+      },
+      "events": {
+        "tp": 29,
+        "fp": 50,
+        "fn": 116,
+        "n_windows": 648,
+        "csi": 0.14871794871794872,
+        "pod": 0.2,
+        "far": 0.6329113924050633,
+        "timing_mae_h": 6.9655172413793105,
+        "timing_bias_h": 3.7241379310344827
+      },
+      "tp": 29,
+      "fp": 50,
+      "fn": 116,
+      "csi": 0.14871794871794872,
+      "timing_mae_h": 6.9655172413793105,
+      "timing_bias_h": 3.7241379310344827,
+      "mse_lt550": 3960.239213971905,
+      "n_pairs_lt550": 39408,
+      "bias_lt550": 31.508933503604617
+    }
+  },
+  "dev1": {
+    "n_origins": 640,
+    "n_pairs": 46080,
+    "mse": 5919.748914391858,
+    "mae": 52.46729224924713,
+    "peak_mae": 80.21257373263946,
+    "peak_bias": -74.48611850719098,
+    "ramp6_mae": 69.10483961026246,
+    "peak_timing_mae_h": 17.9953125,
+    "mse_ge550": 20130.50614371972,
+    "bias_ge550": -112.99897836633863,
+    "n_pairs_ge550": 9936,
+    "mse_by_band": {
+      "h1-24": 2968.3248086558992,
+      "h25-48": 6605.691961373391,
+      "h49-72": 8185.229973146284
+    },
+    "events": {
+      "tp": 20,
+      "fp": 21,
+      "fn": 195,
+      "n_windows": 640,
+      "csi": 0.0847457627118644,
+      "pod": 0.09302325581395349,
+      "far": 0.5121951219512195,
+      "timing_mae_h": 5.0,
+      "timing_bias_h": 1.9
+    },
+    "tp": 20,
+    "fp": 21,
+    "fn": 195,
+    "csi": 0.0847457627118644,
+    "timing_mae_h": 5.0,
+    "timing_bias_h": 1.9,
+    "mse_lt550": 2013.206090393362,
+    "n_pairs_lt550": 36144,
+    "bias_lt550": 0.6796082349772922,
+    "training": {
+      "rows": 7056,
+      "high_target_count": 46161,
+      "last_origin": "2025-02-28 21:00:00+00:00",
+      "last_target": "2025-03-03 21:00:00+00:00",
+      "horizon_details": [
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        },
+        {
+          "rows": 7056,
+          "prefix_rows": 5620,
+          "calibration_rows": 1412,
+          "prefix_last_target": "2024-09-05 09:00:00+00:00",
+          "calibration_first_origin": "2024-09-05 12:00:00+00:00"
+        }
+      ]
+    },
+    "prefix_base_only": {
+      "n_origins": 640,
+      "n_pairs": 46080,
+      "mse": 5986.583762598514,
+      "mae": 53.02548023179895,
+      "peak_mae": 79.35948642053884,
+      "peak_bias": -72.92111498340617,
+      "ramp6_mae": 68.96386871169803,
+      "peak_timing_mae_h": 18.0703125,
+      "mse_ge550": 20054.25835236519,
+      "bias_ge550": -111.90447608328253,
+      "n_pairs_ge550": 9936,
+      "mse_by_band": {
+        "h1-24": 2988.246083291172,
+        "h25-48": 6654.042035224966,
+        "h49-72": 8317.463169279405
+      },
+      "events": {
+        "tp": 22,
+        "fp": 25,
+        "fn": 193,
+        "n_windows": 640,
+        "csi": 0.09166666666666666,
+        "pod": 0.10232558139534884,
+        "far": 0.5319148936170213,
+        "timing_mae_h": 5.181818181818182,
+        "timing_bias_h": 2.5454545454545454
+      },
+      "tp": 22,
+      "fp": 25,
+      "fn": 193,
+      "csi": 0.09166666666666666,
+      "timing_mae_h": 5.181818181818182,
+      "timing_bias_h": 2.5454545454545454,
+      "mse_lt550": 2119.3744132204247,
+      "n_pairs_lt550": 36144,
+      "bias_lt550": 2.093215657585408
+    }
+  },
+  "dev2": {
+    "n_origins": 640,
+    "n_pairs": 46080,
+    "mse": 9196.215894580057,
+    "mae": 64.87348707805731,
+    "peak_mae": 102.49462903292617,
+    "peak_bias": -94.4695540863714,
+    "ramp6_mae": 93.93844593882378,
+    "peak_timing_mae_h": 16.53125,
+    "mse_ge550": 24938.05475767508,
+    "bias_ge550": -115.77837102465719,
+    "n_pairs_ge550": 12939,
+    "mse_by_band": {
+      "h1-24": 4040.6417717441645,
+      "h25-48": 9693.370178456036,
+      "h49-72": 13854.635733539972
+    },
+    "events": {
+      "tp": 13,
+      "fp": 13,
+      "fn": 202,
+      "n_windows": 640,
+      "csi": 0.05701754385964912,
+      "pod": 0.06046511627906977,
+      "far": 0.5,
+      "timing_mae_h": 6.153846153846154,
+      "timing_bias_h": 2.0
+    },
+    "tp": 13,
+    "fp": 13,
+    "fn": 202,
+    "csi": 0.05701754385964912,
+    "timing_mae_h": 6.153846153846154,
+    "timing_bias_h": 2.0,
+    "mse_lt550": 3050.2440455234055,
+    "n_pairs_lt550": 33141,
+    "bias_lt550": 9.56125994661652,
+    "training": {
+      "rows": 8528,
+      "high_target_count": 69621,
+      "last_origin": "2025-08-31 21:00:00+00:00",
+      "last_target": "2025-09-03 21:00:00+00:00",
+      "horizon_details": [
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        },
+        {
+          "rows": 8528,
+          "prefix_rows": 6798,
+          "calibration_rows": 1706,
+          "prefix_last_target": "2025-01-30 15:00:00+00:00",
+          "calibration_first_origin": "2025-01-30 18:00:00+00:00"
+        }
+      ]
+    },
+    "prefix_base_only": {
+      "n_origins": 640,
+      "n_pairs": 46080,
+      "mse": 9774.977971115602,
+      "mae": 66.60962557640966,
+      "peak_mae": 106.79833521586151,
+      "peak_bias": -99.82214821059198,
+      "ramp6_mae": 94.79437859414227,
+      "peak_timing_mae_h": 17.2515625,
+      "mse_ge550": 27075.96418890174,
+      "bias_ge550": -124.32680213863031,
+      "n_pairs_ge550": 12939,
+      "mse_by_band": {
+        "h1-24": 4133.07743236606,
+        "h25-48": 10246.574804897407,
+        "h49-72": 14945.28167608334
+      },
+      "events": {
+        "tp": 10,
+        "fp": 12,
+        "fn": 205,
+        "n_windows": 640,
+        "csi": 0.04405286343612335,
+        "pod": 0.046511627906976744,
+        "far": 0.5454545454545454,
+        "timing_mae_h": 5.7,
+        "timing_bias_h": 0.7
+      },
+      "tp": 10,
+      "fp": 12,
+      "fn": 205,
+      "csi": 0.04405286343612335,
+      "timing_mae_h": 5.7,
+      "timing_bias_h": 0.7,
+      "mse_lt550": 3020.2795410158824,
+      "n_pairs_lt550": 33141,
+      "bias_lt550": 4.1174527390651745
+    }
+  },
+  "pooled": {
+    "n_origins": 1928,
+    "n_pairs": 138816,
+    "mse": 6703.408670083605,
+    "mae": 56.758969474241944,
+    "peak_mae": 81.42599272745895,
+    "peak_bias": -70.35946951008509,
+    "ramp6_mae": 71.27876889147767,
+    "peak_timing_mae_h": 18.309128630705395,
+    "mse_ge550": 20668.380274522384,
+    "bias_ge550": -107.69126221145008,
+    "n_pairs_ge550": 30123,
+    "mse_by_band": {
+      "h1-24": 3131.985239472743,
+      "h25-48": 7369.315255058582,
+      "h49-72": 9608.925515719493
+    },
+    "events": {
+      "tp": 61,
+      "fp": 77,
+      "fn": 514,
+      "n_windows": 1928,
+      "csi": 0.09355828220858896,
+      "pod": 0.10608695652173913,
+      "far": 0.5579710144927537,
+      "timing_mae_h": 5.770491803278689,
+      "timing_bias_h": 1.8360655737704918
+    },
+    "tp": 61,
+    "fp": 77,
+    "fn": 514,
+    "csi": 0.09355828220858896,
+    "timing_mae_h": 5.770491803278689,
+    "timing_bias_h": 1.8360655737704918,
+    "mse_lt550": 2833.1793117945763,
+    "n_pairs_lt550": 108693,
+    "bias_lt550": 11.40265575293764
+  },
+  "development_passed": false
+}
