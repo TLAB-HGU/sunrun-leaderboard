@@ -49,3 +49,5 @@ E2000FS 전략 비교(XGBoost)와 Kumo 비교의 나머지 리더보드 기록�
 각 모델의 세 시드 예측 평균을 표시합니다. 최근 168시간 관측, 이후 72시간 실제값과 예측을 동일한 200~800 km/s Y축으로 비교합니다. 월별 프레임 수는 720 / 744 / 744 / 625로 모델당 전체 2,833개 시작점을 포함하며, 프레임당 100ms로 반복 재생합니다. 시각화는 저장 예측을 읽으며 학습이나 예측 변경을 수행하지 않습니다. 기존 입력 계약과 현재 연구 기준의 차이는 각 모델 설명에 기재했습니다.
 
 기존 시각화: [E0472](xgb_d76_lead_moe_resid_dv_enlil/).
+
+[e2000fs_feat30_pointweight4](e2000fs_feat30_pointweight4/): MSE3732.269, >=550 MSE6071.056; pointwise weighting follow-up, loss/importance and daily-sampled monthly GIFs. High-speed improvement accompanied by ordinary-region degradation.
