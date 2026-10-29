@@ -1,0 +1,36 @@
+{
+  "recipe": {
+    "n_estimators": 900,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 20,
+    "reg_lambda": 5,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "tree_method": "hist",
+    "device": "cpu",
+    "eval_metric": "rmse"
+  },
+  "n_jobs": 4,
+  "multi_strategy": "multi_output_tree",
+  "sigma": 24,
+  "select_validation": {
+    "start": "2025-12-04T00:00:00Z",
+    "end": "2026-02-22T23:00:00Z"
+  },
+  "stage_cutoffs": {
+    "f1": "2026-02-26",
+    "final": "2026-05-29"
+  },
+  "expected": {
+    "dirmo_24_feat30": {
+      "mse": 3249.842329310296,
+      "rows": 357840
+    },
+    "dirrecmo_24": {
+      "rows": 357840
+    }
+  }
+}

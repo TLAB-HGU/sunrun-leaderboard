@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Fetch inputs, rebuild and verify both experiments. Run from the repository root.
-#   bash reproduce/run_all.sh            # full run (pointweight4 trains 216 LightGBM models, ~30-40 min on 2 threads)
-#   bash reproduce/run_all.sh --smoke    # 3-tree pointweight4 + full e1604 (about a minute)
+#   bash reproduce/run_all.sh            # full run: 2 x 216 LightGBM models + 12 XGBoost blocks (about 1.5-2 h)
+#   bash reproduce/run_all.sh --smoke    # tiny models for the four trained experiments + full e1604 (about a minute)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY="${PYTHON:-python}"
@@ -20,3 +20,13 @@ SMOKE=""; [ "${1:-}" = "--smoke" ] && SMOKE="--smoke"
 "$PY" reproduce/feat30_pointweight4/compare_cache.py "$OUT/pointweight4_cache" "$DATA/reference/pointweight4_cache"
 "$PY" reproduce/feat30_pointweight4/train_predict.py --cache "$OUT/pointweight4_cache" $SMOKE \
     --reference "$DATA/reference/pointweight4_forecast.npz"
+
+# e2000fs_feat30_lgbm_extreme4: same models, block-level extreme weights
+"$PY" reproduce/feat30_pointweight4/train_predict.py --arm extreme4 --cache "$OUT/pointweight4_cache" $SMOKE \
+    --reference "$DATA/reference/extreme4_forecast.npz"
+
+# e2000fs_dirmo_24_feat30 (Top-30 groups) and e2000fs_dirrecmo_24 (all 111 features): XGBoost joint-tree blocks
+"$PY" reproduce/e2000fs_xgb/dirmo_24_feat30.py --cache "$OUT/pointweight4_cache" $SMOKE \
+    --reference "$DATA/reference/dirmo_24_feat30_forecast.npz"
+"$PY" reproduce/e2000fs_xgb/dirrecmo_24.py --cache "$OUT/pointweight4_cache" $SMOKE \
+    --reference "$DATA/reference/dirrecmo_24_forecast.npz"

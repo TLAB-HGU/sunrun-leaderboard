@@ -1,6 +1,6 @@
 {
  "hf_repo": "tlabtlab/sunrun-repro-data",
- "hf_revision": "d73e13da7d45be5b25c9f4eae60c8c3f1342dd39",
+ "hf_revision": "47dce13dc6e913e278b751d8aaea0784e6df09cd",
  "lb_repo": "tlabtlab/sunrun-lb-store",
  "lb_revision": "5c274be8a920ce98832d14f7e56f66f341bc0833",
  "files": [
@@ -56,6 +56,13 @@
    "source": "hf"
   },
   {
+   "path": "inputs/feature_importance.csv",
+   "sha256": "ea62386ea10a5fd5f34b795129e491b4684698fe0792d03282286fa113a038ad",
+   "size": 17542,
+   "group": "core",
+   "source": "hf"
+  },
+  {
    "path": "lb-store/folds.parquet",
    "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635",
    "size": 162391,
@@ -77,11 +84,35 @@
    "source": "lb"
   },
   {
+   "path": "reference/dirmo_24_feat30_forecast.npz",
+   "sha256": "28e339d3dcb43c51e31676bfbbec0c769ecaf36b5f766136ed6d77824303c868",
+   "size": 2903008,
+   "group": "reference",
+   "source": "repo",
+   "repo_path": "releases/e2000fs/dirmo_24_feat30/forecast.npz"
+  },
+  {
+   "path": "reference/dirrecmo_24_forecast.npz",
+   "sha256": "0d85041f3ebb91081e7000177e5b897a417ba2cd4bb8ed337bec3037e5b3f254",
+   "size": 2903008,
+   "group": "reference",
+   "source": "repo",
+   "repo_path": "releases/e2000fs/dirrecmo_24/forecast.npz"
+  },
+  {
    "path": "reference/e1604_predictions.parquet",
    "sha256": "7707b5ee712a34e332f56ad708c1398f968fa32a264082323ab12fed62d14563",
    "size": 3197698,
    "group": "reference",
    "source": "hf"
+  },
+  {
+   "path": "reference/extreme4_forecast.npz",
+   "sha256": "10f40e8fbc49a3598630cf14cbf1b1324d3fe3e21b83b99ff975bf457c52af17",
+   "size": 2654772,
+   "group": "reference",
+   "source": "repo",
+   "repo_path": "releases/e2000fs_feat30_lgbm_extreme4/forecast.npz"
   },
   {
    "path": "reference/pointweight4_cache/f1.npz",

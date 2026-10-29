@@ -1,17 +1,23 @@
-# Reproduce `e2000fs_feat30_pointweight4` and `e1604_hsspeak25`
+# Reproduce five leaderboard entries from the raw ACE tables
 
-Raw ACE parquet → features → training → predictions → score, for the two leaderboard entries. Both reruns were
-checked against the published results: pointweight4 matches `releases/e2000fs_feat30_pointweight4/forecast.npz`
-exactly (max abs diff 0.0) and e1604 matches the submitted predictions parquet exactly (max abs diff 0.0).
+Raw ACE parquet → features → training → predictions → official score, for:
 
-| | `e2000fs_feat30_pointweight4` | `e1604_hsspeak25` |
+| Entry | Method | Reproduced MSE (F1+F2) | vs published `forecast.npz` |
+|---|---|---:|---|
+| `e2000fs_feat30_pointweight4` | 72 independent LightGBM models (one per horizon) on the frozen Top-30 groups; weight 4 where this target is ≥ 550 km/s | 3732.2689 | max abs diff 0.0 |
+| `e2000fs_feat30_lgbm_extreme4` | same models; weight 4 for every sample whose 24 h block has a ≥ 550 km/s value or a ≥ 100 km/s 6 h rise | 3728.7713 | max abs diff 0.0 |
+| `e2000fs_dirmo_24_feat30` | **DirMO-24**: three 24-output XGBoost joint-tree blocks on the Top-30 groups (237 columns each) | 3249.8423 | max abs diff 0.0 |
+| `e2000fs_dirrecmo_24` | **DirRecMO-24**: three 24-output XGBoost blocks on all 111 features; each block also sees the trajectory of the earlier blocks | 3580.4322 | max abs diff 0.0 |
+| `e1604_hsspeak25` | two HGB heads add a 12 h Gaussian bump (0.15 × (peak − path min), from lead 25) to the frozen E0472 forecasts, 3 seeds averaged | 3674.0050 (F1 4272.05, F2 3222.883, the published F2 MSE) | max abs diff 0.0 (vs submitted parquet) |
+
+Each rerun starts from the raw ACE tables and the frozen grids and checks itself against the published result.
+Run times on 24 cores: LightGBM arms about 25 min each (2 threads, 216 models), DirMO about 20 min, DirRecMO about 20 min,
+e1604 under a minute, feature cache about 40 s.
+
+| | Rebuilt here | Not rebuilt (frozen inputs) |
 |---|---|---|
-| Method | 72 independent LightGBM models (one per horizon) on the frozen Top-30 feature groups; training weight 4 where the target is ≥ 550 km/s, else 1 (mean-normalized) | Two `HistGradientBoostingRegressor` heads (peak speed, peak hour) add a 12 h Gaussian bump (0.15 × (peak − path min), from lead 25) to the frozen E0472 forecasts, 3 seeds averaged |
-| Starts from | raw ACE tables + the three frozen 111-feature grids | raw ACE table + frozen E0472 base forecasts + HUXt Earth trajectory |
-| Rebuilt here | lag-0 ACE/speed features, block design, 3 training stages, official scoring | 29 causal features (compared with the frozen matrices), both heads (full and F1), bump, predictions |
-| Not rebuilt | SUVI / ENLIL / coronal-hole columns of the grids; the Top-30 selection and HPO | the E0472 base forecasts (HUXt, ENLIL, SUVI, GONG/PFSS/WSA) |
-| Expected | combined MSE **3732.27** (< 550: 3365.97, ≥ 550: 6071.06), 357,840 rows | mean-seed MSE ≈ 3233.09 locally; public MSE 3222.883 |
-| Run time | about 25 min on 2 threads (216 models) | under 1 min |
+| pointweight4 / extreme4 / DirMO / DirRecMO | lag-0 ACE and speed features, block design, all training stages, official scoring, the Top-30 selection (DirMO) | SUVI / ENLIL / coronal-hole columns of the three 111-feature grids; the Top-30 importance table; HPO for the LightGBM arms |
+| e1604 | 29 causal features (compared with the frozen matrices), both heads (full and F1), bump, predictions | E0472 base forecasts (HUXt, ENLIL, SUVI, GONG/PFSS/WSA) |
 
 ## Run
 
@@ -23,10 +29,11 @@ bash reproduce/run_all.sh            # or: bash reproduce/run_all.sh --smoke  (3
 python -m pytest reproduce/tests                       # data-free unit tests
 ```
 
-`run_all.sh` calls, in order: `fetch_data.py` (downloads and sha256-verifies the inputs),
-`e1604_hsspeak25/run.py`, `feat30_pointweight4/build_features.py`, `compare_cache.py` (the rebuilt cache must equal the
-frozen cache array by array) and `feat30_pointweight4/train_predict.py`. Outputs go to `reproduce/outputs/`
-(`pointweight4/predictions.parquet`, `e1604/predictions.parquet`, `results.json`, `receipt.json`).
+`run_all.sh` calls, in order: `fetch_data.py` (downloads and sha256-verifies the inputs), `e1604_hsspeak25/run.py`,
+`feat30_pointweight4/build_features.py`, `compare_cache.py` (the rebuilt cache must equal the frozen cache array by
+array), `feat30_pointweight4/train_predict.py` (`--arm pointweight4`, `--arm extreme4`), `e2000fs_xgb/dirmo_24_feat30.py`
+and `e2000fs_xgb/dirrecmo_24.py`. Every training script takes `--smoke` and `--reference <published forecast.npz>`.
+Outputs go to `reproduce/outputs/<entry>/` (`predictions.parquet`, `forecast.npz`, `result.json`).
 
 Set `SUNRUN_REPRO_DATA` / `SUNRUN_REPRO_OUT` to move the input and output directories. Nothing else depends on the
 location of the checkout.
@@ -37,8 +44,8 @@ Inputs are not stored in git. `data_manifest.json` lists every file with its sha
 
 | Source | Content |
 |---|---|
-| this repository | `releases/e1604/prepared_inputs.npz`, `releases/f1-20261026/hsspeak_f1_inputs.npz`, `releases/e2000fs_feat30_pointweight4/forecast.npz` |
-| HF dataset `tlabtlab/sunrun-repro-data` (private) | `store/ch-v1/ace.parquet`, `store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=*/part.parquet` (raw ACE); `grids/*` (train / F1 / official 111-feature grids, `features_v3.json`); `e1604/huxt_traj_slim.npz`; `reference/*` (frozen cache and E0472-based predictions for verification) |
+| this repository | `releases/e1604/prepared_inputs.npz`, `releases/f1-20261026/hsspeak_f1_inputs.npz`, and the published `forecast.npz` of the four trained entries (used as references) |
+| HF dataset `tlabtlab/sunrun-repro-data` (private) | `store/ch-v1/ace.parquet`, `store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=*/part.parquet` (raw ACE); `grids/*` (train / F1 / official 111-feature grids, `features_v3.json`); `e1604/huxt_traj_slim.npz`; `inputs/feature_importance.csv` (Top-30 selection); `reference/*` (frozen cache and E0472-based predictions for verification) |
 | HF dataset `tlabtlab/sunrun-lb-store` (private), revision `5c274be8…` | `truth.parquet`, `folds.parquet`, `naive.parquet` for the official score |
 
 `e1604/huxt_traj_slim.npz` is the `traj` array of the 654 MB HUXt cache restricted to the 4,970 evaluation origins
@@ -54,8 +61,11 @@ ACE+2h when compared with new runs.
 
 ## Caveats
 
-- The Top-30 feature selection used previously scored official periods, so this family is official-exposed post-hoc
-  research, not a fresh holdout. pointweight4 failed the both-region acceptance gate; it is published as a record.
+- The Top-30 feature selection used previously scored official periods, so the feat30 family (pointweight4, extreme4,
+  DirMO-24 feat30) is official-exposed post-hoc research, not a fresh holdout. pointweight4 failed the both-region
+  acceptance gate; it is published as a record.
+- `e2000fs_dirrecmo_24` and the XGBoost recipe (900 rounds, depth 3, lr 0.03, seed 42, `multi_output_tree`) live in
+  `e2000fs_xgb/config/xgb.json`; the original `experiments/e2000/model.py` that defined it is no longer available.
 - HPO parameters, selected feature groups and the scorer (sha256 `9b5f36cc…`) are frozen in
   `feat30_pointweight4/config/frozen.json` and `scorer/`; the training code does not tune anything.
 - `e1604_hsspeak25/provenance/` keeps the original `run.py`, `official.py`, `score.py` (leaderboard git `d55d9f6d6`),

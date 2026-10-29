@@ -69,5 +69,14 @@
     "mse_ge550": 6071.06,
     "rows": 357840
   },
-  "scorer_sha256": "9b5f36ccab7c6158f6ffded2249086cc42451925ad5a1c5a4bc52d48d13e4e36"
+  "scorer_sha256": "9b5f36ccab7c6158f6ffded2249086cc42451925ad5a1c5a4bc52d48d13e4e36",
+  "block_extreme": {
+    "threshold_kms": 550.0,
+    "ramp_kms_per_6h": 100.0,
+    "weight": 4.0
+  },
+  "expected_extreme4": {
+    "combined_mse": 3728.771320332098,
+    "rows": 357840
+  }
 }
