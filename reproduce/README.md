@@ -8,7 +8,7 @@ Raw ACE parquet → features → training → predictions → official score, fo
 | `e2000fs_feat30_lgbm_extreme4` | same models; weight 4 for every sample whose 24 h block has a ≥ 550 km/s value or a ≥ 100 km/s 6 h rise | 3728.7713 | max abs diff 0.0 |
 | `e2000fs_dirmo_24_feat30` | **DirMO-24**: three 24-output XGBoost joint-tree blocks on the Top-30 groups (237 columns each) | 3249.8423 | max abs diff 0.0 |
 | `e2000fs_dirrecmo_24` | **DirRecMO-24**: three 24-output XGBoost blocks on all 111 features; each block also sees the trajectory of the earlier blocks | 3580.4322 | max abs diff 0.0 |
-| `e1604_hsspeak25` | two HGB heads add a 12 h Gaussian bump (0.15 × (peak − path min), from lead 25) to the frozen E0472 forecasts, 3 seeds averaged | 3233.09 (mean seed, local); public 3222.883 | max abs diff 0.0 (vs submitted parquet) |
+| `e1604_hsspeak25` | two HGB heads add a 12 h Gaussian bump (0.15 × (peak − path min), from lead 25) to the frozen E0472 forecasts, 3 seeds averaged | 3674.0050 (F1 4272.05, F2 3222.883, the published F2 MSE) | max abs diff 0.0 (vs submitted parquet) |
 
 Each rerun starts from the raw ACE tables and the frozen grids and checks itself against the published result.
 Run times on 24 cores: LightGBM arms about 25 min each (2 threads, 216 models), DirMO about 20 min, DirRecMO about 20 min,
