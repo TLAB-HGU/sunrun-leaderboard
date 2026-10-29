@@ -1,0 +1,172 @@
+{
+ "hf_repo": "tlabtlab/sunrun-repro-data",
+ "hf_revision": "d73e13da7d45be5b25c9f4eae60c8c3f1342dd39",
+ "lb_repo": "tlabtlab/sunrun-lb-store",
+ "lb_revision": "5c274be8a920ce98832d14f7e56f66f341bc0833",
+ "files": [
+  {
+   "path": "e1604/hsspeak_f1_inputs.npz",
+   "sha256": "795df2238e423b8246f2c972a1360c2c2cda1721a59da6f662a733c6a1501210",
+   "size": 5337798,
+   "group": "core",
+   "source": "repo",
+   "repo_path": "releases/f1-20261026/hsspeak_f1_inputs.npz"
+  },
+  {
+   "path": "e1604/huxt_traj_slim.npz",
+   "sha256": "f2e8e89dffcbefd47ecf8ef4383b4190a4623c43d74f0f8b5a30dd89223fff96",
+   "size": 94707,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "e1604/prepared_inputs.npz",
+   "sha256": "f02d5e04095c28d71c34065b18699765ec4beff3018acc0b9efac736259f5ead",
+   "size": 6576557,
+   "group": "core",
+   "source": "repo",
+   "repo_path": "releases/e1604/prepared_inputs.npz"
+  },
+  {
+   "path": "grids/features_f1.parquet",
+   "sha256": "399f1cb615ea0312cf7bc859571c72f928fcb8c875a1881c5779c0d020c900cf",
+   "size": 10667703,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "grids/features_v3.json",
+   "sha256": "d7cb6e16403ea83d1437cf3fc077fb09790c55666567a767b107e7f89a74ad27",
+   "size": 2712,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "grids/official_causal.parquet",
+   "sha256": "1aabe775c8dc8194973faf112aa5cb3db0c7a4a4421be59c90d54f6051273f9c",
+   "size": 13451023,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "grids/train_complete_causal.parquet",
+   "sha256": "969e2070c9b90dd83ed4c7c6a94b0ed6472095e135740a826df54098d4bfdc86",
+   "size": 45039613,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "lb-store/folds.parquet",
+   "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635",
+   "size": 162391,
+   "group": "core",
+   "source": "lb"
+  },
+  {
+   "path": "lb-store/naive.parquet",
+   "sha256": "d1f1588c3980ec5047ce6be2745404f7d7d1f4d32decfad0eba440e247b733d8",
+   "size": 89159,
+   "group": "core",
+   "source": "lb"
+  },
+  {
+   "path": "lb-store/truth.parquet",
+   "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1",
+   "size": 203540,
+   "group": "core",
+   "source": "lb"
+  },
+  {
+   "path": "reference/e1604_predictions.parquet",
+   "sha256": "7707b5ee712a34e332f56ad708c1398f968fa32a264082323ab12fed62d14563",
+   "size": 3197698,
+   "group": "reference",
+   "source": "hf"
+  },
+  {
+   "path": "reference/pointweight4_cache/f1.npz",
+   "sha256": "f126160c2a8d5bb12df376781a4d5712cdae0708385c717cc82419556629db1d",
+   "size": 13301664,
+   "group": "reference",
+   "source": "hf"
+  },
+  {
+   "path": "reference/pointweight4_cache/names.json",
+   "sha256": "3b25e892c0093215c90f0f3e579a72a0c6cb314a38c694a4c38e5c58744b14ce",
+   "size": 2401,
+   "group": "reference",
+   "source": "hf"
+  },
+  {
+   "path": "reference/pointweight4_cache/official.npz",
+   "sha256": "9878a560b0d81ddec35f65184afe6a446f425750cce2074290f320d6613ec6ae",
+   "size": 17633568,
+   "group": "reference",
+   "source": "hf"
+  },
+  {
+   "path": "reference/pointweight4_cache/speed.parquet",
+   "sha256": "96f6e22e1643d79c5dd49f04825128dc25c3b8985a5415fa5828fd7db3012877",
+   "size": 405748,
+   "group": "reference",
+   "source": "hf"
+  },
+  {
+   "path": "reference/pointweight4_cache/train.npz",
+   "sha256": "5f9c446b1beb7c8fb4290236bfbbde08f32153433cfafadc3c02fd189406a8a9",
+   "size": 66523088,
+   "group": "reference",
+   "source": "hf"
+  },
+  {
+   "path": "reference/pointweight4_forecast.npz",
+   "sha256": "97fa4add3404c613c35291e83d1e6e141f1397c8c9df7d4b5309973a97649444",
+   "size": 2903008,
+   "group": "reference",
+   "source": "repo",
+   "repo_path": "releases/e2000fs_feat30_pointweight4/forecast.npz"
+  },
+  {
+   "path": "store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2022/part.parquet",
+   "sha256": "512e1512d0b0341e82ab73c93edb40a51551abe7942dcf9dc4c0167229efdb7c",
+   "size": 127738,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2023/part.parquet",
+   "sha256": "90b35a4657a587d984cf94816ef843e9992972afef76c5e100336e19c2ec03a0",
+   "size": 326027,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2024/part.parquet",
+   "sha256": "9d7f0138eab13db42383b9f5f7bf42a6042b9244ca7d8e116287372784fcc559",
+   "size": 358900,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2025/part.parquet",
+   "sha256": "3234862cba5b3f4a7c45eab280e24a360b826ec3936e21e2579cb2421b000b39",
+   "size": 363453,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "store/ch-breakthrough-v2/upload/raw-ace-snapshot/year=2026/part.parquet",
+   "sha256": "94a472986ed3b956f1cb99d86b7200ac2cc7c8ee5aa35c28e03d6e940a167b98",
+   "size": 280498,
+   "group": "core",
+   "source": "hf"
+  },
+  {
+   "path": "store/ch-v1/ace.parquet",
+   "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af",
+   "size": 410403,
+   "group": "core",
+   "source": "hf"
+  }
+ ]
+}

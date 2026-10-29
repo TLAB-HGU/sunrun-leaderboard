@@ -21,6 +21,8 @@ Results submitted before 2026-10-26 hold only F2 (their MSE is the F2 MSE). They
 - [E2000FS DirMO-24 loss · F1+F2 월별 GIF](docs/visualizations/e2000fs_dirmo_24/README.md) — 제출 F1·F2 모델의 round별 train·validation MSE, 2026-03~09 전체 4,970개 공식 폴드.
 - [월별 검증 폴드 GIF: E0472 / xgb_d76_lead_moe_resid_dv_enlil](docs/visualizations/xgb_d76_lead_moe_resid_dv_enlil/README.md) — 최근 7일 관측과 이후 72시간 실제값·예측, 전체 2,833개 공식 폴드 및 별도 10월 참고 추론 264개, 2배속.
 
+- [Reproduce `e2000fs_feat30_pointweight4` and `e1604_hsspeak25` end to end](reproduce/README.md) — raw ACE parquet → features → training → predictions, verified against the published results.
+
 - Private data store (truth, folds, results): `tlabtlab/sunrun-lb-store`
 - Leaderboard page: https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard (private; needs an HF login of an org member).
   Without an account, `python submit.py --show` prints the same ranking in the terminal.
