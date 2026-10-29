@@ -61,6 +61,37 @@ def test_frozen_config_and_scorer_hash(pw4):
     assert hashlib.sha256(scorer.read_bytes()).hexdigest() == frozen['scorer_sha256']
 
 
+def test_block_extreme_weights_flag_events_per_block(pw4):
+    y = np.full((4, 72), 400.)
+    y[1, 5] = 600.                  # block 0 peak >= 550
+    y[2, 30:] += np.arange(42) * 20  # block 1: 6 h rise >= 100
+    w0, w1 = pw4.block_extreme_weights(y, 0), pw4.block_extreme_weights(y, 1)
+    assert w0.mean() == pytest.approx(1.0) and w0[1] / w0[0] == pytest.approx(4.0) and w0[2] == w0[0]
+    assert w1[2] / w1[0] == pytest.approx(4.0) and w1[1] == w1[0]
+
+
+@pytest.fixture(scope='module')
+def xgbc():
+    return load('xgb_common', 'e2000fs_xgb/xgb_common.py')
+
+
+def test_dirrecmo_block_features_stack_earlier_trajectory():
+    mod = load('dirrecmo_24', 'e2000fs_xgb/dirrecmo_24.py')
+    n = 3
+    bundle = {'C': np.zeros((n, 90)), 'past': np.zeros((n, 24)), 'E': np.zeros((n, 72, 20))}
+    traj = np.hstack([bundle['past'], np.arange(72.)[None, :].repeat(n, 0)])
+    assert mod.features(bundle, traj, 1, 24).shape == (n, 90 + 24 + 0 + 24 * 20)
+    x = mod.features(bundle, traj, 49, 72)
+    assert x.shape == (n, 90 + 24 + 48 + 24 * 20)
+    np.testing.assert_array_equal(x[0, 90 + 24:90 + 24 + 48], np.arange(48.))
+
+
+def test_xgb_recipe_is_frozen(xgbc):
+    params = xgbc.xgb_params()
+    assert params['n_estimators'] == 900 and params['max_depth'] == 3 and params['multi_strategy'] == 'multi_output_tree'
+    assert xgbc.xgb_params(smoke=True)['n_estimators'] == 2
+
+
 def test_bump_only_from_lead_25_and_never_below_base(e1604):
     base = np.full((3, 4, 72), 400.)
     peak, hour = np.full((3, 4), 700.), np.full((3, 4), 60.)

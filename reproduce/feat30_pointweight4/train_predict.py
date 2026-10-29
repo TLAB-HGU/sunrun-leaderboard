@@ -1,10 +1,11 @@
-"""e2000fs_feat30_pointweight4: per-horizon LightGBM with pointwise extreme weighting, train -> predict -> score.
+"""e2000fs_feat30_pointweight4 and e2000fs_feat30_lgbm_extreme4: per-horizon LightGBM with extreme weighting, train -> predict -> score.
 
 One independent model per horizon (72) on the frozen Top-30 feature groups, three stages (internal
 validation, F1, final/F2). Training weight is 4 if this horizon's target is >= 550 km/s else 1 (mean
 normalized). HPO parameters are frozen in ``config/frozen.json``; nothing is tuned here.
 
     python reproduce/feat30_pointweight4/train_predict.py --cache reproduce/outputs/pointweight4_cache
+    python reproduce/feat30_pointweight4/train_predict.py --arm extreme4 --cache reproduce/outputs/pointweight4_cache
     python reproduce/feat30_pointweight4/train_predict.py --smoke --cache <cache>   # 3 trees, tiny subsets
 """
 import argparse
@@ -39,6 +40,15 @@ def point_weights(target):
         raise ValueError('Expected finite one-dimensional training targets')
     weights = np.where(target >= FROZEN['point_weight']['threshold_kms'], FROZEN['point_weight']['weight'], 1.)
     return weights / weights.mean()
+
+
+def block_extreme_weights(y, block):
+    """Whole-block event weight: block max >= 550 or a 6 h rise >= 100 km/s -> 4, else 1 (mean normalized)."""
+    cfg = FROZEN['block_extreme']
+    target = y[:, block * 24:(block + 1) * 24]
+    event = (target.max(axis=1) >= cfg['threshold_kms']) | ((target[:, 6:] - target[:, :-6]).max(axis=1) >= cfg['ramp_kms_per_6h'])
+    weight = np.where(event, cfg['weight'], 1.)
+    return weight / weight.mean()
 
 
 def targets(series, origins):
@@ -111,7 +121,7 @@ def point_metrics(y, prediction, origins):
     return result
 
 
-def execute(cache, out, smoke=False):
+def execute(cache, out, smoke=False, arm='pointweight4'):
     out.mkdir(parents=True, exist_ok=True)
     started = time.time()
     names, selected, origins, series, y, blocks = load_data(cache)
@@ -147,8 +157,9 @@ def execute(cache, out, smoke=False):
                 print(f'[{time.time() - started:7.0f}s] {stage} h{h + 1:02}/{H}', flush=True)
                 # Refits use training-only diagnostics; internal validation is purged.
                 diag = val if stage == 'internal' else train[:min(648, len(train))]
+                weights = point_weights(y[train, h]) if arm == 'pointweight4' else block_extreme_weights(y[train], h // 24)
                 model = fit_horizon(blocks[h // 24][train], y[train, h], blocks[h // 24][diag], y[diag, h],
-                                    params, point_weights(y[train, h]), folder)
+                                    params, weights, folder)
                 write_json(receipt, dict(sha256=digest(model_path), train_count=len(train),
                                          validation_held_out=stage == 'internal'))
             pred[:, h] = np.clip(model.predict(query[h // 24], num_threads=2), 1., 3000.)
@@ -182,13 +193,15 @@ def compare_reference(out, reference):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--arm', choices=('pointweight4', 'extreme4'), default='pointweight4',
+                        help='pointweight4: weight 4 per target >= 550; extreme4: weight 4 per 24 h block with an event')
     parser.add_argument('--cache', default=str(paths.OUTPUT_ROOT / 'pointweight4_cache'))
     parser.add_argument('--out', default=None)
     parser.add_argument('--smoke', action='store_true')
     parser.add_argument('--reference', default=None, help='published forecast.npz to diff against')
     args = parser.parse_args()
-    out = Path(args.out) if args.out else paths.OUTPUT_ROOT / ('pointweight4_smoke' if args.smoke else 'pointweight4')
-    results = execute(Path(args.cache), out, args.smoke)
+    out = Path(args.out) if args.out else paths.OUTPUT_ROOT / (args.arm + ('_smoke' if args.smoke else ''))
+    results = execute(Path(args.cache), out, args.smoke, args.arm)
     print(json.dumps({k: results[k].get('mse') if isinstance(results[k], dict) else results[k] for k in results}, indent=2))
     if args.reference and args.smoke:
         print('--smoke predicts a 16-origin subset; skipping the --reference comparison')

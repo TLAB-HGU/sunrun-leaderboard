@@ -16,6 +16,9 @@ from common import paths  # noqa: E402
 
 REPO_FILES = {'e1604/prepared_inputs.npz': 'releases/e1604/prepared_inputs.npz',
               'reference/pointweight4_forecast.npz': 'releases/e2000fs_feat30_pointweight4/forecast.npz',
+              'reference/extreme4_forecast.npz': 'releases/e2000fs_feat30_lgbm_extreme4/forecast.npz',
+              'reference/dirmo_24_feat30_forecast.npz': 'releases/e2000fs/dirmo_24_feat30/forecast.npz',
+              'reference/dirrecmo_24_forecast.npz': 'releases/e2000fs/dirrecmo_24/forecast.npz',
               'e1604/hsspeak_f1_inputs.npz': 'releases/f1-20261026/hsspeak_f1_inputs.npz'}
 LB_FILES = {'lb-store/truth.parquet', 'lb-store/folds.parquet', 'lb-store/naive.parquet'}
 REFERENCE_PREFIXES = ('reference/',)
