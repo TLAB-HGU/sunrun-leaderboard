@@ -190,7 +190,9 @@ def main():
     out = Path(args.out) if args.out else paths.OUTPUT_ROOT / ('pointweight4_smoke' if args.smoke else 'pointweight4')
     results = execute(Path(args.cache), out, args.smoke)
     print(json.dumps({k: results[k].get('mse') if isinstance(results[k], dict) else results[k] for k in results}, indent=2))
-    if args.reference:
+    if args.reference and args.smoke:
+        print('--smoke predicts a 16-origin subset; skipping the --reference comparison')
+    elif args.reference:
         print('max |prediction - reference| =', compare_reference(out, args.reference))
 
 
