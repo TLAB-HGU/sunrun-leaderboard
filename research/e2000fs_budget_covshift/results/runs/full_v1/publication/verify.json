@@ -1,0 +1,12 @@
+{
+  "dataset_revision": "331f3eb4b673a4f62aacd3cd51034a1a0e7f9141",
+  "records": {
+    "e2000fs_budget_covshift": {
+      "key": "seongeun/e2000fs_budget_covshift/054fe469d02e1253dc42fb00d2f7aa61bf8f758cb00aa650f852701bec9455a1",
+      "config_sha256": "054fe469d02e1253dc42fb00d2f7aa61bf8f758cb00aa650f852701bec9455a1",
+      "predictions_identical": true,
+      "scores_match": true,
+      "mse": 3725.0165377871026
+    }
+  }
+}

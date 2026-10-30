@@ -1,0 +1,14 @@
+{
+  "original_f2": "E1988",
+  "f1_execution": "E1994",
+  "rows": 357840,
+  "origins": 4970,
+  "prediction": "/home/t-lab01/sunrun/research/e2000/publication/E1988/combined/predictions_f1_f2.parquet",
+  "prediction_sha256": "577f1cc0ba3eb2c30bf4123cb8f8c52cdd8b471f5127290a29c6a49fb9a862fa",
+  "f1_source_sha256": "3f35fde8d8832b4dd5eaaa0f8b83a08b41ae6a5691f994589a4db4aa5658d430",
+  "f2_source_sha256": "b5a237af1e110956258813d6d0342962595d2e0f91f8acb47c29e8048403ad68",
+  "f1_training_target_cutoff": "2026-02-26T00:00:00+00:00",
+  "prior_f1_exposure": true,
+  "tuning_cutoff_certified": false,
+  "publication_status": "requires honest tuning provenance review"
+}

@@ -1,0 +1,105 @@
+{
+  "team_member": "seongeun",
+  "experiment": "e2000fs_dirmo_24",
+  "description": "E2000 forecasting-strategy study (DirMO-24): one sigma-output model per horizon block. Frozen E2000 XGBoost recipe (900 rounds, depth 3, lr 0.03, seed 42) on the 111 E2000 inputs (ACE, 27-day recurrence, SUVI strips/CH, DONKI WSA-ENLIL) re-timed to the origin hour (no ACE +2h lag), gaps forward-filled. F1 forecasts from models trained on targets before 2026-02-26; F2 from targets before 2026-05-29. Strategy choices use only validation 2025-12-04..2026-02-22; no leaderboard score was used for any choice. Disclosure: the E2000 feature set and recipe were inherited from earlier research whose own selection used later data, so pre-2026-02-26 tuning provenance of those inherited choices is not proven; single seed. Script replays the hash-pinned archived forecast.",
+  "no_future_leakage": true,
+  "f1_training_data_end_utc": "2026-02-26T00:00:00Z",
+  "config": {
+    "data": {
+      "study": "analysis/forecast_strategies_e2000 (E2000 forecasting-strategy comparison, Direct excluded)",
+      "inputs": {
+        "f1": "399f1cb615ea0312cf7bc859571c72f928fcb8c875a1881c5779c0d020c900cf",
+        "features": "d7cb6e16403ea83d1437cf3fc077fb09790c55666567a767b107e7f89a74ad27",
+        "official": "1aabe775c8dc8194973faf112aa5cb3db0c7a4a4421be59c90d54f6051273f9c",
+        "train": "969e2070c9b90dd83ed4c7c6a94b0ed6472095e135740a826df54098d4bfdc86"
+      },
+      "feature_count": 111,
+      "ace_lag_hours": 0,
+      "prefill": "forward fill along the origin timeline",
+      "sources": [
+        "ACE real-time solar wind/plasma/magnetic/EPAM/SIS (hourly)",
+        "ACE 27-day recurrence",
+        "SUVI longitude strips and coronal-hole areas",
+        "DONKI WSA-ENLIL runs completed <= origin"
+      ],
+      "targets": "hourly ACE filled_speed_kms (the leaderboard truth series), absolute km/s",
+      "f1_model_training_target_end_utc": "2026-02-26T00:00:00Z",
+      "f2_model_training_target_end_utc": "2026-05-29T00:00:00Z",
+      "selection": {
+        "fit_target_end_utc": "2025-12-01 00:00:00+00:00",
+        "validation_origins_utc": [
+          "2025-12-04 00:00:00+00:00",
+          "2026-02-22 23:00:00+00:00"
+        ],
+        "metric": "observed-row MSE",
+        "chosen": {
+          "RectifyMO": "RectifyMO-24",
+          "Stratify": "Stratify-DirRecMO-DirRecMO-24"
+        }
+      },
+      "periods": {
+        "F1": {
+          "origins_start_utc": "2026-02-28T23:00:00Z",
+          "origins_end_utc": "2026-05-28T23:00:00Z",
+          "origin_count": 2137
+        },
+        "F2": {
+          "origins_start_utc": "2026-05-31T23:00:00Z",
+          "origins_end_utc": "2026-09-26T23:00:00Z",
+          "origin_count": 2833
+        }
+      },
+      "asset": {
+        "filename": "forecast.npz",
+        "sha256": "08ba35f5b6fa2bf973a15fb7076ec5e165d2e4302ca9c628b923198735737ca3"
+      },
+      "source_sha256": {
+        "data.py": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab",
+        "strategies.py": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a",
+        "run.py": "cc3e0aed645e89d851ba2b8d3dc4ffbb4c9a7e350643efd3300a4440c9ff28da",
+        "evaluate.py": "9b8845324057044454b0da72a7395f101ef11289bc2bd439442f787c9413de5a",
+        "make_notebook.py": "2c1c05bb8b7788d311d35bdbad286bc5c31f5b6c7bc64b6a12ff33b397ec7c71",
+        "publish.py": "077e5867eb06a6959c40c24a3c522ba572a725b73925f7aa3817e11afc392565",
+        "replay_template.py": "970bc877752e01ed25984ae09734d6ef1e09879254ad3ca5143f34bafe4bf6e4",
+        "test_strategies.py": "0ed397fc48d31ad5e60b74a4703138679a6c47ecb4f78356b95ea7035461f0af",
+        "requirements.txt": "d5d57e3887ed8bd479e949e16efb4070aa666171011bf549533e69c8932b5d63",
+        "README.md": "d21e71bce6ae71f44d51a213e2af0636c291e9aa3a481bb50a5c736b21ae4184",
+        "forecast_strategies_e2000.ipynb": "67ed69314647a8c81e77c78d2f1b2a92b7cb1f59aefc2dfbf2df27376cd074d2",
+        "data-receipt.json": "cbeb93bede4fb9d11b4c08c4c45eeae5634435854d28644b02e88907e7cb1d8f",
+        "selection.json": "df502bf1d7c83730577e5f42a9b158d5f86b8430087e4147c5cb972654712d57"
+      },
+      "source_note": "source/ snapshot taken while the study notebook was still executing; the notebook copy is the unexecuted driver",
+      "fit_origins": {
+        "f1": 9928,
+        "final": 10664
+      }
+    },
+    "hyperparameters": {
+      "strategy": "DirMO-24",
+      "structure": {
+        "kind": "DirMO",
+        "sigma": 24
+      },
+      "xgboost": {
+        "n_estimators": 900,
+        "max_depth": 3,
+        "learning_rate": 0.03,
+        "subsample": 0.8,
+        "colsample_bytree": 0.7,
+        "min_child_weight": 20,
+        "reg_lambda": 5,
+        "random_state": 42,
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "device": "cpu",
+        "eval_metric": "rmse"
+      },
+      "multi_output": "multi_strategy=multi_output_tree for blocks with sigma > 1",
+      "lag_window_hours": 24,
+      "shared_models_lead_feature": true,
+      "teacher_forcing": "observed (filled) speeds in training, own forecasts at inference",
+      "seed": 42
+    }
+  },
+  "inference_seconds_per_fold": 1.219249255154132e-05
+}

@@ -1,0 +1,53 @@
+team_member: seongeun
+experiment: e1604_hsspeak25
+description: 'E1604 original-contract comparator: equal prediction mean of 3 seeds,
+  HSS peak Gaussian bump from h25. Original ACE features include origin-hour values
+  (not obs+2h); training labels through first forecast origin, not before May29. Internal
+  cell adoption gate failed; submitted for comparison, not a current-contract SOTA
+  claim. Reproduction uses prepared upstream features; timing excludes upstream generation.
+  F1 (2026-03..05, resubmitted 2026-10-27): both heads refit on the roll6 rows whose
+  72h labels end before 2026-02-26 (15,168 of 17,448), applied to the E0472-F1 base
+  (E0472 recipe with every fit and tuning choice before 2026-02-26, 3 seeds); F2 rows
+  unchanged.'
+no_future_leakage: true
+f1_training_data_end_utc: '2026-02-26T00:00:00Z'
+config:
+  data:
+    base: E0472
+    contract: original retrospective comparator; ACE observation through origin, not
+      ACE obs+2h
+    experiment: E1604
+    input_sha256:
+      prepared_inputs.npz: f02d5e04095c28d71c34065b18699765ec4beff3018acc0b9efac736259f5ead
+    original_prediction_sha256:
+    - 92ee473ab1d009814e763179cf6ffb34b68384ed4740e09b2a7ebbc04d7b1e48
+    - ed0ff67b04d6cf8eb0fa5d1d66c7abc76b12e06cafc68c30d2e9a901baff9938
+    - d656cfb1f6ddffd1de8a576f0a2b8261a608a1393bc1907ee95e82f6b8faf121
+    reproduction: prepared causal features and base forecasts; upstream generation
+      excluded
+    sources:
+    - SW-001 ACE
+    - SW-012 frozen GONG/PFSS/WSA/HUXt trajectory
+    - E0472 frozen forecasts
+    training_cutoff_note: Original recipe uses all six fold labels through 2026-05-31
+      23:00 UTC, equal to first forecast origin; not the newer targets-before-May29
+      contract
+    training_last_target_utc: '2026-05-31 23:00:00+00:00'
+  hyperparameters:
+    ensemble: equal prediction mean
+    learning_rate: 0.04
+    max_depth: 4
+    max_iter: 500
+    min_lead: 25
+    min_samples_leaf: 50
+    model: two HistGradientBoostingRegressor heads
+    random_state: 0
+    seeds:
+    - 0
+    - 1
+    - 2
+    shrink: 0.15
+    timing_scope: batched peak/hour head inference, Gaussian correction, and seed
+      averaging; prepared features exclude upstream forecasts
+    width_hours: 12.0
+inference_seconds_per_fold: 4.588694846005423e-05

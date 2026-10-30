@@ -1,0 +1,121 @@
+D1 control: train=128 eval=16 rounds=2
+[0]	train-rmse:88.87710	train-weighted_mse:16261.52832	train-spectral_loss:830.72369	train-joint_loss:8130.76416	validation-rmse:33.88707	validation-weighted_mse:907.21509	validation-spectral_loss:324.22757	validation-joint_loss:453.60754
+[1]	train-rmse:87.15229	train-weighted_mse:15627.03516	train-spectral_loss:816.59058	train-joint_loss:7813.51758	validation-rmse:33.77445	validation-weighted_mse:901.02344	validation-spectral_loss:326.97498	validation-joint_loss:450.51172
+D1 control b0: saved; reload parity passed
+[0]	train-rmse:82.47792	train-weighted_mse:13217.76856	train-spectral_loss:812.17798	train-joint_loss:6608.88428	validation-rmse:41.71588	validation-weighted_mse:1415.00586	validation-spectral_loss:364.17032	validation-joint_loss:707.50293
+[1]	train-rmse:81.32992	train-weighted_mse:12879.78418	train-spectral_loss:801.80109	train-joint_loss:6439.89209	validation-rmse:43.11370	validation-weighted_mse:1511.53528	validation-spectral_loss:379.37354	validation-joint_loss:755.76764
+D1 control b1: saved; reload parity passed
+[0]	train-rmse:79.55034	train-weighted_mse:11566.46582	train-spectral_loss:770.58417	train-joint_loss:5783.23291	validation-rmse:47.96326	validation-weighted_mse:1861.37170	validation-spectral_loss:435.30576	validation-joint_loss:930.68585
+[1]	train-rmse:78.62632	train-weighted_mse:11249.85938	train-spectral_loss:762.10400	train-joint_loss:5624.92969	validation-rmse:49.04342	validation-weighted_mse:1945.65332	validation-spectral_loss:446.67749	validation-joint_loss:972.82666
+D1 control b2: saved; reload parity passed
+D1 spectral: train=128 eval=16 rounds=2
+[0]	train-rmse:88.97488	train-weighted_mse:16286.02832	train-spectral_loss:831.95654	train-joint_loss:8226.20981	validation-rmse:33.66237	validation-weighted_mse:895.50067	validation-spectral_loss:323.94284	validation-joint_loss:480.14462
+[1]	train-rmse:87.32828	train-weighted_mse:15675.53613	train-spectral_loss:818.48846	train-joint_loss:7919.61691	validation-rmse:33.48908	validation-weighted_mse:886.45429	validation-spectral_loss:322.30716	validation-joint_loss:475.45786
+D1 spectral b0: saved; reload parity passed
+[0]	train-rmse:82.54735	train-weighted_mse:13237.85449	train-spectral_loss:812.79413	train-joint_loss:6700.20666	validation-rmse:41.64652	validation-weighted_mse:1410.23499	validation-spectral_loss:363.31091	validation-joint_loss:741.44858
+[1]	train-rmse:81.47696	train-weighted_mse:12915.74902	train-spectral_loss:803.17554	train-joint_loss:6538.19207	validation-rmse:42.99616	validation-weighted_mse:1503.23181	validation-spectral_loss:377.97379	validation-joint_loss:789.41328
+D1 spectral b1: saved; reload parity passed
+[0]	train-rmse:79.59643	train-weighted_mse:11582.77441	train-spectral_loss:770.65570	train-joint_loss:5868.45278	validation-rmse:47.93681	validation-weighted_mse:1859.38782	validation-spectral_loss:435.01114	validation-joint_loss:973.19502
+[1]	train-rmse:78.69646	train-weighted_mse:11271.71875	train-spectral_loss:762.74713	train-joint_loss:5712.13409	validation-rmse:49.05172	validation-weighted_mse:1946.55896	validation-spectral_loss:446.84042	validation-joint_loss:1017.96352
+D1 spectral b2: saved; reload parity passed
+D2 control: train=128 eval=16 rounds=2
+[0]	train-rmse:91.25343	train-weighted_mse:16880.12109	train-spectral_loss:875.29346	train-joint_loss:8440.06055	validation-rmse:33.57985	validation-weighted_mse:893.92310	validation-spectral_loss:297.32388	validation-joint_loss:446.96155
+[1]	train-rmse:89.53812	train-weighted_mse:16276.44531	train-spectral_loss:859.77826	train-joint_loss:8138.22266	validation-rmse:32.87077	validation-weighted_mse:856.41168	validation-spectral_loss:298.68564	validation-joint_loss:428.20584
+D2 control b0: saved; reload parity passed
+[0]	train-rmse:96.27060	train-weighted_mse:18902.56445	train-spectral_loss:862.87012	train-joint_loss:9451.28223	validation-rmse:29.32310	validation-weighted_mse:639.12299	validation-spectral_loss:245.28772	validation-joint_loss:319.56149
+[1]	train-rmse:94.95553	train-weighted_mse:18292.23242	train-spectral_loss:853.62427	train-joint_loss:9146.11621	validation-rmse:29.79346	validation-weighted_mse:659.67719	validation-spectral_loss:248.56824	validation-joint_loss:329.83859
+D2 control b1: saved; reload parity passed
+[0]	train-rmse:87.87290	train-weighted_mse:14957.41699	train-spectral_loss:824.46875	train-joint_loss:7478.70850	validation-rmse:37.52742	validation-weighted_mse:1304.85584	validation-spectral_loss:402.31064	validation-joint_loss:652.42792
+[1]	train-rmse:86.52124	train-weighted_mse:14431.45606	train-spectral_loss:814.00848	train-joint_loss:7215.72803	validation-rmse:39.03720	validation-weighted_mse:1377.88184	validation-spectral_loss:420.00626	validation-joint_loss:688.94092
+D2 control b2: saved; reload parity passed
+D2 spectral: train=128 eval=16 rounds=2
+[0]	train-rmse:91.32970	train-weighted_mse:16900.88477	train-spectral_loss:875.90332	train-joint_loss:8538.03271	validation-rmse:33.59313	validation-weighted_mse:894.76386	validation-spectral_loss:296.91763	validation-joint_loss:477.07369
+[1]	train-rmse:89.89128	train-weighted_mse:16385.45898	train-spectral_loss:863.03619	train-joint_loss:8279.03311	validation-rmse:33.21388	validation-weighted_mse:874.50684	validation-spectral_loss:298.57675	validation-joint_loss:467.11109
+D2 spectral b0: saved; reload parity passed
+[0]	train-rmse:96.30586	train-weighted_mse:18914.75977	train-spectral_loss:863.40631	train-joint_loss:9543.72051	validation-rmse:30.08702	validation-weighted_mse:672.85821	validation-spectral_loss:251.84625	validation-joint_loss:361.61373
+[1]	train-rmse:94.98079	train-weighted_mse:18320.40430	train-spectral_loss:853.52460	train-joint_loss:9245.55461	validation-rmse:30.73968	validation-weighted_mse:702.28143	validation-spectral_loss:256.83762	validation-joint_loss:376.82448
+D2 spectral b1: saved; reload parity passed
+[0]	train-rmse:87.97654	train-weighted_mse:15003.53906	train-spectral_loss:825.08594	train-joint_loss:7584.27812	validation-rmse:36.77378	validation-weighted_mse:1277.40637	validation-spectral_loss:392.74686	validation-joint_loss:677.97787
+[1]	train-rmse:86.68734	train-weighted_mse:14496.98828	train-spectral_loss:815.09326	train-joint_loss:7330.00347	validation-rmse:37.98010	validation-weighted_mse:1331.01184	validation-spectral_loss:407.42090	validation-joint_loss:706.24801
+D2 spectral b2: saved; reload parity passed
+D3 control: train=128 eval=16 rounds=2
+[0]	train-rmse:88.65273	train-weighted_mse:14398.58106	train-spectral_loss:863.33710	train-joint_loss:7199.29053	validation-rmse:55.19683	validation-weighted_mse:5583.37451	validation-spectral_loss:716.25507	validation-joint_loss:2791.68726
+[1]	train-rmse:87.16220	train-weighted_mse:13916.05859	train-spectral_loss:849.88013	train-joint_loss:6958.02930	validation-rmse:55.15155	validation-weighted_mse:5579.74463	validation-spectral_loss:715.12494	validation-joint_loss:2789.87231
+D3 control b0: saved; reload parity passed
+[0]	train-rmse:88.50007	train-weighted_mse:15454.34082	train-spectral_loss:829.53449	train-joint_loss:7727.17041	validation-rmse:100.06397	validation-weighted_mse:22699.96875	validation-spectral_loss:1396.99670	validation-joint_loss:11349.98438
+[1]	train-rmse:87.79422	train-weighted_mse:15190.57519	train-spectral_loss:823.06592	train-joint_loss:7595.28760	validation-rmse:98.57554	validation-weighted_mse:22120.11719	validation-spectral_loss:1382.02527	validation-joint_loss:11060.05859
+D3 control b1: saved; reload parity passed
+[0]	train-rmse:84.06013	train-weighted_mse:15233.19531	train-spectral_loss:745.92999	train-joint_loss:7616.59766	validation-rmse:124.24770	validation-weighted_mse:40464.34375	validation-spectral_loss:1562.30713	validation-joint_loss:20232.17188
+[1]	train-rmse:83.29301	train-weighted_mse:14954.38379	train-spectral_loss:739.42432	train-joint_loss:7477.19189	validation-rmse:121.00229	validation-weighted_mse:38566.99219	validation-spectral_loss:1528.36438	validation-joint_loss:19283.49609
+D3 control b2: saved; reload parity passed
+D3 spectral: train=128 eval=16 rounds=2
+[0]	train-rmse:88.74157	train-weighted_mse:14423.12402	train-spectral_loss:864.16547	train-joint_loss:7297.97856	validation-rmse:55.19114	validation-weighted_mse:5581.92920	validation-spectral_loss:716.23907	validation-joint_loss:2862.58851
+[1]	train-rmse:87.28310	train-weighted_mse:13954.57812	train-spectral_loss:850.96759	train-joint_loss:7062.38582	validation-rmse:55.19114	validation-weighted_mse:5581.92920	validation-spectral_loss:716.23907	validation-joint_loss:2862.58851
+D3 spectral b0: saved; reload parity passed
+[0]	train-rmse:88.48277	train-weighted_mse:15478.80957	train-spectral_loss:828.42621	train-joint_loss:7822.24741	validation-rmse:99.47484	validation-weighted_mse:22461.94531	validation-spectral_loss:1391.27307	validation-joint_loss:11370.09996
+[1]	train-rmse:87.81017	train-weighted_mse:15228.76074	train-spectral_loss:822.31293	train-joint_loss:7696.61166	validation-rmse:98.16210	validation-weighted_mse:21951.26562	validation-spectral_loss:1379.88415	validation-joint_loss:11113.62123
+D3 spectral b1: saved; reload parity passed
+[0]	train-rmse:84.10931	train-weighted_mse:15247.31152	train-spectral_loss:746.45880	train-joint_loss:7698.30164	validation-rmse:124.41016	validation-weighted_mse:40559.78516	validation-spectral_loss:1564.02185	validation-joint_loss:20436.29476
+[1]	train-rmse:83.31280	train-weighted_mse:14976.89746	train-spectral_loss:738.95978	train-joint_loss:7562.34471	validation-rmse:121.25208	validation-weighted_mse:38716.69531	validation-spectral_loss:1530.83594	validation-joint_loss:19511.43125
+D3 spectral b2: saved; reload parity passed
+C control: train=128 eval=16 rounds=2
+[0]	train-rmse:108.04320	train-weighted_mse:20159.78906	train-spectral_loss:1080.54749	train-joint_loss:10079.89453	validation-rmse:199.11539	validation-weighted_mse:98441.31250	validation-spectral_loss:2170.56738	validation-joint_loss:49220.65625
+[1]	train-rmse:105.82442	train-weighted_mse:19295.44336	train-spectral_loss:1060.78223	train-joint_loss:9647.72168	validation-rmse:194.50936	validation-weighted_mse:93946.59375	validation-spectral_loss:2122.75806	validation-joint_loss:46973.29688
+C control b0: saved; reload parity passed
+[0]	train-rmse:86.91204	train-weighted_mse:13217.56250	train-spectral_loss:882.05597	train-joint_loss:6608.78125	validation-rmse:193.52216	validation-weighted_mse:107285.72656	validation-spectral_loss:2228.93970	validation-joint_loss:53642.86328
+[1]	train-rmse:85.49088	train-weighted_mse:12744.86231	train-spectral_loss:869.94190	train-joint_loss:6372.43115	validation-rmse:190.07547	validation-weighted_mse:103532.81250	validation-spectral_loss:2192.17993	validation-joint_loss:51766.40625
+C control b1: saved; reload parity passed
+[0]	train-rmse:92.62563	train-weighted_mse:17892.52344	train-spectral_loss:844.31103	train-joint_loss:8946.26172	validation-rmse:139.72522	validation-weighted_mse:57571.14062	validation-spectral_loss:1701.05066	validation-joint_loss:28785.57031
+[1]	train-rmse:91.50671	train-weighted_mse:17442.56445	train-spectral_loss:834.49951	train-joint_loss:8721.28223	validation-rmse:136.82488	validation-weighted_mse:55096.86328	validation-spectral_loss:1674.42249	validation-joint_loss:27548.43164
+C control b2: saved; reload parity passed
+C spectral: train=128 eval=16 rounds=2
+[0]	train-rmse:108.16830	train-weighted_mse:20199.22461	train-spectral_loss:1081.42102	train-joint_loss:10207.75441	validation-rmse:199.25236	validation-weighted_mse:98577.03906	validation-spectral_loss:2172.00000	validation-joint_loss:49505.71953
+[1]	train-rmse:106.08391	train-weighted_mse:19399.18750	train-spectral_loss:1061.60706	train-joint_loss:9805.75446	validation-rmse:194.92712	validation-weighted_mse:94353.12500	validation-spectral_loss:2127.53809	validation-joint_loss:47389.31631
+C spectral b0: saved; reload parity passed
+[0]	train-rmse:87.00295	train-weighted_mse:13241.88574	train-spectral_loss:882.81329	train-joint_loss:6709.22420	validation-rmse:193.69033	validation-weighted_mse:107472.21094	validation-spectral_loss:2230.53223	validation-joint_loss:53959.15869
+[1]	train-rmse:85.66158	train-weighted_mse:12792.25098	train-spectral_loss:871.39142	train-joint_loss:6483.26463	validation-rmse:190.40581	validation-weighted_mse:103892.47656	validation-spectral_loss:2195.39868	validation-joint_loss:52165.77815
+C spectral b1: saved; reload parity passed
+[0]	train-rmse:92.70647	train-weighted_mse:17912.43555	train-spectral_loss:845.41596	train-joint_loss:9040.75937	validation-rmse:137.14397	validation-weighted_mse:55389.28125	validation-spectral_loss:1683.81494	validation-joint_loss:27863.02212
+[1]	train-rmse:91.70323	train-weighted_mse:17486.64258	train-spectral_loss:837.58252	train-joint_loss:8827.07954	validation-rmse:136.76112	validation-weighted_mse:54987.30859	validation-spectral_loss:1686.40686	validation-joint_loss:27662.29498
+C spectral b2: saved; reload parity passed
+f1 control: train=128 eval=16 rounds=2
+[0]	train-rmse:96.16086	train-weighted_mse:17706.67969	train-spectral_loss:941.31574	train-joint_loss:8853.33984	validation-rmse:78.22703	validation-weighted_mse:4184.77344	validation-spectral_loss:824.93951	validation-joint_loss:2092.38672
+[1]	train-rmse:94.37202	train-weighted_mse:17075.81250	train-spectral_loss:924.05548	train-joint_loss:8537.90625	validation-rmse:76.77523	validation-weighted_mse:4029.34009	validation-spectral_loss:810.69824	validation-joint_loss:2014.67004
+f1 control b0: saved; reload parity passed
+[0]	train-rmse:95.96984	train-weighted_mse:16728.10352	train-spectral_loss:936.40228	train-joint_loss:8364.05176	validation-rmse:102.35767	validation-weighted_mse:7135.32227	validation-spectral_loss:1099.54626	validation-joint_loss:3567.66113
+[1]	train-rmse:94.65658	train-weighted_mse:16218.21094	train-spectral_loss:924.61157	train-joint_loss:8109.10547	validation-rmse:100.99701	validation-weighted_mse:6946.72656	validation-spectral_loss:1085.29492	validation-joint_loss:3473.36328
+f1 control b1: saved; reload parity passed
+[0]	train-rmse:100.54562	train-weighted_mse:18783.58789	train-spectral_loss:1010.17706	train-joint_loss:9391.79394	validation-rmse:39.58481	validation-weighted_mse:1071.04236	validation-spectral_loss:384.00668	validation-joint_loss:535.52118
+[1]	train-rmse:99.46696	train-weighted_mse:18402.54297	train-spectral_loss:998.85773	train-joint_loss:9201.27148	validation-rmse:39.54429	validation-weighted_mse:1068.65417	validation-spectral_loss:378.13403	validation-joint_loss:534.32709
+f1 control b2: saved; reload parity passed
+f1 spectral: train=128 eval=16 rounds=2
+[0]	train-rmse:96.29281	train-weighted_mse:17721.05273	train-spectral_loss:943.09845	train-joint_loss:8954.83621	validation-rmse:78.59886	validation-weighted_mse:4224.52100	validation-spectral_loss:829.91180	validation-joint_loss:2195.25168
+[1]	train-rmse:94.58585	train-weighted_mse:17117.56055	train-spectral_loss:926.42670	train-joint_loss:8651.42294	validation-rmse:77.60592	validation-weighted_mse:4117.98779	validation-spectral_loss:819.13745	validation-joint_loss:2140.90764
+f1 spectral b0: saved; reload parity passed
+[0]	train-rmse:96.03256	train-weighted_mse:16750.82227	train-spectral_loss:936.93426	train-joint_loss:8469.10456	validation-rmse:102.47851	validation-weighted_mse:7152.18359	validation-spectral_loss:1100.80823	validation-joint_loss:3686.17262
+[1]	train-rmse:94.79508	train-weighted_mse:16267.41016	train-spectral_loss:925.79810	train-joint_loss:8226.28489	validation-rmse:101.24050	validation-weighted_mse:6980.27734	validation-spectral_loss:1087.82898	validation-joint_loss:3598.92157
+f1 spectral b1: saved; reload parity passed
+[0]	train-rmse:100.65614	train-weighted_mse:18816.77930	train-spectral_loss:1010.86359	train-joint_loss:9509.47601	validation-rmse:39.92555	validation-weighted_mse:1089.59473	validation-spectral_loss:388.67136	validation-joint_loss:583.66450
+[1]	train-rmse:99.63738	train-weighted_mse:18452.19141	train-spectral_loss:1000.21307	train-joint_loss:9326.11701	validation-rmse:39.90690	validation-weighted_mse:1088.38281	validation-spectral_loss:383.17636	validation-joint_loss:582.50904
+f1 spectral b2: saved; reload parity passed
+final control: train=128 eval=16 rounds=2
+[0]	train-rmse:98.26759	train-weighted_mse:19173.60156	train-spectral_loss:912.15210	train-joint_loss:9586.80078	validation-rmse:42.22739	validation-weighted_mse:1263.31360	validation-spectral_loss:403.83814	validation-joint_loss:631.65680
+[1]	train-rmse:96.56420	train-weighted_mse:18518.32617	train-spectral_loss:897.86481	train-joint_loss:9259.16309	validation-rmse:41.64438	validation-weighted_mse:1228.61633	validation-spectral_loss:396.84622	validation-joint_loss:614.30817
+final control b0: saved; reload parity passed
+[0]	train-rmse:93.56693	train-weighted_mse:16800.07227	train-spectral_loss:951.09784	train-joint_loss:8400.03613	validation-rmse:58.62383	validation-weighted_mse:2425.32837	validation-spectral_loss:563.27179	validation-joint_loss:1212.66419
+[1]	train-rmse:92.39159	train-weighted_mse:16345.81738	train-spectral_loss:940.66205	train-joint_loss:8172.90869	validation-rmse:57.09337	validation-weighted_mse:2300.38232	validation-spectral_loss:547.50458	validation-joint_loss:1150.19116
+final control b1: saved; reload parity passed
+[0]	train-rmse:106.03985	train-weighted_mse:23001.00977	train-spectral_loss:1032.32886	train-joint_loss:11500.50488	validation-rmse:36.23614	validation-weighted_mse:925.85675	validation-spectral_loss:375.97266	validation-joint_loss:462.92838
+[1]	train-rmse:104.55091	train-weighted_mse:22233.73242	train-spectral_loss:1020.48724	train-joint_loss:11116.86621	validation-rmse:39.77299	validation-weighted_mse:1115.70532	validation-spectral_loss:416.41324	validation-joint_loss:557.85266
+final control b2: saved; reload parity passed
+final spectral: train=128 eval=16 rounds=2
+[0]	train-rmse:98.31885	train-weighted_mse:19151.36914	train-spectral_loss:913.50177	train-joint_loss:9667.03475	validation-rmse:42.18195	validation-weighted_mse:1260.62659	validation-spectral_loss:403.39084	validation-joint_loss:670.65238
+[1]	train-rmse:96.70623	train-weighted_mse:18522.96289	train-spectral_loss:900.25092	train-joint_loss:9351.50654	validation-rmse:41.63122	validation-weighted_mse:1227.86133	validation-spectral_loss:396.72275	validation-joint_loss:653.60294
+final spectral b0: saved; reload parity passed
+[0]	train-rmse:93.63597	train-weighted_mse:16851.49414	train-spectral_loss:951.01776	train-joint_loss:8520.84885	validation-rmse:58.44622	validation-weighted_mse:2410.98901	validation-spectral_loss:560.67255	validation-joint_loss:1261.56176
+[1]	train-rmse:92.76491	train-weighted_mse:16490.06055	train-spectral_loss:943.23029	train-joint_loss:8339.35330	validation-rmse:59.98882	validation-weighted_mse:2538.74121	validation-spectral_loss:577.96759	validation-joint_loss:1327.16737
+final spectral b1: saved; reload parity passed
+[0]	train-rmse:106.10020	train-weighted_mse:23030.24414	train-spectral_loss:1033.05713	train-joint_loss:11618.42778	validation-rmse:36.05721	validation-weighted_mse:916.73145	validation-spectral_loss:374.00418	validation-joint_loss:495.76614
+[1]	train-rmse:104.68192	train-weighted_mse:22294.66602	train-spectral_loss:1021.86060	train-joint_loss:11249.51907	validation-rmse:39.44643	validation-weighted_mse:1097.44836	validation-spectral_loss:412.81284	validation-joint_loss:590.00547
+final spectral b2: saved; reload parity passed
+SMOKE PASSED

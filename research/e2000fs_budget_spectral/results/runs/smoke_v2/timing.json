@@ -1,0 +1,35 @@
+{
+  "inference_seconds_per_fold": 7.66002485761419e-05,
+  "measurements": [
+    {
+      "stage": "f1",
+      "block": 0,
+      "seconds": 0.0011845339904539287
+    },
+    {
+      "stage": "f1",
+      "block": 1,
+      "seconds": 0.00024041300639510155
+    },
+    {
+      "stage": "f1",
+      "block": 2,
+      "seconds": 0.0002395189949311316
+    },
+    {
+      "stage": "final",
+      "block": 0,
+      "seconds": 0.0002849120064638555
+    },
+    {
+      "stage": "final",
+      "block": 1,
+      "seconds": 0.0002295500016771257
+    },
+    {
+      "stage": "final",
+      "block": 2,
+      "seconds": 0.00027227995451539755
+    }
+  ]
+}
