@@ -1,0 +1,21 @@
+{
+  "lane": "leaf_refit",
+  "experiment": "e2000fs_point4_leaf_refit",
+  "session": "fs30-p4-leaf-refit",
+  "unit": "fs30-p4-leaf-refit-20261029-v1",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+    "run",
+    "e2000fs_point4_leaf_refit",
+    "--",
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance/run.py",
+    "--lane",
+    "leaf_refit"
+  ],
+  "log": "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance/runs/full_20261029_v1/leaf_refit/run.log",
+  "status": "started",
+  "pane": "%42"
+}

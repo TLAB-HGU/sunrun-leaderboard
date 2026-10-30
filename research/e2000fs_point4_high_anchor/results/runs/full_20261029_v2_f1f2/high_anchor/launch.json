@@ -1,0 +1,21 @@
+{
+  "lane": "high_anchor",
+  "experiment": "e2000fs_point4_high_anchor",
+  "session": "fs30-p4v2f-high-anchor",
+  "unit": "fs30-p4v2f-high-anchor-20261029-v2-f1f2",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+    "run",
+    "e2000fs_point4_high_anchor",
+    "--",
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance_v2/run.py",
+    "--lane",
+    "high_anchor"
+  ],
+  "log": "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance_v2/runs/full_20261029_v2_f1f2/high_anchor/run.log",
+  "status": "started",
+  "pane": "%57"
+}

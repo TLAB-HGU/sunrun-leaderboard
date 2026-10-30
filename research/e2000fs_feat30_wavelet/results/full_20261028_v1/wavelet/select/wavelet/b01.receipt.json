@@ -1,0 +1,9 @@
+{
+  "sha256": "ecde0bb6cfd5f87dc70afb1870f174389ab3e5fdb36b722d0a64d65e7c87ea55",
+  "fit_origins": 9232,
+  "columns": 660,
+  "target_end_exclusive": "2025-12-01",
+  "reload_parity": true,
+  "native_loss": true,
+  "validation_is_held_out": true
+}

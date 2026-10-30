@@ -1,0 +1,21 @@
+{
+  "lane": "linear_leaf",
+  "experiment": "e2000fs_point4_linear_leaf",
+  "session": "fs30-p4-linear-leaf",
+  "unit": "fs30-p4-linear-leaf-20261029-v1",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+    "run",
+    "e2000fs_point4_linear_leaf",
+    "--",
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance/run.py",
+    "--lane",
+    "linear_leaf"
+  ],
+  "log": "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance/runs/full_20261029_v1/linear_leaf/run.log",
+  "status": "started",
+  "pane": "%41"
+}

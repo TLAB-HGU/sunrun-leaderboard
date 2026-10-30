@@ -1,0 +1,26 @@
+[
+  {
+    "method": "shape",
+    "session": "fs30-shape",
+    "unit": "fs30-shape-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/research/e2000fs_feat30_extreme/results/source/runs/full_20261028_v1/shape"
+  },
+  {
+    "method": "wavelet",
+    "session": "fs30-wavelet",
+    "unit": "fs30-wavelet-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/research/e2000fs_feat30_extreme/results/source/runs/full_20261028_v1/wavelet"
+  },
+  {
+    "method": "extreme",
+    "session": "fs30-extreme",
+    "unit": "fs30-extreme-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/research/e2000fs_feat30_extreme/results/source/runs/full_20261028_v1/extreme"
+  },
+  {
+    "method": "probtraj",
+    "session": "fs30-probtraj",
+    "unit": "fs30-probtraj-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/research/e2000fs_feat30_extreme/results/source/runs/full_20261028_v1/probtraj"
+  }
+]

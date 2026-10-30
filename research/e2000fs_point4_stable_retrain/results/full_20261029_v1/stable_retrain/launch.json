@@ -1,0 +1,21 @@
+{
+  "lane": "stable_retrain",
+  "experiment": "e2000fs_point4_stable_retrain",
+  "session": "fs30-p4-stable-retrain",
+  "unit": "fs30-p4-stable-retrain-20261029-v1",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+    "run",
+    "e2000fs_point4_stable_retrain",
+    "--",
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance/run.py",
+    "--lane",
+    "stable_retrain"
+  ],
+  "log": "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance/runs/full_20261029_v1/stable_retrain/run.log",
+  "status": "started",
+  "pane": "%43"
+}

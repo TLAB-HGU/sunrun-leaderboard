@@ -1,0 +1,65 @@
+{
+  "status": "started",
+  "lanes": [
+    {
+      "lane": "baseline",
+      "unit": "fs30-transfer-baseline-20261028-v1",
+      "session": "fs30-transfer-baseline",
+      "status": "started",
+      "command": [
+        "/home/t-lab01/sunrun/.venv/bin/python",
+        "-u",
+        "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/run.py",
+        "--lane",
+        "baseline"
+      ],
+      "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/runs/full_20261028_v1/baseline/run.log",
+      "pane": "%26"
+    },
+    {
+      "lane": "center",
+      "unit": "fs30-transfer-center-20261028-v1",
+      "session": "fs30-transfer-center",
+      "status": "started",
+      "command": [
+        "/home/t-lab01/sunrun/.venv/bin/python",
+        "-u",
+        "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/run.py",
+        "--lane",
+        "center"
+      ],
+      "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/runs/full_20261028_v1/center/run.log",
+      "pane": "%27"
+    },
+    {
+      "lane": "recency",
+      "unit": "fs30-transfer-recency-20261028-v1",
+      "session": "fs30-transfer-recency",
+      "status": "started",
+      "command": [
+        "/home/t-lab01/sunrun/.venv/bin/python",
+        "-u",
+        "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/run.py",
+        "--lane",
+        "recency"
+      ],
+      "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/runs/full_20261028_v1/recency/run.log",
+      "pane": "%28"
+    },
+    {
+      "lane": "recent_window",
+      "unit": "fs30-transfer-recent-window-20261028-v1",
+      "session": "fs30-transfer-recent-window",
+      "status": "started",
+      "command": [
+        "/home/t-lab01/sunrun/.venv/bin/python",
+        "-u",
+        "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/run.py",
+        "--lane",
+        "recent_window"
+      ],
+      "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer/runs/full_20261028_v1/recent_window/run.log",
+      "pane": "%29"
+    }
+  ]
+}

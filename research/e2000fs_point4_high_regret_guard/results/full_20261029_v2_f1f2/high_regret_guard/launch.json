@@ -1,0 +1,21 @@
+{
+  "lane": "high_regret_guard",
+  "experiment": "e2000fs_point4_high_regret_guard",
+  "session": "fs30-p4v2f-high-regret-guard",
+  "unit": "fs30-p4v2f-high-regret-guard-20261029-v2-f1f2",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+    "run",
+    "e2000fs_point4_high_regret_guard",
+    "--",
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance_v2/run.py",
+    "--lane",
+    "high_regret_guard"
+  ],
+  "log": "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance_v2/runs/full_20261029_v2_f1f2/high_regret_guard/run.log",
+  "status": "started",
+  "pane": "%58"
+}

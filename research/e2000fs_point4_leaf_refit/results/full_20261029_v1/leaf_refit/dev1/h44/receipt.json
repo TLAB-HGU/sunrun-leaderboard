@@ -1,0 +1,13 @@
+{
+  "context": {
+    "manifest_sha256": "52665f37ce654ff68810ad06ff3f767fe09683f23be49650108778dbc92ac2f5",
+    "stage": "dev1",
+    "horizon": 44,
+    "train_indices_sha256": "4104de9925df347fe223c329e230f9164e216783accdcfaf877377aff668a33b",
+    "teacher_sha256": "e0a0aee408a1792ef6f407296da48e6b4b26e67ba9b1439965d6d75cde3250e3"
+  },
+  "sha256": {
+    "model.txt": "72f98d3976f0380a18197f27ba0005755ca50846414a4c0c4c8cb409c5bb086e",
+    "loss.csv": "4c0d81ec7448e47517236d0b31e7ff188d90ab519c3dc0dfcc0c91d42d6629f3"
+  }
+}
