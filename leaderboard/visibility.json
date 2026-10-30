@@ -1,0 +1,190 @@
+{
+  "hidden": [
+    {
+      "member": "seongeun",
+      "experiment": "e2000_direct_s42"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000_horizon_conditioned_s42"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_12"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_6"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirrecmo_12"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirrecmo_24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirrecmo_6"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_extreme"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_gaussian_pilot"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_hyper_gain"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_lognormal_crps"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_mc_calibration"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_pointweight4_tcn_lb120"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_pointweight4_tcn_lb120_regskip"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_probtraj"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_smooth_error_tail"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_center"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_kumo_direct"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_kumo_dirrec"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_kumo_pooled"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_kumo_recursive"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_high_anchor"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_high_regret_guard"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_stable_retrain"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_teacher_trust"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_realmlp_direct"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_realmlp_dirrec"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_realmlp_pooled"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_realmlp_recursive"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_recmo_12"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_recmo_24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_recmo_6"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_rectify"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_rectifymo_24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_stratify_dirrecmo_dirrecmo_24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_tabiclv2_direct"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_tabiclv2_dirrec"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_tabiclv2_pooled"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_tabiclv2_recursive"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "xgb_d76_lead_moe_resid_dv_enlil"
+    }
+  ],
+  "bold": [
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_context"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recency"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_budget_spectral"
+    }
+  ]
+}

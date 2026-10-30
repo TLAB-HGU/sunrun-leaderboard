@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-10-14T13:16:10.872434+00:00",
+  "results": [
+    {
+      "name": "euvwave",
+      "output_sha256_verified": true,
+      "historical_rows_identical": 34968,
+      "official_window_rows_identical": 2833,
+      "new_rows": 421
+    },
+    {
+      "name": "fe171",
+      "output_sha256_verified": true,
+      "historical_rows_identical": 36175,
+      "official_window_rows_identical": 2833,
+      "new_rows": 150
+    },
+    {
+      "name": "chmask",
+      "historical_rows_identical": 36015,
+      "official_window_rows_identical": 2833
+    }
+  ]
+}

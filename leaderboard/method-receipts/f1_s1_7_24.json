@@ -1,0 +1,19 @@
+{
+ "alpha_spec": "0",
+ "base_score": 410.0,
+ "env_counts": [
+  1
+ ],
+ "env_span": [
+  1577836800000000000,
+  1577836800000000000
+ ],
+ "lam": 0.0,
+ "lam_curve": null,
+ "reader": "xgboost_projected_cma",
+ "rows": 18,
+ "seconds": 0.02,
+ "seed": 1,
+ "selection": null,
+ "tag": "f1_s1_7_24"
+}

@@ -1,0 +1,6 @@
+.venv/
+.venv-fusion/
+__pycache__/
+.pytest_cache/
+store/
+*.pyc

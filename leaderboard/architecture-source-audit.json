@@ -1,0 +1,1246 @@
+{
+  "github_repository": "TLAB-HGU/sunrun-leaderboard",
+  "github_commit": "8cd77287d9d8648c1a8cf891d17f94af6aa05791",
+  "scope": "31 completed models displayed at Space revision 5e82a5c71ab027fa18b54efa36ee26eb6c36e789",
+  "verification": "Entry and archived Python bytes match the pinned GitHub blob SHA; canonical release config SHA matches submitted row identity. Python sources parsed without execution.",
+  "execution_scope": "Architecture browsing. Historical runners may require original data paths, shared upstream modules and private input data; no training, evaluation or standalone reproduction was performed.",
+  "models": [
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30",
+      "config_sha256": "ff25cfb2bb0e21f093036f3e9fe2f512ad1e4225f8c985f725a3b9cb84a5aced",
+      "entry": {
+        "path": "releases/e2000fs/dirmo_24_feat30/run.py",
+        "git_blob_sha": "581f2538ce9a69c9add9cc5b01a3d29485474f6a",
+        "sha256": "03f5bfe20cf45f4e0ea5d62ce36e3ff74160084178c2e16ad5f0a1409153541f"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs/dirmo_24_feat30/config.json",
+        "config_sha256": "ff25cfb2bb0e21f093036f3e9fe2f512ad1e4225f8c985f725a3b9cb84a5aced"
+      },
+      "archived_python_sources": []
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_context",
+      "config_sha256": "a26d0ed6aa42373d060c17a2972743247d70895022bb5c868ee3801f097c6b91",
+      "entry": {
+        "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/run.py",
+        "git_blob_sha": "b653782a7a521b37d0655195c6b20dfae2584fa7",
+        "sha256": "bd132e9200c558e4e07bed37270f98f9fbb913f1ec8adf022484c2be0455328a"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_agnostic_v2_context/config.json",
+        "config_sha256": "a26d0ed6aa42373d060c17a2972743247d70895022bb5c868ee3801f097c6b91"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/context.py",
+          "git_blob_sha": "28d78baa1d92b7db26f89659972eb94b6f91a050",
+          "sha256": "d23c23b760d5f3d6af607fb008ecdd63e3b27423d0ac5b6880c9c474ede35610"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/core.py",
+          "git_blob_sha": "fc005ba7f78ea86177767cf8cb385030e6ee323c",
+          "sha256": "31da6c39f1ee9987b9d7c9a83a9c1907790aa3a205d0a300e00682fa3360cd9d"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/evaluation.py",
+          "git_blob_sha": "aaca710c86659a66969507ab5a619228829dc8e2",
+          "sha256": "c156dd6b597da001f16c12055f1c70f64d8197bb4b48846b565436d4e318672a"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/launch.py",
+          "git_blob_sha": "83a2008325097454fa715c74dfc9c64a1708676d",
+          "sha256": "c1373a341f4db13868801365c5c4c468cc7d1d1015bf10fb1f64ce978ea39dfd"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/quantiles.py",
+          "git_blob_sha": "8e0640781a28a03d2c2e02fdade3319250e6244a",
+          "sha256": "d709f43e68fb02d90eae0b003966f86aa2fe6e6e53e4fe2961e910d4eca11569"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/report.py",
+          "git_blob_sha": "6221d2af3fb96327356fe6a84f9c0c324d934215",
+          "sha256": "5c7cbd095fd3f875272ea5edc91032110d7bf93f3ceec07be3041f6d70b28c81"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/run.py",
+          "git_blob_sha": "b653782a7a521b37d0655195c6b20dfae2584fa7",
+          "sha256": "bd132e9200c558e4e07bed37270f98f9fbb913f1ec8adf022484c2be0455328a"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/test_context.py",
+          "git_blob_sha": "2141e1551ae2fbc40f671d826d1bb9c406993533",
+          "sha256": "096bdcee49f129155f7a30b292f6e3150063cd4202fd7be1f5a767ada2572074"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/test_core.py",
+          "git_blob_sha": "b1e98ee5eda7dde0a7ae1b73be31c1e82d89f009",
+          "sha256": "31518bd74a30f02e1cb4c54a6062e57fde19944eb32253a5c990dd101448f77d"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/test_evaluation.py",
+          "git_blob_sha": "ecd650292d51a808b5aa2bb2e242c843483cf4f3",
+          "sha256": "408c4469b9e7e8ba1bed76a26fe41fa8cd9cafb589644c827873212b3bd35b15"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/test_quantiles.py",
+          "git_blob_sha": "5bc9e58b10e9429e55613fd87b77bc8aa9bf70be",
+          "sha256": "dadff5d1f27270fc1d3cd90b17aa08a72a57fbada27d83cafc9adb3953ee80c4"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/test_transforms.py",
+          "git_blob_sha": "76c656ee41c5af41738a9e66740186b452685a31",
+          "sha256": "97bc91fa4bd5e6d297445386f074acd82d3f00b3ee1fa342098e1e2846d684f8"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/transforms.py",
+          "git_blob_sha": "6ca3916beb3512737ff71d971800522015030810",
+          "sha256": "750a9111bc67357eebc382045bc64f73549570073b7ff6f62b786bd64403add0"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_followups/run.py",
+          "git_blob_sha": "f355d0e4e2d8821543e6f98e98f5962250ceeecb",
+          "sha256": "6edc8400fb06e3b84c9fb8147e530db8a54b012f8586d255f41985db33c1c921"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm",
+      "config_sha256": "6e7957584b55c8a518140ebab4054fdee710d0c47b7d2914cf09c4b81f2b1c62",
+      "entry": {
+        "path": "releases/e2000fs_followups_20261028/lgbm/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py",
+        "git_blob_sha": "aba1f666ba575f626d0f1439ed3b1be0e728ece1",
+        "sha256": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_followups_20261028/lgbm/config.json",
+        "config_sha256": "6e7957584b55c8a518140ebab4054fdee710d0c47b7d2914cf09c4b81f2b1c62"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_followups_20261028/lgbm/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py",
+          "git_blob_sha": "aba1f666ba575f626d0f1439ed3b1be0e728ece1",
+          "sha256": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/lgbm/source/analysis/forecast_strategies_e2000/publication/worktree/scorer/scoring.py",
+          "git_blob_sha": "1548ae7c735a68bbb80f696597d829c3c238f636",
+          "sha256": "9b5f36ccab7c6158f6ffded2249086cc42451925ad5a1c5a4bc52d48d13e4e36"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_shape",
+      "config_sha256": "6456b53cf8ec328381c268e2bb67bb7a91903289e10da47a788dcd80d4906414",
+      "entry": {
+        "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/run.py",
+        "git_blob_sha": "f355d0e4e2d8821543e6f98e98f5962250ceeecb",
+        "sha256": "6edc8400fb06e3b84c9fb8147e530db8a54b012f8586d255f41985db33c1c921"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_followups_20261028/shape/config.json",
+        "config_sha256": "6456b53cf8ec328381c268e2bb67bb7a91903289e10da47a788dcd80d4906414"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/launch.py",
+          "git_blob_sha": "4f05debb385be6b9054990feb0d09b56191b34d5",
+          "sha256": "5ae156364750d83d49746910c1858da25639cc0acafa76ed4fd1069bfa7044ba"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/methods.py",
+          "git_blob_sha": "9d117fa9c7eedbac75a89d5a1a9fe49128ebd50d",
+          "sha256": "0b8b9a2cd1c59edf5b216ab6faab5f0405b95714b17de321b0c03d324883fcb3"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/probtraj.py",
+          "git_blob_sha": "a0ff357acc63fba9b84f03bafb75e7bb29c49274",
+          "sha256": "ff8e5d5c8abbf8910bbba95c1b7b56ab87924ff1ab9f86d4f097fa3c0fe3b6ed"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/report.py",
+          "git_blob_sha": "506e1a6ca651c9319e94078fdad613bf863ac0f8",
+          "sha256": "e00d6f0dcaea93d9d5e91b60408c52f4a10792a4d75143f85dc0af4dc8660e91"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/run.py",
+          "git_blob_sha": "f355d0e4e2d8821543e6f98e98f5962250ceeecb",
+          "sha256": "6edc8400fb06e3b84c9fb8147e530db8a54b012f8586d255f41985db33c1c921"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/test_evaluation.py",
+          "git_blob_sha": "d09da2c433036777a2ca7c0da5316e88fdf994a7",
+          "sha256": "6d9988f35eec6957feb8a221087be62906e53844fcd093c0a827f9e481a4f98e"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/test_methods.py",
+          "git_blob_sha": "a7bf91912a280f4b196bba8742cbd30d4b5b89ef",
+          "sha256": "c72f80910beecb584489205b65a28702f2df81120724cb6d7d44a199d0ed03c8"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/test_probtraj.py",
+          "git_blob_sha": "c9829ab6973442b6e8d8727005147501ec7411ca",
+          "sha256": "c49738ea122fc54860d9070d5ff6c0966eea99e693461149a331a1a49e0ea08e"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/test_runner.py",
+          "git_blob_sha": "ceb27aa91576defd00d98c18d4978a3810e925a9",
+          "sha256": "3accd7858948659075f9566b1514cc5780300bb358e4036b279bdeb3007e9f8e"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_tailcal_crps",
+      "config_sha256": "0647b5314fd32a8cb66bc87d5413be4a8233f50667edcc7e1f0c653d49422a99",
+      "entry": {
+        "path": "releases/e2000fs_feat30_tailcal_crps/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+        "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+        "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_tailcal_crps/config.json",
+        "config_sha256": "0647b5314fd32a8cb66bc87d5413be4a8233f50667edcc7e1f0c653d49422a99"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_tailcal_crps/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "01842eb375e82340fc0e87ec87bfd17283491061",
+          "sha256": "e7ae5fa989bb243a44526a2ac4a7250d238c4b8b5c32dd83ba92458b754d4790"
+        },
+        {
+          "path": "releases/e2000fs_feat30_tailcal_crps/source/analysis/e2000fs_feat30_lgbm_distribution/launch.py",
+          "git_blob_sha": "1db4f6ea9874828ad5e1f9fe6e08c70fba8c41b2",
+          "sha256": "ecdbc34dc96c5ebb5c0c984daaf0d4951a6aeef5d814a6654a9e5fe9638fae3e"
+        },
+        {
+          "path": "releases/e2000fs_feat30_tailcal_crps/source/analysis/e2000fs_feat30_lgbm_distribution/methods.py",
+          "git_blob_sha": "893c818ecdc013c5437e71d08edbbf9e0d355767",
+          "sha256": "2aff153bffc8ffc93c7b7718b0870459a37bd365feb0457904018586c0f72fc2"
+        },
+        {
+          "path": "releases/e2000fs_feat30_tailcal_crps/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+          "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+          "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_wavelet",
+      "config_sha256": "5ff33c461cb01e4277e8a23d5af12752490e21f91c1f959814d65574f43e9fc4",
+      "entry": {
+        "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/run.py",
+        "git_blob_sha": "f355d0e4e2d8821543e6f98e98f5962250ceeecb",
+        "sha256": "6edc8400fb06e3b84c9fb8147e530db8a54b012f8586d255f41985db33c1c921"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_followups_20261028/wavelet/config.json",
+        "config_sha256": "5ff33c461cb01e4277e8a23d5af12752490e21f91c1f959814d65574f43e9fc4"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/launch.py",
+          "git_blob_sha": "4f05debb385be6b9054990feb0d09b56191b34d5",
+          "sha256": "5ae156364750d83d49746910c1858da25639cc0acafa76ed4fd1069bfa7044ba"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/methods.py",
+          "git_blob_sha": "9d117fa9c7eedbac75a89d5a1a9fe49128ebd50d",
+          "sha256": "0b8b9a2cd1c59edf5b216ab6faab5f0405b95714b17de321b0c03d324883fcb3"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/probtraj.py",
+          "git_blob_sha": "a0ff357acc63fba9b84f03bafb75e7bb29c49274",
+          "sha256": "ff8e5d5c8abbf8910bbba95c1b7b56ab87924ff1ab9f86d4f097fa3c0fe3b6ed"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/report.py",
+          "git_blob_sha": "506e1a6ca651c9319e94078fdad613bf863ac0f8",
+          "sha256": "e00d6f0dcaea93d9d5e91b60408c52f4a10792a4d75143f85dc0af4dc8660e91"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/run.py",
+          "git_blob_sha": "f355d0e4e2d8821543e6f98e98f5962250ceeecb",
+          "sha256": "6edc8400fb06e3b84c9fb8147e530db8a54b012f8586d255f41985db33c1c921"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/test_evaluation.py",
+          "git_blob_sha": "d09da2c433036777a2ca7c0da5316e88fdf994a7",
+          "sha256": "6d9988f35eec6957feb8a221087be62906e53844fcd093c0a827f9e481a4f98e"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/test_methods.py",
+          "git_blob_sha": "a7bf91912a280f4b196bba8742cbd30d4b5b89ef",
+          "sha256": "c72f80910beecb584489205b65a28702f2df81120724cb6d7d44a199d0ed03c8"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/test_probtraj.py",
+          "git_blob_sha": "c9829ab6973442b6e8d8727005147501ec7411ca",
+          "sha256": "c49738ea122fc54860d9070d5ff6c0966eea99e693461149a331a1a49e0ea08e"
+        },
+        {
+          "path": "releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/test_runner.py",
+          "git_blob_sha": "ceb27aa91576defd00d98c18d4978a3810e925a9",
+          "sha256": "3accd7858948659075f9566b1514cc5780300bb358e4036b279bdeb3007e9f8e"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_smooth_wcrps",
+      "config_sha256": "a2cd0af47e63312b3e4c502c7a952369c56b835ac0f1d91099ae0b644c783822",
+      "entry": {
+        "path": "releases/e2000fs_feat30_smooth_wcrps/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+        "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+        "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_smooth_wcrps/config.json",
+        "config_sha256": "a2cd0af47e63312b3e4c502c7a952369c56b835ac0f1d91099ae0b644c783822"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_smooth_wcrps/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "01842eb375e82340fc0e87ec87bfd17283491061",
+          "sha256": "e7ae5fa989bb243a44526a2ac4a7250d238c4b8b5c32dd83ba92458b754d4790"
+        },
+        {
+          "path": "releases/e2000fs_feat30_smooth_wcrps/source/analysis/e2000fs_feat30_lgbm_distribution/launch.py",
+          "git_blob_sha": "1db4f6ea9874828ad5e1f9fe6e08c70fba8c41b2",
+          "sha256": "ecdbc34dc96c5ebb5c0c984daaf0d4951a6aeef5d814a6654a9e5fe9638fae3e"
+        },
+        {
+          "path": "releases/e2000fs_feat30_smooth_wcrps/source/analysis/e2000fs_feat30_lgbm_distribution/methods.py",
+          "git_blob_sha": "893c818ecdc013c5437e71d08edbbf9e0d355767",
+          "sha256": "2aff153bffc8ffc93c7b7718b0870459a37bd365feb0457904018586c0f72fc2"
+        },
+        {
+          "path": "releases/e2000fs_feat30_smooth_wcrps/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+          "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+          "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm_HPO",
+      "config_sha256": "bdd9c9431645c774ce679725d0cbe4e16b5115541c0b7f494b4d52195c490689",
+      "entry": {
+        "path": "releases/e2000fs_dirmo_24_feat30_lgbm_HPO/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py",
+        "git_blob_sha": "f403eea51f6d96f428e8e23aaa73087c821a6602",
+        "sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_dirmo_24_feat30_lgbm_HPO/config.json",
+        "config_sha256": "bdd9c9431645c774ce679725d0cbe4e16b5115541c0b7f494b4d52195c490689"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_lgbm_HPO/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py",
+          "git_blob_sha": "aba1f666ba575f626d0f1439ed3b1be0e728ece1",
+          "sha256": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_lgbm_HPO/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py",
+          "git_blob_sha": "f403eea51f6d96f428e8e23aaa73087c821a6602",
+          "sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_lgbm_HPO/source/analysis/forecast_strategies_e2000/publication/worktree/scorer/scoring.py",
+          "git_blob_sha": "1548ae7c735a68bbb80f696597d829c3c238f636",
+          "sha256": "9b5f36ccab7c6158f6ffded2249086cc42451925ad5a1c5a4bc52d48d13e4e36"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_lognormal_nll",
+      "config_sha256": "c2f2097dcc28d4adad605f47e2f362127ebe10e37ea48a1f6d2958a97caa5a05",
+      "entry": {
+        "path": "releases/e2000fs_feat30_lognormal_nll/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+        "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+        "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_lognormal_nll/config.json",
+        "config_sha256": "c2f2097dcc28d4adad605f47e2f362127ebe10e37ea48a1f6d2958a97caa5a05"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_lognormal_nll/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "01842eb375e82340fc0e87ec87bfd17283491061",
+          "sha256": "e7ae5fa989bb243a44526a2ac4a7250d238c4b8b5c32dd83ba92458b754d4790"
+        },
+        {
+          "path": "releases/e2000fs_feat30_lognormal_nll/source/analysis/e2000fs_feat30_lgbm_distribution/launch.py",
+          "git_blob_sha": "1db4f6ea9874828ad5e1f9fe6e08c70fba8c41b2",
+          "sha256": "ecdbc34dc96c5ebb5c0c984daaf0d4951a6aeef5d814a6654a9e5fe9638fae3e"
+        },
+        {
+          "path": "releases/e2000fs_feat30_lognormal_nll/source/analysis/e2000fs_feat30_lgbm_distribution/methods.py",
+          "git_blob_sha": "893c818ecdc013c5437e71d08edbbf9e0d355767",
+          "sha256": "2aff153bffc8ffc93c7b7718b0870459a37bd365feb0457904018586c0f72fc2"
+        },
+        {
+          "path": "releases/e2000fs_feat30_lognormal_nll/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+          "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+          "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recency",
+      "config_sha256": "e9cc51d8ad4601d6a2686fb234e3d5f0144943358b6c9508c898f6bf2e675b4c",
+      "entry": {
+        "path": "releases/e2000fs_feat30_transfer_recency/source/analysis/e2000fs_feat30_transfer/run.py",
+        "git_blob_sha": "4ae4b266a7168b2e0e6e8a6f2c2aecd71a18cdc3",
+        "sha256": "1b695d00289222ea5fc510b0e4d143b988d053fde8d1a63a8652bbcddcb5edd5"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_transfer_recency/config.json",
+        "config_sha256": "e9cc51d8ad4601d6a2686fb234e3d5f0144943358b6c9508c898f6bf2e675b4c"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_transfer_recency/source/analysis/e2000fs-backlog-publication-20261029/evaluate.py",
+          "git_blob_sha": "ce837930c585c658fb0830b6d12010ef1100620e",
+          "sha256": "2a5c986b8029b96ad63bfda338e0f6eb89014f741824707aa646d175c609adb7"
+        },
+        {
+          "path": "releases/e2000fs_feat30_transfer_recency/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "c307baf3fadd671709d78563d157913de499fb0b",
+          "sha256": "766dfd3db6b8dbe1405837ec98edfec9a42a0ba7fdac88cd44b88315f772a2ed"
+        },
+        {
+          "path": "releases/e2000fs_feat30_transfer_recency/source/analysis/e2000fs_feat30_transfer/methods.py",
+          "git_blob_sha": "1d122e1c99ada95f0d781055d12010eb306343ab",
+          "sha256": "5cee4d61b6df194df68e90e742b3a62a6664af76327bc1007c913a2feb090f0d"
+        },
+        {
+          "path": "releases/e2000fs_feat30_transfer_recency/source/analysis/e2000fs_feat30_transfer/run.py",
+          "git_blob_sha": "4ae4b266a7168b2e0e6e8a6f2c2aecd71a18cdc3",
+          "sha256": "1b695d00289222ea5fc510b0e4d143b988d053fde8d1a63a8652bbcddcb5edd5"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24",
+      "config_sha256": "d876f4a791e33ec1d7fdadf2ad708309557b16f32471ec4f83e5958f858d8fab",
+      "entry": {
+        "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last24/run.py",
+        "git_blob_sha": "5137677281442e827b54c724fbedd17e15256488",
+        "sha256": "7b6efff00b9314151a1c3ded6e3965f69b5f213dc4a4cb8a080944c9ed6a8821"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/config.json",
+        "config_sha256": "d876f4a791e33ec1d7fdadf2ad708309557b16f32471ec4f83e5958f858d8fab"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py",
+          "git_blob_sha": "aba1f666ba575f626d0f1439ed3b1be0e728ece1",
+          "sha256": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py",
+          "git_blob_sha": "f403eea51f6d96f428e8e23aaa73087c821a6602",
+          "sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last24/execute.py",
+          "git_blob_sha": "74aac382186702956758ba6a00f426c5e319e96f",
+          "sha256": "05850d99b19dbcf07832624abb62492b6307adb38ed7adc7ba18c2e18a9082c4"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last24/publish.py",
+          "git_blob_sha": "98982ac1bb38d944b4b49e6c1e318bd448a0929f",
+          "sha256": "54f20acc0f5580e337bad1d59bd4c2f148432eb3c272e3877bb8b6d2b5d08e6f"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last24/run.py",
+          "git_blob_sha": "5137677281442e827b54c724fbedd17e15256488",
+          "sha256": "7b6efff00b9314151a1c3ded6e3965f69b5f213dc4a4cb8a080944c9ed6a8821"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/forecast_strategies_e2000/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/forecast_strategies_kumo/publish.py",
+          "git_blob_sha": "f529e1d4a79dae339b5c938334b83659a5d78bad",
+          "sha256": "0c8b4ae181098667be3aedcf705674b723ca858691f5e1a8cc4ca48e9476f5f1"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24",
+      "config_sha256": "6fc76b1836f3a22669108823c6bf6833082b4d9a74bedf80edd8199f66183037",
+      "entry": {
+        "path": "releases/e2000fs/dirmo_24/source/strategies.py",
+        "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+        "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs/dirmo_24/config.json",
+        "config_sha256": "6fc76b1836f3a22669108823c6bf6833082b4d9a74bedf80edd8199f66183037"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs/dirmo_24/source/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/evaluate.py",
+          "git_blob_sha": "60dfb71160d5efa6f3184fed2f48f4362aed7bbe",
+          "sha256": "9b8845324057044454b0da72a7395f101ef11289bc2bd439442f787c9413de5a"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/make_notebook.py",
+          "git_blob_sha": "47fe41f4212b55582489f1cf75033829f27b2976",
+          "sha256": "2c1c05bb8b7788d311d35bdbad286bc5c31f5b6c7bc64b6a12ff33b397ec7c71"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/publish.py",
+          "git_blob_sha": "72717eda8c8c75f6cb8a6134c1b198741c25747f",
+          "sha256": "077e5867eb06a6959c40c24a3c522ba572a725b73925f7aa3817e11afc392565"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/replay_template.py",
+          "git_blob_sha": "8544dd6b0698c74309f7832805c21f806208f0d7",
+          "sha256": "970bc877752e01ed25984ae09734d6ef1e09879254ad3ca5143f34bafe4bf6e4"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/run.py",
+          "git_blob_sha": "c6ab1dd310ca3f2fb461da7ac18e8ff94b9bbf48",
+          "sha256": "cc3e0aed645e89d851ba2b8d3dc4ffbb4c9a7e350643efd3300a4440c9ff28da"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/strategies.py",
+          "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+          "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+        },
+        {
+          "path": "releases/e2000fs/dirmo_24/source/test_strategies.py",
+          "git_blob_sha": "c7c55da7c22cedf99fa0c6a816b1547aabe8ac16",
+          "sha256": "0ed397fc48d31ad5e60b74a4703138679a6c47ecb4f78356b95ea7035461f0af"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_leaf_refit",
+      "config_sha256": "7dc7de029ea052095810e3e69c639eb5834d69d0974705cdde957ce0496700b7",
+      "entry": {
+        "path": "releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs_point4_advance/run.py",
+        "git_blob_sha": "92ce7287646f07c8fe67d66ff6298d49e0b9c7fe",
+        "sha256": "bfbeeff7aa9105954a98dd4cda3e8c07ca07103dce69d7e6c7459e504d906bf6"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_point4_leaf_refit/config.json",
+        "config_sha256": "7dc7de029ea052095810e3e69c639eb5834d69d0974705cdde957ce0496700b7"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs-backlog-publication-20261029/evaluate.py",
+          "git_blob_sha": "ce837930c585c658fb0830b6d12010ef1100620e",
+          "sha256": "2a5c986b8029b96ad63bfda338e0f6eb89014f741824707aa646d175c609adb7"
+        },
+        {
+          "path": "releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "c307baf3fadd671709d78563d157913de499fb0b",
+          "sha256": "766dfd3db6b8dbe1405837ec98edfec9a42a0ba7fdac88cd44b88315f772a2ed"
+        },
+        {
+          "path": "releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs_point4_advance/baseline.py",
+          "git_blob_sha": "13f061eabb9646e1c0f04c81e83b9cc02533e51e",
+          "sha256": "98db1605a10573ce4ae7200cac451df0f84aa2e2105e38a8b471e0041cf14b24"
+        },
+        {
+          "path": "releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs_point4_advance/methods.py",
+          "git_blob_sha": "47d66bf137be63c42690157e2ec2b060a9542e18",
+          "sha256": "7e0d93a476502f02014ddd30dbf13f944886b2dfa5496a4aa9f5f99ba4467f26"
+        },
+        {
+          "path": "releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs_point4_advance/run.py",
+          "git_blob_sha": "92ce7287646f07c8fe67d66ff6298d49e0b9c7fe",
+          "sha256": "bfbeeff7aa9105954a98dd4cda3e8c07ca07103dce69d7e6c7459e504d906bf6"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last48",
+      "config_sha256": "3abeda1645ab87d4fa937f38a60d966cbc9b26318799bbe97df2f755a889949d",
+      "entry": {
+        "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last48/run.py",
+        "git_blob_sha": "220dc8143108d5d77f31d73210afcf37007cf6ea",
+        "sha256": "3d91ead97ed58a4b8566f83248305e7ac80050a1750250bbaa6c32faf978f5c3"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/config.json",
+        "config_sha256": "3abeda1645ab87d4fa937f38a60d966cbc9b26318799bbe97df2f755a889949d"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py",
+          "git_blob_sha": "aba1f666ba575f626d0f1439ed3b1be0e728ece1",
+          "sha256": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py",
+          "git_blob_sha": "f403eea51f6d96f428e8e23aaa73087c821a6602",
+          "sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last48/execute.py",
+          "git_blob_sha": "889263202c4eb61b2af007a425743e77adaeb27c",
+          "sha256": "ac0a15c9724f028475c6d4bb906ff1b39b707882ef6c13582d842672c4c48034"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last48/publish.py",
+          "git_blob_sha": "2c1e59880a48d926c8c077fc2f0491fb679232d8",
+          "sha256": "7a272e76184f5a0892038b1d1b74396f056233fe30332258556d40ad3865fd63"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last48/run.py",
+          "git_blob_sha": "220dc8143108d5d77f31d73210afcf37007cf6ea",
+          "sha256": "3d91ead97ed58a4b8566f83248305e7ac80050a1750250bbaa6c32faf978f5c3"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/forecast_strategies_e2000/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/forecast_strategies_kumo/publish.py",
+          "git_blob_sha": "f529e1d4a79dae339b5c938334b83659a5d78bad",
+          "sha256": "0c8b4ae181098667be3aedcf705674b723ca858691f5e1a8cc4ca48e9476f5f1"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_extreme_histprior",
+      "config_sha256": "7ab20f05984715185461c42c042e7756a05bc3d01120089875f67976858f5639",
+      "entry": {
+        "path": "releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs_feat30_extreme_histprior/run.py",
+        "git_blob_sha": "de98e401885181082e1263ee2cb5f26406c46af1",
+        "sha256": "5daa49b87165bd6807f31d350707db099187c15aaa44bd391158d9b856e7995b"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_extreme_histprior/config.json",
+        "config_sha256": "7ab20f05984715185461c42c042e7756a05bc3d01120089875f67976858f5639"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "01842eb375e82340fc0e87ec87bfd17283491061",
+          "sha256": "e7ae5fa989bb243a44526a2ac4a7250d238c4b8b5c32dd83ba92458b754d4790"
+        },
+        {
+          "path": "releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs_feat30_extreme_histprior/hist.py",
+          "git_blob_sha": "ab94c348b1a09d17479c9e0472ba8edccda3e8ef",
+          "sha256": "e94561b2be82c1a731ca20214f704598c36689a01193fe92c9a93a5b2aefbce8"
+        },
+        {
+          "path": "releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs_feat30_extreme_histprior/run.py",
+          "git_blob_sha": "de98e401885181082e1263ee2cb5f26406c46af1",
+          "sha256": "5daa49b87165bd6807f31d350707db099187c15aaa44bd391158d9b856e7995b"
+        },
+        {
+          "path": "releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs_feat30_extreme_histprior/runs/full_20261028_v2/official_score_script.py",
+          "git_blob_sha": "8016fd097741520f893bc096fed31aac3ac15258",
+          "sha256": "f983b3e4faf632f4a9e824c36f01a13ba61ab8f386d81453485ec6a04d50008b"
+        },
+        {
+          "path": "releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs_feat30_extreme_histprior/runs/full_20261028_v2/official_script.py",
+          "git_blob_sha": "bf4abd2bea0aef891979a0d9dbf39531c289b085",
+          "sha256": "af573c0bb629650dffee8f1f3fa649042136716af76c7127027d86666a3febc6"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_mimo",
+      "config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa",
+      "entry": {
+        "path": "releases/e2000fs/mimo/source/strategies.py",
+        "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+        "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs/mimo/config.json",
+        "config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs/mimo/source/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/evaluate.py",
+          "git_blob_sha": "60dfb71160d5efa6f3184fed2f48f4362aed7bbe",
+          "sha256": "9b8845324057044454b0da72a7395f101ef11289bc2bd439442f787c9413de5a"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/make_notebook.py",
+          "git_blob_sha": "47fe41f4212b55582489f1cf75033829f27b2976",
+          "sha256": "2c1c05bb8b7788d311d35bdbad286bc5c31f5b6c7bc64b6a12ff33b397ec7c71"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/publish.py",
+          "git_blob_sha": "1213f6b98f368b82669074fd6dd2fb1ab80036f6",
+          "sha256": "9d3a6a0a4fafa487d4dd48e4dbd9789e4c71b1f316e902b2253f574bd882570e"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/replay_template.py",
+          "git_blob_sha": "8544dd6b0698c74309f7832805c21f806208f0d7",
+          "sha256": "970bc877752e01ed25984ae09734d6ef1e09879254ad3ca5143f34bafe4bf6e4"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/run.py",
+          "git_blob_sha": "c6ab1dd310ca3f2fb461da7ac18e8ff94b9bbf48",
+          "sha256": "cc3e0aed645e89d851ba2b8d3dc4ffbb4c9a7e350643efd3300a4440c9ff28da"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/strategies.py",
+          "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+          "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+        },
+        {
+          "path": "releases/e2000fs/mimo/source/test_strategies.py",
+          "git_blob_sha": "c7c55da7c22cedf99fa0c6a816b1547aabe8ac16",
+          "sha256": "0ed397fc48d31ad5e60b74a4703138679a6c47ecb4f78356b95ea7035461f0af"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4",
+      "config_sha256": "ba9f568b8b85e99fdbe3c7cebf40497057aaa5855c8619daa0c5cca5d4e77ad6",
+      "entry": {
+        "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/run.py",
+        "git_blob_sha": "52d99fd0a4ddeee1c78f6efdad7ee1b03e8fd877",
+        "sha256": "cef5d9ec30b1ad321648a7a8083d423375fbe23469d9f211e042dd7d8d49c1e1"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/config.json",
+        "config_sha256": "ba9f568b8b85e99fdbe3c7cebf40497057aaa5855c8619daa0c5cca5d4e77ad6"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py",
+          "git_blob_sha": "aba1f666ba575f626d0f1439ed3b1be0e728ece1",
+          "sha256": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py",
+          "git_blob_sha": "f403eea51f6d96f428e8e23aaa73087c821a6602",
+          "sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/execute.py",
+          "git_blob_sha": "543abcb38e0e898ef5b3868bb534da8d9fe7e680",
+          "sha256": "8b7d7d496d50605ef64d902e1b405881b76fe83bff3c65f2c37ddebec34d1088"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/publish.py",
+          "git_blob_sha": "5a0ab35a017cf8aafb43a87a8968b89fa156ed9a",
+          "sha256": "0a22bf6d659686d2387a7f2925bce48db59ab54158c1fad4427241d740d2e870"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/run.py",
+          "git_blob_sha": "52d99fd0a4ddeee1c78f6efdad7ee1b03e8fd877",
+          "sha256": "cef5d9ec30b1ad321648a7a8083d423375fbe23469d9f211e042dd7d8d49c1e1"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/forecast_strategies_e2000/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/forecast_strategies_kumo/publish.py",
+          "git_blob_sha": "f529e1d4a79dae339b5c938334b83659a5d78bad",
+          "sha256": "0c8b4ae181098667be3aedcf705674b723ca858691f5e1a8cc4ca48e9476f5f1"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_linear_leaf",
+      "config_sha256": "14a7624d6ba94332dd94d9dc0a236a293df9278332318fe350d720c3fc6fe467",
+      "entry": {
+        "path": "releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs_point4_advance/run.py",
+        "git_blob_sha": "92ce7287646f07c8fe67d66ff6298d49e0b9c7fe",
+        "sha256": "bfbeeff7aa9105954a98dd4cda3e8c07ca07103dce69d7e6c7459e504d906bf6"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_point4_linear_leaf/config.json",
+        "config_sha256": "14a7624d6ba94332dd94d9dc0a236a293df9278332318fe350d720c3fc6fe467"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs-backlog-publication-20261029/evaluate.py",
+          "git_blob_sha": "ce837930c585c658fb0830b6d12010ef1100620e",
+          "sha256": "2a5c986b8029b96ad63bfda338e0f6eb89014f741824707aa646d175c609adb7"
+        },
+        {
+          "path": "releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "c307baf3fadd671709d78563d157913de499fb0b",
+          "sha256": "766dfd3db6b8dbe1405837ec98edfec9a42a0ba7fdac88cd44b88315f772a2ed"
+        },
+        {
+          "path": "releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs_point4_advance/baseline.py",
+          "git_blob_sha": "13f061eabb9646e1c0f04c81e83b9cc02533e51e",
+          "sha256": "98db1605a10573ce4ae7200cac451df0f84aa2e2105e38a8b471e0041cf14b24"
+        },
+        {
+          "path": "releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs_point4_advance/methods.py",
+          "git_blob_sha": "47d66bf137be63c42690157e2ec2b060a9542e18",
+          "sha256": "7e0d93a476502f02014ddd30dbf13f944886b2dfa5496a4aa9f5f99ba4467f26"
+        },
+        {
+          "path": "releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs_point4_advance/run.py",
+          "git_blob_sha": "92ce7287646f07c8fe67d66ff6298d49e0b9c7fe",
+          "sha256": "bfbeeff7aa9105954a98dd4cda3e8c07ca07103dce69d7e6c7459e504d906bf6"
+        }
+      ]
+    },
+    {
+      "member": "gjc-main",
+      "experiment": "hsspeak72",
+      "config_sha256": "eef5f301b253b41369b1b18821e685dc95b5cc9d80d766f5fa06d78d8f5cf965",
+      "entry": {
+        "path": "scripts/gjc-main/hsspeak72/eef5f301b253b41369b1b18821e685dc95b5cc9d80d766f5fa06d78d8f5cf965.py",
+        "git_blob_sha": "c92593d1331e41dcfe1511492ea35a435eb9231a",
+        "sha256": "0ed24c661a6cbcd55405bb57f62df10d2eefeee5f77166cba19e44c3d7262173"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e1604_hsspeak25",
+      "config_sha256": "4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b",
+      "entry": {
+        "path": "scripts/seongeun/e1604_hsspeak25/4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b.py",
+        "git_blob_sha": "2b0b20668f7ccdaa4490b91d83559cdc2f764611",
+        "sha256": "1d93e5308bfea8928c715c4277f81e5138240caa672f9d724c1d2e929f3fc663"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_lgbm_extreme4",
+      "config_sha256": "c7c98a41f42ef519e374ad54e4de7e182b64b6433eb5b1be43a6dabc965222d2",
+      "entry": {
+        "path": "releases/e2000fs_feat30_lgbm_extreme4/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+        "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+        "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_lgbm_extreme4/config.json",
+        "config_sha256": "c7c98a41f42ef519e374ad54e4de7e182b64b6433eb5b1be43a6dabc965222d2"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_lgbm_extreme4/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "01842eb375e82340fc0e87ec87bfd17283491061",
+          "sha256": "e7ae5fa989bb243a44526a2ac4a7250d238c4b8b5c32dd83ba92458b754d4790"
+        },
+        {
+          "path": "releases/e2000fs_feat30_lgbm_extreme4/source/analysis/e2000fs_feat30_lgbm_distribution/launch.py",
+          "git_blob_sha": "1db4f6ea9874828ad5e1f9fe6e08c70fba8c41b2",
+          "sha256": "ecdbc34dc96c5ebb5c0c984daaf0d4951a6aeef5d814a6654a9e5fe9638fae3e"
+        },
+        {
+          "path": "releases/e2000fs_feat30_lgbm_extreme4/source/analysis/e2000fs_feat30_lgbm_distribution/methods.py",
+          "git_blob_sha": "893c818ecdc013c5437e71d08edbbf9e0d355767",
+          "sha256": "2aff153bffc8ffc93c7b7718b0870459a37bd365feb0457904018586c0f72fc2"
+        },
+        {
+          "path": "releases/e2000fs_feat30_lgbm_extreme4/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+          "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+          "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_pointweight4",
+      "config_sha256": "748016d3b57ae92ce90a989dfb038ae41deec4703a9282cc4498181a1d4a8def",
+      "entry": {
+        "path": "releases/e2000fs_feat30_pointweight4/source/analysis/e2000fs_feat30_pointweight/run.py",
+        "git_blob_sha": "7e3e2704f430afd18b77defbddcf496c2c0afc8f",
+        "sha256": "ca4c6482916e85136819938a3e42fcaefec54e5e7480630b1656ec8e3e2fb559"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_pointweight4/config.json",
+        "config_sha256": "748016d3b57ae92ce90a989dfb038ae41deec4703a9282cc4498181a1d4a8def"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py",
+          "git_blob_sha": "f403eea51f6d96f428e8e23aaa73087c821a6602",
+          "sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c"
+        },
+        {
+          "path": "releases/e2000fs_feat30_pointweight4/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_feat30_pointweight4/source/analysis/e2000fs_feat30_lgbm_distribution/run.py",
+          "git_blob_sha": "3712dc5b485b95b36c2f29a3bf9778cf7ae87076",
+          "sha256": "8c970e67228fe69946cf298afaf663a05b630eccaaa985af9cd28e2c0a7501d7"
+        },
+        {
+          "path": "releases/e2000fs_feat30_pointweight4/source/analysis/e2000fs_feat30_pointweight/run.py",
+          "git_blob_sha": "7e3e2704f430afd18b77defbddcf496c2c0afc8f",
+          "sha256": "ca4c6482916e85136819938a3e42fcaefec54e5e7480630b1656ec8e3e2fb559"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recent_window",
+      "config_sha256": "6e52c4b2696f45b474eaac63232bf382a2211e3e3a82f0f0a690e1be89da62fb",
+      "entry": {
+        "path": "releases/e2000fs_feat30_transfer_recent_window/source/analysis/e2000fs_feat30_transfer/run.py",
+        "git_blob_sha": "4ae4b266a7168b2e0e6e8a6f2c2aecd71a18cdc3",
+        "sha256": "1b695d00289222ea5fc510b0e4d143b988d053fde8d1a63a8652bbcddcb5edd5"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_transfer_recent_window/config.json",
+        "config_sha256": "6e52c4b2696f45b474eaac63232bf382a2211e3e3a82f0f0a690e1be89da62fb"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_transfer_recent_window/source/analysis/e2000fs-backlog-publication-20261029/evaluate.py",
+          "git_blob_sha": "ce837930c585c658fb0830b6d12010ef1100620e",
+          "sha256": "2a5c986b8029b96ad63bfda338e0f6eb89014f741824707aa646d175c609adb7"
+        },
+        {
+          "path": "releases/e2000fs_feat30_transfer_recent_window/source/analysis/e2000fs-backlog-publication-20261029/publish.py",
+          "git_blob_sha": "c307baf3fadd671709d78563d157913de499fb0b",
+          "sha256": "766dfd3db6b8dbe1405837ec98edfec9a42a0ba7fdac88cd44b88315f772a2ed"
+        },
+        {
+          "path": "releases/e2000fs_feat30_transfer_recent_window/source/analysis/e2000fs_feat30_transfer/methods.py",
+          "git_blob_sha": "1d122e1c99ada95f0d781055d12010eb306343ab",
+          "sha256": "5cee4d61b6df194df68e90e742b3a62a6664af76327bc1007c913a2feb090f0d"
+        },
+        {
+          "path": "releases/e2000fs_feat30_transfer_recent_window/source/analysis/e2000fs_feat30_transfer/run.py",
+          "git_blob_sha": "4ae4b266a7168b2e0e6e8a6f2c2aecd71a18cdc3",
+          "sha256": "1b695d00289222ea5fc510b0e4d143b988d053fde8d1a63a8652bbcddcb5edd5"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirrec",
+      "config_sha256": "59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04",
+      "entry": {
+        "path": "releases/e2000fs/dirrec/source/strategies.py",
+        "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+        "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs/dirrec/config.json",
+        "config_sha256": "59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs/dirrec/source/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/evaluate.py",
+          "git_blob_sha": "60dfb71160d5efa6f3184fed2f48f4362aed7bbe",
+          "sha256": "9b8845324057044454b0da72a7395f101ef11289bc2bd439442f787c9413de5a"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/make_notebook.py",
+          "git_blob_sha": "47fe41f4212b55582489f1cf75033829f27b2976",
+          "sha256": "2c1c05bb8b7788d311d35bdbad286bc5c31f5b6c7bc64b6a12ff33b397ec7c71"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/publish.py",
+          "git_blob_sha": "962bf6b118e40c759c2c894b16d3150c1f22637c",
+          "sha256": "e29d170d1f35542d1681b66128f0ba92d7e958ae677fb623e0114ab63b235bbf"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/replay_template.py",
+          "git_blob_sha": "8d337018a10d07eadbd860e2a65d1c8dce8f81d9",
+          "sha256": "eccdf67d5cd86b69530f891455fa7f2e24575429981cab559c48da4abfc6d4f8"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/run.py",
+          "git_blob_sha": "c6ab1dd310ca3f2fb461da7ac18e8ff94b9bbf48",
+          "sha256": "cc3e0aed645e89d851ba2b8d3dc4ffbb4c9a7e350643efd3300a4440c9ff28da"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/strategies.py",
+          "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+          "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+        },
+        {
+          "path": "releases/e2000fs/dirrec/source/test_strategies.py",
+          "git_blob_sha": "c7c55da7c22cedf99fa0c6a816b1547aabe8ac16",
+          "sha256": "0ed397fc48d31ad5e60b74a4703138679a6c47ecb4f78356b95ea7035461f0af"
+        }
+      ]
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_event",
+      "config_sha256": "e69176c3d4b9f445bced8a384406f674dc542e296a69c043f2ee758f4a89ddce",
+      "entry": {
+        "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/run.py",
+        "git_blob_sha": "b653782a7a521b37d0655195c6b20dfae2584fa7",
+        "sha256": "bd132e9200c558e4e07bed37270f98f9fbb913f1ec8adf022484c2be0455328a"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs_feat30_agnostic_v2_event/config.json",
+        "config_sha256": "e69176c3d4b9f445bced8a384406f674dc542e296a69c043f2ee758f4a89ddce"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/context.py",
+          "git_blob_sha": "28d78baa1d92b7db26f89659972eb94b6f91a050",
+          "sha256": "d23c23b760d5f3d6af607fb008ecdd63e3b27423d0ac5b6880c9c474ede35610"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/core.py",
+          "git_blob_sha": "fc005ba7f78ea86177767cf8cb385030e6ee323c",
+          "sha256": "31da6c39f1ee9987b9d7c9a83a9c1907790aa3a205d0a300e00682fa3360cd9d"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/evaluation.py",
+          "git_blob_sha": "aaca710c86659a66969507ab5a619228829dc8e2",
+          "sha256": "c156dd6b597da001f16c12055f1c70f64d8197bb4b48846b565436d4e318672a"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/launch.py",
+          "git_blob_sha": "83a2008325097454fa715c74dfc9c64a1708676d",
+          "sha256": "c1373a341f4db13868801365c5c4c468cc7d1d1015bf10fb1f64ce978ea39dfd"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/quantiles.py",
+          "git_blob_sha": "8e0640781a28a03d2c2e02fdade3319250e6244a",
+          "sha256": "d709f43e68fb02d90eae0b003966f86aa2fe6e6e53e4fe2961e910d4eca11569"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/report.py",
+          "git_blob_sha": "6221d2af3fb96327356fe6a84f9c0c324d934215",
+          "sha256": "5c7cbd095fd3f875272ea5edc91032110d7bf93f3ceec07be3041f6d70b28c81"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/run.py",
+          "git_blob_sha": "b653782a7a521b37d0655195c6b20dfae2584fa7",
+          "sha256": "bd132e9200c558e4e07bed37270f98f9fbb913f1ec8adf022484c2be0455328a"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/test_context.py",
+          "git_blob_sha": "2141e1551ae2fbc40f671d826d1bb9c406993533",
+          "sha256": "096bdcee49f129155f7a30b292f6e3150063cd4202fd7be1f5a767ada2572074"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/test_core.py",
+          "git_blob_sha": "b1e98ee5eda7dde0a7ae1b73be31c1e82d89f009",
+          "sha256": "31518bd74a30f02e1cb4c54a6062e57fde19944eb32253a5c990dd101448f77d"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/test_evaluation.py",
+          "git_blob_sha": "ecd650292d51a808b5aa2bb2e242c843483cf4f3",
+          "sha256": "408c4469b9e7e8ba1bed76a26fe41fa8cd9cafb589644c827873212b3bd35b15"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/test_quantiles.py",
+          "git_blob_sha": "5bc9e58b10e9429e55613fd87b77bc8aa9bf70be",
+          "sha256": "dadff5d1f27270fc1d3cd90b17aa08a72a57fbada27d83cafc9adb3953ee80c4"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/test_transforms.py",
+          "git_blob_sha": "76c656ee41c5af41738a9e66740186b452685a31",
+          "sha256": "97bc91fa4bd5e6d297445386f074acd82d3f00b3ee1fa342098e1e2846d684f8"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/transforms.py",
+          "git_blob_sha": "6ca3916beb3512737ff71d971800522015030810",
+          "sha256": "750a9111bc67357eebc382045bc64f73549570073b7ff6f62b786bd64403add0"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_followups/evaluation.py",
+          "git_blob_sha": "e6f2ca5a953a31a4d0a868ef028b251e02963d9a",
+          "sha256": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f"
+        },
+        {
+          "path": "releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_followups/run.py",
+          "git_blob_sha": "f355d0e4e2d8821543e6f98e98f5962250ceeecb",
+          "sha256": "6edc8400fb06e3b84c9fb8147e530db8a54b012f8586d255f41985db33c1c921"
+        }
+      ]
+    },
+    {
+      "member": "baseline",
+      "experiment": "mean_reversion",
+      "config_sha256": "095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66",
+      "entry": {
+        "path": "scripts/baseline/mean_reversion/095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66.py",
+        "git_blob_sha": "cb3b99265884a8b39c374807ed824f74e0e8df43",
+        "sha256": "7b3acf81a3ad502299b7a94aebcd2cea35eb7b432a411c9258812f6ce184efe4"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_recursive",
+      "config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32",
+      "entry": {
+        "path": "releases/e2000fs/recursive/source/strategies.py",
+        "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+        "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+      },
+      "config_evidence": {
+        "path": "releases/e2000fs/recursive/config.json",
+        "config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32"
+      },
+      "archived_python_sources": [
+        {
+          "path": "releases/e2000fs/recursive/source/data.py",
+          "git_blob_sha": "01f5626519a38f89c5df6f10a104e541f7a33456",
+          "sha256": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/evaluate.py",
+          "git_blob_sha": "60dfb71160d5efa6f3184fed2f48f4362aed7bbe",
+          "sha256": "9b8845324057044454b0da72a7395f101ef11289bc2bd439442f787c9413de5a"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/make_notebook.py",
+          "git_blob_sha": "47fe41f4212b55582489f1cf75033829f27b2976",
+          "sha256": "2c1c05bb8b7788d311d35bdbad286bc5c31f5b6c7bc64b6a12ff33b397ec7c71"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/publish.py",
+          "git_blob_sha": "962bf6b118e40c759c2c894b16d3150c1f22637c",
+          "sha256": "e29d170d1f35542d1681b66128f0ba92d7e958ae677fb623e0114ab63b235bbf"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/replay_template.py",
+          "git_blob_sha": "8d337018a10d07eadbd860e2a65d1c8dce8f81d9",
+          "sha256": "eccdf67d5cd86b69530f891455fa7f2e24575429981cab559c48da4abfc6d4f8"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/run.py",
+          "git_blob_sha": "c6ab1dd310ca3f2fb461da7ac18e8ff94b9bbf48",
+          "sha256": "cc3e0aed645e89d851ba2b8d3dc4ffbb4c9a7e350643efd3300a4440c9ff28da"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/strategies.py",
+          "git_blob_sha": "f670535b132a949cad905fd8dade0ee540f1e128",
+          "sha256": "2b7736a29a6dc74ac62c504392b7ddb51e886525cc13955ad01760aef8ef859a"
+        },
+        {
+          "path": "releases/e2000fs/recursive/source/test_strategies.py",
+          "git_blob_sha": "c7c55da7c22cedf99fa0c6a816b1547aabe8ac16",
+          "sha256": "0ed397fc48d31ad5e60b74a4703138679a6c47ecb4f78356b95ea7035461f0af"
+        }
+      ]
+    },
+    {
+      "member": "baseline",
+      "experiment": "ses",
+      "config_sha256": "1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f",
+      "entry": {
+        "path": "scripts/baseline/ses/1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f.py",
+        "git_blob_sha": "40ac9d5039b2e1106ecc211e6952651a0b84a8a4",
+        "sha256": "b4d404978f92e81fc82c75c09e2cdd25cd17de567bc60316bb4964d1f2de5578"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    },
+    {
+      "member": "baseline",
+      "experiment": "naive",
+      "config_sha256": "a73b16dda3144747a5589cd0a34ba56512df8b0e626125c65bdb1e940bc5cb02",
+      "entry": {
+        "path": "scripts/baseline/naive/a73b16dda3144747a5589cd0a34ba56512df8b0e626125c65bdb1e940bc5cb02.py",
+        "git_blob_sha": "609c6e114c5d6795492de9245aa02700789a359a",
+        "sha256": "d16a7a19b3c7b09ad2a2563b3ad3d06d378a8ac804308a72e53a1e76fa10007e"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    },
+    {
+      "member": "baseline",
+      "experiment": "auto_arima",
+      "config_sha256": "e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f",
+      "entry": {
+        "path": "scripts/baseline/auto_arima/e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f.py",
+        "git_blob_sha": "703c14184caee6ca83676286d82bb9a5c35afb3f",
+        "sha256": "5fc873984e5b2296c05d6b8079313b36061fa5d8e387b7b5df831e0eea4322c9"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    },
+    {
+      "member": "baseline",
+      "experiment": "seasonal_naive_648",
+      "config_sha256": "e82281cb844fb18079acceb7579f554d639a65f8e9bba5fd1016b32713f72f77",
+      "entry": {
+        "path": "scripts/baseline/seasonal_naive_648/e82281cb844fb18079acceb7579f554d639a65f8e9bba5fd1016b32713f72f77.py",
+        "git_blob_sha": "2672bc3b1189d937db1c5fe2559856ac6161fa8e",
+        "sha256": "6497c1800d6c84d2b6e1aaefc8bda60be131f141f52f3de047111c26f23bf7c3"
+      },
+      "config_evidence": {},
+      "archived_python_sources": []
+    }
+  ]
+}

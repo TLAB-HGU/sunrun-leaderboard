@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Delegate a bounded task to gjc running muse-spark 1.3 and keep only a short summary in the caller's context.
+# usage: muse-delegate <task-name> <prompt-file> [timeout-seconds]
+# full output: ${RUN_DIR:-/home/t-lab01/sunrun/leaderboard/store/muse-delegates}/delegates/<task-name>.md
+set -uo pipefail
+
+name="${1:?task-name required}"
+prompt="${2:?prompt-file required}"
+tmo="${3:-1800}"
+model="${MUSE_MODEL:-opencode-go/muse-spark-1.3-contributor}"
+think="${MUSE_THINKING:-high}"
+max_parallel=2
+
+[[ "$name" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "invalid task-name: $name" >&2; exit 2; }
+[[ -r "$prompt" ]] || { echo "prompt file not readable: $prompt" >&2; exit 2; }
+
+outdir="${RUN_DIR:-/home/t-lab01/sunrun/leaderboard/store/muse-delegates}/delegates"
+lockdir="/home/t-lab01/sunrun/leaderboard/store/muse-delegates/.slots"
+mkdir -p "$outdir" "$lockdir"
+out="$outdir/$name.md"
+
+# take one of max_parallel slots (blocks until one is free)
+while :; do
+  for i in $(seq 1 "$max_parallel"); do
+    exec {fd}>"$lockdir/slot$i"
+    if flock -n "$fd"; then break 2; fi
+    exec {fd}>&-
+  done
+  sleep 5
+done
+
+cd /home/t-lab01/sunrun || exit 2
+start=$(date +%s)
+timeout "$tmo" gjc -p --model "$model" --thinking "$think" --no-session "@$prompt" >"$out" 2>"$out.err"
+rc=$?
+secs=$(( $(date +%s) - start ))
+
+echo "task=$name exit=$rc secs=$secs model=$model"
+echo "full output: $out ($(wc -l <"$out") lines); stderr: $out.err"
+echo "--- last 30 lines ---"
+tail -n 30 "$out"
+exit "$rc"

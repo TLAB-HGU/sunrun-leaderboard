@@ -1,0 +1,34 @@
+{
+ "cfg": {
+  "d_model": 32,
+  "d_ff": 64,
+  "e_layers": 2,
+  "dropout": 0.1,
+  "layer_norm": true,
+  "d_static": 16,
+  "n_patch": 8,
+  "batch_size": 256,
+  "max_epochs": 120,
+  "learning_rate": 0.001,
+  "min_lr": 1e-05,
+  "weight_decay": 0.01,
+  "grad_clip": 1.0,
+  "patience": 25,
+  "inner_share": 0.12,
+  "w_align": 0.2,
+  "w_recon": 1.0,
+  "local_margin": 0.0,
+  "global_margin": 0.0
+ },
+ "args": {
+  "arms": "base",
+  "folds": "3",
+  "seeds": "0",
+  "out": "research/lit-r6-20261026/worker-7-timealign/runs/pilotA",
+  "lookback": 24,
+  "cfg": [
+   "max_epochs=120"
+  ],
+  "tag": ""
+ }
+}

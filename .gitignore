@@ -1,8 +1,88 @@
-.venv/
-.venv-fusion/
-__pycache__/
-.pytest_cache/
-store/
-*.pyc
-reproduce/reproduce_data/
-reproduce/outputs/
+# Minimal ignore set: keep the working tree tiny so change-set capture is fast.
+# Everything heavy (venvs, caches, parquet stores, model artifacts) is excluded by
+# blocking all directories first, then un-ignoring only what ultragoal needs to see.
+# NOTE: directories are excluded wholesale; the un-ignore block at the end lists
+# what is tracked from leaderboard/, which is part of this repository.
+/*
+!/.gitignore
+!/AGENTS.md
+!/docs/
+!/research
+/research/*
+# Each experiment contributes its single-file script and its results; logs and
+# the publication worktrees (copies of the board repository) stay local.
+!/research/*/
+/research/*/*
+!/research/*/experiment.py
+!/research/*/results/
+/research/**/worktree/
+/research/**/__pycache__/
+/research/**/.pytest_cache/
+!/research/ultragoal-20261020
+!/research/ultragoal-20261020/**
+!/research/AGENTS.md
+!/research/CUMULATIVE-REPAIR-20261024.md
+!/research/CUMULATIVE-WORKER-CONTRACT.md
+!/research/worker-prompt.md
+!/research/gjc-worker
+!/research/policy-archive
+!/research/policy-archive/**
+!/research/cumulative-repair-verification-20261024.json
+!/research/cumulative-history-audit-20261024.json
+!/research/cumulative-worker-acks-20261024
+!/research/cumulative-worker-acks-20261024/**
+
+# Submitted experiment catalog and maintenance code; artifacts remain local.
+!/experiments/
+/experiments/**
+!/experiments/*/
+!/experiments/README.md
+!/experiments/AGENTS.md
+!/experiments/*/README.md
+!/experiments/*/manifest.json
+/experiments/_migration/*
+!/experiments/_tools/*.py
+!/experiments/_migration/CLEANUP_PLAN.md
+!/experiments/_migration/REPORT.md
+/experiments/_shared/
+
+# leaderboard/ is part of this repository (subtree merge bfd7c9cc2, 2026-10-30;
+# history archived at store/sunrun-single-repo-20261030.bundle). Code, tests,
+# release scripts and receipts are tracked; published-site snapshots, release
+# artifacts, experiment outputs, tool datasets and caches stay local.
+!/leaderboard/
+/leaderboard/experiments/
+/leaderboard/.gjc/
+/leaderboard/**/docs/
+/leaderboard/**/releases/
+/leaderboard/**/__pycache__/
+/leaderboard/**/.pytest_cache/
+/leaderboard/**/.venv
+/leaderboard/**/.venv-fusion
+/leaderboard/lb-maint/data/*.parquet
+/leaderboard/lb-maint/data/*.csv
+/leaderboard/lb-maint/data/raw/
+
+# data-v2 source, configs and manifests are tracked; every data store, download
+# tree and cache stays local (all databases live under data-v2/, user
+# instruction 2026-10-30).
+!/data-v2/
+/data-v2/raw-store/
+/data-v2/model-inputs/
+/data-v2/backups/
+/data-v2/suvi/
+/data-v2/collectors/
+/data-v2/research-inputs/
+/data-v2/stage/
+/data-v2/logs/
+/data-v2/**/__pycache__/
+/data-v2/**/.pytest_cache/
+/data-v2/**/*.duckdb
+/data-v2/**/*.parquet
+/data-v2/**/*.nc
+/data-v2/**/*.npz
+/data-v2/**/*.npy
+/data-v2/**/*.bak-*
+/data-v2/**/*.done
+/data-v2/**/logs/
+/data-v2/**/*.log

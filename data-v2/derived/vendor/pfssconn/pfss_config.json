@@ -1,0 +1,69 @@
+{
+  "source": "GONG mrzqs zero-point corrected QuickReduce synoptic maps",
+  "source_url": "https://gong.nso.edu/data/magmap/QR/zqs/",
+  "source_surface_radius_solar_radii": 2.5,
+  "pfss_n_r": 15,
+  "input_grid_latitude": 18,
+  "input_grid_longitude": 36,
+  "subearth_patch_longitude_offsets_deg": [
+    -30,
+    -20,
+    -10,
+    0,
+    10,
+    20,
+    30
+  ],
+  "subearth_patch_latitude_offsets_deg": [
+    -30,
+    -20,
+    -10,
+    0,
+    10,
+    20,
+    30
+  ],
+  "fieldline_seed_longitude_offsets_deg": [
+    -30,
+    -20,
+    -10,
+    0,
+    10,
+    20,
+    30
+  ],
+  "fieldline_seed_latitude_offsets_deg": [
+    -30,
+    -20,
+    -10,
+    0,
+    10,
+    20,
+    30
+  ],
+  "fieldline_atol": 0.0001,
+  "fieldline_rtol": 0.0001,
+  "delay_days": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "feature_statistics": [
+    "br_signed_mean",
+    "br_abs_mean",
+    "br_abs_p90",
+    "open_field_fraction",
+    "expansion_factor_median",
+    "expansion_factor_p90",
+    "polarity_boundary_distance_deg"
+  ],
+  "missing_feature": "one binary mask per delay; 1 means no eligible map",
+  "fieldline_tracer": "pfsspy.FortranTracer (vendored streamtracer 2.6.0)",
+  "fieldline_step_size": 0.1,
+  "fieldline_max_steps": 6000,
+  "fieldline_stop_reason": "Bounded compiled tracer replaces stalled PythonTracer. cap=60000 selected to avoid exhaustion on difficult maps while preserving physical endpoint checks.",
+  "streamtracer_version": "2.6.0",
+  "streamtracer_extension_sha256": "a5b745e5728a193e2e851231431d44626a351305e29673e5c28aa5e3db49c8b1",
+  "trace_incomplete_policy": "If any direction fails to leave the PFSS volume (max_steps/NaN) or any returned endpoint is not within 0.05 R_sun of the photosphere/source surface, keep direct Br/polarity statistics but mark open_field_fraction and expansion-factor aggregates missing; record all path-level trace failures."
+}

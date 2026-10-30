@@ -1,0 +1,130 @@
+[
+  {
+    "name": "suvi-catalog",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "catalog"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/euvwave",
+    "ids": [
+      "SW-040"
+    ]
+  },
+  {
+    "name": "suvi-euvwave",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "euvwave"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/euvwave",
+    "ids": [
+      "SW-040"
+    ]
+  },
+  {
+    "name": "suvi-suvi-dim",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "suvi-dim"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-dim",
+    "ids": [
+      "SW-040"
+    ]
+  },
+  {
+    "name": "suvi-chmorph",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "chmorph"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/chmorph",
+    "ids": [
+      "SW-040"
+    ]
+  },
+  {
+    "name": "suvi-chmask",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "chmask"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/chmask",
+    "ids": [
+      "SW-040"
+    ]
+  },
+  {
+    "name": "suvi-fe171",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "fe171"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/fe171",
+    "ids": [
+      "SW-039"
+    ]
+  },
+  {
+    "name": "suvi-fe171-catalog",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "fe171-catalog"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/fe171",
+    "ids": [
+      "SW-039"
+    ]
+  },
+  {
+    "name": "suvi-fe171-verify",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/suvi-derived/build.py",
+      "fe171-verify"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/sun-img/data",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/suvi-fusion"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/fe171",
+    "ids": [
+      "SW-039"
+    ]
+  }
+]

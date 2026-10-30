@@ -1,0 +1,391 @@
+[
+  {
+    "name": "aceturb",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/build.py",
+      "aceturb",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/ace-snapshot"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/aceturb",
+    "ids": [
+      "SW016"
+    ]
+  },
+  {
+    "name": "alfven",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/build.py",
+      "alfven",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/ace-snapshot"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/alfven",
+    "ids": [
+      "SW016"
+    ]
+  },
+  {
+    "name": "gong-derived",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/gong.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived",
+    "ids": [
+      "SW011",
+      "SW058"
+    ]
+  },
+  {
+    "name": "mambats-inputs",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/mambats.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/ace-snapshot"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/mambats-inputs",
+    "ids": [
+      "SW016"
+    ]
+  },
+  {
+    "name": "gong-ocb",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "gong-ocb-r2",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb-r2",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb-r2",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "gong-ocb-r3",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb-r3",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb-r3",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "gong-ocb-r4",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb-r4",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb-r4",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "gong-ocb-r5",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb-r5",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb-r5",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "gong-ocb-r6",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb-r6",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb-r6",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "gong-ocb-r7",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "gong-ocb-r7",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-ocb-r7",
+    "ids": [
+      "SW018"
+    ]
+  },
+  {
+    "name": "pfssconn",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "pfssconn",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/pfssconn",
+    "ids": [
+      "SW019"
+    ]
+  },
+  {
+    "name": "cme-hcs",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "cme-hcs",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/cme-hcs",
+    "ids": [
+      "SW021"
+    ]
+  },
+  {
+    "name": "dinov3",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-dinov3/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/dino.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/.local/state/sundb/stage/suvi_hourly",
+      "/home/t-lab01/sunrun/sun-img/data"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/dinov3",
+    "ids": [
+      "SW041"
+    ]
+  },
+  {
+    "name": "vjepa-frozen",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-vjepa-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/vjepa.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/.local/state/sundb/stage/suvi_hourly",
+      "/home/t-lab01/sunrun/sun-img/data"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/vjepa-frozen",
+    "ids": [
+      "SW041"
+    ]
+  },
+  {
+    "name": "vjepa-120h",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-vjepa-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/vjepa120.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/vjepa-frozen"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/vjepa-120h",
+    "ids": [
+      "SW041"
+    ]
+  },
+  {
+    "name": "gong-decoded",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/gong_decode.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-mrzqs"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/gong-decoded",
+    "ids": [
+      "SW057"
+    ]
+  },
+  {
+    "name": "pfss-wsa",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-huxt/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/pfss.py",
+      "pfss-wsa",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/pfss-wsa",
+    "ids": [
+      "SW020"
+    ]
+  },
+  {
+    "name": "mambats-source",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-dinov3/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/mambats_source.py",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/fe171/metadata-full.parquet",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/mambats-source",
+    "ids": [
+      "SW016"
+    ]
+  },
+  {
+    "name": "cmechip",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/mixed.py",
+      "cmechip",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/ch",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/euvwave/source_manifest.json",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/donki"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/cmechip",
+    "ids": [
+      "SW023"
+    ]
+  },
+  {
+    "name": "chunip",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/mixed.py",
+      "chunip",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/ch",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/euvwave/source_manifest.json",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/donki"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/chunip",
+    "ids": [
+      "SW022"
+    ]
+  },
+  {
+    "name": "magconc",
+    "cmd": [
+      "/home/t-lab01/sunrun/leaderboard/.venv-fusion/bin/python",
+      "/home/t-lab01/sunrun/data-v2/derived/mixed.py",
+      "magconc",
+      "--end",
+      "now"
+    ],
+    "source_paths": [
+      "/home/t-lab01/sunrun/leaderboard/store/v2/gong-derived/receipts",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/ch",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/euvwave/source_manifest.json",
+      "/home/t-lab01/sunrun/leaderboard/store/v2/donki"
+    ],
+    "output": "/home/t-lab01/sunrun/leaderboard/store/v2/magconc",
+    "ids": [
+      "SW022"
+    ]
+  }
+]

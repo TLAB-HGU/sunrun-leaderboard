@@ -1,0 +1,40 @@
+{
+  "item_id": "solar-inc-suvidim72-20261014",
+  "baseline": "E1130 B exact replay; official causal base predictions from E1022",
+  "source": "GOES-18 SUVI L1b Fe195 local full-disk NetCDF frames",
+  "frame_admission": {
+    "obs_end_plus_hours": 1,
+    "s3_last_modified_le_origin": true,
+    "local_bytes_equal_s3": true,
+    "s3_etag_single_part_md5_check": true
+  },
+  "dimming": {
+    "threshold_ratio": 0.65,
+    "lookback_hours": 18,
+    "reference_lag_hours": 24,
+    "reference_tolerance_minutes": 90,
+    "minimum_reference_frames": 3,
+    "minimum_consecutive_dimming_frames": 2,
+    "disk_radius_fraction": 0.95,
+    "epsilon_radiance": 1e-6,
+    "co_registration": "1-degree Carrington lat/lon grid; standard differential synodic rotation 14.38 - 2.96 sin^2(lat) - 0.48 sin^4(lat) - 0.9856 deg/day",
+    "dqf_required": 0,
+    "connected_component_structure": "8-connected, periodic longitude"
+  },
+  "features": [
+    "dim_area_frac", "dim_largest_frac", "dim_mean_logratio", "dim_p10_logratio",
+    "dim_area_slope_6h", "dim_depth_slope_6h", "dim_n_components",
+    "dim_centroid_lon", "dim_centroid_lat", "dim_east_west_balance",
+    "dim_onset_age_h", "dim_peak_growth_age_h", "dim_missing", "dim_target_age_h"
+  ],
+  "network": {
+    "baseline_path_inputs": 72,
+    "origin_static_inputs": 13,
+    "lead_age_inputs": 72,
+    "total_conditioner_inputs": 157,
+    "hidden_layers": [64, 64],
+    "output_horizons": 72
+  },
+  "resource": {"cpu_threads": 4, "gpu_required": true},
+  "seed_ids": [0, 1, 2]
+}

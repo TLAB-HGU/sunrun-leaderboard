@@ -1,0 +1,30 @@
+{
+  "source": "GONG mrzqs zero-point-corrected QuickReduce synoptic maps",
+  "pfss_source_surface_radius_solar_radii": 2.5,
+  "pfss_radial_shells": 15,
+  "scs_inner_radius_solar_radii": 2.5,
+  "scs_outer_radius_solar_radii": 5.0,
+  "scs_radial_shells": 15,
+  "input_grid_latitude": 18,
+  "input_grid_longitude": 36,
+  "availability_rule": "max(GONG DATE-OBS + 2 h, source HTTP Last-Modified) <= forecast origin",
+  "longitude_convention": "CCMC DONKI CMEAnalysis view labels Direction LON/LAT in HEEQ; SunPy documents HEEQ as the Cartesian representation of heliographic Stonyhurst. Convert the launch-time Stonyhurst longitude to Carrington using SunPy L0; GONG PFSS/SCS grid is Carrington",
+  "scs_method": "PFSS at 2.5 R_sun; use abs(Br) on its source surface as the positive inner SCS boundary; solve the pseudo-potential shell scaled from 1 to 2 (physical 2.5 to 5 R_sun); restore the PFSS polarity sign on the outer radial field. The sign boundary is radially mapped without SCS field-line tracing.",
+  "event_lookback_hours": 72,
+  "event_policy": "latest eligible level-0/1 CMEAnalysis revision per event with submissionTime <= origin; prefer associatedCMEstartTime, fallback to time21_5 only when launch time is absent",
+  "feature_definitions": {
+    "cme_present_72h": "1 iff the selected eligible launch is in [origin-72h, origin]",
+    "cme_age_h": "origin minus selected associatedCMEstartTime in hours",
+    "source_hcs_signed_sep_deg": "DONKI CME center latitude minus nearest SCS HCS latitude at the launch Carrington longitude",
+    "earth_hcs_signed_sep_deg": "Earth B0 latitude minus nearest SCS HCS latitude at origin L0",
+    "cme_earth_same_sector": "1 iff source- and Earth-relative signed HCS separations have the same sign",
+    "cme_cone_hcs_overlap": "1 iff the minimum spherical separation from the CME center to any HCS contour sample is <= DONKI halfAngle",
+    "hcs_tilt_local_deg": "atan of local d(latitude)/d(Carrington longitude) at the Earth meridian",
+    "hcs_warp_rms_deg": "RMS residual from a local linear HCS-latitude fit across +/-30 degrees of Earth meridian",
+    "hcs_crossing_count_cone": "number of discrete HCS contour samples inside the CME cone",
+    "cme_hcs_interaction_score": "cone proximity times speed/1000 times a same-sector factor (1.0 same, 0.5 opposite)",
+    "cme_hcs_missing": "1 when CME event or usable prior HCS geometry is unavailable; otherwise 0"
+  },
+  "cache_key": "sha256(compute_hcs.py, hcs_config.json, full GONG manifest, and each source-map SHA256)",
+  "threads": 4
+}

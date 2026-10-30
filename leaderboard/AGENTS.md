@@ -1,0 +1,7 @@
+# sunrun leaderboard execution
+
+Before code or experiments, read `/home/t-lab01/sunrun/research/CUMULATIVE-WORKER-CONTRACT.md` (current user instruction, 2026-10-24). The compact root AGENTS.md and that contract override older residual/ensemble/GPU prompt clauses. New cumulative runs use `experiments/cumulative_20261024/launch.py`; registered/live/shared runners and protected evaluators are immutable.
+
+Keep one frozen direct parent, single-axis paired changes and verified A/B/A+B combinations. Final success is the full-period leaderboard total MSE under the exact same metric/aggregation as the current champion, at least 5% better. No official-score selection loop. CPU-only, direct-only, admitted sources, causal availability, 72h target maturity and no-upload rules remain active.
+
+Every experiment is posted to the leaderboard Space before it runs, and when it finishes its result is submitted to the leaderboard, which retires its 대기/진행 entry (user instruction, 2026-10-28/29; this replaces the no-upload rule for leaderboard results). Register with `/home/t-lab01/sunrun/.venv/bin/python lbstatus.py set <experiment> --status 대기 --desc "<what it tests>"`, launch with `lbstatus.py run <experiment> -- <command ...>`, then submit the result and run `lbstatus.py sync`. Internal or development gates are recorded only; they never skip F1/F2 evaluation or the submission (user instruction, 2026-10-29). Full rules: `/home/t-lab01/sunrun/AGENTS.md`, section "Leaderboard Experiment Status".

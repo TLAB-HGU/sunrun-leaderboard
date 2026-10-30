@@ -1,0 +1,4 @@
+team_member: alice
+experiment: lgbm-lags-v1
+description: LightGBM on 168h lags + solar-cycle features, direct multi-horizon
+no_future_leakage: true   # only data with timestamp <= origin_last_input_utc was used
