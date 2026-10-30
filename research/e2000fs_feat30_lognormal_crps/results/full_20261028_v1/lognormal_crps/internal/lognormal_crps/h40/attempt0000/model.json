@@ -1,0 +1,47 @@
+{
+  "method": "lognormal_crps",
+  "mu_offset": 6.064304011346413,
+  "rho_offset": -1.5813358712871755,
+  "threads": 2,
+  "parameters": {
+    "objective": "none",
+    "subsample_freq": 1,
+    "random_state": 42,
+    "device_type": "cpu",
+    "verbosity": -1,
+    "colsample_bytree": 0.796156879318864,
+    "learning_rate": 0.011665375590900416,
+    "max_depth": 6,
+    "min_child_samples": 76,
+    "min_child_weight": 1.7495117760617724,
+    "num_leaves": 39,
+    "reg_alpha": 12.889193670860928,
+    "reg_lambda": 9.785792859825623,
+    "subsample": 0.8158360436957313,
+    "metric": "None",
+    "num_threads": 2,
+    "boost_from_average": false,
+    "feature_pre_filter": false
+  },
+  "requested_rounds": 400,
+  "actual_rounds": [
+    400,
+    400
+  ],
+  "target": "positive absolute speed km/s; lognormal mean exp(mu+sigma^2/2)",
+  "quadrature": {
+    "nodes_per_side": 64,
+    "lower": 1.0,
+    "upper": 6000.0,
+    "split_at_observation": true
+  },
+  "weight": {
+    "floor": 1.0,
+    "amplitude": 1.0,
+    "center": 550.0,
+    "width": 100.0
+  },
+  "curvature": "Fisher diagonal for NLL; positive Gauss-Newton diagonal for integrated scores",
+  "tailcal": "CRPS plus unit-weight squared batch marginal CDF residual integrated with smooth tail weight; not TMCB",
+  "lightgbm_version": "4.6.0"
+}

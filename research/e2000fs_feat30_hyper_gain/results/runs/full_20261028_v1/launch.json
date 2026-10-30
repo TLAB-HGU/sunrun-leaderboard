@@ -1,0 +1,65 @@
+[
+  {
+    "lane": "hyper_gain",
+    "experiment": "e2000fs_feat30_hyper_gain",
+    "session": "fs30-v2-hyper-gain",
+    "unit": "fs30-v2-hyper-gain-20261028-v1",
+    "status": "started",
+    "command": [
+      "/home/t-lab01/sunrun/.venv/bin/python",
+      "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+      "run",
+      "e2000fs_feat30_hyper_gain",
+      "--",
+      "/home/t-lab01/sunrun/.venv/bin/python",
+      "-u",
+      "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer_v2/run.py",
+      "--lane",
+      "hyper_gain"
+    ],
+    "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer_v2/runs/full_20261028_v1/hyper_gain/run.log",
+    "pane": "%34"
+  },
+  {
+    "lane": "gaussian",
+    "experiment": "e2000fs_feat30_gaussian_pilot",
+    "session": "fs30-v2-gaussian",
+    "unit": "fs30-v2-gaussian-20261028-v1",
+    "status": "started",
+    "command": [
+      "/home/t-lab01/sunrun/.venv/bin/python",
+      "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+      "run",
+      "e2000fs_feat30_gaussian_pilot",
+      "--",
+      "/home/t-lab01/sunrun/.venv/bin/python",
+      "-u",
+      "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer_v2/run.py",
+      "--lane",
+      "gaussian"
+    ],
+    "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer_v2/runs/full_20261028_v1/gaussian/run.log",
+    "pane": "%35"
+  },
+  {
+    "lane": "mc_calibration",
+    "experiment": "e2000fs_feat30_mc_calibration",
+    "session": "fs30-v2-mc-calibration",
+    "unit": "fs30-v2-mc-calibration-20261028-v1",
+    "status": "started",
+    "command": [
+      "/home/t-lab01/sunrun/.venv/bin/python",
+      "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+      "run",
+      "e2000fs_feat30_mc_calibration",
+      "--",
+      "/home/t-lab01/sunrun/.venv/bin/python",
+      "-u",
+      "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer_v2/run.py",
+      "--lane",
+      "mc_calibration"
+    ],
+    "log": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_transfer_v2/runs/full_20261028_v1/mc_calibration/run.log",
+    "pane": "%36"
+  }
+]
