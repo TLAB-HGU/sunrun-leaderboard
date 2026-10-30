@@ -1,0 +1,651 @@
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:35.341803+00:00", "phase": "load_frozen_inputs"}
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:37.417554+00:00", "stage": "dev0", "horizon": 1}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:41.410632+00:00", "stage": "dev0", "horizon": 2}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:45.605917+00:00", "stage": "dev0", "horizon": 3}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:49.881014+00:00", "stage": "dev0", "horizon": 4}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:53.993379+00:00", "stage": "dev0", "horizon": 5}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:14:58.123854+00:00", "stage": "dev0", "horizon": 6}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:02.692019+00:00", "stage": "dev0", "horizon": 7}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:06.805094+00:00", "stage": "dev0", "horizon": 8}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:12.561944+00:00", "stage": "dev0", "horizon": 9}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:16.775897+00:00", "stage": "dev0", "horizon": 10}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:21.022696+00:00", "stage": "dev0", "horizon": 11}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:25.247339+00:00", "stage": "dev0", "horizon": 12}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:29.678460+00:00", "stage": "dev0", "horizon": 13}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:34.345007+00:00", "stage": "dev0", "horizon": 14}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:38.590570+00:00", "stage": "dev0", "horizon": 15}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:42.889688+00:00", "stage": "dev0", "horizon": 16}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:48.373886+00:00", "stage": "dev0", "horizon": 17}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:52.476483+00:00", "stage": "dev0", "horizon": 18}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:15:56.291270+00:00", "stage": "dev0", "horizon": 19}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:00.272859+00:00", "stage": "dev0", "horizon": 20}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:04.438604+00:00", "stage": "dev0", "horizon": 21}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:08.569834+00:00", "stage": "dev0", "horizon": 22}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:12.669561+00:00", "stage": "dev0", "horizon": 23}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:16.332507+00:00", "stage": "dev0", "horizon": 24}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:21.613726+00:00", "stage": "dev0", "horizon": 25}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:25.872748+00:00", "stage": "dev0", "horizon": 26}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:29.924371+00:00", "stage": "dev0", "horizon": 27}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:33.976271+00:00", "stage": "dev0", "horizon": 28}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:38.934994+00:00", "stage": "dev0", "horizon": 29}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:42.776688+00:00", "stage": "dev0", "horizon": 30}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:46.709357+00:00", "stage": "dev0", "horizon": 31}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:52.301212+00:00", "stage": "dev0", "horizon": 32}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:16:56.383948+00:00", "stage": "dev0", "horizon": 33}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:00.005113+00:00", "stage": "dev0", "horizon": 34}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:04.061334+00:00", "stage": "dev0", "horizon": 35}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:08.108761+00:00", "stage": "dev0", "horizon": 36}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:12.391408+00:00", "stage": "dev0", "horizon": 37}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:16.527298+00:00", "stage": "dev0", "horizon": 38}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:20.679465+00:00", "stage": "dev0", "horizon": 39}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:26.242192+00:00", "stage": "dev0", "horizon": 40}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:30.440651+00:00", "stage": "dev0", "horizon": 41}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:34.682727+00:00", "stage": "dev0", "horizon": 42}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:38.766592+00:00", "stage": "dev0", "horizon": 43}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:42.984886+00:00", "stage": "dev0", "horizon": 44}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:48.813088+00:00", "stage": "dev0", "horizon": 45}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:17:55.058794+00:00", "stage": "dev0", "horizon": 46}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:02.203325+00:00", "stage": "dev0", "horizon": 47}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:06.230527+00:00", "stage": "dev0", "horizon": 48}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:10.399853+00:00", "stage": "dev0", "horizon": 49}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:14.761109+00:00", "stage": "dev0", "horizon": 50}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:18.813217+00:00", "stage": "dev0", "horizon": 51}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:22.849138+00:00", "stage": "dev0", "horizon": 52}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:27.026818+00:00", "stage": "dev0", "horizon": 53}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:31.167607+00:00", "stage": "dev0", "horizon": 54}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:37.496904+00:00", "stage": "dev0", "horizon": 55}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:41.601550+00:00", "stage": "dev0", "horizon": 56}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:45.779677+00:00", "stage": "dev0", "horizon": 57}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:49.885802+00:00", "stage": "dev0", "horizon": 58}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:53.832045+00:00", "stage": "dev0", "horizon": 59}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:18:57.817415+00:00", "stage": "dev0", "horizon": 60}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:02.058689+00:00", "stage": "dev0", "horizon": 61}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:07.443888+00:00", "stage": "dev0", "horizon": 62}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:11.446521+00:00", "stage": "dev0", "horizon": 63}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:15.591247+00:00", "stage": "dev0", "horizon": 64}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:19.750592+00:00", "stage": "dev0", "horizon": 65}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:23.856406+00:00", "stage": "dev0", "horizon": 66}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:28.047074+00:00", "stage": "dev0", "horizon": 67}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:32.347650+00:00", "stage": "dev0", "horizon": 68}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:36.532530+00:00", "stage": "dev0", "horizon": 69}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:41.911038+00:00", "stage": "dev0", "horizon": 70}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:45.784300+00:00", "stage": "dev0", "horizon": 71}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:49.782143+00:00", "stage": "dev0", "horizon": 72}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:54.033027+00:00", "stage": "dev1", "horizon": 1}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:19:58.372316+00:00", "stage": "dev1", "horizon": 2}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:02.700685+00:00", "stage": "dev1", "horizon": 3}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:07.628115+00:00", "stage": "dev1", "horizon": 4}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:12.115932+00:00", "stage": "dev1", "horizon": 5}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:17.882684+00:00", "stage": "dev1", "horizon": 6}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:22.857148+00:00", "stage": "dev1", "horizon": 7}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:27.901767+00:00", "stage": "dev1", "horizon": 8}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:32.102365+00:00", "stage": "dev1", "horizon": 9}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:36.928714+00:00", "stage": "dev1", "horizon": 10}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:41.694280+00:00", "stage": "dev1", "horizon": 11}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:47.714499+00:00", "stage": "dev1", "horizon": 12}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:52.390098+00:00", "stage": "dev1", "horizon": 13}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:20:57.142883+00:00", "stage": "dev1", "horizon": 14}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:01.619459+00:00", "stage": "dev1", "horizon": 15}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:06.158844+00:00", "stage": "dev1", "horizon": 16}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:10.989013+00:00", "stage": "dev1", "horizon": 17}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:15.533821+00:00", "stage": "dev1", "horizon": 18}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:21.520972+00:00", "stage": "dev1", "horizon": 19}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:26.200297+00:00", "stage": "dev1", "horizon": 20}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:30.776041+00:00", "stage": "dev1", "horizon": 21}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:35.324874+00:00", "stage": "dev1", "horizon": 22}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:39.341183+00:00", "stage": "dev1", "horizon": 23}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:43.322488+00:00", "stage": "dev1", "horizon": 24}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:47.316939+00:00", "stage": "dev1", "horizon": 25}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:51.200076+00:00", "stage": "dev1", "horizon": 26}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:21:56.522642+00:00", "stage": "dev1", "horizon": 27}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:00.365361+00:00", "stage": "dev1", "horizon": 28}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:04.638812+00:00", "stage": "dev1", "horizon": 29}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:08.188138+00:00", "stage": "dev1", "horizon": 30}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:12.022429+00:00", "stage": "dev1", "horizon": 31}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:16.046709+00:00", "stage": "dev1", "horizon": 32}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:19.654103+00:00", "stage": "dev1", "horizon": 33}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:23.490825+00:00", "stage": "dev1", "horizon": 34}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:28.870979+00:00", "stage": "dev1", "horizon": 35}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:32.566693+00:00", "stage": "dev1", "horizon": 36}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:36.346643+00:00", "stage": "dev1", "horizon": 37}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:40.082318+00:00", "stage": "dev1", "horizon": 38}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:44.139395+00:00", "stage": "dev1", "horizon": 39}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:47.937828+00:00", "stage": "dev1", "horizon": 40}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:51.444173+00:00", "stage": "dev1", "horizon": 41}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:54.970620+00:00", "stage": "dev1", "horizon": 42}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:22:58.783605+00:00", "stage": "dev1", "horizon": 43}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:04.017811+00:00", "stage": "dev1", "horizon": 44}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:07.600719+00:00", "stage": "dev1", "horizon": 45}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:10.884663+00:00", "stage": "dev1", "horizon": 46}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:14.592922+00:00", "stage": "dev1", "horizon": 47}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:18.465999+00:00", "stage": "dev1", "horizon": 48}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:22.130904+00:00", "stage": "dev1", "horizon": 49}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:25.754876+00:00", "stage": "dev1", "horizon": 50}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:29.238262+00:00", "stage": "dev1", "horizon": 51}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:33.227899+00:00", "stage": "dev1", "horizon": 52}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:38.554017+00:00", "stage": "dev1", "horizon": 53}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:42.200550+00:00", "stage": "dev1", "horizon": 54}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:45.928586+00:00", "stage": "dev1", "horizon": 55}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:49.708452+00:00", "stage": "dev1", "horizon": 56}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:53.519014+00:00", "stage": "dev1", "horizon": 57}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:23:57.427309+00:00", "stage": "dev1", "horizon": 58}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:01.157695+00:00", "stage": "dev1", "horizon": 59}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:04.880815+00:00", "stage": "dev1", "horizon": 60}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:10.412276+00:00", "stage": "dev1", "horizon": 61}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:15.424952+00:00", "stage": "dev1", "horizon": 62}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:19.435450+00:00", "stage": "dev1", "horizon": 63}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:23.279250+00:00", "stage": "dev1", "horizon": 64}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:27.141710+00:00", "stage": "dev1", "horizon": 65}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:30.905899+00:00", "stage": "dev1", "horizon": 66}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:34.765509+00:00", "stage": "dev1", "horizon": 67}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:38.910829+00:00", "stage": "dev1", "horizon": 68}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:44.377346+00:00", "stage": "dev1", "horizon": 69}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:48.364564+00:00", "stage": "dev1", "horizon": 70}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:53.287520+00:00", "stage": "dev1", "horizon": 71}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:24:57.338469+00:00", "stage": "dev1", "horizon": 72}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:01.210515+00:00", "stage": "dev2", "horizon": 1}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:05.577890+00:00", "stage": "dev2", "horizon": 2}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:10.329072+00:00", "stage": "dev2", "horizon": 3}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:15.002769+00:00", "stage": "dev2", "horizon": 4}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:21.148584+00:00", "stage": "dev2", "horizon": 5}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:26.332721+00:00", "stage": "dev2", "horizon": 6}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:30.891572+00:00", "stage": "dev2", "horizon": 7}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:35.880577+00:00", "stage": "dev2", "horizon": 8}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:41.213266+00:00", "stage": "dev2", "horizon": 9}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:45.960613+00:00", "stage": "dev2", "horizon": 10}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:52.230179+00:00", "stage": "dev2", "horizon": 11}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:25:57.225265+00:00", "stage": "dev2", "horizon": 12}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:02.036734+00:00", "stage": "dev2", "horizon": 13}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:06.080087+00:00", "stage": "dev2", "horizon": 14}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:10.651978+00:00", "stage": "dev2", "horizon": 15}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:15.332275+00:00", "stage": "dev2", "horizon": 16}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:19.780940+00:00", "stage": "dev2", "horizon": 17}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:25.761272+00:00", "stage": "dev2", "horizon": 18}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:30.296302+00:00", "stage": "dev2", "horizon": 19}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:34.667365+00:00", "stage": "dev2", "horizon": 20}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:38.874442+00:00", "stage": "dev2", "horizon": 21}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:43.330562+00:00", "stage": "dev2", "horizon": 22}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:48.060319+00:00", "stage": "dev2", "horizon": 23}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:52.554435+00:00", "stage": "dev2", "horizon": 24}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:26:56.989197+00:00", "stage": "dev2", "horizon": 25}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:03.279565+00:00", "stage": "dev2", "horizon": 26}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:08.415621+00:00", "stage": "dev2", "horizon": 27}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:13.651864+00:00", "stage": "dev2", "horizon": 28}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:19.519403+00:00", "stage": "dev2", "horizon": 29}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:25.673307+00:00", "stage": "dev2", "horizon": 30}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:34.964487+00:00", "stage": "dev2", "horizon": 31}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:40.403006+00:00", "stage": "dev2", "horizon": 32}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:46.074913+00:00", "stage": "dev2", "horizon": 33}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:51.475507+00:00", "stage": "dev2", "horizon": 34}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:27:57.874860+00:00", "stage": "dev2", "horizon": 35}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:03.147017+00:00", "stage": "dev2", "horizon": 36}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:10.471428+00:00", "stage": "dev2", "horizon": 37}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:16.224273+00:00", "stage": "dev2", "horizon": 38}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:22.562578+00:00", "stage": "dev2", "horizon": 39}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:28.801944+00:00", "stage": "dev2", "horizon": 40}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:35.186451+00:00", "stage": "dev2", "horizon": 41}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:43.300286+00:00", "stage": "dev2", "horizon": 42}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:49.911747+00:00", "stage": "dev2", "horizon": 43}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:28:56.207788+00:00", "stage": "dev2", "horizon": 44}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:02.382920+00:00", "stage": "dev2", "horizon": 45}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:08.697320+00:00", "stage": "dev2", "horizon": 46}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:16.421923+00:00", "stage": "dev2", "horizon": 47}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:22.415618+00:00", "stage": "dev2", "horizon": 48}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:28.411445+00:00", "stage": "dev2", "horizon": 49}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:34.317213+00:00", "stage": "dev2", "horizon": 50}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:40.100106+00:00", "stage": "dev2", "horizon": 51}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:46.051594+00:00", "stage": "dev2", "horizon": 52}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:53.113049+00:00", "stage": "dev2", "horizon": 53}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:29:58.826802+00:00", "stage": "dev2", "horizon": 54}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:04.340230+00:00", "stage": "dev2", "horizon": 55}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:10.058980+00:00", "stage": "dev2", "horizon": 56}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:16.050203+00:00", "stage": "dev2", "horizon": 57}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:23.299894+00:00", "stage": "dev2", "horizon": 58}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:28.997629+00:00", "stage": "dev2", "horizon": 59}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:34.460651+00:00", "stage": "dev2", "horizon": 60}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:39.820227+00:00", "stage": "dev2", "horizon": 61}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:45.836738+00:00", "stage": "dev2", "horizon": 62}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:51.257316+00:00", "stage": "dev2", "horizon": 63}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:30:58.246155+00:00", "stage": "dev2", "horizon": 64}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:04.248862+00:00", "stage": "dev2", "horizon": 65}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:09.559645+00:00", "stage": "dev2", "horizon": 66}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:15.288603+00:00", "stage": "dev2", "horizon": 67}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:21.345318+00:00", "stage": "dev2", "horizon": 68}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:26.965444+00:00", "stage": "dev2", "horizon": 69}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:34.477998+00:00", "stage": "dev2", "horizon": 70}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:40.052357+00:00", "stage": "dev2", "horizon": 71}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:45.608733+00:00", "stage": "dev2", "horizon": 72}
+/home/t-lab01/sunrun/.venv/lib/python3.12/site-packages/sklearn/utils/validation.py:2830: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+  warnings.warn(
+{"status": "running", "pid": 2546364, "utc": "2026-10-28T14:31:51.665675+00:00", "phase": "waiting_for_baseline"}
+{"status": "completed_rejected", "pid": 2546364, "utc": "2026-10-28T14:35:58.676509+00:00", "smoke": false}

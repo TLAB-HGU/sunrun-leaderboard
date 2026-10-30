@@ -1,0 +1,12 @@
+{
+  "sha256": {
+    "mu.txt": "9ff81d11371f45b82f56025d2181235d76a5cfe809c53378f4403e9db09587d6",
+    "rho.txt": "c2c725c593c8d6b9fd55d641b1e595a480992ee19268a6b5b9cf83cda364f529",
+    "model.json": "5427b59e5b5bac6693dd15781583e83a77cd86899f9ec01655da1a9f2a787b10",
+    "loss.csv": "205b0ba21aa9aedbdd0633a440dc371160be9a958796adf2c7df904560260edf"
+  },
+  "complete": true,
+  "fit_rows": 10664,
+  "validation_rows": 648,
+  "reload_parity": true
+}

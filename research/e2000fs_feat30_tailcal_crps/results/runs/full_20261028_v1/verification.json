@@ -1,0 +1,148 @@
+{
+  "verified_at_utc": "2026-10-28T04:34:13.737151+00:00",
+  "tests": {
+    "command": "/home/t-lab01/sunrun/.venv/bin/python -m pytest -q /home/t-lab01/sunrun/analysis/e2000fs_feat30_lgbm_distribution",
+    "passed": 37
+  },
+  "smoke": {
+    "controls": {
+      "status": "completed",
+      "pid": 1848955,
+      "utc": "2026-10-28T04:33:03.399016+00:00",
+      "method": "controls",
+      "smoke": true,
+      "results": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_lgbm_distribution/runs/smoke_20261028_v1/controls/results.json"
+    },
+    "lognormal_nll": {
+      "status": "completed",
+      "pid": 1848957,
+      "utc": "2026-10-28T04:33:00.806681+00:00",
+      "method": "lognormal_nll",
+      "smoke": true,
+      "results": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_lgbm_distribution/runs/smoke_20261028_v1/lognormal_nll/results.json"
+    },
+    "lognormal_crps": {
+      "status": "completed",
+      "pid": 1848509,
+      "utc": "2026-10-28T04:32:49.413318+00:00",
+      "method": "lognormal_crps",
+      "smoke": true,
+      "results": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_lgbm_distribution/runs/smoke_20261028_v1/lognormal_crps/results.json"
+    },
+    "smooth_wcrps": {
+      "status": "completed",
+      "pid": 1848959,
+      "utc": "2026-10-28T04:33:01.284799+00:00",
+      "method": "smooth_wcrps",
+      "smoke": true,
+      "results": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_lgbm_distribution/runs/smoke_20261028_v1/smooth_wcrps/results.json"
+    },
+    "tailcal_crps": {
+      "status": "completed",
+      "pid": 1848956,
+      "utc": "2026-10-28T04:33:05.665391+00:00",
+      "method": "tailcal_crps",
+      "smoke": true,
+      "results": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_lgbm_distribution/runs/smoke_20261028_v1/tailcal_crps/results.json"
+    }
+  },
+  "launched_lanes": [
+    {
+      "method": "controls",
+      "unit": "fs30dist-full-20261028-v1-controls",
+      "session": "fs30dist-full-20261028-v1-controls",
+      "status": {
+        "status": "running",
+        "pid": 1849854,
+        "utc": "2026-10-28T04:34:06.449322+00:00",
+        "method": "controls",
+        "stage": "internal",
+        "arm": "l2",
+        "horizon": 4,
+        "total_horizons": 72,
+        "fit_rows": 9256,
+        "validation_rows": 648
+      },
+      "training_history": "/home/t-lab01/sunrun/research/e2000fs_feat30_lognormal_nll/results/runs/full_20261028_v1/controls/internal/l2/h03/attempt0000/loss.csv",
+      "last_iteration_row": "400,575.4154640659513,1376.9160373523744"
+    },
+    {
+      "method": "lognormal_nll",
+      "unit": "fs30dist-full-20261028-v1-lognormal-nll",
+      "session": "fs30dist-full-20261028-v1-lognormal-nll",
+      "status": {
+        "status": "running",
+        "pid": 1849865,
+        "utc": "2026-10-28T04:34:11.948890+00:00",
+        "method": "lognormal_nll",
+        "stage": "internal",
+        "arm": "lognormal_nll",
+        "horizon": 3,
+        "total_horizons": 72,
+        "fit_rows": 9256,
+        "validation_rows": 648
+      },
+      "training_history": "/home/t-lab01/sunrun/research/e2000fs_feat30_lognormal_nll/results/runs/full_20261028_v1/lognormal_nll/internal/lognormal_nll/h03/attempt0000/loss.csv",
+      "last_iteration_row": "50,5.46102329728849,5.76406561730176,3547.9198454048133,7343.2757547612355"
+    },
+    {
+      "method": "lognormal_crps",
+      "unit": "fs30dist-full-20261028-v1-lognormal-crps",
+      "session": "fs30dist-full-20261028-v1-lognormal-crps",
+      "status": {
+        "status": "running",
+        "pid": 1849872,
+        "utc": "2026-10-28T04:33:41.243244+00:00",
+        "method": "lognormal_crps",
+        "stage": "internal",
+        "arm": "lognormal_crps",
+        "horizon": 1,
+        "total_horizons": 72,
+        "fit_rows": 9256,
+        "validation_rows": 648
+      },
+      "training_history": "/home/t-lab01/sunrun/research/e2000fs_feat30_lognormal_nll/results/runs/full_20261028_v1/lognormal_crps/internal/lognormal_crps/h01/attempt0000/loss.csv",
+      "last_iteration_row": "75,21.676513850688764,31.671571480328545,1261.4798968999824,2838.634117851044"
+    },
+    {
+      "method": "smooth_wcrps",
+      "unit": "fs30dist-full-20261028-v1-smooth-wcrps",
+      "session": "fs30dist-full-20261028-v1-smooth-wcrps",
+      "status": {
+        "status": "running",
+        "pid": 1849880,
+        "utc": "2026-10-28T04:33:40.959272+00:00",
+        "method": "smooth_wcrps",
+        "stage": "internal",
+        "arm": "smooth_wcrps",
+        "horizon": 1,
+        "total_horizons": 72,
+        "fit_rows": 9256,
+        "validation_rows": 648
+      },
+      "training_history": "/home/t-lab01/sunrun/research/e2000fs_feat30_lognormal_nll/results/runs/full_20261028_v1/smooth_wcrps/internal/smooth_wcrps/h01/attempt0000/loss.csv",
+      "last_iteration_row": "125,20.112409310490417,34.74814386971644,562.6712132996516,1382.6314909523817"
+    },
+    {
+      "method": "tailcal_crps",
+      "unit": "fs30dist-full-20261028-v1-tailcal-crps",
+      "session": "fs30dist-full-20261028-v1-tailcal-crps",
+      "status": {
+        "status": "running",
+        "pid": 1849889,
+        "utc": "2026-10-28T04:33:41.606524+00:00",
+        "method": "tailcal_crps",
+        "stage": "internal",
+        "arm": "tailcal_crps",
+        "horizon": 1,
+        "total_horizons": 72,
+        "fit_rows": 9256,
+        "validation_rows": 648
+      },
+      "training_history": "/home/t-lab01/sunrun/research/e2000fs_feat30_lognormal_nll/results/runs/full_20261028_v1/tailcal_crps/internal/tailcal_crps/h01/attempt0000/loss.csv",
+      "last_iteration_row": "75,21.804206921727523,32.8715548312707,1247.5205876170073,2797.2841628639835"
+    }
+  ],
+  "manifest_sha256": "96ca00d9cbed125370d4c7045b48ce2350a61923766125696b3bd792e9d3307f",
+  "claim": "Five full-data lanes started, each with actual iteration history and separate tmux monitor; full scientific results pending."
+}
