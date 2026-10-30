@@ -1,0 +1,16 @@
+=== 2026-10-28T19:37:15Z official refit hist_weighted_raw ===
+{"arm": "hist_weighted_raw", "rounds": 300, "factor": 4.0, "study_identity": "3e380e7ceff4fc40de9e474b2566b167cb073dfe8346624e904400b68ca6d8d4", "script_sha256": "af573c0bb629650dffee8f1f3fa649042136716af76c7127027d86666a3febc6"}
+{"stage": "f1", "block": 0, "fit_rows": 9928, "query_rows": 2137, "mean_train_ce": 1.3152295416666666}
+{"stage": "f1", "block": 1, "fit_rows": 9928, "query_rows": 2137, "mean_train_ce": 1.5298301666666667}
+{"stage": "f1", "block": 2, "fit_rows": 9928, "query_rows": 2137, "mean_train_ce": 1.5895206666666664}
+{"stage": "final", "block": 0, "fit_rows": 10664, "query_rows": 2833, "mean_train_ce": 1.3251217083333333}
+{"stage": "final", "block": 1, "fit_rows": 10664, "query_rows": 2833, "mean_train_ce": 1.5414290000000002}
+{"stage": "final", "block": 2, "fit_rows": 10664, "query_rows": 2833, "mean_train_ce": 1.6007754166666668}
+{
+ "stage_mse": {
+  "f1": 3903.730076085426,
+  "final": 3262.857357847212,
+  "combined": 3538.419731866339
+ }
+}
+=== 2026-10-28T20:33:24Z finished rc=0 ===

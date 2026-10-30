@@ -1,0 +1,8 @@
+=== 2026-10-28T14:57:11Z stage 1: D1 all arms ===
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T14:57:13.057310+00:00", "phase": "start", "windows": ["D1"], "arms": ["parent", "reference", "hist_weighted", "hist_unweighted"]}
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T14:57:14.005518+00:00", "phase": "parity_ok"}
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T14:57:14.006078+00:00", "phase": "D1/parent"}
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T15:12:52.263228+00:00", "phase": "D1/parent/done"}
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T15:12:52.264329+00:00", "phase": "D1/reference"}
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T15:26:08.148716+00:00", "phase": "D1/reference/done"}
+{"status": "running", "pid": 2693571, "utc": "2026-10-28T15:26:08.149432+00:00", "phase": "D1/hist_weighted"}
