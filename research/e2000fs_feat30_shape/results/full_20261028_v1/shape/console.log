@@ -1,0 +1,173 @@
+{"status": "running", "phase": "prepare"}
+select/baseline/b0: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:95.05968	validation_1-rmse:134.90063
+[100]	validation_0-rmse:46.99979	validation_1-rmse:67.96035
+[200]	validation_0-rmse:43.19488	validation_1-rmse:64.67000
+[300]	validation_0-rmse:41.69197	validation_1-rmse:63.94786
+[400]	validation_0-rmse:40.46280	validation_1-rmse:63.84566
+[500]	validation_0-rmse:39.42899	validation_1-rmse:63.85229
+[600]	validation_0-rmse:38.50598	validation_1-rmse:63.97621
+[700]	validation_0-rmse:37.68449	validation_1-rmse:63.95432
+[800]	validation_0-rmse:36.93918	validation_1-rmse:64.03768
+[899]	validation_0-rmse:36.23162	validation_1-rmse:64.17650
+select/baseline/b1: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.20832	validation_1-rmse:135.74860
+[100]	validation_0-rmse:66.05045	validation_1-rmse:95.20495
+[200]	validation_0-rmse:60.52329	validation_1-rmse:94.41010
+[300]	validation_0-rmse:57.79528	validation_1-rmse:94.80215
+[400]	validation_0-rmse:55.59379	validation_1-rmse:94.79771
+[500]	validation_0-rmse:53.68622	validation_1-rmse:95.03930
+[600]	validation_0-rmse:52.12822	validation_1-rmse:95.75955
+[700]	validation_0-rmse:50.68707	validation_1-rmse:96.11843
+[800]	validation_0-rmse:49.44082	validation_1-rmse:96.21934
+[899]	validation_0-rmse:48.26733	validation_1-rmse:96.88740
+select/baseline/b2: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.47542	validation_1-rmse:134.36292
+[100]	validation_0-rmse:73.05593	validation_1-rmse:98.11464
+[200]	validation_0-rmse:68.18665	validation_1-rmse:98.56456
+[300]	validation_0-rmse:65.25921	validation_1-rmse:99.43316
+[400]	validation_0-rmse:62.72772	validation_1-rmse:100.41164
+[500]	validation_0-rmse:60.54511	validation_1-rmse:100.80794
+[600]	validation_0-rmse:58.62538	validation_1-rmse:100.61450
+[700]	validation_0-rmse:56.88428	validation_1-rmse:101.28824
+[800]	validation_0-rmse:55.23082	validation_1-rmse:101.71960
+[899]	validation_0-rmse:53.68965	validation_1-rmse:102.25656
+{"status": "completed", "phase": "prepare", "parent_parity": {"f1": {"origins": 2137, "max_abs_diff": 0.0}, "final": {"origins": 2833, "max_abs_diff": 0.0}}}
+{"status": "running", "phase": "waiting_for_baseline"}
+{"status": "running", "phase": "internal/shape_0.25"}
+select/shape_0.25/b0: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.00013	validation_1-rmse:136.22543
+[100]	validation_0-rmse:53.68082	validation_1-rmse:78.05138
+[200]	validation_0-rmse:46.67549	validation_1-rmse:67.96963
+[300]	validation_0-rmse:44.15416	validation_1-rmse:65.22153
+[400]	validation_0-rmse:42.91779	validation_1-rmse:64.77588
+[500]	validation_0-rmse:42.00370	validation_1-rmse:64.19095
+[600]	validation_0-rmse:41.29250	validation_1-rmse:63.95305
+[700]	validation_0-rmse:40.68886	validation_1-rmse:63.85289
+[800]	validation_0-rmse:40.09331	validation_1-rmse:63.78282
+[899]	validation_0-rmse:39.55371	validation_1-rmse:63.79125
+select/shape_0.25/b1: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.65973	validation_1-rmse:136.40126
+[100]	validation_0-rmse:72.69885	validation_1-rmse:102.18484
+[200]	validation_0-rmse:65.78296	validation_1-rmse:95.24753
+[300]	validation_0-rmse:62.49050	validation_1-rmse:94.06389
+[400]	validation_0-rmse:60.38378	validation_1-rmse:94.21309
+[500]	validation_0-rmse:58.82654	validation_1-rmse:94.89676
+[600]	validation_0-rmse:57.49478	validation_1-rmse:94.88436
+[700]	validation_0-rmse:56.33384	validation_1-rmse:95.01868
+[800]	validation_0-rmse:55.25030	validation_1-rmse:95.06173
+[899]	validation_0-rmse:54.17056	validation_1-rmse:95.20974
+select/shape_0.25/b2: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.85213	validation_1-rmse:135.02875
+[100]	validation_0-rmse:78.27611	validation_1-rmse:102.68862
+[200]	validation_0-rmse:72.70254	validation_1-rmse:97.84270
+[300]	validation_0-rmse:69.90524	validation_1-rmse:97.85000
+[400]	validation_0-rmse:67.99084	validation_1-rmse:98.48190
+[500]	validation_0-rmse:66.33746	validation_1-rmse:99.13000
+[600]	validation_0-rmse:64.83907	validation_1-rmse:99.82469
+[700]	validation_0-rmse:63.46552	validation_1-rmse:100.38864
+[800]	validation_0-rmse:62.15543	validation_1-rmse:100.78673
+[899]	validation_0-rmse:60.92157	validation_1-rmse:101.15197
+{"status": "running", "phase": "internal/shape_1.0"}
+select/shape_1.0/b0: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.59428	validation_1-rmse:137.06558
+[100]	validation_0-rmse:68.83262	validation_1-rmse:98.86002
+[200]	validation_0-rmse:56.76787	validation_1-rmse:82.09427
+[300]	validation_0-rmse:51.26320	validation_1-rmse:74.13856
+[400]	validation_0-rmse:48.34260	validation_1-rmse:69.81938
+[500]	validation_0-rmse:46.41618	validation_1-rmse:67.34130
+[600]	validation_0-rmse:45.14391	validation_1-rmse:65.86489
+[700]	validation_0-rmse:44.23272	validation_1-rmse:65.01096
+[800]	validation_0-rmse:43.57832	validation_1-rmse:64.55646
+[899]	validation_0-rmse:43.02995	validation_1-rmse:64.25721
+select/shape_1.0/b1: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.94796	validation_1-rmse:136.82314
+[100]	validation_0-rmse:82.61617	validation_1-rmse:116.16892
+[200]	validation_0-rmse:75.09855	validation_1-rmse:105.75892
+[300]	validation_0-rmse:70.45148	validation_1-rmse:99.91871
+[400]	validation_0-rmse:67.48597	validation_1-rmse:96.90394
+[500]	validation_0-rmse:65.40368	validation_1-rmse:95.34827
+[600]	validation_0-rmse:63.85586	validation_1-rmse:94.45880
+[700]	validation_0-rmse:62.61646	validation_1-rmse:94.25879
+[800]	validation_0-rmse:61.57802	validation_1-rmse:94.08882
+[899]	validation_0-rmse:60.67845	validation_1-rmse:94.16492
+select/shape_1.0/b2: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:97.09070	validation_1-rmse:135.45059
+[100]	validation_0-rmse:85.98476	validation_1-rmse:115.39087
+[200]	validation_0-rmse:80.20615	validation_1-rmse:104.88664
+[300]	validation_0-rmse:76.62593	validation_1-rmse:100.44019
+[400]	validation_0-rmse:74.23620	validation_1-rmse:98.50399
+[500]	validation_0-rmse:72.47642	validation_1-rmse:97.81938
+[600]	validation_0-rmse:71.07805	validation_1-rmse:97.55211
+[700]	validation_0-rmse:69.98394	validation_1-rmse:97.53762
+[800]	validation_0-rmse:69.04593	validation_1-rmse:97.64757
+[899]	validation_0-rmse:68.18523	validation_1-rmse:97.76776
+{"status": "running", "phase": "f1/shape_0.25"}
+f1/shape_0.25/b0: fit 9928 rows, 237 columns
+[0]	validation_0-rmse:99.16511	validation_1-rmse:133.45378
+[100]	validation_0-rmse:55.15656	validation_1-rmse:72.81010
+[200]	validation_0-rmse:47.69165	validation_1-rmse:60.74853
+[300]	validation_0-rmse:45.09271	validation_1-rmse:56.52190
+[400]	validation_0-rmse:43.90678	validation_1-rmse:54.19536
+[500]	validation_0-rmse:43.01675	validation_1-rmse:52.55491
+[600]	validation_0-rmse:42.28184	validation_1-rmse:51.08243
+[700]	validation_0-rmse:41.66193	validation_1-rmse:49.64004
+[800]	validation_0-rmse:41.09781	validation_1-rmse:48.42684
+[899]	validation_0-rmse:40.56161	validation_1-rmse:47.41687
+f1/shape_0.25/b1: fit 9928 rows, 237 columns
+[0]	validation_0-rmse:99.81886	validation_1-rmse:133.47608
+[100]	validation_0-rmse:74.45203	validation_1-rmse:94.07572
+[200]	validation_0-rmse:67.49910	validation_1-rmse:83.37293
+[300]	validation_0-rmse:64.33636	validation_1-rmse:78.63569
+[400]	validation_0-rmse:62.31303	validation_1-rmse:75.24731
+[500]	validation_0-rmse:60.69482	validation_1-rmse:72.70900
+[600]	validation_0-rmse:59.42314	validation_1-rmse:70.52063
+[700]	validation_0-rmse:58.32185	validation_1-rmse:68.77261
+[800]	validation_0-rmse:57.31215	validation_1-rmse:67.19246
+[899]	validation_0-rmse:56.27608	validation_1-rmse:65.52085
+f1/shape_0.25/b2: fit 9928 rows, 237 columns
+[0]	validation_0-rmse:99.97488	validation_1-rmse:132.28680
+[100]	validation_0-rmse:79.95477	validation_1-rmse:94.21060
+[200]	validation_0-rmse:74.46122	validation_1-rmse:86.07474
+[300]	validation_0-rmse:71.75172	validation_1-rmse:83.13252
+[400]	validation_0-rmse:69.93777	validation_1-rmse:80.44344
+[500]	validation_0-rmse:68.41931	validation_1-rmse:78.06380
+[600]	validation_0-rmse:67.03671	validation_1-rmse:75.62524
+[700]	validation_0-rmse:65.70735	validation_1-rmse:73.56907
+[800]	validation_0-rmse:64.43343	validation_1-rmse:71.74755
+[899]	validation_0-rmse:63.19809	validation_1-rmse:69.74001
+{"status": "running", "phase": "final/shape_0.25"}
+final/shape_0.25/b0: fit 10664 rows, 237 columns
+[0]	validation_0-rmse:98.82789	validation_1-rmse:132.95112
+[100]	validation_0-rmse:55.04204	validation_1-rmse:73.20253
+[200]	validation_0-rmse:47.68663	validation_1-rmse:60.98119
+[300]	validation_0-rmse:45.14475	validation_1-rmse:57.07829
+[400]	validation_0-rmse:43.93664	validation_1-rmse:54.58707
+[500]	validation_0-rmse:43.04471	validation_1-rmse:52.81567
+[600]	validation_0-rmse:42.33719	validation_1-rmse:51.45922
+[700]	validation_0-rmse:41.74803	validation_1-rmse:50.17243
+[800]	validation_0-rmse:41.19706	validation_1-rmse:48.85708
+[899]	validation_0-rmse:40.67825	validation_1-rmse:47.77903
+final/shape_0.25/b1: fit 10664 rows, 237 columns
+[0]	validation_0-rmse:99.34489	validation_1-rmse:133.08275
+[100]	validation_0-rmse:74.27733	validation_1-rmse:94.75859
+[200]	validation_0-rmse:67.56809	validation_1-rmse:84.54552
+[300]	validation_0-rmse:64.47358	validation_1-rmse:79.94501
+[400]	validation_0-rmse:62.46859	validation_1-rmse:76.45778
+[500]	validation_0-rmse:60.84641	validation_1-rmse:73.84499
+[600]	validation_0-rmse:59.57104	validation_1-rmse:71.42567
+[700]	validation_0-rmse:58.46138	validation_1-rmse:69.37715
+[800]	validation_0-rmse:57.44421	validation_1-rmse:67.67918
+[899]	validation_0-rmse:56.40737	validation_1-rmse:66.20905
+final/shape_0.25/b2: fit 10664 rows, 237 columns
+[0]	validation_0-rmse:99.41014	validation_1-rmse:131.85884
+[100]	validation_0-rmse:79.38206	validation_1-rmse:95.12800
+[200]	validation_0-rmse:73.94699	validation_1-rmse:86.46807
+[300]	validation_0-rmse:71.31902	validation_1-rmse:83.53260
+[400]	validation_0-rmse:69.54684	validation_1-rmse:81.36629
+[500]	validation_0-rmse:68.08738	validation_1-rmse:79.12939
+[600]	validation_0-rmse:66.73299	validation_1-rmse:76.87345
+[700]	validation_0-rmse:65.46222	validation_1-rmse:74.95229
+[800]	validation_0-rmse:64.27424	validation_1-rmse:73.35653
+[899]	validation_0-rmse:63.06577	validation_1-rmse:71.62946
+{"status": "completed", "selected": "shape_0.25", "smoke": false}

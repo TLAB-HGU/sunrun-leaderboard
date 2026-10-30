@@ -1,0 +1,46 @@
+{
+  "selected": "probtraj",
+  "candidates": [
+    {
+      "arm": "probtraj",
+      "metrics": {
+        "n_origins": 648,
+        "n_pairs": 46656,
+        "mse": 8975.931728301102,
+        "mae": 72.74482808224654,
+        "peak_mae": 88.60684760429962,
+        "peak_bias": -66.52637159722951,
+        "ramp6_mae": 91.81203892794878,
+        "peak_timing_mae_h": 19.979938271604937,
+        "mse_ge550": 14546.724116404761,
+        "bias_ge550": -76.04260734491825,
+        "n_pairs_ge550": 16396,
+        "mse_by_band": {
+          "h1-24": 7074.6507722239685,
+          "h25-48": 9959.98063177611,
+          "h49-72": 9893.163780903224
+        },
+        "events": {
+          "tp": 9,
+          "fp": 18,
+          "fn": 162,
+          "n_windows": 648,
+          "csi": 0.047619047619047616,
+          "pod": 0.05263157894736842,
+          "far": 0.6666666666666666,
+          "timing_mae_h": 4.888888888888889,
+          "timing_bias_h": 2.4444444444444446
+        },
+        "tp": 9,
+        "fp": 18,
+        "fn": 162,
+        "csi": 0.047619047619047616,
+        "timing_mae_h": 4.888888888888889,
+        "timing_bias_h": 2.4444444444444446
+      },
+      "selection_score": 1.085186824285973
+    }
+  ],
+  "rule": "mean(parent-relative peak MAE, parent-relative positive 6h ramp MAE), then CSI then MSE",
+  "frozen_before_official": true
+}

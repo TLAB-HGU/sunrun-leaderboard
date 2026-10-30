@@ -1,0 +1,12 @@
+{
+  "dataset_revision": "ddf07e2ec408c2d0da6d008c6f1efa684e6b803a",
+  "records": {
+    "e2000fs_feat30_pointweight4_tcn_lb120_regskip": {
+      "key": "seongeun/e2000fs_feat30_pointweight4_tcn_lb120_regskip/758c31e5b0eab5a85579c3fd912e47a17da431d1b052fced7b56a1a9d23bfcb1",
+      "config_sha256": "758c31e5b0eab5a85579c3fd912e47a17da431d1b052fced7b56a1a9d23bfcb1",
+      "predictions_identical": true,
+      "scores_match": true,
+      "mse": 5032.050597685968
+    }
+  }
+}

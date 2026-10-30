@@ -1,0 +1,19 @@
+{
+  "manifest_sha256": "96ca00d9cbed125370d4c7045b48ce2350a61923766125696b3bd792e9d3307f",
+  "attempt": "attempt0000",
+  "sha256": {
+    "mu.txt": "0851b6d61e8ccd2dfeb4ff970ed7e9ae7c031c7b089265eb24f6bb9d7e00e9ae",
+    "receipt.json": "769c46033be348d22845720b34b89e31572245549f9794db925f7a3f2efbbc97",
+    "model.json": "97ae71f8ffd1385d7a677504d0c9831d01587df902d42bf284dea0b708c9f1d6",
+    "loss.csv": "c0f099c90e31daebff921318f33d444cce58eb6c91b71273a837f3b669ea3760",
+    "rho.txt": "3fa9b26251d849eb793f4da84c9e3c654fb47ccae1e2eed5b285347da8d0c643"
+  },
+  "horizon": 44,
+  "stage": "f1",
+  "arm": "lognormal_nll",
+  "method": "lognormal_nll",
+  "fit_count": 9928,
+  "fit_indices_sha256": "45d78c2ee8bedf75b1442bd73b112829935ff56023deda05ae99b9ee96b231a5",
+  "last_target": "2026-02-25 21:00:00+00:00",
+  "validation_is_held_out": false
+}

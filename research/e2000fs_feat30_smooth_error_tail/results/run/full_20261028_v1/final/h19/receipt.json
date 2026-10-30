@@ -1,0 +1,13 @@
+{
+  "manifest_sha256": "08ea393e2357ad2308195dd406e0168f7d0567246ffe978597804dd8b79e3c14",
+  "stage": "final",
+  "horizon": 19,
+  "train_count": 10664,
+  "train_indices_sha256": "8b3440a146ffd371c3b8994ed469213b79d25f00ea08abd65d87cf90ff19b0ce",
+  "validation_held_out": false,
+  "sha256": {
+    "model.txt": "2b2a69d034810cb4b6e5a47050e3807f1b39ca09a22caf0fd6f9103ce7b648b6",
+    "offset.json": "6bc8cf5a5392ab526787952c59c7e26a6ba8f171a25ee7e07648a3606422b781",
+    "loss.csv": "c973c474ea979205f40dcc7af34d5c1441d243cbddfbd8f69714f34e1ec4f594"
+  }
+}

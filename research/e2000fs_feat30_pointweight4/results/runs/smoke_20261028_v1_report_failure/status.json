@@ -1,0 +1,7 @@
+{
+  "status": "failed",
+  "pid": 2256093,
+  "utc": "2026-10-28T12:28:39.740621+00:00",
+  "error": "unsupported format string passed to NoneType.__format__",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/t-lab01/sunrun/analysis/e2000fs_feat30_pointweight/run.py\", line 128, in execute\n    lines.append(f\"| {stage} | {row['mse']:.3f} | {row['mse_lt550']:.3f} | {row['mse_ge550']:.3f} | {row.get('comparison', {}).get('satisfies_both', 'smoke')} |\")\n                                                                           ^^^^^^^^^^^^^^^^^^^^^^\nTypeError: unsupported format string passed to NoneType.__format__\n"
+}

@@ -1,0 +1,216 @@
+CUDA physical=1 logical=0 device=NVIDIA RTX A5000 torch=2.7.1+cu126
+Building 35087 actual hourly feat30 rows (lag0)
+Hourly features: ACE and recurrence, 35087 hours
+Hourly features: origin-available ENLIL forecasts
+Hourly features: availability-filtered CH and h1 strips
+internal epoch=1/100 train_wmse=11940.1594 val_wmse=13294.53246356573 best_epoch=1 seconds=38.06
+internal epoch=2/100 train_wmse=7988.7820 val_wmse=13564.07889053144 best_epoch=1 seconds=38.36
+internal epoch=3/100 train_wmse=6386.3434 val_wmse=24205.369250206928 best_epoch=1 seconds=38.44
+internal epoch=4/100 train_wmse=5579.3156 val_wmse=15661.036622926862 best_epoch=1 seconds=38.15
+internal epoch=5/100 train_wmse=4811.2188 val_wmse=17395.881743210408 best_epoch=1 seconds=37.98
+internal epoch=6/100 train_wmse=4142.1634 val_wmse=16973.763440048937 best_epoch=1 seconds=37.89
+internal epoch=7/100 train_wmse=3686.4992 val_wmse=19133.766587414342 best_epoch=1 seconds=37.73
+internal epoch=8/100 train_wmse=3306.2775 val_wmse=20092.172765484713 best_epoch=1 seconds=37.72
+internal epoch=9/100 train_wmse=2920.5496 val_wmse=23201.332390983276 best_epoch=1 seconds=37.79
+internal epoch=10/100 train_wmse=2606.3226 val_wmse=25509.178459107505 best_epoch=1 seconds=37.85
+internal epoch=11/100 train_wmse=2394.3541 val_wmse=24908.988405978154 best_epoch=1 seconds=38.11
+f1 epoch=1/1 train_wmse=12016.6952 val_wmse=None best_epoch=1 seconds=39.18
+final epoch=1/1 train_wmse=11640.8302 val_wmse=None best_epoch=1 seconds=41.13
+COMPLETED smoke=False rows=357840 best_epoch=1
+{"rows": 357840, "config_sha256": "e2aac5d7d7068d0bfd4014995a508fc9c3f42a1e2c2f0a13f3e3bfb3da586221", "scope": "archived forecast replay"}
+From https://github.com/TLAB-HGU/sunrun-leaderboard
+ * branch                main       -> FETCH_HEAD
+Preparing worktree (detached HEAD 3e5e53f64)
+Updating files:   5% (187/3318)Updating files:   6% (200/3318)Updating files:   6% (219/3318)Updating files:   7% (233/3318)Updating files:   8% (266/3318)Updating files:   8% (277/3318)Updating files:   9% (299/3318)Updating files:  10% (332/3318)Updating files:  11% (365/3318)Updating files:  12% (399/3318)Updating files:  13% (432/3318)Updating files:  13% (440/3318)Updating files:  14% (465/3318)Updating files:  14% (487/3318)Updating files:  15% (498/3318)Updating files:  16% (531/3318)Updating files:  17% (565/3318)Updating files:  17% (573/3318)Updating files:  17% (589/3318)Updating files:  18% (598/3318)Updating files:  18% (602/3318)Updating files:  19% (631/3318)Updating files:  19% (635/3318)Updating files:  19% (657/3318)Updating files:  20% (664/3318)Updating files:  21% (697/3318)Updating files:  22% (730/3318)Updating files:  23% (764/3318)Updating files:  24% (797/3318)Updating files:  25% (830/3318)Updating files:  25% (840/3318)Updating files:  26% (863/3318)Updating files:  26% (887/3318)Updating files:  27% (896/3318)Updating files:  28% (930/3318)Updating files:  28% (944/3318)Updating files:  29% (963/3318)Updating files:  30% (996/3318)Updating files:  31% (1029/3318)Updating files:  32% (1062/3318)Updating files:  33% (1095/3318)Updating files:  33% (1110/3318)Updating files:  34% (1129/3318)Updating files:  35% (1162/3318)Updating files:  36% (1195/3318)Updating files:  37% (1228/3318)Updating files:  38% (1261/3318)Updating files:  39% (1295/3318)Updating files:  40% (1328/3318)Updating files:  41% (1361/3318)Updating files:  42% (1394/3318)Updating files:  43% (1427/3318)Updating files:  44% (1460/3318)Updating files:  45% (1494/3318)Updating files:  46% (1527/3318)Updating files:  47% (1560/3318)Updating files:  48% (1593/3318)Updating files:  49% (1626/3318)Updating files:  50% (1659/3318)Updating files:  51% (1693/3318)Updating files:  52% (1726/3318)Updating files:  53% (1759/3318)Updating files:  54% (1792/3318)Updating files:  55% (1825/3318)Updating files:  56% (1859/3318)Updating files:  57% (1892/3318)Updating files:  58% (1925/3318)Updating files:  59% (1958/3318)Updating files:  60% (1991/3318)Updating files:  61% (2024/3318)Updating files:  62% (2058/3318)Updating files:  63% (2091/3318)Updating files:  64% (2124/3318)Updating files:  65% (2157/3318)Updating files:  66% (2190/3318)Updating files:  67% (2224/3318)Updating files:  68% (2257/3318)Updating files:  69% (2290/3318)Updating files:  70% (2323/3318)Updating files:  71% (2356/3318)Updating files:  72% (2389/3318)Updating files:  73% (2423/3318)Updating files:  74% (2456/3318)Updating files:  75% (2489/3318)Updating files:  76% (2522/3318)Updating files:  77% (2555/3318)Updating files:  78% (2589/3318)Updating files:  79% (2622/3318)Updating files:  80% (2655/3318)Updating files:  81% (2688/3318)Updating files:  82% (2721/3318)Updating files:  83% (2754/3318)Updating files:  84% (2788/3318)Updating files:  85% (2821/3318)Updating files:  86% (2854/3318)Updating files:  87% (2887/3318)Updating files:  88% (2920/3318)Updating files:  89% (2954/3318)Updating files:  90% (2987/3318)Updating files:  91% (3020/3318)Updating files:  92% (3053/3318)Updating files:  92% (3061/3318)Updating files:  93% (3086/3318)Updating files:  94% (3119/3318)Updating files:  95% (3153/3318)Updating files:  96% (3186/3318)Updating files:  97% (3219/3318)Updating files:  98% (3252/3318)Updating files:  99% (3285/3318)Updating files: 100% (3318/3318)Updating files: 100% (3318/3318), done.
+HEAD is now at 3e5e53f64 E2000FS: publish frozen realmlp scalar ablations (F1+F2)
+1 dry-run scores verified
+[detached HEAD 5749ea9ce] E2000FS: publish feat30 pointweight4 TCN with 120h history
+ 23 files changed, 2971 insertions(+)
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/README.md
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/checkpoints/f1/best.pt
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/checkpoints/final/best.pt
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/checkpoints/internal/best.pt
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/config.json
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/forecast.npz
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/manifest.json
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/meta.yaml
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/predictions.parquet
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/results.json
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/data.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/execute.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/launch.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/model.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/publish.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/run.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/test_data.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/test_model.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/test_publish.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/e2000fs_feat30_pointweight4_tcn_lb120/test_run.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/source/analysis/forecast_strategies_kumo/publish.py
+ create mode 100644 releases/e2000fs_feat30_pointweight4_tcn_lb120/timing.json
+ create mode 100644 scripts/seongeun/e2000fs_feat30_pointweight4_tcn_lb120/e2aac5d7d7068d0bfd4014995a508fc9c3f42a1e2c2f0a13f3e3bfb3da586221.py
+From https://github.com/TLAB-HGU/sunrun-leaderboard
+ * branch                main       -> FETCH_HEAD
+To https://github.com/TLAB-HGU/sunrun-leaderboard.git
+   3e5e53f64..5749ea9ce  HEAD -> main
+Processing Files (0 / 0)      : |          |  0.00B /  0.00B            
+New Data Upload               : |          |  0.00B /  0.00B            [A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[AProcessing Files (0 / 1)      :   1%|▏         | 30.2kB / 2.30MB,   ???B/s  
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[AProcessing Files (0 / 1)      :  24%|██▍       |  558kB / 2.30MB, 54.5kB/s  
+New Data Upload               :  23%|██▎       |  528kB / 2.27MB, 51.7kB/s  [A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  24%|██▍       |  558kB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[AProcessing Files (0 / 1)      :  47%|████▋     | 1.09MB / 2.30MB, 97.4kB/s  
+New Data Upload               :  47%|████▋     | 1.06MB / 2.27MB, 95.0kB/s  [A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  47%|████▋     | 1.09MB / 2.30MB            [A[A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[AProcessing Files (0 / 1)      :  70%|███████   | 1.61MB / 2.30MB,  135kB/s  
+New Data Upload               :  70%|██████▉   | 1.58MB / 2.27MB,  132kB/s  [A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[A
+
+                              :  70%|███████   | 1.61MB / 2.30MB            [A[A
+
+                              :  93%|█████████▎| 2.14MB / 2.30MB            [A[AProcessing Files (0 / 1)      :  93%|█████████▎| 2.14MB / 2.30MB,  174kB/s  
+New Data Upload               :  93%|█████████▎| 2.11MB / 2.27MB,  172kB/s  [A
+
+                              :  93%|█████████▎| 2.14MB / 2.30MB            [A[A
+
+                              :  93%|█████████▎| 2.14MB / 2.30MB            [A[A
+
+                              :  93%|█████████▎| 2.14MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[AProcessing Files (0 / 1)      : 100%|█████████▉| 2.30MB / 2.30MB,  182kB/s  
+New Data Upload               : 100%|█████████▉| 2.27MB / 2.27MB,  180kB/s  [A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|█████████▉| 2.30MB / 2.30MB            [A[A
+
+                              : 100%|██████████| 2.30MB / 2.30MB            [A[AProcessing Files (1 / 1)      : 100%|██████████| 2.30MB / 2.30MB,  165kB/s  
+New Data Upload               : 100%|██████████| 2.27MB / 2.27MB,  163kB/s  [A
+
+
+Validating                    :           |   0%            [A[A[A
+
+
+Validating                    :           |   0%            [A[A[A
+
+                              : 100%|██████████| 2.30MB / 2.30MB            [A[A
+
+
+Validating                    :           |   0%            [A[A[A
+
+                              : 100%|██████████| 2.30MB / 2.30MB            [A[A
+
+
+Validating                    :           |   0%            [A[A[A
+
+                              : 100%|██████████| 2.30MB / 2.30MB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[A
+
+                              : 100%|██████████| 2.30MB / 2.30MB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[A
+
+                              : 100%|██████████| 2.30MB / 2.30MB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[AProcessing Files (1 / 1)      : 100%|██████████| 2.30MB / 2.30MB,  159kB/s  
+New Data Upload               : 100%|██████████| 2.27MB / 2.27MB,  157kB/s  
+Validating                    : ██████████| 100%            
+                              : 100%|██████████| 2.30MB / 2.30MB            
+e2000fs_feat30_pointweight4_tcn_lb120: submitted MSE=6330.024442
+1 remote prediction files and scores verified at 8d41a563f3fbe69484195b6b27f576d4215a1415
+lbstatus: sync committed -> https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard
