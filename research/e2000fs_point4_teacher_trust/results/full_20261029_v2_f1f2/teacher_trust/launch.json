@@ -1,0 +1,21 @@
+{
+  "lane": "teacher_trust",
+  "experiment": "e2000fs_point4_teacher_trust",
+  "session": "fs30-p4v2f-teacher-trust",
+  "unit": "fs30-p4v2f-teacher-trust-20261029-v2-f1f2",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "/home/t-lab01/sunrun/leaderboard/lbstatus.py",
+    "run",
+    "e2000fs_point4_teacher_trust",
+    "--",
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance_v2/run.py",
+    "--lane",
+    "teacher_trust"
+  ],
+  "log": "/home/t-lab01/sunrun/analysis/e2000fs_point4_advance_v2/runs/full_20261029_v2_f1f2/teacher_trust/run.log",
+  "status": "started",
+  "pane": "%59"
+}
