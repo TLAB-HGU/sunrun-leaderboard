@@ -1,0 +1,142 @@
+{
+  "internal": {
+    "n_origins": 16,
+    "n_pairs": 1152,
+    "mse": 36889.77535027513,
+    "mae": 177.23382827970715,
+    "peak_mae": 261.0052070617676,
+    "peak_bias": -261.0052070617676,
+    "ramp6_mae": 51.14000625610355,
+    "peak_timing_mae_h": 16.3125,
+    "mse_ge550": 45184.31780750766,
+    "bias_ge550": -210.31471822102867,
+    "n_pairs_ge550": 930,
+    "mse_by_band": {
+      "h1-24": 48241.54918804953,
+      "h25-48": 42515.60253734516,
+      "h49-72": 19912.174325430704
+    },
+    "events": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "n_windows": 16,
+      "csi": null,
+      "pod": null,
+      "far": null,
+      "timing_mae_h": null,
+      "timing_bias_h": null
+    },
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "csi": null,
+    "timing_mae_h": null,
+    "timing_bias_h": null
+  },
+  "f1": {
+    "n_origins": 16,
+    "n_pairs": 1152,
+    "mse": 6539.999363611677,
+    "mae": 74.72168842951457,
+    "peak_mae": 20.80479011535644,
+    "peak_bias": 20.80479011535644,
+    "ramp6_mae": 47.47545967102053,
+    "peak_timing_mae_h": 9.0625,
+    "mse_ge550": null,
+    "bias_ge550": null,
+    "n_pairs_ge550": 0,
+    "mse_by_band": {
+      "h1-24": 6874.942387231421,
+      "h25-48": 10527.467415321998,
+      "h49-72": 2217.588288281614
+    },
+    "events": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "n_windows": 16,
+      "csi": null,
+      "pod": null,
+      "far": null,
+      "timing_mae_h": null,
+      "timing_bias_h": null
+    },
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "csi": null,
+    "timing_mae_h": null,
+    "timing_bias_h": null
+  },
+  "final": {
+    "n_origins": 16,
+    "n_pairs": 1152,
+    "mse": 1985.7952089839819,
+    "mae": 40.72769838439093,
+    "peak_mae": 7.693785476684582,
+    "peak_bias": 2.650371932983404,
+    "ramp6_mae": 45.46490898132322,
+    "peak_timing_mae_h": 15.25,
+    "mse_ge550": null,
+    "bias_ge550": null,
+    "n_pairs_ge550": 0,
+    "mse_by_band": {
+      "h1-24": 1900.3546435092815,
+      "h25-48": 2831.0896995501594,
+      "h49-72": 1225.9412838925055
+    },
+    "events": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "n_windows": 16,
+      "csi": null,
+      "pod": null,
+      "far": null,
+      "timing_mae_h": null,
+      "timing_bias_h": null
+    },
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "csi": null,
+    "timing_mae_h": null,
+    "timing_bias_h": null
+  },
+  "combined": {
+    "n_origins": 32,
+    "n_pairs": 2304,
+    "mse": 4262.89728629783,
+    "mae": 57.72469340695275,
+    "peak_mae": 14.24928779602051,
+    "peak_bias": 11.727581024169922,
+    "ramp6_mae": 46.470184326171875,
+    "peak_timing_mae_h": 12.15625,
+    "mse_ge550": null,
+    "bias_ge550": null,
+    "n_pairs_ge550": 0,
+    "mse_by_band": {
+      "h1-24": 4387.648515370352,
+      "h25-48": 6679.27855743608,
+      "h49-72": 1721.7647860870595
+    },
+    "events": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "n_windows": 32,
+      "csi": null,
+      "pod": null,
+      "far": null,
+      "timing_mae_h": null,
+      "timing_bias_h": null
+    },
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "csi": null,
+    "timing_mae_h": null,
+    "timing_bias_h": null
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "data": {
+    "selected": [
+      "v_lag0",
+      "rec_mean",
+      "enlil_kp",
+      "ch_ch_t035_meridian30_equatorial_area",
+      "ace_bt_nt_last",
+      "ace_speed_kms_last",
+      "ch_ch_t035_equatorial_area",
+      "ch_ch_t035_meridian15_equatorial_area",
+      "ace_bt_nt_m6",
+      "rec26",
+      "strip_v450_logmed",
+      "strip_v350_logmed",
+      "ch_ch_t055_equatorial_area",
+      "rec27",
+      "ace_density_cm3_last",
+      "ch_ch_t055_meridian30_equatorial_area",
+      "ace_by_gsm_nt_m24",
+      "ace_density_cm3_m6",
+      "ace_temperature_k_last",
+      "enlil_n_pending",
+      "ace_temperature_k_m24",
+      "strip_v750_logmed",
+      "ch_ch_t055_meridian15_area",
+      "ch_ch_t035_top2_area",
+      "strip_v550_dark",
+      "strip_v650_dark",
+      "ace_sis_gt10_flux_last",
+      "ace_epam_p_channel3_last",
+      "img_age_h",
+      "rec28"
+    ],
+    "input_identity": {
+      "/home/t-lab01/sunrun/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11",
+      "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/worktree/docs/visualizations/e2000fs_dirmo_24/feature_importance.csv": "ea62386ea10a5fd5f34b795129e491b4684698fe0792d03282286fa113a038ad",
+      "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/worktree/docs/visualizations/e2000fs_dirmo_24/feature_importance_receipt.json": "cfe954c4c7c38116d2c677f1bf6864bd157827784b737e8925bb375e8fb1aa5e",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/publication/worktree/scorer/scoring.py": "9b5f36ccab7c6158f6ffded2249086cc42451925ad5a1c5a4bc52d48d13e4e36",
+      "/home/t-lab01/sunrun/analysis/e2000fs_dirmo_24_feat30/logs/full_01/manifest.json": "3d7aeff84c37e39975d133305fd1ff33be78e719ba9577b4f338c49d4c05ab5d",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/f1.npz": "f126160c2a8d5bb12df376781a4d5712cdae0708385c717cc82419556629db1d",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/names.json": "3b25e892c0093215c90f0f3e579a72a0c6cb314a38c694a4c38e5c58744b14ce",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/official.npz": "9878a560b0d81ddec35f65184afe6a446f425750cce2074290f320d6613ec6ae",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/receipt.json": "cbeb93bede4fb9d11b4c08c4c45eeae5634435854d28644b02e88907e7cb1d8f",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/speed.parquet": "96f6e22e1643d79c5dd49f04825128dc25c3b8985a5415fa5828fd7db3012877",
+      "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/train.npz": "5f9c446b1beb7c8fb4290236bfbbde08f32153433cfafadc3c02fd189406a8a9",
+      "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/truth.parquet": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1",
+      "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/folds.parquet": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635",
+      "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/naive.parquet": "d1f1588c3980ec5047ce6be2745404f7d7d1f4d32decfad0eba440e247b733d8"
+    },
+    "block_hours": 24,
+    "ace_lag_hours": 0,
+    "columns_per_block": 237,
+    "periods": {
+      "F1": {
+        "start": "2026-02-28T23:00:00Z",
+        "end": "2026-05-28T23:00:00Z",
+        "count": 2137
+      },
+      "F2": {
+        "start": "2026-05-31T23:00:00Z",
+        "end": "2026-09-26T23:00:00Z",
+        "count": 2833
+      }
+    },
+    "asset": {
+      "filename": "forecast.npz",
+      "sha256": "55602f21328f89873bd0d0f26bcdd813193b09283fe3d9b3380946133819960c"
+    },
+    "archived_source_sha256": {
+      "analysis/e2000fs_dirmo_24_feat30_pointweight4/run.py": "cef5d9ec30b1ad321648a7a8083d423375fbe23469d9f211e042dd7d8d49c1e1",
+      "analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c",
+      "analysis/e2000fs_dirmo_24_feat30_lgbm/run.py": "6cc3cf055cb1cc1056011fda79f0b35a2bbae01a926b9a5a0f4c298eaf2bfc11",
+      "analysis/e2000fs_feat30_followups/evaluation.py": "681692e3dc768299a958f815969c0379479f6cd4e127f1ee1f8dc70efa398a8f",
+      "analysis/e2000fs-visualizations/worktree/docs/visualizations/e2000fs_dirmo_24/feature_importance_receipt.json": "cfe954c4c7c38116d2c677f1bf6864bd157827784b737e8925bb375e8fb1aa5e",
+      "analysis/forecast_strategies_e2000/data.py": "903386a51040a2dff86a597b312e500ac8730353f9e7fd2fe53e3ee5ec9b3eab",
+      "analysis/e2000fs_dirmo_24_feat30_pointweight4/execute.py": "8b7d7d496d50605ef64d902e1b405881b76fe83bff3c65f2c37ddebec34d1088",
+      "analysis/e2000fs_dirmo_24_feat30_pointweight4/publish.py": "0a22bf6d659686d2387a7f2925bce48db59ab54158c1fad4427241d740d2e870",
+      "analysis/forecast_strategies_kumo/publish.py": "0c8b4ae181098667be3aedcf705674b723ca858691f5e1a8cc4ca48e9476f5f1"
+    },
+    "model_sha256": {
+      "models/internal_b0.ubj": "3d3047182535eecfac2d0785df3d45d659a9b82b571f3f520e1a0f711e3d0ae3",
+      "models/internal_b1.ubj": "7a718fd4f256f91f33fc62bed19df7056ae142f878e8119cec228367ec5d5c9a",
+      "models/internal_b2.ubj": "1c22359fc999ff4f8bed3f19cd74a67ee445c99695def3c630ca8ab5201e2157",
+      "models/f1_b0.ubj": "c22cf64d47c792fd5319a49564c30a0af9207ccc4f327f100c3437ee17487ea4",
+      "models/f1_b1.ubj": "e5154b7489e014d169d992551224b44d46d93aeb523b5ddae1aabd6ab60bc1ef",
+      "models/f1_b2.ubj": "3c6f185b58b29c220bcf3dcc230a5d125205e88f46927f6d525f151a1f96d956",
+      "models/final_b0.ubj": "e5ba116b6dd4b4c122cb14759cf9a935fe206db2c19823b8a7d96f436c63c1df",
+      "models/final_b1.ubj": "ac95aeb8fa519ec900d6e19cb31ed91ddbf5ec5728c89e3f23480bf6707066e4",
+      "models/final_b2.ubj": "8c41918a415e359bfb8d19610f64f0024d4291d6d395d571462245f495a85a0c"
+    },
+    "loss_sha256": {
+      "losses/internal_b0.csv": "5d388b09e287742d388b7bf1a777e98d089fda113059a28b3d484dde90d0ebca",
+      "losses/internal_b1.csv": "9f4971d6147a00db4caacebcb639a4c234463bb4fb446b0da8864e271a66ea6c",
+      "losses/internal_b2.csv": "66b0b36f4301e3f9abc6ea44ba95758aad2f9807954e08157205ac67ea404641",
+      "losses/f1_b0.csv": "4aea67deca451bdef872e286e6c272a0e9642fb72c2d465a470f7c50544c3f8e",
+      "losses/f1_b1.csv": "76ad9cdbe23c3628d3a60d8ccd9b5f79fe22f0081118c7e299f04743645e9f8e",
+      "losses/f1_b2.csv": "b1c00531b4b3fa0768b22e3512eb795ad12506dc942adf1b06b06f8a58594e1d",
+      "losses/final_b0.csv": "3a72753e99f6c13fa06106fc7dc77398e4b6bf50edd008ce35813ad7f8c79572",
+      "losses/final_b1.csv": "7ea03d420b91b9d87eac3b24a5db0d2e3ee5e2be3106a3429791c31d40a2c0d3",
+      "losses/final_b2.csv": "2ff99d44be6a7205e1d6af18f791defce1468755a3369eee09256f5bdc540fcc"
+    },
+    "run_manifest_sha256": "761edc02076b3117f3384ecdfa919805fb035679910abbc3dbbe8dd7345ae2eb",
+    "original_prediction_sha256": "285741961aeeaf192877f44a6fd759f402f385e2a0c5069968f649623d127c15"
+  },
+  "hyperparameters": {
+    "recipe": {
+      "xgboost": {
+        "n_estimators": 900,
+        "max_depth": 3,
+        "learning_rate": 0.03,
+        "subsample": 0.8,
+        "colsample_bytree": 0.7,
+        "min_child_weight": 20,
+        "reg_lambda": 5,
+        "n_jobs": 4,
+        "random_state": 42,
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "device": "cpu",
+        "eval_metric": "rmse",
+        "multi_strategy": "multi_output_tree"
+      },
+      "rounds": 900,
+      "architecture": "three 24-output vector-leaf trees",
+      "loss": "per-target weighted squared error: y>=550 weight4 else1; training-horizon mean normalization",
+      "initialization": "scalar unweighted training-target mean per block",
+      "seed": 42,
+      "ace_lag_hours": 0,
+      "maturity_hours": 72
+    },
+    "parent": "e2000fs_dirmo_24_feat30",
+    "comparator": "e2000fs_feat30_pointweight4"
+  }
+}

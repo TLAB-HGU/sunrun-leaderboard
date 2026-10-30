@@ -1,0 +1,1408 @@
+{"status": "running", "phase": "starting", "pid": 1635452, "utc": "2026-10-27T23:52:13.741122+00:00"}
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+Waiting for frozen three-fold common baseline
+{"status": "running", "phase": "fold0/context_0.25", "pid": 1635452, "utc": "2026-10-28T00:17:54.998775+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b00/fold0: X=(6190, 237), y=(6190,)
+[0]	validation_0-logloss:0.50674	validation_1-logloss:0.63286
+[100]	validation_0-logloss:0.27425	validation_1-logloss:0.38785
+[200]	validation_0-logloss:0.23521	validation_1-logloss:0.36497
+[300]	validation_0-logloss:0.20777	validation_1-logloss:0.36406
+[400]	validation_0-logloss:0.18748	validation_1-logloss:0.36883
+[500]	validation_0-logloss:0.16985	validation_1-logloss:0.38126
+[600]	validation_0-logloss:0.15602	validation_1-logloss:0.39222
+[700]	validation_0-logloss:0.14391	validation_1-logloss:0.40208
+[800]	validation_0-logloss:0.13360	validation_1-logloss:0.41156
+[899]	validation_0-logloss:0.12452	validation_1-logloss:0.42193
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b00/fold1: X=(6166, 237), y=(6166,)
+[0]	validation_0-logloss:0.53371	validation_1-logloss:0.51802
+[100]	validation_0-logloss:0.26122	validation_1-logloss:0.36371
+[200]	validation_0-logloss:0.21783	validation_1-logloss:0.36995
+[300]	validation_0-logloss:0.18923	validation_1-logloss:0.37699
+[400]	validation_0-logloss:0.17016	validation_1-logloss:0.38673
+[500]	validation_0-logloss:0.15459	validation_1-logloss:0.39397
+[600]	validation_0-logloss:0.14187	validation_1-logloss:0.40127
+[700]	validation_0-logloss:0.13044	validation_1-logloss:0.40878
+[800]	validation_0-logloss:0.12172	validation_1-logloss:0.41347
+[899]	validation_0-logloss:0.11331	validation_1-logloss:0.41973
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b00/fold2: X=(6166, 237), y=(6166,)
+[0]	validation_0-logloss:0.54719	validation_1-logloss:0.47624
+[100]	validation_0-logloss:0.29122	validation_1-logloss:0.27897
+[200]	validation_0-logloss:0.24834	validation_1-logloss:0.26763
+[300]	validation_0-logloss:0.21931	validation_1-logloss:0.26570
+[400]	validation_0-logloss:0.19775	validation_1-logloss:0.26474
+[500]	validation_0-logloss:0.18056	validation_1-logloss:0.26685
+[600]	validation_0-logloss:0.16580	validation_1-logloss:0.27003
+[700]	validation_0-logloss:0.15227	validation_1-logloss:0.27301
+[800]	validation_0-logloss:0.14100	validation_1-logloss:0.27611
+[899]	validation_0-logloss:0.13227	validation_1-logloss:0.28040
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b00/fold3: X=(6167, 237), y=(6167,)
+[0]	validation_0-logloss:0.55798	validation_1-logloss:0.43573
+[100]	validation_0-logloss:0.28033	validation_1-logloss:0.30326
+[200]	validation_0-logloss:0.23814	validation_1-logloss:0.29284
+[300]	validation_0-logloss:0.20992	validation_1-logloss:0.29340
+[400]	validation_0-logloss:0.18830	validation_1-logloss:0.29234
+[500]	validation_0-logloss:0.17245	validation_1-logloss:0.29037
+[600]	validation_0-logloss:0.15840	validation_1-logloss:0.29297
+[700]	validation_0-logloss:0.14701	validation_1-logloss:0.29459
+[800]	validation_0-logloss:0.13713	validation_1-logloss:0.29592
+[899]	validation_0-logloss:0.12868	validation_1-logloss:0.29798
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b00/fold4: X=(6191, 237), y=(6191,)
+[0]	validation_0-logloss:0.50649	validation_1-logloss:0.63456
+[100]	validation_0-logloss:0.28524	validation_1-logloss:0.30993
+[200]	validation_0-logloss:0.24571	validation_1-logloss:0.28852
+[300]	validation_0-logloss:0.21757	validation_1-logloss:0.28579
+[400]	validation_0-logloss:0.19622	validation_1-logloss:0.28485
+[500]	validation_0-logloss:0.17881	validation_1-logloss:0.28814
+[600]	validation_0-logloss:0.16447	validation_1-logloss:0.29050
+[700]	validation_0-logloss:0.15228	validation_1-logloss:0.29254
+[800]	validation_0-logloss:0.14141	validation_1-logloss:0.29396
+[899]	validation_0-logloss:0.13249	validation_1-logloss:0.29650
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b00/full: X=(7768, 237), y=(7768,)
+[0]	validation_0-logloss:0.53068	validation_1-logloss:0.70592
+[100]	validation_0-logloss:0.28363	validation_1-logloss:0.37411
+[200]	validation_0-logloss:0.24469	validation_1-logloss:0.37951
+[300]	validation_0-logloss:0.21987	validation_1-logloss:0.39544
+[400]	validation_0-logloss:0.19991	validation_1-logloss:0.40925
+[500]	validation_0-logloss:0.18510	validation_1-logloss:0.42068
+[600]	validation_0-logloss:0.17215	validation_1-logloss:0.42928
+[700]	validation_0-logloss:0.16042	validation_1-logloss:0.43483
+[800]	validation_0-logloss:0.14983	validation_1-logloss:0.43941
+[899]	validation_0-logloss:0.14121	validation_1-logloss:0.44573
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/context_0.25/b00: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:87.88627	validation_1-rmse:100.18073
+[100]	validation_0-rmse:44.87275	validation_1-rmse:49.51320
+[200]	validation_0-rmse:41.27989	validation_1-rmse:46.28359
+[300]	validation_0-rmse:39.70501	validation_1-rmse:45.53893
+[400]	validation_0-rmse:38.45091	validation_1-rmse:45.41896
+[500]	validation_0-rmse:37.43317	validation_1-rmse:45.43361
+[600]	validation_0-rmse:36.56225	validation_1-rmse:45.51025
+[700]	validation_0-rmse:35.73237	validation_1-rmse:45.45453
+[800]	validation_0-rmse:34.99944	validation_1-rmse:45.43122
+[899]	validation_0-rmse:34.31062	validation_1-rmse:45.44856
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b01/fold0: X=(6190, 237), y=(6190,)
+[0]	validation_0-logloss:0.51410	validation_1-logloss:0.64153
+[100]	validation_0-logloss:0.34799	validation_1-logloss:0.51994
+[200]	validation_0-logloss:0.30400	validation_1-logloss:0.50979
+[300]	validation_0-logloss:0.27164	validation_1-logloss:0.50869
+[400]	validation_0-logloss:0.24542	validation_1-logloss:0.51516
+[500]	validation_0-logloss:0.22404	validation_1-logloss:0.53209
+[600]	validation_0-logloss:0.20334	validation_1-logloss:0.54433
+[700]	validation_0-logloss:0.18864	validation_1-logloss:0.55720
+[800]	validation_0-logloss:0.17548	validation_1-logloss:0.56428
+[899]	validation_0-logloss:0.16362	validation_1-logloss:0.57002
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b01/fold1: X=(6166, 237), y=(6166,)
+[0]	validation_0-logloss:0.53973	validation_1-logloss:0.52167
+[100]	validation_0-logloss:0.34489	validation_1-logloss:0.47453
+[200]	validation_0-logloss:0.29504	validation_1-logloss:0.48775
+[300]	validation_0-logloss:0.25953	validation_1-logloss:0.49618
+[400]	validation_0-logloss:0.23455	validation_1-logloss:0.50395
+[500]	validation_0-logloss:0.21466	validation_1-logloss:0.51575
+[600]	validation_0-logloss:0.19849	validation_1-logloss:0.52890
+[700]	validation_0-logloss:0.18308	validation_1-logloss:0.54159
+[800]	validation_0-logloss:0.16942	validation_1-logloss:0.55382
+[899]	validation_0-logloss:0.15874	validation_1-logloss:0.56627
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b01/fold2: X=(6166, 237), y=(6166,)
+[0]	validation_0-logloss:0.55475	validation_1-logloss:0.48575
+[100]	validation_0-logloss:0.37882	validation_1-logloss:0.38825
+[200]	validation_0-logloss:0.33450	validation_1-logloss:0.38263
+[300]	validation_0-logloss:0.30197	validation_1-logloss:0.38617
+[400]	validation_0-logloss:0.27438	validation_1-logloss:0.38987
+[500]	validation_0-logloss:0.25213	validation_1-logloss:0.39439
+[600]	validation_0-logloss:0.23257	validation_1-logloss:0.40010
+[700]	validation_0-logloss:0.21704	validation_1-logloss:0.40652
+[800]	validation_0-logloss:0.20249	validation_1-logloss:0.40963
+[899]	validation_0-logloss:0.18939	validation_1-logloss:0.41356
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b01/fold3: X=(6167, 237), y=(6167,)
+[0]	validation_0-logloss:0.56600	validation_1-logloss:0.43752
+[100]	validation_0-logloss:0.38207	validation_1-logloss:0.36113
+[200]	validation_0-logloss:0.33156	validation_1-logloss:0.34661
+[300]	validation_0-logloss:0.29872	validation_1-logloss:0.34691
+[400]	validation_0-logloss:0.27071	validation_1-logloss:0.34815
+[500]	validation_0-logloss:0.24812	validation_1-logloss:0.35047
+[600]	validation_0-logloss:0.22859	validation_1-logloss:0.35264
+[700]	validation_0-logloss:0.21195	validation_1-logloss:0.35753
+[800]	validation_0-logloss:0.19608	validation_1-logloss:0.36187
+[899]	validation_0-logloss:0.18319	validation_1-logloss:0.36591
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b01/fold4: X=(6191, 237), y=(6191,)
+[0]	validation_0-logloss:0.51256	validation_1-logloss:0.65370
+[100]	validation_0-logloss:0.36180	validation_1-logloss:0.46730
+[200]	validation_0-logloss:0.31256	validation_1-logloss:0.45554
+[300]	validation_0-logloss:0.28177	validation_1-logloss:0.45930
+[400]	validation_0-logloss:0.25735	validation_1-logloss:0.46178
+[500]	validation_0-logloss:0.23695	validation_1-logloss:0.46402
+[600]	validation_0-logloss:0.21786	validation_1-logloss:0.46496
+[700]	validation_0-logloss:0.20142	validation_1-logloss:0.46725
+[800]	validation_0-logloss:0.18714	validation_1-logloss:0.47095
+[899]	validation_0-logloss:0.17429	validation_1-logloss:0.47325
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b01/full: X=(7768, 237), y=(7768,)
+[0]	validation_0-logloss:0.53820	validation_1-logloss:0.70292
+[100]	validation_0-logloss:0.36925	validation_1-logloss:0.53471
+[200]	validation_0-logloss:0.32625	validation_1-logloss:0.53154
+[300]	validation_0-logloss:0.29485	validation_1-logloss:0.54722
+[400]	validation_0-logloss:0.27120	validation_1-logloss:0.56136
+[500]	validation_0-logloss:0.25045	validation_1-logloss:0.57510
+[600]	validation_0-logloss:0.23217	validation_1-logloss:0.58803
+[700]	validation_0-logloss:0.21665	validation_1-logloss:0.59881
+[800]	validation_0-logloss:0.20322	validation_1-logloss:0.60536
+[899]	validation_0-logloss:0.19120	validation_1-logloss:0.61339
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/context_0.25/b01: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:89.29987	validation_1-rmse:97.73881
+[100]	validation_0-rmse:62.66201	validation_1-rmse:70.37770
+[200]	validation_0-rmse:57.42457	validation_1-rmse:66.10698
+[300]	validation_0-rmse:54.43831	validation_1-rmse:64.60362
+[400]	validation_0-rmse:52.17194	validation_1-rmse:64.36369
+[500]	validation_0-rmse:50.23436	validation_1-rmse:63.92005
+[600]	validation_0-rmse:48.71428	validation_1-rmse:63.90918
+[700]	validation_0-rmse:47.24899	validation_1-rmse:63.42483
+[800]	validation_0-rmse:46.00471	validation_1-rmse:63.48286
+[899]	validation_0-rmse:44.73894	validation_1-rmse:63.42689
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b02/fold0: X=(6190, 237), y=(6190,)
+[0]	validation_0-logloss:0.51577	validation_1-logloss:0.63274
+[100]	validation_0-logloss:0.38117	validation_1-logloss:0.60134
+[200]	validation_0-logloss:0.33382	validation_1-logloss:0.57617
+[300]	validation_0-logloss:0.30033	validation_1-logloss:0.56830
+[400]	validation_0-logloss:0.27465	validation_1-logloss:0.55881
+[500]	validation_0-logloss:0.25259	validation_1-logloss:0.56119
+[600]	validation_0-logloss:0.23520	validation_1-logloss:0.57123
+[700]	validation_0-logloss:0.21838	validation_1-logloss:0.57993
+[800]	validation_0-logloss:0.20281	validation_1-logloss:0.59252
+[899]	validation_0-logloss:0.18904	validation_1-logloss:0.60126
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b02/fold1: X=(6166, 237), y=(6166,)
+[0]	validation_0-logloss:0.53875	validation_1-logloss:0.52900
+[100]	validation_0-logloss:0.38001	validation_1-logloss:0.51529
+[200]	validation_0-logloss:0.33686	validation_1-logloss:0.52869
+[300]	validation_0-logloss:0.30373	validation_1-logloss:0.53631
+[400]	validation_0-logloss:0.27913	validation_1-logloss:0.54270
+[500]	validation_0-logloss:0.25883	validation_1-logloss:0.55038
+[600]	validation_0-logloss:0.24039	validation_1-logloss:0.56024
+[700]	validation_0-logloss:0.22333	validation_1-logloss:0.56896
+[800]	validation_0-logloss:0.20781	validation_1-logloss:0.57897
+[899]	validation_0-logloss:0.19478	validation_1-logloss:0.58994
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b02/fold2: X=(6166, 237), y=(6166,)
+[0]	validation_0-logloss:0.55343	validation_1-logloss:0.47937
+[100]	validation_0-logloss:0.41303	validation_1-logloss:0.42495
+[200]	validation_0-logloss:0.37275	validation_1-logloss:0.43535
+[300]	validation_0-logloss:0.33715	validation_1-logloss:0.44379
+[400]	validation_0-logloss:0.31011	validation_1-logloss:0.45277
+[500]	validation_0-logloss:0.28675	validation_1-logloss:0.46187
+[600]	validation_0-logloss:0.26607	validation_1-logloss:0.46624
+[700]	validation_0-logloss:0.24830	validation_1-logloss:0.47465
+[800]	validation_0-logloss:0.23231	validation_1-logloss:0.48451
+[899]	validation_0-logloss:0.21777	validation_1-logloss:0.49164
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b02/fold3: X=(6167, 237), y=(6167,)
+[0]	validation_0-logloss:0.56554	validation_1-logloss:0.43955
+[100]	validation_0-logloss:0.40917	validation_1-logloss:0.41463
+[200]	validation_0-logloss:0.36531	validation_1-logloss:0.40821
+[300]	validation_0-logloss:0.32896	validation_1-logloss:0.41525
+[400]	validation_0-logloss:0.30156	validation_1-logloss:0.42066
+[500]	validation_0-logloss:0.27758	validation_1-logloss:0.42726
+[600]	validation_0-logloss:0.25772	validation_1-logloss:0.43452
+[700]	validation_0-logloss:0.23944	validation_1-logloss:0.43915
+[800]	validation_0-logloss:0.22479	validation_1-logloss:0.44416
+[899]	validation_0-logloss:0.21036	validation_1-logloss:0.44882
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b02/fold4: X=(6191, 237), y=(6191,)
+[0]	validation_0-logloss:0.51197	validation_1-logloss:0.65751
+[100]	validation_0-logloss:0.39159	validation_1-logloss:0.50866
+[200]	validation_0-logloss:0.34888	validation_1-logloss:0.50122
+[300]	validation_0-logloss:0.31641	validation_1-logloss:0.50997
+[400]	validation_0-logloss:0.29015	validation_1-logloss:0.51668
+[500]	validation_0-logloss:0.26787	validation_1-logloss:0.52373
+[600]	validation_0-logloss:0.24840	validation_1-logloss:0.52219
+[700]	validation_0-logloss:0.23160	validation_1-logloss:0.52549
+[800]	validation_0-logloss:0.21724	validation_1-logloss:0.53049
+[899]	validation_0-logloss:0.20395	validation_1-logloss:0.53454
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/gate_b02/full: X=(7768, 237), y=(7768,)
+[0]	validation_0-logloss:0.53827	validation_1-logloss:0.68618
+[100]	validation_0-logloss:0.40529	validation_1-logloss:0.53384
+[200]	validation_0-logloss:0.36586	validation_1-logloss:0.52507
+[300]	validation_0-logloss:0.33533	validation_1-logloss:0.53379
+[400]	validation_0-logloss:0.31091	validation_1-logloss:0.53918
+[500]	validation_0-logloss:0.28936	validation_1-logloss:0.54482
+[600]	validation_0-logloss:0.27110	validation_1-logloss:0.55423
+[700]	validation_0-logloss:0.25518	validation_1-logloss:0.56462
+[800]	validation_0-logloss:0.24048	validation_1-logloss:0.57698
+[899]	validation_0-logloss:0.22717	validation_1-logloss:0.58503
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/context_0.25/b02: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:89.93894	validation_1-rmse:96.39413
+[100]	validation_0-rmse:68.84763	validation_1-rmse:73.26346
+[200]	validation_0-rmse:63.82755	validation_1-rmse:70.72274
+[300]	validation_0-rmse:60.36284	validation_1-rmse:69.82820
+[400]	validation_0-rmse:57.61439	validation_1-rmse:69.48405
+[500]	validation_0-rmse:55.30567	validation_1-rmse:69.26992
+[600]	validation_0-rmse:53.26296	validation_1-rmse:69.67461
+[700]	validation_0-rmse:51.50391	validation_1-rmse:69.65429
+[800]	validation_0-rmse:49.85360	validation_1-rmse:70.23827
+[899]	validation_0-rmse:48.42720	validation_1-rmse:70.28017
+{"status": "running", "phase": "fold1/context_0.25", "pid": 1635452, "utc": "2026-10-28T00:38:06.864172+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b00/fold0: X=(6779, 237), y=(6779,)
+[0]	validation_0-logloss:0.52667	validation_1-logloss:0.63379
+[100]	validation_0-logloss:0.27859	validation_1-logloss:0.38303
+[200]	validation_0-logloss:0.24274	validation_1-logloss:0.36329
+[300]	validation_0-logloss:0.21630	validation_1-logloss:0.36109
+[400]	validation_0-logloss:0.19645	validation_1-logloss:0.35906
+[500]	validation_0-logloss:0.17975	validation_1-logloss:0.36430
+[600]	validation_0-logloss:0.16578	validation_1-logloss:0.36848
+[700]	validation_0-logloss:0.15370	validation_1-logloss:0.37315
+[800]	validation_0-logloss:0.14311	validation_1-logloss:0.37699
+[899]	validation_0-logloss:0.13438	validation_1-logloss:0.37982
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b00/fold1: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.54563	validation_1-logloss:0.54390
+[100]	validation_0-logloss:0.26596	validation_1-logloss:0.38438
+[200]	validation_0-logloss:0.22702	validation_1-logloss:0.40379
+[300]	validation_0-logloss:0.20292	validation_1-logloss:0.41954
+[400]	validation_0-logloss:0.18526	validation_1-logloss:0.42845
+[500]	validation_0-logloss:0.16972	validation_1-logloss:0.43438
+[600]	validation_0-logloss:0.15548	validation_1-logloss:0.44260
+[700]	validation_0-logloss:0.14451	validation_1-logloss:0.45093
+[800]	validation_0-logloss:0.13490	validation_1-logloss:0.45866
+[899]	validation_0-logloss:0.12663	validation_1-logloss:0.46453
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b00/fold2: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.57623	validation_1-logloss:0.45071
+[100]	validation_0-logloss:0.29985	validation_1-logloss:0.26527
+[200]	validation_0-logloss:0.26049	validation_1-logloss:0.25086
+[300]	validation_0-logloss:0.23415	validation_1-logloss:0.24616
+[400]	validation_0-logloss:0.21364	validation_1-logloss:0.24318
+[500]	validation_0-logloss:0.19779	validation_1-logloss:0.24235
+[600]	validation_0-logloss:0.18085	validation_1-logloss:0.24126
+[700]	validation_0-logloss:0.16707	validation_1-logloss:0.24048
+[800]	validation_0-logloss:0.15648	validation_1-logloss:0.24173
+[899]	validation_0-logloss:0.14658	validation_1-logloss:0.24184
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b00/fold3: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.57377	validation_1-logloss:0.45421
+[100]	validation_0-logloss:0.28864	validation_1-logloss:0.28339
+[200]	validation_0-logloss:0.24603	validation_1-logloss:0.27640
+[300]	validation_0-logloss:0.21852	validation_1-logloss:0.28078
+[400]	validation_0-logloss:0.19780	validation_1-logloss:0.28576
+[500]	validation_0-logloss:0.18285	validation_1-logloss:0.28857
+[600]	validation_0-logloss:0.16914	validation_1-logloss:0.29249
+[700]	validation_0-logloss:0.15801	validation_1-logloss:0.29433
+[800]	validation_0-logloss:0.14733	validation_1-logloss:0.29778
+[899]	validation_0-logloss:0.13850	validation_1-logloss:0.30066
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b00/fold4: X=(6780, 237), y=(6780,)
+[0]	validation_0-logloss:0.50610	validation_1-logloss:0.72504
+[100]	validation_0-logloss:0.28051	validation_1-logloss:0.33968
+[200]	validation_0-logloss:0.24059	validation_1-logloss:0.32185
+[300]	validation_0-logloss:0.21528	validation_1-logloss:0.32416
+[400]	validation_0-logloss:0.19523	validation_1-logloss:0.32877
+[500]	validation_0-logloss:0.17837	validation_1-logloss:0.33426
+[600]	validation_0-logloss:0.16497	validation_1-logloss:0.33867
+[700]	validation_0-logloss:0.15292	validation_1-logloss:0.34282
+[800]	validation_0-logloss:0.14179	validation_1-logloss:0.34546
+[899]	validation_0-logloss:0.13260	validation_1-logloss:0.35063
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b00/full: X=(8504, 237), y=(8504,)
+[0]	validation_0-logloss:0.54698	validation_1-logloss:0.78822
+[100]	validation_0-logloss:0.28745	validation_1-logloss:0.35297
+[200]	validation_0-logloss:0.25060	validation_1-logloss:0.34120
+[300]	validation_0-logloss:0.22877	validation_1-logloss:0.33911
+[400]	validation_0-logloss:0.20949	validation_1-logloss:0.33799
+[500]	validation_0-logloss:0.19478	validation_1-logloss:0.34072
+[600]	validation_0-logloss:0.18121	validation_1-logloss:0.34122
+[700]	validation_0-logloss:0.16919	validation_1-logloss:0.34372
+[800]	validation_0-logloss:0.15887	validation_1-logloss:0.34346
+[899]	validation_0-logloss:0.14975	validation_1-logloss:0.34338
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/context_0.25/b00: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:91.01445	validation_1-rmse:128.60436
+[100]	validation_0-rmse:45.34529	validation_1-rmse:66.47179
+[200]	validation_0-rmse:41.82036	validation_1-rmse:63.81917
+[300]	validation_0-rmse:40.26430	validation_1-rmse:63.22422
+[400]	validation_0-rmse:39.06494	validation_1-rmse:63.18501
+[500]	validation_0-rmse:38.06069	validation_1-rmse:63.38273
+[600]	validation_0-rmse:37.20420	validation_1-rmse:63.46015
+[700]	validation_0-rmse:36.37641	validation_1-rmse:63.66008
+[800]	validation_0-rmse:35.63352	validation_1-rmse:63.82341
+[899]	validation_0-rmse:34.95767	validation_1-rmse:63.88323
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b01/fold0: X=(6779, 237), y=(6779,)
+[0]	validation_0-logloss:0.53218	validation_1-logloss:0.64235
+[100]	validation_0-logloss:0.35918	validation_1-logloss:0.51758
+[200]	validation_0-logloss:0.31726	validation_1-logloss:0.49625
+[300]	validation_0-logloss:0.28651	validation_1-logloss:0.49147
+[400]	validation_0-logloss:0.26146	validation_1-logloss:0.49349
+[500]	validation_0-logloss:0.24081	validation_1-logloss:0.49547
+[600]	validation_0-logloss:0.22367	validation_1-logloss:0.49834
+[700]	validation_0-logloss:0.20785	validation_1-logloss:0.50347
+[800]	validation_0-logloss:0.19520	validation_1-logloss:0.50405
+[899]	validation_0-logloss:0.18268	validation_1-logloss:0.50769
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b01/fold1: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.55175	validation_1-logloss:0.55451
+[100]	validation_0-logloss:0.35574	validation_1-logloss:0.50562
+[200]	validation_0-logloss:0.31096	validation_1-logloss:0.52266
+[300]	validation_0-logloss:0.27896	validation_1-logloss:0.53647
+[400]	validation_0-logloss:0.25307	validation_1-logloss:0.54875
+[500]	validation_0-logloss:0.23188	validation_1-logloss:0.56038
+[600]	validation_0-logloss:0.21367	validation_1-logloss:0.57647
+[700]	validation_0-logloss:0.19793	validation_1-logloss:0.58741
+[800]	validation_0-logloss:0.18541	validation_1-logloss:0.59894
+[899]	validation_0-logloss:0.17223	validation_1-logloss:0.61029
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b01/fold2: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.58277	validation_1-logloss:0.45043
+[100]	validation_0-logloss:0.40078	validation_1-logloss:0.33531
+[200]	validation_0-logloss:0.35372	validation_1-logloss:0.32720
+[300]	validation_0-logloss:0.32002	validation_1-logloss:0.32732
+[400]	validation_0-logloss:0.29305	validation_1-logloss:0.32583
+[500]	validation_0-logloss:0.27113	validation_1-logloss:0.32548
+[600]	validation_0-logloss:0.25172	validation_1-logloss:0.32834
+[700]	validation_0-logloss:0.23510	validation_1-logloss:0.32773
+[800]	validation_0-logloss:0.22086	validation_1-logloss:0.32785
+[899]	validation_0-logloss:0.20720	validation_1-logloss:0.32894
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b01/fold3: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.57966	validation_1-logloss:0.45799
+[100]	validation_0-logloss:0.38516	validation_1-logloss:0.39242
+[200]	validation_0-logloss:0.33961	validation_1-logloss:0.39325
+[300]	validation_0-logloss:0.30600	validation_1-logloss:0.39918
+[400]	validation_0-logloss:0.28184	validation_1-logloss:0.40375
+[500]	validation_0-logloss:0.25895	validation_1-logloss:0.40621
+[600]	validation_0-logloss:0.24134	validation_1-logloss:0.40713
+[700]	validation_0-logloss:0.22400	validation_1-logloss:0.41038
+[800]	validation_0-logloss:0.20870	validation_1-logloss:0.40984
+[899]	validation_0-logloss:0.19632	validation_1-logloss:0.41189
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b01/fold4: X=(6780, 237), y=(6780,)
+[0]	validation_0-logloss:0.51282	validation_1-logloss:0.74080
+[100]	validation_0-logloss:0.36477	validation_1-logloss:0.50623
+[200]	validation_0-logloss:0.31722	validation_1-logloss:0.49005
+[300]	validation_0-logloss:0.28709	validation_1-logloss:0.49509
+[400]	validation_0-logloss:0.26247	validation_1-logloss:0.50498
+[500]	validation_0-logloss:0.24254	validation_1-logloss:0.50964
+[600]	validation_0-logloss:0.22421	validation_1-logloss:0.51425
+[700]	validation_0-logloss:0.20692	validation_1-logloss:0.52087
+[800]	validation_0-logloss:0.19336	validation_1-logloss:0.52545
+[899]	validation_0-logloss:0.18083	validation_1-logloss:0.52810
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b01/full: X=(8504, 237), y=(8504,)
+[0]	validation_0-logloss:0.55303	validation_1-logloss:0.80539
+[100]	validation_0-logloss:0.37874	validation_1-logloss:0.54037
+[200]	validation_0-logloss:0.33815	validation_1-logloss:0.53117
+[300]	validation_0-logloss:0.30917	validation_1-logloss:0.53305
+[400]	validation_0-logloss:0.28684	validation_1-logloss:0.54820
+[500]	validation_0-logloss:0.26776	validation_1-logloss:0.55923
+[600]	validation_0-logloss:0.25028	validation_1-logloss:0.56996
+[700]	validation_0-logloss:0.23422	validation_1-logloss:0.58046
+[800]	validation_0-logloss:0.22025	validation_1-logloss:0.58567
+[899]	validation_0-logloss:0.20789	validation_1-logloss:0.59128
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/context_0.25/b01: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:91.99230	validation_1-rmse:130.46153
+[100]	validation_0-rmse:63.14044	validation_1-rmse:96.96982
+[200]	validation_0-rmse:57.96086	validation_1-rmse:93.93011
+[300]	validation_0-rmse:55.09921	validation_1-rmse:93.50597
+[400]	validation_0-rmse:52.87353	validation_1-rmse:94.02480
+[500]	validation_0-rmse:51.04934	validation_1-rmse:94.08237
+[600]	validation_0-rmse:49.50431	validation_1-rmse:94.50835
+[700]	validation_0-rmse:48.10142	validation_1-rmse:94.77809
+[800]	validation_0-rmse:46.85275	validation_1-rmse:95.27970
+[899]	validation_0-rmse:45.63557	validation_1-rmse:95.48276
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b02/fold0: X=(6779, 237), y=(6779,)
+[0]	validation_0-logloss:0.53244	validation_1-logloss:0.63758
+[100]	validation_0-logloss:0.38638	validation_1-logloss:0.58573
+[200]	validation_0-logloss:0.34350	validation_1-logloss:0.56495
+[300]	validation_0-logloss:0.31117	validation_1-logloss:0.56048
+[400]	validation_0-logloss:0.28647	validation_1-logloss:0.56793
+[500]	validation_0-logloss:0.26538	validation_1-logloss:0.57452
+[600]	validation_0-logloss:0.24746	validation_1-logloss:0.58249
+[700]	validation_0-logloss:0.23085	validation_1-logloss:0.58797
+[800]	validation_0-logloss:0.21667	validation_1-logloss:0.59164
+[899]	validation_0-logloss:0.20439	validation_1-logloss:0.60005
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b02/fold1: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.55029	validation_1-logloss:0.55545
+[100]	validation_0-logloss:0.38505	validation_1-logloss:0.55312
+[200]	validation_0-logloss:0.34260	validation_1-logloss:0.57352
+[300]	validation_0-logloss:0.31257	validation_1-logloss:0.58654
+[400]	validation_0-logloss:0.28904	validation_1-logloss:0.59669
+[500]	validation_0-logloss:0.26746	validation_1-logloss:0.60727
+[600]	validation_0-logloss:0.24933	validation_1-logloss:0.61939
+[700]	validation_0-logloss:0.23194	validation_1-logloss:0.62994
+[800]	validation_0-logloss:0.21733	validation_1-logloss:0.64066
+[899]	validation_0-logloss:0.20371	validation_1-logloss:0.64888
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b02/fold2: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.58112	validation_1-logloss:0.44994
+[100]	validation_0-logloss:0.43099	validation_1-logloss:0.38876
+[200]	validation_0-logloss:0.39354	validation_1-logloss:0.38671
+[300]	validation_0-logloss:0.35968	validation_1-logloss:0.38469
+[400]	validation_0-logloss:0.33304	validation_1-logloss:0.39197
+[500]	validation_0-logloss:0.31047	validation_1-logloss:0.39200
+[600]	validation_0-logloss:0.29043	validation_1-logloss:0.39365
+[700]	validation_0-logloss:0.27171	validation_1-logloss:0.39724
+[800]	validation_0-logloss:0.25584	validation_1-logloss:0.40069
+[899]	validation_0-logloss:0.24097	validation_1-logloss:0.40416
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b02/fold3: X=(6755, 237), y=(6755,)
+[0]	validation_0-logloss:0.57802	validation_1-logloss:0.45745
+[100]	validation_0-logloss:0.41466	validation_1-logloss:0.41768
+[200]	validation_0-logloss:0.36922	validation_1-logloss:0.42654
+[300]	validation_0-logloss:0.33296	validation_1-logloss:0.43144
+[400]	validation_0-logloss:0.30760	validation_1-logloss:0.43484
+[500]	validation_0-logloss:0.28506	validation_1-logloss:0.44004
+[600]	validation_0-logloss:0.26676	validation_1-logloss:0.44464
+[700]	validation_0-logloss:0.24911	validation_1-logloss:0.44955
+[800]	validation_0-logloss:0.23322	validation_1-logloss:0.45460
+[899]	validation_0-logloss:0.21966	validation_1-logloss:0.45701
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b02/fold4: X=(6780, 237), y=(6780,)
+[0]	validation_0-logloss:0.51194	validation_1-logloss:0.73817
+[100]	validation_0-logloss:0.39777	validation_1-logloss:0.52868
+[200]	validation_0-logloss:0.35776	validation_1-logloss:0.51284
+[300]	validation_0-logloss:0.32655	validation_1-logloss:0.51690
+[400]	validation_0-logloss:0.30099	validation_1-logloss:0.52390
+[500]	validation_0-logloss:0.27816	validation_1-logloss:0.53635
+[600]	validation_0-logloss:0.25918	validation_1-logloss:0.54103
+[700]	validation_0-logloss:0.24163	validation_1-logloss:0.54326
+[800]	validation_0-logloss:0.22535	validation_1-logloss:0.54996
+[899]	validation_0-logloss:0.21151	validation_1-logloss:0.55486
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/gate_b02/full: X=(8504, 237), y=(8504,)
+[0]	validation_0-logloss:0.55234	validation_1-logloss:0.81724
+[100]	validation_0-logloss:0.40959	validation_1-logloss:0.62303
+[200]	validation_0-logloss:0.37010	validation_1-logloss:0.64182
+[300]	validation_0-logloss:0.34140	validation_1-logloss:0.67247
+[400]	validation_0-logloss:0.31738	validation_1-logloss:0.69522
+[500]	validation_0-logloss:0.29719	validation_1-logloss:0.70990
+[600]	validation_0-logloss:0.27924	validation_1-logloss:0.72444
+[700]	validation_0-logloss:0.26343	validation_1-logloss:0.72929
+[800]	validation_0-logloss:0.24907	validation_1-logloss:0.74069
+[899]	validation_0-logloss:0.23639	validation_1-logloss:0.75427
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/context_0.25/b02: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:92.21592	validation_1-rmse:134.01993
+[100]	validation_0-rmse:69.60657	validation_1-rmse:110.88316
+[200]	validation_0-rmse:64.50525	validation_1-rmse:110.85040
+[300]	validation_0-rmse:61.29638	validation_1-rmse:112.16021
+[400]	validation_0-rmse:58.49742	validation_1-rmse:112.69950
+[500]	validation_0-rmse:56.31513	validation_1-rmse:113.71087
+[600]	validation_0-rmse:54.29511	validation_1-rmse:114.23687
+[700]	validation_0-rmse:52.61519	validation_1-rmse:115.13210
+[800]	validation_0-rmse:51.04100	validation_1-rmse:115.52095
+[899]	validation_0-rmse:49.60532	validation_1-rmse:116.46311
+{"status": "running", "phase": "fold2/context_0.25", "pid": 1635452, "utc": "2026-10-28T00:59:39.126072+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b00/fold0: X=(7361, 237), y=(7361,)
+[0]	validation_0-logloss:0.55063	validation_1-logloss:0.62074
+[100]	validation_0-logloss:0.27752	validation_1-logloss:0.37675
+[200]	validation_0-logloss:0.24023	validation_1-logloss:0.35955
+[300]	validation_0-logloss:0.21628	validation_1-logloss:0.35953
+[400]	validation_0-logloss:0.19708	validation_1-logloss:0.36000
+[500]	validation_0-logloss:0.18139	validation_1-logloss:0.36175
+[600]	validation_0-logloss:0.16727	validation_1-logloss:0.36330
+[700]	validation_0-logloss:0.15495	validation_1-logloss:0.36561
+[800]	validation_0-logloss:0.14435	validation_1-logloss:0.36677
+[899]	validation_0-logloss:0.13503	validation_1-logloss:0.36940
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b00/fold1: X=(7337, 237), y=(7337,)
+[0]	validation_0-logloss:0.57255	validation_1-logloss:0.54902
+[100]	validation_0-logloss:0.27420	validation_1-logloss:0.37267
+[200]	validation_0-logloss:0.23399	validation_1-logloss:0.38412
+[300]	validation_0-logloss:0.20802	validation_1-logloss:0.40071
+[400]	validation_0-logloss:0.18896	validation_1-logloss:0.41041
+[500]	validation_0-logloss:0.17446	validation_1-logloss:0.41826
+[600]	validation_0-logloss:0.16058	validation_1-logloss:0.42504
+[700]	validation_0-logloss:0.14989	validation_1-logloss:0.43365
+[800]	validation_0-logloss:0.13950	validation_1-logloss:0.44217
+[899]	validation_0-logloss:0.13002	validation_1-logloss:0.44730
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b00/fold2: X=(7338, 237), y=(7338,)
+[0]	validation_0-logloss:0.60601	validation_1-logloss:0.44527
+[100]	validation_0-logloss:0.30711	validation_1-logloss:0.25550
+[200]	validation_0-logloss:0.26465	validation_1-logloss:0.24362
+[300]	validation_0-logloss:0.23815	validation_1-logloss:0.24049
+[400]	validation_0-logloss:0.21785	validation_1-logloss:0.23844
+[500]	validation_0-logloss:0.20214	validation_1-logloss:0.23744
+[600]	validation_0-logloss:0.18827	validation_1-logloss:0.23980
+[700]	validation_0-logloss:0.17563	validation_1-logloss:0.24016
+[800]	validation_0-logloss:0.16406	validation_1-logloss:0.23982
+[899]	validation_0-logloss:0.15519	validation_1-logloss:0.24021
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b00/fold3: X=(7338, 237), y=(7338,)
+[0]	validation_0-logloss:0.57623	validation_1-logloss:0.53884
+[100]	validation_0-logloss:0.29256	validation_1-logloss:0.30716
+[200]	validation_0-logloss:0.24899	validation_1-logloss:0.30579
+[300]	validation_0-logloss:0.22443	validation_1-logloss:0.31389
+[400]	validation_0-logloss:0.20506	validation_1-logloss:0.31798
+[500]	validation_0-logloss:0.18973	validation_1-logloss:0.32547
+[600]	validation_0-logloss:0.17550	validation_1-logloss:0.33296
+[700]	validation_0-logloss:0.16416	validation_1-logloss:0.33513
+[800]	validation_0-logloss:0.15390	validation_1-logloss:0.33846
+[899]	validation_0-logloss:0.14446	validation_1-logloss:0.34206
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b00/fold4: X=(7362, 237), y=(7362,)
+[0]	validation_0-logloss:0.52163	validation_1-logloss:0.76741
+[100]	validation_0-logloss:0.27967	validation_1-logloss:0.36139
+[200]	validation_0-logloss:0.24145	validation_1-logloss:0.35425
+[300]	validation_0-logloss:0.21702	validation_1-logloss:0.36151
+[400]	validation_0-logloss:0.19666	validation_1-logloss:0.36989
+[500]	validation_0-logloss:0.18106	validation_1-logloss:0.38037
+[600]	validation_0-logloss:0.16738	validation_1-logloss:0.38933
+[700]	validation_0-logloss:0.15605	validation_1-logloss:0.39713
+[800]	validation_0-logloss:0.14494	validation_1-logloss:0.40196
+[899]	validation_0-logloss:0.13594	validation_1-logloss:0.41027
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b00/full: X=(9232, 237), y=(9232,)
+[0]	validation_0-logloss:0.56681	validation_1-logloss:0.83982
+[100]	validation_0-logloss:0.29068	validation_1-logloss:0.38415
+[200]	validation_0-logloss:0.25233	validation_1-logloss:0.36674
+[300]	validation_0-logloss:0.23077	validation_1-logloss:0.37116
+[400]	validation_0-logloss:0.21276	validation_1-logloss:0.37691
+[500]	validation_0-logloss:0.19853	validation_1-logloss:0.38506
+[600]	validation_0-logloss:0.18532	validation_1-logloss:0.39464
+[700]	validation_0-logloss:0.17391	validation_1-logloss:0.40155
+[800]	validation_0-logloss:0.16404	validation_1-logloss:0.40638
+[899]	validation_0-logloss:0.15457	validation_1-logloss:0.41547
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/context_0.25/b00: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:95.04595	validation_1-rmse:134.94218
+[100]	validation_0-rmse:46.94734	validation_1-rmse:67.87367
+[200]	validation_0-rmse:43.20228	validation_1-rmse:64.90098
+[300]	validation_0-rmse:41.63930	validation_1-rmse:64.29326
+[400]	validation_0-rmse:40.50908	validation_1-rmse:64.18521
+[500]	validation_0-rmse:39.43440	validation_1-rmse:64.36245
+[600]	validation_0-rmse:38.53645	validation_1-rmse:64.62030
+[700]	validation_0-rmse:37.67848	validation_1-rmse:64.70652
+[800]	validation_0-rmse:36.94290	validation_1-rmse:64.75123
+[899]	validation_0-rmse:36.23174	validation_1-rmse:64.74360
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b01/fold0: X=(7361, 237), y=(7361,)
+[0]	validation_0-logloss:0.55690	validation_1-logloss:0.63370
+[100]	validation_0-logloss:0.36698	validation_1-logloss:0.52083
+[200]	validation_0-logloss:0.32542	validation_1-logloss:0.50407
+[300]	validation_0-logloss:0.29538	validation_1-logloss:0.49847
+[400]	validation_0-logloss:0.27228	validation_1-logloss:0.49692
+[500]	validation_0-logloss:0.25289	validation_1-logloss:0.49659
+[600]	validation_0-logloss:0.23576	validation_1-logloss:0.49760
+[700]	validation_0-logloss:0.22159	validation_1-logloss:0.50086
+[800]	validation_0-logloss:0.20717	validation_1-logloss:0.50189
+[899]	validation_0-logloss:0.19567	validation_1-logloss:0.50412
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b01/fold1: X=(7337, 237), y=(7337,)
+[0]	validation_0-logloss:0.57941	validation_1-logloss:0.55008
+[100]	validation_0-logloss:0.37221	validation_1-logloss:0.47967
+[200]	validation_0-logloss:0.32415	validation_1-logloss:0.50172
+[300]	validation_0-logloss:0.29172	validation_1-logloss:0.52076
+[400]	validation_0-logloss:0.26546	validation_1-logloss:0.54163
+[500]	validation_0-logloss:0.24484	validation_1-logloss:0.55836
+[600]	validation_0-logloss:0.22726	validation_1-logloss:0.57892
+[700]	validation_0-logloss:0.21047	validation_1-logloss:0.59776
+[800]	validation_0-logloss:0.19609	validation_1-logloss:0.61006
+[899]	validation_0-logloss:0.18480	validation_1-logloss:0.62301
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b01/fold2: X=(7338, 237), y=(7338,)
+[0]	validation_0-logloss:0.61290	validation_1-logloss:0.44902
+[100]	validation_0-logloss:0.41521	validation_1-logloss:0.32147
+[200]	validation_0-logloss:0.36959	validation_1-logloss:0.31211
+[300]	validation_0-logloss:0.33715	validation_1-logloss:0.31256
+[400]	validation_0-logloss:0.30998	validation_1-logloss:0.31070
+[500]	validation_0-logloss:0.28786	validation_1-logloss:0.30962
+[600]	validation_0-logloss:0.26885	validation_1-logloss:0.31108
+[700]	validation_0-logloss:0.25240	validation_1-logloss:0.31415
+[800]	validation_0-logloss:0.23753	validation_1-logloss:0.31455
+[899]	validation_0-logloss:0.22485	validation_1-logloss:0.31421
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b01/fold3: X=(7338, 237), y=(7338,)
+[0]	validation_0-logloss:0.58310	validation_1-logloss:0.54568
+[100]	validation_0-logloss:0.38491	validation_1-logloss:0.44784
+[200]	validation_0-logloss:0.33764	validation_1-logloss:0.45404
+[300]	validation_0-logloss:0.30622	validation_1-logloss:0.46362
+[400]	validation_0-logloss:0.28131	validation_1-logloss:0.47269
+[500]	validation_0-logloss:0.25995	validation_1-logloss:0.47976
+[600]	validation_0-logloss:0.24119	validation_1-logloss:0.48571
+[700]	validation_0-logloss:0.22471	validation_1-logloss:0.48988
+[800]	validation_0-logloss:0.21066	validation_1-logloss:0.49362
+[899]	validation_0-logloss:0.19763	validation_1-logloss:0.49978
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b01/fold4: X=(7362, 237), y=(7362,)
+[0]	validation_0-logloss:0.52807	validation_1-logloss:0.78923
+[100]	validation_0-logloss:0.36393	validation_1-logloss:0.56802
+[200]	validation_0-logloss:0.32237	validation_1-logloss:0.56472
+[300]	validation_0-logloss:0.29092	validation_1-logloss:0.57593
+[400]	validation_0-logloss:0.26684	validation_1-logloss:0.59389
+[500]	validation_0-logloss:0.24751	validation_1-logloss:0.59985
+[600]	validation_0-logloss:0.23006	validation_1-logloss:0.60810
+[700]	validation_0-logloss:0.21522	validation_1-logloss:0.62336
+[800]	validation_0-logloss:0.20120	validation_1-logloss:0.63605
+[899]	validation_0-logloss:0.18959	validation_1-logloss:0.64372
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b01/full: X=(9232, 237), y=(9232,)
+[0]	validation_0-logloss:0.57357	validation_1-logloss:0.85289
+[100]	validation_0-logloss:0.39006	validation_1-logloss:0.56626
+[200]	validation_0-logloss:0.34992	validation_1-logloss:0.56570
+[300]	validation_0-logloss:0.32159	validation_1-logloss:0.57100
+[400]	validation_0-logloss:0.29919	validation_1-logloss:0.57627
+[500]	validation_0-logloss:0.28015	validation_1-logloss:0.58477
+[600]	validation_0-logloss:0.26273	validation_1-logloss:0.59282
+[700]	validation_0-logloss:0.24725	validation_1-logloss:0.59655
+[800]	validation_0-logloss:0.23450	validation_1-logloss:0.60086
+[899]	validation_0-logloss:0.22260	validation_1-logloss:0.60275
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/context_0.25/b01: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:96.20313	validation_1-rmse:135.73566
+[100]	validation_0-rmse:66.02685	validation_1-rmse:95.69135
+[200]	validation_0-rmse:60.55721	validation_1-rmse:94.32698
+[300]	validation_0-rmse:57.79088	validation_1-rmse:94.22870
+[400]	validation_0-rmse:55.60978	validation_1-rmse:94.36253
+[500]	validation_0-rmse:53.65565	validation_1-rmse:94.64850
+[600]	validation_0-rmse:52.06416	validation_1-rmse:95.17587
+[700]	validation_0-rmse:50.63494	validation_1-rmse:95.61514
+[800]	validation_0-rmse:49.41222	validation_1-rmse:95.88291
+[899]	validation_0-rmse:48.24166	validation_1-rmse:96.38655
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b02/fold0: X=(7361, 237), y=(7361,)
+[0]	validation_0-logloss:0.55737	validation_1-logloss:0.63641
+[100]	validation_0-logloss:0.39571	validation_1-logloss:0.58440
+[200]	validation_0-logloss:0.35839	validation_1-logloss:0.57518
+[300]	validation_0-logloss:0.32880	validation_1-logloss:0.57757
+[400]	validation_0-logloss:0.30553	validation_1-logloss:0.57828
+[500]	validation_0-logloss:0.28441	validation_1-logloss:0.57991
+[600]	validation_0-logloss:0.26742	validation_1-logloss:0.58674
+[700]	validation_0-logloss:0.25160	validation_1-logloss:0.59015
+[800]	validation_0-logloss:0.23646	validation_1-logloss:0.59219
+[899]	validation_0-logloss:0.22458	validation_1-logloss:0.59572
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b02/fold1: X=(7337, 237), y=(7337,)
+[0]	validation_0-logloss:0.58031	validation_1-logloss:0.54638
+[100]	validation_0-logloss:0.40366	validation_1-logloss:0.52183
+[200]	validation_0-logloss:0.36477	validation_1-logloss:0.54623
+[300]	validation_0-logloss:0.33656	validation_1-logloss:0.56523
+[400]	validation_0-logloss:0.31191	validation_1-logloss:0.58205
+[500]	validation_0-logloss:0.28929	validation_1-logloss:0.59620
+[600]	validation_0-logloss:0.27041	validation_1-logloss:0.60841
+[700]	validation_0-logloss:0.25424	validation_1-logloss:0.61833
+[800]	validation_0-logloss:0.23784	validation_1-logloss:0.63051
+[899]	validation_0-logloss:0.22287	validation_1-logloss:0.63892
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b02/fold2: X=(7338, 237), y=(7338,)
+[0]	validation_0-logloss:0.61357	validation_1-logloss:0.44946
+[100]	validation_0-logloss:0.45564	validation_1-logloss:0.35615
+[200]	validation_0-logloss:0.41350	validation_1-logloss:0.35224
+[300]	validation_0-logloss:0.38059	validation_1-logloss:0.35438
+[400]	validation_0-logloss:0.35558	validation_1-logloss:0.35568
+[500]	validation_0-logloss:0.33343	validation_1-logloss:0.35852
+[600]	validation_0-logloss:0.31164	validation_1-logloss:0.36166
+[700]	validation_0-logloss:0.29329	validation_1-logloss:0.36272
+[800]	validation_0-logloss:0.27788	validation_1-logloss:0.36323
+[899]	validation_0-logloss:0.26320	validation_1-logloss:0.36572
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b02/fold3: X=(7338, 237), y=(7338,)
+[0]	validation_0-logloss:0.58238	validation_1-logloss:0.54455
+[100]	validation_0-logloss:0.41450	validation_1-logloss:0.50025
+[200]	validation_0-logloss:0.37148	validation_1-logloss:0.50901
+[300]	validation_0-logloss:0.33859	validation_1-logloss:0.51582
+[400]	validation_0-logloss:0.31182	validation_1-logloss:0.53022
+[500]	validation_0-logloss:0.29092	validation_1-logloss:0.53795
+[600]	validation_0-logloss:0.27110	validation_1-logloss:0.54513
+[700]	validation_0-logloss:0.25276	validation_1-logloss:0.55565
+[800]	validation_0-logloss:0.23818	validation_1-logloss:0.55732
+[899]	validation_0-logloss:0.22428	validation_1-logloss:0.56664
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b02/fold4: X=(7362, 237), y=(7362,)
+[0]	validation_0-logloss:0.52688	validation_1-logloss:0.79549
+[100]	validation_0-logloss:0.40023	validation_1-logloss:0.62700
+[200]	validation_0-logloss:0.35798	validation_1-logloss:0.62725
+[300]	validation_0-logloss:0.32762	validation_1-logloss:0.64863
+[400]	validation_0-logloss:0.30335	validation_1-logloss:0.66323
+[500]	validation_0-logloss:0.28160	validation_1-logloss:0.67565
+[600]	validation_0-logloss:0.26315	validation_1-logloss:0.68792
+[700]	validation_0-logloss:0.24816	validation_1-logloss:0.70028
+[800]	validation_0-logloss:0.23419	validation_1-logloss:0.71325
+[899]	validation_0-logloss:0.22101	validation_1-logloss:0.72620
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/gate_b02/full: X=(9232, 237), y=(9232,)
+[0]	validation_0-logloss:0.57423	validation_1-logloss:0.85357
+[100]	validation_0-logloss:0.42352	validation_1-logloss:0.58531
+[200]	validation_0-logloss:0.38482	validation_1-logloss:0.59032
+[300]	validation_0-logloss:0.35691	validation_1-logloss:0.59516
+[400]	validation_0-logloss:0.33281	validation_1-logloss:0.60037
+[500]	validation_0-logloss:0.31302	validation_1-logloss:0.60308
+[600]	validation_0-logloss:0.29605	validation_1-logloss:0.61180
+[700]	validation_0-logloss:0.28103	validation_1-logloss:0.61744
+[800]	validation_0-logloss:0.26702	validation_1-logloss:0.62188
+[899]	validation_0-logloss:0.25442	validation_1-logloss:0.62883
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/context_0.25/b02: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:96.46785	validation_1-rmse:134.34026
+[100]	validation_0-rmse:72.97861	validation_1-rmse:98.19489
+[200]	validation_0-rmse:68.10789	validation_1-rmse:98.89225
+[300]	validation_0-rmse:65.14153	validation_1-rmse:100.23418
+[400]	validation_0-rmse:62.61164	validation_1-rmse:101.34089
+[500]	validation_0-rmse:60.36955	validation_1-rmse:101.69407
+[600]	validation_0-rmse:58.49721	validation_1-rmse:101.40882
+[700]	validation_0-rmse:56.79138	validation_1-rmse:102.16976
+[800]	validation_0-rmse:55.16079	validation_1-rmse:102.72347
+[899]	validation_0-rmse:53.61569	validation_1-rmse:103.18546
+{"status": "running", "phase": "fold0/context_1.0", "pid": 1635452, "utc": "2026-10-28T01:22:03.131208+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/context_1.0/b00: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:87.85188	validation_1-rmse:100.11878
+[100]	validation_0-rmse:44.74420	validation_1-rmse:49.21470
+[200]	validation_0-rmse:41.24290	validation_1-rmse:46.08004
+[300]	validation_0-rmse:39.64253	validation_1-rmse:45.48117
+[400]	validation_0-rmse:38.42817	validation_1-rmse:45.44847
+[500]	validation_0-rmse:37.44412	validation_1-rmse:45.47641
+[600]	validation_0-rmse:36.58103	validation_1-rmse:45.63048
+[700]	validation_0-rmse:35.73575	validation_1-rmse:45.58601
+[800]	validation_0-rmse:35.00690	validation_1-rmse:45.67597
+[899]	validation_0-rmse:34.30617	validation_1-rmse:45.68895
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/context_1.0/b01: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:89.27433	validation_1-rmse:97.62422
+[100]	validation_0-rmse:62.47405	validation_1-rmse:69.62225
+[200]	validation_0-rmse:57.32082	validation_1-rmse:65.62722
+[300]	validation_0-rmse:54.29802	validation_1-rmse:64.38087
+[400]	validation_0-rmse:52.06376	validation_1-rmse:64.38775
+[500]	validation_0-rmse:50.02120	validation_1-rmse:63.59148
+[600]	validation_0-rmse:48.49516	validation_1-rmse:63.60919
+[700]	validation_0-rmse:47.02575	validation_1-rmse:63.31402
+[800]	validation_0-rmse:45.76202	validation_1-rmse:63.33683
+[899]	validation_0-rmse:44.54609	validation_1-rmse:63.44089
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold0/context_1.0/b02: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:89.92974	validation_1-rmse:96.34094
+[100]	validation_0-rmse:68.78497	validation_1-rmse:72.80836
+[200]	validation_0-rmse:63.67272	validation_1-rmse:70.78989
+[300]	validation_0-rmse:60.23714	validation_1-rmse:69.69002
+[400]	validation_0-rmse:57.38383	validation_1-rmse:68.90957
+[500]	validation_0-rmse:55.00965	validation_1-rmse:68.87029
+[600]	validation_0-rmse:53.07031	validation_1-rmse:69.22969
+[700]	validation_0-rmse:51.41038	validation_1-rmse:69.45508
+[800]	validation_0-rmse:49.79031	validation_1-rmse:69.74721
+[899]	validation_0-rmse:48.31336	validation_1-rmse:69.82040
+{"status": "running", "phase": "fold1/context_1.0", "pid": 1635452, "utc": "2026-10-28T01:40:41.717582+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/context_1.0/b00: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:90.98321	validation_1-rmse:128.69300
+[100]	validation_0-rmse:45.20015	validation_1-rmse:65.97107
+[200]	validation_0-rmse:41.72238	validation_1-rmse:63.67786
+[300]	validation_0-rmse:40.23038	validation_1-rmse:63.25307
+[400]	validation_0-rmse:39.04086	validation_1-rmse:63.25460
+[500]	validation_0-rmse:37.99701	validation_1-rmse:63.51228
+[600]	validation_0-rmse:37.15932	validation_1-rmse:63.64770
+[700]	validation_0-rmse:36.34709	validation_1-rmse:63.77087
+[800]	validation_0-rmse:35.61113	validation_1-rmse:63.92286
+[899]	validation_0-rmse:34.92010	validation_1-rmse:64.14536
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/context_1.0/b01: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:91.98670	validation_1-rmse:130.55077
+[100]	validation_0-rmse:63.11691	validation_1-rmse:96.60620
+[200]	validation_0-rmse:57.91716	validation_1-rmse:93.74819
+[300]	validation_0-rmse:55.13925	validation_1-rmse:92.98366
+[400]	validation_0-rmse:52.94173	validation_1-rmse:93.54819
+[500]	validation_0-rmse:51.15279	validation_1-rmse:93.53346
+[600]	validation_0-rmse:49.56348	validation_1-rmse:93.64790
+[700]	validation_0-rmse:48.20147	validation_1-rmse:94.11999
+[800]	validation_0-rmse:46.93050	validation_1-rmse:94.50193
+[899]	validation_0-rmse:45.71422	validation_1-rmse:94.71594
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold1/context_1.0/b02: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:92.20528	validation_1-rmse:133.98256
+[100]	validation_0-rmse:69.42779	validation_1-rmse:111.00694
+[200]	validation_0-rmse:64.45745	validation_1-rmse:111.41836
+[300]	validation_0-rmse:61.12184	validation_1-rmse:112.75066
+[400]	validation_0-rmse:58.37175	validation_1-rmse:113.68427
+[500]	validation_0-rmse:56.17407	validation_1-rmse:114.96898
+[600]	validation_0-rmse:54.20389	validation_1-rmse:115.46688
+[700]	validation_0-rmse:52.66559	validation_1-rmse:116.12024
+[800]	validation_0-rmse:51.10778	validation_1-rmse:116.78849
+[899]	validation_0-rmse:49.67566	validation_1-rmse:117.66167
+{"status": "running", "phase": "fold2/context_1.0", "pid": 1635452, "utc": "2026-10-28T02:03:24.782644+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/context_1.0/b00: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:95.00626	validation_1-rmse:134.85966
+[100]	validation_0-rmse:46.81176	validation_1-rmse:67.62857
+[200]	validation_0-rmse:43.12340	validation_1-rmse:64.77474
+[300]	validation_0-rmse:41.61320	validation_1-rmse:64.26615
+[400]	validation_0-rmse:40.43703	validation_1-rmse:64.09965
+[500]	validation_0-rmse:39.38814	validation_1-rmse:64.14765
+[600]	validation_0-rmse:38.48478	validation_1-rmse:64.35436
+[700]	validation_0-rmse:37.67371	validation_1-rmse:64.43204
+[800]	validation_0-rmse:36.92378	validation_1-rmse:64.61689
+[899]	validation_0-rmse:36.23023	validation_1-rmse:64.74058
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/context_1.0/b01: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:96.18773	validation_1-rmse:135.69713
+[100]	validation_0-rmse:65.86502	validation_1-rmse:94.69961
+[200]	validation_0-rmse:60.46236	validation_1-rmse:93.88850
+[300]	validation_0-rmse:57.64085	validation_1-rmse:94.40949
+[400]	validation_0-rmse:55.52745	validation_1-rmse:94.40860
+[500]	validation_0-rmse:53.58136	validation_1-rmse:94.70160
+[600]	validation_0-rmse:52.00438	validation_1-rmse:95.32187
+[700]	validation_0-rmse:50.61805	validation_1-rmse:95.54282
+[800]	validation_0-rmse:49.39502	validation_1-rmse:95.68516
+[899]	validation_0-rmse:48.16932	validation_1-rmse:96.40731
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/fold2/context_1.0/b02: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:96.45568	validation_1-rmse:134.31112
+[100]	validation_0-rmse:72.86127	validation_1-rmse:98.35686
+[200]	validation_0-rmse:68.03375	validation_1-rmse:98.78192
+[300]	validation_0-rmse:65.07984	validation_1-rmse:99.69646
+[400]	validation_0-rmse:62.52016	validation_1-rmse:100.74977
+[500]	validation_0-rmse:60.30005	validation_1-rmse:101.29550
+[600]	validation_0-rmse:58.38233	validation_1-rmse:101.29547
+[700]	validation_0-rmse:56.63743	validation_1-rmse:101.77885
+[800]	validation_0-rmse:54.90496	validation_1-rmse:102.10045
+[899]	validation_0-rmse:53.43179	validation_1-rmse:102.46729
+{"status": "running", "phase": "f1/context_0.25", "pid": 1635452, "utc": "2026-10-28T02:26:50.839884+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b00/fold0: X=(7918, 237), y=(7918,)
+[0]	validation_0-logloss:0.57910	validation_1-logloss:0.61703
+[100]	validation_0-logloss:0.28889	validation_1-logloss:0.36556
+[200]	validation_0-logloss:0.25226	validation_1-logloss:0.34631
+[300]	validation_0-logloss:0.22888	validation_1-logloss:0.34179
+[400]	validation_0-logloss:0.21121	validation_1-logloss:0.34048
+[500]	validation_0-logloss:0.19605	validation_1-logloss:0.34015
+[600]	validation_0-logloss:0.18305	validation_1-logloss:0.33829
+[700]	validation_0-logloss:0.17105	validation_1-logloss:0.33861
+[800]	validation_0-logloss:0.16002	validation_1-logloss:0.33836
+[899]	validation_0-logloss:0.15031	validation_1-logloss:0.34007
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b00/fold1: X=(7894, 237), y=(7894,)
+[0]	validation_0-logloss:0.60340	validation_1-logloss:0.52402
+[100]	validation_0-logloss:0.28376	validation_1-logloss:0.34132
+[200]	validation_0-logloss:0.24452	validation_1-logloss:0.35102
+[300]	validation_0-logloss:0.22027	validation_1-logloss:0.36360
+[400]	validation_0-logloss:0.20219	validation_1-logloss:0.37318
+[500]	validation_0-logloss:0.18710	validation_1-logloss:0.38059
+[600]	validation_0-logloss:0.17332	validation_1-logloss:0.38970
+[700]	validation_0-logloss:0.16147	validation_1-logloss:0.39757
+[800]	validation_0-logloss:0.15052	validation_1-logloss:0.40626
+[899]	validation_0-logloss:0.14105	validation_1-logloss:0.41233
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b00/fold2: X=(7894, 237), y=(7894,)
+[0]	validation_0-logloss:0.61931	validation_1-logloss:0.48282
+[100]	validation_0-logloss:0.30387	validation_1-logloss:0.28410
+[200]	validation_0-logloss:0.26379	validation_1-logloss:0.27302
+[300]	validation_0-logloss:0.23991	validation_1-logloss:0.27046
+[400]	validation_0-logloss:0.22069	validation_1-logloss:0.27000
+[500]	validation_0-logloss:0.20499	validation_1-logloss:0.26966
+[600]	validation_0-logloss:0.19122	validation_1-logloss:0.26949
+[700]	validation_0-logloss:0.17870	validation_1-logloss:0.27034
+[800]	validation_0-logloss:0.16836	validation_1-logloss:0.26941
+[899]	validation_0-logloss:0.15768	validation_1-logloss:0.27058
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b00/fold3: X=(7895, 237), y=(7895,)
+[0]	validation_0-logloss:0.58281	validation_1-logloss:0.59441
+[100]	validation_0-logloss:0.29531	validation_1-logloss:0.30762
+[200]	validation_0-logloss:0.25675	validation_1-logloss:0.30104
+[300]	validation_0-logloss:0.23121	validation_1-logloss:0.30249
+[400]	validation_0-logloss:0.21098	validation_1-logloss:0.30420
+[500]	validation_0-logloss:0.19515	validation_1-logloss:0.30921
+[600]	validation_0-logloss:0.18167	validation_1-logloss:0.31163
+[700]	validation_0-logloss:0.16967	validation_1-logloss:0.31311
+[800]	validation_0-logloss:0.15857	validation_1-logloss:0.31607
+[899]	validation_0-logloss:0.14925	validation_1-logloss:0.31856
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b00/fold4: X=(7919, 237), y=(7919,)
+[0]	validation_0-logloss:0.53440	validation_1-logloss:0.81463
+[100]	validation_0-logloss:0.28229	validation_1-logloss:0.36981
+[200]	validation_0-logloss:0.24613	validation_1-logloss:0.35936
+[300]	validation_0-logloss:0.22004	validation_1-logloss:0.36509
+[400]	validation_0-logloss:0.20118	validation_1-logloss:0.37056
+[500]	validation_0-logloss:0.18556	validation_1-logloss:0.37614
+[600]	validation_0-logloss:0.17176	validation_1-logloss:0.38135
+[700]	validation_0-logloss:0.16082	validation_1-logloss:0.38497
+[800]	validation_0-logloss:0.15074	validation_1-logloss:0.38867
+[899]	validation_0-logloss:0.14269	validation_1-logloss:0.39433
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b00/full: X=(9928, 237), y=(9928,)
+[0]	validation_0-logloss:0.58616	validation_1-logloss:0.81357
+[100]	validation_0-logloss:0.29560	validation_1-logloss:0.34843
+[200]	validation_0-logloss:0.26022	validation_1-logloss:0.30835
+[300]	validation_0-logloss:0.23875	validation_1-logloss:0.28819
+[400]	validation_0-logloss:0.22197	validation_1-logloss:0.26803
+[500]	validation_0-logloss:0.20769	validation_1-logloss:0.25036
+[600]	validation_0-logloss:0.19434	validation_1-logloss:0.23568
+[700]	validation_0-logloss:0.18374	validation_1-logloss:0.22208
+[800]	validation_0-logloss:0.17287	validation_1-logloss:0.20802
+[899]	validation_0-logloss:0.16384	validation_1-logloss:0.19834
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/context_0.25/b00: X=(9928, 237), y=(9928, 24)
+[0]	validation_0-rmse:98.17703	validation_1-rmse:132.13198
+[100]	validation_0-rmse:47.95523	validation_1-rmse:61.60517
+[200]	validation_0-rmse:44.15481	validation_1-rmse:54.98877
+[300]	validation_0-rmse:42.57648	validation_1-rmse:51.82208
+[400]	validation_0-rmse:41.42631	validation_1-rmse:49.57206
+[500]	validation_0-rmse:40.41322	validation_1-rmse:47.65446
+[600]	validation_0-rmse:39.51303	validation_1-rmse:46.09889
+[700]	validation_0-rmse:38.71879	validation_1-rmse:44.59496
+[800]	validation_0-rmse:37.97011	validation_1-rmse:43.33503
+[899]	validation_0-rmse:37.26012	validation_1-rmse:42.32272
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b01/fold0: X=(7918, 237), y=(7918,)
+[0]	validation_0-logloss:0.58623	validation_1-logloss:0.62376
+[100]	validation_0-logloss:0.38618	validation_1-logloss:0.51006
+[200]	validation_0-logloss:0.34491	validation_1-logloss:0.48874
+[300]	validation_0-logloss:0.31642	validation_1-logloss:0.48386
+[400]	validation_0-logloss:0.29247	validation_1-logloss:0.48217
+[500]	validation_0-logloss:0.27308	validation_1-logloss:0.48371
+[600]	validation_0-logloss:0.25456	validation_1-logloss:0.48283
+[700]	validation_0-logloss:0.23977	validation_1-logloss:0.48407
+[800]	validation_0-logloss:0.22584	validation_1-logloss:0.48804
+[899]	validation_0-logloss:0.21309	validation_1-logloss:0.49002
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b01/fold1: X=(7894, 237), y=(7894,)
+[0]	validation_0-logloss:0.61016	validation_1-logloss:0.53004
+[100]	validation_0-logloss:0.38837	validation_1-logloss:0.45023
+[200]	validation_0-logloss:0.34208	validation_1-logloss:0.46801
+[300]	validation_0-logloss:0.31106	validation_1-logloss:0.48568
+[400]	validation_0-logloss:0.28613	validation_1-logloss:0.49867
+[500]	validation_0-logloss:0.26554	validation_1-logloss:0.51259
+[600]	validation_0-logloss:0.24663	validation_1-logloss:0.52490
+[700]	validation_0-logloss:0.23024	validation_1-logloss:0.53665
+[800]	validation_0-logloss:0.21606	validation_1-logloss:0.54865
+[899]	validation_0-logloss:0.20265	validation_1-logloss:0.55667
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b01/fold2: X=(7894, 237), y=(7894,)
+[0]	validation_0-logloss:0.62639	validation_1-logloss:0.48724
+[100]	validation_0-logloss:0.41699	validation_1-logloss:0.36071
+[200]	validation_0-logloss:0.37360	validation_1-logloss:0.35105
+[300]	validation_0-logloss:0.33965	validation_1-logloss:0.35271
+[400]	validation_0-logloss:0.31428	validation_1-logloss:0.35433
+[500]	validation_0-logloss:0.29284	validation_1-logloss:0.35720
+[600]	validation_0-logloss:0.27395	validation_1-logloss:0.35952
+[700]	validation_0-logloss:0.25676	validation_1-logloss:0.36161
+[800]	validation_0-logloss:0.24280	validation_1-logloss:0.36223
+[899]	validation_0-logloss:0.22869	validation_1-logloss:0.36411
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b01/fold3: X=(7895, 237), y=(7895,)
+[0]	validation_0-logloss:0.59121	validation_1-logloss:0.60490
+[100]	validation_0-logloss:0.38832	validation_1-logloss:0.48404
+[200]	validation_0-logloss:0.34618	validation_1-logloss:0.49282
+[300]	validation_0-logloss:0.31730	validation_1-logloss:0.49951
+[400]	validation_0-logloss:0.29290	validation_1-logloss:0.50513
+[500]	validation_0-logloss:0.27133	validation_1-logloss:0.51204
+[600]	validation_0-logloss:0.25280	validation_1-logloss:0.51586
+[700]	validation_0-logloss:0.23625	validation_1-logloss:0.51918
+[800]	validation_0-logloss:0.22179	validation_1-logloss:0.52173
+[899]	validation_0-logloss:0.20925	validation_1-logloss:0.52626
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b01/fold4: X=(7919, 237), y=(7919,)
+[0]	validation_0-logloss:0.54079	validation_1-logloss:0.83098
+[100]	validation_0-logloss:0.36941	validation_1-logloss:0.56000
+[200]	validation_0-logloss:0.32726	validation_1-logloss:0.55217
+[300]	validation_0-logloss:0.29872	validation_1-logloss:0.55830
+[400]	validation_0-logloss:0.27532	validation_1-logloss:0.57206
+[500]	validation_0-logloss:0.25652	validation_1-logloss:0.58040
+[600]	validation_0-logloss:0.23784	validation_1-logloss:0.59493
+[700]	validation_0-logloss:0.22210	validation_1-logloss:0.60525
+[800]	validation_0-logloss:0.20853	validation_1-logloss:0.61788
+[899]	validation_0-logloss:0.19635	validation_1-logloss:0.62883
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b01/full: X=(9928, 237), y=(9928,)
+[0]	validation_0-logloss:0.59285	validation_1-logloss:0.82321
+[100]	validation_0-logloss:0.39939	validation_1-logloss:0.47790
+[200]	validation_0-logloss:0.36027	validation_1-logloss:0.42469
+[300]	validation_0-logloss:0.33321	validation_1-logloss:0.38776
+[400]	validation_0-logloss:0.31116	validation_1-logloss:0.35832
+[500]	validation_0-logloss:0.29285	validation_1-logloss:0.33260
+[600]	validation_0-logloss:0.27508	validation_1-logloss:0.30882
+[700]	validation_0-logloss:0.25952	validation_1-logloss:0.28645
+[800]	validation_0-logloss:0.24594	validation_1-logloss:0.26799
+[899]	validation_0-logloss:0.23362	validation_1-logloss:0.25355
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/context_0.25/b01: X=(9928, 237), y=(9928, 24)
+[0]	validation_0-rmse:99.31746	validation_1-rmse:132.69076
+[100]	validation_0-rmse:67.79717	validation_1-rmse:84.07984
+[200]	validation_0-rmse:62.55373	validation_1-rmse:76.34595
+[300]	validation_0-rmse:59.76352	validation_1-rmse:72.07774
+[400]	validation_0-rmse:57.70915	validation_1-rmse:68.86191
+[500]	validation_0-rmse:55.78919	validation_1-rmse:65.91691
+[600]	validation_0-rmse:54.24450	validation_1-rmse:63.28624
+[700]	validation_0-rmse:52.79124	validation_1-rmse:60.99590
+[800]	validation_0-rmse:51.55004	validation_1-rmse:58.98405
+[899]	validation_0-rmse:50.27886	validation_1-rmse:57.23208
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b02/fold0: X=(7918, 237), y=(7918,)
+[0]	validation_0-logloss:0.58735	validation_1-logloss:0.62077
+[100]	validation_0-logloss:0.41616	validation_1-logloss:0.54802
+[200]	validation_0-logloss:0.38044	validation_1-logloss:0.53757
+[300]	validation_0-logloss:0.35285	validation_1-logloss:0.53912
+[400]	validation_0-logloss:0.33031	validation_1-logloss:0.54131
+[500]	validation_0-logloss:0.30977	validation_1-logloss:0.54256
+[600]	validation_0-logloss:0.29010	validation_1-logloss:0.54450
+[700]	validation_0-logloss:0.27392	validation_1-logloss:0.55018
+[800]	validation_0-logloss:0.26009	validation_1-logloss:0.55466
+[899]	validation_0-logloss:0.24716	validation_1-logloss:0.55981
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b02/fold1: X=(7894, 237), y=(7894,)
+[0]	validation_0-logloss:0.61046	validation_1-logloss:0.53460
+[100]	validation_0-logloss:0.41933	validation_1-logloss:0.50283
+[200]	validation_0-logloss:0.38043	validation_1-logloss:0.52679
+[300]	validation_0-logloss:0.35158	validation_1-logloss:0.54315
+[400]	validation_0-logloss:0.32645	validation_1-logloss:0.55651
+[500]	validation_0-logloss:0.30521	validation_1-logloss:0.56428
+[600]	validation_0-logloss:0.28705	validation_1-logloss:0.57451
+[700]	validation_0-logloss:0.26989	validation_1-logloss:0.57966
+[800]	validation_0-logloss:0.25351	validation_1-logloss:0.58821
+[899]	validation_0-logloss:0.23951	validation_1-logloss:0.59661
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b02/fold2: X=(7894, 237), y=(7894,)
+[0]	validation_0-logloss:0.62672	validation_1-logloss:0.48438
+[100]	validation_0-logloss:0.44906	validation_1-logloss:0.39885
+[200]	validation_0-logloss:0.40852	validation_1-logloss:0.40360
+[300]	validation_0-logloss:0.37558	validation_1-logloss:0.41267
+[400]	validation_0-logloss:0.35009	validation_1-logloss:0.42137
+[500]	validation_0-logloss:0.32815	validation_1-logloss:0.42974
+[600]	validation_0-logloss:0.30967	validation_1-logloss:0.43782
+[700]	validation_0-logloss:0.29188	validation_1-logloss:0.44414
+[800]	validation_0-logloss:0.27669	validation_1-logloss:0.44985
+[899]	validation_0-logloss:0.26248	validation_1-logloss:0.45401
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b02/fold3: X=(7895, 237), y=(7895,)
+[0]	validation_0-logloss:0.59117	validation_1-logloss:0.60723
+[100]	validation_0-logloss:0.42091	validation_1-logloss:0.51189
+[200]	validation_0-logloss:0.37853	validation_1-logloss:0.51877
+[300]	validation_0-logloss:0.34730	validation_1-logloss:0.53012
+[400]	validation_0-logloss:0.32249	validation_1-logloss:0.53458
+[500]	validation_0-logloss:0.29970	validation_1-logloss:0.54040
+[600]	validation_0-logloss:0.28021	validation_1-logloss:0.54487
+[700]	validation_0-logloss:0.26337	validation_1-logloss:0.55130
+[800]	validation_0-logloss:0.24948	validation_1-logloss:0.55550
+[899]	validation_0-logloss:0.23659	validation_1-logloss:0.55919
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b02/fold4: X=(7919, 237), y=(7919,)
+[0]	validation_0-logloss:0.54092	validation_1-logloss:0.83111
+[100]	validation_0-logloss:0.40739	validation_1-logloss:0.59730
+[200]	validation_0-logloss:0.36911	validation_1-logloss:0.60217
+[300]	validation_0-logloss:0.34049	validation_1-logloss:0.61352
+[400]	validation_0-logloss:0.31589	validation_1-logloss:0.63085
+[500]	validation_0-logloss:0.29446	validation_1-logloss:0.64382
+[600]	validation_0-logloss:0.27635	validation_1-logloss:0.65847
+[700]	validation_0-logloss:0.25979	validation_1-logloss:0.67112
+[800]	validation_0-logloss:0.24590	validation_1-logloss:0.68385
+[899]	validation_0-logloss:0.23295	validation_1-logloss:0.69519
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/gate_b02/full: X=(9928, 237), y=(9928,)
+[0]	validation_0-logloss:0.59344	validation_1-logloss:0.82201
+[100]	validation_0-logloss:0.43220	validation_1-logloss:0.49137
+[200]	validation_0-logloss:0.39671	validation_1-logloss:0.44695
+[300]	validation_0-logloss:0.36976	validation_1-logloss:0.41544
+[400]	validation_0-logloss:0.34701	validation_1-logloss:0.38415
+[500]	validation_0-logloss:0.32713	validation_1-logloss:0.35954
+[600]	validation_0-logloss:0.31077	validation_1-logloss:0.33648
+[700]	validation_0-logloss:0.29641	validation_1-logloss:0.31868
+[800]	validation_0-logloss:0.28281	validation_1-logloss:0.30291
+[899]	validation_0-logloss:0.27024	validation_1-logloss:0.28703
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/f1/context_0.25/b02: X=(9928, 237), y=(9928, 24)
+[0]	validation_0-rmse:99.57898	validation_1-rmse:131.62750
+[100]	validation_0-rmse:74.53245	validation_1-rmse:85.90798
+[200]	validation_0-rmse:69.99200	validation_1-rmse:80.61347
+[300]	validation_0-rmse:67.12279	validation_1-rmse:76.48563
+[400]	validation_0-rmse:64.71692	validation_1-rmse:72.50592
+[500]	validation_0-rmse:62.46668	validation_1-rmse:69.20851
+[600]	validation_0-rmse:60.60884	validation_1-rmse:65.65022
+[700]	validation_0-rmse:58.77036	validation_1-rmse:63.03489
+[800]	validation_0-rmse:57.11312	validation_1-rmse:60.76639
+[899]	validation_0-rmse:55.52059	validation_1-rmse:58.67832
+{"status": "running", "phase": "final/context_0.25", "pid": 1635452, "utc": "2026-10-28T02:59:59.307300+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b00/fold0: X=(8507, 237), y=(8507,)
+[0]	validation_0-logloss:0.58518	validation_1-logloss:0.60474
+[100]	validation_0-logloss:0.29547	validation_1-logloss:0.35348
+[200]	validation_0-logloss:0.26132	validation_1-logloss:0.33527
+[300]	validation_0-logloss:0.23900	validation_1-logloss:0.33190
+[400]	validation_0-logloss:0.22105	validation_1-logloss:0.32960
+[500]	validation_0-logloss:0.20540	validation_1-logloss:0.32722
+[600]	validation_0-logloss:0.19149	validation_1-logloss:0.32652
+[700]	validation_0-logloss:0.17957	validation_1-logloss:0.32706
+[800]	validation_0-logloss:0.16911	validation_1-logloss:0.32803
+[899]	validation_0-logloss:0.15956	validation_1-logloss:0.32839
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b00/fold1: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.61283	validation_1-logloss:0.51727
+[100]	validation_0-logloss:0.29660	validation_1-logloss:0.32530
+[200]	validation_0-logloss:0.25817	validation_1-logloss:0.32798
+[300]	validation_0-logloss:0.23612	validation_1-logloss:0.33603
+[400]	validation_0-logloss:0.21765	validation_1-logloss:0.34411
+[500]	validation_0-logloss:0.20235	validation_1-logloss:0.34879
+[600]	validation_0-logloss:0.18849	validation_1-logloss:0.35605
+[700]	validation_0-logloss:0.17625	validation_1-logloss:0.36136
+[800]	validation_0-logloss:0.16641	validation_1-logloss:0.36628
+[899]	validation_0-logloss:0.15695	validation_1-logloss:0.37003
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b00/fold2: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.62344	validation_1-logloss:0.48753
+[100]	validation_0-logloss:0.30615	validation_1-logloss:0.29859
+[200]	validation_0-logloss:0.26756	validation_1-logloss:0.29242
+[300]	validation_0-logloss:0.24387	validation_1-logloss:0.29348
+[400]	validation_0-logloss:0.22697	validation_1-logloss:0.29179
+[500]	validation_0-logloss:0.21317	validation_1-logloss:0.29227
+[600]	validation_0-logloss:0.19944	validation_1-logloss:0.29412
+[700]	validation_0-logloss:0.18703	validation_1-logloss:0.29506
+[800]	validation_0-logloss:0.17618	validation_1-logloss:0.29632
+[899]	validation_0-logloss:0.16669	validation_1-logloss:0.29620
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b00/fold3: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.57342	validation_1-logloss:0.66161
+[100]	validation_0-logloss:0.29873	validation_1-logloss:0.31791
+[200]	validation_0-logloss:0.26003	validation_1-logloss:0.30218
+[300]	validation_0-logloss:0.23707	validation_1-logloss:0.30117
+[400]	validation_0-logloss:0.21815	validation_1-logloss:0.30150
+[500]	validation_0-logloss:0.20174	validation_1-logloss:0.30543
+[600]	validation_0-logloss:0.18725	validation_1-logloss:0.30901
+[700]	validation_0-logloss:0.17561	validation_1-logloss:0.31066
+[800]	validation_0-logloss:0.16469	validation_1-logloss:0.31190
+[899]	validation_0-logloss:0.15537	validation_1-logloss:0.31394
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b00/fold4: X=(8508, 237), y=(8508,)
+[0]	validation_0-logloss:0.54685	validation_1-logloss:0.78368
+[100]	validation_0-logloss:0.28765	validation_1-logloss:0.36618
+[200]	validation_0-logloss:0.25127	validation_1-logloss:0.35231
+[300]	validation_0-logloss:0.22863	validation_1-logloss:0.35483
+[400]	validation_0-logloss:0.20946	validation_1-logloss:0.35830
+[500]	validation_0-logloss:0.19445	validation_1-logloss:0.36331
+[600]	validation_0-logloss:0.18069	validation_1-logloss:0.36936
+[700]	validation_0-logloss:0.16855	validation_1-logloss:0.37364
+[800]	validation_0-logloss:0.15832	validation_1-logloss:0.37919
+[899]	validation_0-logloss:0.15006	validation_1-logloss:0.38493
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b00/full: X=(10664, 237), y=(10664,)
+[0]	validation_0-logloss:0.59029	validation_1-logloss:0.80834
+[100]	validation_0-logloss:0.30146	validation_1-logloss:0.35059
+[200]	validation_0-logloss:0.26679	validation_1-logloss:0.31784
+[300]	validation_0-logloss:0.24625	validation_1-logloss:0.29899
+[400]	validation_0-logloss:0.22848	validation_1-logloss:0.28259
+[500]	validation_0-logloss:0.21468	validation_1-logloss:0.26575
+[600]	validation_0-logloss:0.20257	validation_1-logloss:0.25223
+[700]	validation_0-logloss:0.19193	validation_1-logloss:0.24102
+[800]	validation_0-logloss:0.18164	validation_1-logloss:0.22634
+[899]	validation_0-logloss:0.17267	validation_1-logloss:0.21424
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/context_0.25/b00: X=(10664, 237), y=(10664, 24)
+[0]	validation_0-rmse:97.84185	validation_1-rmse:131.64289
+[100]	validation_0-rmse:48.02920	validation_1-rmse:62.37207
+[200]	validation_0-rmse:44.18948	validation_1-rmse:55.93908
+[300]	validation_0-rmse:42.61015	validation_1-rmse:52.76975
+[400]	validation_0-rmse:41.46392	validation_1-rmse:50.23247
+[500]	validation_0-rmse:40.46739	validation_1-rmse:48.20247
+[600]	validation_0-rmse:39.60386	validation_1-rmse:46.54745
+[700]	validation_0-rmse:38.81265	validation_1-rmse:45.06610
+[800]	validation_0-rmse:38.12422	validation_1-rmse:43.71791
+[899]	validation_0-rmse:37.45137	validation_1-rmse:42.58679
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b01/fold0: X=(8507, 237), y=(8507,)
+[0]	validation_0-logloss:0.59120	validation_1-logloss:0.61448
+[100]	validation_0-logloss:0.38238	validation_1-logloss:0.50525
+[200]	validation_0-logloss:0.34325	validation_1-logloss:0.48998
+[300]	validation_0-logloss:0.31714	validation_1-logloss:0.48638
+[400]	validation_0-logloss:0.29560	validation_1-logloss:0.48399
+[500]	validation_0-logloss:0.27634	validation_1-logloss:0.48323
+[600]	validation_0-logloss:0.25925	validation_1-logloss:0.48463
+[700]	validation_0-logloss:0.24541	validation_1-logloss:0.48681
+[800]	validation_0-logloss:0.23188	validation_1-logloss:0.48891
+[899]	validation_0-logloss:0.21975	validation_1-logloss:0.49080
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b01/fold1: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.61880	validation_1-logloss:0.51922
+[100]	validation_0-logloss:0.39973	validation_1-logloss:0.41275
+[200]	validation_0-logloss:0.35570	validation_1-logloss:0.42006
+[300]	validation_0-logloss:0.32532	validation_1-logloss:0.43232
+[400]	validation_0-logloss:0.30312	validation_1-logloss:0.44119
+[500]	validation_0-logloss:0.28102	validation_1-logloss:0.44618
+[600]	validation_0-logloss:0.26263	validation_1-logloss:0.45155
+[700]	validation_0-logloss:0.24528	validation_1-logloss:0.46156
+[800]	validation_0-logloss:0.23052	validation_1-logloss:0.46681
+[899]	validation_0-logloss:0.21781	validation_1-logloss:0.47442
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b01/fold2: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.62972	validation_1-logloss:0.49019
+[100]	validation_0-logloss:0.41513	validation_1-logloss:0.38323
+[200]	validation_0-logloss:0.37484	validation_1-logloss:0.37652
+[300]	validation_0-logloss:0.34553	validation_1-logloss:0.38052
+[400]	validation_0-logloss:0.32154	validation_1-logloss:0.38699
+[500]	validation_0-logloss:0.30190	validation_1-logloss:0.38972
+[600]	validation_0-logloss:0.28323	validation_1-logloss:0.39275
+[700]	validation_0-logloss:0.26467	validation_1-logloss:0.39653
+[800]	validation_0-logloss:0.24976	validation_1-logloss:0.39948
+[899]	validation_0-logloss:0.23647	validation_1-logloss:0.40218
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b01/fold3: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.57936	validation_1-logloss:0.67445
+[100]	validation_0-logloss:0.38410	validation_1-logloss:0.47732
+[200]	validation_0-logloss:0.34506	validation_1-logloss:0.46766
+[300]	validation_0-logloss:0.31864	validation_1-logloss:0.46869
+[400]	validation_0-logloss:0.29590	validation_1-logloss:0.47079
+[500]	validation_0-logloss:0.27759	validation_1-logloss:0.47256
+[600]	validation_0-logloss:0.25957	validation_1-logloss:0.47654
+[700]	validation_0-logloss:0.24312	validation_1-logloss:0.48057
+[800]	validation_0-logloss:0.22935	validation_1-logloss:0.48158
+[899]	validation_0-logloss:0.21632	validation_1-logloss:0.48325
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b01/fold4: X=(8508, 237), y=(8508,)
+[0]	validation_0-logloss:0.55290	validation_1-logloss:0.79096
+[100]	validation_0-logloss:0.37895	validation_1-logloss:0.51906
+[200]	validation_0-logloss:0.33994	validation_1-logloss:0.51569
+[300]	validation_0-logloss:0.31133	validation_1-logloss:0.52325
+[400]	validation_0-logloss:0.28832	validation_1-logloss:0.53779
+[500]	validation_0-logloss:0.26886	validation_1-logloss:0.54701
+[600]	validation_0-logloss:0.25049	validation_1-logloss:0.55774
+[700]	validation_0-logloss:0.23418	validation_1-logloss:0.56757
+[800]	validation_0-logloss:0.22043	validation_1-logloss:0.57515
+[899]	validation_0-logloss:0.20804	validation_1-logloss:0.58208
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b01/full: X=(10664, 237), y=(10664,)
+[0]	validation_0-logloss:0.59604	validation_1-logloss:0.82027
+[100]	validation_0-logloss:0.40080	validation_1-logloss:0.48896
+[200]	validation_0-logloss:0.36398	validation_1-logloss:0.44357
+[300]	validation_0-logloss:0.33886	validation_1-logloss:0.40617
+[400]	validation_0-logloss:0.31865	validation_1-logloss:0.37822
+[500]	validation_0-logloss:0.30151	validation_1-logloss:0.35156
+[600]	validation_0-logloss:0.28530	validation_1-logloss:0.32750
+[700]	validation_0-logloss:0.26931	validation_1-logloss:0.30296
+[800]	validation_0-logloss:0.25619	validation_1-logloss:0.28626
+[899]	validation_0-logloss:0.24322	validation_1-logloss:0.26885
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/context_0.25/b01: X=(10664, 237), y=(10664, 24)
+[0]	validation_0-rmse:98.84667	validation_1-rmse:132.31620
+[100]	validation_0-rmse:67.72899	validation_1-rmse:84.45075
+[200]	validation_0-rmse:62.65502	validation_1-rmse:76.82518
+[300]	validation_0-rmse:59.92542	validation_1-rmse:72.32220
+[400]	validation_0-rmse:57.67057	validation_1-rmse:68.96957
+[500]	validation_0-rmse:55.84823	validation_1-rmse:66.02728
+[600]	validation_0-rmse:54.39112	validation_1-rmse:63.52050
+[700]	validation_0-rmse:52.98843	validation_1-rmse:61.03301
+[800]	validation_0-rmse:51.74298	validation_1-rmse:59.29159
+[899]	validation_0-rmse:50.49549	validation_1-rmse:57.56860
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b02/fold0: X=(8507, 237), y=(8507,)
+[0]	validation_0-logloss:0.59118	validation_1-logloss:0.61581
+[100]	validation_0-logloss:0.40873	validation_1-logloss:0.55984
+[200]	validation_0-logloss:0.37743	validation_1-logloss:0.54526
+[300]	validation_0-logloss:0.35106	validation_1-logloss:0.54509
+[400]	validation_0-logloss:0.32762	validation_1-logloss:0.54597
+[500]	validation_0-logloss:0.30770	validation_1-logloss:0.54969
+[600]	validation_0-logloss:0.29052	validation_1-logloss:0.55446
+[700]	validation_0-logloss:0.27530	validation_1-logloss:0.55471
+[800]	validation_0-logloss:0.26066	validation_1-logloss:0.56079
+[899]	validation_0-logloss:0.24766	validation_1-logloss:0.56172
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b02/fold1: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.61829	validation_1-logloss:0.51695
+[100]	validation_0-logloss:0.42871	validation_1-logloss:0.44627
+[200]	validation_0-logloss:0.39102	validation_1-logloss:0.45665
+[300]	validation_0-logloss:0.36200	validation_1-logloss:0.46438
+[400]	validation_0-logloss:0.33950	validation_1-logloss:0.47131
+[500]	validation_0-logloss:0.32003	validation_1-logloss:0.47617
+[600]	validation_0-logloss:0.30106	validation_1-logloss:0.48299
+[700]	validation_0-logloss:0.28287	validation_1-logloss:0.48882
+[800]	validation_0-logloss:0.26832	validation_1-logloss:0.49470
+[899]	validation_0-logloss:0.25431	validation_1-logloss:0.50041
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b02/fold2: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.62926	validation_1-logloss:0.49087
+[100]	validation_0-logloss:0.44078	validation_1-logloss:0.42825
+[200]	validation_0-logloss:0.40556	validation_1-logloss:0.43181
+[300]	validation_0-logloss:0.37587	validation_1-logloss:0.44190
+[400]	validation_0-logloss:0.35371	validation_1-logloss:0.45414
+[500]	validation_0-logloss:0.33076	validation_1-logloss:0.46439
+[600]	validation_0-logloss:0.31209	validation_1-logloss:0.47335
+[700]	validation_0-logloss:0.29504	validation_1-logloss:0.47978
+[800]	validation_0-logloss:0.27990	validation_1-logloss:0.48494
+[899]	validation_0-logloss:0.26590	validation_1-logloss:0.49126
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b02/fold3: X=(8483, 237), y=(8483,)
+[0]	validation_0-logloss:0.57784	validation_1-logloss:0.67672
+[100]	validation_0-logloss:0.41487	validation_1-logloss:0.51080
+[200]	validation_0-logloss:0.37715	validation_1-logloss:0.51161
+[300]	validation_0-logloss:0.34913	validation_1-logloss:0.51676
+[400]	validation_0-logloss:0.32594	validation_1-logloss:0.52024
+[500]	validation_0-logloss:0.30469	validation_1-logloss:0.52468
+[600]	validation_0-logloss:0.28515	validation_1-logloss:0.53144
+[700]	validation_0-logloss:0.26935	validation_1-logloss:0.53574
+[800]	validation_0-logloss:0.25486	validation_1-logloss:0.54037
+[899]	validation_0-logloss:0.24272	validation_1-logloss:0.54286
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b02/fold4: X=(8508, 237), y=(8508,)
+[0]	validation_0-logloss:0.55222	validation_1-logloss:0.79009
+[100]	validation_0-logloss:0.40976	validation_1-logloss:0.55964
+[200]	validation_0-logloss:0.36936	validation_1-logloss:0.56453
+[300]	validation_0-logloss:0.34071	validation_1-logloss:0.57830
+[400]	validation_0-logloss:0.31614	validation_1-logloss:0.59127
+[500]	validation_0-logloss:0.29618	validation_1-logloss:0.59922
+[600]	validation_0-logloss:0.27763	validation_1-logloss:0.60957
+[700]	validation_0-logloss:0.26299	validation_1-logloss:0.61579
+[800]	validation_0-logloss:0.24919	validation_1-logloss:0.62388
+[899]	validation_0-logloss:0.23717	validation_1-logloss:0.63044
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/gate_b02/full: X=(10664, 237), y=(10664,)
+[0]	validation_0-logloss:0.59585	validation_1-logloss:0.82003
+[100]	validation_0-logloss:0.43115	validation_1-logloss:0.49515
+[200]	validation_0-logloss:0.39580	validation_1-logloss:0.45640
+[300]	validation_0-logloss:0.36862	validation_1-logloss:0.42587
+[400]	validation_0-logloss:0.34737	validation_1-logloss:0.39711
+[500]	validation_0-logloss:0.32812	validation_1-logloss:0.37207
+[600]	validation_0-logloss:0.31199	validation_1-logloss:0.35085
+[700]	validation_0-logloss:0.29797	validation_1-logloss:0.33422
+[800]	validation_0-logloss:0.28450	validation_1-logloss:0.31700
+[899]	validation_0-logloss:0.27144	validation_1-logloss:0.29992
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context/final/context_0.25/b02: X=(10664, 237), y=(10664, 24)
+[0]	validation_0-rmse:98.97196	validation_1-rmse:131.11356
+[100]	validation_0-rmse:74.14065	validation_1-rmse:86.16119
+[200]	validation_0-rmse:69.84007	validation_1-rmse:81.14656
+[300]	validation_0-rmse:66.99652	validation_1-rmse:77.42806
+[400]	validation_0-rmse:64.56809	validation_1-rmse:73.77847
+[500]	validation_0-rmse:62.42149	validation_1-rmse:70.89208
+[600]	validation_0-rmse:60.60944	validation_1-rmse:67.63134
+[700]	validation_0-rmse:58.88651	validation_1-rmse:65.13706
+[800]	validation_0-rmse:57.30160	validation_1-rmse:62.99523
+[899]	validation_0-rmse:55.88113	validation_1-rmse:60.85018
+{"status": "completed", "phase": "completed", "pid": 1635452, "utc": "2026-10-28T03:32:04.693965+00:00", "selected": "parent", "research_arm": "context_0.25"}

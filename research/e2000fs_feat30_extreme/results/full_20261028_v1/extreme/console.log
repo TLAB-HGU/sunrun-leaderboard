@@ -1,0 +1,195 @@
+{"status": "running", "phase": "waiting_for_baseline"}
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+Waiting for verified shared internal baseline
+{"status": "running", "phase": "internal/extreme_2.0"}
+select/extreme_2.0/b0: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:95.07094	validation_1-rmse:134.86086
+[100]	validation_0-rmse:46.66068	validation_1-rmse:66.96945
+[200]	validation_0-rmse:43.06889	validation_1-rmse:64.12016
+[300]	validation_0-rmse:41.45503	validation_1-rmse:63.88119
+[400]	validation_0-rmse:40.20259	validation_1-rmse:64.13644
+[500]	validation_0-rmse:39.10807	validation_1-rmse:64.37123
+[600]	validation_0-rmse:38.21597	validation_1-rmse:64.45631
+[700]	validation_0-rmse:37.29599	validation_1-rmse:64.44646
+[800]	validation_0-rmse:36.50797	validation_1-rmse:64.59596
+[899]	validation_0-rmse:35.80119	validation_1-rmse:64.75455
+select/extreme_2.0/b1: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.17764	validation_1-rmse:135.36200
+[100]	validation_0-rmse:66.37550	validation_1-rmse:93.00143
+[200]	validation_0-rmse:61.14838	validation_1-rmse:92.70243
+[300]	validation_0-rmse:58.22055	validation_1-rmse:93.04131
+[400]	validation_0-rmse:55.84455	validation_1-rmse:93.39693
+[500]	validation_0-rmse:53.83254	validation_1-rmse:93.72179
+[600]	validation_0-rmse:52.16778	validation_1-rmse:93.78087
+[700]	validation_0-rmse:50.74152	validation_1-rmse:94.23136
+[800]	validation_0-rmse:49.40938	validation_1-rmse:94.71402
+[899]	validation_0-rmse:48.20214	validation_1-rmse:95.16878
+select/extreme_2.0/b2: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.44210	validation_1-rmse:134.05719
+[100]	validation_0-rmse:73.42985	validation_1-rmse:96.07365
+[200]	validation_0-rmse:68.64006	validation_1-rmse:97.47898
+[300]	validation_0-rmse:65.34205	validation_1-rmse:98.55118
+[400]	validation_0-rmse:62.63246	validation_1-rmse:99.31347
+[500]	validation_0-rmse:60.30312	validation_1-rmse:99.73451
+[600]	validation_0-rmse:58.28305	validation_1-rmse:99.95776
+[700]	validation_0-rmse:56.41412	validation_1-rmse:100.30985
+[800]	validation_0-rmse:54.69533	validation_1-rmse:100.90294
+[899]	validation_0-rmse:53.16172	validation_1-rmse:101.38592
+{"status": "running", "phase": "internal/extreme_4.0"}
+select/extreme_4.0/b0: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:95.12329	validation_1-rmse:134.86310
+[100]	validation_0-rmse:48.28455	validation_1-rmse:66.46582
+[200]	validation_0-rmse:44.53436	validation_1-rmse:64.04140
+[300]	validation_0-rmse:42.81744	validation_1-rmse:63.88663
+[400]	validation_0-rmse:41.48763	validation_1-rmse:63.65231
+[500]	validation_0-rmse:40.31418	validation_1-rmse:63.72748
+[600]	validation_0-rmse:39.30164	validation_1-rmse:63.77856
+[700]	validation_0-rmse:38.37487	validation_1-rmse:63.62422
+[800]	validation_0-rmse:37.53652	validation_1-rmse:63.57548
+[899]	validation_0-rmse:36.81454	validation_1-rmse:63.68077
+select/extreme_4.0/b1: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.16209	validation_1-rmse:135.13411
+[100]	validation_0-rmse:69.97674	validation_1-rmse:91.91039
+[200]	validation_0-rmse:64.56922	validation_1-rmse:92.11275
+[300]	validation_0-rmse:61.23195	validation_1-rmse:92.56017
+[400]	validation_0-rmse:58.62219	validation_1-rmse:92.50319
+[500]	validation_0-rmse:56.41582	validation_1-rmse:92.54620
+[600]	validation_0-rmse:54.66803	validation_1-rmse:92.52819
+[700]	validation_0-rmse:53.12666	validation_1-rmse:92.93816
+[800]	validation_0-rmse:51.72120	validation_1-rmse:93.27661
+[899]	validation_0-rmse:50.48626	validation_1-rmse:93.77692
+select/extreme_4.0/b2: fit 9232 rows, 237 columns
+[0]	validation_0-rmse:96.45837	validation_1-rmse:133.87193
+[100]	validation_0-rmse:77.90133	validation_1-rmse:96.21687
+[200]	validation_0-rmse:73.13479	validation_1-rmse:96.97025
+[300]	validation_0-rmse:69.64277	validation_1-rmse:98.40490
+[400]	validation_0-rmse:66.65787	validation_1-rmse:98.66295
+[500]	validation_0-rmse:64.09747	validation_1-rmse:98.56678
+[600]	validation_0-rmse:61.96161	validation_1-rmse:99.07595
+[700]	validation_0-rmse:60.04996	validation_1-rmse:99.27851
+[800]	validation_0-rmse:58.29879	validation_1-rmse:99.17312
+[899]	validation_0-rmse:56.68139	validation_1-rmse:99.66201
+{"status": "running", "phase": "f1/extreme_4.0"}
+f1/extreme_4.0/b0: fit 9928 rows, 237 columns
+[0]	validation_0-rmse:98.27875	validation_1-rmse:132.01722
+[100]	validation_0-rmse:49.43398	validation_1-rmse:59.12102
+[200]	validation_0-rmse:45.60153	validation_1-rmse:53.72658
+[300]	validation_0-rmse:43.84563	validation_1-rmse:50.69546
+[400]	validation_0-rmse:42.55108	validation_1-rmse:48.32185
+[500]	validation_0-rmse:41.42474	validation_1-rmse:46.21985
+[600]	validation_0-rmse:40.48196	validation_1-rmse:44.76399
+[700]	validation_0-rmse:39.60157	validation_1-rmse:43.10385
+[800]	validation_0-rmse:38.81294	validation_1-rmse:41.90709
+[899]	validation_0-rmse:38.10932	validation_1-rmse:40.76197
+f1/extreme_4.0/b1: fit 9928 rows, 237 columns
+[0]	validation_0-rmse:99.26759	validation_1-rmse:132.36025
+[100]	validation_0-rmse:72.00247	validation_1-rmse:81.48602
+[200]	validation_0-rmse:66.64916	validation_1-rmse:74.34865
+[300]	validation_0-rmse:63.30974	validation_1-rmse:69.59323
+[400]	validation_0-rmse:61.04068	validation_1-rmse:65.64220
+[500]	validation_0-rmse:58.93477	validation_1-rmse:62.61009
+[600]	validation_0-rmse:57.00633	validation_1-rmse:59.32076
+[700]	validation_0-rmse:55.47604	validation_1-rmse:56.76920
+[800]	validation_0-rmse:54.05878	validation_1-rmse:54.33770
+[899]	validation_0-rmse:52.81378	validation_1-rmse:52.40977
+f1/extreme_4.0/b2: fit 9928 rows, 237 columns
+[0]	validation_0-rmse:99.54878	validation_1-rmse:130.83400
+[100]	validation_0-rmse:79.90373	validation_1-rmse:84.95621
+[200]	validation_0-rmse:75.58688	validation_1-rmse:79.35439
+[300]	validation_0-rmse:72.13219	validation_1-rmse:73.90584
+[400]	validation_0-rmse:69.19681	validation_1-rmse:69.51226
+[500]	validation_0-rmse:66.63100	validation_1-rmse:65.73945
+[600]	validation_0-rmse:64.32415	validation_1-rmse:62.75628
+[700]	validation_0-rmse:62.49331	validation_1-rmse:59.93236
+[800]	validation_0-rmse:60.70637	validation_1-rmse:57.61543
+[899]	validation_0-rmse:59.13817	validation_1-rmse:55.43049
+{"status": "running", "phase": "final/extreme_4.0"}
+final/extreme_4.0/b0: fit 10664 rows, 237 columns
+[0]	validation_0-rmse:97.94021	validation_1-rmse:131.52352
+[100]	validation_0-rmse:49.49230	validation_1-rmse:59.40850
+[200]	validation_0-rmse:45.58143	validation_1-rmse:54.04688
+[300]	validation_0-rmse:43.87691	validation_1-rmse:51.14642
+[400]	validation_0-rmse:42.50202	validation_1-rmse:48.54398
+[500]	validation_0-rmse:41.46925	validation_1-rmse:46.58167
+[600]	validation_0-rmse:40.54378	validation_1-rmse:44.86787
+[700]	validation_0-rmse:39.69428	validation_1-rmse:43.44024
+[800]	validation_0-rmse:38.98609	validation_1-rmse:41.96790
+[899]	validation_0-rmse:38.30539	validation_1-rmse:41.08525
+final/extreme_4.0/b1: fit 10664 rows, 237 columns
+[0]	validation_0-rmse:98.89384	validation_1-rmse:131.89783
+[100]	validation_0-rmse:72.06880	validation_1-rmse:82.34363
+[200]	validation_0-rmse:66.95904	validation_1-rmse:75.37228
+[300]	validation_0-rmse:63.61095	validation_1-rmse:70.70827
+[400]	validation_0-rmse:61.21179	validation_1-rmse:66.74210
+[500]	validation_0-rmse:59.15315	validation_1-rmse:62.89401
+[600]	validation_0-rmse:57.41173	validation_1-rmse:60.36661
+[700]	validation_0-rmse:55.84140	validation_1-rmse:57.43667
+[800]	validation_0-rmse:54.51575	validation_1-rmse:55.12271
+[899]	validation_0-rmse:53.27278	validation_1-rmse:53.27618
+final/extreme_4.0/b2: fit 10664 rows, 237 columns
+[0]	validation_0-rmse:98.99375	validation_1-rmse:130.49371
+[100]	validation_0-rmse:79.14352	validation_1-rmse:85.75148
+[200]	validation_0-rmse:74.94769	validation_1-rmse:80.92475
+[300]	validation_0-rmse:71.62569	validation_1-rmse:76.01759
+[400]	validation_0-rmse:68.79910	validation_1-rmse:71.21438
+[500]	validation_0-rmse:66.33187	validation_1-rmse:67.80344
+[600]	validation_0-rmse:64.09083	validation_1-rmse:64.33101
+[700]	validation_0-rmse:62.25706	validation_1-rmse:61.44377
+[800]	validation_0-rmse:60.49723	validation_1-rmse:58.98856
+[899]	validation_0-rmse:58.98449	validation_1-rmse:56.91343
+{"status": "completed", "selected": "extreme_4.0", "smoke": false}

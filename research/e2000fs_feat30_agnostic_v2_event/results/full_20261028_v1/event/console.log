@@ -1,0 +1,400 @@
+{"status": "running", "phase": "starting", "pid": 1635459, "utc": "2026-10-27T23:52:13.780788+00:00"}
+{"status": "running", "phase": "fold0", "pid": 1635459, "utc": "2026-10-27T23:52:14.184306+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold0/b00: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:87.89781	validation_1-rmse:100.20152
+[100]	validation_0-rmse:44.94197	validation_1-rmse:50.04054
+[200]	validation_0-rmse:41.27027	validation_1-rmse:46.57894
+[300]	validation_0-rmse:39.68990	validation_1-rmse:45.87382
+[400]	validation_0-rmse:38.46786	validation_1-rmse:45.88915
+[500]	validation_0-rmse:37.48081	validation_1-rmse:45.95846
+[600]	validation_0-rmse:36.58510	validation_1-rmse:45.90588
+[700]	validation_0-rmse:35.76262	validation_1-rmse:45.79308
+[800]	validation_0-rmse:35.02463	validation_1-rmse:45.83031
+[899]	validation_0-rmse:34.33199	validation_1-rmse:45.85362
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold0/b01: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:89.30427	validation_1-rmse:97.74525
+[100]	validation_0-rmse:62.64878	validation_1-rmse:70.22866
+[200]	validation_0-rmse:57.42675	validation_1-rmse:66.24105
+[300]	validation_0-rmse:54.44431	validation_1-rmse:64.91546
+[400]	validation_0-rmse:52.20250	validation_1-rmse:64.69159
+[500]	validation_0-rmse:50.23820	validation_1-rmse:64.14620
+[600]	validation_0-rmse:48.71894	validation_1-rmse:64.13674
+[700]	validation_0-rmse:47.28095	validation_1-rmse:63.94155
+[800]	validation_0-rmse:46.03800	validation_1-rmse:63.95122
+[899]	validation_0-rmse:44.82572	validation_1-rmse:63.87155
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold0/b02: X=(7768, 237), y=(7768, 24)
+[0]	validation_0-rmse:89.94168	validation_1-rmse:96.40152
+[100]	validation_0-rmse:68.81799	validation_1-rmse:73.30027
+[200]	validation_0-rmse:63.76532	validation_1-rmse:70.82734
+[300]	validation_0-rmse:60.40759	validation_1-rmse:69.72395
+[400]	validation_0-rmse:57.60091	validation_1-rmse:69.41655
+[500]	validation_0-rmse:55.20607	validation_1-rmse:69.26320
+[600]	validation_0-rmse:53.20487	validation_1-rmse:69.51957
+[700]	validation_0-rmse:51.53197	validation_1-rmse:69.92303
+[800]	validation_0-rmse:49.90129	validation_1-rmse:69.98661
+[899]	validation_0-rmse:48.40638	validation_1-rmse:70.05594
+{"status": "running", "phase": "fold1", "pid": 1635459, "utc": "2026-10-27T23:58:19.347576+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold1/b00: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:91.02708	validation_1-rmse:128.63044
+[100]	validation_0-rmse:45.44084	validation_1-rmse:66.68862
+[200]	validation_0-rmse:41.87923	validation_1-rmse:63.90749
+[300]	validation_0-rmse:40.31339	validation_1-rmse:63.34199
+[400]	validation_0-rmse:39.11144	validation_1-rmse:63.18671
+[500]	validation_0-rmse:38.09143	validation_1-rmse:63.39879
+[600]	validation_0-rmse:37.22857	validation_1-rmse:63.35639
+[700]	validation_0-rmse:36.40516	validation_1-rmse:63.47738
+[800]	validation_0-rmse:35.65669	validation_1-rmse:63.69655
+[899]	validation_0-rmse:34.94908	validation_1-rmse:63.76047
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold1/b01: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:91.99697	validation_1-rmse:130.47229
+[100]	validation_0-rmse:63.27698	validation_1-rmse:96.85140
+[200]	validation_0-rmse:58.00257	validation_1-rmse:93.98214
+[300]	validation_0-rmse:55.16949	validation_1-rmse:93.50325
+[400]	validation_0-rmse:52.94632	validation_1-rmse:93.94259
+[500]	validation_0-rmse:51.13453	validation_1-rmse:93.89998
+[600]	validation_0-rmse:49.60936	validation_1-rmse:94.20459
+[700]	validation_0-rmse:48.19717	validation_1-rmse:94.55882
+[800]	validation_0-rmse:46.93240	validation_1-rmse:94.97078
+[899]	validation_0-rmse:45.74845	validation_1-rmse:95.25575
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold1/b02: X=(8504, 237), y=(8504, 24)
+[0]	validation_0-rmse:92.21971	validation_1-rmse:134.03028
+[100]	validation_0-rmse:69.59668	validation_1-rmse:111.22012
+[200]	validation_0-rmse:64.48961	validation_1-rmse:111.26840
+[300]	validation_0-rmse:61.15487	validation_1-rmse:112.72322
+[400]	validation_0-rmse:58.42606	validation_1-rmse:113.89391
+[500]	validation_0-rmse:56.19638	validation_1-rmse:115.04122
+[600]	validation_0-rmse:54.28723	validation_1-rmse:115.70755
+[700]	validation_0-rmse:52.69665	validation_1-rmse:116.50979
+[800]	validation_0-rmse:51.13051	validation_1-rmse:117.07274
+[899]	validation_0-rmse:49.67940	validation_1-rmse:117.77880
+{"status": "running", "phase": "fold2", "pid": 1635459, "utc": "2026-10-28T00:07:19.745127+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold2/b00: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:95.05968	validation_1-rmse:134.90063
+[100]	validation_0-rmse:46.99979	validation_1-rmse:67.96035
+[200]	validation_0-rmse:43.19488	validation_1-rmse:64.67000
+[300]	validation_0-rmse:41.69197	validation_1-rmse:63.94786
+[400]	validation_0-rmse:40.46280	validation_1-rmse:63.84566
+[500]	validation_0-rmse:39.42899	validation_1-rmse:63.85229
+[600]	validation_0-rmse:38.50598	validation_1-rmse:63.97621
+[700]	validation_0-rmse:37.68449	validation_1-rmse:63.95432
+[800]	validation_0-rmse:36.93918	validation_1-rmse:64.03768
+[899]	validation_0-rmse:36.23162	validation_1-rmse:64.17650
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold2/b01: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:96.20832	validation_1-rmse:135.74860
+[100]	validation_0-rmse:66.05045	validation_1-rmse:95.20495
+[200]	validation_0-rmse:60.52329	validation_1-rmse:94.41010
+[300]	validation_0-rmse:57.79528	validation_1-rmse:94.80215
+[400]	validation_0-rmse:55.59379	validation_1-rmse:94.79771
+[500]	validation_0-rmse:53.68622	validation_1-rmse:95.03930
+[600]	validation_0-rmse:52.12822	validation_1-rmse:95.75955
+[700]	validation_0-rmse:50.68707	validation_1-rmse:96.11843
+[800]	validation_0-rmse:49.44082	validation_1-rmse:96.21934
+[899]	validation_0-rmse:48.26733	validation_1-rmse:96.88740
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/common/fold2/b02: X=(9232, 237), y=(9232, 24)
+[0]	validation_0-rmse:96.47542	validation_1-rmse:134.36292
+[100]	validation_0-rmse:73.05593	validation_1-rmse:98.11464
+[200]	validation_0-rmse:68.18665	validation_1-rmse:98.56456
+[300]	validation_0-rmse:65.25921	validation_1-rmse:99.43316
+[400]	validation_0-rmse:62.72772	validation_1-rmse:100.41164
+[500]	validation_0-rmse:60.54511	validation_1-rmse:100.80794
+[600]	validation_0-rmse:58.62538	validation_1-rmse:100.61450
+[700]	validation_0-rmse:56.88428	validation_1-rmse:101.28824
+[800]	validation_0-rmse:55.23082	validation_1-rmse:101.71960
+[899]	validation_0-rmse:53.68965	validation_1-rmse:102.25656
+{"status": "completed", "phase": "prepare", "pid": 1635459, "utc": "2026-10-28T00:17:43.328187+00:00", "parity": {"f1": {"origins": 2137, "max_abs_difference": 0.0}, "final": {"origins": 2833, "max_abs_difference": 0.0}}}
+{"status": "running", "phase": "starting", "pid": 1635453, "utc": "2026-10-28T00:17:44.775095+00:00"}
+{"status": "running", "phase": "fold0/event", "pid": 1635453, "utc": "2026-10-28T00:17:45.156506+00:00"}
+Event target codec: 0/7768 training-only curves
+Event target codec: 256/7768 training-only curves
+Event target codec: 512/7768 training-only curves
+Event target codec: 768/7768 training-only curves
+Event target codec: 1024/7768 training-only curves
+Event target codec: 1280/7768 training-only curves
+Event target codec: 1536/7768 training-only curves
+Event target codec: 1792/7768 training-only curves
+Event target codec: 2048/7768 training-only curves
+Event target codec: 2304/7768 training-only curves
+Event target codec: 2560/7768 training-only curves
+Event target codec: 2816/7768 training-only curves
+Event target codec: 3072/7768 training-only curves
+Event target codec: 3328/7768 training-only curves
+Event target codec: 3584/7768 training-only curves
+Event target codec: 3840/7768 training-only curves
+Event target codec: 4096/7768 training-only curves
+Event target codec: 4352/7768 training-only curves
+Event target codec: 4608/7768 training-only curves
+Event target codec: 4864/7768 training-only curves
+Event target codec: 5120/7768 training-only curves
+Event target codec: 5376/7768 training-only curves
+Event target codec: 5632/7768 training-only curves
+Event target codec: 5888/7768 training-only curves
+Event target codec: 6144/7768 training-only curves
+Event target codec: 6400/7768 training-only curves
+Event target codec: 6656/7768 training-only curves
+Event target codec: 6912/7768 training-only curves
+Event target codec: 7168/7768 training-only curves
+Event target codec: 7424/7768 training-only curves
+Event target codec: 7680/7768 training-only curves
+Event target codec: 0/640 training-only curves
+Event target codec: 256/640 training-only curves
+Event target codec: 512/640 training-only curves
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/fold0/event: X=(7768, 669), y=(7768, 7)
+[0]	validation_0-rmse:0.99362	validation_1-rmse:0.96721
+[100]	validation_0-rmse:0.83450	validation_1-rmse:0.77420
+[200]	validation_0-rmse:0.80289	validation_1-rmse:0.76945
+[300]	validation_0-rmse:0.78262	validation_1-rmse:0.77024
+[400]	validation_0-rmse:0.76563	validation_1-rmse:0.77275
+[500]	validation_0-rmse:0.75021	validation_1-rmse:0.77516
+[600]	validation_0-rmse:0.73684	validation_1-rmse:0.77655
+[700]	validation_0-rmse:0.72424	validation_1-rmse:0.77835
+[800]	validation_0-rmse:0.71205	validation_1-rmse:0.77838
+[899]	validation_0-rmse:0.70126	validation_1-rmse:0.77957
+{"status": "running", "phase": "fold1/event", "pid": 1635453, "utc": "2026-10-28T00:30:26.590149+00:00"}
+Event target codec: 0/8504 training-only curves
+Event target codec: 256/8504 training-only curves
+Event target codec: 512/8504 training-only curves
+Event target codec: 768/8504 training-only curves
+Event target codec: 1024/8504 training-only curves
+Event target codec: 1280/8504 training-only curves
+Event target codec: 1536/8504 training-only curves
+Event target codec: 1792/8504 training-only curves
+Event target codec: 2048/8504 training-only curves
+Event target codec: 2304/8504 training-only curves
+Event target codec: 2560/8504 training-only curves
+Event target codec: 2816/8504 training-only curves
+Event target codec: 3072/8504 training-only curves
+Event target codec: 3328/8504 training-only curves
+Event target codec: 3584/8504 training-only curves
+Event target codec: 3840/8504 training-only curves
+Event target codec: 4096/8504 training-only curves
+Event target codec: 4352/8504 training-only curves
+Event target codec: 4608/8504 training-only curves
+Event target codec: 4864/8504 training-only curves
+Event target codec: 5120/8504 training-only curves
+Event target codec: 5376/8504 training-only curves
+Event target codec: 5632/8504 training-only curves
+Event target codec: 5888/8504 training-only curves
+Event target codec: 6144/8504 training-only curves
+Event target codec: 6400/8504 training-only curves
+Event target codec: 6656/8504 training-only curves
+Event target codec: 6912/8504 training-only curves
+Event target codec: 7168/8504 training-only curves
+Event target codec: 7424/8504 training-only curves
+Event target codec: 7680/8504 training-only curves
+Event target codec: 7936/8504 training-only curves
+Event target codec: 8192/8504 training-only curves
+Event target codec: 8448/8504 training-only curves
+Event target codec: 0/640 training-only curves
+Event target codec: 256/640 training-only curves
+Event target codec: 512/640 training-only curves
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/fold1/event: X=(8504, 669), y=(8504, 7)
+[0]	validation_0-rmse:0.99345	validation_1-rmse:1.20815
+[100]	validation_0-rmse:0.83087	validation_1-rmse:0.96416
+[200]	validation_0-rmse:0.80161	validation_1-rmse:0.95398
+[300]	validation_0-rmse:0.78210	validation_1-rmse:0.95202
+[400]	validation_0-rmse:0.76692	validation_1-rmse:0.95279
+[500]	validation_0-rmse:0.75212	validation_1-rmse:0.95299
+[600]	validation_0-rmse:0.73947	validation_1-rmse:0.95322
+[700]	validation_0-rmse:0.72737	validation_1-rmse:0.95458
+[800]	validation_0-rmse:0.71620	validation_1-rmse:0.95431
+[899]	validation_0-rmse:0.70582	validation_1-rmse:0.95569
+{"status": "running", "phase": "fold2/event", "pid": 1635453, "utc": "2026-10-28T00:37:04.995167+00:00"}
+Event target codec: 0/9232 training-only curves
+Event target codec: 256/9232 training-only curves
+Event target codec: 512/9232 training-only curves
+Event target codec: 768/9232 training-only curves
+Event target codec: 1024/9232 training-only curves
+Event target codec: 1280/9232 training-only curves
+Event target codec: 1536/9232 training-only curves
+Event target codec: 1792/9232 training-only curves
+Event target codec: 2048/9232 training-only curves
+Event target codec: 2304/9232 training-only curves
+Event target codec: 2560/9232 training-only curves
+Event target codec: 2816/9232 training-only curves
+Event target codec: 3072/9232 training-only curves
+Event target codec: 3328/9232 training-only curves
+Event target codec: 3584/9232 training-only curves
+Event target codec: 3840/9232 training-only curves
+Event target codec: 4096/9232 training-only curves
+Event target codec: 4352/9232 training-only curves
+Event target codec: 4608/9232 training-only curves
+Event target codec: 4864/9232 training-only curves
+Event target codec: 5120/9232 training-only curves
+Event target codec: 5376/9232 training-only curves
+Event target codec: 5632/9232 training-only curves
+Event target codec: 5888/9232 training-only curves
+Event target codec: 6144/9232 training-only curves
+Event target codec: 6400/9232 training-only curves
+Event target codec: 6656/9232 training-only curves
+Event target codec: 6912/9232 training-only curves
+Event target codec: 7168/9232 training-only curves
+Event target codec: 7424/9232 training-only curves
+Event target codec: 7680/9232 training-only curves
+Event target codec: 7936/9232 training-only curves
+Event target codec: 8192/9232 training-only curves
+Event target codec: 8448/9232 training-only curves
+Event target codec: 8704/9232 training-only curves
+Event target codec: 8960/9232 training-only curves
+Event target codec: 9216/9232 training-only curves
+Event target codec: 0/648 training-only curves
+Event target codec: 256/648 training-only curves
+Event target codec: 512/648 training-only curves
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/fold2/event: X=(9232, 669), y=(9232, 7)
+[0]	validation_0-rmse:0.99320	validation_1-rmse:1.17970
+[100]	validation_0-rmse:0.82817	validation_1-rmse:0.98023
+[200]	validation_0-rmse:0.79925	validation_1-rmse:0.97140
+[300]	validation_0-rmse:0.78027	validation_1-rmse:0.97401
+[400]	validation_0-rmse:0.76606	validation_1-rmse:0.97938
+[500]	validation_0-rmse:0.75244	validation_1-rmse:0.98243
+[600]	validation_0-rmse:0.74079	validation_1-rmse:0.98595
+[700]	validation_0-rmse:0.72940	validation_1-rmse:0.98771
+[800]	validation_0-rmse:0.71934	validation_1-rmse:0.99193
+[899]	validation_0-rmse:0.70939	validation_1-rmse:0.99493
+{"status": "running", "phase": "fold0/raw72", "pid": 1635453, "utc": "2026-10-28T00:43:55.751296+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/fold0/raw72: X=(7768, 669), y=(7768, 72)
+[0]	validation_0-rmse:89.13255	validation_1-rmse:98.31449
+[100]	validation_0-rmse:61.50129	validation_1-rmse:67.99237
+[200]	validation_0-rmse:56.73952	validation_1-rmse:64.59720
+[300]	validation_0-rmse:54.06180	validation_1-rmse:63.36301
+[400]	validation_0-rmse:52.07785	validation_1-rmse:62.71079
+[500]	validation_0-rmse:50.45599	validation_1-rmse:62.43773
+[600]	validation_0-rmse:49.03366	validation_1-rmse:62.26187
+[700]	validation_0-rmse:47.77378	validation_1-rmse:62.20369
+[800]	validation_0-rmse:46.64116	validation_1-rmse:62.25026
+[899]	validation_0-rmse:45.57269	validation_1-rmse:62.45942
+{"status": "running", "phase": "fold1/raw72", "pid": 1635453, "utc": "2026-10-28T01:34:05.567434+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/fold1/raw72: X=(8504, 669), y=(8504, 72)
+[0]	validation_0-rmse:91.83267	validation_1-rmse:131.32968
+[100]	validation_0-rmse:62.23499	validation_1-rmse:94.14185
+[200]	validation_0-rmse:57.35345	validation_1-rmse:91.95303
+[300]	validation_0-rmse:54.79324	validation_1-rmse:92.03030
+[400]	validation_0-rmse:52.83531	validation_1-rmse:92.41469
+[500]	validation_0-rmse:51.30835	validation_1-rmse:92.42458
+[600]	validation_0-rmse:49.85981	validation_1-rmse:92.95571
+[700]	validation_0-rmse:48.69557	validation_1-rmse:93.19533
+[800]	validation_0-rmse:47.57056	validation_1-rmse:93.71012
+[899]	validation_0-rmse:46.54612	validation_1-rmse:94.24699
+{"status": "running", "phase": "fold2/raw72", "pid": 1635453, "utc": "2026-10-28T02:43:40.437121+00:00"}
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/fold2/raw72: X=(9232, 669), y=(9232, 72)
+[0]	validation_0-rmse:96.01344	validation_1-rmse:135.12978
+[100]	validation_0-rmse:64.76592	validation_1-rmse:91.34733
+[200]	validation_0-rmse:59.74300	validation_1-rmse:89.59208
+[300]	validation_0-rmse:57.35175	validation_1-rmse:89.76314
+[400]	validation_0-rmse:55.44808	validation_1-rmse:90.13888
+[500]	validation_0-rmse:53.80397	validation_1-rmse:90.60974
+[600]	validation_0-rmse:52.46472	validation_1-rmse:90.80466
+[700]	validation_0-rmse:51.24572	validation_1-rmse:91.17863
+[800]	validation_0-rmse:50.20222	validation_1-rmse:91.31794
+[899]	validation_0-rmse:49.18706	validation_1-rmse:91.48318
+{"status": "running", "phase": "f1/event", "pid": 1635453, "utc": "2026-10-28T03:40:50.750408+00:00"}
+Event target codec: 0/9928 training-only curves
+Event target codec: 256/9928 training-only curves
+Event target codec: 512/9928 training-only curves
+Event target codec: 768/9928 training-only curves
+Event target codec: 1024/9928 training-only curves
+Event target codec: 1280/9928 training-only curves
+Event target codec: 1536/9928 training-only curves
+Event target codec: 1792/9928 training-only curves
+Event target codec: 2048/9928 training-only curves
+Event target codec: 2304/9928 training-only curves
+Event target codec: 2560/9928 training-only curves
+Event target codec: 2816/9928 training-only curves
+Event target codec: 3072/9928 training-only curves
+Event target codec: 3328/9928 training-only curves
+Event target codec: 3584/9928 training-only curves
+Event target codec: 3840/9928 training-only curves
+Event target codec: 4096/9928 training-only curves
+Event target codec: 4352/9928 training-only curves
+Event target codec: 4608/9928 training-only curves
+Event target codec: 4864/9928 training-only curves
+Event target codec: 5120/9928 training-only curves
+Event target codec: 5376/9928 training-only curves
+Event target codec: 5632/9928 training-only curves
+Event target codec: 5888/9928 training-only curves
+Event target codec: 6144/9928 training-only curves
+Event target codec: 6400/9928 training-only curves
+Event target codec: 6656/9928 training-only curves
+Event target codec: 6912/9928 training-only curves
+Event target codec: 7168/9928 training-only curves
+Event target codec: 7424/9928 training-only curves
+Event target codec: 7680/9928 training-only curves
+Event target codec: 7936/9928 training-only curves
+Event target codec: 8192/9928 training-only curves
+Event target codec: 8448/9928 training-only curves
+Event target codec: 8704/9928 training-only curves
+Event target codec: 8960/9928 training-only curves
+Event target codec: 9216/9928 training-only curves
+Event target codec: 9472/9928 training-only curves
+Event target codec: 9728/9928 training-only curves
+Event target codec: 0/648 training-only curves
+Event target codec: 256/648 training-only curves
+Event target codec: 512/648 training-only curves
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/f1/event: X=(9928, 669), y=(9928, 7)
+[0]	validation_0-rmse:0.99319	validation_1-rmse:1.15384
+[100]	validation_0-rmse:0.82877	validation_1-rmse:0.89941
+[200]	validation_0-rmse:0.79861	validation_1-rmse:0.84697
+[300]	validation_0-rmse:0.78098	validation_1-rmse:0.81937
+[400]	validation_0-rmse:0.76675	validation_1-rmse:0.79388
+[500]	validation_0-rmse:0.75338	validation_1-rmse:0.77110
+[600]	validation_0-rmse:0.74209	validation_1-rmse:0.75124
+[700]	validation_0-rmse:0.73158	validation_1-rmse:0.73476
+[800]	validation_0-rmse:0.72125	validation_1-rmse:0.72182
+[899]	validation_0-rmse:0.71137	validation_1-rmse:0.70783
+{"status": "running", "phase": "final/event", "pid": 1635453, "utc": "2026-10-28T03:46:22.000538+00:00"}
+Event target codec: 0/10664 training-only curves
+Event target codec: 256/10664 training-only curves
+Event target codec: 512/10664 training-only curves
+Event target codec: 768/10664 training-only curves
+Event target codec: 1024/10664 training-only curves
+Event target codec: 1280/10664 training-only curves
+Event target codec: 1536/10664 training-only curves
+Event target codec: 1792/10664 training-only curves
+Event target codec: 2048/10664 training-only curves
+Event target codec: 2304/10664 training-only curves
+Event target codec: 2560/10664 training-only curves
+Event target codec: 2816/10664 training-only curves
+Event target codec: 3072/10664 training-only curves
+Event target codec: 3328/10664 training-only curves
+Event target codec: 3584/10664 training-only curves
+Event target codec: 3840/10664 training-only curves
+Event target codec: 4096/10664 training-only curves
+Event target codec: 4352/10664 training-only curves
+Event target codec: 4608/10664 training-only curves
+Event target codec: 4864/10664 training-only curves
+Event target codec: 5120/10664 training-only curves
+Event target codec: 5376/10664 training-only curves
+Event target codec: 5632/10664 training-only curves
+Event target codec: 5888/10664 training-only curves
+Event target codec: 6144/10664 training-only curves
+Event target codec: 6400/10664 training-only curves
+Event target codec: 6656/10664 training-only curves
+Event target codec: 6912/10664 training-only curves
+Event target codec: 7168/10664 training-only curves
+Event target codec: 7424/10664 training-only curves
+Event target codec: 7680/10664 training-only curves
+Event target codec: 7936/10664 training-only curves
+Event target codec: 8192/10664 training-only curves
+Event target codec: 8448/10664 training-only curves
+Event target codec: 8704/10664 training-only curves
+Event target codec: 8960/10664 training-only curves
+Event target codec: 9216/10664 training-only curves
+Event target codec: 9472/10664 training-only curves
+Event target codec: 9728/10664 training-only curves
+Event target codec: 9984/10664 training-only curves
+Event target codec: 10240/10664 training-only curves
+Event target codec: 10496/10664 training-only curves
+Event target codec: 0/648 training-only curves
+Event target codec: 256/648 training-only curves
+Event target codec: 512/648 training-only curves
+FIT /home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event/final/event: X=(10664, 669), y=(10664, 7)
+[0]	validation_0-rmse:0.99311	validation_1-rmse:1.16076
+[100]	validation_0-rmse:0.82854	validation_1-rmse:0.91287
+[200]	validation_0-rmse:0.79894	validation_1-rmse:0.86083
+[300]	validation_0-rmse:0.78145	validation_1-rmse:0.83398
+[400]	validation_0-rmse:0.76798	validation_1-rmse:0.80648
+[500]	validation_0-rmse:0.75529	validation_1-rmse:0.78353
+[600]	validation_0-rmse:0.74468	validation_1-rmse:0.76420
+[700]	validation_0-rmse:0.73368	validation_1-rmse:0.74616
+[800]	validation_0-rmse:0.72407	validation_1-rmse:0.73139
+[899]	validation_0-rmse:0.71526	validation_1-rmse:0.71841
+{"status": "completed", "phase": "completed", "pid": 1635453, "utc": "2026-10-28T03:52:07.034355+00:00", "selected": "parent", "research_arm": "event"}

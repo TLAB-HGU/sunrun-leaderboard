@@ -1,0 +1,18 @@
+{
+  "study": 1,
+  "trial": 32,
+  "value": 7416.809576831365,
+  "params": {
+    "max_depth": 6,
+    "n_estimators": 400,
+    "learning_rate": 0.011665375590900416,
+    "num_leaves": 39,
+    "subsample": 0.8158360436957313,
+    "colsample_bytree": 0.796156879318864,
+    "min_child_samples": 76,
+    "min_child_weight": 1.7495117760617724,
+    "reg_alpha": 12.889193670860928,
+    "reg_lambda": 9.785792859825623
+  },
+  "completed": 50
+}

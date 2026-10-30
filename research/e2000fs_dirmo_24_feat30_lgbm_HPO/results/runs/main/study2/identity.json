@@ -1,0 +1,27 @@
+{
+  "source_sha256": "a47eb3c0a5adf56aff55187375290aad2a38a0fb73366e13218f04d191e4ae0c",
+  "parent_sha256": "53948c78bee12ceb0f0c877f0b61ea6104a6734655aa9eea1725472aba0ea3cc",
+  "input_sha256": {
+    "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/f1.npz": "f126160c2a8d5bb12df376781a4d5712cdae0708385c717cc82419556629db1d",
+    "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/names.json": "3b25e892c0093215c90f0f3e579a72a0c6cb314a38c694a4c38e5c58744b14ce",
+    "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/official.npz": "9878a560b0d81ddec35f65184afe6a446f425750cce2074290f320d6613ec6ae",
+    "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/receipt.json": "cbeb93bede4fb9d11b4c08c4c45eeae5634435854d28644b02e88907e7cb1d8f",
+    "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/speed.parquet": "96f6e22e1643d79c5dd49f04825128dc25c3b8985a5415fa5828fd7db3012877",
+    "/home/t-lab01/sunrun/analysis/forecast_strategies_e2000/outputs/cache/train.npz": "5f9c446b1beb7c8fb4290236bfbbde08f32153433cfafadc3c02fd189406a8a9"
+  },
+  "seed": 43,
+  "model_seed": 42,
+  "threads": 4,
+  "goal": 50,
+  "fit_count": 9256,
+  "validation_count": 648,
+  "fit_target_end": "2025-12-03 21:00:00+00:00",
+  "validation_start": "2025-12-04 00:00:00+00:00",
+  "validation_end": "2026-02-22 21:00:00+00:00",
+  "smoke": false,
+  "optuna_version": "5.0.0",
+  "lightgbm_version": "4.6.0",
+  "numpy_version": "2.4.6",
+  "pandas_version": "2.3.3",
+  "sampler_seed_policy": "study_seed + 1009 * attempted_trial_count"
+}

@@ -1,0 +1,533 @@
+internal: train=9256 eval=648 rounds=900
+[0]	train-rmse:95.14559	train-weighted_mse:17673.16211	validation-rmse:134.39891	validation-weighted_mse:46374.58203
+[25]	train-rmse:63.83535	train-weighted_mse:7316.58887	validation-rmse:88.12085	validation-weighted_mse:19306.96875
+[50]	train-rmse:53.04931	train-weighted_mse:4490.65430	validation-rmse:72.30613	validation-weighted_mse:11962.94824
+[75]	train-rmse:49.19103	train-weighted_mse:3529.34668	validation-rmse:66.99494	validation-weighted_mse:9360.31641
+[100]	train-rmse:47.33052	train-weighted_mse:3092.05347	validation-rmse:64.97899	validation-weighted_mse:8267.56738
+[125]	train-rmse:46.20527	train-weighted_mse:2849.01123	validation-rmse:64.30292	validation-weighted_mse:7807.56885
+[150]	train-rmse:45.43675	train-weighted_mse:2692.29565	validation-rmse:63.92671	validation-weighted_mse:7489.18213
+[175]	train-rmse:44.89793	train-weighted_mse:2586.46338	validation-rmse:63.89658	validation-weighted_mse:7347.44873
+[200]	train-rmse:44.46823	train-weighted_mse:2509.04810	validation-rmse:64.02955	validation-weighted_mse:7303.71728
+[225]	train-rmse:44.04111	train-weighted_mse:2439.82593	validation-rmse:64.25653	validation-weighted_mse:7275.45898
+[250]	train-rmse:43.68125	train-weighted_mse:2382.66797	validation-rmse:64.26950	validation-weighted_mse:7255.62061
+[275]	train-rmse:43.33990	train-weighted_mse:2331.55859	validation-rmse:64.12753	validation-weighted_mse:7190.36719
+[300]	train-rmse:43.00526	train-weighted_mse:2287.07959	validation-rmse:64.22283	validation-weighted_mse:7213.29541
+[325]	train-rmse:42.69556	train-weighted_mse:2242.66870	validation-rmse:64.20951	validation-weighted_mse:7219.97510
+[350]	train-rmse:42.42474	train-weighted_mse:2203.85230	validation-rmse:64.18004	validation-weighted_mse:7200.12939
+[375]	train-rmse:42.12278	train-weighted_mse:2160.38281	validation-rmse:64.37968	validation-weighted_mse:7232.54053
+[400]	train-rmse:41.86483	train-weighted_mse:2125.58667	validation-rmse:64.42080	validation-weighted_mse:7273.29150
+[425]	train-rmse:41.59393	train-weighted_mse:2088.01245	validation-rmse:64.38014	validation-weighted_mse:7278.50293
+[450]	train-rmse:41.32209	train-weighted_mse:2049.96191	validation-rmse:64.30526	validation-weighted_mse:7271.07812
+[475]	train-rmse:41.07638	train-weighted_mse:2017.25061	validation-rmse:64.29270	validation-weighted_mse:7288.80859
+[500]	train-rmse:40.80914	train-weighted_mse:1981.94690	validation-rmse:64.21938	validation-weighted_mse:7284.64307
+[525]	train-rmse:40.55715	train-weighted_mse:1950.38562	validation-rmse:64.23582	validation-weighted_mse:7323.80664
+[550]	train-rmse:40.34438	train-weighted_mse:1923.74951	validation-rmse:64.23409	validation-weighted_mse:7328.70996
+[575]	train-rmse:40.09500	train-weighted_mse:1892.76550	validation-rmse:64.22948	validation-weighted_mse:7363.04199
+[600]	train-rmse:39.86536	train-weighted_mse:1865.28528	validation-rmse:64.26727	validation-weighted_mse:7390.64502
+[625]	train-rmse:39.61742	train-weighted_mse:1836.86377	validation-rmse:64.29912	validation-weighted_mse:7417.10596
+[650]	train-rmse:39.39000	train-weighted_mse:1811.15674	validation-rmse:64.25371	validation-weighted_mse:7429.93555
+[675]	train-rmse:39.16476	train-weighted_mse:1785.83606	validation-rmse:64.19887	validation-weighted_mse:7428.63916
+[700]	train-rmse:38.95562	train-weighted_mse:1760.54578	validation-rmse:64.14894	validation-weighted_mse:7434.73877
+[725]	train-rmse:38.75012	train-weighted_mse:1739.05615	validation-rmse:64.16907	validation-weighted_mse:7462.00439
+[750]	train-rmse:38.52567	train-weighted_mse:1715.56250	validation-rmse:64.16674	validation-weighted_mse:7479.09473
+[775]	train-rmse:38.36415	train-weighted_mse:1698.61072	validation-rmse:64.10149	validation-weighted_mse:7490.66260
+[800]	train-rmse:38.17923	train-weighted_mse:1678.05627	validation-rmse:64.08848	validation-weighted_mse:7482.33740
+[825]	train-rmse:37.98555	train-weighted_mse:1656.20642	validation-rmse:64.02440	validation-weighted_mse:7494.22852
+[850]	train-rmse:37.80367	train-weighted_mse:1636.55139	validation-rmse:64.04493	validation-weighted_mse:7527.30713
+[875]	train-rmse:37.63094	train-weighted_mse:1617.38953	validation-rmse:64.02172	validation-weighted_mse:7546.77197
+[899]	train-rmse:37.46264	train-weighted_mse:1600.49292	validation-rmse:64.01053	validation-weighted_mse:7559.45801
+internal b0: vector output (648, 24), reload parity passed; elapsed=138.8s
+[0]	train-rmse:96.14432	train-weighted_mse:17973.79492	validation-rmse:134.80184	validation-weighted_mse:46578.24219
+[25]	train-rmse:79.64911	train-weighted_mse:10522.35547	validation-rmse:104.72711	validation-weighted_mse:26309.65039
+[50]	train-rmse:73.61538	train-weighted_mse:7863.96436	validation-rmse:95.18277	validation-weighted_mse:19164.31836
+[75]	train-rmse:70.56790	train-weighted_mse:6689.64893	validation-rmse:93.14305	validation-weighted_mse:16757.01367
+[100]	train-rmse:68.78272	train-weighted_mse:6076.64551	validation-rmse:93.44775	validation-weighted_mse:15924.40039
+[125]	train-rmse:67.30147	train-weighted_mse:5670.41943	validation-rmse:94.03134	validation-weighted_mse:15783.25684
+[150]	train-rmse:66.03316	train-weighted_mse:5367.52978	validation-rmse:94.47695	validation-weighted_mse:15605.26953
+[175]	train-rmse:64.89096	train-weighted_mse:5122.35791	validation-rmse:94.99078	validation-weighted_mse:15587.15137
+[200]	train-rmse:63.95388	train-weighted_mse:4936.68457	validation-rmse:95.35488	validation-weighted_mse:15595.90723
+[225]	train-rmse:63.10994	train-weighted_mse:4772.49316	validation-rmse:95.49194	validation-weighted_mse:15646.19336
+[250]	train-rmse:62.35727	train-weighted_mse:4634.06494	validation-rmse:95.74140	validation-weighted_mse:15754.18945
+[275]	train-rmse:61.55110	train-weighted_mse:4488.95264	validation-rmse:95.78683	validation-weighted_mse:15777.42773
+[300]	train-rmse:60.78344	train-weighted_mse:4356.88086	validation-rmse:95.85763	validation-weighted_mse:15788.57227
+[325]	train-rmse:60.22344	train-weighted_mse:4258.71533	validation-rmse:96.20334	validation-weighted_mse:15884.61231
+[350]	train-rmse:59.56755	train-weighted_mse:4154.92969	validation-rmse:96.36001	validation-weighted_mse:15961.81641
+[375]	train-rmse:58.95117	train-weighted_mse:4055.20483	validation-rmse:96.38820	validation-weighted_mse:16077.47559
+[400]	train-rmse:58.45003	train-weighted_mse:3968.88501	validation-rmse:96.66503	validation-weighted_mse:16170.56836
+[425]	train-rmse:57.82199	train-weighted_mse:3868.01880	validation-rmse:96.84743	validation-weighted_mse:16270.04297
+[450]	train-rmse:57.23959	train-weighted_mse:3774.57397	validation-rmse:97.08819	validation-weighted_mse:16461.48828
+[475]	train-rmse:56.80375	train-weighted_mse:3701.99902	validation-rmse:97.06410	validation-weighted_mse:16478.76758
+[500]	train-rmse:56.29532	train-weighted_mse:3627.34619	validation-rmse:97.03955	validation-weighted_mse:16500.04102
+[525]	train-rmse:55.76732	train-weighted_mse:3544.08350	validation-rmse:97.06784	validation-weighted_mse:16573.16211
+[550]	train-rmse:55.30686	train-weighted_mse:3472.18945	validation-rmse:97.07135	validation-weighted_mse:16558.70312
+[575]	train-rmse:54.89125	train-weighted_mse:3412.00732	validation-rmse:97.14333	validation-weighted_mse:16676.15234
+[600]	train-rmse:54.51078	train-weighted_mse:3357.61255	validation-rmse:97.12347	validation-weighted_mse:16700.73438
+[625]	train-rmse:54.09327	train-weighted_mse:3296.19849	validation-rmse:97.34504	validation-weighted_mse:16765.94336
+[650]	train-rmse:53.67717	train-weighted_mse:3237.03882	validation-rmse:97.41779	validation-weighted_mse:16880.20703
+[675]	train-rmse:53.29293	train-weighted_mse:3181.66016	validation-rmse:97.40998	validation-weighted_mse:16919.51562
+[700]	train-rmse:52.93424	train-weighted_mse:3128.76221	validation-rmse:97.40476	validation-weighted_mse:16958.47070
+[725]	train-rmse:52.55064	train-weighted_mse:3077.27808	validation-rmse:97.47871	validation-weighted_mse:17018.00781
+[750]	train-rmse:52.17920	train-weighted_mse:3027.35864	validation-rmse:97.42366	validation-weighted_mse:17048.86328
+[775]	train-rmse:51.85587	train-weighted_mse:2982.79077	validation-rmse:97.50027	validation-weighted_mse:17112.32422
+[800]	train-rmse:51.51281	train-weighted_mse:2936.10767	validation-rmse:97.51891	validation-weighted_mse:17173.80078
+[825]	train-rmse:51.17549	train-weighted_mse:2890.18213	validation-rmse:97.52276	validation-weighted_mse:17238.21289
+[850]	train-rmse:50.80895	train-weighted_mse:2842.21436	validation-rmse:97.63890	validation-weighted_mse:17321.22266
+[875]	train-rmse:50.48716	train-weighted_mse:2799.13330	validation-rmse:97.78888	validation-weighted_mse:17391.22656
+[899]	train-rmse:50.18781	train-weighted_mse:2759.62085	validation-rmse:98.02085	validation-weighted_mse:17502.19141
+internal b1: vector output (648, 24), reload parity passed; elapsed=139.3s
+[0]	train-rmse:96.27623	train-weighted_mse:18009.75781	validation-rmse:133.43694	validation-weighted_mse:45400.60938
+[25]	train-rmse:84.53821	train-weighted_mse:11530.31738	validation-rmse:102.71666	validation-weighted_mse:24406.48828
+[50]	train-rmse:80.77028	train-weighted_mse:9264.95606	validation-rmse:96.26102	validation-weighted_mse:18526.90820
+[75]	train-rmse:78.62325	train-weighted_mse:8195.72656	validation-rmse:95.53194	validation-weighted_mse:16664.82422
+[100]	train-rmse:76.88686	train-weighted_mse:7564.08398	validation-rmse:96.49251	validation-weighted_mse:16127.85644
+[125]	train-rmse:75.57092	train-weighted_mse:7152.86816	validation-rmse:97.30190	validation-weighted_mse:15984.03906
+[150]	train-rmse:74.34448	train-weighted_mse:6839.19434	validation-rmse:98.05523	validation-weighted_mse:15962.17871
+[175]	train-rmse:73.32257	train-weighted_mse:6591.29541	validation-rmse:98.47823	validation-weighted_mse:16027.03906
+[200]	train-rmse:72.27548	train-weighted_mse:6355.09668	validation-rmse:99.06595	validation-weighted_mse:16156.17090
+[225]	train-rmse:71.32873	train-weighted_mse:6149.55811	validation-rmse:99.51741	validation-weighted_mse:16318.30273
+[250]	train-rmse:70.40153	train-weighted_mse:5946.82666	validation-rmse:100.17512	validation-weighted_mse:16555.33594
+[275]	train-rmse:69.32011	train-weighted_mse:5748.00928	validation-rmse:100.29197	validation-weighted_mse:16692.82031
+[300]	train-rmse:68.31306	train-weighted_mse:5557.60742	validation-rmse:100.54213	validation-weighted_mse:16965.48438
+[325]	train-rmse:67.53296	train-weighted_mse:5408.14404	validation-rmse:100.67657	validation-weighted_mse:17183.00977
+[350]	train-rmse:66.75656	train-weighted_mse:5261.66992	validation-rmse:100.80103	validation-weighted_mse:17252.71484
+[375]	train-rmse:66.03349	train-weighted_mse:5125.28564	validation-rmse:100.89398	validation-weighted_mse:17393.07617
+[400]	train-rmse:65.31302	train-weighted_mse:4995.76367	validation-rmse:100.82048	validation-weighted_mse:17551.80664
+[425]	train-rmse:64.62214	train-weighted_mse:4876.96240	validation-rmse:100.83910	validation-weighted_mse:17655.73633
+[450]	train-rmse:63.98795	train-weighted_mse:4759.80127	validation-rmse:100.99204	validation-weighted_mse:17774.91406
+[475]	train-rmse:63.32566	train-weighted_mse:4649.28076	validation-rmse:100.86296	validation-weighted_mse:17875.85742
+[500]	train-rmse:62.71589	train-weighted_mse:4546.05518	validation-rmse:100.71287	validation-weighted_mse:17884.71289
+[525]	train-rmse:62.04974	train-weighted_mse:4437.53516	validation-rmse:100.50595	validation-weighted_mse:17935.83203
+[550]	train-rmse:61.51061	train-weighted_mse:4345.17529	validation-rmse:100.48217	validation-weighted_mse:17960.55469
+[575]	train-rmse:60.98997	train-weighted_mse:4256.95068	validation-rmse:100.52612	validation-weighted_mse:18027.80859
+[600]	train-rmse:60.40300	train-weighted_mse:4166.32520	validation-rmse:100.38637	validation-weighted_mse:18036.02930
+[625]	train-rmse:59.91008	train-weighted_mse:4084.58130	validation-rmse:100.47223	validation-weighted_mse:18145.74805
+[650]	train-rmse:59.46338	train-weighted_mse:4016.38037	validation-rmse:100.13769	validation-weighted_mse:18135.69336
+[675]	train-rmse:58.97566	train-weighted_mse:3935.24341	validation-rmse:100.12044	validation-weighted_mse:18150.94531
+[700]	train-rmse:58.54107	train-weighted_mse:3863.55933	validation-rmse:100.30038	validation-weighted_mse:18265.22461
+[725]	train-rmse:58.04958	train-weighted_mse:3791.79370	validation-rmse:100.28304	validation-weighted_mse:18294.47656
+[750]	train-rmse:57.58006	train-weighted_mse:3721.36694	validation-rmse:100.43652	validation-weighted_mse:18430.61523
+[775]	train-rmse:57.12846	train-weighted_mse:3652.13477	validation-rmse:100.36965	validation-weighted_mse:18449.75781
+[800]	train-rmse:56.66559	train-weighted_mse:3584.36157	validation-rmse:100.22120	validation-weighted_mse:18411.27734
+[825]	train-rmse:56.25713	train-weighted_mse:3524.38037	validation-rmse:100.19739	validation-weighted_mse:18473.76953
+[850]	train-rmse:55.87564	train-weighted_mse:3470.11304	validation-rmse:100.22351	validation-weighted_mse:18565.63086
+[875]	train-rmse:55.42478	train-weighted_mse:3406.81616	validation-rmse:100.22620	validation-weighted_mse:18621.00000
+[899]	train-rmse:55.01828	train-weighted_mse:3351.36670	validation-rmse:100.23828	validation-weighted_mse:18703.26562
+internal b2: vector output (648, 24), reload parity passed; elapsed=140.3s
+f1: train=9928 eval=2137 rounds=900
+[0]	train-rmse:98.10254	train-weighted_mse:18405.25391	validation-rmse:90.98953	validation-weighted_mse:16158.91797
+[25]	train-rmse:66.00695	train-weighted_mse:7607.60791	validation-rmse:60.04842	validation-weighted_mse:6408.53027
+[50]	train-rmse:54.64087	train-weighted_mse:4640.06348	validation-rmse:50.76339	validation-weighted_mse:4108.61133
+[75]	train-rmse:50.64194	train-weighted_mse:3639.91943	validation-rmse:48.32994	validation-weighted_mse:3475.24805
+[100]	train-rmse:48.56648	train-weighted_mse:3165.82471	validation-rmse:47.70009	validation-weighted_mse:3204.95776
+[125]	train-rmse:47.42982	train-weighted_mse:2922.68701	validation-rmse:47.40111	validation-weighted_mse:3067.06445
+[150]	train-rmse:46.62972	train-weighted_mse:2762.66064	validation-rmse:47.33042	validation-weighted_mse:3013.06274
+[175]	train-rmse:46.06995	train-weighted_mse:2655.33862	validation-rmse:47.45814	validation-weighted_mse:2970.92188
+[200]	train-rmse:45.64638	train-weighted_mse:2583.83301	validation-rmse:47.34532	validation-weighted_mse:2934.38769
+[225]	train-rmse:45.20918	train-weighted_mse:2513.97534	validation-rmse:47.04761	validation-weighted_mse:2898.66406
+[250]	train-rmse:44.82122	train-weighted_mse:2452.57300	validation-rmse:46.94451	validation-weighted_mse:2874.79639
+[275]	train-rmse:44.52004	train-weighted_mse:2406.59668	validation-rmse:46.75217	validation-weighted_mse:2843.41821
+[300]	train-rmse:44.16391	train-weighted_mse:2357.68188	validation-rmse:46.67435	validation-weighted_mse:2831.91504
+[325]	train-rmse:43.83741	train-weighted_mse:2310.63794	validation-rmse:46.71334	validation-weighted_mse:2828.26636
+[350]	train-rmse:43.54118	train-weighted_mse:2270.11719	validation-rmse:46.65784	validation-weighted_mse:2814.39795
+[375]	train-rmse:43.29622	train-weighted_mse:2234.51709	validation-rmse:46.60940	validation-weighted_mse:2801.64209
+[400]	train-rmse:42.98952	train-weighted_mse:2194.21094	validation-rmse:46.58705	validation-weighted_mse:2791.22632
+[425]	train-rmse:42.71447	train-weighted_mse:2155.56934	validation-rmse:46.53332	validation-weighted_mse:2779.94702
+[450]	train-rmse:42.40899	train-weighted_mse:2116.90161	validation-rmse:46.51205	validation-weighted_mse:2770.73413
+[475]	train-rmse:42.18132	train-weighted_mse:2086.38452	validation-rmse:46.41351	validation-weighted_mse:2756.47192
+[500]	train-rmse:41.90793	train-weighted_mse:2050.69800	validation-rmse:46.33293	validation-weighted_mse:2751.28052
+[525]	train-rmse:41.66407	train-weighted_mse:2021.54382	validation-rmse:46.23128	validation-weighted_mse:2744.77002
+[550]	train-rmse:41.42346	train-weighted_mse:1992.92908	validation-rmse:46.16827	validation-weighted_mse:2734.56934
+[575]	train-rmse:41.19043	train-weighted_mse:1964.03650	validation-rmse:46.23771	validation-weighted_mse:2733.38208
+[600]	train-rmse:40.95030	train-weighted_mse:1934.04102	validation-rmse:46.24365	validation-weighted_mse:2728.07105
+[625]	train-rmse:40.75278	train-weighted_mse:1907.01526	validation-rmse:46.23767	validation-weighted_mse:2726.55566
+[650]	train-rmse:40.51404	train-weighted_mse:1881.20129	validation-rmse:46.21334	validation-weighted_mse:2722.37964
+[675]	train-rmse:40.33174	train-weighted_mse:1860.83020	validation-rmse:46.19610	validation-weighted_mse:2721.97534
+[700]	train-rmse:40.11206	train-weighted_mse:1836.90381	validation-rmse:46.24459	validation-weighted_mse:2725.47314
+[725]	train-rmse:39.90915	train-weighted_mse:1815.44495	validation-rmse:46.15278	validation-weighted_mse:2715.34277
+[750]	train-rmse:39.70636	train-weighted_mse:1792.03919	validation-rmse:46.09246	validation-weighted_mse:2704.19531
+[775]	train-rmse:39.51661	train-weighted_mse:1771.79309	validation-rmse:46.09300	validation-weighted_mse:2703.53589
+[800]	train-rmse:39.33407	train-weighted_mse:1751.78931	validation-rmse:46.06977	validation-weighted_mse:2698.45825
+[825]	train-rmse:39.11453	train-weighted_mse:1729.44128	validation-rmse:46.04797	validation-weighted_mse:2695.17798
+[850]	train-rmse:38.93374	train-weighted_mse:1709.95862	validation-rmse:46.09408	validation-weighted_mse:2697.06030
+[875]	train-rmse:38.75173	train-weighted_mse:1689.45178	validation-rmse:46.00182	validation-weighted_mse:2688.06543
+[899]	train-rmse:38.57144	train-weighted_mse:1670.98657	validation-rmse:46.02487	validation-weighted_mse:2688.57837
+f1 b0: vector output (2137, 24), reload parity passed; elapsed=138.4s
+[0]	train-rmse:99.19211	train-weighted_mse:18713.49414	validation-rmse:91.55452	validation-weighted_mse:16366.41113
+[25]	train-rmse:81.87193	train-weighted_mse:10824.45117	validation-rmse:77.45159	validation-weighted_mse:9145.38867
+[50]	train-rmse:75.67093	train-weighted_mse:8075.85303	validation-rmse:75.61286	validation-weighted_mse:7383.58203
+[75]	train-rmse:72.67786	train-weighted_mse:6893.15625	validation-rmse:75.08041	validation-weighted_mse:6866.27588
+[100]	train-rmse:70.90491	train-weighted_mse:6281.01855	validation-rmse:75.11308	validation-weighted_mse:6662.14209
+[125]	train-rmse:69.53948	train-weighted_mse:5888.86865	validation-rmse:74.57358	validation-weighted_mse:6532.82666
+[150]	train-rmse:68.37200	train-weighted_mse:5609.80078	validation-rmse:74.05641	validation-weighted_mse:6455.61328
+[175]	train-rmse:67.32372	train-weighted_mse:5386.39746	validation-rmse:73.41542	validation-weighted_mse:6358.84570
+[200]	train-rmse:66.45245	train-weighted_mse:5210.77539	validation-rmse:72.81220	validation-weighted_mse:6308.82715
+[225]	train-rmse:65.44517	train-weighted_mse:5038.53320	validation-rmse:72.46966	validation-weighted_mse:6282.60010
+[250]	train-rmse:64.63007	train-weighted_mse:4887.73047	validation-rmse:71.87123	validation-weighted_mse:6145.74756
+[275]	train-rmse:63.97970	train-weighted_mse:4764.09863	validation-rmse:71.49335	validation-weighted_mse:6041.66699
+[300]	train-rmse:63.23072	train-weighted_mse:4636.93701	validation-rmse:71.11659	validation-weighted_mse:5969.72217
+[325]	train-rmse:62.67601	train-weighted_mse:4537.00684	validation-rmse:70.72830	validation-weighted_mse:5923.77588
+[350]	train-rmse:62.13164	train-weighted_mse:4444.26123	validation-rmse:70.53273	validation-weighted_mse:5876.58984
+[375]	train-rmse:61.47987	train-weighted_mse:4334.14258	validation-rmse:70.32468	validation-weighted_mse:5807.50000
+[400]	train-rmse:60.94938	train-weighted_mse:4243.91748	validation-rmse:70.10909	validation-weighted_mse:5772.84277
+[425]	train-rmse:60.36686	train-weighted_mse:4148.75537	validation-rmse:70.05734	validation-weighted_mse:5765.29199
+[450]	train-rmse:59.80915	train-weighted_mse:4059.74194	validation-rmse:69.90358	validation-weighted_mse:5753.60889
+[475]	train-rmse:59.32789	train-weighted_mse:3980.54272	validation-rmse:69.97905	validation-weighted_mse:5759.84277
+[500]	train-rmse:58.75519	train-weighted_mse:3896.98462	validation-rmse:70.04741	validation-weighted_mse:5775.15478
+[525]	train-rmse:58.33550	train-weighted_mse:3829.71753	validation-rmse:70.06309	validation-weighted_mse:5771.72607
+[550]	train-rmse:57.88119	train-weighted_mse:3758.37622	validation-rmse:69.94037	validation-weighted_mse:5752.63037
+[575]	train-rmse:57.35243	train-weighted_mse:3680.57666	validation-rmse:69.73378	validation-weighted_mse:5735.20215
+[600]	train-rmse:56.90585	train-weighted_mse:3616.06812	validation-rmse:69.55625	validation-weighted_mse:5725.85693
+[625]	train-rmse:56.46185	train-weighted_mse:3546.62476	validation-rmse:69.52241	validation-weighted_mse:5724.33887
+[650]	train-rmse:56.00188	train-weighted_mse:3479.33228	validation-rmse:69.55565	validation-weighted_mse:5731.66260
+[675]	train-rmse:55.61659	train-weighted_mse:3424.07031	validation-rmse:69.37265	validation-weighted_mse:5705.48828
+[700]	train-rmse:55.32808	train-weighted_mse:3378.07422	validation-rmse:69.33059	validation-weighted_mse:5699.38037
+[725]	train-rmse:54.89657	train-weighted_mse:3319.96020	validation-rmse:69.30747	validation-weighted_mse:5710.36768
+[750]	train-rmse:54.52662	train-weighted_mse:3265.38232	validation-rmse:69.19334	validation-weighted_mse:5697.66260
+[775]	train-rmse:54.17128	train-weighted_mse:3217.47192	validation-rmse:69.24746	validation-weighted_mse:5709.10742
+[800]	train-rmse:53.76727	train-weighted_mse:3160.86377	validation-rmse:69.12656	validation-weighted_mse:5697.62207
+[825]	train-rmse:53.45033	train-weighted_mse:3114.52051	validation-rmse:69.20565	validation-weighted_mse:5714.94727
+[850]	train-rmse:53.09912	train-weighted_mse:3066.76074	validation-rmse:69.14478	validation-weighted_mse:5722.24365
+[875]	train-rmse:52.78812	train-weighted_mse:3022.29150	validation-rmse:68.98085	validation-weighted_mse:5707.85107
+[899]	train-rmse:52.44625	train-weighted_mse:2976.75635	validation-rmse:69.01889	validation-weighted_mse:5722.09619
+f1 b1: vector output (2137, 24), reload parity passed; elapsed=139.4s
+[0]	train-rmse:99.35954	train-weighted_mse:18745.60938	validation-rmse:90.99298	validation-weighted_mse:16174.22266
+[25]	train-rmse:86.36140	train-weighted_mse:11670.66699	validation-rmse:79.42486	validation-weighted_mse:8870.07617
+[50]	train-rmse:82.73256	train-weighted_mse:9356.37891	validation-rmse:78.63318	validation-weighted_mse:6886.00293
+[75]	train-rmse:80.74933	train-weighted_mse:8320.10254	validation-rmse:79.91851	validation-weighted_mse:6505.26514
+[100]	train-rmse:79.24948	train-weighted_mse:7725.20654	validation-rmse:80.34971	validation-weighted_mse:6350.75781
+[125]	train-rmse:78.07203	train-weighted_mse:7343.12988	validation-rmse:80.54528	validation-weighted_mse:6317.91602
+[150]	train-rmse:76.91895	train-weighted_mse:7045.36816	validation-rmse:80.33515	validation-weighted_mse:6277.80273
+[175]	train-rmse:75.90224	train-weighted_mse:6807.46728	validation-rmse:80.00533	validation-weighted_mse:6213.00928
+[200]	train-rmse:75.01016	train-weighted_mse:6603.26318	validation-rmse:79.86256	validation-weighted_mse:6203.46387
+[225]	train-rmse:74.13018	train-weighted_mse:6416.44287	validation-rmse:79.72427	validation-weighted_mse:6175.68115
+[250]	train-rmse:73.35767	train-weighted_mse:6260.53418	validation-rmse:79.55340	validation-weighted_mse:6140.33936
+[275]	train-rmse:72.40352	train-weighted_mse:6083.29053	validation-rmse:79.10891	validation-weighted_mse:6072.57031
+[300]	train-rmse:71.50970	train-weighted_mse:5911.52978	validation-rmse:78.79252	validation-weighted_mse:6021.62305
+[325]	train-rmse:70.73822	train-weighted_mse:5757.72559	validation-rmse:78.40207	validation-weighted_mse:5995.80664
+[350]	train-rmse:69.88887	train-weighted_mse:5599.41797	validation-rmse:78.06995	validation-weighted_mse:5970.35010
+[375]	train-rmse:69.25050	train-weighted_mse:5479.16846	validation-rmse:77.81402	validation-weighted_mse:5942.63965
+[400]	train-rmse:68.55409	train-weighted_mse:5346.50635	validation-rmse:77.39782	validation-weighted_mse:5888.60205
+[425]	train-rmse:67.79202	train-weighted_mse:5204.26514	validation-rmse:77.30339	validation-weighted_mse:5871.87793
+[450]	train-rmse:67.13735	train-weighted_mse:5082.78467	validation-rmse:76.92295	validation-weighted_mse:5815.88721
+[475]	train-rmse:66.50337	train-weighted_mse:4970.34668	validation-rmse:76.60645	validation-weighted_mse:5779.50732
+[500]	train-rmse:65.85419	train-weighted_mse:4856.12549	validation-rmse:76.41392	validation-weighted_mse:5755.11426
+[525]	train-rmse:65.18933	train-weighted_mse:4747.98730	validation-rmse:76.10527	validation-weighted_mse:5711.33105
+[550]	train-rmse:64.71683	train-weighted_mse:4662.89014	validation-rmse:76.02150	validation-weighted_mse:5706.97510
+[575]	train-rmse:64.15902	train-weighted_mse:4572.94336	validation-rmse:75.92559	validation-weighted_mse:5697.76465
+[600]	train-rmse:63.55354	train-weighted_mse:4474.74658	validation-rmse:75.88700	validation-weighted_mse:5686.49609
+[625]	train-rmse:62.96992	train-weighted_mse:4375.06250	validation-rmse:75.54482	validation-weighted_mse:5626.61230
+[650]	train-rmse:62.44750	train-weighted_mse:4294.77832	validation-rmse:75.45990	validation-weighted_mse:5632.09863
+[675]	train-rmse:61.94877	train-weighted_mse:4209.08887	validation-rmse:75.37142	validation-weighted_mse:5637.34961
+[700]	train-rmse:61.45353	train-weighted_mse:4129.93897	validation-rmse:75.25905	validation-weighted_mse:5624.40869
+[725]	train-rmse:60.93769	train-weighted_mse:4051.67236	validation-rmse:75.11601	validation-weighted_mse:5629.59228
+[750]	train-rmse:60.48411	train-weighted_mse:3979.11694	validation-rmse:74.81659	validation-weighted_mse:5604.32617
+[775]	train-rmse:60.08496	train-weighted_mse:3918.27173	validation-rmse:74.69003	validation-weighted_mse:5592.59717
+[800]	train-rmse:59.58838	train-weighted_mse:3844.38940	validation-rmse:74.69995	validation-weighted_mse:5595.88184
+[825]	train-rmse:59.21730	train-weighted_mse:3787.20142	validation-rmse:74.66354	validation-weighted_mse:5599.94775
+[850]	train-rmse:58.82361	train-weighted_mse:3728.70752	validation-rmse:74.46330	validation-weighted_mse:5584.37061
+[875]	train-rmse:58.36208	train-weighted_mse:3665.51807	validation-rmse:74.31416	validation-weighted_mse:5569.49658
+[899]	train-rmse:57.94389	train-weighted_mse:3604.43506	validation-rmse:74.19869	validation-weighted_mse:5560.81787
+f1 b2: vector output (2137, 24), reload parity passed; elapsed=136.2s
+final: train=10664 eval=2833 rounds=900
+[0]	train-rmse:97.75591	train-weighted_mse:18137.41406	validation-rmse:87.38027	validation-weighted_mse:11368.29590
+[25]	train-rmse:65.81402	train-weighted_mse:7490.90625	validation-rmse:61.51565	validation-weighted_mse:5084.14355
+[50]	train-rmse:54.45569	train-weighted_mse:4573.98828	validation-rmse:51.85069	validation-weighted_mse:3350.45776
+[75]	train-rmse:50.46504	train-weighted_mse:3598.95752	validation-rmse:48.71828	validation-weighted_mse:2833.20117
+[100]	train-rmse:48.52957	train-weighted_mse:3154.06104	validation-rmse:46.87468	validation-weighted_mse:2600.49316
+[125]	train-rmse:47.42795	train-weighted_mse:2916.30493	validation-rmse:45.59513	validation-weighted_mse:2467.06470
+[150]	train-rmse:46.68928	train-weighted_mse:2764.18506	validation-rmse:44.81440	validation-weighted_mse:2392.60230
+[175]	train-rmse:46.10462	train-weighted_mse:2651.21875	validation-rmse:44.50936	validation-weighted_mse:2352.20166
+[200]	train-rmse:45.62454	train-weighted_mse:2573.72534	validation-rmse:44.17990	validation-weighted_mse:2317.37329
+[225]	train-rmse:45.20366	train-weighted_mse:2506.38818	validation-rmse:43.95171	validation-weighted_mse:2298.91211
+[250]	train-rmse:44.85504	train-weighted_mse:2446.90918	validation-rmse:43.78404	validation-weighted_mse:2284.36792
+[275]	train-rmse:44.52596	train-weighted_mse:2398.86914	validation-rmse:43.67731	validation-weighted_mse:2276.21045
+[300]	train-rmse:44.17695	train-weighted_mse:2351.56641	validation-rmse:43.58729	validation-weighted_mse:2269.07544
+[325]	train-rmse:43.86405	train-weighted_mse:2307.13355	validation-rmse:43.49068	validation-weighted_mse:2256.96729
+[350]	train-rmse:43.56818	train-weighted_mse:2265.71558	validation-rmse:43.46829	validation-weighted_mse:2255.21729
+[375]	train-rmse:43.34422	train-weighted_mse:2232.30225	validation-rmse:43.46196	validation-weighted_mse:2254.09912
+[400]	train-rmse:43.07084	train-weighted_mse:2196.80981	validation-rmse:43.42965	validation-weighted_mse:2252.93970
+[425]	train-rmse:42.82855	train-weighted_mse:2164.44458	validation-rmse:43.35334	validation-weighted_mse:2250.51001
+[450]	train-rmse:42.57063	train-weighted_mse:2130.76318	validation-rmse:43.22882	validation-weighted_mse:2245.57422
+[475]	train-rmse:42.32600	train-weighted_mse:2099.88452	validation-rmse:43.19747	validation-weighted_mse:2241.96240
+[500]	train-rmse:42.08000	train-weighted_mse:2070.05322	validation-rmse:43.22256	validation-weighted_mse:2245.60791
+[525]	train-rmse:41.82886	train-weighted_mse:2039.45019	validation-rmse:43.12590	validation-weighted_mse:2245.93970
+[550]	train-rmse:41.56415	train-weighted_mse:2006.60449	validation-rmse:43.13949	validation-weighted_mse:2247.89258
+[575]	train-rmse:41.35729	train-weighted_mse:1979.79334	validation-rmse:43.15727	validation-weighted_mse:2248.83203
+[600]	train-rmse:41.13174	train-weighted_mse:1952.99255	validation-rmse:43.14708	validation-weighted_mse:2250.44629
+[625]	train-rmse:40.92512	train-weighted_mse:1926.66540	validation-rmse:43.15006	validation-weighted_mse:2253.84058
+[650]	train-rmse:40.69678	train-weighted_mse:1900.68140	validation-rmse:43.11351	validation-weighted_mse:2256.18604
+[675]	train-rmse:40.50868	train-weighted_mse:1879.09851	validation-rmse:43.17096	validation-weighted_mse:2265.28613
+[700]	train-rmse:40.30545	train-weighted_mse:1854.21533	validation-rmse:43.14829	validation-weighted_mse:2266.57593
+[725]	train-rmse:40.11321	train-weighted_mse:1833.21423	validation-rmse:43.14157	validation-weighted_mse:2265.20166
+[750]	train-rmse:39.93146	train-weighted_mse:1811.70264	validation-rmse:43.18222	validation-weighted_mse:2269.14746
+[775]	train-rmse:39.73354	train-weighted_mse:1790.82275	validation-rmse:43.18010	validation-weighted_mse:2272.72437
+[800]	train-rmse:39.55497	train-weighted_mse:1769.81128	validation-rmse:43.18520	validation-weighted_mse:2278.09424
+[825]	train-rmse:39.36621	train-weighted_mse:1748.91602	validation-rmse:43.15084	validation-weighted_mse:2280.92993
+[850]	train-rmse:39.19186	train-weighted_mse:1730.28101	validation-rmse:43.12952	validation-weighted_mse:2282.55835
+[875]	train-rmse:38.99470	train-weighted_mse:1708.68994	validation-rmse:43.12407	validation-weighted_mse:2282.62109
+[899]	train-rmse:38.82881	train-weighted_mse:1691.58106	validation-rmse:43.12615	validation-weighted_mse:2287.76953
+final b0: vector output (2833, 24), reload parity passed; elapsed=149.7s
+[0]	train-rmse:98.63948	train-weighted_mse:18409.44727	validation-rmse:88.27729	validation-weighted_mse:11554.38184
+[25]	train-rmse:81.87015	train-weighted_mse:10706.43262	validation-rmse:77.97675	validation-weighted_mse:7578.97607
+[50]	train-rmse:75.71992	train-weighted_mse:8018.90527	validation-rmse:73.12301	validation-weighted_mse:6089.81152
+[75]	train-rmse:72.80005	train-weighted_mse:6864.73486	validation-rmse:69.47861	validation-weighted_mse:5350.59668
+[100]	train-rmse:71.00542	train-weighted_mse:6265.77734	validation-rmse:66.91275	validation-weighted_mse:4926.82080
+[125]	train-rmse:69.64816	train-weighted_mse:5891.68262	validation-rmse:65.47838	validation-weighted_mse:4730.38867
+[150]	train-rmse:68.54011	train-weighted_mse:5619.70264	validation-rmse:64.80079	validation-weighted_mse:4640.38867
+[175]	train-rmse:67.46424	train-weighted_mse:5403.61816	validation-rmse:64.23723	validation-weighted_mse:4576.77100
+[200]	train-rmse:66.57074	train-weighted_mse:5223.87305	validation-rmse:63.56038	validation-weighted_mse:4519.42480
+[225]	train-rmse:65.63288	train-weighted_mse:5055.01855	validation-rmse:62.99367	validation-weighted_mse:4478.48291
+[250]	train-rmse:64.77864	train-weighted_mse:4896.71240	validation-rmse:62.62142	validation-weighted_mse:4430.41699
+[275]	train-rmse:64.06885	train-weighted_mse:4769.90967	validation-rmse:62.34660	validation-weighted_mse:4390.60303
+[300]	train-rmse:63.32989	train-weighted_mse:4642.22803	validation-rmse:62.01461	validation-weighted_mse:4342.56836
+[325]	train-rmse:62.68637	train-weighted_mse:4532.73047	validation-rmse:61.62048	validation-weighted_mse:4308.73096
+[350]	train-rmse:62.14428	train-weighted_mse:4440.37695	validation-rmse:61.34740	validation-weighted_mse:4273.09912
+[375]	train-rmse:61.56584	train-weighted_mse:4343.46387	validation-rmse:61.01511	validation-weighted_mse:4238.90332
+[400]	train-rmse:60.97862	train-weighted_mse:4243.76807	validation-rmse:60.67521	validation-weighted_mse:4203.35840
+[425]	train-rmse:60.48625	train-weighted_mse:4161.16211	validation-rmse:60.48919	validation-weighted_mse:4182.20703
+[450]	train-rmse:59.90800	train-weighted_mse:4068.11255	validation-rmse:59.89296	validation-weighted_mse:4139.98779
+[475]	train-rmse:59.42469	train-weighted_mse:3987.73682	validation-rmse:59.74531	validation-weighted_mse:4136.15772
+[500]	train-rmse:58.87599	train-weighted_mse:3905.77148	validation-rmse:59.58991	validation-weighted_mse:4127.57715
+[525]	train-rmse:58.44257	train-weighted_mse:3833.26050	validation-rmse:59.32564	validation-weighted_mse:4102.39355
+[550]	train-rmse:57.96231	train-weighted_mse:3758.56763	validation-rmse:58.99904	validation-weighted_mse:4067.50952
+[575]	train-rmse:57.50811	train-weighted_mse:3690.52270	validation-rmse:58.78697	validation-weighted_mse:4049.14087
+[600]	train-rmse:57.12178	train-weighted_mse:3635.21436	validation-rmse:58.73940	validation-weighted_mse:4038.65479
+[625]	train-rmse:56.71004	train-weighted_mse:3571.46802	validation-rmse:58.61419	validation-weighted_mse:4029.54712
+[650]	train-rmse:56.26598	train-weighted_mse:3505.83106	validation-rmse:58.42002	validation-weighted_mse:4022.64648
+[675]	train-rmse:55.88056	train-weighted_mse:3450.95850	validation-rmse:58.23306	validation-weighted_mse:4015.24561
+[700]	train-rmse:55.55939	train-weighted_mse:3401.75391	validation-rmse:58.17761	validation-weighted_mse:4002.70288
+[725]	train-rmse:55.10149	train-weighted_mse:3341.06128	validation-rmse:58.01879	validation-weighted_mse:3981.59229
+[750]	train-rmse:54.77070	train-weighted_mse:3293.68677	validation-rmse:58.01331	validation-weighted_mse:3981.27441
+[775]	train-rmse:54.43619	train-weighted_mse:3246.92871	validation-rmse:57.88808	validation-weighted_mse:3972.60107
+[800]	train-rmse:54.07272	train-weighted_mse:3194.97266	validation-rmse:57.85103	validation-weighted_mse:3980.45044
+[825]	train-rmse:53.71729	train-weighted_mse:3143.72583	validation-rmse:57.78118	validation-weighted_mse:3977.22925
+[850]	train-rmse:53.38309	train-weighted_mse:3099.21680	validation-rmse:57.79459	validation-weighted_mse:3992.50928
+[875]	train-rmse:53.05591	train-weighted_mse:3052.23413	validation-rmse:57.83016	validation-weighted_mse:4000.88013
+[899]	train-rmse:52.77976	train-weighted_mse:3015.85571	validation-rmse:57.72164	validation-weighted_mse:4004.76050
+final b1: vector output (2833, 24), reload parity passed; elapsed=148.8s
+[0]	train-rmse:98.82933	train-weighted_mse:18450.36328	validation-rmse:88.99449	validation-weighted_mse:11621.77246
+[25]	train-rmse:85.83168	train-weighted_mse:11465.63281	validation-rmse:82.08134	validation-weighted_mse:7906.62353
+[50]	train-rmse:82.24757	train-weighted_mse:9211.15527	validation-rmse:81.35775	validation-weighted_mse:6824.95752
+[75]	train-rmse:80.26764	train-weighted_mse:8201.99219	validation-rmse:79.62579	validation-weighted_mse:6269.82617
+[100]	train-rmse:78.77417	train-weighted_mse:7619.26758	validation-rmse:78.18472	validation-weighted_mse:5962.95410
+[125]	train-rmse:77.69006	train-weighted_mse:7258.12939	validation-rmse:77.22231	validation-weighted_mse:5792.14697
+[150]	train-rmse:76.58051	train-weighted_mse:6964.83398	validation-rmse:76.47995	validation-weighted_mse:5682.40576
+[175]	train-rmse:75.52089	train-weighted_mse:6724.73242	validation-rmse:75.70108	validation-weighted_mse:5590.72070
+[200]	train-rmse:74.65882	train-weighted_mse:6534.66162	validation-rmse:74.92588	validation-weighted_mse:5521.80078
+[225]	train-rmse:73.67972	train-weighted_mse:6334.57080	validation-rmse:73.76252	validation-weighted_mse:5407.47607
+[250]	train-rmse:72.69656	train-weighted_mse:6135.87939	validation-rmse:72.89985	validation-weighted_mse:5312.96338
+[275]	train-rmse:71.76329	train-weighted_mse:5963.39502	validation-rmse:71.92849	validation-weighted_mse:5227.46094
+[300]	train-rmse:70.88335	train-weighted_mse:5793.49512	validation-rmse:70.89725	validation-weighted_mse:5156.80176
+[325]	train-rmse:70.13825	train-weighted_mse:5644.89111	validation-rmse:70.59111	validation-weighted_mse:5144.69678
+[350]	train-rmse:69.43671	train-weighted_mse:5508.77734	validation-rmse:70.18635	validation-weighted_mse:5109.76660
+[375]	train-rmse:68.75299	train-weighted_mse:5384.12158	validation-rmse:69.76051	validation-weighted_mse:5090.97705
+[400]	train-rmse:68.07161	train-weighted_mse:5261.22949	validation-rmse:69.18402	validation-weighted_mse:5054.43066
+[425]	train-rmse:67.45275	train-weighted_mse:5145.61230	validation-rmse:68.63373	validation-weighted_mse:5019.99316
+[450]	train-rmse:66.77614	train-weighted_mse:5024.49463	validation-rmse:68.26098	validation-weighted_mse:4999.70312
+[475]	train-rmse:66.07550	train-weighted_mse:4904.11230	validation-rmse:67.70808	validation-weighted_mse:4977.99463
+[500]	train-rmse:65.55033	train-weighted_mse:4810.10352	validation-rmse:67.32242	validation-weighted_mse:4983.61768
+[525]	train-rmse:64.89414	train-weighted_mse:4702.65137	validation-rmse:67.10508	validation-weighted_mse:4993.58008
+[550]	train-rmse:64.39203	train-weighted_mse:4614.33252	validation-rmse:66.65781	validation-weighted_mse:4965.51709
+[575]	train-rmse:63.85396	train-weighted_mse:4523.02686	validation-rmse:66.30452	validation-weighted_mse:4949.37305
+[600]	train-rmse:63.30503	train-weighted_mse:4433.69727	validation-rmse:66.11618	validation-weighted_mse:4952.47461
+[625]	train-rmse:62.80606	train-weighted_mse:4345.08203	validation-rmse:65.97116	validation-weighted_mse:4964.50586
+[650]	train-rmse:62.33709	train-weighted_mse:4271.43213	validation-rmse:65.68625	validation-weighted_mse:4954.48877
+[675]	train-rmse:61.85466	train-weighted_mse:4191.32959	validation-rmse:65.56456	validation-weighted_mse:4954.12305
+[700]	train-rmse:61.43303	train-weighted_mse:4121.87256	validation-rmse:65.58419	validation-weighted_mse:4972.93897
+[725]	train-rmse:60.92554	train-weighted_mse:4045.46533	validation-rmse:65.34406	validation-weighted_mse:4955.74072
+[750]	train-rmse:60.47260	train-weighted_mse:3973.87085	validation-rmse:65.16203	validation-weighted_mse:4949.57568
+[775]	train-rmse:60.06178	train-weighted_mse:3908.57861	validation-rmse:65.02065	validation-weighted_mse:4960.61279
+[800]	train-rmse:59.67619	train-weighted_mse:3846.13794	validation-rmse:64.96581	validation-weighted_mse:4957.80371
+[825]	train-rmse:59.26431	train-weighted_mse:3784.76269	validation-rmse:64.80486	validation-weighted_mse:4954.77148
+[850]	train-rmse:58.86282	train-weighted_mse:3725.66992	validation-rmse:64.68600	validation-weighted_mse:4957.13818
+[875]	train-rmse:58.43207	train-weighted_mse:3665.53955	validation-rmse:64.60654	validation-weighted_mse:4969.50098
+[899]	train-rmse:58.06107	train-weighted_mse:3612.38794	validation-rmse:64.65641	validation-weighted_mse:4995.95459
+final b2: vector output (2833, 24), reload parity passed; elapsed=150.2s
+TRAINING COMPLETE
+{"rows": 357840, "config_sha256": "ba9f568b8b85e99fdbe3c7cebf40497057aaa5855c8619daa0c5cca5d4e77ad6", "scope": "archived forecast replay"}
+From https://github.com/TLAB-HGU/sunrun-leaderboard
+ * branch                main       -> FETCH_HEAD
+Preparing worktree (detached HEAD 447860295)
+Updating files:   5% (187/3430)Updating files:   6% (206/3430)Updating files:   6% (219/3430)Updating files:   7% (241/3430)Updating files:   8% (275/3430)Updating files:   8% (278/3430)Updating files:   9% (309/3430)Updating files:  10% (343/3430)Updating files:  11% (378/3430)Updating files:  12% (412/3430)Updating files:  13% (446/3430)Updating files:  13% (463/3430)Updating files:  14% (481/3430)Updating files:  14% (490/3430)Updating files:  15% (515/3430)Updating files:  16% (549/3430)Updating files:  16% (550/3430)Updating files:  16% (580/3430)Updating files:  17% (584/3430)Updating files:  17% (594/3430)Updating files:  18% (618/3430)Updating files:  18% (620/3430)Updating files:  19% (652/3430)Updating files:  19% (654/3430)Updating files:  20% (686/3430)Updating files:  21% (721/3430)Updating files:  22% (755/3430)Updating files:  23% (789/3430)Updating files:  24% (824/3430)Updating files:  24% (838/3430)Updating files:  24% (842/3430)Updating files:  25% (858/3430)Updating files:  25% (890/3430)Updating files:  26% (892/3430)Updating files:  27% (927/3430)Updating files:  27% (950/3430)Updating files:  28% (961/3430)Updating files:  29% (995/3430)Updating files:  30% (1029/3430)Updating files:  31% (1064/3430)Updating files:  32% (1098/3430)Updating files:  33% (1132/3430)Updating files:  34% (1167/3430)Updating files:  35% (1201/3430)Updating files:  36% (1235/3430)Updating files:  37% (1270/3430)Updating files:  38% (1304/3430)Updating files:  39% (1338/3430)Updating files:  40% (1372/3430)Updating files:  41% (1407/3430)Updating files:  42% (1441/3430)Updating files:  42% (1446/3430)Updating files:  43% (1475/3430)Updating files:  44% (1510/3430)Updating files:  45% (1544/3430)Updating files:  46% (1578/3430)Updating files:  47% (1613/3430)Updating files:  48% (1647/3430)Updating files:  49% (1681/3430)Updating files:  50% (1715/3430)Updating files:  51% (1750/3430)Updating files:  52% (1784/3430)Updating files:  53% (1818/3430)Updating files:  54% (1853/3430)Updating files:  55% (1887/3430)Updating files:  56% (1921/3430)Updating files:  57% (1956/3430)Updating files:  58% (1990/3430)Updating files:  59% (2024/3430)Updating files:  60% (2058/3430)Updating files:  61% (2093/3430)Updating files:  62% (2127/3430)Updating files:  63% (2161/3430)Updating files:  64% (2196/3430)Updating files:  65% (2230/3430)Updating files:  66% (2264/3430)Updating files:  67% (2299/3430)Updating files:  68% (2333/3430)Updating files:  69% (2367/3430)Updating files:  70% (2401/3430)Updating files:  71% (2436/3430)Updating files:  72% (2470/3430)Updating files:  73% (2504/3430)Updating files:  74% (2539/3430)Updating files:  75% (2573/3430)Updating files:  76% (2607/3430)Updating files:  77% (2642/3430)Updating files:  78% (2676/3430)Updating files:  79% (2710/3430)Updating files:  80% (2744/3430)Updating files:  81% (2779/3430)Updating files:  82% (2813/3430)Updating files:  83% (2847/3430)Updating files:  84% (2882/3430)Updating files:  85% (2916/3430)Updating files:  86% (2950/3430)Updating files:  87% (2985/3430)Updating files:  88% (3019/3430)Updating files:  89% (3053/3430)Updating files:  90% (3087/3430)Updating files:  91% (3122/3430)Updating files:  92% (3156/3430)Updating files:  93% (3190/3430)Updating files:  94% (3225/3430)Updating files:  95% (3259/3430)Updating files:  96% (3293/3430)Updating files:  97% (3328/3430)Updating files:  98% (3362/3430)Updating files:  99% (3396/3430)Updating files: 100% (3430/3430)Updating files: 100% (3430/3430), done.
+HEAD is now at 447860295 E2000FS: publish finished feat30 follow-ups missing from the leaderboard
+1 dry-run scores verified
+[detached HEAD de96f7ed8] E2000FS: publish DirMO-24 feat30 pointweight4
+ 36 files changed, 10786 insertions(+)
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/README.md
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/config.json
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/forecast.npz
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/f1_b0.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/f1_b1.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/f1_b2.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/final_b0.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/final_b1.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/final_b2.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/internal_b0.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/internal_b1.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/losses/internal_b2.csv
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/manifest.json
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/meta.yaml
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/f1_b0.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/f1_b1.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/f1_b2.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/final_b0.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/final_b1.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/final_b2.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/internal_b0.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/internal_b1.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/models/internal_b2.ubj
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/predictions.parquet
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/results.json
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs-visualizations/worktree/docs/visualizations/e2000fs_dirmo_24/feature_importance_receipt.json
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/execute.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/publish.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/run.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_feat30_followups/evaluation.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/forecast_strategies_e2000/data.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/forecast_strategies_kumo/publish.py
+ create mode 100644 releases/e2000fs_dirmo_24_feat30_pointweight4/timing.json
+ create mode 100644 scripts/seongeun/e2000fs_dirmo_24_feat30_pointweight4/ba9f568b8b85e99fdbe3c7cebf40497057aaa5855c8619daa0c5cca5d4e77ad6.py
+From https://github.com/TLAB-HGU/sunrun-leaderboard
+ * branch                main       -> FETCH_HEAD
+To https://github.com/TLAB-HGU/sunrun-leaderboard.git
+   447860295..de96f7ed8  HEAD -> main
+Processing Files (0 / 0)      : |          |  0.00B /  0.00B            
+New Data Upload               : |          |  0.00B /  0.00B            [A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[AProcessing Files (0 / 1)      :   1%|▏         | 30.2kB / 2.36MB,   ???B/s  
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :   1%|▏         | 30.2kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[AProcessing Files (0 / 1)      :  24%|██▎       |  558kB / 2.36MB, 54.5kB/s  
+New Data Upload               :  23%|██▎       |  528kB / 2.33MB, 51.7kB/s  [A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  24%|██▎       |  558kB / 2.36MB            [A[A
+
+                              :  46%|████▌     | 1.09MB / 2.36MB            [A[AProcessing Files (0 / 1)      :  46%|████▌     | 1.09MB / 2.36MB,  100kB/s  
+New Data Upload               :  45%|████▌     | 1.06MB / 2.33MB, 97.8kB/s  [A
+
+                              :  46%|████▌     | 1.09MB / 2.36MB            [A[A
+
+                              :  46%|████▌     | 1.09MB / 2.36MB            [A[A
+
+                              :  46%|████▌     | 1.09MB / 2.36MB            [A[A
+
+                              :  46%|████▌     | 1.09MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[AProcessing Files (0 / 1)      :  68%|██████▊   | 1.61MB / 2.36MB,  145kB/s  
+New Data Upload               :  68%|██████▊   | 1.58MB / 2.33MB,  143kB/s  [A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              :  68%|██████▊   | 1.61MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[AProcessing Files (0 / 1)      : 100%|█████████▉| 2.36MB / 2.36MB,  202kB/s  
+New Data Upload               : 100%|█████████▉| 2.33MB / 2.33MB,  200kB/s  [A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|█████████▉| 2.36MB / 2.36MB            [A[A
+
+                              : 100%|██████████| 2.36MB / 2.36MB            [A[AProcessing Files (1 / 1)      : 100%|██████████| 2.36MB / 2.36MB,  177kB/s  
+New Data Upload               : 100%|██████████| 2.33MB / 2.33MB,  175kB/s  [A
+
+
+Validating                    :           |   0%            [A[A[A
+
+
+Validating                    :           |   0%            [A[A[A
+
+                              : 100%|██████████| 2.36MB / 2.36MB            [A[A
+
+
+Validating                    :           |   0%            [A[A[A
+
+                              : 100%|██████████| 2.36MB / 2.36MB            [A[A
+
+
+Validating                    :           |   0%            [A[A[A
+
+                              : 100%|██████████| 2.36MB / 2.36MB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[A
+
+                              : 100%|██████████| 2.36MB / 2.36MB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[A
+
+                              : 100%|██████████| 2.36MB / 2.36MB            [A[A
+
+
+Validating                    : ██████████| 100%            [A[A[AProcessing Files (1 / 1)      : 100%|██████████| 2.36MB / 2.36MB,  170kB/s  
+New Data Upload               : 100%|██████████| 2.33MB / 2.33MB,  168kB/s  
+Validating                    : ██████████| 100%            
+                              : 100%|██████████| 2.36MB / 2.36MB            
+e2000fs_dirmo_24_feat30_pointweight4: submitted MSE=3556.198351
+1 remote prediction files and scores verified at a083ce9d9b74a57a5c818b2e560bcac84b9e0ba1
+lbstatus: sync committed -> https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard

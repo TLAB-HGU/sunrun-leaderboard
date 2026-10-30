@@ -1,0 +1,85 @@
+{
+  "selected": "extreme_4.0",
+  "candidates": [
+    {
+      "arm": "extreme_4.0",
+      "metrics": {
+        "n_origins": 648,
+        "n_pairs": 46656,
+        "mse": 7593.9556215658795,
+        "mae": 65.309480172224,
+        "peak_mae": 77.61249128741981,
+        "peak_bias": -53.18754164142372,
+        "ramp6_mae": 77.34161633150076,
+        "peak_timing_mae_h": 19.412037037037038,
+        "mse_ge550": 12378.20429257826,
+        "bias_ge550": -64.7015733631857,
+        "n_pairs_ge550": 16396,
+        "mse_by_band": {
+          "h1-24": 4055.2408537781444,
+          "h25-48": 8794.110559268465,
+          "h49-72": 9932.515451651028
+        },
+        "events": {
+          "tp": 20,
+          "fp": 40,
+          "fn": 151,
+          "n_windows": 648,
+          "csi": 0.0947867298578199,
+          "pod": 0.11695906432748537,
+          "far": 0.6666666666666666,
+          "timing_mae_h": 6.75,
+          "timing_bias_h": -2.05
+        },
+        "tp": 20,
+        "fp": 40,
+        "fn": 151,
+        "csi": 0.0947867298578199,
+        "timing_mae_h": 6.75,
+        "timing_bias_h": -2.05
+      },
+      "selection_score": 0.9315394362489058
+    },
+    {
+      "arm": "extreme_2.0",
+      "metrics": {
+        "n_origins": 648,
+        "n_pairs": 46656,
+        "mse": 7843.117539502739,
+        "mae": 65.6180383160281,
+        "peak_mae": 80.9266224331326,
+        "peak_bias": -58.97678263157973,
+        "ramp6_mae": 78.69708055095907,
+        "peak_timing_mae_h": 20.320987654320987,
+        "mse_ge550": 13695.864145985403,
+        "bias_ge550": -67.58565698843755,
+        "n_pairs_ge550": 16396,
+        "mse_by_band": {
+          "h1-24": 4193.151116824519,
+          "h25-48": 9057.09627384134,
+          "h49-72": 10279.10522784236
+        },
+        "events": {
+          "tp": 16,
+          "fp": 26,
+          "fn": 155,
+          "n_windows": 648,
+          "csi": 0.08121827411167512,
+          "pod": 0.0935672514619883,
+          "far": 0.6190476190476191,
+          "timing_mae_h": 6.6875,
+          "timing_bias_h": -1.6875
+        },
+        "tp": 16,
+        "fp": 26,
+        "fn": 155,
+        "csi": 0.08121827411167512,
+        "timing_mae_h": 6.6875,
+        "timing_bias_h": -1.6875
+      },
+      "selection_score": 0.9593011776528102
+    }
+  ],
+  "rule": "mean(parent-relative peak MAE, parent-relative positive 6h ramp MAE), then CSI then MSE",
+  "frozen_before_official": true
+}

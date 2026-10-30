@@ -1,0 +1,78 @@
+{
+  "n_origins": 640,
+  "n_pairs": 46080,
+  "mse": 8882.495099781345,
+  "mae": 62.70246555381352,
+  "peak_mae": 97.65169050216676,
+  "peak_bias": -89.67412313461304,
+  "ramp6_mae": 100.7570473384857,
+  "peak_timing_mae_h": 15.4125,
+  "mse_ge550": 23487.203039535532,
+  "bias_ge550": -96.08214645450603,
+  "n_pairs_ge550": 12939,
+  "mse_by_band": {
+    "h1-24": 4049.209162909861,
+    "h25-48": 9242.950659948001,
+    "h49-72": 13355.32547648617
+  },
+  "events": {
+    "tp": 2,
+    "fp": 18,
+    "fn": 213,
+    "n_windows": 640,
+    "csi": 0.008583690987124463,
+    "pod": 0.009302325581395349,
+    "far": 0.9,
+    "timing_mae_h": 11.0,
+    "timing_bias_h": -11.0
+  },
+  "tp": 2,
+  "fp": 18,
+  "fn": 213,
+  "csi": 0.008583690987124463,
+  "timing_mae_h": 11.0,
+  "timing_bias_h": -11.0,
+  "unique_tp": 2,
+  "unique_fp": 11,
+  "unique_fn": 18,
+  "unique_csi": 0.06451612903225806,
+  "unique_peak_mae": 52.02326660156251,
+  "unique_ramp6_mae": null,
+  "unique_timing_mae_h": 4.0,
+  "unique_events": {
+    "true_count": 20,
+    "pred_count": 13,
+    "matches": [
+      {
+        "true_peak_utc": "2025-09-07T06:00:00+00:00",
+        "pred_peak_utc": "2025-09-07T09:00:00+00:00",
+        "true": {
+          "peak": 550.5,
+          "ramp6": 126.5,
+          "windows": 1
+        },
+        "pred": {
+          "peak": 621.3427734375,
+          "ramp6": 28.66131591796875,
+          "windows": 1
+        },
+        "ramp6_ae": 97.83868408203125
+      },
+      {
+        "true_peak_utc": "2025-09-07T23:00:00+00:00",
+        "pred_peak_utc": "2025-09-07T18:00:00+00:00",
+        "true": {
+          "peak": 587.1,
+          "ramp6": 59.900000000000034,
+          "windows": 16
+        },
+        "pred": {
+          "peak": 553.896240234375,
+          "ramp6": null,
+          "windows": 1
+        },
+        "ramp6_ae": null
+      }
+    ]
+  }
+}

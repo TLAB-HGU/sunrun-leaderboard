@@ -1,0 +1,26 @@
+[
+  {
+    "method": "event",
+    "session": "fs30v2-event",
+    "unit": "fs30v2-event-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/event"
+  },
+  {
+    "method": "context",
+    "session": "fs30v2-context",
+    "unit": "fs30v2-context-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/context"
+  },
+  {
+    "method": "outputwave",
+    "session": "fs30v2-outputwave",
+    "unit": "fs30v2-outputwave-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/outputwave"
+  },
+  {
+    "method": "quantile",
+    "session": "fs30v2-quantile",
+    "unit": "fs30v2-quantile-full-20261028-v1",
+    "directory": "/home/t-lab01/sunrun/analysis/e2000fs_feat30_agnostic_v2/runs/full_20261028_v1/quantile"
+  }
+]
