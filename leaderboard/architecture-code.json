@@ -1,112 +1,184 @@
 {
   "models": [
     {
-      "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30",
-      "config_sha256": "ff25cfb2bb0e21f093036f3e9fe2f512ad1e4225f8c985f725a3b9cb84a5aced",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs/dirmo_24_feat30/run.py"
+      "member": "baseline",
+      "experiment": "auto_arima",
+      "config_sha256": "e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/auto_arima/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_feat30_agnostic_v2_context",
-      "config_sha256": "a26d0ed6aa42373d060c17a2972743247d70895022bb5c868ee3801f097c6b91",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_agnostic_v2_context/source/analysis/e2000fs_feat30_agnostic_v2/run.py"
+      "experiment": "e1604_hsspeak25",
+      "config_sha256": "4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e1604_hsspeak25/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30_lgbm",
-      "config_sha256": "6e7957584b55c8a518140ebab4054fdee710d0c47b7d2914cf09c4b81f2b1c62",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_followups_20261028/lgbm/source/analysis/e2000fs_dirmo_24_feat30_lgbm/run.py"
+      "experiment": "e2000fs_budget_complexity",
+      "config_sha256": "0d270c6d183d1f994d29f20288c7c0224d368aff3d76f1909ffb442abb1f8053",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_budget_complexity/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_feat30_shape",
-      "config_sha256": "6456b53cf8ec328381c268e2bb67bb7a91903289e10da47a788dcd80d4906414",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_followups_20261028/shape/source/analysis/e2000fs_feat30_followups/run.py"
+      "experiment": "e2000fs_budget_covshift",
+      "config_sha256": "054fe469d02e1253dc42fb00d2f7aa61bf8f758cb00aa650f852701bec9455a1",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_budget_covshift/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_feat30_tailcal_crps",
-      "config_sha256": "0647b5314fd32a8cb66bc87d5413be4a8233f50667edcc7e1f0c653d49422a99",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_tailcal_crps/source/analysis/e2000fs_feat30_lgbm_distribution/run.py"
+      "experiment": "e2000fs_budget_primaldual",
+      "config_sha256": "18dcb2879ee0825fb37a7559c7fbac12c1760d7c13fda056e1da4d9afa162b65",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_budget_primaldual/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_feat30_wavelet",
-      "config_sha256": "5ff33c461cb01e4277e8a23d5af12752490e21f91c1f959814d65574f43e9fc4",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_followups_20261028/wavelet/source/analysis/e2000fs_feat30_followups/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_smooth_wcrps",
-      "config_sha256": "a2cd0af47e63312b3e4c502c7a952369c56b835ac0f1d91099ae0b644c783822",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_smooth_wcrps/source/analysis/e2000fs_feat30_lgbm_distribution/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30_lgbm_HPO",
-      "config_sha256": "bdd9c9431645c774ce679725d0cbe4e16b5115541c0b7f494b4d52195c490689",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_dirmo_24_feat30_lgbm_HPO/source/analysis/e2000fs_dirmo_24_feat30_lgbm_HPO/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_lognormal_nll",
-      "config_sha256": "c2f2097dcc28d4adad605f47e2f362127ebe10e37ea48a1f6d2958a97caa5a05",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_lognormal_nll/source/analysis/e2000fs_feat30_lgbm_distribution/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_transfer_recency",
-      "config_sha256": "e9cc51d8ad4601d6a2686fb234e3d5f0144943358b6c9508c898f6bf2e675b4c",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_transfer_recency/source/analysis/e2000fs_feat30_transfer/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24",
-      "config_sha256": "d876f4a791e33ec1d7fdadf2ad708309557b16f32471ec4f83e5958f858d8fab",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_dirmo_24_feat30_pointweight4_last24/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last24/run.py"
+      "experiment": "e2000fs_budget_spectral",
+      "config_sha256": "f56a2f555b44b85a5b0629dce4156950c83eead542c112cb176b59b050d89566",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_budget_spectral/experiment.py"
     },
     {
       "member": "seongeun",
       "experiment": "e2000fs_dirmo_24",
       "config_sha256": "6fc76b1836f3a22669108823c6bf6833082b4d9a74bedf80edd8199f66183037",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs/dirmo_24/source/strategies.py"
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_point4_leaf_refit",
-      "config_sha256": "7dc7de029ea052095810e3e69c639eb5834d69d0974705cdde957ce0496700b7",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_point4_leaf_refit/source/analysis/e2000fs_point4_advance/run.py"
+      "experiment": "e2000fs_dirmo_24_feat30",
+      "config_sha256": "ff25cfb2bb0e21f093036f3e9fe2f512ad1e4225f8c985f725a3b9cb84a5aced",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24_feat30/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last48",
-      "config_sha256": "3abeda1645ab87d4fa937f38a60d966cbc9b26318799bbe97df2f755a889949d",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_dirmo_24_feat30_pointweight4_last48/source/analysis/e2000fs_dirmo_24_feat30_pointweight4_last48/run.py"
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm",
+      "config_sha256": "6e7957584b55c8a518140ebab4054fdee710d0c47b7d2914cf09c4b81f2b1c62",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24_feat30_lgbm/experiment.py"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_feat30_extreme_histprior",
-      "config_sha256": "7ab20f05984715185461c42c042e7756a05bc3d01120089875f67976858f5639",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_extreme_histprior/source/analysis/e2000fs_feat30_extreme_histprior/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_mimo",
-      "config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs/mimo/source/strategies.py"
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm_HPO",
+      "config_sha256": "bdd9c9431645c774ce679725d0cbe4e16b5115541c0b7f494b4d52195c490689",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24_feat30_lgbm_HPO/experiment.py"
     },
     {
       "member": "seongeun",
       "experiment": "e2000fs_dirmo_24_feat30_pointweight4",
       "config_sha256": "ba9f568b8b85e99fdbe3c7cebf40497057aaa5855c8619daa0c5cca5d4e77ad6",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_dirmo_24_feat30_pointweight4/source/analysis/e2000fs_dirmo_24_feat30_pointweight4/run.py"
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24_feat30_pointweight4/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24",
+      "config_sha256": "d876f4a791e33ec1d7fdadf2ad708309557b16f32471ec4f83e5958f858d8fab",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24_feat30_pointweight4_last24/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last48",
+      "config_sha256": "3abeda1645ab87d4fa937f38a60d966cbc9b26318799bbe97df2f755a889949d",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirmo_24_feat30_pointweight4_last48/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirrec",
+      "config_sha256": "59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_dirrec/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_context",
+      "config_sha256": "a26d0ed6aa42373d060c17a2972743247d70895022bb5c868ee3801f097c6b91",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_agnostic_v2_context/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_event",
+      "config_sha256": "e69176c3d4b9f445bced8a384406f674dc542e296a69c043f2ee758f4a89ddce",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_agnostic_v2_event/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_extreme_histprior",
+      "config_sha256": "7ab20f05984715185461c42c042e7756a05bc3d01120089875f67976858f5639",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_extreme_histprior/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_lgbm_extreme4",
+      "config_sha256": "c7c98a41f42ef519e374ad54e4de7e182b64b6433eb5b1be43a6dabc965222d2",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_lgbm_extreme4/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_lognormal_nll",
+      "config_sha256": "c2f2097dcc28d4adad605f47e2f362127ebe10e37ea48a1f6d2958a97caa5a05",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_lognormal_nll/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_pointweight4",
+      "config_sha256": "748016d3b57ae92ce90a989dfb038ae41deec4703a9282cc4498181a1d4a8def",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_pointweight4/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_shape",
+      "config_sha256": "6456b53cf8ec328381c268e2bb67bb7a91903289e10da47a788dcd80d4906414",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_shape/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_smooth_wcrps",
+      "config_sha256": "a2cd0af47e63312b3e4c502c7a952369c56b835ac0f1d91099ae0b644c783822",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_smooth_wcrps/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_tailcal_crps",
+      "config_sha256": "0647b5314fd32a8cb66bc87d5413be4a8233f50667edcc7e1f0c653d49422a99",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_tailcal_crps/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recency",
+      "config_sha256": "e9cc51d8ad4601d6a2686fb234e3d5f0144943358b6c9508c898f6bf2e675b4c",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_transfer_recency/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recent_window",
+      "config_sha256": "6e52c4b2696f45b474eaac63232bf382a2211e3e3a82f0f0a690e1be89da62fb",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_transfer_recent_window/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_wavelet",
+      "config_sha256": "5ff33c461cb01e4277e8a23d5af12752490e21f91c1f959814d65574f43e9fc4",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_feat30_wavelet/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_mimo",
+      "config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_mimo/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_leaf_refit",
+      "config_sha256": "7dc7de029ea052095810e3e69c639eb5834d69d0974705cdde957ce0496700b7",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_point4_leaf_refit/experiment.py"
     },
     {
       "member": "seongeun",
       "experiment": "e2000fs_point4_linear_leaf",
       "config_sha256": "14a7624d6ba94332dd94d9dc0a236a293df9278332318fe350d720c3fc6fe467",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_point4_linear_leaf/source/analysis/e2000fs_point4_advance/run.py"
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_point4_linear_leaf/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_recursive",
+      "config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/e2000fs_recursive/experiment.py"
     },
     {
       "member": "gjc-main",
@@ -115,76 +187,112 @@
       "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/gjc-main/hsspeak72/eef5f301b253b41369b1b18821e685dc95b5cc9d80d766f5fa06d78d8f5cf965.py"
     },
     {
-      "member": "seongeun",
-      "experiment": "e1604_hsspeak25",
-      "config_sha256": "4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/seongeun/e1604_hsspeak25/4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_lgbm_extreme4",
-      "config_sha256": "c7c98a41f42ef519e374ad54e4de7e182b64b6433eb5b1be43a6dabc965222d2",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_lgbm_extreme4/source/analysis/e2000fs_feat30_lgbm_distribution/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_pointweight4",
-      "config_sha256": "748016d3b57ae92ce90a989dfb038ae41deec4703a9282cc4498181a1d4a8def",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_pointweight4/source/analysis/e2000fs_feat30_pointweight/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_transfer_recent_window",
-      "config_sha256": "6e52c4b2696f45b474eaac63232bf382a2211e3e3a82f0f0a690e1be89da62fb",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_transfer_recent_window/source/analysis/e2000fs_feat30_transfer/run.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_dirrec",
-      "config_sha256": "59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs/dirrec/source/strategies.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_agnostic_v2_event",
-      "config_sha256": "e69176c3d4b9f445bced8a384406f674dc542e296a69c043f2ee758f4a89ddce",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs_feat30_agnostic_v2_event/source/analysis/e2000fs_feat30_agnostic_v2/run.py"
-    },
-    {
       "member": "baseline",
       "experiment": "mean_reversion",
       "config_sha256": "095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/baseline/mean_reversion/095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66.py"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_recursive",
-      "config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/releases/e2000fs/recursive/source/strategies.py"
-    },
-    {
-      "member": "baseline",
-      "experiment": "ses",
-      "config_sha256": "1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/baseline/ses/1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f.py"
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/mean_reversion/experiment.py"
     },
     {
       "member": "baseline",
       "experiment": "naive",
       "config_sha256": "a73b16dda3144747a5589cd0a34ba56512df8b0e626125c65bdb1e940bc5cb02",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/baseline/naive/a73b16dda3144747a5589cd0a34ba56512df8b0e626125c65bdb1e940bc5cb02.py"
-    },
-    {
-      "member": "baseline",
-      "experiment": "auto_arima",
-      "config_sha256": "e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/baseline/auto_arima/e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f.py"
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/naive/experiment.py"
     },
     {
       "member": "baseline",
       "experiment": "seasonal_naive_648",
       "config_sha256": "e82281cb844fb18079acceb7579f554d639a65f8e9bba5fd1016b32713f72f77",
-      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/8cd77287d9d8648c1a8cf891d17f94af6aa05791/scripts/baseline/seasonal_naive_648/e82281cb844fb18079acceb7579f554d639a65f8e9bba5fd1016b32713f72f77.py"
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/seasonal_naive_648/experiment.py"
+    },
+    {
+      "member": "baseline",
+      "experiment": "ses",
+      "config_sha256": "1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/309a44ce79c475f29d5fc1c4baa5b8195a73d225/research/ses/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib4_detpool_gpd",
+      "config_sha256": "3cd5af86dc52938cfb71ce4089825bab7d6e5918d5285f804add501cd96f4661",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib4-20261031/pool_lane.py#L29-L122"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib2_detroute",
+      "config_sha256": "e2457303ad54fe568c2b239ebf6b4f9b53657e60473284c276097f14f34a2acb",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib2-20261031/detector_lane.py#L1-L169"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_tweedie15",
+      "config_sha256": "7861a17483e738863c669f4aab19f65afb231953d36793c0bb2a9ffa3df00468",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib-20261030/tweedie_lane.py#L91-L128"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib4_detpool_era",
+      "config_sha256": "8c8cb6a6c193141b2f7726b7ec990715f0de96bbd3c5bd39433f9cf645fbf875",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib4-20261031/pool_lane.py#L29-L122"
+    },
+    {
+      "member": "jsy301",
+      "experiment": "dirmo_24_feat30_delta12_shape25",
+      "config_sha256": "7d692eb432fe67055cc779937c45983f27ae020dc9dee374286da1535cda0ea4",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/scripts/jsy301/dirmo_24_feat30_delta12_shape25/7d692eb432fe67055cc779937c45983f27ae020dc9dee374286da1535cda0ea4.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib4_detpool_mixture",
+      "config_sha256": "9f0075eaf2016ad57d83f30c121d4503b6942414c585e440cb95d15042af437c",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib4-20261031/pool_lane.py#L29-L122"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib5_detpool_all",
+      "config_sha256": "13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib5-20261031/pool_all.py#L41-L158"
+    },
+    {
+      "member": "jsy301",
+      "experiment": "dirmo_24_feat30_delta12",
+      "config_sha256": "7ac13818a2d63832eb4e660ceb3345eee6ddd8ada333745912a18a9801773ea2",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/scripts/jsy301/dirmo_24_feat30_delta12/7ac13818a2d63832eb4e660ceb3345eee6ddd8ada333745912a18a9801773ea2.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib6_detpool_mix20",
+      "config_sha256": "a9299a275fd53d6cf66f689cbcd85bfbd7a938715ff365143eb9e615f5539353",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib6-20261031/mix_lane.py#L1-L49"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_pool_bodytail",
+      "config_sha256": "0718492933ab4abcfe51a72414e662949d2548f647c0583b0a7fba978bf195da",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib-20261030/lanes.py#L193-L247"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll",
+      "config_sha256": "96438e68666ce094fe62a8eb0d1ec1e36157255c0915107882b9e60df8facd34",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib-20261030/lanes.py#L101-L192"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib3_era",
+      "config_sha256": "f28b9c810e7fedfacbe1047b473e9c580cdfd681f09872929045ee871e3057cc",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib3-20261031/lanes3.py#L312-L342"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_point4_144h",
+      "config_sha256": "23c5e8e20f829e50460253954e24a88b903cfc92c6a4d8e025a4933a26730721",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib-20261030/tweedie_lane.py#L85-L90"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib2_mixture2comp",
+      "config_sha256": "88d14fe569ac4bb62d7b77c2a9a4468780e668f9a8163c365c88a38a02aacf7a",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib2-20261031/lanes2.py#L253-L320"
     }
   ]
 }
