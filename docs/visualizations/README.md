@@ -1,5 +1,9 @@
 # 리더보드 예측 GIF
 
+공식 평가 기간인 2026년 6~9월의 예측을 월별 GIF로 확인할 수 있습니다. 최근 168시간 관측, 이후 72시간 실제값과 예측을 동일한 200~800 km/s Y축으로 비교하며, 시각화는 저장된 제출 예측을 읽기만 하고 학습이나 예측 변경을 수행하지 않습니다. 기존 입력 계약과 현재 연구 기준의 차이는 각 폴더의 설명에 기재했습니다.
+
+게시 후 2주가 지난 폴더는 정리하여 제거합니다. 2026-10-31에 E1604·HSSPEAK72·E0472 폴더를 2주 경과 기준으로 제거했습니다.
+
 ## 2026-10-28 추가
 
 [E2000FS Feat30 Extreme의 train·validation loss, feature importance, F1+F2 월별 예측 GIF](e2000fs_feat30_extreme/)를 추가했습니다. 게시 기준 리더보드 14위, MSE **3585.635750**(F1 4025.01 / F2 3254.20)이며 실제 제출 예측과 저장 booster를 검증해 사용했습니다. 30개 특징은 공식 F1/F2 permutation importance를 본 뒤 사후 선택한 집합이므로 fresh holdout 결과가 아니라는 점을 명시했습니다.
@@ -36,18 +40,5 @@ E2000FS 전략 비교(XGBoost)와 Kumo 비교의 나머지 리더보드 기록�
 | 22 | E2000FS Recursive | 6043.244806 | [e2000fs_recursive](e2000fs_recursive/) |
 | 31 | E2000FS Kumo pooled | 13844.759176 | [e2000fs_kumo_pooled](e2000fs_kumo_pooled/) |
 | 27 | E2000FS Kumo Recursive | 18306.617946 | [e2000fs_kumo_recursive](e2000fs_kumo_recursive/) |
-
-## 기존 시각화
-
-공식 평가 기간인 2026년 6~9월의 예측을 월별 GIF로 확인할 수 있습니다. 아래 순위는 **2026-10-20** 게시 상태 기준이며, 각 그림은 리더보드에 실제 제출한 예측을 사용합니다.
-
-| 당시 순위 | 모델 | 작성자 | 공식 MSE | GIF |
-| ---: | --- | --- | ---: | --- |
-| 1 | E1604 · HSSPEAK25 | seongeun | 3222.882998 | [월별 GIF](e1604_hsspeak25/) |
-| 2 | E1593 · HSSPEAK72 | gjc-main | 3225.384369 | [월별 GIF](hsspeak72/) |
-
-각 모델의 세 시드 예측 평균을 표시합니다. 최근 168시간 관측, 이후 72시간 실제값과 예측을 동일한 200~800 km/s Y축으로 비교합니다. 월별 프레임 수는 720 / 744 / 744 / 625로 모델당 전체 2,833개 시작점을 포함하며, 프레임당 100ms로 반복 재생합니다. 시각화는 저장 예측을 읽으며 학습이나 예측 변경을 수행하지 않습니다. 기존 입력 계약과 현재 연구 기준의 차이는 각 모델 설명에 기재했습니다.
-
-기존 시각화: [E0472](xgb_d76_lead_moe_resid_dv_enlil/).
 
 [e2000fs_feat30_pointweight4](e2000fs_feat30_pointweight4/): MSE3732.269, >=550 MSE6071.056; pointwise weighting follow-up, loss/importance and daily-sampled monthly GIFs. High-speed improvement accompanied by ordinary-region degradation.
