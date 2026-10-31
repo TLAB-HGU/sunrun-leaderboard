@@ -1,0 +1,37 @@
+{
+  "experiment": "e2000fs_calib2_detroute",
+  "method": "permutation across origins of one feature's columns in the 237-column block design, then the three band detectors are re-predicted, the two archived arm forecasts are re-routed at tau=0.234 and the official MSE is recomputed; \u0394MSE vs the submitted routing",
+  "note": "the arm forecasts are frozen archives, so the permutation measures the routing component only; the scored windows are public, so this is diagnostic and was not used for selection",
+  "repeats": 5,
+  "seed": 20261031,
+  "tau": 0.234,
+  "parity": {
+    "f1": {
+      "origins": 2137,
+      "mse": 3551.7401177440747,
+      "mse_ge550": 6566.353652607389,
+      "expected_mse": 3551.7401177440747,
+      "probability_parity": "exact (max |diff| = 0.0 vs exceedance_prob.npz)"
+    },
+    "final": {
+      "origins": 2833,
+      "mse": 2957.816785940078,
+      "mse_ge550": 8136.83621838217,
+      "expected_mse": 2957.816785940078,
+      "probability_parity": "exact (max |diff| = 0.0 vs exceedance_prob.npz)"
+    }
+  },
+  "split_counts": "xgboost get_dump over the 400 trees of each of the six archived boosters; design column -> source feature, hourly features summed over their 24 lead copies",
+  "model_sha256": {
+    "research/e2000fs_calib2-20261031/runs/detroute_v1/detector_f1_b0.ubj": "cc62c763044d8a2cf87305295618a3d104130e293caa30e77fa2b1c8a415ab48",
+    "research/e2000fs_calib2-20261031/runs/detroute_v1/detector_f1_b1.ubj": "9b678d623504e369a51d1a1ead31ae40f79175ad3d4ab574e3515f1603739448",
+    "research/e2000fs_calib2-20261031/runs/detroute_v1/detector_f1_b2.ubj": "084913224a227483e810ee643318f516ca402de282593129c06f6fbfb7ad76c1",
+    "research/e2000fs_calib2-20261031/runs/detroute_v1/detector_final_b0.ubj": "c89ae18c6cb5e9b0e3e3e11195ffad7b9d0c80453acb144417b1800041eca073",
+    "research/e2000fs_calib2-20261031/runs/detroute_v1/detector_final_b1.ubj": "4bade4b6fcd55197e0ac28d00404f4b3644d51ff20f64e26d65aad0d7ab0e2f7",
+    "research/e2000fs_calib2-20261031/runs/detroute_v1/detector_final_b2.ubj": "4c79d430d57951c4c283da1afbd5961a35f92645cf6d9450902acdd3818e99dc"
+  },
+  "outputs": {
+    "feature_importance.csv": "5cc163aec1ed702a19bae3ac7054d1885ca4dad0c9d9b00cbc2713c3a062fd26",
+    "feature_importance.png": "1f8ae936019cdcbb0efb9bd0fb46bee684c101adc4ef550a8d89e1ca5b109f39"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "model": "e2000fs_calib2_detroute",
+  "experiment": "e2000fs_calib2_detroute",
+  "member": "seongeun",
+  "submitted_utc": "20261031T000632213Z",
+  "arm": "detector-routed: tweedie15 body arm, mixture2comp tail arm when p>=0.234",
+  "aggregation": "single model; one binary detector per 24 h band per stage, causal routing between two archived arm forecasts",
+  "created_at_utc": "2026-10-31T08:09:55.350593+00:00",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "input_x_hours": [
+      -167,
+      0
+    ],
+    "ace_latency_hours": 0,
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "256-colour palette fixed from the month's first frame; no dithering"
+  },
+  "sources": {
+    "predictions": {
+      "file": "/home/t-lab01/sunrun/research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz",
+      "sha256": "e7bbdbdf7cd211b95a87186b0d2f79e0ca17c2c132dd8da8ebb4964655438985"
+    },
+    "truth": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/ff001c863f177d47ba40489441fe43d6d9685df4/truth.parquet",
+      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+    },
+    "folds": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/ff001c863f177d47ba40489441fe43d6d9685df4/folds.parquet",
+      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    }
+  },
+  "verification": {
+    "folds": 4970,
+    "pairs": 357840,
+    "mse": 3213.1918684481543,
+    "expected_mse": 3213.1918684481543,
+    "mse_f1": 3551.7401177440747,
+    "expected_mse_f1": 3551.7401177440747,
+    "mse_f2": 2957.816785940078,
+    "expected_mse_f2": 2957.816785940078,
+    "mse_ge550": 7343.427492730721,
+    "expected_mse_ge550": 7343.427492730721,
+    "mse_tolerance": 1e-09,
+    "expected_month_counts": {
+      "2026-03": 744,
+      "2026-04": 720,
+      "2026-05": 673,
+      "2026-06": 720,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 4970,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 hourly samples ending at the origin; filled values kept as stored"
+  },
+  "notes": [
+    "Each (origin, horizon) pair is the archive of one of two arms: mixture2comp when the detector probability is >= 0.234, tweedie15 otherwise; the routed series itself is the submission.",
+    "Hollow markers identify observations filled by the input store (ACE gaps), not model output.",
+    "All truth, including filled observations, contributes to the displayed RMSE."
+  ],
+  "outputs": [
+    {
+      "month": "2026-03",
+      "file": "validation_2026-03.gif",
+      "frames": 744,
+      "first_fold": 1,
+      "last_fold": 744,
+      "first_origin_utc": "2026-02-28T23:00:00+00:00",
+      "last_origin_utc": "2026-03-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 16279986,
+      "sha256": "eca8cc2c94f7a2f49b2a8586f5f87061bca0486c16dbabf43cecc252946d9369"
+    },
+    {
+      "month": "2026-04",
+      "file": "validation_2026-04.gif",
+      "frames": 720,
+      "first_fold": 745,
+      "last_fold": 1464,
+      "first_origin_utc": "2026-03-31T23:00:00+00:00",
+      "last_origin_utc": "2026-04-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 16365739,
+      "sha256": "41da70b3a5b4d960ae197111cf33ff236ee27410cedaf7011d419ca7cfc6cbb7"
+    },
+    {
+      "month": "2026-05",
+      "file": "validation_2026-05.gif",
+      "frames": 673,
+      "first_fold": 1465,
+      "last_fold": 2137,
+      "first_origin_utc": "2026-04-30T23:00:00+00:00",
+      "last_origin_utc": "2026-05-28T23:00:00+00:00",
+      "duration_ms": 67300,
+      "bytes": 14943398,
+      "sha256": "6ce517ce29c27b56f8773612389a1d3255ae16ca01851e17453b2f325e16972e"
+    },
+    {
+      "month": "2026-06",
+      "file": "validation_2026-06.gif",
+      "frames": 720,
+      "first_fold": 2138,
+      "last_fold": 2857,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 15865794,
+      "sha256": "7343abc567c800907a37ce85d0f646fb57eea9ae665608a6c9a905acd908850e"
+    },
+    {
+      "month": "2026-07",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 2858,
+      "last_fold": 3601,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 17327831,
+      "sha256": "bc28f900c41780b51cfc1f20a7adc2038cd6cac5e85464ceb83f819bae746223"
+    },
+    {
+      "month": "2026-08",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 3602,
+      "last_fold": 4345,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 16714310,
+      "sha256": "6f096d7f7583135afe404ace22adcbe7ffde48e3cb7edcc0c63fe348d828b122"
+    },
+    {
+      "month": "2026-09",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 4346,
+      "last_fold": 4970,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 14685768,
+      "sha256": "cf4443f4a4208b70ba94a75cb221bb612b0b65f7122356fe2110149f5a393652"
+    }
+  ]
+}

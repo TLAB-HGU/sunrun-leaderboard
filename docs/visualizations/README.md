@@ -4,6 +4,10 @@
 
 게시 후 2주가 지난 폴더는 정리하여 제거합니다. 2026-10-31에 E1604·HSSPEAK72·E0472 폴더를 2주 경과 기준으로 제거했습니다.
 
+## 2026-10-31 추가
+
+[E2000FS Calib2 DetRoute의 detector 학습 loss, 라우팅 진단, permutation 중요도, F1+F2 월별 예측 GIF](e2000fs_calib2_detroute/)를 추가했습니다. 게시 기준 리더보드 **1위**, MSE **3213.191868**(F1 3551.74 / F2 2957.82, ≥550 7343.43)입니다. 두 archive arm(tweedie15 몸통, mixture2comp 꼬리) 사이를 `binary:logistic` detector가 (origin, horizon)마다 확률로 라우팅한 제출이며, τ=0.234는 채점 전에 비용비 1233/(1233+4045)로 고정했습니다. 몸통 arm 대비 전체 −14.40 / ≥550 −2082.75의 Pareto 개선이지만 F1 전체 MSE는 +39.03 나빠졌고, 사전 목표(전체 <3200, 모든 ≥550 <6000)는 달성하지 못했습니다. loss는 저장 booster를 비트 단위로 재현한 재학습으로 기록했고, 중요도는 두 arm 예측을 고정한 채 라우팅만 다시 실행해 계산했습니다.
+
 ## 2026-10-28 추가
 
 [E2000FS Feat30 Extreme의 train·validation loss, feature importance, F1+F2 월별 예측 GIF](e2000fs_feat30_extreme/)를 추가했습니다. 게시 기준 리더보드 14위, MSE **3585.635750**(F1 4025.01 / F2 3254.20)이며 실제 제출 예측과 저장 booster를 검증해 사용했습니다. 30개 특징은 공식 F1/F2 permutation importance를 본 뒤 사후 선택한 집합이므로 fresh holdout 결과가 아니라는 점을 명시했습니다.
@@ -20,6 +24,7 @@ E2000FS 전략 비교(XGBoost)와 Kumo 비교의 나머지 리더보드 기록�
 
 | 게시 시점 순위 | 실험 | 공식 MSE (F1 + F2) | 폴더 |
 | ---: | --- | ---: | --- |
+| 1 | E2000FS Calib2 DetRoute | 3213.191868 | [e2000fs_calib2_detroute](e2000fs_calib2_detroute/) |
 | 3 | E2000FS DirRecMO-12 | 3534.223345 | [e2000fs_dirrecmo_12](e2000fs_dirrecmo_12/) |
 | 4 | E2000FS DirMO-12 | 3553.341592 | [e2000fs_dirmo_12](e2000fs_dirmo_12/) |
 | 5 | E2000FS MIMO | 3553.553891 | [e2000fs_mimo](e2000fs_mimo/) |

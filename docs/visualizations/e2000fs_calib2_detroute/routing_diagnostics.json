@@ -1,0 +1,44 @@
+{
+  "experiment": "e2000fs_calib2_detroute",
+  "tau": 0.234,
+  "tau_rule": "threshold fixed from the cost ratio C_fp/(C_fp+C_fn)=1233/5278; never tuned on F1/F2",
+  "pairs": 357840,
+  "pairs_ge550": 48456,
+  "arms": {
+    "body_tweedie": {
+      "total": 3227.596508,
+      "ge550": 9426.178611,
+      "f1": 3512.714922,
+      "f2": 3012.524835,
+      "f1_ge550": 8655.53848,
+      "f2_ge550": 10213.018385
+    },
+    "tail_mixture": {
+      "total": 3745.961524,
+      "ge550": 5380.580129,
+      "f1": 4364.205501,
+      "f2": 3279.60523,
+      "f1_ge550": 5161.503135,
+      "f2_ge550": 5604.262345
+    },
+    "routed": {
+      "total": 3213.191868,
+      "ge550": 7343.427493,
+      "f1": 3551.740118,
+      "f2": 2957.816786,
+      "f1_ge550": 6566.353653,
+      "f2_ge550": 8136.836218
+    },
+    "oracle_arm": {
+      "total": 2679.772006,
+      "ge550": 5380.580129,
+      "f1": 2956.808503,
+      "f2": 2470.796716,
+      "f1_ge550": 5161.503135,
+      "f2_ge550": 5604.262345
+    }
+  },
+  "sensitivity_sha256": "a0fe73ecb80da2930f241ace830ae2cada8b944b46efa2cfcdce9411cefd3a4d",
+  "band_sha256": "54f45e2193b063c88e9d4b8ce7217935f5e861c85d229d3555e70e778d238163",
+  "note": "recomputed from exceedance_prob.npz, the two archived arm forecasts and the official truth; every value that results.json also reports is asserted equal before writing"
+}
