@@ -8,7 +8,7 @@ Evaluation uses `onboarding.md` and `metric.ipynb`: forecasts issued at **00, 06
 | F2 | 2026-04-01 .. 2026-07-01 | 352 | 2026-03-29 |
 | F3 | 2026-07-01 .. 2026-09-30 | 352 | 2026-06-29 |
 
-**Rank = Total S, lower is better.** The board shows S, TIMSE and RMSE for Total and each quarter, plus a GitHub-hosted image of their 72 lead-specific curves. Each numeric column averages 72 lead values equally. Total pools the three quarters separately at each lead before calculating metrics, rather than averaging quarter scores.
+**Rank = Total S, lower is better.** The board shows S, TIMSE and RMSE for Total and each quarter, plus a GitHub link to an image of their 72 lead-specific curves (no inline images). Each numeric column averages 72 lead values equally. Total pools the three quarters separately at each lead before calculating metrics, rather than averaging quarter scores.
 
 At each lead, observation-only linear quantiles define exactly 100 percentile intervals. TIMSE is the velocity-width-weighted integral of conditional tail MSE, divided by the observation range. `S = sqrt(RMSE * sqrt(TIMSE))`. S and RMSE have units km/s; displayed TIMSE remains in (km/s)², not TRMSE.
 

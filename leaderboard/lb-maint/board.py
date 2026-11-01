@@ -31,7 +31,6 @@ main{max-width:1200px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}p.sub{color
 th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
 th{background:var(--head);cursor:pointer;position:sticky;top:0;user-select:none}th:hover{color:var(--acc)}
 td.l,th.l{text-align:left}tr:last-child td{border-bottom:0}.ok{color:var(--ok);font-weight:600}.no{color:var(--mut)}
-.lead-curves{display:block;width:160px;height:160px;object-fit:contain;background:white;border-radius:4px}
 .dash{color:var(--mut)}footer{color:var(--mut);font-size:12.5px;margin-top:14px}code{font-size:12.5px}
 """
 
@@ -309,10 +308,11 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
         plot_url = r.get("metric_plot_url") if metrics else None
         # Every published image is immutable and hosted alongside the reproducible source.
         if plot_url and re.fullmatch(r"https://raw\.githubusercontent\.com/TLAB-HGU/sunrun-leaderboard/[0-9a-f]{40}/leaderboard/assets/metrics/[^?#]+\.png", plot_url):
-            url = html.escape(plot_url, quote=True)
-            alt = html.escape(f'{r["experiment"]}: S, TIMSE and RMSE by lead, Total and F1–F3', quote=True)
-            plot = (f'<a href="{url}" target="_blank" rel="noopener" title="Open full-size lead curves">'
-                    f'<img class="lead-curves" src="{url}" alt="{alt}" loading="lazy" width="160" height="160"></a>')
+            github_url = plot_url.replace("https://raw.githubusercontent.com/", "https://github.com/", 1)
+            github_url = github_url.replace("/sunrun-leaderboard/", "/sunrun-leaderboard/blob/", 1)
+            url = html.escape(github_url, quote=True)
+            plot = (f'<a class="lead-curves-link" href="{url}" target="_blank" rel="noopener" '
+                    'title="View S, TIMSE and RMSE curves on GitHub">GitHub</a>')
         else:
             plot = '<span class="dash">–</span>'
         e2e = end_to_end_hours(r)
@@ -352,7 +352,7 @@ Missing observations are excluded without filling. Missing or invalid prediction
 hover over metrics for persistence replacement rates and mean forecast bias.
 Predictions for F1, F2 and F3 use training data before 2025-12-29, 2026-03-29 and 2026-06-29 00:00 UTC respectively.
 Legacy submissions without a complete current score are marked <b>unscored</b> and excluded from the ranking.
-Click a lead-curve image to open its full-size GitHub-hosted version.
+The lead curves column links to the image on GitHub; images are not embedded in this table.
 <b>end-to-end (h)</b> is the submitter-reported wall-clock time from training through forecast production (hover for scope).
 In each metric column the best value is <b>bold</b> and the second best <u>underlined</u>; ties share marks.
 Click a numeric or identity header to sort.<br>Generated from {len(results)} scored submissions.</footer>

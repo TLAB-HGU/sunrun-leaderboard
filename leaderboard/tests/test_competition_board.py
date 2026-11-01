@@ -30,14 +30,15 @@ def test_metrics_order_units_images_and_identity_survive_status_refresh(monkeypa
                                            for m in ("S", "TIMSE", "RMSE")],
                        "lead curves", "member", "end-to-end (h)", "code"]
     assert "(km/s)²" in page and "every 6 hours" in page
-    assert 'loading="lazy"' in page and 'target="_blank"' in page
+    assert "<img " not in page and 'class="lead-curves-link"' in page
+    assert "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/" in page
     assert 'Persistence replacements: 25.00% of valid pairs; Mean forecast bias: -1.50 km/s' in page
     assert f'data-config="{"a" * 64}"' in page
     assert lbstatus.trim_ranking_columns(page) == page
     pending = lbstatus.upsert([], "alice", "next", "대기", at="2026-11-01T00:00:00Z")
     refreshed = lbstatus.mark_leaders(lbstatus.inject(page, pending))
     assert [label for label, _ in board.ranking(refreshed)[2]] == headers
-    assert refreshed.count('class="lead-curves"') == 1
+    assert refreshed.count('class="lead-curves-link"') == 1
     status = re.search(r'<tr style="color:var\(--mut\)">(.*?)</tr>', refreshed).group(1)
     assert len(board.CELL.findall(status)) == len(headers)
     assert lbstatus.mark_leaders(lbstatus.inject(refreshed, pending)) == refreshed
@@ -82,7 +83,8 @@ def test_visibility_and_architecture_rewrite_preserve_current_metrics(monkeypatc
     mapping = {"models": [{"member": "alice", "experiment": "kept", "config_sha256": "a" * 64, "url": target}]}
     updated = board.apply_architecture_links(page, mapping)
     assert target in updated and board.script_cells(updated) == []
-    assert '<img ' in updated and lbstatus.mark_leaders(updated) == updated
+    assert 'class="lead-curves-link"' in updated and "<img " not in updated
+    assert lbstatus.mark_leaders(updated) == updated
 
 
 def test_legacy_status_wrapper_cannot_find_or_strip_current_markup():
