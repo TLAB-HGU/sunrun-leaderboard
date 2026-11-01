@@ -1,0 +1,233 @@
+{
+  "model": "e2000fs_calib5_detpool_all",
+  "experiment": "e2000fs_calib5_detpool_all",
+  "member": "seongeun",
+  "submitted_utc": "20261031T172348000Z",
+  "config_sha256": "13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307",
+  "arm": "base e2000fs_calib4_detpool_gpd + 16 refit arms, beta >= 0, sum(beta) <= 1 (trailing NNLS, ridge 1e-3)",
+  "aggregation": "single linear stack: pred = base + sum_j beta_j (arm_j - base); beta refit every 168 origins from the trailing 2160 matured origins with a trailing >=550 no-regression shrink",
+  "created_at_utc": "2026-11-01T01:53:04.196343+00:00",
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 100,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "x_hours": [
+      -167,
+      72
+    ],
+    "input_x_hours": [
+      -167,
+      0
+    ],
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "month_grouping": "UTC month of origin + 1 hour",
+    "palette": "256-colour palette fixed from the month's first frame; no dithering"
+  },
+  "sources": {
+    "predictions": [
+      {
+        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz",
+        "sha256": "a4e4cb20674daf958794cb02576bbb443fb6c7e07b819b41c72fb160ecc7934f"
+      }
+    ],
+    "prediction_keys": [
+      [
+        "origins_ns",
+        "predictions"
+      ]
+    ],
+    "folds": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/folds.parquet",
+      "sha256": "38cf7b8271c8630710d6c40795cfea4981cf1362afe756999bae3e85f2ccba9a"
+    },
+    "truth": {
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/truth.parquet",
+      "sha256": "c1b510313c2fe49b44f704653f9efcfa2113f8e3240617abad199460127931eb"
+    },
+    "history": {
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
+      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+    },
+    "receipt": {
+      "file": "/home/t-lab01/sunrun/docs/visualizations/e2000fs_calib5_detpool_all/leaderboard-result.json",
+      "sha256": "8c90aa73fddda2313f6dcc1a4f5f9569d926e81263e4d74de2f86c628bf18c46"
+    }
+  },
+  "footer": "e2000fs_calib5_detpool_all \u00b7 detpool_gpd base + 16 archived refit arms, trailing NNLS weights \u00b7 F1 01\u201303 / F2 04\u201306 / F3 07\u201309 2026 \u00b7 Y axis fixed at 200\u2013850 km/s",
+  "verification": {
+    "mse": 4154.1526325545565,
+    "mse_f1": 6007.057035049542,
+    "mse_f1_ge550": 12097.99266103738,
+    "mse_f2": 3600.168705922258,
+    "mse_f2_ge550": 7055.637629036007,
+    "mse_f3": 2876.277923686607,
+    "mse_f3_ge550": 6311.407447512145,
+    "mse_ge550": 9641.590819894685,
+    "n_pairs": 454680,
+    "n_pairs_ge550": 78379,
+    "receipt": {
+      "mse": 4154.1526325545565,
+      "mse_f1": 6007.057035049542,
+      "mse_f1_ge550": 12097.99266103738,
+      "mse_f2": 3600.168705922258,
+      "mse_f2_ge550": 7055.637629036007,
+      "mse_f3": 2876.277923686607,
+      "mse_f3_ge550": 6311.407447512145,
+      "mse_ge550": 9641.590819894685,
+      "n_pairs": 454680,
+      "n_pairs_ge550": 78379
+    },
+    "tolerance": 1e-09,
+    "expected_month_counts": {
+      "2026-01": 744,
+      "2026-02": 672,
+      "2026-03": 673,
+      "2026-04": 720,
+      "2026-05": 744,
+      "2026-06": 649,
+      "2026-07": 744,
+      "2026-08": 744,
+      "2026-09": 625
+    },
+    "rendered_frames": 6315,
+    "complete": true,
+    "all_gifs_decoded": true,
+    "prediction_truth_join": "one-to-one; complete origin x horizons 1..72",
+    "input_window": "168 hourly samples ending at the origin; filled values kept as stored"
+  },
+  "notes": [
+    "The forecast drawn here is the archived submission itself; nothing is retrained or re-post-processed.",
+    "Hollow markers identify observations filled by the input store (ACE gaps), not model output.",
+    "All truth, including filled observations, contributes to the displayed RMSE."
+  ],
+  "diagnostics": [
+    {
+      "file": "weights_receipt.json",
+      "sha256": "482ec84e0f44d5022ab19db91741acd92232dd84aa641c22bfd8aaa40eae84cb"
+    }
+  ],
+  "outputs": [
+    {
+      "month": "2026-01",
+      "period": "F1",
+      "file": "validation_2026-01.gif",
+      "frames": 744,
+      "first_fold": 1,
+      "last_fold": 744,
+      "first_origin_utc": "2025-12-31T23:00:00+00:00",
+      "last_origin_utc": "2026-01-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 16985384,
+      "sha256": "4be112eb83a2bdcb02aa75073d6b8220eb3d043fb64ab0e95fe76e36e0cede0e"
+    },
+    {
+      "month": "2026-02",
+      "period": "F1",
+      "file": "validation_2026-02.gif",
+      "frames": 672,
+      "first_fold": 745,
+      "last_fold": 1416,
+      "first_origin_utc": "2026-01-31T23:00:00+00:00",
+      "last_origin_utc": "2026-02-28T22:00:00+00:00",
+      "duration_ms": 67200,
+      "bytes": 14734590,
+      "sha256": "a1de3074bde3d0f08a21cdae37741c05ccd5610dd8f69d7aacf06f78cfd8428b"
+    },
+    {
+      "month": "2026-03",
+      "period": "F1",
+      "file": "validation_2026-03.gif",
+      "frames": 673,
+      "first_fold": 1417,
+      "last_fold": 2089,
+      "first_origin_utc": "2026-02-28T23:00:00+00:00",
+      "last_origin_utc": "2026-03-28T23:00:00+00:00",
+      "duration_ms": 67300,
+      "bytes": 14780177,
+      "sha256": "16a792965b168ab3f832974039fc2ca9fdb8f668cf1c426b2dd3195075bc7f22"
+    },
+    {
+      "month": "2026-04",
+      "period": "F2",
+      "file": "validation_2026-04.gif",
+      "frames": 720,
+      "first_fold": 2090,
+      "last_fold": 2809,
+      "first_origin_utc": "2026-03-31T23:00:00+00:00",
+      "last_origin_utc": "2026-04-30T22:00:00+00:00",
+      "duration_ms": 72000,
+      "bytes": 16386012,
+      "sha256": "af05d4df1d406fa8803e3b99d5e832a91c6d3bc649ba40ec3426e987c6acb295"
+    },
+    {
+      "month": "2026-05",
+      "period": "F2",
+      "file": "validation_2026-05.gif",
+      "frames": 744,
+      "first_fold": 2810,
+      "last_fold": 3553,
+      "first_origin_utc": "2026-04-30T23:00:00+00:00",
+      "last_origin_utc": "2026-05-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 16577705,
+      "sha256": "ef8bfbab4b8307574df2689822c025d0bf1b42bcc2b3c17a891530c356cfc4cf"
+    },
+    {
+      "month": "2026-06",
+      "period": "F2",
+      "file": "validation_2026-06.gif",
+      "frames": 649,
+      "first_fold": 3554,
+      "last_fold": 4202,
+      "first_origin_utc": "2026-05-31T23:00:00+00:00",
+      "last_origin_utc": "2026-06-27T23:00:00+00:00",
+      "duration_ms": 64900,
+      "bytes": 14166220,
+      "sha256": "6980c64957110860dcee83c30a705694df237d7fae91e58c8839238e410066e4"
+    },
+    {
+      "month": "2026-07",
+      "period": "F3",
+      "file": "validation_2026-07.gif",
+      "frames": 744,
+      "first_fold": 4203,
+      "last_fold": 4946,
+      "first_origin_utc": "2026-06-30T23:00:00+00:00",
+      "last_origin_utc": "2026-07-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 17328567,
+      "sha256": "e44a457a8ec373e8f382723aae05de47967aed39d097ecb889b94e735d2c044b"
+    },
+    {
+      "month": "2026-08",
+      "period": "F3",
+      "file": "validation_2026-08.gif",
+      "frames": 744,
+      "first_fold": 4947,
+      "last_fold": 5690,
+      "first_origin_utc": "2026-07-31T23:00:00+00:00",
+      "last_origin_utc": "2026-08-31T22:00:00+00:00",
+      "duration_ms": 74400,
+      "bytes": 16738244,
+      "sha256": "57d84128478cc9f6f6d02f00ab6184423363e95ad4694d83c14c7dc122fca0ff"
+    },
+    {
+      "month": "2026-09",
+      "period": "F3",
+      "file": "validation_2026-09.gif",
+      "frames": 625,
+      "first_fold": 5691,
+      "last_fold": 6315,
+      "first_origin_utc": "2026-08-31T23:00:00+00:00",
+      "last_origin_utc": "2026-09-26T23:00:00+00:00",
+      "duration_ms": 62500,
+      "bytes": 14671581,
+      "sha256": "51ed637d8de5f121ccb01527ad100758e47c8d2b8d31a673a846fe9eb1861a44"
+    }
+  ]
+}
