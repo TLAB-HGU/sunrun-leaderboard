@@ -53,13 +53,13 @@ def require_token() -> None:
 
 
 def text_table(results: list[dict]) -> str:
-    labels = [f"{scope.upper()} {metric.upper()}" for scope in ("total", "f1", "f2", "f3")
-              for metric in ("s", "timse", "rmse")]
+    labels = [f"{scope.upper()} {metric.upper()}" for metric in ("s", "timse", "rmse")
+              for scope in ("total", "f1", "f2", "f3")]
     out = ["rank experiment member " + " | ".join(labels)]
     for i, record in enumerate(ranked(results), 1):
         metrics = competition_metrics(record) or {}
-        values = [metrics.get(scope, {}).get(metric) for scope in ("total", "f1", "f2", "f3")
-                  for metric in ("s", "timse", "rmse")]
+        values = [metrics.get(scope, {}).get(metric) for metric in ("s", "timse", "rmse")
+                  for scope in ("total", "f1", "f2", "f3")]
         cells = " | ".join("-" if value is None else f"{value:.3f}" for value in values)
         rank = str(i) if metrics else "unscored"
         out.append(f"{rank} {record['experiment']} {record['team_member']} {cells}")

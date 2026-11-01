@@ -26,8 +26,8 @@ def test_metrics_order_units_images_and_identity_survive_status_refresh(monkeypa
     monkeypatch.setattr(board, "visibility_policy", lambda: {})
     page = board.render([record()], architecture={})
     headers = [label for label, _ in board.ranking(page)[2]]
-    assert headers == ["#", "experiment", *[f"{p} {m}" for p in ("Total", "F1", "F2", "F3")
-                                           for m in ("S", "TIMSE", "RMSE")],
+    assert headers == ["#", "experiment", *[f"{p} {m}" for m in ("S", "TIMSE", "RMSE")
+                                           for p in ("Total", "F1", "F2", "F3")],
                        "lead curves", "member", "end-to-end (h)", "code"]
     assert "(km/s)²" in page and "every 6 hours" in page
     assert "<img " not in page and 'class="lead-curves-link"' in page

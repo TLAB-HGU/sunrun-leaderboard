@@ -162,8 +162,8 @@ def test_board_keeps_total_and_period_competition_columns():
     page = render([{**metric, "experiment": "scored", "competition": _competition(10.0),
                     "extras": {"end_to_end_seconds": 7200}}])
     labels = re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
-    assert labels == ["#", "experiment", *[f"{p} {m}" for p in ("Total", "F1", "F2", "F3")
-                                           for m in ("S", "TIMSE", "RMSE")],
+    assert labels == ["#", "experiment", *[f"{p} {m}" for m in ("S", "TIMSE", "RMSE")
+                                           for p in ("Total", "F1", "F2", "F3")],
                       "lead curves", "member", "end-to-end (h)", "code"]
     assert "10.00" in page and "100.00" in page and "2.00" in page
 

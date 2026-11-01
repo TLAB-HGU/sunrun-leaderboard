@@ -17,8 +17,8 @@ HIGHER_IS_BETTER = re.compile(r"^(CSI|skill vs naive)$")
 # end-to-end (h) is cost, not skill; the regime columns of older pages were skill.
 LOWER_IS_BETTER = re.compile(r"MSE|MAE|≥\d+|^(low|high)_(low|high)_(low|high)$")
 COMPETITION_VERSION = "lead-timse-6h-v1"
-METRIC_COLUMNS = [f"{scope} {metric}" for scope in ("Total", "F1", "F2", "F3")
-                  for metric in ("S", "TIMSE", "RMSE")]
+METRIC_COLUMNS = [f"{scope} {metric}" for metric in ("S", "TIMSE", "RMSE")
+                  for scope in ("Total", "F1", "F2", "F3")]
 BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "member", "end-to-end (h)", "code"]
 CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 
@@ -293,15 +293,15 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
         if (r["team_member"], r["experiment"]) in bold:
             experiment_name = f'<strong class="lb-experiment">{experiment_name}</strong>'
         cells = [(rank_attrs, rank, None), (' class="l"', experiment_name, None)]
-        for scope in ("total", "f1", "f2", "f3"):
-            values = metrics[scope] if metrics else {}
-            tip = []
-            if values.get("replacement_fraction") is not None:
-                tip.append(f'Persistence replacements: {values["replacement_fraction"]:.2%} of valid pairs')
-            if values.get("bias") is not None:
-                tip.append(f'Mean forecast bias: {values["bias"]:+.2f} km/s')
-            title = html.escape("; ".join(tip), quote=True)
-            for key in ("s", "timse", "rmse"):
+        for key in ("s", "timse", "rmse"):
+            for scope in ("total", "f1", "f2", "f3"):
+                values = metrics[scope] if metrics else {}
+                tip = []
+                if values.get("replacement_fraction") is not None:
+                    tip.append(f'Persistence replacements: {values["replacement_fraction"]:.2%} of valid pairs')
+                if values.get("bias") is not None:
+                    tip.append(f'Mean forecast bias: {values["bias"]:+.2f} km/s')
+                title = html.escape("; ".join(tip), quote=True)
                 value = values.get(key)
                 attrs = f' data-v="{"" if value is None else value}" title="{title}"'
                 cells.append((attrs, _num(value, 2), value))
