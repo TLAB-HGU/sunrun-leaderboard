@@ -137,6 +137,7 @@ README에서 바로 재생되도록 **4 origin 간격 · 720×360 미리보기**
 - loss 재현: 9개 booster 재학습 예측이 archive `F*_part{b}.npz`와 **최대 차이 0.0**([loss_receipt.json](loss_receipt.json)의 `max_abs_difference_kms`).
 - 밴드 표의 세 예측은 모두 같은 folds에서 채점했고, `point4_144h`는 레코드 값과, `detpool_gpd`는 `runs/detpool_gpd_v1/results.json`(총 4,360.208035)과 일치함을 확인했습니다(float32 저장 오차 1e-3 허용).
 - GIF는 제출 예측을 그대로 그립니다(재학습 없음), `manifest.json`에 입력 sha256과 월별 프레임 수가 남아 있습니다.
+- **누출 검토**: 학습/평가 분리, 결측 충전 규칙, 특징 시점(ACE·순환·SUVI 나이·CH·Enlil), 237열 상관 스캔, 예측 재현을 14개 검사로 확인했습니다 — 전부 통과, 남는 위험은 특징 선택 1건입니다. [LEAKAGE-AUDIT.md](LEAKAGE-AUDIT.md), 재현 [code/leakage_audit.py](code/leakage_audit.py).
 
 ## 재현
 

@@ -1,0 +1,406 @@
+{
+ "experiment": "e2000fs_calib_point4_144h",
+ "created_at_utc": "2026-11-01T03:36:06.744412+00:00",
+ "mask_hours": 144,
+ "periods": [
+  {
+   "period": "F1",
+   "cutoff_utc": "2025-12-29T00:00:00+00:00",
+   "training_rows": 9433,
+   "last_train_origin_utc": "2025-12-23T00:00:00+00:00",
+   "last_train_target_utc": "2025-12-26T00:00:00+00:00",
+   "first_query_origin_utc": "2025-12-31T23:00:00+00:00",
+   "first_query_target_utc": "2026-01-01T00:00:00+00:00",
+   "gap_hours": 144.0,
+   "origin_overlap": 0,
+   "query_origins": 2089
+  },
+  {
+   "period": "F2",
+   "cutoff_utc": "2026-03-29T00:00:00+00:00",
+   "training_rows": 10153,
+   "last_train_origin_utc": "2026-03-23T00:00:00+00:00",
+   "last_train_target_utc": "2026-03-26T00:00:00+00:00",
+   "first_query_origin_utc": "2026-03-31T23:00:00+00:00",
+   "first_query_target_utc": "2026-04-01T00:00:00+00:00",
+   "gap_hours": 144.0,
+   "origin_overlap": 0,
+   "query_origins": 2113
+  },
+  {
+   "period": "F3",
+   "cutoff_utc": "2026-06-29T00:00:00+00:00",
+   "training_rows": 10889,
+   "last_train_origin_utc": "2026-06-23T00:00:00+00:00",
+   "last_train_target_utc": "2026-06-26T00:00:00+00:00",
+   "first_query_origin_utc": "2026-06-30T23:00:00+00:00",
+   "first_query_target_utc": "2026-07-01T00:00:00+00:00",
+   "gap_hours": 120.0,
+   "origin_overlap": 0,
+   "query_origins": 2113
+  }
+ ],
+ "checks": [
+  {
+   "check": "training and evaluation origins are disjoint",
+   "pass": true,
+   "periods": [
+    {
+     "period": "F1",
+     "cutoff_utc": "2025-12-29T00:00:00+00:00",
+     "training_rows": 9433,
+     "last_train_origin_utc": "2025-12-23T00:00:00+00:00",
+     "last_train_target_utc": "2025-12-26T00:00:00+00:00",
+     "first_query_origin_utc": "2025-12-31T23:00:00+00:00",
+     "first_query_target_utc": "2026-01-01T00:00:00+00:00",
+     "gap_hours": 144.0,
+     "origin_overlap": 0,
+     "query_origins": 2089
+    },
+    {
+     "period": "F2",
+     "cutoff_utc": "2026-03-29T00:00:00+00:00",
+     "training_rows": 10153,
+     "last_train_origin_utc": "2026-03-23T00:00:00+00:00",
+     "last_train_target_utc": "2026-03-26T00:00:00+00:00",
+     "first_query_origin_utc": "2026-03-31T23:00:00+00:00",
+     "first_query_target_utc": "2026-04-01T00:00:00+00:00",
+     "gap_hours": 144.0,
+     "origin_overlap": 0,
+     "query_origins": 2113
+    },
+    {
+     "period": "F3",
+     "cutoff_utc": "2026-06-29T00:00:00+00:00",
+     "training_rows": 10889,
+     "last_train_origin_utc": "2026-06-23T00:00:00+00:00",
+     "last_train_target_utc": "2026-06-26T00:00:00+00:00",
+     "first_query_origin_utc": "2026-06-30T23:00:00+00:00",
+     "first_query_target_utc": "2026-07-01T00:00:00+00:00",
+     "gap_hours": 120.0,
+     "origin_overlap": 0,
+     "query_origins": 2113
+    }
+   ]
+  },
+  {
+   "check": "the mask leaves at least 120 h between the last training target and the first scored target",
+   "pass": true,
+   "gaps": [
+    144.0,
+    144.0,
+    120.0
+   ],
+   "note": "144 h in F1/F2, 120 h in F3 because the F3 cutoff (2026-06-29) is 48 h before 2026-07-01"
+  },
+  {
+   "check": "training row counts equal the archived refit logs",
+   "pass": true,
+   "rows": [
+    9433,
+    10153,
+    10889
+   ]
+  },
+  {
+   "check": "no identical feature row appears in both the training and the query design",
+   "pass": true,
+   "shared_rows": {
+    "F1_b0": 0,
+    "F1_b1": 0,
+    "F1_b2": 0,
+    "F2_b0": 0,
+    "F2_b1": 0,
+    "F2_b2": 0,
+    "F3_b0": 0,
+    "F3_b1": 0,
+    "F3_b2": 0
+   }
+  },
+  {
+   "check": "missing hours are filled by persistence from the past only (ffill, no interpolation or backfill)",
+   "pass": true,
+   "filled_hours": 7269,
+   "mismatches_vs_ffill": 0,
+   "share_filled": 0.20172614752733528
+  },
+  {
+   "check": "the frozen input speed series equals the leaderboard history series (same fill, same hours)",
+   "pass": true,
+   "same_index": true
+  },
+  {
+   "check": "speed-family features equal past-only rolling/shift values recomputed from the speed series",
+   "pass": true,
+   "max_abs_diff": {
+    "v_lag0": 2.4414062522737368e-05,
+    "v_m6": 2.848307292424579e-05,
+    "v_m24": 2.848307292424579e-05,
+    "v_sd6": 4.316477287602538e-06
+   }
+  },
+  {
+   "check": "rec26/27/28 are the speed exactly 26/27/28 days before the target (26+ days in the past)",
+   "pass": true,
+   "max_abs_diff": {
+    "rec26": 2.4414062522737368e-05,
+    "rec27": 2.4414062522737368e-05,
+    "rec28": 2.4414062522737368e-05
+   },
+   "tolerance": "1e-3 km/s covers the bundle's float32 storage"
+  },
+  {
+   "check": "every SUVI image used is older than the origin (img_age_h > 0 for all 2,833 origins)",
+   "pass": true,
+   "min_h": 1.0005555152893066,
+   "median_h": 1.0096666812896729,
+   "max_h": 65.0102767944336
+  },
+  {
+   "check": "coronal-hole and Enlil features follow documented causal rules (code citations)",
+   "pass": true,
+   "coronal_hole": "headroom_audit.headroom.ch_features: store/ch-v1/ch-hourly.parquet reindex(origins, method='ffill', tolerance='6h'); CH rows are kept only with slot <= origin",
+   "enlil": "headroom_audit.headroom.donki_matrix: only WSA-Enlil runs with modelCompletionTime <= origin are visible to an origin (searchsorted side='right')",
+   "ace": "headroom_audit.headroom.ace_features: ffill(limit=6), rolling(6/24).mean(), shift(24)/shift(6) only"
+  },
+  {
+   "check": "columns that track the target (>0.9) are only the origin-hour speed, which the t0 rule allows",
+   "pass": true,
+   "offenders": [],
+   "per_period_block": [
+    {
+     "period": "F1",
+     "block": 0,
+     "columns": 237,
+     "max_abs_corr": 0.9838839439075191,
+     "columns_over_0.9": [
+      "ace_speed_kms_last",
+      "v_lag0"
+     ],
+     "top3": [
+      [
+       "v_lag0",
+       0.984
+      ],
+      [
+       "ace_speed_kms_last",
+       0.984
+      ],
+      [
+       "ace_temperature_k_m24",
+       0.702
+      ]
+     ]
+    },
+    {
+     "period": "F1",
+     "block": 1,
+     "columns": 237,
+     "max_abs_corr": 0.570508930527209,
+     "columns_over_0.9": [],
+     "top3": [
+      [
+       "ch_ch_t035_equatorial_area",
+       0.571
+      ],
+      [
+       "strip_v350_logmed@h16",
+       0.534
+      ],
+      [
+       "strip_v450_logmed@h1",
+       0.534
+      ]
+     ]
+    },
+    {
+     "period": "F1",
+     "block": 2,
+     "columns": 237,
+     "max_abs_corr": 0.586832736616913,
+     "columns_over_0.9": [],
+     "top3": [
+      [
+       "ch_ch_t035_meridian30_equatorial_area",
+       0.587
+      ],
+      [
+       "ch_ch_t035_equatorial_area",
+       0.58
+      ],
+      [
+       "ch_ch_t035_meridian15_equatorial_area",
+       0.551
+      ]
+     ]
+    },
+    {
+     "period": "F2",
+     "block": 0,
+     "columns": 237,
+     "max_abs_corr": 0.9830162356132188,
+     "columns_over_0.9": [
+      "ace_speed_kms_last",
+      "v_lag0"
+     ],
+     "top3": [
+      [
+       "v_lag0",
+       0.983
+      ],
+      [
+       "ace_speed_kms_last",
+       0.983
+      ],
+      [
+       "ace_temperature_k_m24",
+       0.825
+      ]
+     ]
+    },
+    {
+     "period": "F2",
+     "block": 1,
+     "columns": 237,
+     "max_abs_corr": 0.5999329720003497,
+     "columns_over_0.9": [],
+     "top3": [
+      [
+       "v_lag0",
+       0.6
+      ],
+      [
+       "ace_speed_kms_last",
+       0.6
+      ],
+      [
+       "ace_temperature_k_last",
+       0.551
+      ]
+     ]
+    },
+    {
+     "period": "F2",
+     "block": 2,
+     "columns": 237,
+     "max_abs_corr": 0.47190365384871347,
+     "columns_over_0.9": [],
+     "top3": [
+      [
+       "ch_ch_t035_meridian30_equatorial_area",
+       0.472
+      ],
+      [
+       "ch_ch_t035_meridian15_equatorial_area",
+       0.444
+      ],
+      [
+       "rec_mean@h11",
+       0.411
+      ]
+     ]
+    },
+    {
+     "period": "F3",
+     "block": 0,
+     "columns": 237,
+     "max_abs_corr": 0.9681983306628983,
+     "columns_over_0.9": [
+      "ace_speed_kms_last",
+      "v_lag0"
+     ],
+     "top3": [
+      [
+       "v_lag0",
+       0.968
+      ],
+      [
+       "ace_speed_kms_last",
+       0.968
+      ],
+      [
+       "ace_temperature_k_m24",
+       0.81
+      ]
+     ]
+    },
+    {
+     "period": "F3",
+     "block": 1,
+     "columns": 237,
+     "max_abs_corr": 0.5921673264376438,
+     "columns_over_0.9": [],
+     "top3": [
+      [
+       "v_lag0",
+       0.592
+      ],
+      [
+       "ace_speed_kms_last",
+       0.592
+      ],
+      [
+       "ace_temperature_k_m24",
+       0.554
+      ]
+     ]
+    },
+    {
+     "period": "F3",
+     "block": 2,
+     "columns": 237,
+     "max_abs_corr": 0.5330861402248449,
+     "columns_over_0.9": [],
+     "top3": [
+      [
+       "rec26@h4",
+       0.533
+      ],
+      [
+       "rec26@h13",
+       0.533
+      ],
+      [
+       "rec26@h22",
+       0.533
+      ]
+     ]
+    }
+   ],
+   "allowed": "{'ace_speed_kms_last', 'v_lag0'}",
+   "note": "v_lag0 and ace_speed_kms_last are the speed observed at the origin itself; the next-highest column anywhere is <=0.83 (ACE temperature) and every per-horizon feature stays below 0.54"
+  },
+  {
+   "check": "archived predictions are reproduced bit for bit by models trained only on the masked rows",
+   "pass": true,
+   "blocks": 9,
+   "max_abs_difference_kms": 0.0
+  },
+  {
+   "check": "held-out loss exceeds training loss (the usual signature of no truth leakage)",
+   "pass": true,
+   "train_point4_rmse_mean": 51.551358666666665,
+   "valid_point4_rmse_mean": 72.14214166666667
+  },
+  {
+   "check": "leaderboard score reproduces from the archived forecast",
+   "pass": true,
+   "mse": 4452.152080686679
+  }
+ ],
+ "caveats": {
+  "feature_selection": "The 30 inputs were chosen with permutation importance computed on the official F1/F2 windows (research/e2000fs_feat30_extreme, documented there). That is a selection leak shared by every e2000fs arm; removing it needs a re-selection on an internal window and a full refit.",
+  "recipe_inheritance": "900 rounds, depth 3, eta 0.03, the 4x high-speed weight and the 144 h maturity mask are inherited from earlier e2000fs studies; none was tuned on the F1/F2/F3 quarters scored here.",
+  "windowed_post_processing": "This arm has no window fitting. The calib4/calib5 stacks do fit weights on trailing windows, but only on matured targets (audited in their folders)."
+ },
+ "verdict": "no train/evaluation overlap, no future dependence in the feature families that can be recomputed from the frozen inputs, no truth copy in the design matrix",
+ "sources": {
+  "bundle": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/e2000fs-lag0",
+  "study_code": [
+   "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/common.py",
+   "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/arms.py"
+  ],
+  "folds": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/folds.parquet",
+  "truth": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/truth.parquet"
+ }
+}
