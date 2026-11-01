@@ -27,15 +27,18 @@ from huggingface_hub.utils import HfHubHTTPError
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE)]
-from board import end_to_end_hours, event_value, has_f1, is_legacy, ranked, render  # noqa: E402
-from scoring import score, validate  # noqa: E402
+from board import competition_metrics, ranked, render, visibility_policy
+from competition import prepare_context, score_competition  # noqa: E402
+from metric_assets import publish_plots  # noqa: E402
+import architecture_code  # noqa: E402  (the code-column mapping every submission writes)
 
 DATASET = "tlabtlab/sunrun-lb-store"
 SPACE = "tlabtlab/sunrun-leaderboard"
 GITHUB_REPO = "TLAB-HGU/sunrun-leaderboard"
 GITHUB_BRANCH = "main"
 REQUIRED_META = ("team_member", "experiment", "description", "no_future_leakage", "f1_training_data_end_utc",
-                 "f2_training_data_end_utc", "f3_training_data_end_utc", "config", "inference_seconds_per_fold")
+                 "f2_training_data_end_utc", "f3_training_data_end_utc", "config", "inference_seconds_per_fold",
+                 "architecture_url")
 # period start - 72h: predictions for a period use only models trained on data before its cutoff
 TRAIN_END = {"f1": pd.Timestamp("2025-12-29T00:00:00Z"), "f2": pd.Timestamp("2026-03-29T00:00:00Z"),
              "f3": pd.Timestamp("2026-06-29T00:00:00Z")}
@@ -50,30 +53,16 @@ def require_token() -> None:
 
 
 def text_table(results: list[dict]) -> str:
-    def num(x):
-        return f"{x:,.1f}" if x is not None else "-"
-
-    out = [f"{'#':>4} {'experiment':<24} {'member':<12} {'config':<12} {'sec/fold':>10} {'e2e(h)':>7} {'MSE':>10} {'F1':>10} {'F2':>10} {'F3':>10} "
-           f"{'MSE>=550':>10} {'F1>=550':>10} {'F2>=550':>10} {'F3>=550':>10} {'CSI':>6} {'TmMAE':>6} {'skill':>8} {'beats naive':>11} code"]
-    for i, r in enumerate(ranked(results), 1):
-        full = has_f1(r)
-        keys = ("mse", "mse_f1", "mse_f2", "mse_f3", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550", "mse_f3_ge550")
-        metrics = [None if is_legacy(r) else r.get(k) for k in keys]
-        if not full:  # an incomplete (or old-window) F1 and the totals that include it are not shown
-            for i in (0, 1, 4, 5):
-                metrics[i] = None
-        periods = " ".join(f"{num(x):>10}" for x in metrics)
-        csi, tmae = event_value(r, "csi"), event_value(r, "timing_mae_h")
-        events = f"{f'{csi:.3f}' if csi is not None else '-':>6} {num(tmae):>6}"
-        beat = (r.get("vs_naive") or {}).get("beats_reference")
-        config = r.get("config_sha256", "legacy")[:12]
-        seconds = r.get("inference_seconds_per_fold")
-        seconds_text = f"{seconds:.6f}" if seconds is not None else "-"
-        e2e = end_to_end_hours(r)
-        e2e_text = f"{e2e:.2f}" if e2e is not None else "-"
-        out.append(f"{i if full else ('old' if is_legacy(r) else 'noF1'):>4} {r['experiment'][:24]:<24} {r['team_member'][:12]:<12} {config:<12} {seconds_text:>10} "
-                   f"{e2e_text:>7} {periods} {events} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
-                   f"{r.get('code_url') or '-'}")
+    labels = [f"{scope.upper()} {metric.upper()}" for scope in ("total", "f1", "f2", "f3")
+              for metric in ("s", "timse", "rmse")]
+    out = ["rank experiment member " + " | ".join(labels)]
+    for i, record in enumerate(ranked(results), 1):
+        metrics = competition_metrics(record) or {}
+        values = [metrics.get(scope, {}).get(metric) for scope in ("total", "f1", "f2", "f3")
+                  for metric in ("s", "timse", "rmse")]
+        cells = " | ".join("-" if value is None else f"{value:.3f}" for value in values)
+        rank = str(i) if metrics else "unscored"
+        out.append(f"{rank} {record['experiment']} {record['team_member']} {cells}")
     return "\n".join(out)
 
 
@@ -101,6 +90,21 @@ def script_location(member: str, experiment: str, config_sha256: str) -> tuple[s
     return path, raw, page
 
 
+def architecture_location(meta: dict) -> str:
+    """The code-column link of a submission: the study source that defines the model, pinned to a commit.
+
+    The submitted replay script stays required (scripts/<member>/<experiment>/<config_sha256>.py) but is never shown
+    on the board: the code cell must open the architecture, so `meta.architecture_url` names it explicitly and
+    submit.py records it in the Space's architecture-code.json entry for this result."""
+    url = meta.get("architecture_url")
+    if not isinstance(url, str) or not url.strip():
+        raise SystemExit("meta.architecture_url must be a non-empty string")
+    url = url.strip()
+    if not architecture_code.is_architecture_url(url):
+        raise SystemExit(f"meta.architecture_url {architecture_code.why_not_architecture(url)}")
+    return url
+
+
 def validate_meta(meta: dict) -> tuple[dict, str, float, str]:
     if not isinstance(meta, dict):
         raise SystemExit("meta must be a YAML mapping")
@@ -111,6 +115,7 @@ def validate_meta(meta: dict) -> tuple[dict, str, float, str]:
         raise SystemExit("meta.no_future_leakage must be true")
     if not isinstance(meta["description"], str) or not meta["description"].strip():
         raise SystemExit("meta.description must be a non-empty string")
+    architecture_location(meta)
     for field in ("team_member", "experiment"):
         if not isinstance(meta[field], str) or not SAFE_NAME.fullmatch(meta[field]):
             raise SystemExit(f"meta.{field} must match {SAFE_NAME.pattern}")
@@ -192,21 +197,54 @@ def with_extras(api: HfApi, repo: str, results: list[dict], revision: str | None
     return out
 
 
-def publish(api: HfApi, results: list[dict], space: str) -> str:
+def space_file(space: str, name: str, revision: str) -> dict:
+    """A JSON policy file at the Space's head, or {} on a Space that has none yet."""
+    try:
+        with open(hf_hub_download(space, name, repo_type="space", revision=revision), encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def publish(api: HfApi, results: list[dict], space: str, architecture: dict | None = None,
+            attempts: int = 3, dataset: str | None = None) -> str:
+    """Render the page and record this submission's architecture link in one commit, retrying if another publish
+    lands first. The code cells must open the architecture, never the replay script, so the mapping is uploaded with
+    the page it renders instead of being curated by hand afterwards."""
     try:
         api.create_repo(space, repo_type="space", space_sdk="static", private=True, exist_ok=True)
     except Exception:  # some plans cannot host private Spaces; the page only exposes metrics
         api.create_repo(space, repo_type="space", space_sdk="static", private=False, exist_ok=True)
-    api.create_commit(
-        repo_id=space,
-        repo_type="space",
-        commit_message="Refresh leaderboard",
-        operations=[
+    for attempt in range(attempts):
+        parent = api.repo_info(space, repo_type="space").sha
+        if dataset is not None:
+            revision = api.repo_info(dataset, repo_type="dataset").sha
+            results = with_extras(api, dataset, all_results(api, dataset, revision=revision), revision=revision)
+        on_space = space_file(space, architecture_code.FILE, parent)
+        mapping = on_space
+        for item in (architecture or {}).get("models", []):
+            mapping = architecture_code.upsert(mapping, item)
+        body = json.dumps(mapping, indent=2, ensure_ascii=False) + "\n"
+        operations = [
             CommitOperationAdd("README.md", b"---\ntitle: Solar wind 72h leaderboard\nsdk: static\napp_file: index.html\n---\n"),
-            CommitOperationAdd("index.html", render(results).encode()),
-        ],
-    )
-    return f"https://huggingface.co/spaces/{space}"
+            CommitOperationAdd("index.html", render(results, architecture=mapping).encode()),
+        ]
+        if body != json.dumps(on_space, indent=2, ensure_ascii=False) + "\n":
+            operations.append(CommitOperationAdd(architecture_code.FILE, body.encode()))
+        policy = visibility_policy()  # the page was rendered with this policy: keep the Space's copy in step
+        on_space_policy = space_file(space, "visibility.json", parent)
+        if policy and policy != on_space_policy:
+            operations.append(CommitOperationAdd("visibility.json",
+                                                 (json.dumps(policy, indent=2, ensure_ascii=False) + "\n").encode()))
+        try:
+            api.create_commit(repo_id=space, repo_type="space", commit_message="Refresh leaderboard",
+                              operations=operations, parent_commit=parent)
+            return f"https://huggingface.co/spaces/{space}"
+        except HfHubHTTPError as exc:
+            if getattr(exc.response, "status_code", None) not in (409, 412) or attempt == attempts - 1:
+                raise
+            time.sleep(1 + attempt)
+    raise RuntimeError("unreachable")
 
 
 def store_submission(api: HfApi, repo: str, rec: dict, pred_bytes: bytes, replace: bool,
@@ -240,26 +278,35 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
            replace: bool = False) -> dict:
     config, config_sha, seconds, f1_end, train_ends = validate_meta(meta)
     code_url = require_script(meta["team_member"], meta["experiment"], config_sha, remote=not dry_run)
+    architecture_url = architecture_location(meta)
+    if not dry_run and not architecture_code.reachable(architecture_url):
+        raise SystemExit(f"meta.architecture_url does not resolve on GitHub: {architecture_url}")
     require_token()
     api = HfApi()
     pred = pd.read_parquet(pred_path) if str(pred_path).endswith(".parquet") else pd.read_csv(pred_path)
-    folds, truth, naive = (_store(n, dataset) for n in ("folds.parquet", "truth.parquet", "naive.parquet"))
-    errs = validate(pred, folds)
-    if errs:
-        raise SystemExit("submission rejected:\n- " + "\n- ".join(errs))
-    res = score(pred, truth, folds, naive)
+    data_revision = api.repo_info(dataset, repo_type="dataset").sha
+    observation_path = Path(_download(dataset, "competition-observations.parquet", revision=data_revision))
+    observations = pd.read_parquet(observation_path)
+    try:
+        competition = score_competition(pred, prepare_context(observations))
+    except (ValueError, FloatingPointError) as exc:
+        raise SystemExit(f"submission rejected: {exc}") from exc
     now = time.time()
     ts = time.strftime("%Y%m%dT%H%M%S", time.gmtime(now)) + f"{int(now % 1 * 1000):03d}Z"
     rec = {"submitted_utc": ts, **{k: meta[k] for k in ("team_member", "experiment", "description")},
            "f1_training_data_end_utc": f1_end, "f2_training_data_end_utc": train_ends["f2"],
            "f3_training_data_end_utc": train_ends["f3"], "config": config, "config_sha256": config_sha, "inference_seconds_per_fold": seconds,
-           "code_url": code_url, **res}
+           "code_url": code_url, "architecture_url": architecture_url, "competition": competition,
+           "competition_provenance": hashlib.sha256(observation_path.read_bytes()).hexdigest(),
+           "competition_dataset_revision": data_revision}
     if not dry_run:
+        rec = publish_plots([rec], HERE / "assets" / "metrics")[0]
         # One Hub commit keeps the keyed prediction and its score consistent.
         buf = io.BytesIO()
         pred.to_parquet(buf, index=False)
         store_submission(api, dataset, rec, buf.getvalue(), replace)
-        rec["_leaderboard"] = publish(api, with_extras(api, dataset, all_results(api, dataset)), space)
+        entry = architecture_code.entry(rec["team_member"], rec["experiment"], config_sha, architecture_url)
+        rec["_leaderboard"] = publish(api, [], space, architecture={"models": [entry]}, dataset=dataset)
     return rec
 
 
@@ -280,14 +327,10 @@ if __name__ == "__main__":
     if not (a.predictions and a.meta):
         ap.error("predictions and meta are required (or use --show)")
     r = submit(a.predictions, yaml.safe_load(Path(a.meta).read_text()), a.dataset, a.space, a.dry_run, a.replace)
-    vs = r["vs_naive"]
-    print(f"MSE={r['mse']:.1f}  F1={r['mse_f1']:.1f}  F2={r['mse_f2']:.1f}  F3={r['mse_f3']:.1f}  "
-          f"MSE>=550={r['mse_ge550']:.1f}  F1>=550={r['mse_f1_ge550']:.1f}  F2>=550={r['mse_f2_ge550']:.1f}  "
-          f"F3>=550={r['mse_f3_ge550']:.1f}")
-    tm = "-" if r["timing_mae_h"] is None else f"{r['timing_mae_h']:.1f}h (bias {r['timing_bias_h']:+.1f}h)"
-    print(f"HSS events: CSI={'-' if r['csi'] is None else format(r['csi'], '.3f')}  timing MAE={tm}  (TP/FP/FN={r['events']['']['tp']}/{r['events']['']['fp']}/{r['events']['']['fn']})")
-    print(f"MSE(obs)={r['mse_observed']:.1f}  skill vs naive={r['skill_vs_naive']:+.3f}  "
-          f"beats naive (95% CI)={vs['beats_reference']}  diff CI={[round(x, 1) for x in vs['ci95']]}")
+    for scope in ("total", "f1", "f2", "f3"):
+        metrics = r["competition"][scope]
+        print(f"{scope.upper()}: S={metrics['s']:.3f} TIMSE={metrics['timse']:.3f} "
+              f"RMSE={metrics['rmse']:.3f} persistence={metrics['replacement_fraction']:.2%}")
     if "_leaderboard" in r:
         print("\n" + text_table(with_extras(HfApi(), a.dataset, all_results(HfApi(), a.dataset))))
         print("\npage (needs an HF login of an org member):", r["_leaderboard"])

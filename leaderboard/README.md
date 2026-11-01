@@ -1,27 +1,39 @@
 # Solar wind 72h — team leaderboard (submit client)
 
-Evaluation (**three quarterly periods since 2026-10-31**), hourly origins, 72h windows, all target times UTC, end exclusive:
+Evaluation uses `onboarding.md` and `metric.ipynb`: forecasts issued at **00, 06, 12 and 18 UTC**, with leads 1–72 hours. Only windows entirely contained in one period count.
 
-| period | targets | origins | folds | training cutoff (`meta.yaml`) |
-|---|---|---|---|---|
-| **F1** | 2026-01-01 00:00 – 2026-04-01 00:00 | `2025-12-31T23:00:00Z` .. `2026-03-28T23:00:00Z` | 2,089 | `f1_training_data_end_utc` ≤ 2025-12-29 |
-| **F2** | 2026-04-01 00:00 – 2026-07-01 00:00 | `2026-03-31T23:00:00Z` .. `2026-06-27T23:00:00Z` | 2,113 | `f2_training_data_end_utc` ≤ 2026-03-29 |
-| **F3** | 2026-07-01 00:00 – 2026-09-30 00:00 | `2026-06-30T23:00:00Z` .. `2026-09-26T23:00:00Z` | 2,113 | `f3_training_data_end_utc` ≤ 2026-06-29 |
+| period | target interval (UTC, end exclusive) | six-hour origins | training cutoff |
+|---|---|---:|---|
+| F1 | 2026-01-01 .. 2026-04-01 | 348 | 2025-12-29 |
+| F2 | 2026-04-01 .. 2026-07-01 | 352 | 2026-03-29 |
+| F3 | 2026-07-01 .. 2026-09-30 | 352 | 2026-06-29 |
 
-6,315 origins × 72 = 454,680 rows. Origins whose 72h window straddles a boundary (the 71 origins before each period start) are in no period.
-Rank = overall MSE over F1 + F2 + F3. The board also shows F1, F2 and F3 MSE, and the same four MSEs over targets whose true speed
-is ≥ 550 km/s (`MSE ≥550`, `F1 ≥550`, `F2 ≥550`, `F3 ≥550`; forward-filled targets count, as in `MSE`). Regime columns are diagnostic
-and now cover F2 + F3 (the thresholds were frozen on the 2026-06-01..09-29 folds).
+**Rank = Total S, lower is better.** The board shows S, TIMSE and RMSE for Total and each quarter, plus a GitHub-hosted image of their 72 lead-specific curves. Each numeric column averages 72 lead values equally. Total pools the three quarters separately at each lead before calculating metrics, rather than averaging quarter scores.
+
+At each lead, observation-only linear quantiles define exactly 100 percentile intervals. TIMSE is the velocity-width-weighted integral of conditional tail MSE, divided by the observation range. `S = sqrt(RMSE * sqrt(TIMSE))`. S and RMSE have units km/s; displayed TIMSE remains in (km/s)², not TRMSE.
+
+Truth comes from NASA monthly hourly ACE/SWEPAM files: status 0, finite positive bulk speed. Missing truth is excluded without reconstruction. Missing, nonfinite or nonpositive model predictions use the latest valid observation **at or before** the issue time. Hover metrics to see persistence replacement rates and mean forecast bias. Duplicate keys, malformed timestamps/leads and undefined metrics are rejected.
+
+The private dataset freezes `competition-observations.parquet` and `competition-provenance.json` with source hashes. New scores are stored under `competition`, version `lead-timse-6h-v1`, with Total/F1/F2/F3 summaries and complete `by_lead` values. Existing hourly predictions remain accepted; nonselected hourly origins are ignored. Existing evaluation parquets, predictions and historical MSE diagnostics are retained.
+
+Images are published under `leaderboard/assets/metrics/` on GitHub main via a small commit based on the remote head; the board uses commit-pinned raw URLs. Future live submissions need GitHub write credentials (`GH_TOKEN`, `GITHUB_TOKEN`, or a git credential helper) as well as HF credentials. Dry runs upload nothing.
+
+To preview and migrate stored submissions:
+
+```bash
+/home/t-lab01/sunrun/.venv/bin/python leaderboard/lb-maint/migrate_competition.py --out data-v2/metric/leaderboard-v1
+# After reviewing preview.html, apply scores, GitHub images and the HF page:
+/home/t-lab01/sunrun/.venv/bin/python leaderboard/lb-maint/migrate_competition.py --out data-v2/metric/leaderboard-v1 --apply
+/home/t-lab01/sunrun/.venv/bin/python leaderboard/lbstatus.py sync
+```
+
+The migration backs up source results and forecasts at a pinned dataset revision, preserves old metric fields, and commits new scores under a dataset-head lease. Results without stored forecasts remain visible as unscored. Missing forecast hours within available submissions receive persistence, including historical missing intervals.
 
 **Training cutoffs:** predictions for a period must come from a model trained (and tuned) only on data before
 **period start − 72h**: 2025-12-29, 2026-03-29 and 2026-06-29 00:00 UTC for F1, F2 and F3. Declare each in `meta.yaml`
 (`f1_/f2_/f3_training_data_end_utc`, ≤ that time); `submit.py` rejects later values. Like `no_future_leakage`, this is an honour statement.
 
-**Earlier results (rescored 2026-10-31):** results submitted under the old windows (F1 = 03..05, F2 = 06..09) were rescored from their
-stored predictions on the new folds; the old scores are kept in each record as `legacy_f1f2`. Those predictions start in March and skip the
-origins of 2026-05-29..05-31, so their F1 is only about a third covered and F2 lacks those 3 days (`coverage_f1/f2/f3` in the record).
-They are listed below the complete rows as `no F1`, sorted by pooled F2 + F3 MSE, with F1 and the overall MSE hidden, until they are
-resubmitted with predictions for all 6,315 origins (`--replace` keeps the same key). A result that could not be rescored shows as `legacy`.
+**Historical scores:** pre-migration MSE and event diagnostics remain in stored result records for reproducibility, but do not determine the current ranking. Historical submissions are evaluated on the same fixed six-hour grid using the persistence replacement rule above.
 
 - Private data store (truth, folds, results): `tlabtlab/sunrun-lb-store`
 - Leaderboard page: https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard (private; needs an HF login of an org member).
@@ -44,13 +56,14 @@ are stored in the dataset and the leaderboard page is regenerated.
 
 **predictions** (`.parquet` or `.csv`): one row per (origin, horizon), columns
 `origin_last_input_utc` (e.g. `2026-06-01T05:00:00Z`, the last timestamp your model may use),
-`horizon_hours` (1..72), `pred_kms`. Every origin/horizon of the evaluation set (F1 and F2) must be present exactly once.
+`horizon_hours` (1..72), `pred_kms`. Keys must be unique; omitted required predictions are replaced with causal persistence.
 List the origins from the dataset:
 ```python
 import pandas as pd
 from huggingface_hub import hf_hub_download
 folds = pd.read_parquet(hf_hub_download("tlabtlab/sunrun-lb-store", "folds.parquet", repo_type="dataset"))
-origins = folds["origin_last_input_utc"]   # `period` is F1 or F2; ignore the regime columns
+origins = pd.to_datetime(folds["origin_last_input_utc"], utc=True)
+origins = origins[origins.dt.hour.mod(6).eq(0)]  # the six-hour scoring subset
 ```
 
 **meta.yaml**: see `meta.example.yaml`. `no_future_leakage: true` means only data with timestamp ≤ `origin_last_input_utc`
@@ -71,6 +84,24 @@ scripts/<team_member>/<experiment>/<config_sha256>.py
 `--dry-run` checks the local path. A real submission checks that the script is already available on this repository's
 `main` branch, so push the script before uploading the result. Existing entries without config, timing, or code metadata
 remain visible as `legacy` records.
+
+**The board's `code` column links the architecture, not that replay script.** `meta.yaml` must also carry
+`architecture_url`: the study source that defines the model, pinned to a commit, e.g.
+`https://github.com/TLAB-HGU/sunrun-leaderboard/blob/6b85acc0b00d731bf31b6885e0b847c18ee395d0/research/e2000fs_f123-20261031/qxgb.py`
+(optionally `#Lx-Ly`). Publish the study directory first, then submit: `submit.py` rejects a URL on a branch instead of a
+commit, a directory, and the `scripts/<member>/<experiment>/<config_sha256>.py` replay script itself. It records the link
+in the result (`architecture_url`) and writes the matching entry to the Space's `architecture-code.json` in the same
+commit as the page, so a new row is published as `architecture` and never needs hand curation:
+
+```bash
+python architecture_code.py check                  # ranking rows whose code cell is not an architecture link (exit 1)
+python architecture_code.py add <member> <exp> <config_sha256> <url>   # repair an older row
+python architecture_code.py publish                # upload the mapping and rewrite the code cells
+python architecture_code.py verify                 # every mapped URL answers 200
+```
+
+`lbstatus.py sync` reports any row that is still on a replay script, and `lbstatus.py` re-applies the mapping whenever it
+rewrites the page.
 
 To intentionally replace an existing result with the same three-part key:
 ```bash

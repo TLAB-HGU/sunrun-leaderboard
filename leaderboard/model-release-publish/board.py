@@ -7,14 +7,20 @@ from __future__ import annotations
 
 import html
 import json
+import math
 import re
 from pathlib import Path
 
 REGIMES = [f"{t}_{s}_{f}" for t in ("low", "high") for s in ("low", "high") for f in ("low", "high")]
 
 HIGHER_IS_BETTER = re.compile(r"^(CSI|skill vs naive)$")
-# sec/fold, end-to-end (h) and config are cost or identity, not skill; the regime columns of older pages were skill.
+# sec/fold and end-to-end (h) are cost, not skill; the regime columns of older pages were skill.
 LOWER_IS_BETTER = re.compile(r"MSE|MAE|≥\d+|^(low|high)_(low|high)_(low|high)$")
+COMPETITION_VERSION = "lead-timse-6h-v1"
+METRIC_COLUMNS = [f"{scope} {metric}" for scope in ("Total", "F1", "F2", "F3")
+                  for metric in ("S", "TIMSE", "RMSE")]
+BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "member", "sec/fold", "end-to-end (h)", "code"]
+CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 
 CSS = """
 :root{--bg:#fff;--fg:#1c1c1e;--mut:#6b6b70;--line:#e3e3e6;--acc:#2b6cb0;--ok:#1a7f4b;--bad:#b3261e;--head:#f6f6f8}
@@ -25,15 +31,109 @@ main{max-width:1200px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}p.sub{color
 th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
 th{background:var(--head);cursor:pointer;position:sticky;top:0;user-select:none}th:hover{color:var(--acc)}
 td.l,th.l{text-align:left}tr:last-child td{border-bottom:0}.ok{color:var(--ok);font-weight:600}.no{color:var(--mut)}
+.lead-curves{display:block;width:160px;height:160px;object-fit:contain;background:white;border-radius:4px}
 .dash{color:var(--mut)}footer{color:var(--mut);font-size:12.5px;margin-top:14px}code{font-size:12.5px}
 """
 
 JS = """
 document.querySelectorAll('th').forEach((th,i)=>th.addEventListener('click',()=>{
+ if(th.dataset.sortable==='0')return;
  const tb=th.closest('table').tBodies[0],rows=[...tb.rows],asc=th.dataset.asc!=='1';th.dataset.asc=asc?'1':'0';
- const v=r=>{const t=r.cells[i].dataset.v??r.cells[i].textContent;const n=parseFloat(t);return isNaN(n)?t:n};
- rows.sort((a,b)=>{const x=v(a),y=v(b);return (x>y?1:x<y?-1:0)*(asc?1:-1)});rows.forEach(r=>tb.appendChild(r))}));
+ const v=r=>{const t=(r.cells[i].dataset.v??r.cells[i].textContent).trim();
+  if(!t||t==='–')return null;const n=Number(t);return Number.isFinite(n)?n:t};
+ rows.sort((a,b)=>{const ap=a.cells[0].textContent.trim()==='',bp=b.cells[0].textContent.trim()==='';
+  if(ap!==bp)return ap?-1:1;const x=v(a),y=v(b);if(x===null||y===null)return x===y?0:x===null?1:-1;
+  return (x>y?1:x<y?-1:0)*(asc?1:-1)});rows.forEach(r=>tb.appendChild(r))}));
 """
+
+
+def ranking(page: str) -> tuple[int, int, list[tuple[str, str]]] | None:
+    """(start, stop, [(header label, header class)]) of the ranking table: the first <table> of a published page.
+    lbstatus.py edits the rows and columns through it, so both sides agree on what the ranking table is."""
+    start = page.find("<table>")
+    stop = page.find("</table>", start)
+    if start < 0 or stop < 0 or "<tbody>" not in page[start:stop]:
+        return None
+    head = page[start:stop].split("<tbody>", 1)[0]
+    cols = []
+    for attrs, inner in re.findall(r"<th(\s[^>]*)?>(.*?)</th>", head, re.S):
+        cls = re.search(r'class="([^"]*)"', attrs or "")
+        cols.append((html.unescape(re.sub(r"<[^>]+>", "", inner)).strip(), cls.group(1) if cls else ""))
+    return start, stop, cols
+
+
+def apply_architecture_links(page: str, mapping: dict) -> str:
+    """Replace code links only for an exact member, experiment, and full config SHA.
+
+    The SHA comes from the code cell's `data-config` attribute (the board no longer publishes a config column) or, on
+    a page an older client rendered, from that column; a row still linking its replay script is identified by its path."""
+    models = {(e["member"], e["experiment"], e["config_sha256"]): e["url"]
+              for e in mapping.get("models", [])}
+    found = ranking(page)
+    if not models or not found:
+        return page
+    start, stop, cols = found
+    labels = [label for label, _ in cols]
+    if not all(label in labels for label in ("experiment", "member", "code")):
+        return page
+    experiment_col, member_col, code_col = (labels.index(label) for label in ("experiment", "member", "code"))
+
+    def replace_link(match):
+        row = match.group(0)
+        cells = list(CELL.finditer(row))
+        if len(cells) != len(cols):
+            return row
+        text = lambda cell: html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
+        member, experiment = text(cells[member_col]), text(cells[experiment_col])
+        cell = cells[code_col]
+        tag = re.search(r'data-config="([0-9a-f]{64})"', cell.group(1) or "")
+        config = tag.group(1) if tag else None
+        if config is None and "config" in labels:  # a page published before the config column was retired
+            title = re.search(r'title="([0-9a-f]{64})"', cells[labels.index("config")].group(1) or "")
+            if title:
+                config = title.group(1)
+        if config is None:
+            href = re.search(r'href="([^"]+)"', cell.group(2))
+            if href:
+                path = rf"/scripts/{re.escape(member)}/{re.escape(experiment)}/([0-9a-f]{{64}})\.py(?:[?#]|$)"
+                script = re.search(path, html.unescape(href.group(1)))
+                if script:
+                    config = script.group(1)
+        url = models.get((member, experiment, config))
+        if url is None:
+            return row
+        link = f'<a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">architecture</a>'
+        return row[:cell.start(2)] + link + row[cell.end(2):]
+
+    table = re.sub(r"<tr\b[^>]*>.*?</tr>", replace_link, page[start:stop], flags=re.S)
+    return page[:start] + table + page[stop:]
+
+
+def script_cells(page: str) -> list[tuple[str, str]]:
+    """(experiment, link or "") of every ranking row whose code cell is not an architecture link: the cells that
+    board.render labels "script" (or leaves empty), listed so a publish can report and repair them."""
+    found = ranking(page)
+    if found is None:
+        return []
+    start, stop, cols = found
+    labels = [label for label, _ in cols]
+    if not all(label in labels for label in ("experiment", "code")):
+        return []
+    experiment_col, code_col = labels.index("experiment"), labels.index("code")
+    out = []
+    for row in re.findall(r"<tr\b[^>]*>.*?</tr>", page[start:stop], flags=re.S):
+        cells = list(CELL.finditer(row))
+        if len(cells) != len(cols):
+            continue
+        text = lambda cell: html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
+        experiment = text(cells[experiment_col])
+        if re.search(r"\((진행|대기|완료|실패|중단)\)$", experiment):  # a status row carries dashes, not a code link
+            continue
+        if text(cells[code_col]) == "architecture":
+            continue
+        href = re.search(r'href="([^"]+)"', cells[code_col].group(2))
+        out.append((experiment, html.unescape(href.group(1)) if href else ""))
+    return out
 
 
 def _latest(results: list[dict]) -> list[dict]:
@@ -80,13 +180,27 @@ def end_to_end_hours(r: dict):
     return None if seconds is None else seconds / 3600
 
 
+def competition_metrics(r: dict) -> dict | None:
+    """Only complete, finite scores from the current metric version enter this ranking."""
+    metrics = r.get("competition")
+    if not isinstance(metrics, dict) or metrics.get("version") != COMPETITION_VERSION:
+        return None
+    for scope in ("total", "f1", "f2", "f3"):
+        values = metrics.get(scope)
+        if not isinstance(values, dict):
+            return None
+        for key in ("s", "timse", "rmse"):
+            value = values.get(key)
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                return None
+    return metrics
+
+
 def ranked(results: list[dict]) -> list[dict]:
-    """Complete F1+F2+F3 results by overall MSE, then results without a complete F1 by pooled F2+F3 MSE, then legacy ones."""
+    """Current six-hour competition results by Total S; unscored submissions follow without a rank."""
     rows = _latest(results)
-    partial = [r for r in rows if not has_f1(r) and not is_legacy(r)]
-    return (sorted([r for r in rows if has_f1(r)], key=lambda r: r["mse"])
-            + sorted(partial, key=f23_mse)
-            + sorted([r for r in rows if is_legacy(r)], key=lambda r: r["mse"]))
+    return sorted(rows, key=lambda r: (competition_metrics(r) is None,
+                                       (competition_metrics(r) or {}).get("total", {}).get("s", math.inf)))
 
 
 def _num(x, d=1):
@@ -96,6 +210,8 @@ def _num(x, d=1):
 def mark_sign(label: str) -> int:
     """+1 for a lower-is-better skill column, -1 for a higher-is-better one, 0 for rank, identity and cost columns.
     `leader_marks` ranks a column by `sign * value` ascending, so its first two distinct values are the best two."""
+    if label in METRIC_COLUMNS:
+        return 1
     if HIGHER_IS_BETTER.search(label):
         return -1
     return 1 if LOWER_IS_BETTER.search(label) else 0
@@ -117,79 +233,104 @@ def leader_marks(values: list[list[float | None]], head: list[str]) -> dict[tupl
     return marks
 
 
-def render(results: list[dict], note: str = "") -> str:
-    policy_path = Path(__file__).resolve().parent / "visibility.json"
-    if not policy_path.exists():
-        policy_path = policy_path.parent.parent / "visibility.json"
-    policy = json.loads(policy_path.read_text()) if policy_path.exists() else {}
+def architecture_mapping(architecture: dict | None = None) -> dict:
+    """`architecture-code.json` (member, experiment, full config SHA) -> architecture source, or the given mapping."""
+    if architecture is not None:
+        return architecture
     architecture_path = Path(__file__).resolve().parent / "architecture-code.json"
     if not architecture_path.exists():
         architecture_path = architecture_path.parent.parent / "architecture-code.json"
-    architecture = json.loads(architecture_path.read_text()) if architecture_path.exists() else {}
-    architecture_urls = {(e["member"], e["experiment"], e["config_sha256"]): e["url"]
-                         for e in architecture.get("models", [])}
+    return json.loads(architecture_path.read_text()) if architecture_path.exists() else {}
+
+
+def architecture_urls(architecture: dict | None = None) -> dict[tuple[str, str, str], str]:
+    return {(e["member"], e["experiment"], e["config_sha256"]): e["url"]
+            for e in architecture_mapping(architecture).get("models", [])}
+
+
+def code_link(r: dict, architecture: dict | None = None) -> tuple[str | None, str]:
+    """(url, label) of the `code` cell: the study code that defines the architecture, never the submitted replay
+    script when an architecture link is known. The mapping wins over the result's own `architecture_url`; a row with
+    neither falls back to its recorded `code_url`, labelled script."""
+    url = architecture_urls(architecture).get((r["team_member"], r["experiment"], r.get("config_sha256")))
+    url = url or r.get("architecture_url")
+    return (url, "architecture") if url else (r.get("code_url"), "script")
+
+
+def visibility_policy() -> dict:
+    """`visibility.json`: the rows hidden from the ranking (hidden) and the experiment names shown in bold. Every
+    publish renders with it, and lbstatus.py re-applies it when it rewrites a page."""
+    policy_path = Path(__file__).resolve().parent / "visibility.json"
+    if not policy_path.exists():
+        policy_path = policy_path.parent.parent / "visibility.json"
+    return json.loads(policy_path.read_text()) if policy_path.exists() else {}
+
+
+def render(results: list[dict], note: str = "", architecture: dict | None = None) -> str:
+    policy = visibility_policy()
+    architecture = architecture_mapping(architecture)
     hidden = {(e["member"], e["experiment"]) for e in policy.get("hidden", [])}
     bold = {(e["member"], e["experiment"]) for e in policy.get("bold", [])}
     rows = [r for r in ranked(results) if (r["team_member"], r["experiment"]) not in hidden]
-    head = ["#", "experiment",
-            "MSE", "F1 MSE", "F2 MSE", "F3 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550", "F3 ≥550",
-            "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive",
-            "member", "sec/fold", "config", "end-to-end (h)", "code"]
-    th = "".join(f'<th class="{"l" if i in (1, 14, 16, 18) else ""}">{html.escape(h)}</th>' for i, h in enumerate(head))
-    table: list[list[tuple[str, str, float | None]]] = []  # (cell attributes, cell html, value for the leader marks)
+    head = BOARD_COLUMNS
+    left = {"experiment", "member", "code", "lead curves"}
+    th = "".join(f'<th class="{"l" if h in left else ""}"'
+                 + (' data-sortable="0"' if h == "lead curves" else '')
+                 + f'>{html.escape(h)}</th>' for h in head)
+    table: list[list[tuple[str, str, float | None]]] = []
     rank_no = 0
     for r in rows:
-        full, legacy = has_f1(r), is_legacy(r)
-        rank_no += full
-        if full:
+        metrics = competition_metrics(r)
+        if metrics is not None:
+            rank_no += 1
             rank, rank_attrs = str(rank_no), ""
-        elif legacy:
-            rank = "legacy"
-            rank_attrs = ' data-v="99999" title="scored on the pre-2026-10-31 windows (F1 03..05, F2 06..09); resubmit to be ranked on F1-F3"'
         else:
-            rank = "no F1"
-            rank_attrs = ' data-v="9999" title="rescored from earlier predictions: F1 (2026-01..03) is mostly missing and F2 lacks the origins of 05-29..05-31, so F1 and the overall values are not shown; listed by pooled F2+F3 MSE; resubmit complete F1-F3 predictions to be ranked"'
-        keys = ("mse", "mse_f1", "mse_f2", "mse_f3", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550", "mse_f3_ge550")
-        metrics = [None if legacy else r.get(k) for k in keys]
-        if not full and not legacy:  # an incomplete F1 and the overall values that include it are not shown
-            for i in (0, 1, 4, 5):
-                metrics[i] = None
-        csi, tmae, bias = (event_value(r, k) for k in ("csi", "timing_mae_h", "timing_bias_h"))
-        bias_title = "" if bias is None else f"mean timing error {bias:+.1f} h (+ = forecast peak late)"
-        e2e = end_to_end_hours(r)
-        e2e_title = html.escape((r.get("extras") or {}).get("end_to_end_note", ""), quote=True)
-        skill = None if legacy else (r.get("skill_vs_naive") or 0)
+            rank = "unscored"
+            rank_attrs = ' data-v="999999" title="No complete score under the current six-hour evaluation metric"'
         experiment_name = html.escape(r["experiment"])
         if (r["team_member"], r["experiment"]) in bold:
             experiment_name = f'<strong class="lb-experiment">{experiment_name}</strong>'
-        config_sha = r.get("config_sha256")
-        config_label = config_sha[:12] if config_sha else "legacy"
-        seconds = r.get("inference_seconds_per_fold")
-        architecture_url = architecture_urls.get((r["team_member"], r["experiment"], config_sha))
-        code_url = architecture_url or r.get("code_url")
-        code_label = "architecture" if architecture_url else "script"
+        cells = [(rank_attrs, rank, None), (' class="l"', experiment_name, None)]
+        for scope in ("total", "f1", "f2", "f3"):
+            values = metrics[scope] if metrics else {}
+            tip = []
+            if values.get("replacement_fraction") is not None:
+                tip.append(f'Persistence replacements: {values["replacement_fraction"]:.2%} of valid pairs')
+            if values.get("bias") is not None:
+                tip.append(f'Mean forecast bias: {values["bias"]:+.2f} km/s')
+            title = html.escape("; ".join(tip), quote=True)
+            for key in ("s", "timse", "rmse"):
+                value = values.get(key)
+                attrs = f' data-v="{"" if value is None else value}" title="{title}"'
+                cells.append((attrs, _num(value, 2), value))
+        plot_url = r.get("metric_plot_url") if metrics else None
+        # Every published image is immutable and hosted alongside the reproducible source.
+        if plot_url and re.fullmatch(r"https://raw\.githubusercontent\.com/TLAB-HGU/sunrun-leaderboard/[0-9a-f]{40}/leaderboard/assets/metrics/[^?#]+\.png", plot_url):
+            url = html.escape(plot_url, quote=True)
+            alt = html.escape(f'{r["experiment"]}: S, TIMSE and RMSE by lead, Total and F1–F3', quote=True)
+            plot = (f'<a href="{url}" target="_blank" rel="noopener" title="Open full-size lead curves">'
+                    f'<img class="lead-curves" src="{url}" alt="{alt}" loading="lazy" width="160" height="160"></a>')
+        else:
+            plot = '<span class="dash">–</span>'
+        seconds, e2e = r.get("inference_seconds_per_fold"), end_to_end_hours(r)
+        e2e_title = html.escape((r.get("extras") or {}).get("end_to_end_note", ""), quote=True)
+        code_url, code_label = code_link(r, architecture)
         code = (f'<a href="{html.escape(code_url, quote=True)}" target="_blank" rel="noopener">{code_label}</a>'
                 if code_url else '<span class="dash">–</span>')
-        table.append([
-            (rank_attrs, rank, None),
-            (' class="l"', experiment_name, None),
-            *((f' data-v="{"" if x is None else x}"', _num(x), x) for x in metrics),
-            (f' data-v="{"" if csi is None else csi}"', _num(csi, 3), csi),
-            (f' data-v="{"" if tmae is None else tmae}" title="{bias_title}"', _num(tmae), tmae),
-            ("", _num(r.get("mse_observed")), r.get("mse_observed")) if not legacy else ("", _num(None), None),
-            (f' data-v="{"" if skill is None else skill}"', '<span class="dash">–</span>' if skill is None else f"{skill:+.1%}", skill),
+        cells.extend([
+            (' class="l"', plot, None),
             (' class="l"', html.escape(r["team_member"]), None),
             (f' data-v="{seconds if seconds is not None else ""}"', _num(seconds, 6), None),
-            (f' class="l" title="{html.escape(config_sha or "legacy")}"', f"<code>{config_label}</code>", None),
             (f' data-v="{"" if e2e is None else e2e}" title="{e2e_title}"', _num(e2e, 2), None),
-            (' class="l"', code, None),
+            (f' data-config="{html.escape(r.get("config_sha256") or "")}" class="l"', code, None),
         ])
+        table.append(cells)
     marks = leader_marks([[value for _, _, value in cells] for cells in table], head)
     body = []
     for i, cells in enumerate(table):
         tds = []
         for col, (attrs, inner, _) in enumerate(cells):
-            if place := marks.get((i, col)):  # best column value in bold, second best underlined
+            if place := marks.get((i, col)):
                 tag = "b" if place == 1 else "u"
                 inner = f'<{tag} class="lb-{place}">{inner}</{tag}>'
             tds.append(f"<td{attrs}>{inner}</td>")
@@ -197,21 +338,22 @@ def render(results: list[dict], note: str = "") -> str:
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Solar wind 72h leaderboard</title><style>{CSS}</style></head><body><main>
 <h1>Solar wind 72h leaderboard</h1>
-<p class="sub">Hourly origins, 72h windows. <b>F1</b> targets 2026-01-01 00:00 .. 2026-03-31 23:00 UTC (2,089 folds),
-<b>F2</b> targets 2026-04-01 00:00 .. 2026-06-30 23:00 UTC (2,113 folds), <b>F3</b> targets 2026-07-01 00:00 .. 2026-09-29 23:00 UTC (2,113 folds).
-Rank = MSE over F1 + F2 + F3. Lower MSE (km/s)² is better. {html.escape(note)}</p>
+<p class="sub">Forecasts issued every 6 hours at 00, 06, 12 and 18 UTC; leads 1–72h.
+<b>F1</b>: targets 2026-01-01 .. 03-31; <b>F2</b>: 2026-04-01 .. 06-30; <b>F3</b>: 2026-07-01 .. 09-29.
+Only forecasts whose full 72h window lies within one period are evaluated. Rank = <b>Total S</b>, lower is better. {html.escape(note)}</p>
 <div class="wrap"><table><thead><tr>{th}</tr></thead><tbody>{"".join(body)}</tbody></table></div>
-<footer>Rank = overall MSE over F1 + F2 + F3 (counts forward-filled targets, same as the baseline study). <b>≥550</b> columns score only targets whose true speed is ≥ 550 km/s.
-Predictions for F1, F2 and F3 must come from models trained on data before 2025-12-29, 2026-03-29 and 2026-06-29 00:00 UTC respectively.
-<b>no F1</b> rows were rescored from earlier predictions that start in March and skip the origins of 2026-05-29..05-31, so their F1 is incomplete and F2 misses those 3 days: F1 and the overall values are not shown, they are listed below the ranking by pooled F2+F3 MSE,
-and their CSI / timing are F2 values. <b>legacy</b> rows could not be rescored and keep no values. <b>MSE obs.</b> scores only originally observed targets.
-<b>CSI</b> (threat score) = TP / (TP + FP + FN) for HSS events in each 72h window: a run of hours ≥ 550 km/s (quiet gaps ≤ 6h merged; runs touching
-hour 1 or 72 are not counted), forecast and true peaks matched one-to-one within 12h, summed over all windows. <b>timing MAE</b> = mean |forecast − true
-peak hour| of matched events (hover: signed bias, + = late). Both are diagnostic; rows without a complete F1 show F2 values.
-<b>end-to-end (h)</b> = wall-clock compute from training through the submitted F1 + F2 + F3 forecasts, as reported by the submitter
-(optional, shown only where provided; hover for its scope). In every skill column the best value is <b>bold</b> and the
-second best <u>underlined</u> (ties share the mark); sec/fold, end-to-end (h) and the ranking columns are not marked.
-Click a header to sort.<br>Generated from {len(results)} scored submissions.</footer>
+<footer>Each displayed S, TIMSE and RMSE is the arithmetic mean of its 72 lead-specific values.
+Total pools F1–F3 observations separately at each lead before computing the metrics.
+S = √(RMSE × √TIMSE); S and RMSE are in km/s, TIMSE in (km/s)².
+TIMSE uses 100 observation-percentile intervals with velocity-width weighting, recomputed at each lead.
+Missing observations are excluded without filling. Missing or invalid predictions use the latest valid observation at or before issue time;
+hover over metrics for persistence replacement rates and mean forecast bias.
+Predictions for F1, F2 and F3 use training data before 2025-12-29, 2026-03-29 and 2026-06-29 00:00 UTC respectively.
+Legacy submissions without a complete current score are marked <b>unscored</b> and excluded from the ranking.
+Click a lead-curve image to open its full-size GitHub-hosted version.
+<b>end-to-end (h)</b> is the submitter-reported wall-clock time from training through forecast production (hover for scope).
+In each metric column the best value is <b>bold</b> and the second best <u>underlined</u>; ties share marks.
+Click a numeric or identity header to sort.<br>Generated from {len(results)} scored submissions.</footer>
 </main><script>{JS}</script></body></html>"""
 
 

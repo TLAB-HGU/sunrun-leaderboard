@@ -33,7 +33,7 @@ import sys
 import threading
 import time
 
-from board import mark_sign  # the column rule both the publisher and this tool apply
+from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, CELL, apply_architecture_links, mark_sign, ranking as _ranking, script_cells
 
 SPACE = "tlabtlab/sunrun-leaderboard"
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -51,11 +51,8 @@ ALIASES = {"queued": "대기", "waiting": "대기", "pending": "대기", "runnin
 SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
 DEFAULT_MEMBER = os.environ.get("SUNRUN_MEMBER", "seongeun")
 FINISHED_KEPT = 300
-BOARD_COLUMNS = frozenset({  # every column board.py publishes; anything else is a retired column
-    "#", "experiment", "member", "sec/fold", "MSE", "F1 MSE", "F2 MSE", "F3 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550", "F3 ≥550",
-    "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive", "config", "end-to-end (h)", "code"})
+BOARD_COLUMNS = frozenset(CURRENT_BOARD_COLUMNS)
 LEADER_MARK = re.compile(r'<(b|u) class="lb-[12]">(.*?)</\1>', re.S)
-CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 
 
 def now() -> str:
@@ -141,38 +138,35 @@ def leaderboard_submissions(entries: list[dict], dataset: str = DATASET) -> dict
     return latest
 
 
-def _ranking(page: str) -> tuple[int, int, list[tuple[str, str]]] | None:
-    """(start, stop, [(header label, header class)]) of the ranking table, the first <table> on the page."""
-    start = page.find("<table>")
-    stop = page.find("</table>", start)
-    if start < 0 or stop < 0 or "<tbody>" not in page[start:stop]:
-        return None
-    head = page[start:stop].split("<tbody>", 1)[0]
-    cols = []
-    for attrs, inner in re.findall(r"<th(\s[^>]*)?>(.*?)</th>", head, re.S):
-        cls = re.search(r'class="([^"]*)"', attrs or "")
-        cols.append((html.unescape(re.sub(r"<[^>]+>", "", inner)).strip(), cls.group(1) if cls else ""))
-    return start, stop, cols
-
-
 def trim_ranking_columns(page: str) -> str:
-    """Drop columns no publisher ships any more (e.g. the retired regime table), keeping every current column
-    wherever the board places it: config, end-to-end (h) and code sit after skill vs naive."""
+    """Drop columns no publisher ships any more (e.g. the retired regime table or config column), keeping every
+    current column wherever the board places it. A dropped config
+    column hands its SHA to the code cell's `data-config`, so the row's architecture link stays rewritable."""
     ranking = _ranking(page)
     if ranking is None:
         return page
     start, stop, cols = ranking
+    labels = [label for label, _ in cols]
     drop = {i for i, (label, _) in enumerate(cols) if label not in BOARD_COLUMNS}
     if not drop:
         return page
     keep = [i for i in range(len(cols)) if i not in drop]
+    code_col = labels.index("code") if "code" in labels else None
+    config_col = labels.index("config") if "config" in labels else None
+    move_config = code_col is not None and config_col in drop and code_col in keep
 
     def trim_row(match):
         row = match.group(0)
         cells = list(re.finditer(r"<t[hd]\b[^>]*>.*?</t[hd]>", row, re.S))
         if len(cells) != len(cols):
             return row
-        return row[:cells[0].start()] + "".join(cells[i].group(0) for i in keep) + row[cells[-1].end():]
+        parts = [cells[i].group(0) for i in keep]
+        if move_config and "data-config=" not in parts[keep.index(code_col)]:
+            sha = re.search(r'title="([0-9a-f]{64})"', cells[config_col].group(0))
+            if sha:
+                at = keep.index(code_col)
+                parts[at] = re.sub(r"^<td", f'<td data-config="{sha.group(1)}"', parts[at], count=1)
+        return row[:cells[0].start()] + "".join(parts) + row[cells[-1].end():]
 
     table = re.sub(r"<tr\b[^>]*>.*?</tr>", trim_row, page[start:stop], flags=re.S)
     return page[:start] + table + page[stop:]
@@ -237,49 +231,6 @@ def bold_experiment_names(page: str, visibility: dict) -> str:
         return row[:cell.start(2)] + inner + row[cell.end(2):]
 
     table = re.sub(r"<tr\b[^>]*>.*?</tr>", emphasize, page[start:stop], flags=re.S)
-    return page[:start] + table + page[stop:]
-
-
-def apply_architecture_links(page: str, mapping: dict) -> str:
-    """Replace code links only for an exact member, experiment, and full config SHA."""
-    models = {(e["member"], e["experiment"], e["config_sha256"]): e["url"]
-              for e in mapping.get("models", [])}
-    found = _ranking(page)
-    if not models or not found:
-        return page
-    start, stop, cols = found
-    labels = [label for label, _ in cols]
-    if not all(label in labels for label in ("experiment", "member", "code")):
-        return page
-    experiment_col, member_col, code_col = (labels.index(label) for label in ("experiment", "member", "code"))
-
-    def replace_link(match):
-        row = match.group(0)
-        cells = list(CELL.finditer(row))
-        if len(cells) != len(cols):
-            return row
-        text = lambda cell: html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
-        member, experiment = text(cells[member_col]), text(cells[experiment_col])
-        config = None
-        if "config" in labels:
-            title = re.search(r'title="([0-9a-f]{64})"', cells[labels.index("config")].group(1) or "")
-            if title:
-                config = title.group(1)
-        cell = cells[code_col]
-        if config is None:
-            href = re.search(r'href="([^"]+)"', cell.group(2))
-            if href:
-                path = rf"/scripts/{re.escape(member)}/{re.escape(experiment)}/([0-9a-f]{{64}})\.py(?:[?#]|$)"
-                script = re.search(path, html.unescape(href.group(1)))
-                if script:
-                    config = script.group(1)
-        url = models.get((member, experiment, config))
-        if url is None:
-            return row
-        link = f'<a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">architecture</a>'
-        return row[:cell.start(2)] + link + row[cell.end(2):]
-
-    table = re.sub(r"<tr\b[^>]*>.*?</tr>", replace_link, page[start:stop], flags=re.S)
     return page[:start] + table + page[stop:]
 
 
@@ -433,6 +384,25 @@ def commit(mutate, space: str = SPACE, message: str = "Update experiment status"
     raise RuntimeError("unreachable")
 
 
+def warn_script_cells(space: str = SPACE) -> list[tuple[str, str]]:
+    """Report ranking rows whose code cell is not an architecture link: a published page must not expose a replay
+    script. Fix them with `architecture_code.py add ... && architecture_code.py publish`."""
+    from huggingface_hub import HfApi
+    try:
+        revision = HfApi().repo_info(space, repo_type="space").sha
+        rows = script_cells(_space_file(space, "index.html", revision) or "")
+    except Exception as exc:  # a report only; never fail the sync that called it
+        print(f"lbstatus: WARNING could not check the code column: {exc}", file=sys.stderr)
+        return []
+    for experiment, link in rows:
+        print(f"lbstatus: WARNING code cell without an architecture link: {experiment} ({link or 'no link'})",
+              file=sys.stderr)
+    if rows:
+        print("lbstatus: repair with: architecture_code.py add <member> <experiment> <config_sha256> <url> "
+              "&& architecture_code.py publish", file=sys.stderr)
+    return rows
+
+
 def _print(entries: list[dict]) -> None:
     rows = sorted(entries, key=lambda e: (e["status"] not in ACTIVE, ACTIVE.index(e["status"]) if e["status"] in ACTIVE else 0,
                                           e["updated_utc"]))
@@ -520,6 +490,7 @@ def main(argv=None) -> int:
             return 0
         if a.action == "sync":
             changed = commit(lambda es: es, a.space, "Restore experiment status rows")
+            warn_script_cells(a.space)
         elif a.action == "rm":
             changed = commit(lambda es: remove(es, a.member, a.experiment), a.space, f"Remove {a.member}/{a.experiment}")
         else:

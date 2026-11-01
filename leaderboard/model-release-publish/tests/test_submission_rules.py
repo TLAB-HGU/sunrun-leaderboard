@@ -4,14 +4,17 @@ from pathlib import Path
 
 import pytest
 
-from board import _latest, load_results, ranked, render
-from submit import canonical_config, script_location, store_submission, validate_meta
+from board import _latest, code_link, load_results, ranked, render
+from submit import (architecture_location, canonical_config, publish, script_location, store_submission,
+                    validate_meta)
 
 
 CONFIG = {
     "data": {"source": "ace", "features": ["speed"]},
     "hyperparameters": {"tau": 48, "window": 648},
 }
+COMMIT = "1" * 40
+ARCHITECTURE = f"https://github.com/TLAB-HGU/sunrun-leaderboard/blob/{COMMIT}/research/mean_reversion/experiment.py"
 
 
 def meta(**overrides):
@@ -25,6 +28,7 @@ def meta(**overrides):
         "f3_training_data_end_utc": "2026-06-29T00:00:00Z",
         "config": CONFIG,
         "inference_seconds_per_fold": 0.001,
+        "architecture_url": ARCHITECTURE,
     }
     value.update(overrides)
     return value
@@ -130,93 +134,75 @@ def test_board_renders_new_and_legacy_metadata():
         {**metric, "experiment": "new", "config_sha256": "a" * 64,
          "inference_seconds_per_fold": 0.001234, "code_url": "https://example.com/code.py"},
     ])
-    assert "legacy" in page
+    assert ">unscored</td>" in page
     assert "0.001234" in page
     assert "https://example.com/code.py" in page
 
 
-def test_rows_without_a_complete_f1_rank_below_complete_rows_and_legacy_rows_last():
-    regimes = {name: {"mse": None, "reliable": False} for name in __import__("board").REGIMES}
-    base = {"team_member": "alice", "submitted_utc": "20261031T000000Z", "skill_vs_naive": 0.1,
-            "vs_naive": {"beats_reference": True}, "by_regime": regimes}
-    full = {"mse_f1": 5000.0, "mse_f2": 3000.0, "mse_f3": 3500.0, "mse_ge550": 9000.0, "mse_f1_ge550": 9500.0,
-            "mse_f2_ge550": 8500.0, "mse_f3_ge550": 8700.0}
-    partial = {"mse_f1": 100.0, "coverage_f1": 0.35, "coverage_f2": 1.0, "coverage_f3": 1.0, "mse_ge550": 9000.0,
-               "mse_f1_ge550": 100.0, "mse_f2_ge550": 8100.0, "mse_f3_ge550": 8300.0, "n_pairs_f2": 100, "n_pairs_f3": 300}
-    rows = [
-        {**base, "experiment": "legacy_good", "config_sha256": "a" * 64, "mse": 1000.0, "mse_f1": 700.0, "mse_f2": 900.0},
-        {**base, "experiment": "new_worse", "config_sha256": "b" * 64, "mse": 4100.0, **full},
-        {**base, "experiment": "new_better", "config_sha256": "c" * 64, "mse": 4000.0, **full},
-        {**base, "experiment": "march_start_good", "config_sha256": "d" * 64, "mse": 500.0, "mse_f2": 3000.0,
-         "mse_f3": 3400.0, **partial},
-        {**base, "experiment": "march_start_bad", "config_sha256": "e" * 64, "mse": 600.0, "mse_f2": 4000.0,
-         "mse_f3": 4400.0, **partial},
-    ]
-    assert [r["experiment"] for r in ranked(rows)] == [
-        "new_better", "new_worse", "march_start_good", "march_start_bad", "legacy_good"]
+def _competition(score):
+    return {"version": __import__("board").COMPETITION_VERSION, **{
+        scope: {"s": score, "timse": score * score, "rmse": score}
+        for scope in ("total", "f1", "f2", "f3")}}
+
+
+def test_current_scores_rank_by_total_s_and_old_results_remain_unscored():
+    base = {"team_member": "alice", "submitted_utc": "20261031T000000Z"}
+    rows = [{**base, "experiment": "old", "mse": 1.0},
+            {**base, "experiment": "second", "mse": 10.0, "competition": _competition(5.0)},
+            {**base, "experiment": "best", "mse": 100.0, "competition": _competition(2.0)}]
+    assert [r["experiment"] for r in ranked(rows)] == ["best", "second", "old"]
     page = render(rows)
-    assert (page.index("new_better") < page.index("new_worse") < page.index("march_start_good")
-            < page.index("march_start_bad") < page.index("legacy_good"))
-    assert "no F1" in page and "legacy" in page and "9,500.0" in page
-    # an incomplete F1 (March only) and the totals that include it are not shown; the pooled F2+F3 value orders the rows
-    assert "<td data-v=\"100.0\"" not in page and "<td data-v=\"500.0\"" not in page
-    assert '<td data-v="3000.0"><b class="lb-1">3,000.0</b></td>' in page
-    assert '<td data-v="700.0"' not in page and "900.0" not in page  # legacy values mean other windows: not shown
+    assert page.index('>best</td>') < page.index('>second</td>') < page.index('>old</td>')
+    assert '>unscored</td>' in page
+    assert '<th class="">MSE</th>' not in page
 
 
-def test_board_keeps_the_period_and_event_columns():
-    metric = {"team_member": "alice", "submitted_utc": "20260101T000000Z", "skill_vs_naive": 0.1, "mse_observed": 2.0}
-    full = {"mse_f1": 5000.0, "mse_f2": 3000.0, "mse_f3": 3300.0, "mse_ge550": 9000.0, "mse_f1_ge550": 9500.0,
-            "mse_f2_ge550": 8500.0, "mse_f3_ge550": 8800.0, "csi": 0.25, "timing_mae_h": 6.5, "timing_bias_h": -1.0}
-    page = render([
-        {**metric, "experiment": "old_windows", "config_sha256": "a" * 64, "mse": 1000.0},
-        {**metric, "experiment": "scored", "config_sha256": "b" * 64, "mse": 4000.0, **full,
-         "extras": {"end_to_end_seconds": 7200}},
-    ])
+def test_board_keeps_total_and_period_competition_columns():
+    metric = {"team_member": "alice", "submitted_utc": "20260101T000000Z"}
+    page = render([{**metric, "experiment": "scored", "competition": _competition(10.0),
+                    "extras": {"end_to_end_seconds": 7200}}])
     labels = re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
-    assert labels == ["#", "experiment",
-                      "MSE", "F1 MSE", "F2 MSE", "F3 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550", "F3 ≥550",
-                      "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive",
-                      "member", "sec/fold", "config", "end-to-end (h)", "code"]
-    assert page.index("scored") < page.index("old_windows") and "legacy" in page
-    assert all(text in page for text in ("9,500.0", "8,800.0", "3,300.0", "0.250", "6.5", "2.00"))
+    assert labels == ["#", "experiment", *[f"{p} {m}" for p in ("Total", "F1", "F2", "F3")
+                                           for m in ("S", "TIMSE", "RMSE")],
+                      "lead curves", "member", "sec/fold", "end-to-end (h)", "code"]
+    assert "10.00" in page and "100.00" in page and "2.00" in page
+
+
+def test_removed_config_column_keeps_the_row_identity_on_the_code_cell():
+    """No config column (user instruction 2026-11-01): the SHA rides on the code cell so its architecture link stays
+    rewritable, and no cell shows it."""
+    sha = "c" * 64
+    page = render([{"team_member": "alice", "experiment": "kept", "submitted_utc": "20260101T000000Z",
+                    "config_sha256": sha, "mse": 4000.0, "mse_f1": 5000.0, "mse_f2": 3000.0, "mse_f3": 3300.0}])
+    assert "config" not in re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
+    assert f'<td data-config="{sha}" class="l">' in page  # identity for architecture_code.py, not a visible cell
+    assert "<code>" not in page
 
 
 def test_every_publish_marks_the_best_and_second_best_of_each_skill_column():
-    """The page a publisher writes carries its own marks, so a leaderboard refresh no longer drops them."""
-    base = {"team_member": "alice", "submitted_utc": "20260101T000000Z", "mse_ge550": 9000.0,
-            "mse_f1_ge550": 9000.0, "mse_f2_ge550": 9000.0, "mse_f3_ge550": 9000.0}
-    page = render([
-        {**base, "experiment": name, "config_sha256": sha * 64, "mse": mse, "mse_f1": f1, "mse_f2": f2, "mse_f3": f2 + 100, "csi": csi,
-         "timing_mae_h": mae, "mse_observed": obs, "skill_vs_naive": skill, "inference_seconds_per_fold": cost,
-         "extras": {"end_to_end_seconds": e2e}}
-        for name, sha, mse, f1, f2, csi, mae, obs, skill, cost, e2e in (
-            ("best", "a", 4000.0, 5000.0, 3000.0, 0.3, 6.0, 3900.0, 0.5, 0.003, 7200),
-            ("second", "b", 4100.0, 5100.0, 3100.0, 0.2, 5.0, 4000.0, 0.4, 0.001, 3600),
-            ("third", "c", 4200.0, 5200.0, 3200.0, 0.1, 8.0, 4100.0, 0.3, 0.002, 1800))
-    ])
-    assert len(re.findall(r'<(b|u) class="lb-[12]">', page)) == 28  # 8 skill columns × 2 plus 4 ≥550 ties, so 12 + 8 + 8
-    assert '<td data-v="4000.0"><b class="lb-1">4,000.0</b></td>' in page   # lower is better: MSE, F1/F2 MSE
-    assert '<td data-v="4100.0"><u class="lb-2">4,100.0</u></td>' in page
-    assert '<td data-v="4200.0">4,200.0</td>' in page
-    assert page.count('<td data-v="9000.0"><b class="lb-1">9,000.0</b></td>') == 12  # 4 columns × 3-way ties share the best mark
-    assert '<td data-v="0.3"><b class="lb-1">0.300</b></td>' in page         # higher is better: CSI, skill
-    assert '<td data-v="0.2"><u class="lb-2">0.200</u></td>' in page
-    assert '<td data-v="5.0" title=""><b class="lb-1">5.0</b></td>' in page  # lower is better: timing MAE
-    assert '<td data-v="6.0" title=""><u class="lb-2">6.0</u></td>' in page
-    assert '<td data-v="0.001">0.001000</td>' in page and '<td data-v="1.0" title="">1.00</td>' in page  # cost
-    # A status write re-applies the same rule to the page a publisher wrote, so it never fights it. Only the
-    # canonical checkout ships lbstatus.py next to the board.
+    base = {"team_member": "alice", "submitted_utc": "20260101T000000Z"}
+    page = render([{**base, "experiment": name, "competition": _competition(score),
+                    "inference_seconds_per_fold": 0.001,
+                    "extras": {"end_to_end_seconds": 3600}}
+                   for name, score in (("best", 2.0), ("second", 3.0), ("third", 4.0))])
+    assert len(re.findall(r'<(b|u) class="lb-[12]">', page)) == 24
+    assert page.count('<b class="lb-1">2.00</b>') == 8
+    assert page.count('<u class="lb-2">3.00</u>') == 8
+    assert '<td data-v="0.001">0.001000</td>' in page
+    assert '<td data-v="1.0" title="">1.00</td>' in page
     assert pytest.importorskip("lbstatus").mark_leaders(page) == page
 
 
-
+def test_published_client_copies_are_synchronized():
     root = Path(__file__).resolve().parents[1]
     root = root if (root / "lb-f1f2").is_dir() else root.parent
     copies = [root / name / "board.py" for name in (".", "model-release-publish", "lb-f1f2", "lb-maint")]
     assert len({path.read_text() for path in copies}) == 1
     clients = [root / name / "submit.py" for name in (".", "model-release-publish", "lb-f1f2")]
     assert len({path.read_text() for path in clients}) == 1
+    # submit.py writes the code-column mapping on every submission, so every client carries that module too
+    mapping_writers = [root / name / "architecture_code.py" for name in (".", "model-release-publish", "lb-f1f2")]
+    assert len({path.read_text() for path in mapping_writers}) == 1
     scorers = [root / name / "scorer/scoring.py" for name in (".", "model-release-publish", "lb-f1f2", "lb-maint")]
     assert len({path.read_text() for path in scorers}) == 1
 
@@ -302,3 +288,83 @@ def test_extras_attach_to_matching_results_only(monkeypatch, tmp_path):
     rows = submit.with_extras(api, "repo", [result_record(), {**result_record(), "experiment": "other"}])
     assert rows[0]["extras"] == {"end_to_end_seconds": 60.0}
     assert "extras" not in rows[1]
+
+
+def test_architecture_link_is_required_and_must_be_a_pinned_study_source():
+    value = meta()
+    del value["architecture_url"]
+    with pytest.raises(SystemExit, match="architecture_url"):
+        validate_meta(value)
+    replay = script_location("alice", "mean_reversion", "a" * 64)[2].replace("/main/", f"/{COMMIT}/")
+    with pytest.raises(SystemExit, match="replay script"):
+        architecture_location(meta(architecture_url=replay))
+    for url in (f"https://github.com/TLAB-HGU/sunrun-leaderboard/blob/main/research/mean_reversion/experiment.py",
+                f"https://github.com/TLAB-HGU/sunrun-leaderboard/blob/{COMMIT}/research/mean_reversion/",
+                f"https://example.com/{COMMIT}/research/mean_reversion/experiment.py",
+                ""):
+        with pytest.raises(SystemExit, match="architecture_url"):
+            architecture_location(meta(architecture_url=url))
+    assert architecture_location(meta()) == ARCHITECTURE
+    assert architecture_location(meta(architecture_url=ARCHITECTURE + "#L1-L169")) == ARCHITECTURE + "#L1-L169"
+
+
+def test_code_cell_opens_the_architecture_and_never_the_replay_script():
+    script = script_location("alice", "mean_reversion", "a" * 64)[2]
+    row = {"team_member": "alice", "experiment": "mean_reversion", "config_sha256": "a" * 64,
+           "code_url": script, "architecture_url": ARCHITECTURE}
+    assert code_link(row) == (ARCHITECTURE, "architecture")
+    assert code_link({k: v for k, v in row.items() if k != "architecture_url"}) == (script, "script")
+    page = render([{**row, "submitted_utc": "20260101T000000Z", "mse": 2.0}])
+    assert f'href="{ARCHITECTURE}"' in page and ">architecture</a>" in page and script not in page
+
+
+def test_the_mapping_wins_over_the_recorded_link_and_matches_full_config_only():
+    script = script_location("alice", "mean_reversion", "a" * 64)[2]
+    mapped = ARCHITECTURE.replace("mean_reversion/experiment.py", "mean_reversion/lane.py")
+    mapping = {"models": [{"member": "alice", "experiment": "mean_reversion", "config_sha256": "a" * 64,
+                           "url": mapped}]}
+    row = {"team_member": "alice", "experiment": "mean_reversion", "config_sha256": "a" * 64,
+           "code_url": script, "architecture_url": ARCHITECTURE}
+    assert code_link(row, mapping) == (mapped, "architecture")
+    other = {**row, "config_sha256": "b" * 64}
+    assert code_link(other, mapping) == (ARCHITECTURE, "architecture")
+    page = render([{**row, "submitted_utc": "20260101T000000Z", "mse": 2.0}], architecture=mapping)
+    assert f'href="{mapped}"' in page and ARCHITECTURE not in page
+
+
+def test_publish_records_the_architecture_link_in_the_same_commit_as_the_page(monkeypatch):
+    import architecture_code
+    kept = {"member": "other", "experiment": "kept", "config_sha256": "b" * 64, "url": "https://example.com/kept.py"}
+    monkeypatch.setattr("submit.space_file",
+                        lambda space, name, revision: {"models": [kept]} if name == "architecture-code.json" else {})
+    api = FakeApi()
+    api.create_repo = lambda *args, **kwargs: None
+    script = script_location("alice", "mean_reversion", "a" * 64)[2]
+    row = {"team_member": "alice", "experiment": "mean_reversion", "config_sha256": "a" * 64, "submitted_utc":
+           "20260101T000000Z", "mse": 4000.0, "mse_f1": 5000.0, "mse_f2": 3000.0, "mse_f3": 3300.0,
+           "mse_ge550": 9000.0, "mse_f1_ge550": 9500.0, "mse_f2_ge550": 8500.0, "mse_f3_ge550": 8800.0,
+           "code_url": script, "architecture_url": ARCHITECTURE}
+    entry = architecture_code.entry("alice", "mean_reversion", "a" * 64, ARCHITECTURE)
+    publish(api, [row], "space", architecture={"models": [entry]})
+    files = {op.path_in_repo: op.path_or_fileobj for op in api.commits[0]["operations"]}
+    mapping = json.loads(files["architecture-code.json"])
+    assert [e["experiment"] for e in mapping["models"]] == ["mean_reversion", "kept"]  # the Space entry is kept
+    page = files["index.html"].decode()
+    assert f'href="{ARCHITECTURE}"' in page and ">architecture</a>" in page and script not in page
+
+
+def test_publish_keeps_the_space_visibility_policy_in_step_with_the_page(monkeypatch):
+    import board
+    monkeypatch.setattr("submit.space_file", lambda space, name, revision: {})
+    api = FakeApi()
+    api.create_repo = lambda *args, **kwargs: None
+    publish(api, [], "space")
+    files = {op.path_in_repo: op.path_or_fileobj for op in api.commits[0]["operations"]}
+    assert json.loads(files["visibility.json"]) == board.visibility_policy()
+    # a Space that already carries the same policy gets no second copy
+    monkeypatch.setattr("submit.space_file",
+                        lambda space, name, revision: board.visibility_policy() if name == "visibility.json" else {})
+    api = FakeApi()
+    api.create_repo = lambda *args, **kwargs: None
+    publish(api, [], "space")
+    assert "visibility.json" not in {op.path_in_repo for op in api.commits[0]["operations"]}

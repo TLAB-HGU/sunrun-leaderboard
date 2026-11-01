@@ -152,26 +152,40 @@ def test_trim_ranking_columns_preserves_metrics_and_status_rows():
     entries = upsert([], "seongeun", "E2001", "진행", at="2026-10-28T00:00:00Z")
     original = inject(PAGE, entries)
     trimmed = lbstatus.trim_ranking_columns(original)
-    assert lbstatus._ranking(trimmed)[2] == lbstatus._ranking(original)[2][:-1]
+    assert lbstatus._ranking(trimmed)[2] == lbstatus._ranking(original)[2][:4]
     before_rows = re.findall(r"<tr\b[^>]*>.*?</tr>", original, re.S)
     after_rows = re.findall(r"<tr\b[^>]*>.*?</tr>", trimmed, re.S)
     assert len(before_rows) == len(after_rows)
     for before, after in zip(before_rows, after_rows):
         cells = lambda row: re.findall(r"<t[hd]\b[^>]*>.*?</t[hd]>", row, re.S)
-        assert cells(after) == cells(before)[:7]
+        assert cells(after) == cells(before)[:4]
     assert ROWS_BEGIN in trimmed and ROWS_END in trimmed
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
     assert lbstatus.trim_ranking_columns("<p>No ranking</p>") == "<p>No ranking</p>"
 
 
 def test_trim_keeps_current_columns_wherever_the_board_places_them():
-    head = ("#", "experiment", "member", "sec/fold", "MSE", "skill vs naive", "config", "end-to-end (h)", "code", "retired")
+    head = ("#", "experiment", "member", "sec/fold", "Total S", "F1 TIMSE", "end-to-end (h)", "code", "retired")
     row = "".join(f"<td>{i}</td>" for i in range(len(head)))
     page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
             f"<tr>{row}</tr></tbody></table>")
     trimmed = lbstatus.trim_ranking_columns(page)
     assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == list(head[:-1])
     assert trimmed.count("<td>") == len(head) - 1
+    assert lbstatus.trim_ranking_columns(trimmed) == trimmed
+
+
+def test_trim_drops_a_config_column_and_hands_its_sha_to_the_code_cell():
+    sha = "d" * 64
+    head = ("#", "experiment", "member", "sec/fold", "MSE", "skill vs naive", "config", "end-to-end (h)", "code")
+    row = ('<td>1</td><td class="l">a</td><td class="l">s</td><td>1.0</td><td>4000.0</td><td data-v="0.5">+50.0%</td>'
+           f'<td class="l" title="{sha}"><code>{sha[:12]}</code></td><td>1.00</td>'
+           '<td class="l"><a href="https://github.com/x/y">architecture</a></td>')
+    page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
+            f"<tr>{row}</tr></tbody></table>")
+    trimmed = lbstatus.trim_ranking_columns(page)
+    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == ["#", "experiment", "member", "sec/fold", "end-to-end (h)", "code"]
+    assert f'<td data-config="{sha}" class="l">' in trimmed and "<code>" not in trimmed
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
 
 
