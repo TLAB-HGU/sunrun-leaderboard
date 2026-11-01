@@ -32,6 +32,8 @@ def main() -> None:
     parser.add_argument("--months", nargs="*", help="subset of YYYY-MM (default: all nine)")
     parser.add_argument("--limit", type=int, help="render at most this many frames per month (smoke check)")
     parser.add_argument("--suffix", default="", help="suffix for output names (smoke check)")
+    parser.add_argument("--previews", action="store_true",
+                        help="render the compact preview_*.gif files that the README embeds")
     parser.add_argument("--manifest-only", action="store_true",
                         help="rewrite manifest.json (scores, diagnostics, hashes) for the GIFs already on disk")
     args = parser.parse_args()
@@ -42,6 +44,19 @@ def main() -> None:
         manifest = V.gif_manifest(OUT, data, EXPERIMENT, ARM, AGGREGATION, FILES, KEYS, FOOTER, previous["outputs"])
         (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
         print(f"manifest rewritten: {len(previous['outputs'])} GIFs, {manifest['verification']['rendered_frames']:,} frames")
+        return
+
+    if args.previews:
+        data = V.load(OUT, FILES, KEYS)
+        previous = json.loads((OUT / "manifest.json").read_text())
+        previews = V.render_gifs(OUT, data, EXPERIMENT, FOOTER, prefix="preview_", stride=4, dpi=72, frame_ms=400)
+        manifest = V.gif_manifest(OUT, data, EXPERIMENT, ARM, AGGREGATION, FILES, KEYS, FOOTER, previous["outputs"])
+        manifest["previews"] = previews
+        manifest["previews_config"] = dict(prefix="preview_", stride=4, dpi=72, frame_ms=400,
+                                           note="every 4th fold, 72 dpi, 400 ms per frame: the same drawing as the "
+                                                "full GIFs, sized for playback inside the README")
+        (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        print(f"{len(previews)} previews, {sum(p['bytes'] for p in previews) / 1e6:.1f} MB")
         return
 
     data = V.load(OUT, FILES, KEYS)

@@ -148,8 +148,8 @@ def load(out_dir: Path, files, keys) -> dict:
                 scores=recomputed, receipt=receipt, folds=folds)
 
 
-def figure(footer: str):
-    fig = plt.figure(figsize=(WIDTH / 100, HEIGHT / 100), dpi=100)
+def figure(footer: str, dpi: float = 100):
+    fig = plt.figure(figsize=(WIDTH / 100, HEIGHT / 100), dpi=dpi)
     ax = fig.add_axes([0.058, 0.115, 0.925, 0.735])
     ax.set_xlim(-INPUT_HOURS + 1, H)
     ax.set_ylim(*Y_LIMITS)
@@ -180,9 +180,9 @@ def figure(footer: str):
     return fig, lines, (title, subtitle, note)
 
 
-def frames(data: dict, indices, experiment: str, footer: str):
+def frames(data: dict, indices, experiment: str, footer: str, dpi: float = 100):
     """Yield one palette-quantised frame per fold index."""
-    fig, lines, texts = figure(footer)
+    fig, lines, texts = figure(footer, dpi)
     hist_x = np.arange(-INPUT_HOURS + 1, 1)
     future_x = np.arange(1, H + 1)
     palette = None
@@ -208,24 +208,27 @@ def frames(data: dict, indices, experiment: str, footer: str):
     plt.close(fig)
 
 
-def render_gifs(out_dir: Path, data: dict, experiment: str, footer: str, months=None, limit=None, suffix="") -> list:
+def render_gifs(out_dir: Path, data: dict, experiment: str, footer: str, months=None, limit=None, suffix="",
+                prefix: str = "validation_", stride: int = 1, dpi: float = 100, frame_ms: int = FRAME_MS) -> list:
+    """Render the monthly GIFs. `stride`/`dpi`/`frame_ms` produce the compact README previews of the same frames."""
+    size = (int(round(WIDTH * dpi / 100)), int(round(HEIGHT * dpi / 100)))
     outputs = []
     for month in (months or list(MONTHS)):
-        indices = np.flatnonzero(data["months"] == month)
+        indices = np.flatnonzero(data["months"] == month)[::stride]
         if limit:
             indices = indices[:limit]
-        rendered = list(frames(data, indices, experiment, footer))
-        name = f"validation_{month}{suffix}.gif"
+        rendered = list(frames(data, indices, experiment, footer, dpi))
+        name = f"{prefix}{month}{suffix}.gif"
         buffer = io.BytesIO()
         rendered[0].save(buffer, format="GIF", save_all=True, append_images=rendered[1:],
-                         duration=FRAME_MS, loop=0, optimize=False, disposal=1)
+                         duration=frame_ms, loop=0, optimize=False, disposal=1)
         payload = buffer.getvalue()
         (out_dir / name).write_bytes(payload)
 
         with Image.open(out_dir / name) as check:
-            assert check.size == (WIDTH, HEIGHT), f"{name} is {check.size}"
+            assert check.size == size, f"{name} is {check.size}"
             assert check.n_frames == len(rendered), f"{name} has {check.n_frames} frames"
-            assert check.info.get("duration") == FRAME_MS
+            assert check.info.get("duration") == frame_ms
             for position, frame in enumerate(rendered):
                 check.seek(position)
                 assert np.array_equal(np.asarray(check.convert("RGB")), np.asarray(frame.convert("RGB"))), \
@@ -235,7 +238,8 @@ def render_gifs(out_dir: Path, data: dict, experiment: str, footer: str, months=
                             first_fold=int(indices[0]) + 1, last_fold=int(indices[-1]) + 1,
                             first_origin_utc=data["origins"][indices[0]].isoformat(),
                             last_origin_utc=data["origins"][indices[-1]].isoformat(),
-                            duration_ms=FRAME_MS * len(indices), bytes=len(payload),
+                            duration_ms=frame_ms * len(indices), bytes=len(payload), stride=stride, dpi=dpi,
+                            frame_ms=frame_ms,
                             sha256=hashlib.sha256(payload).hexdigest()))
         print(json.dumps({k: outputs[-1][k] for k in ("month", "file", "frames", "bytes")}), flush=True)
     return outputs
