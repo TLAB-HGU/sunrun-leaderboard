@@ -28,7 +28,7 @@ def test_metrics_order_units_images_and_identity_survive_status_refresh(monkeypa
     headers = [label for label, _ in board.ranking(page)[2]]
     assert headers == ["#", "experiment", *[f"{p} {m}" for p in ("Total", "F1", "F2", "F3")
                                            for m in ("S", "TIMSE", "RMSE")],
-                       "lead curves", "member", "sec/fold", "end-to-end (h)", "code"]
+                       "lead curves", "member", "end-to-end (h)", "code"]
     assert "(km/s)²" in page and "every 6 hours" in page
     assert 'loading="lazy"' in page and 'target="_blank"' in page
     assert 'Persistence replacements: 25.00% of valid pairs; Mean forecast bias: -1.50 km/s' in page

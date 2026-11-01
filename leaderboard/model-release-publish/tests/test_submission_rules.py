@@ -135,7 +135,7 @@ def test_board_renders_new_and_legacy_metadata():
          "inference_seconds_per_fold": 0.001234, "code_url": "https://example.com/code.py"},
     ])
     assert ">unscored</td>" in page
-    assert "0.001234" in page
+    assert "0.001234" not in page
     assert "https://example.com/code.py" in page
 
 
@@ -164,7 +164,7 @@ def test_board_keeps_total_and_period_competition_columns():
     labels = re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
     assert labels == ["#", "experiment", *[f"{p} {m}" for p in ("Total", "F1", "F2", "F3")
                                            for m in ("S", "TIMSE", "RMSE")],
-                      "lead curves", "member", "sec/fold", "end-to-end (h)", "code"]
+                      "lead curves", "member", "end-to-end (h)", "code"]
     assert "10.00" in page and "100.00" in page and "2.00" in page
 
 
@@ -188,7 +188,7 @@ def test_every_publish_marks_the_best_and_second_best_of_each_skill_column():
     assert len(re.findall(r'<(b|u)(?: data-metric-version="[^"]+")? class="lb-[12]">', page)) == 24
     assert page.count('<b data-metric-version="lead-timse-6h-v1" class="lb-1">2.00</b>') == 8
     assert page.count('<u data-metric-version="lead-timse-6h-v1" class="lb-2">3.00</u>') == 8
-    assert '<td data-v="0.001">0.001000</td>' in page
+    assert '<td data-v="0.001">0.001000</td>' not in page
     assert '<td data-v="1.0" title="">1.00</td>' in page
     assert pytest.importorskip("lbstatus").mark_leaders(page) == page
 

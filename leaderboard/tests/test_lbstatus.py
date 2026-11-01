@@ -152,13 +152,13 @@ def test_trim_ranking_columns_preserves_metrics_and_status_rows():
     entries = upsert([], "seongeun", "E2001", "진행", at="2026-10-28T00:00:00Z")
     original = inject(PAGE, entries)
     trimmed = lbstatus.trim_ranking_columns(original)
-    assert lbstatus._ranking(trimmed)[2] == lbstatus._ranking(original)[2][:4]
+    assert lbstatus._ranking(trimmed)[2] == lbstatus._ranking(original)[2][:3]
     before_rows = re.findall(r"<tr\b[^>]*>.*?</tr>", original, re.S)
     after_rows = re.findall(r"<tr\b[^>]*>.*?</tr>", trimmed, re.S)
     assert len(before_rows) == len(after_rows)
     for before, after in zip(before_rows, after_rows):
         cells = lambda row: re.findall(r"<t[hd]\b[^>]*>.*?</t[hd]>", row, re.S)
-        assert cells(after) == cells(before)[:4]
+        assert cells(after) == cells(before)[:3]
     assert ROWS_BEGIN in trimmed and ROWS_END in trimmed
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
     assert lbstatus.trim_ranking_columns("<p>No ranking</p>") == "<p>No ranking</p>"
@@ -170,8 +170,8 @@ def test_trim_keeps_current_columns_wherever_the_board_places_them():
     page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
             f"<tr>{row}</tr></tbody></table>")
     trimmed = lbstatus.trim_ranking_columns(page)
-    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == list(head[:-1])
-    assert trimmed.count("<td>") == len(head) - 1
+    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == [label for label in head if label not in ("sec/fold", "retired")]
+    assert trimmed.count("<td>") == len(head) - 2
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
 
 
@@ -184,7 +184,7 @@ def test_trim_drops_a_config_column_and_hands_its_sha_to_the_code_cell():
     page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
             f"<tr>{row}</tr></tbody></table>")
     trimmed = lbstatus.trim_ranking_columns(page)
-    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == ["#", "experiment", "member", "sec/fold", "end-to-end (h)", "code"]
+    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == ["#", "experiment", "member", "end-to-end (h)", "code"]
     assert f'<td data-config="{sha}" class="l">' in trimmed and "<code>" not in trimmed
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
 

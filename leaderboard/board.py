@@ -14,12 +14,12 @@ from pathlib import Path
 REGIMES = [f"{t}_{s}_{f}" for t in ("low", "high") for s in ("low", "high") for f in ("low", "high")]
 
 HIGHER_IS_BETTER = re.compile(r"^(CSI|skill vs naive)$")
-# sec/fold and end-to-end (h) are cost, not skill; the regime columns of older pages were skill.
+# end-to-end (h) is cost, not skill; the regime columns of older pages were skill.
 LOWER_IS_BETTER = re.compile(r"MSE|MAE|≥\d+|^(low|high)_(low|high)_(low|high)$")
 COMPETITION_VERSION = "lead-timse-6h-v1"
 METRIC_COLUMNS = [f"{scope} {metric}" for scope in ("Total", "F1", "F2", "F3")
                   for metric in ("S", "TIMSE", "RMSE")]
-BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "member", "sec/fold", "end-to-end (h)", "code"]
+BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "member", "end-to-end (h)", "code"]
 CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 
 CSS = """
@@ -315,7 +315,7 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
                     f'<img class="lead-curves" src="{url}" alt="{alt}" loading="lazy" width="160" height="160"></a>')
         else:
             plot = '<span class="dash">–</span>'
-        seconds, e2e = r.get("inference_seconds_per_fold"), end_to_end_hours(r)
+        e2e = end_to_end_hours(r)
         e2e_title = html.escape((r.get("extras") or {}).get("end_to_end_note", ""), quote=True)
         code_url, code_label = code_link(r, architecture)
         code = (f'<a href="{html.escape(code_url, quote=True)}" target="_blank" rel="noopener">{code_label}</a>'
@@ -323,7 +323,6 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
         cells.extend([
             (' class="l"', plot, None),
             (' class="l"', html.escape(r["team_member"]), None),
-            (f' data-v="{seconds if seconds is not None else ""}"', _num(seconds, 6), None),
             (f' data-v="{"" if e2e is None else e2e}" title="{e2e_title}"', _num(e2e, 2), None),
             (f' data-config="{html.escape(r.get("config_sha256") or "")}" class="l"', code, None),
         ])
