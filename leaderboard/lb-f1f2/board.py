@@ -50,9 +50,12 @@ document.querySelectorAll('th').forEach((th,i)=>th.addEventListener('click',()=>
 def ranking(page: str) -> tuple[int, int, list[tuple[str, str]]] | None:
     """(start, stop, [(header label, header class)]) of the ranking table: the first <table> of a published page.
     lbstatus.py edits the rows and columns through it, so both sides agree on what the ranking table is."""
-    start = page.find("<table>")
-    stop = page.find("</table>", start)
-    if start < 0 or stop < 0 or "<tbody>" not in page[start:stop]:
+    opening = re.search(r"<table(?:\s[^>]*)?>", page)
+    if opening is None:
+        return None
+    start = opening.start()
+    stop = page.find("</table>", opening.end())
+    if stop < 0 or "<tbody>" not in page[start:stop]:
         return None
     head = page[start:stop].split("<tbody>", 1)[0]
     cols = []
@@ -332,7 +335,7 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
         for col, (attrs, inner, _) in enumerate(cells):
             if place := marks.get((i, col)):
                 tag = "b" if place == 1 else "u"
-                inner = f'<{tag} class="lb-{place}">{inner}</{tag}>'
+                inner = f'<{tag} data-metric-version="{COMPETITION_VERSION}" class="lb-{place}">{inner}</{tag}>'
             tds.append(f"<td{attrs}>{inner}</td>")
         body.append("<tr>" + "".join(tds) + "</tr>")
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -341,7 +344,7 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
 <p class="sub">Forecasts issued every 6 hours at 00, 06, 12 and 18 UTC; leads 1–72h.
 <b>F1</b>: targets 2026-01-01 .. 03-31; <b>F2</b>: 2026-04-01 .. 06-30; <b>F3</b>: 2026-07-01 .. 09-29.
 Only forecasts whose full 72h window lies within one period are evaluated. Rank = <b>Total S</b>, lower is better. {html.escape(note)}</p>
-<div class="wrap"><table><thead><tr>{th}</tr></thead><tbody>{"".join(body)}</tbody></table></div>
+<div class="wrap"><table data-metric-version="{COMPETITION_VERSION}"><thead><tr>{th}</tr></thead><tbody>{"".join(body)}</tbody></table></div>
 <footer>Each displayed S, TIMSE and RMSE is the arithmetic mean of its 72 lead-specific values.
 Total pools F1–F3 observations separately at each lead before computing the metrics.
 S = √(RMSE × √TIMSE); S and RMSE are in km/s, TIMSE in (km/s)².

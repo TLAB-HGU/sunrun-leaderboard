@@ -33,7 +33,7 @@ import sys
 import threading
 import time
 
-from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, CELL, apply_architecture_links, mark_sign, ranking as _ranking, script_cells
+from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, COMPETITION_VERSION, CELL, apply_architecture_links, mark_sign, ranking as _ranking, script_cells
 
 SPACE = "tlabtlab/sunrun-leaderboard"
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -41,8 +41,8 @@ DATASET = "tlabtlab/sunrun-lb-store"
 # the first version read status.json["entries"], so they now fail with a warning instead of re-inserting the
 # separate status table that this version replaced.
 STATUS_FILE, HISTORY_FILE = "status.json", "status-history.json"
-ROWS_BEGIN, ROWS_END = "<!-- sunrun-status-rows:begin -->", "<!-- sunrun-status-rows:end -->"
-ROWS = re.compile(re.escape(ROWS_BEGIN) + ".*?" + re.escape(ROWS_END), re.S)
+ROWS_BEGIN, ROWS_END = "<!-- sunrun-status-rows-v2:begin -->", "<!-- sunrun-status-rows-v2:end -->"
+ROWS = re.compile(r"<!-- sunrun-status-rows(?:-v2)?:begin -->.*?<!-- sunrun-status-rows(?:-v2)?:end -->", re.S)
 LEGACY_BLOCK = re.compile(r"<!-- sunrun-status:begin -->.*?<!-- sunrun-status:end -->", re.S)
 STATUSES = ("대기", "진행", "완료", "실패", "중단")
 ACTIVE = ("진행", "대기")
@@ -52,7 +52,7 @@ SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
 DEFAULT_MEMBER = os.environ.get("SUNRUN_MEMBER", "seongeun")
 FINISHED_KEPT = 300
 BOARD_COLUMNS = frozenset(CURRENT_BOARD_COLUMNS)
-LEADER_MARK = re.compile(r'<(b|u) class="lb-[12]">(.*?)</\1>', re.S)
+LEADER_MARK = re.compile(r'<(b|u)(?: data-metric-version="[^"]+")? class="lb-[12]">(.*?)</\1>', re.S)
 
 
 def now() -> str:
@@ -290,6 +290,7 @@ def mark_leaders(page: str) -> str:
         return page
     start, stop, cols = found
     head, body = page[start:stop].split("<tbody>", 1)
+    version = f' data-metric-version="{COMPETITION_VERSION}"' if f'data-metric-version="{COMPETITION_VERSION}"' in head else ""
     rows = list(re.finditer(r"<tr(?:\s[^>]*)?>.*?</tr>", body, re.S))
     cells = [list(CELL.finditer(r.group(0))) for r in rows]
     marks = {}  # (row, column) -> tag
@@ -309,7 +310,7 @@ def mark_leaders(page: str) -> str:
         for col, m in reversed(list(enumerate(cells[i]))):
             if (i, col) in marks:
                 tag = marks[i, col]
-                row = row[:m.start(2)] + f'<{tag} class="lb-{1 if tag == "b" else 2}">{m.group(2)}</{tag}>' + row[m.end(2):]
+                row = row[:m.start(2)] + f'<{tag}{version} class="lb-{1 if tag == "b" else 2}">{m.group(2)}</{tag}>' + row[m.end(2):]
         out += [body[pos:r.start()], row]
         pos = r.end()
     return page[:start] + head + "<tbody>" + "".join(out) + body[pos:] + page[stop:]

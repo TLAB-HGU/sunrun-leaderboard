@@ -83,3 +83,31 @@ def test_visibility_and_architecture_rewrite_preserve_current_metrics(monkeypatc
     updated = board.apply_architecture_links(page, mapping)
     assert target in updated and board.script_cells(updated) == []
     assert '<img ' in updated and lbstatus.mark_leaders(updated) == updated
+
+
+def test_legacy_status_wrapper_cannot_find_or_strip_current_markup():
+    """Long-running wrappers retain their imported old regexes until their run ends."""
+    page = board.render([record()], architecture={})
+    entries = lbstatus.upsert([], "alice", "next", "진행", at="2026-11-01T00:00:00Z")
+    page = lbstatus.mark_leaders(lbstatus.inject(page, entries))
+    assert '<table data-metric-version="lead-timse-6h-v1">' in page
+    # Old trim/hide/architecture helpers return unchanged when old ranking() cannot find <table>.
+    assert page.find("<table>") == -1
+    # Old inject() and mark_leaders() strip these patterns even before checking ranking().
+    old_status = re.compile(r"<!-- sunrun-status-rows:begin -->.*?<!-- sunrun-status-rows:end -->", re.S)
+    old_marks = re.compile(r'<(b|u) class="lb-[12]">(.*?)</\1>', re.S)
+    assert old_marks.sub(r"\2", old_status.sub("", page)) == page
+    assert lbstatus.trim_ranking_columns(page) == page
+    assert lbstatus.mark_leaders(lbstatus.inject(page, entries)) == page
+    assert board.script_cells(page) == []
+
+
+def test_current_status_wrapper_replaces_legacy_status_markers_once():
+    page = board.render([record()], architecture={})
+    entries = lbstatus.upsert([], "alice", "next", "진행", at="2026-11-01T00:00:00Z")
+    current = lbstatus.inject(page, entries)
+    old = current.replace("sunrun-status-rows-v2:", "sunrun-status-rows:")
+    upgraded = lbstatus.inject(old, entries)
+    assert upgraded == current
+    assert upgraded.count("next (진행)") == 1
+    assert upgraded.count(lbstatus.ROWS_BEGIN) == 1

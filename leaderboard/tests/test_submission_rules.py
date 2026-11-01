@@ -185,9 +185,9 @@ def test_every_publish_marks_the_best_and_second_best_of_each_skill_column():
                     "inference_seconds_per_fold": 0.001,
                     "extras": {"end_to_end_seconds": 3600}}
                    for name, score in (("best", 2.0), ("second", 3.0), ("third", 4.0))])
-    assert len(re.findall(r'<(b|u) class="lb-[12]">', page)) == 24
-    assert page.count('<b class="lb-1">2.00</b>') == 8
-    assert page.count('<u class="lb-2">3.00</u>') == 8
+    assert len(re.findall(r'<(b|u)(?: data-metric-version="[^"]+")? class="lb-[12]">', page)) == 24
+    assert page.count('<b data-metric-version="lead-timse-6h-v1" class="lb-1">2.00</b>') == 8
+    assert page.count('<u data-metric-version="lead-timse-6h-v1" class="lb-2">3.00</u>') == 8
     assert '<td data-v="0.001">0.001000</td>' in page
     assert '<td data-v="1.0" title="">1.00</td>' in page
     assert pytest.importorskip("lbstatus").mark_leaders(page) == page
