@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>detpool_gpd · 이미지에서 예측까지</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f2; --surface:#fcfcfb; --surface-2:#f0efec; --line:#dcdad3; --line-2:#c9c7be;
+  --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#7c7a74;
+  --img:#eb6834; --ace:#2a78d6; --enl:#6250d6;
+  --img-bg:#fdeee7; --ace-bg:#e8f0fb; --enl-bg:#eceafb;
+  --body:#1baf7a; --tail:#e87ba4; --gpd:#eda100; --route:#6c6b66; --final:#008300; --truth:#0b0b0b;
+  --ok:#008300; --warn:#b45309;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --line:#34332f; --line-2:#4a4944;
+    --ink:#f0efec; --ink-2:#c3c2b7; --ink-3:#8f8e86;
+    --img:#e8703c; --ace:#3987e5; --enl:#9085e9;
+    --img-bg:#2b1c14; --ace-bg:#15202e; --enl-bg:#1f1c33;
+    --body:#199e70; --tail:#d55181; --gpd:#c98500; --route:#a3a299; --final:#3fae3f; --truth:#f0efec;
+    --ok:#3fae3f; --warn:#e0a050;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:56px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px 16px;scrollbar-width:thin}
+nav a{flex:none;color:var(--ink-2);text-decoration:none;font-size:13px;padding:4px 10px;border-radius:14px;border:1px solid transparent}
+nav a:hover{border-color:var(--line-2);color:var(--ink)}
+nav a b{font-family:var(--mono);font-weight:600;margin-right:5px;color:var(--ink-3)}
+header.hero{padding:40px 0 8px}
+.eyebrow{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+h1{font-size:30px;line-height:1.25;margin:6px 0 10px;letter-spacing:-.01em}
+h2{font-size:22px;line-height:1.3;margin:0 0 6px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 6px}
+p{margin:0 0 10px;color:var(--ink-2)}
+p b,li b{color:var(--ink)}
+.lead{font-size:16.5px;color:var(--ink-2);max-width:760px}
+section{padding:44px 0 6px;border-top:1px solid var(--line);margin-top:36px}
+section:first-of-type{border-top:0;margin-top:0}
+.num{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.two{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;align-items:start;margin-top:16px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+code,.mono{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.c-img{--c:var(--img);--cbg:var(--img-bg)} .c-ace{--c:var(--ace);--cbg:var(--ace-bg)} .c-enl{--c:var(--enl);--cbg:var(--enl-bg)}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:10px;background:var(--cbg);color:var(--ink);border:1px solid var(--c)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.tabs button,.btn{font:inherit;font-size:13px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);
+  border-radius:16px;padding:4px 12px;cursor:pointer}
+.tabs button:hover,.btn:hover{background:var(--surface-2)}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.note{border-left:3px solid var(--ink-3);background:var(--surface-2);padding:8px 12px;border-radius:0 6px 6px 0;font-size:13.5px;color:var(--ink-2);margin:12px 0}
+.note b{color:var(--ink)}
+.note.key{border-left-color:var(--img)}
+/* overview flow */
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:22px 0 6px;position:relative}
+@media(max-width:900px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.flow{grid-template-columns:1fr}}
+.node{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;text-decoration:none;color:inherit;display:block;position:relative}
+.node:hover{border-color:var(--ink-3)}
+.node .k{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.node h3{margin:2px 0 6px;font-size:14.5px}
+.node ul{margin:0;padding:0;list-style:none;font-size:12.5px;color:var(--ink-2)}
+.node li{margin:3px 0}
+.node:not(:last-child)::after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--ink-3);z-index:2;
+  background:var(--bg);border-radius:50%;width:12px;text-align:center;font-size:13px;line-height:14px}
+@media(max-width:900px){.node::after{display:none}}
+.bar30{display:flex;height:14px;border-radius:4px;overflow:hidden;gap:2px;margin:6px 0 4px}
+.bar30 i{display:block;height:100%}
+/* stage */
+.stage{position:relative;width:100%;max-width:580px;aspect-ratio:1;margin:0 auto;background:#0a0608;border-radius:10px;overflow:hidden;
+  border:1px solid var(--line-2);touch-action:none}
+.stage .rot{position:absolute;inset:0;transform-origin:50% 50%}
+.stage img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.stage svg{position:absolute;inset:0;width:100%;height:100%}
+.stage .compass{position:absolute;font:600 12px var(--mono);color:#e8e2d8;text-shadow:0 0 4px #000;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2);margin:8px 0}
+.legend label{cursor:pointer;display:inline-flex;align-items:center;gap:5px;user-select:none}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:13px;margin:0}
+.kv dt{color:var(--ink-3)} .kv dd{margin:0;font-family:var(--mono);font-size:12.5px;word-break:break-all}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--ink-3);font-weight:500;font-size:12px}
+td.n{text-align:right;font-family:var(--mono);font-size:12.5px}
+input[type=range]{width:100%;accent-color:var(--img)}
+.sl{display:flex;gap:12px;align-items:center;margin:4px 0 10px}
+.sl output{font-family:var(--mono);min-width:110px;font-size:13px}
+svg text{font-family:var(--sans)}
+.chart{width:100%;height:auto;display:block}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;
+  padding:8px 10px;font-size:12.5px;box-shadow:0 4px 18px rgba(0,0,0,.18);display:none;max-width:260px}
+.tip .r{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:12px}
+.tip .r span:first-child{font-family:var(--sans);color:var(--ink-2)}
+.chip{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-left:4px solid var(--c);background:var(--surface);
+  border-radius:6px;padding:4px 8px;font-size:12.5px;min-width:0}
+.chip{color:var(--ink)}
+.chip .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip .nm small{display:block;color:var(--ink-3);font-size:11px;font-family:var(--mono);overflow:hidden;text-overflow:ellipsis}
+.chip .v{font-family:var(--mono);font-size:12px;color:var(--ink)}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:860px){.cols3{grid-template-columns:1fr}}
+.cols3 h3 .tag{margin-left:6px}
+.chips{display:grid;gap:5px}
+/* model diagram */
+.arch{display:grid;gap:10px;margin-top:14px}
+.row{display:grid;gap:10px}
+.r3{grid-template-columns:repeat(3,minmax(0,1fr))} .r2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:860px){.r3,.r2{grid-template-columns:1fr}}
+.mcard{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:8px;padding:10px 12px;font-size:13px}
+.mcard h3{margin:0 0 3px;font-size:14px}
+.mcard p{font-size:12.5px;margin:0 0 4px}
+.mcard .o{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.join{text-align:center;color:var(--ink-3);font-size:12.5px;padding:2px 0}
+.join b{color:var(--ink)}
+.group{border:1px dashed var(--line-2);border-radius:12px;padding:10px}
+.group > .gt{font-size:12px;color:var(--ink-3);font-family:var(--mono);margin:0 0 8px}
+.pathrow{display:grid;grid-template-columns:auto 1fr auto;gap:2px 8px;align-items:center;font-size:12.5px;padding:3px 0;border-bottom:1px solid var(--line)}
+.pathrow:last-child{border:0}
+.pathrow .f{font-family:var(--mono);font-size:11.5px;overflow-wrap:anywhere}
+.pill{display:inline-block;font-size:11px;font-family:var(--mono);padding:0 6px;border-radius:9px;border:1px solid var(--line-2);color:var(--ink-2)}
+.pill.yes{border-color:var(--ace);color:var(--ace)} .pill.no{border-color:var(--route);color:var(--route)}
+footer{padding:36px 0 60px;color:var(--ink-3);font-size:12.5px;border-top:1px solid var(--line);margin-top:40px}
+.bars{display:grid;gap:4px;font-size:12px}
+.bars .b{display:grid;grid-template-columns:70px 1fr 44px;gap:8px;align-items:center}
+.bars .t{height:12px;border-radius:3px;background:var(--surface-2);overflow:hidden;display:flex;gap:1px}
+.bars .t i{display:block;height:100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* bottom-up worked blocks */
+.eq{font-family:var(--mono);font-size:13.5px;line-height:1.95;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:8px;padding:10px 14px;margin:10px 0;overflow-x:auto;color:var(--ink)}
+.eq em{font-style:normal;color:var(--ink-3);font-family:var(--sans);font-size:12px}
+.wk{display:grid;gap:4px;font-family:var(--mono);font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:8px;padding:10px 12px;margin:10px 0;overflow-x:auto}
+.wk .lt{font-family:var(--sans);font-size:12px;color:var(--ink-3)}
+.steps{display:grid;gap:12px;margin:14px 0;counter-reset:st}
+.step{padding-left:32px;position:relative}
+.step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;
+  background:var(--ink);color:var(--bg);font:600 11.5px/22px var(--mono);text-align:center}
+.step h3{font-size:14px;margin:0 0 3px}
+.step p{font-size:13.5px;margin:0 0 6px}
+.tb{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+.tb th{color:var(--ink-3);font-weight:500;font-size:11.5px;padding:3px 8px;border-bottom:1px solid var(--line);text-align:left}
+.tb td{padding:3px 8px;border-bottom:1px solid var(--line)}
+.tb td.m,.tb th.m{font-family:var(--mono);text-align:right}
+.tb tr.hl td{background:var(--surface-2)}
+.sub{font-size:12.5px;color:var(--ink-3);margin:2px 0 10px}
+.deeplabel{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.03em;padding:1px 7px;border-radius:9px;
+  border:1px solid var(--ace);color:var(--ace);margin-left:8px;vertical-align:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.narrow{max-width:860px}
+</style>
+</head>
+<body>
+<nav><div class="wrap" id="nav">
+  <a href="#s0"><b>0</b>한눈에</a><a href="#s1"><b>1</b>이미지</a><a href="#s1b"><b>2</b>패치 통계</a><a href="#s2"><b>3</b>경도 줄</a>
+  <a href="#s3"><b>4</b>코로나홀</a><a href="#s4"><b>5</b>나머지 17개</a><a href="#s5"><b>6</b>30개→237열</a><a href="#s6"><b>7</b>모델</a>
+  <a href="#s6b"><b>8</b>gpd arm</a><a href="#s7"><b>9</b>트리 계산</a><a href="#s8"><b>10</b>w 선택</a><a href="#s9"><b>11</b>최종·채점</a>
+</div></nav>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">e2000fs_calib4_detpool_gpd · 예시 시점 <span id="h-origin"></span></div>
+  <h1>태양 사진 한 장은 어떻게<br>72시간 풍속 예측이 되는가</h1>
+  <p class="lead">실제 SUVI 이미지 1장에서 출발해 30개 숫자가 되고, 그 숫자가 트리 모델 4개를 거쳐 72개 예측으로 나오는 과정을
+  <b>한 시점의 실제 계산값</b>으로 따라갑니다. 화면의 모든 숫자는 저장된 파일에서 다시 계산해 모델이 실제로 받은 입력과 대조한 값입니다.</p>
+</header>
+
+<section id="s0">
+  <div class="num">0 · 한눈에</div>
+  <h2>이미지는 신경망에 들어가지 않습니다</h2>
+  <p>이미지 → 숫자는 <b>사람이 정한 고정 산식</b>(학습 없음)이고, 그 뒤는 전부 <b>XGBoost 트리 모델</b>입니다. 각 칸을 누르면 해당 단계로 이동합니다.</p>
+  <div class="flow" id="flow"></div>
+  <div class="note key"><b>읽는 법.</b> 주황 = 이미지에서 나온 숫자, 파랑 = ACE 위성 관측에서 나온 숫자, 보라 = WSA-Enlil 모델 기록에서 나온 숫자.
+  30개 중 <b>13개가 이미지에서</b> 나옵니다. 모델은 이미지의 픽셀을 직접 보지 않고, 이 13개 숫자만 봅니다.</div>
+</section>
+
+<section id="s1">
+  <div class="num">1 · 원자료 이미지</div>
+  <h2>이미지 1장 = 1280×1280 프레임 → 디스크 774×774 밝기 행렬</h2>
+  <p>GOES-18 위성의 SUVI 망원경이 찍은 극자외선(Fe 195Å) 사진입니다. 밝은 곳은 뜨거운 플라스마, <b>어두운 곳</b>(코로나홀)은 태양풍이 빠르게 새어 나오는 곳입니다.
+  <b>예시 시각 T<sub>0</sub> 보다 1시간 이상 전에 끝난 가장 최근 사진</b>만 쓰므로 이미지는 항상 약 1시간 묵어 있습니다.</p>
+  <div class="two">
+    <div>
+      <div class="tabs" id="t1">
+        <button data-m="raw" aria-pressed="true">원본</button>
+        <button data-m="grid" aria-pressed="false">12×3 패치 격자</button>
+      </div>
+      <div class="tabs" id="t1m" style="display:none">
+        <button data-s="logmed" aria-pressed="true">밝기(log)</button>
+        <button data-s="dark" aria-pressed="false">어두운 비율</button>
+        <button data-s="valid" aria-pressed="false">유효 비율</button>
+      </div>
+      <div class="stage" id="st1"></div>
+      <p style="font-size:12.5px;margin-top:8px;color:var(--ink-3)">위성 자세 때문에 원본 프레임은 약 26° 기울어 있어, 화면에서는 태양 북극이 위로 오도록 돌려 놓았습니다. 격자 위에서 마우스를 움직이면 칸의 값이 나옵니다.</p>
+    </div>
+    <div>
+      <div class="card" id="cell1"></div>
+      <div class="card" style="margin-top:12px">
+        <h3>이 이미지가 숫자가 되는 두 갈래</h3>
+        <p><span class="tag c-img" style="--c:var(--img);--cbg:var(--img-bg)">갈래 A</span> 디스크를 경도 12칸×위도 3칸으로 나눠 칸마다 통계 3개(밝기·어두운 비율·유효 비율) → 가운데 위도 줄 12칸만 사용 → <a href="#s2">3절</a>에서 <b>5개</b></p>
+        <p><span class="tag c-img" style="--c:var(--img);--cbg:var(--img-bg)">갈래 B</span> 중앙값보다 훨씬 어두운 덩어리(코로나홀 후보)를 찾아 면적을 잰다 → <a href="#s3">4절</a>에서 <b>7개</b></p>
+        <p><span class="tag c-img" style="--c:var(--img);--cbg:var(--img-bg)">그 외</span> 이미지가 얼마나 묵었는지(시간) → <b>1개</b></p>
+        <dl class="kv" id="facts1" style="margin-top:8px"></dl>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:26px">바텀업 ① 픽셀 한 개가 (경도, 위도) 좌표를 얻기까지<span class="deeplabel">학습 없음 · 고정 산식</span></h3>
+  <p class="sub">같은 식이 공개 코드 <code>experiments/xgboost_suvi_fusion/features.py</code>의 <code>extract_frame_features()</code>에 그대로 있고, 줄 계산은 <code>model_release/strips.py</code>에 고정돼 있습니다. 모델은 이 좌표를 직접 보지 않고, 아래 5단계를 거쳐 만든 칸별 통계만 봅니다.</p>
+  <div class="steps">
+    <div class="step"><h3>복사휘도 복원</h3>
+      <p>SUVI L1b netCDF의 <code>RAD</code> 정수(DN)를 <code>RAD = DN × scale_factor + add_offset</code>으로 실수 복사휘도로 바꿉니다. 이 프레임은 <b><span id="rad-range"></span></b> W m⁻² sr⁻¹ 범위이고, 디스크 유효 픽셀의 <b>중앙값 R<sub>ref</sub> = <span id="ref-med"></span></b>입니다. 뒤에 나오는 “어둡다”의 기준이 바로 이 값입니다.</p></div>
+    <div class="step"><h3>유효 픽셀만 남기기</h3>
+      <p><code>disk &amp; (DQF == 0) &amp; isfinite(RAD) &amp; (RAD ≥ 0)</code>. <code>DQF</code>는 품질 플래그(우주선 타격·결측), <code>disk</code>는 태양 원반 <code>x² + y² ≤ 0.98²</code>입니다. 반지름의 98%까지만 쓰는 이유는 림(가장자리)에서 구면→평면 투영 오차가 커지기 때문입니다.</p>
+      <div class="wk"><span class="lt">픽셀 수</span>디스크 π·(0.98·<span id="rsun-px"></span>px)² ≈ <b id="npix-disk"></b>개 → DQF·결측 제거 후 <b id="npix-valid"></b>개 (유효 <span id="valid-pct"></span>%)</div></div>
+    <div class="step"><h3>기울기 보정 후 반지름 단위로 정규화</h3>
+      <p>FITS 헤더의 <code>CRPIX</code>·<code>CROTA</code>·<code>PC</code> 행렬·<code>RSUN</code>으로 중심을 옮기고 <b><span id="rot-deg"></span>°</b> 기울기를 풀어, 픽셀 오프셋 (d<sub>x</sub>, d<sub>y</sub>)를 태양 반지름 단위 (x, y)로 바꿉니다. 이 프레임의 반지름은 <b>RSUN = <span id="rsun2"></span> px</b>입니다.</p>
+      <div class="eq">x = (PC₁₁·d<sub>x</sub> + PC₁₂·d<sub>y</sub>) / RSUN &nbsp;&nbsp;<em>// 디스크 중심 = (0,0), 림 = |r| = 1</em><br>
+y = (PC₂₁·d<sub>x</sub> + PC₂₂·d<sub>y</sub>) / RSUN &nbsp;&nbsp;<em>// 화면 y는 아래로 증가하므로 부호를 뒤집어 씀</em></div></div>
+    <div class="step"><h3>평면 → 구면: 경도·위도</h3>
+      <p>원반 위 (x, y)는 구면의 한 점입니다. z = √(1 − x² − y²)가 “태양 중심을 향한 깊이”이고, B₀는 지구에서 본 태양 자전축 기울기(<b><span id="b0"></span>°</b>)입니다.</p>
+      <div class="eq">z = √(1 − x² − y²) &nbsp;&nbsp;<em>// x² + y² &gt; 0.98² 이면 원반 밖 → 버림</em><br>
+위도 φ = arcsin( y·cos B₀ + z·sin B₀ )<br>
+경도 λ<sub>px</sub> = atan2( x , z·cos B₀ − y·sin B₀ ) &nbsp;&nbsp;<em>// 서쪽이 +</em></div>
+      <table class="tb"><thead><tr><th class="m">x</th><th class="m">y</th><th class="m">z</th><th class="m">λ<sub>px</sub></th><th class="m">φ</th><th class="m">칸 (i, j)</th></tr></thead><tbody>
+        <tr><td class="m">+0.500</td><td class="m">0.000</td><td class="m">0.866</td><td class="m">+30.1°</td><td class="m">−5.5°</td><td class="m">(8, 1)</td></tr>
+        <tr><td class="m">0.000</td><td class="m">+0.600</td><td class="m">0.800</td><td class="m">0.0°</td><td class="m">+30.5°</td><td class="m">(6, 2)</td></tr>
+        <tr><td class="m">−0.350</td><td class="m">−0.450</td><td class="m">0.822</td><td class="m">−24.6°</td><td class="m">−32.6°</td><td class="m">(4, 0)</td></tr>
+      </tbody></table>
+      <p class="sub">세 줄은 산식 확인용 계산 예시입니다(같은 식, 임의의 픽셀). 아래 표의 값은 이 시점 이미지의 실제 계산값입니다.</p></div>
+    <div class="step"><h3>12 × 3 칸으로 떨어뜨리기</h3>
+      <p>경도는 −90°~+90°를 15°씩 12칸, 위도는 −90°~+90°를 60°씩 3칸으로 나눕니다. 그래서 픽셀 하나는 (i, j) 한 칸에 속하고, <b>칸 하나의 통계가 그 칸에 속한 수십만 픽셀의 요약</b>이 됩니다.</p>
+      <div class="eq">i = clip( ⌊(λ<sub>px</sub> + 90°) / 15°⌋ , 0, 11) &nbsp;&nbsp; j = clip( ⌊(φ + 90°) / 60°⌋ , 0, 2)</div>
+      <div class="note key"><b>36칸 중 12칸만 씁니다.</b> 경도 줄(strip) 피처는 <b>적도대 j = 1</b>(위도 ±30°)만 씁니다. 위 예시의 (6, 2)는 북반구 칸이라 버려지고, (8, 1)·(4, 0) 중에서도 j = 1인 (8, 1)만 살아남습니다. 이 선택은 피처 생성 코드의 <code>lat1</code> 컬럼 필터로 고정돼 있습니다.</div></div>
+  </div>
+
+  <h3 style="margin-top:22px">이 이미지의 적도 줄 12칸 — 실제 값</h3>
+  <table class="tb" id="cells1"><caption class="sub" style="text-align:left">밝기 = median(log(1+RAD)) [nats], 어둡 = 칸 픽셀 중 RAD &lt; 0.5·R<sub>ref</sub> 비율, 유효 = 칸 안 유효 픽셀 비율</caption></table>
+</section>
+
+<section id="s1b">
+  <div class="num">2 · 패치 통계: 칸 하나가 숫자 3개가 되는 법</div>
+  <h2>logmed · dark · cover — 세 통계의 정확한 정의</h2>
+  <p>1절에서 픽셀을 12×3칸에 배분했습니다. 이제 <b>칸 하나에 속한 픽셀 수천 개를 숫자 하나로 줄입니다</b>. 쓰는 통계는 딱 세 개이고, 아래 정의가 피처 생성 코드의 전부입니다.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>① logmed — 밝기의 대표값</h3>
+      <div class="eq">logmed = median<sub>p ∈ 칸</sub> [ log(1 + RAD<sub>p</sub>) ]</div>
+      <p class="sub">자연로그(<code>np.log1p</code>)입니다. 1을 더하는 이유는 RAD가 0인 픽셀이 있어도 log가 −∞로 가지 않게 하려는 것입니다.</p>
+      <table class="tb"><thead><tr><th>픽셀</th><th class="m">RAD</th><th class="m">log(1+RAD)</th></tr></thead><tbody>
+        <tr><td>P1</td><td class="m">9</td><td class="m">2.303</td></tr>
+        <tr><td>P2</td><td class="m">19</td><td class="m">2.996</td></tr>
+        <tr class="hl"><td>P3</td><td class="m">29</td><td class="m"><b>3.401</b> ← 가운데</td></tr>
+        <tr><td>P4</td><td class="m">39</td><td class="m">3.689</td></tr>
+        <tr><td>P5</td><td class="m">999</td><td class="m">6.908</td></tr>
+      </tbody></table>
+      <div class="wk"><span class="lt">계산 구조 예시 (픽셀 5개짜리 장난감 칸)</span>
+        logmed = median(2.303, 2.996, <b>3.401</b>, 3.689, 6.908) = <b>3.401</b><br>
+        <span class="lt">평균을 쓰면</span> 3.859 — 밝은 픽셀 1개(P5)에 0.46만큼 끌려갑니다.
+      </div>
+      <p class="sub">실제 칸에는 수천~수만 개 픽셀이 들어가고, 그중 유효 픽셀만 씁니다. flares 같은 국소 발광이 중앙값을 못 흔들게 하려는 선택입니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>② dark — 어두운 픽셀의 비율</h3>
+      <div class="eq">R<sub>ref</sub> = median( RAD<sub>유효 디스크 전체</sub> )<br>
+dark = #{ p : RAD<sub>p</sub> &lt; 0.5 · R<sub>ref</sub> } / #{ p : 유효 }</div>
+      <p class="sub">기준은 <b>그 칸이 아니라 이미지 전체 디스크</b>에서 잡습니다. 칸 기준으로 잡으면 “상대적으로 어두운 칸”이 전부 0.5가 되어 버려 비교가 안 됩니다.</p>
+      <div class="wk"><span class="lt">계산 구조 예시</span>
+        R<sub>ref</sub> = 100 → 임계값 0.5 × 100 = <b>50</b><br>
+        칸 픽셀 RAD = 10, 20, 40, 70, 90 → 50 미만 3개 → dark = 3 / 5 = <b>0.60</b>
+      </div>
+      <p class="sub">이 시점 이미지의 실제 R<sub>ref</sub>는 <b><span id="refmed2"></span></b>이라 임계값은 <b><span id="darkthr"></span></b>입니다. 어두운 영역 = 코로나홀 후보 = 고속 태양풍의 출발지라는 물리적 가정이 이 통계 하나에 담겨 있습니다.</p>
+      <h3 style="margin-top:14px">③ cover — 이 칸을 믿어도 되나</h3>
+      <div class="eq">cover = #{ p : 유효 } / #{ p : 칸 전체 }</div>
+      <p class="sub">칸이 원반 가장자리에 걸리거나 결측이 많으면 cover가 떨어집니다. 줄(strip) 단계에서 <b>cover &lt; 0.5면 그 시점 값은 NaN</b>으로 버려집니다.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>왜 정확히 이 셋인가.</b> 밝기(logmed)는 “밝은 활성영역/어두운 구멍”의 대비를, dark는 “구멍이 차지하는 비율”을, cover는 “그 판단을 믿을 수 있는지”를 각각 담당합니다. 나머지 통계(10% 분위 등)도 계산되지만 Top30 선택에서 떨어져 모델에 들어가지 않습니다.</div>
+</section>
+
+
+<section id="s2">
+  <div class="num">3 · 갈래 A: 패치 → 경도 줄 5개</div>
+  <h2>“h시간 뒤에 닿을 바람은 지금 태양의 어느 경도에서 떠났나”</h2>
+  <p>v km/s로 날아오는 바람이 h시간 뒤 지구에 닿으려면 태양에서 <code>τ(v) = 1.4786×10⁸ km ÷ (3600·v)</code> 시간 전에 출발해야 합니다.
+  태양은 시간당 0.55°씩 자전하므로, 그 출발 지점은 이미지 속에서 <code>λ(h,v) = 0.55° × (τ(v) − (h + 이미지 나이))</code> 경도(서쪽이 +)에 있습니다.
+  이 경도 ±5° 폭의 줄이 겹치는 칸 값을 <b>겹친 길이 비율로 가중 평균</b>한 것이 strip 값입니다. 속도 5개 × 72개 시점마다 하나씩 나옵니다.</p>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><h3>① 이동 시간 τ — 속도를 “가정”하면 시간이 나온다</h3>
+      <div class="eq">τ(v) = 147,858,620.7 km / (3600 · v)</div>
+      <table class="tb"><thead><tr><th>가정한 v</th><th class="m">τ (h)</th><th class="m">h = 1일 때 λ</th><th class="m">h = 72일 때 λ</th></tr></thead><tbody id="tauTbl"></tbody></table>
+      <p class="sub">λ가 <b>h가 커질수록 작아지는</b> 이유: 72시간 뒤 도착하는 바람일수록 더 늦게 출발하므로, 지금 이미지에서는 더 동쪽(중앙 쪽)에 있습니다. v가 작을수록 오래 걸려서 더 일찍 출발 → 더 서쪽입니다.</p></div>
+    <div class="card"><h3>② 왜 속도 5개를 동시에 넣나</h3>
+      <p>바람의 실제 속도를 모르는 채로 줄 위치를 정해야 하므로, 350·450·550·650·750 km/s <b>다섯 개의 가설</b>을 모두 만들어 모델에 넘깁니다. 모델은 “지금 상황에서 어느 가설이 맞는지”를 5개 값의 조합으로 배웁니다.</p>
+      <p class="sub">750 km/s 가설은 같은 h에서 더 동쪽(중앙 근처), 350 km/s 가설은 더 서쪽(림 근처)을 봅니다. 그래서 5개 줄은 <b>같은 이미지의 서로 다른 경도</b>를 보는 셈이고, 서로 다른 정보를 담습니다.</p>
+      <div class="eq">λ<sub>350</sub> − λ<sub>750</sub> = 0.55 × (117.35 − 54.76) = <b>34.4°</b> &nbsp;<em>// 폭 10° 줄 두 개가 겹치지 않는 거리</em></div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>③ 이 시점 h에서 남는 5개 숫자 — 계산을 그대로</h3>
+    <p class="sub">슬라이더를 움직이면 아래 계산이 함께 바뀝니다. 각 줄의 λ → 겹치는 칸과 겹침 비율 w → 칸 값의 가중합이 그대로 모델 입력입니다.</p>
+    <div class="sl"><label for="hs2">예측 시점 h</label><input type="range" id="hs2" min="1" max="72" value="44"><output id="hs2o"></output></div>
+    <div id="stripCalc"></div>
+  </div>
+
+  <div class="card">
+    <div class="sl" style="display:none"><label for="hs">예측 시점 h</label><input type="range" id="hs" min="1" max="72" value="44"><output id="hso"></output></div>
+    <p class="sub" style="margin:0 0 8px">위 ③의 h를 그대로 그림으로 보여 줍니다.</p>
+    <svg class="chart" id="stripSvg" viewBox="0 0 900 400" role="img" aria-label="경도 줄과 패치 값"></svg>
+    <div class="note" id="stripNote"></div>
+  </div>
+  <h3 style="margin-top:16px">모델이 실제로 받는 strip 5개 — h에 따라 바뀌는 시계열 (72시간)</h3>
+  <div class="cols3" id="stripSpark" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))"></div>
+  <p style="font-size:12.5px;margin-top:8px;color:var(--ink-3)">15개(속도 5 × 밝기·어두운 비율·유효 비율) 중 모델이 쓰는 건 5개입니다. 특징 30개를 고르는 단계에서 나머지는 탈락했습니다.
+  이 시점은 5개 줄 모두 72시간 내내 유효(cover ≥ 0.5, NaN 0개)입니다.</p>
+
+  <h3 style="margin-top:20px">값이 비는 두 경로 — 그리고 이 시점은 왜 안 비는가</h3>
+  <div class="grid2">
+    <div class="card"><h3>① 이미지가 늦거나 낡음</h3>
+      <p>슬롯은 <b>관측 종료가 예측 시점보다 1시간 이상 앞선 것</b>(<code>slot ≤ O − 1h</code>)만 씁니다. 공개 지연 때문에 방금 찍은 사진은 쓸 수 없습니다. 그런데 그 슬롯의 <b>관측 종료가 O보다 6시간 넘게 과거</b>면(<code>O − obs_end &gt; 6h</code>) 그 이미지는 stale로 보고 72개 값을 전부 NaN으로 버립니다.</p>
+      <div class="wk"><span class="lt">이 시점</span>슬롯 <span id="slot-t"></span> · 관측 종료 <span id="obs-t"></span> · 이미지 나이 <b><span id="age-h"></span>h</b> → stale 아님</div></div>
+    <div class="card"><h3>② 그 줄이 원반을 벗어남</h3>
+      <p>λ가 ±90°를 넘어가면 그 줄은 디스크에 걸치는 칸이 없습니다. 또 <b>가중 평균한 cover가 0.5 미만</b>이면(림에 걸침·결측) 값이 아니라 NaN으로 기록합니다. 그래서 학습 데이터에는 NaN이 남아 있고, 뒤 6절에서 <b>예측 시점 축 전방 채움</b>으로 처리합니다.</p>
+      <div class="wk"><span class="lt">이 시점 5줄의 최소 cover</span><b><span id="min-cover"></span></b> (기준 0.5)</div></div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="num">4 · 갈래 B: 어두운 덩어리 → 코로나홀 면적 7개</div>
+  <h2>“태양풍이 새는 구멍이 얼마나, 어디에 있나”</h2>
+  <p>① 디스크 중앙값(<span id="refmed"></span>)의 <b>0.35배 또는 0.55배보다 어두운 픽셀</b>을 표시 → ② 3×3 열기·닫기로 잡음 제거 → ③ 보이는 반구의 0.05% 미만인 덩어리 버림 →
+  ④ 구면 보정한 <b>펼친 면적</b>(보이는 반구 대비 비율)을 구역별로 합산. 버튼을 누르면 그 피처가 어느 픽셀의 합인지 분홍색으로 표시됩니다.</p>
+  <div class="two">
+    <div><div class="stage" id="st3"></div>
+      <div class="legend" style="justify-content:center"><span><i class="dot" style="background:#46beff"></i>후보 전체</span><span><i class="dot" style="background:#ff4696"></i>선택한 피처가 합산하는 픽셀</span><span><i class="dot" style="background:transparent;border:1px dashed #fff"></i>구역 경계</span></div></div>
+    <div class="card"><div class="chips" id="chbtn"></div>
+      <div class="note" id="chnote"></div></div>
+  </div>
+
+  <h3 style="margin-top:24px">바텀업 ② 검출식 — “어둡다”를 픽셀 단위로 정의하면</h3>
+  <div class="grid2">
+    <div class="card"><h3>① 후보 픽셀과 잡음 제거</h3>
+      <div class="eq">후보 = 유효 &nbsp;&amp;&nbsp; ( RAD &lt; t · R<sub>ref</sub> ), &nbsp; t ∈ {0.35, 0.45, 0.55}<br>
+후보 → 3×3 <b>열기</b>(opening) → 3×3 <b>닫기</b>(closing) → 8-연결 성분 라벨링</div>
+      <p class="sub">열기로 점 하나짜리 우주선 자국을 지우고, 닫기로 구멍 안쪽의 작은 밝은 반점을 메웁니다. 임계값을 세 개 두는 이유는 “아주 어두운 핵심 구멍(0.35)”과 “느슨하게 잡은 넓은 후보(0.55)”를 모두 피처로 남기기 위해서입니다. (0.45는 계산되지만 Top30에는 0.35·0.55만 들어왔습니다.)</p></div>
+    <div class="card"><h3>② 면적은 픽셀 수가 아니라 구면 면적</h3>
+      <div class="eq">a<sub>p</sub> = 1 / ( z<sub>p</sub> · 2π · R<sub>☉,px</sub>² ) &nbsp;&nbsp;<em>// z = √(1 − x² − y²)</em><br>
+면적(덩어리) = Σ<sub>p ∈ 덩어리</sub> a<sub>p</sub> &nbsp;&nbsp;<em>// 단위: 보이는 반구 = 1</em><br>
+유지 조건: 면적 ≥ <b>0.0005</b> (=반구의 0.05%)</div>
+      <p class="sub">원반 가장자리 픽셀은 z가 작아 <b>실제로는 더 넓은 면적</b>을 덮습니다. 이 1/z 가중이 없으면 림 근처 코로나홀이 과소평가됩니다. “면적” 피처는 그래서 픽셀 수 비율이 아니라 <b>보이는 반구 대비 비율</b>입니다.</p></div>
+  </div>
+
+  <h3 style="margin-top:20px">③ 덩어리 → 구역별 합계 → 모델이 쓰는 7개 (이 시점 실제 값)</h3>
+  <div class="eq" style="margin-bottom:6px">적도대 = |위도| ≤ 30° &nbsp;·&nbsp; 중앙±15° = |경도| ≤ 15° &nbsp;·&nbsp; 중앙±30° = |경도| ≤ 30° &nbsp;·&nbsp; top-k = 면적 순위</div>
+  <table class="tb" id="chTbl"><thead><tr><th>피처</th><th>정의</th><th class="m">값 (반구 비율)</th></tr></thead><tbody></tbody></table>
+  <p class="sub">값은 <b>보이는 반구 = 1</b> 기준 비율입니다. 예: 0.0244는 “보이는 반구 면적의 2.44%가 그 조건의 코로나홀 후보”라는 뜻입니다.</p>
+
+  <div class="note"><b>이 절의 한계.</b> 이것은 코로나홀의 <b>물리적 검출</b>이 아니라 “중앙값 대비 어두운 픽셀 덩어리”라는 고정 규칙입니다. 임계값·최소면적·열기/닫기 구조는 사전에 고정됐고 F1/F2로 튜닝하지 않았습니다.</div>
+</section>
+
+<section id="s4">
+  <div class="num">5 · 나머지 17개</div>
+  <h2>ACE 위성 15개 + WSA-Enlil 2개는 이미지가 아닙니다</h2>
+  <p>ACE(L1 지점)는 지구 앞 150만 km에서 지금 지나가는 바람을 잽니다. 가장 강력한 단서는 <b>“지금 속도”</b>와 <b>“27일 전 같은 시각의 속도”</b>(태양이 한 바퀴 돌아 같은 곳이 다시 지구를 향함)입니다.</p>
+  <div class="two">
+    <div class="card"><h3>ACE 속도, T<sub>0</sub> 직전 24시간 (빈 구간은 결측)</h3><svg class="chart" id="aceSvg" viewBox="0 0 520 230"></svg>
+      <p style="font-size:12.5px;margin:6px 0 0">마지막 값(<code>ace_speed_kms_last</code>), 최근 6시간 평균(<code>_m6</code>), 24시간 평균(<code>_m24</code>)처럼 같은 원자료에서 여러 요약이 나옵니다.</p></div>
+    <div class="card"><h3>27일 회귀: 목표 시각의 26·27·28일 전 ACE 속도 (h마다 하나)</h3><svg class="chart" id="recSvg" viewBox="0 0 520 230"></svg>
+      <p style="font-size:12.5px;margin:6px 0 0"><code>rec26 / rec27 / rec28 / rec_mean</code> 4개는 h에 따라 달라지는 시계열입니다.</p></div>
+  </div>
+  <div class="cols3" style="margin-top:14px"><div><h3>ACE 15개 <span class="tag c-ace">관측</span></h3><div class="chips c-ace" id="chipsAce"></div></div>
+    <div><h3>WSA-Enlil 2개 <span class="tag c-enl">모델 기록</span></h3><div class="chips c-enl" id="chipsEnl"></div>
+    <p style="font-size:12.5px;margin-top:8px">NASA DONKI에 올라오는 WSA-Enlil 태양풍·CME 수치모의 실행 기록(JSON)에서 뽑은 값입니다. 이 절의 숫자는 <code>extract_raw_chain.py</code>가 원자료에서 다시 계산해 번들과 대조합니다.</p></div>
+    <div><h3>이미지 13개 <span class="tag c-img">1~3절</span></h3><div class="chips c-img" id="chipsImgShort"></div></div></div>
+
+  <h3 style="margin-top:26px">바텀업 ③ 한 시간값에서 15개 요약이 나오는 법</h3>
+  <p class="sub">같은 ACE 시계열에서 “어느 창을, 어떤 변환으로 요약했는가”만 다릅니다. 아래 값은 모두 이 시점의 실제 입력입니다.</p>
+  <table class="tb" id="aceTbl"><thead><tr><th>피처</th><th>산식</th><th class="m">값</th></tr></thead><tbody></tbody></table>
+  <div class="grid2">
+    <div class="card"><h3>평균은 “관측된 행만” 셉니다</h3>
+      <div class="eq">m6 = mean( 속도[t−5h … t] 중 결측 아닌 값 )</div>
+      <div class="wk" id="m6calc"></div>
+      <p class="sub">6행 창에 결측 1개가 있으면 5개 평균입니다. 24시간 창도 같은 규칙(24행 중 관측 <span id="m24obs"></span>행)입니다. 이래서 “마지막 값”과 “6시간 평균”이 서로 다른 숫자가 됩니다.</p></div>
+    <div class="card"><h3>27일 회귀는 h축으로 밀어 넣습니다</h3>
+      <div class="eq">rec_k(t, h) = 속도( t + h − k·24h ), &nbsp; k ∈ {26, 27, 28}<br>
+rec_mean(t, h) = 평균( rec26, rec27, rec28 )</div>
+      <p class="sub">목표 시각(t+h)의 k일 전 값을 그대로 가져오므로 <b>모두 과거 관측</b>입니다. 정보 누수가 없습니다. 아래 표에서 <code>rec26@h48 = 450.9</code>와 <code>rec27@h24 = 450.9</code>가 같은 값인 이유도 같은 시각을 가리키기 때문입니다(48−26×24 = 24−27×24 = −576h).</p>
+      <table class="tb" id="recTbl"><thead><tr><th class="m">h</th><th class="m">목표 시각</th><th class="m">rec26</th><th class="m">rec27</th><th class="m">rec28</th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="note"><b>입력 시점 규칙.</b> 이 페이지의 실험은 <b>ACE +2h 지연을 쓰지 않습니다</b>. t<sub>0</sub>까지 관측된 행은 그대로 쓰고, 늦어지는 것은 <b>이미지뿐</b>입니다(이미지 나이 <span id="age-h2"></span>h → <code>img_age_h</code> 피처로 남김).</div>
+</section>
+
+<section id="s5">
+  <div class="num">6 · 30개가 한 줄이 되는 법</div>
+  <h2>30개 → 입력 행 237열 (블록 3개)</h2>
+  <p>30개 중 <b>21개는 T<sub>0</sub>에서 하나의 숫자</b>(상수), <b>9개는 시간 h마다 하나씩 값이 있는 시계열</b>입니다. 모델은 72시간을 24시간씩 3블록으로 나눠 예측하므로,
+  블록마다 입력 행을 <code>상수 21 + 9종 × 24시간 = 237열</code>로 만듭니다.</p>
+  <div class="card"><svg class="chart" id="rowSvg" viewBox="0 0 900 330" role="img" aria-label="입력 행 구조"></svg></div>
+
+  <h3 style="margin-top:26px">바텀업 ④ 237열이 조립되는 순서<span class="deeplabel">design() 한 함수</span></h3>
+  <div class="eq">block = E[:, start : start+24, :][:, :, vary] &nbsp;<em>// (N,72,20) → (N,24,20) → (N,24,9)</em><br>
+X = hstack([ C[:, const], block.reshape(N, -1) ]) &nbsp;<em>// (N,237)</em></div>
+  <div class="steps">
+    <div class="step"><h3>① 상수 C — 21개, T<sub>0</sub>의 스칼라</h3>
+      <p>“그 시점에 하나의 값”만 있는 피처입니다. h에 따라 변하지 않으므로 24번 복제하지 않고 <b>한 번만</b> 넣습니다.</p>
+      <div class="chips" id="cChips" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr))"></div></div>
+    <div class="step"><h3>② 시계열 E — 9개, h마다 값</h3>
+      <p>원래 E는 <b>20종</b>(27일 회귀 4 + strip 15[속도 5 × 통계 3] + <code>enlil_dt_target</code> 1)입니다. 그중 Top30에 든 <b>9종</b>만 씁니다.</p>
+      <div class="chips" id="cE" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr))"></div>
+      <p class="sub" style="margin-top:8px">20 × 72 = 1,440개 후보 중 9 × 24 = 216개가 블록 하나의 입력이 됩니다.
+      이 9개(와 상수 21개)는 <b>미리 고정된 목록</b>이고, 예측 시점마다 다시 고르지 않습니다. 목록은 과거 공식 구간 성적을 참고해 정해진 이력이 있습니다.</p></div>
+    <div class="step"><h3>③ 24시간만 자른다</h3>
+      <p>한 예측 시점의 E는 72행이지만, 블록 b는 자기 구간만 봅니다. 세 모델은 같은 C를 공유하고 E만 다릅니다.</p>
+      <div class="eq">Block 0 → E[:, 0:24, :] &nbsp;·&nbsp; Block 1 → E[:, 24:48, :] &nbsp;·&nbsp; Block 2 → E[:, 48:72, :]<br>
+f<sub>0</sub>, f<sub>1</sub>, f<sub>2</sub> : ℝ²³⁷ → ℝ²⁴ &nbsp;<em>// 각 24개 출력, 이어 붙이면 72</em></div></div>
+    <div class="step"><h3>④ 펼치는 순서는 “시간 우선”</h3>
+      <p><code>reshape(N, -1)</code>은 (24, 9)를 <b>행 우선</b>으로 펼칩니다. 즉 h=1의 9개, h=2의 9개, … h=24의 9개 순서입니다. 그래서 22~30열이 h=1, 31~39열이 h=2 … 가 됩니다.</p>
+      <div class="wk">X[1..21] = C &nbsp;·&nbsp; X[22..30] = E(h=1) &nbsp;·&nbsp; X[31..39] = E(h=2) &nbsp;·&nbsp; … &nbsp;·&nbsp; X[229..237] = E(h=24)</div></div>
+    <div class="step"><h3>⑤ 결측은 “예측 시점 축”으로 전방 채움</h3>
+      <p>strip 값이 비는 경우(3절)가 있어, 학습·F1·F2의 origin을 시간순으로 정렬한 뒤 <b>이전 origin의 같은 위치 값</b>으로 채웁니다. 같은 origin 안에서 h를 넘나들며 채우지는 않습니다.</p>
+      <table class="tb"><thead><tr><th class="m">origin</th><th class="m">rec27 @h=2</th><th class="m">rec27 @h=3</th></tr></thead><tbody>
+        <tr><td class="m">t₁</td><td class="m">420</td><td class="m">450</td></tr>
+        <tr class="hl"><td class="m">t₂</td><td class="m">430</td><td class="m">450 ← 채움</td></tr>
+        <tr><td class="m">t₃</td><td class="m">440</td><td class="m">470</td></tr>
+      </tbody></table>
+      <p class="sub">전방 채움 후 F1·F2의 E에는 NaN이 0개로 기록돼 있습니다(학습 구간에는 일부 남음).</p></div>
+  </div>
+
+  <h3 style="margin-top:22px">이 시점 Block 0의 E, 24행 × 9열 — 모델이 실제로 받은 값</h3>
+  <p class="sub">가로 스크롤되는 표입니다. 각 행이 h=1…24이고, 이 216개 숫자가 위 22~237열에 그대로 들어갑니다.</p>
+  <div style="overflow-x:auto"><table class="tb" id="eTbl"></table></div>
+
+  <h3 style="margin-top:22px">30개 전체 — 값은 이 시점의 실제 입력</h3>
+  <div class="cols3" id="all30"></div>
+</section>
+
+<section id="s6">
+  <div class="num">7 · 모델 구조</div>
+  <h2>트리 모델 4개 → 두 갈래 예측 → 비율 w로 섞기</h2>
+  <p>같은 237열 입력을 <b>기준 모델 detroute</b>(body·tail·탐지기의 조합)와 <b>gpd arm</b>이 각각 받아 72개 예측을 만들고, 마지막에 두 예측을 <code>(1−w)·detroute + w·gpd</code>로 섞습니다.</p>
+  <div class="arch">
+    <div class="card" style="text-align:center;padding:10px"><b>입력 237열</b> × 블록 3개 (h1–24 · h25–48 · h49–72) <span style="color:var(--ink-3)">← 6절</span></div>
+    <div class="row r2">
+      <div class="group"><p class="gt">① 기준 모델 detroute  (“고속류가 올 것 같으면 tail, 아니면 body”)</p>
+        <div class="row" style="gap:8px">
+          <div class="mcard" style="--c:var(--body)"><h3><i class="dot" style="background:var(--body)"></i>body — 평소 풍속</h3><p>XGBoost 블록 3개. 트리 1개가 24시간을 한 번에 출력(벡터 리프), 깊이 3 · 900 라운드, <b>Tweedie(p=1.5) 손실</b>.</p><div class="o">출력: 72개 속도</div></div>
+          <div class="mcard" style="--c:var(--tail)"><h3><i class="dot" style="background:var(--tail)"></i>tail — 고속류 전용</h3><p>level · P(y≥550) · gap 3개 머리 × 3블록. <code>level + P·(gap − level)</code>로 합성, 고속 쪽으로 기움.</p><div class="o">출력: 72개 속도</div></div>
+          <div class="mcard" style="--c:var(--route)"><h3><i class="dot" style="background:var(--route)"></i>탐지기 — 고속류 확률</h3><p>이진 로지스틱 XGBoost, 깊이 4 · 400 라운드. 입력 237열 + 시간 인덱스 h.</p><div class="o">출력: P(≥550) 72개</div></div>
+        </div>
+        <div class="join">각 시간마다 <b>P ≥ 0.234 이면 tail, 아니면 body</b> → <b>detroute</b> 72개 <span style="color:var(--ink-3)">(0.234 = 오경보 비용 1233 ÷ (1233+놓침 비용 4045), 사전 고정)</span></div></div>
+      <div class="group"><p class="gt">② gpd arm  (“고속류 구간은 꼬리 분포로 교체”)</p>
+        <div class="row" style="gap:8px">
+          <div class="mcard" style="--c:var(--gpd)"><h3><i class="dot" style="background:var(--gpd)"></i>level</h3><p>고속 샘플에 4배 가중을 준 MSE 트리 (900 라운드). 평소 속도.</p></div>
+          <div class="mcard" style="--c:var(--gpd)"><h3><i class="dot" style="background:var(--gpd)"></i>P</h3><p>y≥550 확률 (400 라운드).</p></div>
+          <div class="mcard" style="--c:var(--gpd)"><h3><i class="dot" style="background:var(--gpd)"></i>excess</h3><p>log(y − 550) 회귀 (400 라운드).</p></div>
+        </div>
+        <div class="join"><b>P ≥ 0.5 이면 550 + exp(excess), 아니면 level</b> → <b>gpd</b> 72개</div></div>
+    </div>
+    <div class="card" style="text-align:center;padding:10px"><b>최종 = (1 − w)·detroute + w·gpd</b> &nbsp; (w는 0~0.75를 0.025 간격 31점에서 최근 성숙 잔차로 고름, <a href="#s8">10절</a>)</div>
+  </div>
+  <p style="font-size:12.5px;margin-top:10px;color:var(--ink-3)">F1 평가용 모델은 정답이 2026-02-26 이전인 데이터로만 학습합니다(원점+144h 마스크). 예시 시점은 F1 구간 안입니다. gpd arm의 세 머리는 보관되지 않아 최종 gpd 곡선만 보입니다.</p>
+
+  <h3 style="margin-top:26px">바텀업 ⑤ 세 모델은 각각 무엇을 최소화하는가</h3>
+  <p class="sub">같은 237열 입력, 같은 트리 구조(깊이 3 · 900 라운드), 다른 <b>손실함수</b>. XGBoost는 손실의 그래디언트 g와 헤시안 h만 보고 트리를 자라게 합니다.</p>
+  <div class="grid2">
+    <div class="card" style="border-top:4px solid var(--body)"><h3>body — point4 가중 제곱오차</h3>
+      <div class="eq">L = ½ · w · (μ − y)², &nbsp; w = 4 (y ≥ 550) 또는 1<br>
+g = w(μ − y), &nbsp; h = w &nbsp;&nbsp;<em>// w는 horizon별 평균이 1이 되게 정규화</em><br>
+리프 값 = −G/(H + λ), &nbsp; λ = 5, &nbsp; 반영량 = 0.03 × 리프 값</div>
+      <div class="wk"><span class="lt">계산 예시</span>
+        μ = 500, y = 650, w = 4 → g = 4(500−650) = <b>−600</b>, h = 4<br>
+        그 잎의 합이 G = −600, H = 4이면 리프 값 = 600/(4+5) = <b>66.7</b><br>
+        학습률 0.03 → 이번 라운드에서 예측이 <b>+2.0</b> 올라감 (500 → 502.0)</div>
+      <p class="sub">w가 <b>정답</b> 기준이라는 점이 중요합니다. “실제로 고속이었던 샘플”의 오차를 4배로 세므로, 고속 구간을 놓치면 벌점이 커집니다. 대신 손실의 최소점이 조건부 평균에서 살짝 비뚤어집니다.</p></div>
+    <div class="card" style="border-top:4px solid var(--tail)"><h3>tail — level + P·(gap − level)</h3>
+      <div class="eq">L̂ = level 트리 &nbsp;<em>// point4 손실</em><br>
+P̂ = clip( 확률트리 , 0, 1) &nbsp;<em>// 정답 1[y ≥ 550], MSE로 학습</em><br>
+Ĝ = gap 트리 + mean<sub>event</sub>(y) &nbsp;<em>// 잔차로 학습하고 평균을 되더함</em><br>
+tail = L̂ + P̂ · (Ĝ − L̂)</div>
+      <div class="wk"><span class="lt">계산 예시</span>level 470, P 0.6, gap 650 → 470 + 0.6×(650−470) = <b>578</b><br>
+        <span class="lt">gap 학습</span>event = (y ≥ 550).any(h축) 행만 사용 → resid = y − mean<sub>event</sub>(y) → 학습 후 평균 재가산</div>
+      <p class="sub">P̂는 <b>tail 내부의</b> 확률 머리이고, 아래 탐지기의 P와는 다른 모델입니다. 둘 다 기준은 550이지만 학습 대상이 다릅니다(머리는 horizon 단위, gap은 블록 단위).</p></div>
+  </div>
+
+  <div class="card" style="margin-top:14px;border-top:4px solid var(--route)"><h3>탐지기 — “이 (시점, h)는 고속인가”를 따로 학습</h3>
+    <div class="grid2">
+      <div>
+        <div class="eq">입력 = [ 237열 블록 피처 , h ] &nbsp;<em>// 238열, h마다 한 행</em><br>
+3개 분류기(블록별), binary:logistic · 깊이 4 · 400 라운드<br>
+P̂<sub>det</sub> ≥ <b>0.234</b> → tail, &nbsp; 아니면 → body</div>
+        <p class="sub">임계값은 성능으로 고른 값이 아니라 <b>비용비</b>에서 나옵니다. 고속을 놓칠 때의 손실 ≈ 4,045, 오경보의 손실 ≈ 1,233이라 베이즈 임계값은 1233/(1233+4045) = <b>0.2336</b> → 0.234로 고정했습니다.</p>
+      </div>
+      <div>
+        <div class="wk"><span class="lt">이 시점 h = <span id="det-h"></span>의 실제 계산</span>
+          시작값(base margin) = <span id="det-bias"></span><br>
+          + 400그루 잎 값 누적 = <span id="det-sum"></span><br>
+          → 로짓 <span id="det-margin"></span> → P = 1/(1+e<sup>−로짓</sup>) = <b><span id="det-prob"></span></b><br>
+          → 0.234 이상이므로 <b>tail</b> 선택</div>
+        <p class="sub">라우팅은 <b>h마다 독립</b>이라, 한 시점의 72시간 예보 안에서 어떤 시간은 body, 어떤 시간은 tail이 됩니다. 그래서 detroute 곡선은 두 모델을 이어 붙인 모양이 됩니다(아래 그림).</p>
+      </div>
+    </div>
+    <div class="note" style="margin-bottom:0"><b>왜 이 구조를 쓰나.</b> 두 arm을 “정답을 미리 안다”고 가정하고 섞으면 총 MSE 2,679.8 · 고속 5,380.6까지 내려갑니다(오라클 진단). 즉 <b>정보는 두 arm 안에 이미 있고</b>, 부족한 것은 “어느 (시점, h)가 고속인가”를 맞히는 일입니다. 탐지기는 그 선택만 담당합니다.</div></div>
+
+  <h3 style="margin-top:22px">같은 시점에서 모델들이 낸 72시간 곡선</h3>
+  <div class="card">
+    <div class="legend" id="fLegend"></div>
+    <svg class="chart" id="fSvg" viewBox="0 0 900 420" role="img" aria-label="72시간 예측과 실측"></svg>
+    <p style="font-size:12.5px;margin:6px 0 0;color:var(--ink-3)">아래 막대는 탐지기 확률입니다. 점선(0.234)을 넘는 시간은 detroute가 tail을 택합니다. 마우스를 올리면 시간별 값이 나옵니다.</p>
+  </div>
+</section>
+
+<section id="s6b">
+  <div class="num">8 · gpd arm: 꼬리만 따로 맞히는 모델</div>
+  <h2>“550을 넘는다면, 얼마나 넘는가”를 따로 학습</h2>
+  <p>detroute는 고속 여부에 따라 두 arm을 <b>통째로 골라 쓰는</b> 방식입니다. gpd arm은 반대로 <b>같은 모델 안에서</b> 고속일 때만 예측을 교체합니다.
+  세 머리를 각각 학습하고, 확률이 0.5를 넘는 (시점, h)에서만 level 예측을 꼬리 예측으로 바꿉니다.</p>
+
+  <div class="cols3" style="margin-top:14px">
+    <div class="card" style="border-top:4px solid var(--gpd)"><h3>level — 평소 속도</h3>
+      <div class="eq" style="font-size:12.5px">L̂ = point4 트리(x)<br><em>// y≥550에 4배 가중, 900 라운드</em></div></div>
+    <div class="card" style="border-top:4px solid var(--gpd)"><h3>P — 550을 넘을 확률</h3>
+      <div class="eq" style="font-size:12.5px">P̂ = clip(트리(x), 0, 1)<br><em>// 정답 1[y≥550], MSE, 400 라운드</em></div></div>
+    <div class="card" style="border-top:4px solid var(--gpd)"><h3>excess — 초과량</h3>
+      <div class="eq" style="font-size:12.5px">Z = log( max(y − 550, 1) )<br>Ẑ = clip(트리(x), 0, log 2450)<br><em>// 초과가 있는 블록 행만 학습</em></div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>조립식</h3>
+    <div class="eq">route = ( P̂ ≥ 0.5 )<br>
+y&#770;<sub>gpd</sub> = U + exp(Ẑ) &nbsp; if route &nbsp;&nbsp;<em>// U = 550</em><br>
+y&#770;<sub>gpd</sub> = L̂ &nbsp; otherwise<br>
+마지막에 clip(y&#770;<sub>gpd</sub>, 1, 3000)</div>
+    <div class="grid2">
+      <div class="wk"><span class="lt">계산 예시</span>
+        L = 480, P = 0.70, Z = log(100) → route = 참<br>
+        y&#770; = 550 + exp(log 100) = <b>650</b><br>
+        <span class="lt">같은 시점에서 P = 0.40이었다면</span> y&#770; = L = <b>480</b> (level 그대로)
+      </div>
+      <div>
+        <p class="sub">이름은 gpd지만 <b>일반화 파레토 분포를 적합하지는 않습니다</b>. 실제 구현은 “550 초과 발생(P)”과 “초과량의 로그(Z)”를 XGBoost로 회귀하는 peaks-over-threshold 근사입니다. Z를 로그로 둔 덕분에 꼬리 오차가 절대량이 아니라 <b>비율</b>로 벌점화됩니다.</p>
+        <p class="sub"><b>0.5라는 문턱</b>은 확률을 매끄럽게 섞는 대신 “넘는다/안 넘는다”를 딱 잘라 씁니다. 그래서 gpd 곡선은 level 곡선과 꼬리 곡선 사이를 <b>계단처럼</b> 오갑니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><b>arm은 파일 하나입니다.</b> 학습이 끝나면 72시간 예측 전체를 <code>runs/gpd_v1/forecast.npz</code>에 저장하고, detpool(pool_lane)은 그 배열을 <b>다시 학습하지 않고 그대로</b> 읽어 씁니다. 같은 자리에 넣을 수 있는 다른 arm도 있습니다 —
+  <code>era</code>(월별 오차로 반복 재가중), <code>mixture</code>(level+확률+gap), <code>spectral</code>(FFT 기반 오차 벌점). 10절의 w는 “이 arm을 얼마나 믿을지”를 고르는 값입니다.</div>
+</section>
+
+<section id="s7">
+  <div class="num">9 · 트리 한 번 계산해 보기</div>
+  <h2>탐지기가 <span id="t-h"></span>시간 뒤 확률을 계산하는 과정</h2>
+  <p>XGBoost 모델은 <b>수백 그루의 작은 결정 트리</b>입니다. 각 트리는 “이 값이 기준보다 작은가?”를 4번 묻고 도착한 잎(leaf)의 숫자를 내놓으며, 모든 잎 값을 더한 뒤 확률로 바꿉니다.
+  아래는 이 시점의 <b>실제 모델 파일</b>에서 꺼낸 첫 세 그루입니다. 주황색 이름 = 이미지에서 나온 피처.</p>
+
+  <div class="note"><b>벡터 리프.</b> body·tail은 <code>multi_strategy='multi_output_tree'</code>(<code>num_target=24</code>)입니다. 즉 리프 하나가 숫자 하나가 아니라 <b>24차원 벡터</b>를 들고 있습니다. 그래서 “트리 1그루 = h1~h24를 동시에 보정”이 되고, 900 라운드 뒤 24개 출력이 함께 완성됩니다. 탐지기는 이진 분류기라 리프가 스칼라입니다(아래 그림).</div>
+
+  <h3 style="margin-top:18px">같은 입력, 다른 손실 — Tweedie가 바꾼 것</h3>
+  <p><b>body(tweedie15)</b>는 point4의 4배 가중 제곱오차 대신 Tweedie deviance를 씁니다. 분산이 평균의 p제곱에 비례한다고 보는 손실(<code>Var = φ·μ^p</code>, p = 1.5)이고, 코드의 그래디언트·헤시안은 다음과 같습니다.</p>
+  <div class="eq">g = S<sup>p</sup>( μ<sup>1−p</sup> − y·μ<sup>−p</sup> ) = (S/μ)<sup>p</sup> (μ − y)<br>
+h = S<sup>p</sup>( (1−p)·μ<sup>−p</sup> + p·y·μ<sup>−p−1</sup> ) = (S/μ)<sup>p</sup>( (1−p) + p·y/μ )<br>
+S = 500, p = 1.5, &nbsp; h ← max(h, 10⁻⁶·S<sup>p</sup>) &nbsp;<em>// 헤시안이 0 이하로 갈 수 있어 하한</em></div>
+  <table class="tb" style="max-width:620px"><thead><tr><th class="m">예측 μ</th><th class="m">(500/μ)<sup>1.5</sup></th><th class="m">오차 μ−y = −150</th><th class="m">|g|</th></tr></thead><tbody>
+    <tr><td class="m">300</td><td class="m">2.152</td><td class="m">−150</td><td class="m">322.8</td></tr>
+    <tr><td class="m">400</td><td class="m">1.398</td><td class="m">−150</td><td class="m">209.6</td></tr>
+    <tr class="hl"><td class="m">500</td><td class="m">1.000</td><td class="m">−150</td><td class="m">150.0</td></tr>
+    <tr><td class="m">600</td><td class="m">0.761</td><td class="m">−150</td><td class="m">114.1</td></tr>
+    <tr><td class="m">700</td><td class="m">0.604</td><td class="m">−150</td><td class="m">90.6</td></tr>
+  </tbody></table>
+  <p class="sub">같은 150 km/s 과소예측이라도 <b>낮은 예측값에서 더 세게</b> 밀어 올립니다. 즉 Tweedie 손실은 “상대오차”를 벌점화하고, point4처럼 550에서 가중치가 계단으로 뛰지 않습니다. “고속을 더 강하게 학습한다”와는 다른 이야기입니다(표에서 μ가 클수록 |g|가 작아집니다). S<sup>p</sup>를 곱하는 이유는 그래디언트를 O(1)로 유지해 <code>reg_lambda=5</code>가 원래 의미를 갖게 하려는 것입니다.</p>
+
+  <div class="cols3" id="trees"></div>
+  <div class="two">
+    <div class="card"><h3>잎 값을 400그루 누적하면</h3><svg class="chart" id="marSvg" viewBox="0 0 520 250"></svg>
+      <p style="font-size:12.5px;margin:6px 0 0" id="marNote"></p></div>
+    <div class="card"><h3>질문(분할)이 어떤 입력에서 나왔나</h3>
+      <p style="font-size:12.5px">모델 파일의 모든 트리에서 분할 횟수를 센 비율(3개 블록 평균, F1 학습본).</p><div class="bars" id="shareBars"></div>
+      <p style="font-size:12.5px;margin-top:8px;color:var(--ink-3)">분할 횟수는 영향력의 근사일 뿐입니다. 이미지 피처는 30개 중 13개(43%)인데 분할의 약 절반을 차지합니다. 쓸모는 있지만 압도적이라는 뜻은 아닙니다.</p></div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="num">10 · 마지막 섞기와 결과</div>
+  <h2>w는 최근 한 달 성적으로 고릅니다</h2>
+  <p>예시 시점 직전까지 <b>72시간치 정답이 모두 나온</b>(그 시점 + 72시간 ≤ T<sub>0</sub>) 최근 <span id="wrows"></span>개 시점의 잔차만 모아, 31개 후보 w마다 “전체 MSE”를 계산합니다.
+  단, 같은 구간의 고속(≥550) MSE가 detroute보다 나빠지는 w는 후보에서 뺍니다. 가장 낮은 전체 MSE의 w가 이 시점의 w입니다. <b>재학습은 없습니다.</b></p>
+
+  <h3 style="margin-top:24px">바텀업 ⑥ 잔차 세 개로 2차식을 만들고, 최소점을 격자에 스냅<span class="deeplabel">pool_lane.choose_weights</deeplabel></h3>
+  <div class="steps">
+    <div class="step"><h3>① 잔차 세 종류만 저장한다</h3>
+      <div class="eq">se_base = (base − y)² &nbsp;·&nbsp; se_arm = (arm − y)² &nbsp;·&nbsp; cross = (base − y)(arm − y)</div>
+      <p class="sub">혼합 예측의 오차는 <code>(1−w)(base−y) + w(arm−y)</code>이므로, 제곱해서 평균하면 아래 세 평균만 있으면 됩니다. 72개 horizon을 모두 같은 w로 섞기 때문에 <b>horizon별로 쪼개지 않고 전부 더해</b> 씁니다.</p></div>
+    <div class="step"><h3>② 창(window)을 자른다 — 성숙한 과거만</h3>
+      <div class="eq">matured(k) = #{ k′ : origin<sub>k′</sub> + 72h ≤ origin<sub>k</sub> } &nbsp;<em>// searchsorted</em><br>
+사용 구간 = [ matured(k) − 2160 , matured(k) ) &nbsp;<em>// 최근 2,160개 시점</em></div>
+      <p class="sub">아직 72시간이 지나지 않은 시점의 정답은 <b>미래 정보</b>이므로 후보에서 제외합니다. 이 한 줄이 정보 누수를 막는 장치입니다.</p></div>
+    <div class="step"><h3>③ 평균 세 개 → MSE(w)는 w의 2차식</h3>
+      <div class="eq">A = mean(se_base), &nbsp; B = mean(se_arm), &nbsp; C = mean(cross) &nbsp;<em>// 창 전체</em><br>
+MSE(w) = (1−w)²·A + w²·B + 2w(1−w)·C<br>
+w* = (A − C) / (A + B − 2C)</div>
+      <div class="wk" id="poolABC"></div>
+      <p class="sub">A는 detroute의 창 MSE(= w=0), B는 arm의 창 MSE(= w=1), C는 두 오차가 같은 방향으로 틀린 정도입니다. <b>C가 작을수록</b> 두 모델이 서로 다른 쪽으로 틀렸다는 뜻이라 섞을 이득이 커집니다.</p></div>
+    <div class="step"><h3>④ 고속 구간 보호 제약</h3>
+      <div class="eq">tail(w) = (1−w)²·A₁ + w²·B₁ + 2w(1−w)·C₁ &nbsp;&nbsp;<em>// 정답 ≥ 550인 셀만</em><br>
+허용 조건: tail(w) ≤ tail(0) = A₁</div>
+      <p class="sub">전체 MSE만 보고 w를 고르면 고속 구간이 나빠질 수 있습니다. 그래서 “고속 MSE가 detroute보다 나빠지지 않는 w”만 남기고 그 안에서 전체 MSE 최소를 고릅니다. 이 제약 때문에 <b>w가 0에 붙는 시점</b>도 생깁니다(전체 w의 <span id="wzero"></span>%).</p>
+      <div class="wk" id="poolGuard"></div></div>
+    <div class="step"><h3>⑤ 격자에 스냅 + 안전장치</h3>
+      <div class="eq">w ∈ {0, 0.025, 0.050, …, 0.750} &nbsp;<em>// 31점, 사전 고정</em><br>
+w ← argmin<sub>w, 허용</sub> MSE(w)</div>
+      <p class="sub">연속 최적점 w*를 그대로 쓰지 않고 <b>미리 정한 격자</b>에서 고릅니다(과최적화 방지·재현성). 그리고 창이 너무 짧으면 학습을 포기합니다: <code>성숙 시점 &lt; 48개</code> 또는 <code>고속 셀 &lt; 50개</code>면 <b>w = 0</b>(detroute 그대로).</p>
+      <div class="wk" id="poolSnap"></div></div>
+  </div>
+
+  <div class="note"><b>이 설계가 하는 말.</b> “어느 모델이 나은가”를 <b>미래가 아니라 과거 잔차</b>로 판단하고, 판단에 쓰는 통계는 <b>세 개의 평균</b>뿐이며, 그 위에 <b>고속 성능 하한</b>과 <b>표본 최소 조건</b>을 얹었습니다. 학습되는 파라미터는 하나도 없습니다 — 매 시점 w만 다시 계산합니다(시점당 약 <span id="wtime"></span>μs).</div>
+
+  <div class="two">
+    <div class="card"><h3>후보 w별 최근 구간 전체 MSE</h3><svg class="chart" id="scanSvg" viewBox="0 0 520 250"></svg></div>
+    <div class="card"><h3>이 시점 한 개의 결과 (72개 평균 MSE)</h3><div class="bars" id="resBars"></div>
+      <h3 style="margin-top:16px">전체 4,970개 시점 평균</h3><table id="allTbl"></table>
+      <p style="font-size:12.5px;margin:8px 0 0;color:var(--ink-3)">이 시점은 설명을 위해 <b>탐지기가 실제로 발동한 사례</b>를 골랐습니다. 전체로 보면 개선폭은 작습니다(총 MSE −4.3, 고속 −378). 시점의 약 48%에서 좋아지고 약 48%에서 나빠집니다.</p></div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="num">11 · 최종 산출물과 채점</div>
+  <h2>예측 하나가 파일 세 개가 되기까지</h2>
+  <p>여기까지가 “입력 237열 → 트리 4개 → detroute·gpd → w 혼합”입니다. 남은 일은 <b>모든 시점을 같은 규칙으로 다시 계산해 한 파일로 저장</b>하고, 고정된 채점기로 재는 것입니다.</p>
+
+  <div class="grid2">
+    <div class="card"><h3>저장되는 세 파일</h3>
+      <table class="tb"><tbody>
+        <tr><td><code>forecast.npz</code></td><td>최종 혼합 예측 (N, 72) · origins_ns</td></tr>
+        <tr><td><code>weights.npz</code></td><td>시점별 w, 성숙 시점 수</td></tr>
+        <tr><td><code>results.json</code></td><td>전체·F1·F2·고속 MSE, CSI/POD/FAR, bias, 목표 판정</td></tr>
+      </tbody></table>
+      <p class="sub">검증: 예측이 <b>유한한 양수이고 3,000 km/s 이하</b>인지, arm과 base의 origin이 정확히 같은지(<code>allclose</code>), 공식 창에 미관측 정답이 없는지 확인하고 하나라도 어긋나면 중단합니다.</p></div>
+    <div class="card"><h3>공식 창 = F1 + F2</h3>
+      <table class="tb"><thead><tr><th>구간</th><th class="m">시점 수</th><th class="m">행 수</th></tr></thead><tbody>
+        <tr><td>F1 (2026-01 ~ 03)</td><td class="m">2,137</td><td class="m">153,864</td></tr>
+        <tr><td>F2 (2026-04 ~ 06)</td><td class="m">2,833</td><td class="m">203,976</td></tr>
+        <tr class="hl"><td>합계</td><td class="m">4,970</td><td class="m"><b>357,840</b></td></tr>
+      </tbody></table>
+      <div class="eq" style="font-size:12.5px">(2,137 + 2,833) × 72 = 357,840</div>
+      <p class="sub">내부 게이트로 공식 구간을 건너뛰지 않습니다. 학습이 끝나면 항상 F1·F2 전체를 예측·제출합니다.</p></div>
+  </div>
+
+  <h3 style="margin-top:20px">채점 — 목표선과 실제 성적</h3>
+  <table class="tb" id="scoreTbl"><thead><tr><th>지표</th><th class="m">detroute (w=0)</th><th class="m">detpool+gpd (최종)</th><th class="m">차이</th><th class="m">목표</th></tr></thead><tbody></tbody></table>
+  <p class="sub">MSE 단위는 (km/s)². 목표는 전체 MSE &lt; 3,200 이고 F1·F2·전체의 고속(≥550) MSE가 모두 &lt; 6,000 인 것입니다. 고속 MSE는 detroute보다 확실히 좋아졌지만 <b>아직 목표 미달</b>이고, 전체 MSE는 목표에 근접했습니다.</p>
+
+  <div class="note"><b>숫자를 읽을 때의 세 가지 주의.</b>
+  ① 10절의 w는 <b>과거 잔차</b>로만 정해집니다. 미래에 새로 발생하는 고속류를 보장하지 않습니다.
+  ② 고속 구간 제약은 “과거에 550 이상이었던 셀”의 성능을 지키는 장치입니다.
+  ③ 이 페이지의 Top30 목록은 <b>과거 공식 결과를 참고해 고른 이력</b>이 있어, 독립적인 신규 구간 성능으로 읽을 때는 그 점을 감안해야 합니다.</div>
+</section>
+
+<footer>
+  <div>원본: <span id="f-file"></span></div>
+  <div>재생성: <code>.venv/bin/python docs/explainers/code/extract_flow.py &amp;&amp; .venv/bin/python docs/explainers/code/build_flow.py</code> — 스크립트가 strip 72시점×5속도, 코로나홀 7개, detroute 라우팅, 최종 블렌드, w 선택을 모델이 실제로 받은 번들/아카이브와 대조하고, 하나라도 다르면 중단합니다.</div>
+  <div>이 페이지에서 <b>실제 값</b>은 번들(이미지·패치·strip·코로나홀·30피처·예측 곡선·w 스캔·채점)에서 오고, <b>계산 예시</b>라고 표시한 블록(픽셀 5개 중앙값, gap/tail 조립, Tweedie 그래디언트, gpd 조립)은 산식 설명용 숫자입니다.</div>
+  <div>이전 버전(단계 흐름 중심)은 <code>templates/flow.v1.html</code>, 3D 단계별 설명은 <code>code/build.py detpool</code>로 <code>e2000fs_calib4_detpool_gpd.3d.html</code>에 다시 만들 수 있습니다.</div>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById('data').textContent);
+const NS = 'http://www.w3.org/2000/svg';
+const $ = (s, el = document) => el.querySelector(s);
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const fmt = (v, n = 2) => v == null || !isFinite(v) ? '—' : Number(v).toFixed(n);
+function S(tag, attrs = {}, kids = []) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (Array.isArray(kids) ? kids : [kids]).forEach(c => c != null && e.append(c.nodeType ? c : document.createTextNode(String(c))));
+  return e;
+}
+function H(tag, attrs = {}, kids = []) {
+  const e = document.createElement(tag);
+  for (const k in attrs) k === 'html' ? e.innerHTML = attrs[k] : e.setAttribute(k, attrs[k]);
+  (Array.isArray(kids) ? kids : [kids]).forEach(c => c != null && e.append(c.nodeType ? c : document.createTextNode(String(c))));
+  return e;
+}
+const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0 || 1) * (r1 - r0);
+const SRC = { image: 'img', ace: 'ace', enlil: 'enl' };
+const SRCNAME = { image: '이미지', ace: 'ACE', enlil: 'Enlil' };
+const tip = $('#tip');
+function showTip(html, ev) {
+  tip.innerHTML = html; tip.style.display = 'block';
+  const w = tip.offsetWidth, hgt = tip.offsetHeight;
+  let x = ev.clientX + 14, y = ev.clientY + 14;
+  if (x + w > innerWidth - 8) x = ev.clientX - w - 14;
+  if (y + hgt > innerHeight - 8) y = ev.clientY - hgt - 14;
+  tip.style.left = Math.max(4, x) + 'px'; tip.style.top = Math.max(4, y) + 'px';
+}
+const hideTip = () => tip.style.display = 'none';
+function axisText(g, x, y, t, anchor = 'middle', extra = {}) {
+  g.append(S('text', Object.assign({ x, y, 'text-anchor': anchor, 'font-size': 11, fill: 'var(--ink-3)' }, extra), t));
+}
+const NAME = {
+  v_lag0: 'ACE 속도 (T0 시점)', ace_speed_kms_last: 'ACE 속도 (마지막 관측)', ace_density_cm3_last: '밀도 (마지막)',
+  ace_density_cm3_m6: '밀도 6시간 평균', ace_temperature_k_last: '온도 (마지막)', ace_temperature_k_m24: '온도 24시간 평균',
+  ace_bt_nt_last: '자기장 세기 Bt (마지막)', ace_bt_nt_m6: 'Bt 6시간 평균', ace_by_gsm_nt_m24: 'By(GSM) 24시간 평균',
+  ace_epam_p_channel3_last: 'EPAM 입자 flux (log10)', ace_sis_gt10_flux_last: 'SIS >10MeV flux (log10)',
+  rec26: '26일 전 ACE 속도', rec27: '27일 전 ACE 속도', rec28: '28일 전 ACE 속도', rec_mean: '26·27·28일 전 평균',
+  enlil_kp: 'Enlil 실행의 Kp 값', enlil_n_pending: 'Enlil 미도착(pending) 실행 수', img_age_h: '이미지 나이 (시간)',
+  ch_ch_t035_top2_area: '코로나홀 2번째 큰 덩어리 (0.35)', ch_ch_t035_equatorial_area: '적도대 면적 (0.35)',
+  ch_ch_t035_meridian15_equatorial_area: '중앙 ±15°·적도대 (0.35)', ch_ch_t035_meridian30_equatorial_area: '중앙 ±30°·적도대 (0.35)',
+  ch_ch_t055_equatorial_area: '적도대 면적 (0.55)', ch_ch_t055_meridian15_area: '중앙 ±15° 면적 (0.55)',
+  ch_ch_t055_meridian30_equatorial_area: '중앙 ±30°·적도대 (0.55)',
+};
+const nameOf = n => NAME[n] || (n.startsWith('strip_') ? `속도 ${n.match(/v(\d+)/)[1]} 줄 · ${n.endsWith('logmed') ? '밝기(log)' : '어두운 비율'}` : n);
+const I = D.image, W0 = I.size[0], H0 = I.size[1];
+$('#h-origin').textContent = D.origin.replace('+00:00', ' UTC');
+$('#f-file').textContent = I.file;
+
+/* ---------------- 0. overview ---------------- */
+(function () {
+  const n = { image: 0, ace: 0, enlil: 0 };
+  D.features.forEach(f => n[f.src]++);
+  const nodes = [
+    ['s1', '원자료', ['SUVI 이미지 1장 (1280² 프레임)', 'ACE 위성 시계열', 'WSA-Enlil 실행 기록']],
+    ['s2', '고정 산식 (학습 없음)', ['패치 통계 → 경도 줄', '어두운 덩어리 → 면적', '평균·지연·27일 전 값']],
+    ['s5', '30개 피처', null],
+    ['s5', '입력 행', ['237열 × 블록 3개', '= 상수 21 + 9 × 24시간']],
+    ['s6', '트리 모델 4개', ['body · tail · 탐지기', 'gpd arm', '→ detroute, gpd']],
+    ['s8', '최종 72개', ['(1−w)·detroute + w·gpd', 'w ≈ ' + fmt(D.model.w, 3)]],
+  ];
+  const root = $('#flow');
+  nodes.forEach((nd, i) => {
+    const a = H('a', { class: 'node', href: '#' + nd[0] });
+    a.append(H('div', { class: 'k' }, '단계 ' + (i + 1)), H('h3', {}, nd[1]));
+    if (nd[2]) { const ul = H('ul'); nd[2].forEach(t => ul.append(H('li', {}, t))); a.append(ul); }
+    else {
+      const bar = H('div', { class: 'bar30' });
+      [['image', n.image], ['ace', n.ace], ['enlil', n.enlil]].forEach(([k, v]) => bar.append(H('i', { style: `flex:${v};background:var(--${SRC[k]})`, title: SRCNAME[k] + ' ' + v })));
+      a.append(bar);
+      const ul = H('ul');
+      [['image', '이미지'], ['ace', 'ACE'], ['enlil', 'Enlil']].forEach(([k, t]) =>
+        ul.append(H('li', {}, [H('i', { class: 'dot', style: `background:var(--${SRC[k]})` }), `${t} ${n[k]}개`])));
+      a.append(ul);
+    }
+    root.append(a);
+  });
+})();
+
+/* ---------------- stage helper (rotated image + overlays) ---------------- */
+function makeStage(el) {
+  const rot = H('div', { class: 'rot', style: `transform:rotate(${I.rot_deg}deg)` });
+  const base = H('img', { src: I.uri, alt: 'SUVI Fe195', draggable: 'false' });
+  const svg = S('svg', { viewBox: `0 0 ${W0} ${H0}` });
+  rot.append(base);
+  el.append(rot);
+  const comp = (cls, txt, st) => H('div', { class: 'compass', style: st }, txt);
+  el.append(comp('', '북(N)', 'top:6px;left:50%;transform:translateX(-50%)'), comp('', '서(W) +', 'right:8px;top:50%;transform:translateY(-50%)'),
+    comp('', '− 동(E)', 'left:8px;top:50%;transform:translateY(-50%)'), comp('', '남(S)', 'bottom:6px;left:50%;transform:translateX(-50%)'));
+  return { el, rot, svg, finish() { rot.append(svg); } };
+}
+function cellAt(xs, ys) {
+  const R = I.rsun_px, col = xs, row = H0 - 1 - ys, crow = H0 - 1 - I.disk.cy;
+  const xi = col - I.disk.cx, yi = row - crow;
+  const xx = (I.pc[0] * xi + I.pc[1] * yi) / R, yy = (I.pc[2] * xi + I.pc[3] * yi) / R;
+  const rr = xx * xx + yy * yy; if (rr > 0.98 * 0.98) return null;
+  const z = Math.sqrt(Math.max(0, 1 - rr)), b0 = I.b0 * Math.PI / 180;
+  const lat = Math.asin(clamp(yy * Math.cos(b0) + z * Math.sin(b0), -1, 1)), lon = Math.atan2(xx, z * Math.cos(b0) - yy * Math.sin(b0));
+  return { i: clamp(Math.floor((lon + Math.PI / 2) / Math.PI * 12), 0, 11), j: clamp(Math.floor((lat + Math.PI / 2) / Math.PI * 3), 0, 2), lon: lon * 180 / Math.PI, lat: lat * 180 / Math.PI };
+}
+
+/* ---------------- 1. raw image + patch grid ---------------- */
+(function () {
+  const st = makeStage($('#st1'));
+  const g = S('g', { id: 'g1', style: 'display:none' });
+  const gl = S('g', { fill: 'none', stroke: '#fff', 'stroke-opacity': .5, 'stroke-width': 1 });
+  gl.append(S('path', { d: I.grid.lon }));
+  const lat = S('path', { d: I.grid.lat, stroke: '#ffd37a', 'stroke-width': 2.2, 'stroke-opacity': .95 });
+  gl.append(lat);
+  gl.append(S('circle', { cx: I.disk.cx, cy: I.disk.cy, r: I.disk.r, 'stroke-opacity': .5 }));
+  g.append(gl);
+  const labels = S('g'); g.append(labels);
+  const hi = S('circle', { r: 16, fill: 'none', stroke: '#fff', 'stroke-width': 2, style: 'display:none' }); g.append(hi);
+  st.svg.append(g); st.finish();
+  let stat = 'logmed';
+  const STATN = { logmed: '밝기(log1p 중앙값)', dark: '어두운 비율', valid: '유효 비율' };
+  function drawLabels() {
+    labels.replaceChildren();
+    D.patches.filter(p => p.j === 1 && p.cx != null).forEach(p => {
+      const t = S('text', { x: p.cx, y: p.cy + 4, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: '#fff', stroke: '#000', 'stroke-width': 3, 'paint-order': 'stroke',
+        transform: `rotate(${-I.rot_deg} ${p.cx} ${p.cy})` }, fmt(p[stat], stat === 'logmed' ? 2 : 2));
+      labels.append(t);
+    });
+  }
+  drawLabels();
+  const info = $('#cell1');
+  const infoDefault = () => info.innerHTML = `<h3>격자 칸 값</h3><p>격자 탭에서 이미지 위에 마우스를 올리면 그 칸의 통계가 나옵니다. 노란 선 사이의 <b>가운데 위도 줄</b>(위도 −30°~+30°) 12칸의 값이 화면에 표시되어 있고, 2절에서 이 12칸만 씁니다.</p>`;
+  infoDefault();
+  function showCell(c) {
+    if (!c) return infoDefault();
+    const p = D.patches.find(q => q.i === c.i && q.j === c.j);
+    hi.style.display = ''; hi.setAttribute('cx', p.cx); hi.setAttribute('cy', p.cy);
+    info.innerHTML = `<h3>경도 칸 ${c.i} · 위도 줄 ${c.j}${c.j === 1 ? ' (사용)' : ' (미사용)'}</h3>
+      <dl class="kv"><dt>경도 범위</dt><dd>${-90 + 15 * c.i}° ~ ${-90 + 15 * (c.i + 1)}° (서쪽 +)</dd>
+      <dt>밝기 log1p 중앙값</dt><dd>${fmt(p.logmed, 4)}</dd><dt>어두운 비율</dt><dd>${fmt(p.dark, 4)} <span style="color:var(--ink-3)">(밝기 &lt; 0.5×디스크 중앙값인 픽셀 비율)</span></dd>
+      <dt>유효 비율</dt><dd>${fmt(p.valid, 4)} <span style="color:var(--ink-3)">(품질 플래그 정상 픽셀 비율)</span></dd></dl>`;
+  }
+  const stageEl = $('#st1');
+  stageEl.addEventListener('pointermove', ev => {
+    if (g.style.display === 'none') return;
+    const r = stageEl.getBoundingClientRect(), s = W0 / r.width, a = -I.rot_deg * Math.PI / 180;
+    const dx = ev.clientX - r.left - r.width / 2, dy = ev.clientY - r.top - r.height / 2;
+    showCell(cellAt(W0 / 2 + (dx * Math.cos(a) - dy * Math.sin(a)) * s, H0 / 2 + (dx * Math.sin(a) + dy * Math.cos(a)) * s));
+  });
+  stageEl.addEventListener('pointerleave', () => { hi.style.display = 'none'; infoDefault(); });
+  $('#t1').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...$('#t1').children].forEach(x => x.setAttribute('aria-pressed', x === b));
+    const on = b.dataset.m === 'grid'; g.style.display = on ? '' : 'none'; $('#t1m').style.display = on ? '' : 'none';
+  });
+  $('#t1m').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...$('#t1m').children].forEach(x => x.setAttribute('aria-pressed', x === b)); stat = b.dataset.s; drawLabels();
+  });
+  const f = $('#facts1');
+  [['파일', I.file.replace('OR_SUVI-L1b-', '')], ['촬영 시각', D.obs_end.replace('+00:00', ' UTC')], ['예시 시점 T0', D.origin.replace('+00:00', ' UTC')],
+   ['이미지 나이', fmt(D.age_h, 3) + ' 시간 → img_age_h'], ['프레임', `${I.frame_px[0]}×${I.frame_px[1]} → 디스크 ${W0}×${H0} 잘라냄`], ['정상 픽셀', I.valid_pct + ' %'],
+   ['복사휘도 범위', `${I.rad_min} ~ ${I.rad_max} W m⁻² sr⁻¹`]].forEach(([k, v]) => f.append(H('dt', {}, k), H('dd', {}, v)));
+})();
+
+/* ---------------- 2. strips ---------------- */
+(function () {
+  const svg = $('#stripSvg'), SP = D.strip.speeds, rows = D.strip.rows;
+  const L = 130, R = 770, x = lin(-90, 90, L, R);
+  const lm = D.patches.filter(p => p.j === 1).sort((a, b) => a.i - b.i);
+  const lmv = lm.map(p => p.logmed), lo = Math.min(...lmv), hi = Math.max(...lmv);
+  const heat = v => { const u = clamp((v - lo) / (hi - lo || 1), 0, 1); return `color-mix(in srgb, var(--img) ${Math.round(12 + 78 * u)}%, var(--surface))`; };
+  const USED = { 350: 'logmed', 450: 'logmed', 550: 'dark', 650: 'dark', 750: 'logmed' };
+  function draw(h) {
+    svg.replaceChildren();
+    const row = rows[h - 1];
+    // cell row
+    const y0 = 36;
+    svg.append(S('text', { x: L - 10, y: y0 + 22, 'text-anchor': 'end', 'font-size': 12, fill: 'var(--ink-2)', 'font-weight': 700 }, '패치 12칸'));
+    svg.append(S('text', { x: L - 10, y: y0 + 38, 'text-anchor': 'end', 'font-size': 10.5, fill: 'var(--ink-3)' }, '밝기(log) / 어두운 비율'));
+    lm.forEach((p, i) => {
+      const xa = x(-90 + 15 * i), xb = x(-90 + 15 * (i + 1));
+      svg.append(S('rect', { x: xa + 1, y: y0, width: xb - xa - 2, height: 54, rx: 4, fill: heat(p.logmed), stroke: 'var(--line-2)' }));
+      svg.append(S('text', { x: (xa + xb) / 2, y: y0 + 24, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 700, fill: 'var(--ink)' }, fmt(p.logmed, 2)));
+      svg.append(S('text', { x: (xa + xb) / 2, y: y0 + 43, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--ink-2)' }, fmt(p.dark, 2)));
+    });
+    [-90, -60, -30, 0, 30, 60, 90].forEach(d => svg.append(S('text', { x: x(d), y: y0 - 8, 'text-anchor': 'middle', 'font-size': 10.5, fill: 'var(--ink-3)' }, (d > 0 ? '+' : '') + d + '°')));
+    svg.append(S('text', { x: L, y: 14, 'font-size': 11, fill: 'var(--ink-3)' }, '← 동쪽 림'));
+    svg.append(S('text', { x: R, y: 14, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--ink-3)' }, '서쪽 림 →'));
+    svg.append(S('text', { x: 790, y: y0 + 8, 'font-size': 11, fill: 'var(--ink-3)' }, '줄 값 (가중평균)'));
+    svg.append(S('text', { x: 790, y: y0 + 22, 'font-size': 10.5, fill: 'var(--ink-3)' }, '밝기 · 어둠 · 유효'));
+    // speed rows
+    SP.forEach((v, k) => {
+      const d = row['v' + v], yy = 128 + k * 50, lam = d.lam;
+      const inside = lam + 5 > -90 && lam - 5 < 90;
+      svg.append(S('text', { x: L - 10, y: yy + 5, 'text-anchor': 'end', 'font-size': 12.5, 'font-weight': 700, fill: 'var(--ink)' }, `${v} km/s`));
+      svg.append(S('text', { x: L - 10, y: yy + 20, 'text-anchor': 'end', 'font-size': 10.5, fill: 'var(--ink-3)' }, `τ=${D.strip.tau[v]}h`));
+      svg.append(S('line', { x1: L, x2: R, y1: yy, y2: yy, stroke: 'var(--line)', 'stroke-width': 1 }));
+      if (inside) {
+        const a = clamp(lam - 5, -90, 90), b = clamp(lam + 5, -90, 90);
+        svg.append(S('rect', { x: x(a), y: yy - 16, width: Math.max(2, x(b) - x(a)), height: 32, rx: 4, fill: 'var(--img)', 'fill-opacity': .28, stroke: 'var(--img)', 'stroke-width': 2 }));
+        svg.append(S('line', { x1: x(clamp(lam, -90, 90)), x2: x(clamp(lam, -90, 90)), y1: yy - 20, y2: yy + 20, stroke: 'var(--img)', 'stroke-width': 2 }));
+      }
+      svg.append(S('text', { x: x(clamp(lam, -90, 90)), y: yy + 33, 'text-anchor': 'middle', 'font-size': 11, fill: 'var(--ink-2)' }, `λ=${fmt(lam, 1)}°${inside ? '' : ' (디스크 밖)'}`));
+      const nm = d.logmed == null;
+      [['logmed', 790, d.logmed], ['dark', 836, d.dark], ['cover', 878, d.cover]].forEach(([key, xx, val], q) => {
+        const used = USED[v] === key;
+        svg.append(S('text', { x: xx, y: yy + 4, 'text-anchor': q < 2 ? 'start' : 'end', 'font-size': 12, 'font-family': 'var(--mono)', 'font-weight': used ? 700 : 400,
+          fill: used ? 'var(--img)' : 'var(--ink-3)' }, key === 'cover' ? fmt(val, 2) : (nm && key !== 'cover' ? 'NaN' : fmt(val, 3))));
+        if (used) svg.append(S('rect', { x: xx - 3, y: yy - 11, width: q < 2 ? 46 : 36, height: 20, rx: 4, fill: 'none', stroke: 'var(--img)', 'stroke-width': 1.5, transform: q < 2 ? '' : 'translate(-34 0)' }));
+      });
+    });
+    svg.append(S('text', { x: 790, y: 384, 'font-size': 11, fill: 'var(--img)' }, '■ 테두리 = 30개에 들어가는 값'));
+    const d550 = row.v550, w = d550.w.map((q, i) => q > 0 ? `칸${i}: ${fmt(q * 10 / 1, 1)}°` : null).filter(Boolean);
+    $('#stripNote').innerHTML = `<b>h = ${h}</b> · 550 km/s 줄: λ = 0.55 × (${D.strip.tau[550]} − (${h} + ${fmt(D.age_h, 2)})) = <b>${fmt(d550.lam, 2)}°</b>. 줄 [${fmt(d550.lam - 5, 1)}°, ${fmt(d550.lam + 5, 1)}°]이 겹치는 칸과 겹침 비율: ` +
+      (d550.w.some(q => q > 0) ? d550.w.map((q, i) => q > 0 ? `칸 ${i} (${fmt(q * 100, 0)}%)` : '').filter(Boolean).join(', ') : '없음 (디스크 밖)') +
+      (d550.dark == null ? '' : ` → 어두운 비율 가중평균 = <b>${fmt(d550.dark, 4)}</b> = strip_v550_dark@h${h}`);
+  }
+  const sl = $('#hs'), out = $('#hso');
+  const upd = () => { out.textContent = `h = ${sl.value}시간 뒤`; draw(+sl.value); sparkCur(+sl.value); };
+  // sparklines
+  const spk = $('#stripSpark'); const cur = [];
+  ['strip_v350_logmed', 'strip_v450_logmed', 'strip_v550_dark', 'strip_v650_dark', 'strip_v750_logmed'].forEach(nm => {
+    const f = D.features.find(q => q.name === nm), vals = f.series;
+    const wv = 190, hv = 62, xs = lin(1, 72, 6, wv - 6);
+    const fin = vals.filter(v => v != null), mn = Math.min(...fin), mx = Math.max(...fin), ys = lin(mn, mx, hv - 10, 8);
+    const s = S('svg', { viewBox: `0 0 ${wv} ${hv}`, class: 'chart' });
+    let d = '', pen = false; vals.forEach((v, i) => { if (v == null) { pen = false; return; } d += (pen ? 'L' : 'M') + xs(i + 1).toFixed(1) + ',' + ys(v).toFixed(1); pen = true; });
+    s.append(S('path', { d, fill: 'none', stroke: 'var(--img)', 'stroke-width': 2 }));
+    const c = S('line', { y1: 2, y2: hv - 2, stroke: 'var(--ink)', 'stroke-width': 1 }); const dotc = S('circle', { r: 3.5, fill: 'var(--img)', stroke: 'var(--surface)', 'stroke-width': 1.5 });
+    s.append(c, dotc);
+    const card = H('div', { class: 'card', style: 'padding:8px 10px' }, [H('div', { style: 'font-size:12px' }, [H('i', { class: 'dot', style: 'background:var(--img)' }), nameOf(nm)]), H('div', { class: 'mono', style: 'background:none;color:var(--ink-3);padding:0' }, nm)]);
+    const val = H('div', { class: 'mono', style: 'background:none;padding:0;font-size:13px;margin-top:2px' }); card.append(s, val); spk.append(card);
+    cur.push((h) => { const v = vals[h - 1]; c.setAttribute('x1', xs(h)); c.setAttribute('x2', xs(h)); if (v == null) dotc.setAttribute('r', 0); else { dotc.setAttribute('r', 3.5); dotc.setAttribute('cx', xs(h)); dotc.setAttribute('cy', ys(v)); } val.textContent = `h=${h}: ${v == null ? 'NaN (유효 비율 부족)' : fmt(v, 4)}`; });
+  });
+  function sparkCur(h) { cur.forEach(f => f(h)); }
+  sl.addEventListener('input', upd); upd();
+})();
+
+/* ---------------- 3. coronal holes ---------------- */
+(function () {
+  const st = makeStage($('#st3'));
+  const ovAll = H('img', { alt: '' }); ovAll.style.opacity = .55; const ovF = H('img', { alt: '' });
+  st.rot.append(ovAll, ovF);
+  const g = S('g', { fill: 'none', stroke: '#fff', 'stroke-dasharray': '6 5', 'stroke-width': 1.8, 'stroke-opacity': .95 });
+  st.svg.append(g); st.finish();
+  $('#refmed').textContent = I.ref_median;
+  const META = {
+    ch_ch_t035_top2_area: { th: 't035', reg: '2번째로 큰 덩어리 전체', lines: [] },
+    ch_ch_t035_equatorial_area: { th: 't035', reg: '위도 ±30° 적도대 안', lines: ['lat'] },
+    ch_ch_t035_meridian15_equatorial_area: { th: 't035', reg: '중앙 경도 ±15° ∩ 적도대', lines: ['lat', '15'] },
+    ch_ch_t035_meridian30_equatorial_area: { th: 't035', reg: '중앙 경도 ±30° ∩ 적도대', lines: ['lat', '30'] },
+    ch_ch_t055_equatorial_area: { th: 't055', reg: '위도 ±30° 적도대 안', lines: ['lat'] },
+    ch_ch_t055_meridian15_area: { th: 't055', reg: '중앙 경도 ±15° (전 위도)', lines: ['15'] },
+    ch_ch_t055_meridian30_equatorial_area: { th: 't055', reg: '중앙 경도 ±30° ∩ 적도대', lines: ['lat', '30'] },
+  };
+  const names = Object.keys(META), vmax = Math.max(...Object.values(D.ch.values));
+  const box = $('#chbtn'); let sel = null;
+  function pick(nm) {
+    sel = nm; const m = META[nm], v = D.ch.values[nm];
+    ovAll.src = D.ch.base[m.th].all; ovF.src = D.ch.layers[nm];
+    g.replaceChildren();
+    m.lines.forEach(k => {
+      if (k === 'lat') g.append(S('path', { d: I.grid.lat }));
+      else { g.append(S('path', { d: I.lon_q['-' + k] }), S('path', { d: I.lon_q[k] })); }
+    });
+    [...box.children].forEach(b => b.style.outline = b.dataset.n === nm ? '2px solid var(--img)' : 'none');
+    const th = m.th === 't035' ? 0.35 : 0.55, B = D.ch.base[m.th];
+    $('#chnote').innerHTML = `<b>${nameOf(nm)}</b><br>임계 ${th} → 밝기 &lt; ${fmt(th * I.ref_median, 3)}인 후보 덩어리 ${B.n_holes}개, 가장 큰 4개의 면적 ${B.top_areas.map(a => fmt(a, 4)).join(' · ')}. 합산 구역: <b>${m.reg}</b>. 값 <b>${fmt(v, 5)}</b> = 보이는 반구의 <b>${fmt(v * 100, 2)}%</b>.`;
+  }
+  names.forEach(nm => {
+    const v = D.ch.values[nm];
+    const b = H('button', { class: 'chip c-img', 'data-n': nm, style: 'cursor:pointer;text-align:left;font:inherit;width:100%' });
+    b.append(H('div', { class: 'nm' }, [nameOf(nm), H('small', {}, nm.replace('ch_ch_', 'ch_'))]));
+    const bar = H('div', { style: 'width:70px;height:8px;background:var(--surface-2);border-radius:4px;overflow:hidden' }, H('i', { style: `display:block;height:100%;width:${v / vmax * 100}%;background:var(--img)` }));
+    b.append(bar, H('div', { class: 'v' }, fmt(v, 4)));
+    b.addEventListener('click', () => pick(nm)); box.append(b);
+  });
+  pick('ch_ch_t055_meridian30_equatorial_area');
+})();
+
+/* ---------------- 4. ACE / ENLIL ---------------- */
+(function () {
+  // chips
+  const mk = (f) => {
+    const c = H('div', { class: 'chip ' + 'c-' + SRC[f.src] });
+    const v = f.kind === 'const' ? (Math.abs(f.value) >= 1e4 ? f.value.toExponential(2) : fmt(f.value, Math.abs(f.value) < 10 ? 3 : 1)) : '시계열×24h';
+    c.append(H('div', { class: 'nm' }, [nameOf(f.name), H('small', {}, f.name)]), H('div', { class: 'v' }, v));
+    return c;
+  };
+  D.features.filter(f => f.src === 'ace').forEach(f => $('#chipsAce').append(mk(f)));
+  D.features.filter(f => f.src === 'enlil').forEach(f => $('#chipsEnl').append(mk(f)));
+  D.features.filter(f => f.src === 'image').forEach(f => $('#chipsImgShort').append(mk(f)));
+  // ACE 24h
+  const vals = D.ace.raw.win24_values, svg = $('#aceSvg'), w = 520, h = 230, m = { l: 44, r: 12, t: 14, b: 30 };
+  const fin = vals.filter(v => v != null), mn = Math.floor(Math.min(...fin) / 50) * 50 - 50, mx = Math.ceil(Math.max(...fin) / 50) * 50 + 50;
+  const x = lin(0, 23, m.l, w - m.r), y = lin(mn, mx, h - m.b, m.t);
+  for (let t = mn; t <= mx; t += 50) { svg.append(S('line', { x1: m.l, x2: w - m.r, y1: y(t), y2: y(t), stroke: 'var(--line)' })); axisText(svg, m.l - 6, y(t) + 4, t, 'end'); }
+  [0, 6, 12, 18, 23].forEach(i => axisText(svg, x(i), h - 12, i === 23 ? 'T0' : `−${23 - i}h`));
+  svg.append(S('rect', { x: x(18) - 4, y: m.t, width: x(23) - x(18) + 8, height: h - m.b - m.t, fill: 'var(--ace)', 'fill-opacity': .09 }));
+  axisText(svg, x(20.5), m.t + 11, '6h 평균(_m6)', 'middle', { fill: 'var(--ace)' });
+  let d = '', pen = false; vals.forEach((v, i) => { if (v == null) { pen = false; return; } d += (pen ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); pen = true; });
+  svg.append(S('path', { d, fill: 'none', stroke: 'var(--ace)', 'stroke-width': 2 }));
+  vals.forEach((v, i) => v != null && svg.append(S('circle', { cx: x(i), cy: y(v), r: 3, fill: 'var(--ace)' })));
+  vals.forEach((v, i) => v == null && svg.append(S('text', { x: x(i), y: h - m.b - 4, 'text-anchor': 'middle', 'font-size': 10, fill: 'var(--ink-3)' }, '×')));
+  const T = D.ace.raw; svg.append(S('line', { x1: m.l, x2: w - m.r, y1: y(T.m24.ace_speed_kms), y2: y(T.m24.ace_speed_kms), stroke: 'var(--ace)', 'stroke-dasharray': '4 4' }));
+  axisText(svg, m.l + 4, y(T.m24.ace_speed_kms) - 4, `24h 평균 ${fmt(T.m24.ace_speed_kms, 0)}`, 'start', { fill: 'var(--ace)' });
+  axisText(svg, x(23) - 4, y(vals[23]) - 9, `${fmt(vals[23], 0)} km/s`, 'end', { fill: 'var(--ink)' });
+  // recurrence
+  const s2 = $('#recSvg'), keys = [['rec26', 'var(--ace)', '26일'], ['rec27', 'var(--ink)', '27일'], ['rec28', 'var(--route)', '28일']];
+  const all = keys.flatMap(([k]) => D.features.find(f => f.name === k).series.filter(v => v != null));
+  const mn2 = Math.floor(Math.min(...all) / 50) * 50, mx2 = Math.ceil(Math.max(...all) / 50) * 50;
+  const x2 = lin(1, 72, m.l, w - m.r), y2 = lin(mn2, mx2, h - m.b, m.t);
+  for (let t = mn2; t <= mx2; t += 100) { s2.append(S('line', { x1: m.l, x2: w - m.r, y1: y2(t), y2: y2(t), stroke: 'var(--line)' })); axisText(s2, m.l - 6, y2(t) + 4, t, 'end'); }
+  [1, 12, 24, 36, 48, 60, 72].forEach(i => axisText(s2, x2(i), h - 12, 'h' + i));
+  keys.forEach(([k, col, lab]) => {
+    const sr = D.features.find(f => f.name === k).series; let dd = '', p = false;
+    sr.forEach((v, i) => { if (v == null) { p = false; return; } dd += (p ? 'L' : 'M') + x2(i + 1).toFixed(1) + ',' + y2(v).toFixed(1); p = true; });
+    s2.append(S('path', { d: dd, fill: 'none', stroke: col, 'stroke-width': k === 'rec27' ? 2.2 : 1.4, 'stroke-opacity': .9 }));
+    const last = sr[71]; if (last != null) axisText(s2, w - m.r - 2, y2(last) - 5, lab, 'end', { fill: col });
+  });
+})();
+
+/* ---------------- 5. row layout + all 30 ---------------- */
+(function () {
+  const svg = $('#rowSvg'), cF = D.features.filter(f => f.kind === 'const'), vF = D.features.filter(f => f.kind === 'vary');
+  const order = f => ({ image: 0, ace: 1, enlil: 2 }[f.src]);
+  const cs = [...cF].sort((a, b) => order(a) - order(b)), vs = [...vF].sort((a, b) => order(a) - order(b));
+  const x0 = 210, cw = 14, x1 = x0 + 21 * cw + 24, bw = (870 - x1 - 20) / 3, cell = bw / 24, y0 = 62, rh = 22;
+  svg.append(S('text', { x: x0, y: 18, 'font-size': 12.5, 'font-weight': 700, fill: 'var(--ink)' }, '상수 21'));
+  svg.append(S('text', { x: x0, y: 34, 'font-size': 11, fill: 'var(--ink-3)' }, 'T0에서 값 1개씩'));
+  cs.forEach((f, i) => {
+    svg.append(S('rect', { x: x0 + i * cw, y: y0 - 18, width: cw - 2, height: 9 * rh + 20, rx: 3, fill: `var(--${SRC[f.src]})`, 'fill-opacity': .85 }, S('title', {}, nameOf(f.name))));
+  });
+  // varying heatmap 3 blocks
+  vs.forEach((f, r) => {
+    const s = f.series, fin = s.filter(v => v != null), mn = Math.min(...fin), mx = Math.max(...fin);
+    svg.append(S('text', { x: 200, y: y0 + r * rh + 14, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--ink-2)' }, nameOf(f.name).slice(0, 22)));
+    s.forEach((v, i) => {
+      const b = Math.floor(i / 24), xx = x1 + b * (bw + 10) + (i % 24) * cell;
+      const u = v == null ? null : (v - mn) / (mx - mn || 1);
+      svg.append(S('rect', { x: xx, y: y0 + r * rh, width: cell - .6, height: rh - 2, fill: u == null ? 'var(--surface-2)' : `color-mix(in srgb, var(--${SRC[f.src]}) ${Math.round(10 + 85 * u)}%, var(--surface))`,
+        stroke: u == null ? 'var(--line-2)' : 'none', 'stroke-width': .5 }, S('title', {}, `${f.name} h${i + 1}: ${v == null ? 'NaN' : fmt(v, 4)}`)));
+    });
+  });
+  ['h1–24 (블록 1)', 'h25–48 (블록 2)', 'h49–72 (블록 3)'].forEach((t, b) => {
+    const xx = x1 + b * (bw + 10);
+    svg.append(S('text', { x: xx, y: 18, 'font-size': 12.5, 'font-weight': 700, fill: 'var(--ink)' }, t));
+    svg.append(S('text', { x: xx, y: 34, 'font-size': 11, fill: 'var(--ink-3)' }, '9종 × 24시간 = 216'));
+    svg.append(S('line', { x1: xx, x2: xx + bw, y1: y0 - 6, y2: y0 - 6, stroke: 'var(--line-2)' }));
+  });
+  const yb = y0 + 9 * rh + 26;
+  svg.append(S('text', { x: x0, y: yb + 10, 'font-size': 12, fill: 'var(--ink)' }, '한 블록의 입력 행 = 상수 21 + 해당 24시간 216 = 237열'));
+  svg.append(S('text', { x: x0, y: yb + 30, 'font-size': 12, fill: 'var(--ink-2)' }, '블록 1 행 = [상수 21 | 블록1 시계열 216], 블록 2 행 = [상수 21 | 블록2 시계열 216], …  탐지기만 맨 끝에 시간 인덱스 h 한 열을 더 받음 (238열).'));
+  svg.append(S('text', { x: x0, y: yb + 52, 'font-size': 11.5, fill: 'var(--ink-3)' }, '색 진하기 = 그 줄 안에서 상대적 크기(줄마다 따로 정규화). 회색 = 결측(NaN) — 트리가 기본 방향으로 처리.'));
+  // all 30
+  const root = $('#all30');
+  ['image', 'ace', 'enlil'].forEach(src => {
+    const col = H('div', {}), list = D.features.filter(f => f.src === src);
+    col.append(H('h3', {}, [H('i', { class: 'dot', style: `background:var(--${SRC[src]})` }), `${SRCNAME[src]} ${list.length}개`]));
+    const cl = H('div', { class: 'chips c-' + SRC[src] });
+    list.forEach(f => {
+      const c = H('div', { class: 'chip c-' + SRC[src] });
+      let v;
+      if (f.kind === 'const') v = Math.abs(f.value) >= 1e4 ? f.value.toExponential(1) : fmt(f.value, Math.abs(f.value) < 10 ? 3 : 1);
+      else { const s = f.series, fin = s.filter(q => q != null), mn = Math.min(...fin), mx = Math.max(...fin), sp = S('svg', { viewBox: '0 0 72 20', width: 72, height: 20 });
+        let d = '', p = false; s.forEach((q, i) => { if (q == null) { p = false; return; } d += (p ? 'L' : 'M') + (i).toFixed(0) + ',' + (18 - (q - mn) / (mx - mn || 1) * 16).toFixed(1); p = true; });
+        sp.append(S('path', { d, fill: 'none', stroke: `var(--${SRC[src]})`, 'stroke-width': 1.6 })); v = sp; }
+      c.append(H('div', { class: 'nm' }, [nameOf(f.name), H('small', {}, f.name + (f.kind === 'vary' ? ' · 시계열' : ''))]), H('div', { class: 'v' }, v));
+      cl.append(c);
+    });
+    col.append(cl); root.append(col);
+  });
+})();
+
+/* ---------------- 6. forecast chart ---------------- */
+(function () {
+  const M = D.model, svg = $('#fSvg'), W = 900, Hh = 420, L = 54, R = 790, hs = Array.from({ length: 72 }, (_, i) => i + 1);
+  const SER = [
+    ['truth', '실측', 'var(--truth)', 2.6, ''], ['body', 'body', 'var(--body)', 1.5, ''], ['tail', 'tail', 'var(--tail)', 1.5, ''],
+    ['detroute', 'detroute', 'var(--route)', 2, '6 4'], ['gpd', 'gpd', 'var(--gpd)', 2, ''], ['final', '최종', 'var(--final)', 3, ''],
+  ];
+  const on = {}; SER.forEach(s => on[s[0]] = true);
+  const all = SER.flatMap(s => M[s[0]]), mn = Math.floor(Math.min(...all) / 50) * 50, mx = Math.ceil(Math.max(...all) / 50) * 50;
+  const x = lin(1, 72, L, R), y = lin(mn, mx, 270, 14), yp = lin(0, 1, 392, 318);
+  const leg = $('#fLegend');
+  SER.forEach(s => {
+    const lb = H('label', {}, [H('input', { type: 'checkbox', checked: '' }), H('i', { class: 'dot', style: `background:${s[2]}` }), s[1]]);
+    lb.firstChild.addEventListener('change', e => { on[s[0]] = e.target.checked; draw(); }); leg.append(lb);
+  });
+  const g = S('g'); svg.append(g);
+  const hov = S('g', { style: 'display:none' }); svg.append(hov);
+  const hl = S('line', { y1: 10, y2: 394, stroke: 'var(--ink-3)', 'stroke-dasharray': '3 3' }); hov.append(hl);
+  const hit = S('rect', { x: L, y: 8, width: R - L, height: 390, fill: 'transparent' }); svg.append(hit);
+  function draw() {
+    g.replaceChildren();
+    for (let t = mn; t <= mx; t += 50) { g.append(S('line', { x1: L, x2: R, y1: y(t), y2: y(t), stroke: 'var(--line)' })); axisText(g, L - 6, y(t) + 4, t, 'end'); }
+    axisText(g, 14, 140, 'km/s', 'middle', { transform: 'rotate(-90 14 140)' });
+    [1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72].forEach(i => axisText(g, x(i), 410, 'h' + i));
+    // routed shading
+    M.prob.forEach((p, i) => { if (p >= M.tau) g.append(S('rect', { x: x(i + 1) - (x(2) - x(1)) / 2, y: 14, width: x(2) - x(1), height: 256, fill: 'var(--tail)', 'fill-opacity': .09 })); });
+    g.append(S('line', { x1: L, x2: R, y1: y(550), y2: y(550), stroke: 'var(--ink-3)', 'stroke-dasharray': '2 4' })); axisText(g, R + 4, y(550) + 4, '550', 'start');
+    // direct labels with dodge
+    const ends = SER.filter(s => on[s[0]]).map(s => ({ s, y: y(M[s[0]][71]) })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+    SER.forEach(([k, lab, col, wd, da]) => {
+      if (!on[k]) return;
+      g.append(S('path', { d: M[k].map((v, i) => (i ? 'L' : 'M') + x(i + 1).toFixed(1) + ',' + y(v).toFixed(1)).join(''), fill: 'none', stroke: col, 'stroke-width': wd, 'stroke-dasharray': da, 'stroke-linejoin': 'round' }));
+    });
+    ends.forEach(e => axisText(g, R + 22, e.y + 4, e.s[1], 'start', { fill: 'var(--ink)', 'font-size': 12 }));
+    // prob panel
+    g.append(S('line', { x1: L, x2: R, y1: yp(0), y2: yp(0), stroke: 'var(--line-2)' }));
+    [0, 0.5, 1].forEach(t => axisText(g, L - 6, yp(t) + 4, t, 'end'));
+    axisText(g, 14, 355, 'P(≥550)', 'middle', { transform: 'rotate(-90 14 355)' });
+    const bwid = (x(2) - x(1)) * .72;
+    M.prob.forEach((p, i) => g.append(S('rect', { x: x(i + 1) - bwid / 2, y: yp(p), width: bwid, height: yp(0) - yp(p), rx: 2, fill: p >= M.tau ? 'var(--tail)' : 'var(--body)', 'fill-opacity': .85 })));
+    g.append(S('line', { x1: L, x2: R, y1: yp(M.tau), y2: yp(M.tau), stroke: 'var(--ink)', 'stroke-dasharray': '4 3' }));
+    axisText(g, R + 4, yp(M.tau) + 4, '0.234', 'start', { fill: 'var(--ink)' });
+    axisText(g, R + 4, yp(0.9), '■ ≥0.234 → tail', 'start', { fill: 'var(--tail)' }); axisText(g, R + 4, yp(0.9) + 14, '■ 그 외 → body', 'start', { fill: 'var(--body)' });
+  }
+  draw();
+  function move(ev) {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width * W;
+    const i = clamp(Math.round((px - L) / (R - L) * 71), 0, 71);
+    hov.style.display = ''; hl.setAttribute('x1', x(i + 1)); hl.setAttribute('x2', x(i + 1));
+    const row = (lab, v, col) => `<div class="r"><span><i class="dot" style="background:${col}"></i>${lab}</span><span>${v}</span></div>`;
+    showTip(`<b>h = ${i + 1}</b> (${new Date(Date.parse(D.origin) + (i + 1) * 3600e3).toISOString().slice(5, 16).replace('T', ' ')} UTC)` +
+      SER.filter(s => on[s[0]]).map(s => row(s[1], fmt(M[s[0]][i], 1), s[2])).join('') + row('탐지기 P', fmt(M.prob[i], 3), 'var(--ink-3)') +
+      `<div class="r"><span>선택</span><span>${M.prob[i] >= M.tau ? 'tail' : 'body'}</span></div>`, ev);
+  }
+  hit.addEventListener('pointermove', move); hit.addEventListener('pointerleave', () => { hov.style.display = 'none'; hideTip(); });
+})();
+
+/* ---------------- 7. trees ---------------- */
+(function () {
+  const T = D.detector, root = $('#trees'); $('#t-h').textContent = T.h;
+  const srcOf = n => { const b = n.split('@')[0]; if (b === 'hz') return 'hz'; const f = D.features.find(q => q.name === b); return f ? f.src : 'ace'; };
+  T.trees.forEach((t, k) => {
+    const c = H('div', { class: 'card' }); c.append(H('h3', {}, `트리 ${k + 1}`));
+    t.path.forEach((p, i) => {
+      const s = srcOf(p.feat), col = s === 'hz' ? 'var(--ink-3)' : `var(--${SRC[s]})`;
+      const row = H('div', { class: 'pathrow' });
+      row.append(H('span', { class: 'num' }, `질문 ${i + 1}`),
+        H('div', {}, [H('div', { class: 'f', style: `color:${col};font-weight:700` }, p.feat), H('div', { style: 'font-size:12px;color:var(--ink-2)' }, `값 ${fmt(p.value, Math.abs(p.value) < 10 ? 3 : 1)}  <  ${fmt(p.split, Math.abs(p.split) < 10 ? 3 : 1)} ?`)]),
+        H('span', { class: 'pill ' + p.go }, p.go === 'yes' ? '예' : '아니오'));
+      c.append(row);
+    });
+    c.append(H('div', { style: 'margin-top:8px;font-size:13px' }, [H('span', { class: 'num' }, '도착한 잎 값  '), H('b', { class: 'mono', style: 'background:none' }, (t.leaf >= 0 ? '+' : '') + fmt(t.leaf, 4))]));
+    root.append(c);
+  });
+  // margin chart
+  const svg = $('#marSvg'), w = 520, h = 250, m = { l: 50, r: 16, t: 14, b: 34 };
+  const ks = T.margin_k, mg = T.margin, lg = Math.log(D.model.tau / (1 - D.model.tau));
+  const mn = Math.min(...mg, lg, T.bias) - .15, mx = Math.max(...mg, 0) + .15, x = lin(0, 400, m.l, w - m.r), y = lin(mn, mx, h - m.b, m.t);
+  for (let t = Math.ceil(mn * 2) / 2; t <= mx; t += .5) { svg.append(S('line', { x1: m.l, x2: w - m.r, y1: y(t), y2: y(t), stroke: 'var(--line)' })); axisText(svg, m.l - 6, y(t) + 4, t.toFixed(1), 'end'); }
+  [0, 100, 200, 300, 400].forEach(k => axisText(svg, x(k), h - 14, k)); axisText(svg, (m.l + w) / 2, h - 1, '누적한 트리 수');
+  svg.append(S('line', { x1: m.l, x2: w - m.r, y1: y(lg), y2: y(lg), stroke: 'var(--tail)', 'stroke-dasharray': '4 3', 'stroke-width': 1.6 }));
+  axisText(svg, w - m.r, y(lg) + 14, 'P = 0.234 (라우팅 기준)', 'end', { fill: 'var(--tail)' });
+  svg.append(S('path', { d: ks.map((k, i) => (i ? 'L' : 'M') + x(k).toFixed(1) + ',' + y(mg[i]).toFixed(1)).join(''), fill: 'none', stroke: 'var(--ace)', 'stroke-width': 2.4 }));
+  svg.append(S('circle', { cx: x(0), cy: y(T.bias), r: 4, fill: 'var(--ink)' })); axisText(svg, x(0) + 8, y(T.bias) + 16, `시작 ${fmt(T.bias, 3)}`, 'start', { fill: 'var(--ink)' });
+  svg.append(S('circle', { cx: x(400), cy: y(mg[mg.length - 1]), r: 4.5, fill: 'var(--ace)' }));
+  axisText(svg, x(400) - 8, y(mg[mg.length - 1]) - 9, `합계 ${fmt(mg[mg.length - 1], 3)}`, 'end', { fill: 'var(--ink)' });
+  axisText(svg, 12, 120, '로짓 합', 'middle', { transform: 'rotate(-90 12 120)' });
+  const last = mg[mg.length - 1];
+  $('#marNote').innerHTML = `시작값 ${fmt(T.bias, 3)}에서 잎 값을 400개 더하면 ${fmt(last, 3)} → <code>P = 1/(1+e<sup>−${fmt(last, 3)}</sup>)</code> = <b>${fmt(T.prob, 3)}</b> ≥ 0.234이므로 h=${T.h}는 <b>tail</b> 쪽으로 보냅니다. 첫 세 트리의 잎 값 합은 ${fmt(T.trees.reduce((a, t) => a + t.leaf, 0), 3)}로, 개별 트리는 작은 보정일 뿐입니다.`;
+  // share bars
+  const bars = $('#shareBars');
+  [['탐지기', D.gain.detector], ['body', D.gain.body]].forEach(([nm, arr]) => {
+    const avg = {}; ['image', 'ace', 'enlil', 'hz'].forEach(k => avg[k] = arr.reduce((a, q) => a + q[k], 0) / arr.length);
+    const b = H('div', { class: 'b' }); b.append(H('span', {}, nm));
+    const t = H('div', { class: 't' }); ['image', 'ace', 'enlil', 'hz'].forEach(k => avg[k] > 0 && t.append(H('i', { style: `width:${avg[k] * 100}%;background:${k === 'hz' ? 'var(--ink-3)' : `var(--${SRC[k]})`}`, title: (SRCNAME[k] || '시간 인덱스') + ' ' + fmt(avg[k] * 100, 1) + '%' })));
+    b.append(t, H('span', { class: 'mono', style: 'background:none' }, `이미지 ${fmt(avg.image * 100, 0)}%`)); bars.append(b);
+  });
+  bars.append(H('div', { class: 'legend' }, [H('span', {}, [H('i', { class: 'dot', style: 'background:var(--img)' }), '이미지']), H('span', {}, [H('i', { class: 'dot', style: 'background:var(--ace)' }), 'ACE']),
+    H('span', {}, [H('i', { class: 'dot', style: 'background:var(--enl)' }), 'Enlil']), H('span', {}, [H('i', { class: 'dot', style: 'background:var(--ink-3)' }), '시간 인덱스(탐지기만)'])]));
+})();
+
+/* ---------------- 8. scan + results ---------------- */
+(function () {
+  const M = D.model, sc = M.scan, svg = $('#scanSvg'), w = 520, h = 250, m = { l: 54, r: 16, t: 16, b: 34 };
+  $('#wrows').textContent = M.detail.window_rows;
+  const mn = Math.min(...sc.map(q => q.total)), mx = Math.max(...sc.map(q => q.total)), pad = (mx - mn) * .12;
+  const x = lin(0, .75, m.l, w - m.r), y = lin(mn - pad, mx + pad, h - m.b, m.t);
+  for (let i = 0; i <= 4; i++) { const t = mn - pad + (mx - mn + 2 * pad) * i / 4; svg.append(S('line', { x1: m.l, x2: w - m.r, y1: y(t), y2: y(t), stroke: 'var(--line)' })); axisText(svg, m.l - 6, y(t) + 4, Math.round(t), 'end'); }
+  [0, .25, .5, .75].forEach(t => axisText(svg, x(t), h - 14, t)); axisText(svg, (m.l + w) / 2, h - 1, '후보 w');
+  svg.append(S('path', { d: sc.map((q, i) => (i ? 'L' : 'M') + x(q.w).toFixed(1) + ',' + y(q.total).toFixed(1)).join(''), fill: 'none', stroke: 'var(--ace)', 'stroke-width': 2.2 }));
+  sc.forEach(q => svg.append(S('circle', { cx: x(q.w), cy: y(q.total), r: 3, fill: q.ok ? 'var(--ace)' : 'var(--surface)', stroke: 'var(--ace)' }, S('title', {}, `w=${q.w}  MSE=${q.total}  고속 MSE=${q.tail}${q.ok ? '' : ' (제외)'}`))));
+  const ch = sc.find(q => Math.abs(q.w - M.w) < 1e-9);
+  svg.append(S('circle', { cx: x(ch.w), cy: y(ch.total), r: 7, fill: 'none', stroke: 'var(--final)', 'stroke-width': 2.4 }));
+  axisText(svg, x(ch.w), y(ch.total) - 12, `선택 w = ${M.w}`, 'middle', { fill: 'var(--final)', 'font-weight': 700 });
+  axisText(svg, 12, 120, '최근 구간 전체 MSE', 'middle', { transform: 'rotate(-90 12 120)' });
+  const bad = sc.filter(q => !q.ok).length;
+  svg.append(S('text', { x: w - m.r, y: m.t + 4, 'text-anchor': 'end', 'font-size': 11, fill: 'var(--ink-3)' }, `고속 MSE 조건을 못 넘는 후보: ${bad}개 (속이 빈 점)`));
+  // result bars
+  const d = M.detail, top = Math.max(d.mse_base, d.mse_gpd, d.mse_final), rb = $('#resBars');
+  [['detroute', d.mse_base, 'var(--route)'], ['gpd', d.mse_gpd, 'var(--gpd)'], [`최종 w=${M.w}`, d.mse_final, 'var(--final)']].forEach(([n, v, col]) => {
+    const b = H('div', { class: 'b' }); b.append(H('span', {}, n), H('div', { class: 't' }, H('i', { style: `width:${v / top * 100}%;background:${col}` })), H('span', { class: 'mono', style: 'background:none' }, fmt(v, 0))); rb.append(b);
+  });
+  rb.append(H('p', { style: 'font-size:12.5px;margin-top:6px' }, `이 시점은 고속 구간 ${M.truth.filter(v => v >= 550).length}시간 중 탐지기가 ${M.prob.filter((p, i) => p >= M.tau && M.truth[i] >= 550).length}시간을 잡았습니다. 두 예측의 중간쯤인 최종이 가장 좋지는 않았지만(gpd가 더 좋음) w는 미래를 모른 채 과거 성적으로만 고른 값입니다.`));
+  const A = D.scores, B = D.base_scores;
+  const t = $('#allTbl'); t.innerHTML = '<tr><th></th><th style="text-align:right">detroute</th><th style="text-align:right">+gpd 블렌드</th></tr>';
+  [['전체 MSE', B.total, A.total], ['고속(≥550) MSE', B.ge550, A.ge550], ['F1 고속', B.f1_ge550, A.f1_ge550], ['F2 고속', B.f2_ge550, A.f2_ge550]].forEach(([n, a, b]) => {
+    const r = t.insertRow(); r.innerHTML = `<td>${n}</td><td class="n">${fmt(a, 1)}</td><td class="n"><b>${fmt(b, 1)}</b></td>`;
+  });
+})();
+
+/* ---------------- bottom-up blocks (2·3·4·5·6·7·10·11절) ---------------- */
+(function () {
+  const I = D.image, SP = D.strip.speeds, TAU = D.strip.tau, OM = D.strip.omega, AGE = D.age_h;
+  const put = (sel, v) => { const e = $(sel); if (e) e.textContent = v; };
+  const cells = D.patches.filter(p => p.j === 1).sort((a, b) => a.i - b.i);
+  const fname = n => nameOf(n);
+
+  /* --- 1절: 픽셀 사실 --- */
+  put('#rad-range', `${fmt(I.rad_min, 1)} ~ ${fmt(I.rad_max, 2)}`);
+  put('#ref-med', fmt(I.ref_median, 4));
+  put('#rsun-px', fmt(I.rsun_px, 2));
+  put('#rsun2', fmt(I.rsun_px, 2));
+  put('#rot-deg', fmt(I.rot_deg, 3));
+  put('#b0', fmt(I.b0, 3));
+  const ndisk = Math.PI * Math.pow(0.98 * I.rsun_px, 2);
+  put('#npix-disk', Math.round(ndisk).toLocaleString('en-US'));
+  put('#npix-valid', Math.round(ndisk * I.valid_pct / 100).toLocaleString('en-US'));
+  put('#valid-pct', fmt(I.valid_pct, 2));
+  const c1 = $('#cells1');
+  if (c1) {
+    c1.append(H('thead', { html: '<tr><th class="m">칸 i</th><th class="m">경도</th><th class="m">밝기 logmed</th><th class="m">어둡 dark</th><th class="m">유효 cover</th></tr>' }));
+    const tb = H('tbody');
+    cells.forEach((p, i) => tb.append(H('tr', { html: `<td class="m">${i}</td><td class="m">${i * 15 - 90}°~${i * 15 - 75}°</td><td class="m">${fmt(p.logmed, 3)}</td><td class="m">${fmt(p.dark, 3)}</td><td class="m">${fmt(p.valid, 3)}</td>` })));
+    c1.append(tb);
+  }
+
+  /* --- 2절: dark 기준 --- */
+  put('#refmed2', fmt(I.ref_median, 4));
+  put('#darkthr', fmt(0.5 * I.ref_median, 4));
+
+  /* --- 3절: τ 표 + 줄 계산 --- */
+  const tt = $('#tauTbl');
+  if (tt) SP.forEach(v => {
+    tt.append(H('tr', { html: `<td class="m">${v} km/s</td><td class="m">${fmt(TAU[v], 2)}</td><td class="m">${fmt(OM * (TAU[v] - 1 - AGE), 1)}°</td><td class="m">${fmt(OM * (TAU[v] - 72 - AGE), 1)}°</td>` }));
+  });
+  const USED = { 350: 'logmed', 450: 'logmed', 550: 'dark', 650: 'dark', 750: 'logmed' };
+  function wavg(ws, key) {
+    let s = 0, sw = 0;
+    ws.forEach((w, i) => { const v = cells[i][key]; if (w > 0 && v != null && isFinite(v)) { s += w * v; sw += w; } });
+    return sw > 0 ? s / sw : null;
+  }
+  const calc = $('#stripCalc');
+  function drawCalc(h) {
+    if (!calc) return;
+    const row = D.strip.rows[h - 1];
+    const tbl = H('table', { class: 'tb' });
+    tbl.append(H('thead', { html: `<tr><th>가정 v</th><th class="m">λ (h=${h})</th><th>겹치는 칸 (겹침 비율)</th><th>계산</th><th class="m">모델이 받는 값</th></tr>` }));
+    const tb = H('tbody');
+    SP.forEach(v => {
+      const e = row['v' + v], key = USED[v];
+      const terms = e.w.map((w, i) => w > 0 ? [i, w] : null).filter(Boolean);
+      const shown = terms.map(([i, w]) => `${fmt(w, 3)}×${cells[i][key] == null ? 'NaN' : fmt(cells[i][key], 3)}`).join(' + ');
+      const got = wavg(e.w, key);
+      const okMark = (e[key] == null || got == null) ? '' : (Math.abs(got - e[key]) < 5e-4 ? ' ✓' : ' ⚠');
+      tb.append(H('tr', { html: `<td>${v} <span style="color:var(--ink-3)">${key === 'logmed' ? '밝기' : '어둡'}</span></td>` +
+        `<td class="m">${fmt(e.lam, 2)}°</td>` +
+        `<td>${terms.map(([i, w]) => `칸${i} (${fmt(w * 100, 0)}%)`).join(' · ') || '디스크 밖'}</td>` +
+        `<td class="m" style="text-align:left">${shown || '—'}</td>` +
+        `<td class="m"><b>${e[key] == null ? 'NaN' : fmt(e[key], 4)}</b>${okMark}</td>` }));
+    });
+    tbl.append(tb);
+    calc.replaceChildren(
+      H('p', { class: 'sub', html: `λ = 0.55 × (τ<sub>v</sub> − (h + 이미지 나이)) = 0.55 × (τ<sub>v</sub> − ${h} − ${fmt(AGE, 3)}) · 칸 값은 적도대 j=1의 <b>실제</b> 패치 값 · ✓ = 가중평균이 번들 값과 일치` }),
+      tbl);
+  }
+  const hsA = $('#hs'), hsB = $('#hs2'), outB = $('#hs2o');
+  if (hsB && hsA) {
+    hsA.addEventListener('input', () => { hsB.value = hsA.value; if (outB) outB.textContent = `h = ${hsA.value}시간 뒤`; drawCalc(+hsA.value); });
+    hsB.addEventListener('input', () => { hsA.value = hsB.value; hsA.dispatchEvent(new Event('input')); });
+    if (outB) outB.textContent = `h = ${hsB.value}시간 뒤`;
+    drawCalc(+hsB.value);
+  }
+  put('#slot-t', D.slot.replace('+00:00', ' UTC'));
+  put('#obs-t', D.obs_end.replace('+00:00', ' UTC'));
+  put('#age-h', fmt(AGE, 3));
+  put('#age-h2', fmt(AGE, 3));
+  let minCov = Infinity;
+  D.strip.rows.forEach(r => SP.forEach(v => { const c = r['v' + v].cover; if (c != null && isFinite(c)) minCov = Math.min(minCov, c); }));
+  put('#min-cover', isFinite(minCov) ? fmt(minCov, 4) : '—');
+
+  /* --- 4절: 코로나홀 7개 --- */
+  const chT = $('#chTbl');
+  if (chT) {
+    const DEF = {
+      ch_ch_t035_top2_area: '0.35 · 면적 2위 덩어리',
+      ch_ch_t035_meridian15_equatorial_area: '0.35 · |경도| ≤ 15° & 적도대',
+      ch_ch_t035_meridian30_equatorial_area: '0.35 · |경도| ≤ 30° & 적도대',
+      ch_ch_t035_equatorial_area: '0.35 · 적도대(|위도| ≤ 30°) 전체',
+      ch_ch_t055_meridian15_area: '0.55 · |경도| ≤ 15° 전체',
+      ch_ch_t055_meridian30_equatorial_area: '0.55 · |경도| ≤ 30° & 적도대',
+      ch_ch_t055_equatorial_area: '0.55 · 적도대 전체',
+    };
+    const tb = H('tbody');
+    Object.keys(DEF).forEach(n => tb.append(H('tr', { html: `<td><code>${n}</code></td><td>${DEF[n]}</td><td class="m">${fmt(D.ch.values[n], 5)}</td>` })));
+    chT.append(tb);
+  }
+
+  /* --- 5절: ACE 15개 / 회귀 / ENLIL --- */
+  const F = Object.fromEntries(D.features.map(f => [f.name, f]));
+  const fv = n => { const f = F[n]; return f ? (f.value != null ? f.value : (f.series ? f.series[0] : null)) : null; };
+  const aceT = $('#aceTbl');
+  if (aceT) {
+    const ROWS = [
+      ['v_lag0', 'speed( t + 0h ) — 지연 없음', 0],
+      ['ace_speed_kms_last', 'speed( t ) — 같은 값의 다른 이름', 0],
+      ['ace_density_cm3_last', 'n( t )', 0],
+      ['ace_density_cm3_m6', 'mean n( t−5h … t )', 0],
+      ['ace_temperature_k_last', 'T( t )', 0],
+      ['ace_temperature_k_m24', 'mean T( t−23h … t )', 0],
+      ['ace_bt_nt_last', 'B<sub>t</sub>( t )', 0],
+      ['ace_bt_nt_m6', 'mean B<sub>t</sub>( t−5h … t )', 0],
+      ['ace_by_gsm_nt_m24', 'mean B<sub>y</sub><sup>GSM</sup>( t−23h … t )', 0],
+      ['ace_epam_p_channel3_last', 'log<sub>10</sub>( EPAM P3( t ) )', 0],
+      ['ace_sis_gt10_flux_last', 'log<sub>10</sub>( SIS &gt;10MeV( t ) )', 0],
+      ['rec26', 'speed( t + h − 26d )', 1],
+      ['rec27', 'speed( t + h − 27d )', 1],
+      ['rec28', 'speed( t + h − 28d )', 1],
+      ['rec_mean', 'mean(rec26, rec27, rec28)', 1],
+    ];
+    const tb = H('tbody');
+    ROWS.forEach(([n, eq, vary]) => {
+      const v = vary ? (F[n] && F[n].series ? F[n].series[0] : null) : fv(n);
+      tb.append(H('tr', { html: `<td><code>${n}</code></td><td>${eq}${vary ? ' <span style="color:var(--ink-3)">(h마다; 값은 h=1)</span>' : ''}</td><td class="m">${fmt(v, v != null && Math.abs(v) > 1000 ? 0 : 4)}</td>` }));
+    });
+    aceT.append(tb);
+  }
+  const m6 = $('#m6calc');
+  if (m6) {
+    const vals = D.ace.raw.win6_values, obs = vals.filter(v => v != null);
+    const mean = obs.reduce((a, b) => a + b, 0) / obs.length;
+    m6.innerHTML = `<span class="lt">속도 6행 창 (${D.ace.raw.m6.rows}행 중 관측 ${D.ace.raw.m6.obs}행)</span>` +
+      vals.map(v => v == null ? '<span style="color:var(--warn)">결측</span>' : fmt(v, 1)).join(' , ') +
+      `<br>mean = (${obs.map(v => fmt(v, 1)).join(' + ')}) / ${obs.length} = <b>${fmt(mean, 2)}</b>` +
+      `<br><span class="lt">마지막 값 = ${fmt(D.ace.raw.t0.ace_speed_kms, 1)} · 24시간 평균 = ${fmt(D.ace.raw.m24.ace_speed_kms, 2)} (24행 중 ${D.ace.raw.m24.obs}행)</span>`;
+  }
+  put('#m24obs', D.ace.raw.m24.obs);
+  const recT = $('#recTbl');
+  if (recT) {
+    const tb = H('tbody');
+    D.ace.recurrence.forEach(r => tb.append(H('tr', { html: `<td class="m">${r.h}</td><td class="m">${r.target.replace('+00:00', '')}</td><td class="m">${fmt(r.rec26, 1)}</td><td class="m">${fmt(r.rec27, 1)}</td><td class="m">${fmt(r.rec28, 1)}</td>` })));
+    recT.append(tb);
+  }
+
+  /* --- 6절: C/E 칩 + E 24×9 표 --- */
+  const chip = (n, val) => H('div', { class: 'chip' }, [H('span', { class: 'nm' }, [fname(n), H('small', {}, n)]), H('span', { class: 'v' }, val)]);
+  const chipC = $('#cChips');
+  if (chipC) D.columns.const.forEach(n => chipC.append(chip(n, fmt(fv(n), Math.abs(fv(n)) > 1000 ? 0 : 3))));
+  const chipE = $('#cE');
+  if (chipE) D.columns.vary.forEach(n => { const s = F[n].series.filter(v => v != null); chipE.append(chip(n, `${fmt(s[0], 3)} … ${fmt(s[s.length - 1], 3)}`)); });
+  const eT = $('#eTbl');
+  if (eT) {
+    const V = D.columns.vary;
+    eT.append(H('thead', { html: `<tr><th class="m">h</th>${V.map(n => `<th class="m">${n.replace('strip_v', 'v').replace('_logmed', '·log').replace('_dark', '·dark').replace('_cover', '·cov')}</th>`).join('')}</tr>` }));
+    const tb = H('tbody');
+    for (let h = 1; h <= 24; h++) {
+      tb.append(H('tr', { html: `<td class="m">${h}</td>${V.map(n => `<td class="m">${fmt(F[n].series[h - 1], 3)}</td>`).join('')}` }));
+    }
+    eT.append(tb);
+  }
+
+  /* --- 7절: 탐지기 숫자 --- */
+  const T = D.detector, mlast = T.margin[T.margin.length - 1];
+  put('#det-h', T.h);
+  put('#det-bias', fmt(T.bias, 4));
+  put('#det-sum', fmt(mlast - T.bias, 4));
+  put('#det-margin', fmt(mlast, 4));
+  put('#det-prob', fmt(T.prob, 4));
+
+  /* --- 10절: pool 2차식 --- */
+  const M = D.model, sc = M.scan, D2 = M.detail;
+  const at = wq => sc.find(q => Math.abs(q.w - wq) < 1e-9);
+  const A = at(0).total, A1 = at(0).tail;
+  const solveBC = get => {
+    const b1 = (1 - .25) ** 2, k1 = .25 ** 2, m1 = 2 * .25 * (1 - .25);
+    const b2 = (1 - .5) ** 2, k2 = .5 ** 2, m2 = 2 * .5 * (1 - .5);
+    const r1 = get(at(0.25)) - b1 * get(at(0)), r2 = get(at(0.5)) - b2 * get(at(0));
+    const det = k1 * m2 - m1 * k2;
+    return [(r1 * m2 - m1 * r2) / det, (k1 * r2 - r1 * k2) / det];
+  };
+  const [B, C] = solveBC(q => q.total), [B1, C1] = solveBC(q => q.tail);
+  const wStar = (A - C) / (A + B - 2 * C);
+  const gStar = Math.round(wStar / 0.025) * 0.025;
+  const mse = (w, a, b, c) => (1 - w) ** 2 * a + w * w * b + 2 * w * (1 - w) * c;
+  const abc = $('#poolABC');
+  if (abc) {
+    abc.innerHTML = `<span class="lt">이 시점 창: 성숙 ${D2.window_rows}개 시점 × 72 = ${(D2.window_rows * 72).toLocaleString('en-US')}셀 (고속 ${D2.window_tail_cells.toLocaleString('en-US')}셀)</span>` +
+      `A = ${fmt(A, 2)} (detroute) · B = ${fmt(B, 2)} (gpd) · C = ${fmt(C, 2)}<br>` +
+      `w* = (A − C) / (A + B − 2C) = (${fmt(A, 2)} − ${fmt(C, 2)}) / ${fmt(A + B - 2 * C, 2)} = <b>${fmt(wStar, 4)}</b><br>` +
+      `MSE(w*) = ${fmt(mse(wStar, A, B, C), 2)} · MSE(0) = ${fmt(A, 2)} → <b>${fmt(mse(wStar, A, B, C) - A, 2)}</b>`;
+  }
+  const gd = $('#poolGuard');
+  if (gd) {
+    const wCross = 2 * (A1 - C1) / (A1 + B1 - 2 * C1);
+    const sel = at(M.w);
+    gd.innerHTML = `<span class="lt">고속(≥550) 셀만 따로</span>` +
+      `A₁ = ${fmt(A1, 2)} · B₁ = ${fmt(B1, 2)} · C₁ = ${fmt(C1, 2)}<br>` +
+      `tail(w) = (1−w)²A₁ + w²B₁ + 2w(1−w)C₁ → tail(0) = ${fmt(A1, 2)}<br>` +
+      `tail(w) = tail(0) 이 되는 w = ${isFinite(wCross) && wCross > 0 ? fmt(wCross, 3) : '없음(전 구간 허용)'} · ` +
+      `tail(${M.w}) = <b>${fmt(sel.tail, 2)}</b> ≤ ${fmt(A1, 2)} ${sel.tail <= A1 ? '✓' : '✗'}<br>` +
+      `<span class="lt">제약 위반으로 제외된 격자점: ${sc.filter(q => !q.ok).length} / ${sc.length}</span>`;
+  }
+  const sn = $('#poolSnap');
+  if (sn) {
+    sn.innerHTML = `<span class="lt">연속 최적점 → 격자</span>w* = ${fmt(wStar, 4)} → 0.025 간격 격자 → ` +
+      `argmin(허용) = <b>${fmt(gStar, 3)}</b> · 저장된 w = <b>${M.w}</b> ${Math.abs(gStar - M.w) < 1e-9 ? '✓' : '⚠'}<br>` +
+      `<span class="lt">이 시점 채점</span>detroute ${fmt(D2.mse_base, 1)} · gpd ${fmt(D2.mse_gpd, 1)} · 최종 ${fmt(D2.mse_final, 1)} (72셀 MSE)`;
+  }
+  put('#wzero', fmt(100 * D.weights.share_zero, 1));
+  put('#wtime', fmt(D.scores.inference_us_per_origin, 1));
+
+  /* --- 11절: 채점 표 --- */
+  const st = $('#scoreTbl');
+  if (st) {
+    const S1 = D.scores, S0 = D.base_scores;
+    const ROWS = [
+      ['전체 MSE', 'total', '<3,200'],
+      ['F1 MSE', 'f1', '—'],
+      ['F2 MSE', 'f2', '—'],
+      ['고속(≥550) MSE', 'ge550', '<6,000'],
+      ['F1 고속 MSE', 'f1_ge550', '<6,000'],
+      ['F2 고속 MSE', 'f2_ge550', '<6,000'],
+    ];
+    const tb = H('tbody');
+    ROWS.forEach(([lab, k, target]) => {
+      const a = S0[k], b = S1[k], d = b - a;
+      const hit = target === '—' ? '' : ((k === 'total' ? b < 3200 : b < 6000) ? ' ✓' : ' ✗');
+      tb.append(H('tr', { html: `<td>${lab}</td><td class="m">${fmt(a, 1)}</td><td class="m"><b>${fmt(b, 1)}</b></td><td class="m" style="color:${d < 0 ? 'var(--ok)' : 'var(--warn)'}">${d > 0 ? '+' : ''}${fmt(d, 1)}</td><td class="m">${target}${hit}</td>` }));
+    });
+    st.append(tb);
+  }
+})();
+</script>
+</body>
+</html>

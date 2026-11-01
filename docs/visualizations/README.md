@@ -19,9 +19,26 @@
   학습·held-out loss(재학습이 archive 예측을 **비트 단위로 재현**), 목표 속도 밴드별 MSE(tweedie15·detpool_gpd와 같은
   folds에서 비교), 9개월 예측 GIF를 담았습니다.
 
+## 2026-10-31 추가 (B) — 추론 손풀이 앱
+
+제출 모델 두 개의 추론을 **원자료부터 채점까지** 한 단계씩 따라가는 앱 형태(bbycroft.net/llm 과 같은
+레이아웃: 좌 sidebar 3 : 우 캔버스 5, `#f3f3f3`, 단계 칩 `#8587f7`) 자기완결 HTML 2편을
+[`docs/explainers/`](../explainers/)에 추가했습니다.
+
+- [e2000fs_calib4_detpool_gpd](../explainers/e2000fs_calib4_detpool_gpd.html) — 실제 SUVI 이미지 1장 →
+  패치·코로나홀 13개 → 30개 피처 → 입력 행 237열 → detroute·gpd 트리 모델 → `(1−w)·detroute + w·gpd` →
+  72시간 예측. 한 시점의 실제 계산값을 스크롤형으로 보여 줍니다.
+- [e2000fs_calib2_mixture2comp](../explainers/e2000fs_calib2_mixture2comp.html) — 원자료 → 정답 72h →
+  입력 237열 → level → 확률 → gap → 합성 → 72개 출력 → 채점 (9단계). 칸을 클릭하면
+  `level + p·(gap−level)` 계산이 뜹니다.
+
 ## 2026-10-31 추가
 
 [E2000FS Calib2 DetRoute의 detector 학습 loss, 라우팅 진단, permutation 중요도, F1+F2 월별 예측 GIF](e2000fs_calib2_detroute/)를 추가했습니다. 게시 기준 리더보드 **1위**, MSE **3213.191868**(F1 3551.74 / F2 2957.82, ≥550 7343.43)입니다. 두 archive arm(tweedie15 몸통, mixture2comp 꼬리) 사이를 `binary:logistic` detector가 (origin, horizon)마다 확률로 라우팅한 제출이며, τ=0.234는 채점 전에 비용비 1233/(1233+4045)로 고정했습니다. 몸통 arm 대비 전체 −14.40 / ≥550 −2082.75의 Pareto 개선이지만 F1 전체 MSE는 +39.03 나빠졌고, 사전 목표(전체 <3200, 모든 ≥550 <6000)는 달성하지 못했습니다. loss는 저장 booster를 비트 단위로 재현한 재학습으로 기록했고, 중요도는 두 arm 예측을 고정한 채 라우팅만 다시 실행해 계산했습니다.
+
+## 2026-10-30 추가
+
+[E2000FS Budget-Spectral의 학습 loss, permutation importance, F1+F2 월별 예측 GIF](e2000fs_budget_spectral/)를 추가했습니다. point4 weighted L2에 24시간 잔차 FFT의 radial pseudo-Huber 항(λ 0.10, scale 50 km/s)을 더한 spectral loss를 24-output vector tree 3개로 학습한 제출 모델이며, 공식 MSE **3495.593477**(F1 4028.97 / F2 3093.25, ≥550 5727.17)입니다. 같은 행·같은 cutoff로 학습한 paired control(3494.210802)과의 loss 비교, 개발 창(D1/D2/D3/C) 곡선, 제출 예측 4,970개 시작점 전체의 월별 GIF를 담았습니다. XGBoost 2.1.4가 multi-target 트리를 덤프하지 못해 특징 중요도는 permutation(ΔMSE)으로 계산했고, 저장 booster가 제출 예측을 비트 단위로 재현하는지 먼저 확인했습니다.
 
 ## 2026-10-28 추가
 

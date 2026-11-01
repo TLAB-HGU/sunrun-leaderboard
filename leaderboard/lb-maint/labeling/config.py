@@ -9,7 +9,13 @@ EVAL_START = "2026-06-01"
 EVAL_END = "2026-09-30"  # exclusive, UTC: last target 2026-09-29 23:00 (fixed by the team on 2026-09-30)
 THRESHOLDS = {"T": 0.762, "S": 0.174, "F": 0.472}
 
-# 2026-10-26 policy: two scored periods, [start, end) on target time. Folds straddling the
-# boundary (origins 2026-05-29..05-31) belong to neither. THRESHOLDS above stay frozen for both.
-PERIODS = {"F1": ("2026-03-01", "2026-06-01"), "F2": (EVAL_START, EVAL_END)}
-F1_TRAIN_END = "2026-02-26T00:00:00Z"  # exclusive: F1 predictions use models trained on data before this (F1 start - 72h)
+# 2026-10-31 policy: three scored quarters, [start, end) on target time (replaces the 2026-10-26 F1 = 03..05 /
+# F2 = 06..09 split). Folds straddling a boundary (the 71 origins before each start) belong to none.
+# THRESHOLDS above stay frozen (derived on the old F2 folds 2026-06-01..09-29).
+PERIODS = {"F1": ("2026-01-01", "2026-04-01"), "F2": ("2026-04-01", "2026-07-01"), "F3": ("2026-07-01", EVAL_END)}
+# exclusive training cutoffs (period start - 72h): predictions for a period use models trained on data before it
+F1_TRAIN_END = "2025-12-29T00:00:00Z"
+F2_TRAIN_END = "2026-03-29T00:00:00Z"
+F3_TRAIN_END = "2026-06-29T00:00:00Z"
+# targets of the pre-2026-10-31 evaluation (old F1 + old F2); used to tell legacy predictions from full ones
+LEGACY_EVAL_START = "2026-03-01"

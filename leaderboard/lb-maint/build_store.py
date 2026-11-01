@@ -2,7 +2,7 @@
 
     python build_store.py --out store
 
-Folds cover every period in labeling/config.py PERIODS (F1, F2) and carry a `period` column.
+Folds cover every period in labeling/config.py PERIODS (F1, F2, F3) and carry a `period` column.
 Baselines come from analysis/naive_baselines (Naive, Seasonal naive-648, SES, Auto ARIMA) plus
 one new mean-reversion baseline whose decay time is tuned on targets BEFORE the evaluation start.
 """
@@ -18,7 +18,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE / "labeling")]
-from config import EVAL_START, PERIODS  # noqa: E402
+from config import PERIODS  # noqa: E402
 from regimes import build_folds  # noqa: E402
 from scoring import HORIZON, KEY, build_truth, score, validate  # noqa: E402
 
@@ -70,9 +70,10 @@ def main() -> None:
     for k, c in {"ses": "es_kms", "auto_arima": "auto_arima_kms"}.items():
         preds[k] = keys.merge(ext[KEY + [c]], on=KEY, how="left").rename(columns={c: "pred_kms"})
 
-    # tune the mean-reversion decay on targets before the F2 start, as published (tau 48). Retuned on targets
-    # before F1_TRAIN_END it is 24, with dev MSE within 0.13% of 48; kept at 48 by the team on 2026-10-26.
-    dev_origins = pd.date_range(pd.Timestamp("2025-09-01", tz="UTC"), pd.Timestamp(EVAL_START, tz="UTC") - pd.Timedelta(hours=HORIZON + 1), freq="h")
+    # tune the mean-reversion decay on targets before the first evaluation start (F1, 2026-01-01); the published
+    # value before the 2026-10-31 re-split was tau 48 (tuned before 2026-06-01), kept by the team on 2026-10-26.
+    eval_start = min(pd.Timestamp(s, tz="UTC") for s, _ in PERIODS.values())
+    dev_origins = pd.date_range(pd.Timestamp("2025-09-01", tz="UTC"), eval_start - pd.Timedelta(hours=HORIZON + 1), freq="h")
     dev_origins = dev_origins[dev_origins >= series.index[MEAN_WINDOW - 1]]
     dev_truth = np.stack([series.loc[o + pd.Timedelta(hours=1): o + pd.Timedelta(hours=HORIZON)].to_numpy() for o in dev_origins])
     dev_mse = {t: float(((mean_reversion(series, dev_origins, t)["pred_kms"].to_numpy().reshape(-1, HORIZON) - dev_truth) ** 2).mean()) for t in TAUS}

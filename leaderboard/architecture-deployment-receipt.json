@@ -1,9 +1,13 @@
 {
   "space": "tlabtlab/sunrun-leaderboard",
-  "space_commit": "d04af65dd1064e3a41aaf324125ab4876c9f2114",
-  "parent_commit": "5e82a5c71ab027fa18b54efa36ee26eb6c36e789",
-  "completed_model_links": 31,
+  "space_commit": "73a8626a6679a3b1fd4573821b7bfc9a80b948a9",
+  "parent_commit": "53029e020c6d16ec84abe3e5755a291828227ab8",
+  "code_cells_architecture": 24,
+  "code_cells_script": 0,
+  "completed_model_links": 49,
+  "links_added": 14,
   "non_code_cells_unchanged": true,
-  "source_commit": "8cd77287d9d8648c1a8cf891d17f94af6aa05791",
-  "tests": "22 passed; Python compile passed"
+  "source_commit": "b930cc556b626a633c58d8fd74680cbf80f27008",
+  "mapping_commit": "74778a544",
+  "tests": "23 passed (tests/test_lbstatus.py, tests/test_architecture_links.py); board.render over 91 dataset results -> 24 rows, 24 architecture, 0 script"
 }

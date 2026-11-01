@@ -164,6 +164,17 @@ def test_trim_ranking_columns_preserves_metrics_and_status_rows():
     assert lbstatus.trim_ranking_columns("<p>No ranking</p>") == "<p>No ranking</p>"
 
 
+def test_trim_keeps_current_columns_wherever_the_board_places_them():
+    head = ("#", "experiment", "member", "sec/fold", "MSE", "skill vs naive", "config", "end-to-end (h)", "code", "retired")
+    row = "".join(f"<td>{i}</td>" for i in range(len(head)))
+    page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
+            f"<tr>{row}</tr></tbody></table>")
+    trimmed = lbstatus.trim_ranking_columns(page)
+    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == list(head[:-1])
+    assert trimmed.count("<td>") == len(head) - 1
+    assert lbstatus.trim_ranking_columns(trimmed) == trimmed
+
+
 def test_hide_rows_matches_exact_identity_and_preserves_active_status():
     entries = upsert([], "seongeun", "E2001", "대기", at="2026-10-28T00:00:00Z")
     original = inject(PAGE, entries)

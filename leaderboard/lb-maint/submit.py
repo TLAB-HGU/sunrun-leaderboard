@@ -46,6 +46,16 @@ def all_results(api: HfApi, repo: str) -> list[dict]:
     return [json.loads(Path(_download(repo, f)).read_text()) for f in files]
 
 
+def with_extras(api: HfApi, repo: str, results: list[dict]) -> list[dict]:
+    """Attach optional display-only extras (``extras/<member>/<experiment>/<config_sha256>.json``) as ``r["extras"]``."""
+    files = {f for f in api.list_repo_files(repo, repo_type="dataset") if f.startswith("extras/")}
+    out = []
+    for r in results:
+        path = f"extras/{r['team_member']}/{r['experiment']}/{r.get('config_sha256', 'legacy')}.json"
+        out.append({**r, "extras": json.loads(Path(_download(repo, path)).read_text())} if path in files else r)
+    return out
+
+
 def publish(api: HfApi, results: list[dict], space: str) -> str:
     try:
         api.create_repo(space, repo_type="space", space_sdk="static", private=True, exist_ok=True)
@@ -76,7 +86,7 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
         # raw file first so a scored row always has its source
         api.upload_file(path_or_fileobj=str(pred_path), path_in_repo=f"submissions/{tag}{Path(pred_path).suffix}", repo_id=dataset, repo_type="dataset")
         api.upload_file(path_or_fileobj=json.dumps(rec, ensure_ascii=False).encode(), path_in_repo=f"results/{tag}.json", repo_id=dataset, repo_type="dataset")
-        rec["_leaderboard"] = publish(api, all_results(api, dataset), space)
+        rec["_leaderboard"] = publish(api, with_extras(api, dataset, all_results(api, dataset)), space)
     return rec
 
 

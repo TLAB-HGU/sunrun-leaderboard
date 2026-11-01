@@ -1,4 +1,6 @@
 import json
+import re
+from pathlib import Path
 
 import pytest
 
@@ -134,7 +136,64 @@ def test_f2_only_results_rank_below_f1_f2_results():
     page = render(rows)
     assert page.index("new_better") < page.index("new_worse") < page.index("old_good") < page.index("old_bad")
     assert "F2 only" in page and "9,500.0" in page
-    assert '<td data-v="1000.0">1,000.0</td>' in page  # an F2-only row's old MSE is shown as its F2 MSE
+    assert '<td data-v="1000.0"><b class="lb-1">1,000.0</b></td>' in page  # an F2-only row's old MSE is its F2 MSE
+
+
+def test_board_keeps_the_period_and_event_columns():
+    metric = {"team_member": "alice", "submitted_utc": "20260101T000000Z", "skill_vs_naive": 0.1, "mse_observed": 2.0}
+    full = {"mse_f1": 5000.0, "mse_f2": 3000.0, "mse_ge550": 9000.0, "mse_f1_ge550": 9500.0, "mse_f2_ge550": 8500.0,
+            "csi": 0.25, "timing_mae_h": 6.5, "timing_bias_h": -1.0}
+    page = render([
+        {**metric, "experiment": "f2_only", "config_sha256": "a" * 64, "mse": 1000.0},
+        {**metric, "experiment": "scored", "config_sha256": "b" * 64, "mse": 4000.0, **full,
+         "extras": {"end_to_end_seconds": 7200}},
+    ])
+    labels = re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
+    assert labels == ["#", "experiment",
+                      "MSE", "F1 MSE", "F2 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550",
+                      "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive",
+                      "member", "sec/fold", "config", "end-to-end (h)", "code"]
+    assert page.index("scored") < page.index("f2_only") and "F2 only" in page
+    assert all(text in page for text in ("9,500.0", "0.250", "6.5", "2.00"))
+
+
+def test_every_publish_marks_the_best_and_second_best_of_each_skill_column():
+    """The page a publisher writes carries its own marks, so a leaderboard refresh no longer drops them."""
+    base = {"team_member": "alice", "submitted_utc": "20260101T000000Z", "mse_ge550": 9000.0,
+            "mse_f1_ge550": 9500.0, "mse_f2_ge550": 8500.0}
+    page = render([
+        {**base, "experiment": name, "config_sha256": sha * 64, "mse": mse, "mse_f1": f1, "mse_f2": f2, "csi": csi,
+         "timing_mae_h": mae, "mse_observed": obs, "skill_vs_naive": skill, "inference_seconds_per_fold": cost,
+         "extras": {"end_to_end_seconds": e2e}}
+        for name, sha, mse, f1, f2, csi, mae, obs, skill, cost, e2e in (
+            ("best", "a", 4000.0, 5000.0, 3000.0, 0.3, 6.0, 3900.0, 0.5, 0.003, 7200),
+            ("second", "b", 4100.0, 5100.0, 3100.0, 0.2, 5.0, 4000.0, 0.4, 0.001, 3600),
+            ("third", "c", 4200.0, 5200.0, 3200.0, 0.1, 8.0, 4100.0, 0.3, 0.002, 1800))
+    ])
+    assert len(re.findall(r'<(b|u) class="lb-[12]">', page)) == 23  # 10 skill columns × 2, plus a 3-way tie in ≥550
+    assert '<td data-v="4000.0"><b class="lb-1">4,000.0</b></td>' in page   # lower is better: MSE, F1/F2 MSE
+    assert '<td data-v="4100.0"><u class="lb-2">4,100.0</u></td>' in page
+    assert '<td data-v="4200.0">4,200.0</td>' in page
+    assert page.count('<td data-v="9000.0"><b class="lb-1">9,000.0</b></td>') == 3  # ties share the best mark
+    assert '<td data-v="0.3"><b class="lb-1">0.300</b></td>' in page         # higher is better: CSI, skill
+    assert '<td data-v="0.2"><u class="lb-2">0.200</u></td>' in page
+    assert '<td data-v="5.0" title=""><b class="lb-1">5.0</b></td>' in page  # lower is better: timing MAE
+    assert '<td data-v="6.0" title=""><u class="lb-2">6.0</u></td>' in page
+    assert '<td data-v="0.001">0.001000</td>' in page and '<td data-v="1.0" title="">1.00</td>' in page  # cost
+    # A status write re-applies the same rule to the page a publisher wrote, so it never fights it. Only the
+    # canonical checkout ships lbstatus.py next to the board.
+    assert pytest.importorskip("lbstatus").mark_leaders(page) == page
+
+
+
+    root = Path(__file__).resolve().parents[1]
+    root = root if (root / "lb-f1f2").is_dir() else root.parent
+    copies = [root / name / "board.py" for name in (".", "model-release-publish", "lb-f1f2", "lb-maint")]
+    assert len({path.read_text() for path in copies}) == 1
+    clients = [root / name / "submit.py" for name in (".", "model-release-publish", "lb-f1f2")]
+    assert len({path.read_text() for path in clients}) == 1
+    scorers = [root / name / "scorer/scoring.py" for name in (".", "model-release-publish", "lb-f1f2", "lb-maint")]
+    assert len({path.read_text() for path in scorers}) == 1
 
 
 def test_local_preview_loads_flat_and_nested_results(tmp_path):
@@ -191,3 +250,29 @@ def test_concurrent_same_key_is_rechecked_and_rejected(monkeypatch):
     monkeypatch.setattr("submit.all_results", results)
     with pytest.raises(SystemExit, match="already exists"):
         store_submission(FakeApi(conflict=True), "repo", result_record(), b"prediction", replace=False)
+
+
+def test_board_shows_end_to_end_hours_only_when_provided():
+    regimes = {name: {"mse": None, "reliable": False} for name in __import__("board").REGIMES}
+    base = {"team_member": "alice", "submitted_utc": "20261027T000000Z", "skill_vs_naive": 0.1, "mse": 4000.0,
+            "vs_naive": {"beats_reference": True}, "by_regime": regimes, "mse_f1": 5000.0, "mse_f2": 3000.0}
+    page = render([
+        {**base, "experiment": "timed", "config_sha256": "a" * 64,
+         "extras": {"end_to_end_seconds": 5400.0, "end_to_end_note": "select + F1 + F2 fits"}},
+        {**base, "experiment": "untimed", "config_sha256": "b" * 64},
+    ])
+    assert "end-to-end (h)" in page
+    assert '<td data-v="1.5" title="select + F1 + F2 fits">1.50</td>' in page
+    assert '<td data-v="" title=""><span class="dash">–</span></td>' in page
+
+
+def test_extras_attach_to_matching_results_only(monkeypatch, tmp_path):
+    import submit
+    extra = tmp_path / "e.json"
+    extra.write_text('{"end_to_end_seconds": 60.0}')
+    key = f"extras/alice/model/{'a' * 64}.json"
+    monkeypatch.setattr(submit, "_download", lambda repo, name, revision=None: str(extra) if name == key else None)
+    api = type("Api", (), {"list_repo_files": lambda self, repo, repo_type, revision=None: [key, "results/x.json"]})()
+    rows = submit.with_extras(api, "repo", [result_record(), {**result_record(), "experiment": "other"}])
+    assert rows[0]["extras"] == {"end_to_end_seconds": 60.0}
+    assert "extras" not in rows[1]

@@ -27,16 +27,19 @@ from huggingface_hub.utils import HfHubHTTPError
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE)]
-from board import f2_mse, has_f1, ranked, render  # noqa: E402
+from board import end_to_end_hours, event_value, has_f1, is_legacy, ranked, render  # noqa: E402
 from scoring import score, validate  # noqa: E402
 
 DATASET = "tlabtlab/sunrun-lb-store"
 SPACE = "tlabtlab/sunrun-leaderboard"
 GITHUB_REPO = "TLAB-HGU/sunrun-leaderboard"
 GITHUB_BRANCH = "main"
-REQUIRED_META = ("team_member", "experiment", "description", "no_future_leakage", "f1_training_data_end_utc", "config",
-                 "inference_seconds_per_fold")
-F1_TRAIN_END = pd.Timestamp("2026-02-26T00:00:00Z")  # F1 start - 72h; F1 predictions use only data before this
+REQUIRED_META = ("team_member", "experiment", "description", "no_future_leakage", "f1_training_data_end_utc",
+                 "f2_training_data_end_utc", "f3_training_data_end_utc", "config", "inference_seconds_per_fold")
+# period start - 72h: predictions for a period use only models trained on data before its cutoff
+TRAIN_END = {"f1": pd.Timestamp("2025-12-29T00:00:00Z"), "f2": pd.Timestamp("2026-03-29T00:00:00Z"),
+             "f3": pd.Timestamp("2026-06-29T00:00:00Z")}
+F1_TRAIN_END = TRAIN_END["f1"]
 SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
 
 
@@ -50,19 +53,26 @@ def text_table(results: list[dict]) -> str:
     def num(x):
         return f"{x:,.1f}" if x is not None else "-"
 
-    out = [f"{'#':>4} {'experiment':<24} {'member':<12} {'config':<12} {'sec/fold':>10} {'MSE':>10} {'F1':>10} {'F2':>10} "
-           f"{'MSE>=550':>10} {'F1>=550':>10} {'F2>=550':>10} {'skill':>8} {'beats naive':>11} code"]
+    out = [f"{'#':>4} {'experiment':<24} {'member':<12} {'config':<12} {'sec/fold':>10} {'e2e(h)':>7} {'MSE':>10} {'F1':>10} {'F2':>10} {'F3':>10} "
+           f"{'MSE>=550':>10} {'F1>=550':>10} {'F2>=550':>10} {'F3>=550':>10} {'CSI':>6} {'TmMAE':>6} {'skill':>8} {'beats naive':>11} code"]
     for i, r in enumerate(ranked(results), 1):
         full = has_f1(r)
-        metrics = [r.get(k) if full else None for k in ("mse", "mse_f1", "mse_f2", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550")]
-        metrics[2] = f2_mse(r)
+        keys = ("mse", "mse_f1", "mse_f2", "mse_f3", "mse_ge550", "mse_f1_ge550", "mse_f2_ge550", "mse_f3_ge550")
+        metrics = [None if is_legacy(r) else r.get(k) for k in keys]
+        if not full:  # an incomplete (or old-window) F1 and the totals that include it are not shown
+            for i in (0, 1, 4, 5):
+                metrics[i] = None
         periods = " ".join(f"{num(x):>10}" for x in metrics)
+        csi, tmae = event_value(r, "csi"), event_value(r, "timing_mae_h")
+        events = f"{f'{csi:.3f}' if csi is not None else '-':>6} {num(tmae):>6}"
         beat = (r.get("vs_naive") or {}).get("beats_reference")
         config = r.get("config_sha256", "legacy")[:12]
         seconds = r.get("inference_seconds_per_fold")
         seconds_text = f"{seconds:.6f}" if seconds is not None else "-"
-        out.append(f"{i if full else 'F2':>4} {r['experiment'][:24]:<24} {r['team_member'][:12]:<12} {config:<12} {seconds_text:>10} "
-                   f"{periods} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
+        e2e = end_to_end_hours(r)
+        e2e_text = f"{e2e:.2f}" if e2e is not None else "-"
+        out.append(f"{i if full else ('old' if is_legacy(r) else 'noF1'):>4} {r['experiment'][:24]:<24} {r['team_member'][:12]:<12} {config:<12} {seconds_text:>10} "
+                   f"{e2e_text:>7} {periods} {events} {r.get('skill_vs_naive') or 0:>+8.1%} {'yes' if beat else 'no':>11} "
                    f"{r.get('code_url') or '-'}")
     return "\n".join(out)
 
@@ -104,14 +114,18 @@ def validate_meta(meta: dict) -> tuple[dict, str, float, str]:
     for field in ("team_member", "experiment"):
         if not isinstance(meta[field], str) or not SAFE_NAME.fullmatch(meta[field]):
             raise SystemExit(f"meta.{field} must match {SAFE_NAME.pattern}")
-    try:
-        f1_end = pd.Timestamp(str(meta["f1_training_data_end_utc"]))
-    except ValueError as exc:
-        raise SystemExit("meta.f1_training_data_end_utc must be a UTC timestamp, e.g. 2026-02-26T00:00:00Z") from exc
-    f1_end = f1_end.tz_localize("UTC") if f1_end.tzinfo is None else f1_end.tz_convert("UTC")
-    if f1_end > F1_TRAIN_END:
-        raise SystemExit(f"meta.f1_training_data_end_utc must be <= {F1_TRAIN_END:%Y-%m-%dT%H:%M:%SZ}: "
-                         "F1 predictions may only use models trained on data before it")
+    ends = {}
+    for period, limit in TRAIN_END.items():
+        field = f"{period}_training_data_end_utc"
+        try:
+            end = pd.Timestamp(str(meta[field]))
+        except ValueError as exc:
+            raise SystemExit(f"meta.{field} must be a UTC timestamp, e.g. {limit:%Y-%m-%dT%H:%M:%SZ}") from exc
+        end = end.tz_localize("UTC") if end.tzinfo is None else end.tz_convert("UTC")
+        if end > limit:
+            raise SystemExit(f"meta.{field} must be <= {limit:%Y-%m-%dT%H:%M:%SZ}: "
+                             f"{period.upper()} predictions may only use models trained on data before it")
+        ends[period] = f"{end:%Y-%m-%dT%H:%M:%SZ}"
     try:
         canonical, config_sha = canonical_config(meta["config"])
     except ValueError as exc:
@@ -125,7 +139,7 @@ def validate_meta(meta: dict) -> tuple[dict, str, float, str]:
         raise SystemExit("meta.inference_seconds_per_fold must be a positive finite number") from exc
     if not math.isfinite(seconds) or seconds <= 0:
         raise SystemExit("meta.inference_seconds_per_fold must be a positive finite number")
-    return json.loads(canonical), config_sha, seconds, f"{f1_end:%Y-%m-%dT%H:%M:%SZ}"
+    return json.loads(canonical), config_sha, seconds, ends["f1"], ends
 
 
 def require_script(member: str, experiment: str, config_sha: str, remote: bool) -> str:
@@ -162,6 +176,20 @@ def _store(name: str, repo: str) -> pd.DataFrame:
 def all_results(api: HfApi, repo: str, revision: str | None = None) -> list[dict]:
     files = [f for f in api.list_repo_files(repo, repo_type="dataset", revision=revision) if f.startswith("results/")]
     return [json.loads(Path(_download(repo, f, revision=revision)).read_text()) for f in files]
+
+
+def with_extras(api: HfApi, repo: str, results: list[dict], revision: str | None = None) -> list[dict]:
+    """Attach optional display-only extras (``extras/<member>/<experiment>/<config_sha256>.json``) as ``r["extras"]``.
+
+    Extras are facts added after scoring, such as end-to-end compute time; the scored result files stay untouched.
+    """
+    files = {f for f in api.list_repo_files(repo, repo_type="dataset", revision=revision) if f.startswith("extras/")}
+    out = []
+    for r in results:
+        path = f"extras/{r['team_member']}/{r['experiment']}/{r.get('config_sha256', 'legacy')}.json"
+        out.append({**r, "extras": json.loads(Path(_download(repo, path, revision=revision)).read_text())}
+                   if path in files else r)
+    return out
 
 
 def publish(api: HfApi, results: list[dict], space: str) -> str:
@@ -210,7 +238,7 @@ def store_submission(api: HfApi, repo: str, rec: dict, pred_bytes: bytes, replac
 
 def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPACE, dry_run: bool = False,
            replace: bool = False) -> dict:
-    config, config_sha, seconds, f1_end = validate_meta(meta)
+    config, config_sha, seconds, f1_end, train_ends = validate_meta(meta)
     code_url = require_script(meta["team_member"], meta["experiment"], config_sha, remote=not dry_run)
     require_token()
     api = HfApi()
@@ -223,14 +251,15 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
     now = time.time()
     ts = time.strftime("%Y%m%dT%H%M%S", time.gmtime(now)) + f"{int(now % 1 * 1000):03d}Z"
     rec = {"submitted_utc": ts, **{k: meta[k] for k in ("team_member", "experiment", "description")},
-           "f1_training_data_end_utc": f1_end, "config": config, "config_sha256": config_sha, "inference_seconds_per_fold": seconds,
+           "f1_training_data_end_utc": f1_end, "f2_training_data_end_utc": train_ends["f2"],
+           "f3_training_data_end_utc": train_ends["f3"], "config": config, "config_sha256": config_sha, "inference_seconds_per_fold": seconds,
            "code_url": code_url, **res}
     if not dry_run:
         # One Hub commit keeps the keyed prediction and its score consistent.
         buf = io.BytesIO()
         pred.to_parquet(buf, index=False)
         store_submission(api, dataset, rec, buf.getvalue(), replace)
-        rec["_leaderboard"] = publish(api, all_results(api, dataset), space)
+        rec["_leaderboard"] = publish(api, with_extras(api, dataset, all_results(api, dataset)), space)
     return rec
 
 
@@ -246,16 +275,19 @@ if __name__ == "__main__":
     a = ap.parse_args()
     if a.show:
         require_token()
-        print(text_table(all_results(HfApi(), a.dataset)))
+        print(text_table(with_extras(HfApi(), a.dataset, all_results(HfApi(), a.dataset))))
         raise SystemExit(0)
     if not (a.predictions and a.meta):
         ap.error("predictions and meta are required (or use --show)")
     r = submit(a.predictions, yaml.safe_load(Path(a.meta).read_text()), a.dataset, a.space, a.dry_run, a.replace)
     vs = r["vs_naive"]
-    print(f"MSE={r['mse']:.1f}  F1={r['mse_f1']:.1f}  F2={r['mse_f2']:.1f}  "
-          f"MSE>=550={r['mse_ge550']:.1f}  F1>=550={r['mse_f1_ge550']:.1f}  F2>=550={r['mse_f2_ge550']:.1f}")
+    print(f"MSE={r['mse']:.1f}  F1={r['mse_f1']:.1f}  F2={r['mse_f2']:.1f}  F3={r['mse_f3']:.1f}  "
+          f"MSE>=550={r['mse_ge550']:.1f}  F1>=550={r['mse_f1_ge550']:.1f}  F2>=550={r['mse_f2_ge550']:.1f}  "
+          f"F3>=550={r['mse_f3_ge550']:.1f}")
+    tm = "-" if r["timing_mae_h"] is None else f"{r['timing_mae_h']:.1f}h (bias {r['timing_bias_h']:+.1f}h)"
+    print(f"HSS events: CSI={'-' if r['csi'] is None else format(r['csi'], '.3f')}  timing MAE={tm}  (TP/FP/FN={r['events']['']['tp']}/{r['events']['']['fp']}/{r['events']['']['fn']})")
     print(f"MSE(obs)={r['mse_observed']:.1f}  skill vs naive={r['skill_vs_naive']:+.3f}  "
           f"beats naive (95% CI)={vs['beats_reference']}  diff CI={[round(x, 1) for x in vs['ci95']]}")
     if "_leaderboard" in r:
-        print("\n" + text_table(all_results(HfApi(), a.dataset)))
+        print("\n" + text_table(with_extras(HfApi(), a.dataset, all_results(HfApi(), a.dataset))))
         print("\npage (needs an HF login of an org member):", r["_leaderboard"])

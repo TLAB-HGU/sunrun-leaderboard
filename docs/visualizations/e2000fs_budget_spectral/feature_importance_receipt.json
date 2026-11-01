@@ -1,0 +1,33 @@
+{
+  "method": "permutation across origins; the three 24-output boosters of a stage are re-predicted with the feature's columns shuffled; predictions clipped to 1-3000 km/s; \u0394MSE vs the submitted forecast",
+  "repeats": 5,
+  "seed": 42,
+  "stages": {
+    "f1": {
+      "origins": 2137,
+      "mse": 4028.9729700045964,
+      "expected": 4028.9729700045964,
+      "prediction_parity": "exact (bit-identical to the submitted grid)"
+    },
+    "final": {
+      "origins": 2833,
+      "mse": 3093.2525032153662,
+      "expected": 3093.2525032153662,
+      "prediction_parity": "exact (bit-identical to the submitted grid)"
+    }
+  },
+  "native_importance": "unavailable: XGBoost 2.1.4 cannot dump multi-target trees and get_score crashes",
+  "model_sha256": {
+    "research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/e2000fs_budget_spectral/models/f1_spectral_b0.ubj": "27fd0fd17ec86a895d88f065f76e75315a2e502271c64df988b5e38df2e7b591",
+    "research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/e2000fs_budget_spectral/models/f1_spectral_b1.ubj": "7a28f77016ae7cda3e4c5569ca2e92e960b6ee1663e14453afd3f7b58678a99d",
+    "research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/e2000fs_budget_spectral/models/f1_spectral_b2.ubj": "168baa9e5f0c15474756ac84e68e2a8de4b5ba6fef86f268da874f603c9f23da",
+    "research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/e2000fs_budget_spectral/models/final_spectral_b0.ubj": "192de8055f8c54824f16577de32be9560f5e6e89892c940f8e7a92476330b6f3",
+    "research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/e2000fs_budget_spectral/models/final_spectral_b1.ubj": "aef2a90bd1a9651b392376ef634a28fb106db1644b195c48a299961f00ccdd49",
+    "research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/e2000fs_budget_spectral/models/final_spectral_b2.ubj": "7a8198cdcc00820e7caa45090230ba4df92a1196cf77e60ab8cee9e783924917"
+  },
+  "note": "official-exposed window; not used for feature selection or model choice",
+  "outputs": {
+    "feature_importance.csv": "2baac2ac064bbc5ddaf876a5bab30e98190f8c4af22c3170a74385081df6caba",
+    "feature_importance.png": "543806544e02102bee8dc030567cbd1e6118b917c5816933bdd7ad20a3b085bb"
+  }
+}

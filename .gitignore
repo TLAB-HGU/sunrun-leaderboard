@@ -86,3 +86,5 @@
 /data-v2/**/*.done
 /data-v2/**/logs/
 /data-v2/**/*.log
+
+/docs/**/__pycache__/

@@ -12,10 +12,11 @@ a row at the top of the ranking table in index.html, shown as "<experiment> (진
 A finished experiment leaves those rows by appearing in the ranking: every write marks an active entry 완료 once
 the dataset holds a result for the same (member, experiment) submitted after the entry was registered, and moves
 it to the history. A successful `run` therefore stays 진행 until its result is submitted.
-Each write also bolds the best and underlines the second-best value of every skill metric column (mark_leaders).
-Every publisher (submit.py and its per-study copies) rewrites index.html and drops the rows and the marks, so
-every set/rm, `sync`, and a running `run` (every --sync-every seconds) re-apply them; they commit only when
-something changed.
+board.render already writes the bold (best) and underlined (second-best) value of every skill metric column, so a
+publisher's page keeps its marks; every write here re-applies the same rule (mark_leaders, sharing board.mark_sign)
+because it injects or removes rows and trims columns, and pages published by older clients still drop them. A
+publisher does drop the status rows, so every set/rm, `sync`, and a running `run` (every --sync-every seconds)
+re-inserts them; they commit only when something changed.
 """
 from __future__ import annotations
 
@@ -31,6 +32,8 @@ import subprocess
 import sys
 import threading
 import time
+
+from board import mark_sign  # the column rule both the publisher and this tool apply
 
 SPACE = "tlabtlab/sunrun-leaderboard"
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -48,8 +51,9 @@ ALIASES = {"queued": "대기", "waiting": "대기", "pending": "대기", "runnin
 SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$")
 DEFAULT_MEMBER = os.environ.get("SUNRUN_MEMBER", "seongeun")
 FINISHED_KEPT = 300
-HIGHER_IS_BETTER = re.compile(r"^(CSI|skill vs naive)$")
-LOWER_IS_BETTER = re.compile(r"MSE|MAE|≥\d+|^(low|high)_(low|high)_(low|high)$")  # sec/fold etc. are cost, not skill
+BOARD_COLUMNS = frozenset({  # every column board.py publishes; anything else is a retired column
+    "#", "experiment", "member", "sec/fold", "MSE", "F1 MSE", "F2 MSE", "F3 MSE", "MSE ≥550", "F1 ≥550", "F2 ≥550", "F3 ≥550",
+    "CSI", "timing MAE (h)", "MSE obs.", "skill vs naive", "config", "end-to-end (h)", "code"})
 LEADER_MARK = re.compile(r'<(b|u) class="lb-[12]">(.*?)</\1>', re.S)
 CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 
@@ -152,24 +156,23 @@ def _ranking(page: str) -> tuple[int, int, list[tuple[str, str]]] | None:
 
 
 def trim_ranking_columns(page: str) -> str:
-    """Keep skill vs naive as the final column, including pages from older publishers."""
+    """Drop columns no publisher ships any more (e.g. the retired regime table), keeping every current column
+    wherever the board places it: config, end-to-end (h) and code sit after skill vs naive."""
     ranking = _ranking(page)
     if ranking is None:
         return page
     start, stop, cols = ranking
-    labels = [label for label, _ in cols]
-    if "skill vs naive" not in labels:
+    drop = {i for i, (label, _) in enumerate(cols) if label not in BOARD_COLUMNS}
+    if not drop:
         return page
-    count = labels.index("skill vs naive") + 1
-    if count == len(cols):
-        return page
+    keep = [i for i in range(len(cols)) if i not in drop]
 
     def trim_row(match):
         row = match.group(0)
         cells = list(re.finditer(r"<t[hd]\b[^>]*>.*?</t[hd]>", row, re.S))
-        if len(cells) <= count:
+        if len(cells) != len(cols):
             return row
-        return row[:cells[count].start()] + row[cells[-1].end():]
+        return row[:cells[0].start()] + "".join(cells[i].group(0) for i in keep) + row[cells[-1].end():]
 
     table = re.sub(r"<tr\b[^>]*>.*?</tr>", trim_row, page[start:stop], flags=re.S)
     return page[:start] + table + page[stop:]
@@ -186,6 +189,7 @@ def hide_ranking_rows(page: str, visibility: dict) -> str:
     if "experiment" not in labels or "member" not in labels:
         return page
     experiment_col, member_col = labels.index("experiment"), labels.index("member")
+    rank_col = labels.index("#") if "#" in labels else 0  # the rank column is not necessarily the first
     rank = 0
 
     def filter_row(match):
@@ -198,9 +202,9 @@ def hide_ranking_rows(page: str, visibility: dict) -> str:
         experiment = re.sub(r" \((?:진행|대기)\)$", "", values[experiment_col])
         if (values[member_col], experiment) in hidden:
             return ""
-        if values[0].isdigit():
+        if values[rank_col].isdigit():
             rank += 1
-            cell = cells[0]
+            cell = cells[rank_col]
             row = row[:cell.start(2)] + str(rank) + row[cell.end(2):]
         return row
 
@@ -326,8 +330,9 @@ def _cell_value(attrs: str, inner: str) -> float | None:
 
 
 def mark_leaders(page: str) -> str:
-    """Bold the best and underline the second-best value of each skill metric column in the ranking table.
-    Ties share the mark. Idempotent: old marks are removed first."""
+    """Bold the best and underline the second-best value of each skill metric column in the ranking table, the same
+    rule board.render writes (`mark_sign`); a board page therefore passes through unchanged. Ties share the mark.
+    Idempotent: old marks are removed first."""
     page = LEADER_MARK.sub(r"\2", page)
     found = _ranking(page)
     if not found:
@@ -338,14 +343,14 @@ def mark_leaders(page: str) -> str:
     cells = [list(CELL.finditer(r.group(0))) for r in rows]
     marks = {}  # (row, column) -> tag
     for col, (label, _) in enumerate(cols):
-        sign = -1 if HIGHER_IS_BETTER.search(label) else 1 if LOWER_IS_BETTER.search(label) else 0
+        sign = mark_sign(label)
         if not sign:
             continue
         values = {i: v for i, cs in enumerate(cells) if col < len(cs)
                   and (v := _cell_value(cs[col].group(1), cs[col].group(2))) is not None}
-        ranks = sorted({sign * v for v in values.values()})
+        ranks = sorted({sign * v for v in values.values()})[:2]
         for i, v in values.items():
-            if sign * v in ranks[:2]:
+            if sign * v in ranks:
                 marks[i, col] = "b" if sign * v == ranks[0] else "u"
     out, pos = [], 0
     for i, r in enumerate(rows):

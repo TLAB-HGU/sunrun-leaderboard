@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>e2000fs_calib4_detpool_gpd · 추론 손풀이</title>
+<style>/*__CSS__*/</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <i style="background:#f24822"></i><i style="background:#ffb020"></i><i style="background:#14ae5c"></i><i style="background:#0d99ff"></i>
+  </div>
+  <div class="file"><b>e2000fs_calib4_detpool_gpd</b> · inference-walkthrough.fig</div>
+  <div class="tab">Frame 01–13 · final</div>
+  <div class="grow"></div>
+  <div class="zoomer">
+    <button id="zoomOut" title="축소">−</button>
+    <span id="zoomLabel">100%</span>
+    <button id="zoomIn" title="확대">+</button>
+  </div>
+  <button class="pill ghost">보기 전용</button>
+  <button class="pill">공유</button>
+</header>
+
+<div class="workspace">
+  <nav class="rail">
+    <h4>Layers</h4>
+    <div class="layer" data-target="sec-cover"><span class="ic">◇</span>00 / Cover — 한 장 요약</div>
+    <div class="layer" data-target="sec-scene"><span class="ic">◇</span>00b / Scene — 인터랙티브</div>
+    <div class="layer" data-target="sec-raw"><span class="ic">◇</span>01 / Raw — 원자료에서 시작</div>
+    <div class="layer" data-target="sec-align"><span class="ic">◇</span>02 / Align — 한 시간 격자와 결측</div>
+    <div class="layer" data-target="sec-features"><span class="ic">◇</span>03 / Features — 원자료에서 번들까지</div>
+    <div class="layer" data-target="sec-lineage"><span class="ic">◇</span>04 / Lineage — 두 예측의 계보</div>
+    <div class="layer" data-target="sec-pipeline"><span class="ic">◇</span>05 / Pipeline — 풀링 추론의 경로</div>
+    <div class="layer" data-target="sec-inputs"><span class="ic">◇</span>06 / Contract — 입력 계약 (npz · sha256)</div>
+    <div class="layer" data-target="sec-maturity"><span class="ic">◇</span>07 / Causality — 성숙한 잔차만</div>
+    <div class="layer" data-target="sec-stats"><span class="ic">◇</span>08 / Six numbers — 충분통계</div>
+    <div class="layer" data-target="sec-scan"><span class="ic">◇</span>09 / Scan — 31점 + 가드</div>
+    <div class="layer" data-target="sec-hand"><span class="ic">◇</span>10 / Hand — 예시 origin 손풀이</div>
+    <div class="layer" data-target="sec-vector"><span class="ic">◇</span>11 / Vector — 72개 숫자 조립</div>
+    <div class="layer" data-target="sec-walk"><span class="ic">◇</span>12 / Loop — 4,970번 반복</div>
+    <div class="layer" data-target="sec-notoracle"><span class="ic">◇</span>13 / Not an oracle — 규칙의 대가</div>
+    <div class="layer" data-target="sec-score"><span class="ic">◇</span>14 / Score — 리더보드</div>
+    <div class="layer" data-target="sec-run"><span class="ic">◇</span>15 / Receipt — 재현</div>
+    <div class="layer" data-target="sec-limits"><span class="ic">◇</span>16 / Limits</div>
+    <div class="meta">
+      <div><b>모델</b> detroute + gpd 꼬리 arm 풀링</div>
+      <div><b>학습</b> 없음 (아카이브 예측 2개 재사용)</div>
+      <div><b>추론</b> <span data-num="scores.inference_us_per_origin" data-fmt="us"></span>/origin</div>
+      <div style="margin-top:8px">모든 숫자는 <code>docs/explainers/data/*.json</code>에서 주입됩니다.</div>
+    </div>
+  </nav>
+
+  <main class="canvas">
+  <div class="stage">
+
+    <!-- scene -->
+
+
+<section class="frame" id="sec-cover">
+      <div class="flabel"><span class="nm">00 / Cover — 한 장 요약</span><span class="sz">1080 × auto</span></div>
+      <div class="fbody">
+        <div class="h">
+          <span class="no">E2K · CALIB4</span>
+          <h2>detroute 예측에 꼬리 전용 arm을 얹어 72시간 예보를 다시 만든다</h2>
+        </div>
+        <p class="lead">
+          <em>ACE 위성 관측·SUVI 영상·코로나홀 지도·WSA-Enlil 실행</em>이라는 원자료에서 시작해
+          1시간 격자 → 특징 → 번들로 두 개의 72시간 예측(base <code>detroute</code>, arm <code>gpd</code>)이
+          만들어지고, 이 모델은 그 둘을 읽어 origin마다 <b>하나의 숫자 w</b>를 정해
+          <code>(1−w)·base + w·arm</code>으로 섞습니다. w는 매 시점 <b>이미 성숙한 잔차</b>만 보고 고릅니다.
+          이 문서는 <b>원자료 → 번들 → 두 예측 → 상수 6개 → w → 72개 숫자 → 리더보드 점수</b>까지 따라갑니다.
+        </p>
+        <div class="grid g4">
+          <div class="kpi hl"><div class="k">공식 총 MSE <span class="tag p">최종</span></div>
+            <div class="v" data-num="scores.total" data-fmt="1"></div>
+            <div class="d" data-num="compare.delta_total" data-fmt="signed" data-pre="base 대비 "></div></div>
+          <div class="kpi hl"><div class="k">≥550 MSE</div>
+            <div class="v" data-num="scores.ge550" data-fmt="1"></div>
+            <div class="d good" data-num="compare.delta_ge550" data-fmt="signed" data-pre="base 대비 "></div></div>
+          <div class="kpi"><div class="k">총 예측 셀</div>
+            <div class="v" data-num="scores.n_pairs" data-fmt="0"></div>
+            <div class="d"><span data-num="origins.n" data-fmt="0"></span> origins × 72 h</div></div>
+          <div class="kpi"><div class="k">가중 w 평균</div>
+            <div class="v" data-num="weights.mean" data-fmt="w"></div>
+            <div class="d">w=0 비율 <span data-num="weights.share_zero" data-fmt="pct1"></span></div></div>
+        </div>
+        <div class="grid g2" style="margin-top:12px">
+          <div class="card">
+            <h3><span class="tag b">읽는 법</span> 이 문서의 규칙</h3>
+            <p>모든 <span class="mono">숫자</span>는 실제 산출물에서 계산한 값입니다 — 원자료 표(ACE·SUVI·
+            코로나홀·ENLIL), 번들(<code>train.npz</code>), 예측(<code>forecast.npz</code>),
+            가중(<code>weights.npz</code>), 실측(<code>speed.parquet</code>). 각 단계는 검산 표시(✓)로
+            재계산값과 대조합니다.</p>
+          </div>
+          <div class="card soft">
+            <h3><span class="tag a">주의</span> F1은 나빠졌습니다</h3>
+            <p>총 <span data-num="compare.delta_total" data-fmt="signed2"></span>이지만 전부 F2에서 나옵니다.
+            F1 <span class="mono" data-num="compare.base_f1" data-fmt="1"></span> →
+            <span class="mono" data-num="compare.pool_f1" data-fmt="1"></span>. 이득은 꼬리(≥550)에 몰려 있습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="conn"><div class="ln"></div><div class="ch">데이터</div><div class="ln"></div></div>
+
+    <section class="frame sel" id="sec-scene">
+      <div class="flabel"><span class="nm">00b / Scene — 숫자가 흐르는 장면</span><span class="sz">9 steps · ← →</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">SCENE</span><h2>한 단계씩 누르면 계산이 눈앞에서 이어집니다</h2>
+          <div class="q">왼쪽 판을 클릭하거나 ← → 로 이동. 오른쪽에 그 단계의 식과 실제 값이 나옵니다.</div></div>
+        <div class="scene-wrap">
+          <div class="scene" id="scene"></div>
+          <div class="scene-side" id="scene-side"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="frame" id="sec-raw">
+      <div class="flabel"><span class="nm">01 / Raw — 원자료에서 시작</span><span class="sz">6 sources · 36,015 h</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">RAW</span><h2>모델의 첫 입력은 위성 관측과 모델 실행 파일이다</h2>
+          <div class="q">예측 파일은 이 원자료들의 결과물입니다. 그래서 여기서부터 시작합니다.</div></div>
+        <p class="lead">
+          이 모델은 예측을 직접 만들지 않습니다. ACE 관측, SUVI 영상, 코로나홀 지도,
+            WSA-Enlil 실행으로 만들어진 두 예측(detroute, gpd)을 읽어 섞습니다. 그래서 문서는
+            <b>원자료 → 1시간 정렬 → 특징 → 번들 → 예측 2개 → 풀링</b> 순서로 내려갑니다.
+        </p>
+        <div class="tw" id="src-table" style="max-height:none"></div>
+        <div class="grid g4" id="src-kpi" style="margin-top:12px"></div>
+        <hr class="sep">
+        <h3 style="font-size:13px;margin-bottom:4px">SUVI 경도 스트립 — “도달 시각 h에 지구로 흘러오는 태양면은 어느 경도인가”</h3>
+        <p class="tiny" style="color:var(--ink-3);margin-bottom:8px">
+          태양 자전 <b>0.55°/h</b>, 태양–지구 거리 <b>147,858,620.7 km</b>. 속도 v인 유체가 h시간 뒤에
+          도착한다면 그 유체는 <b>h + age</b> 시간 전에 태양면을 떠난 것이므로 유효 경도는
+          <span class="mono">λ = Ω·(τ_v − (h + age))</span>, τ_v = D/v 입니다. 이 λ를 중심으로 ±5° 띠의
+          이미지 통계를 가중 평균해 <span class="mono">strip_v*</span>를 만듭니다.
+        </p>
+        <div id="lam-chart"></div>
+        <div class="legend" id="lam-legend"></div>
+        <div class="grid g2" style="margin-top:12px">
+          <div class="fx">
+            <span class="cm">// 원자료(이미지 패치)</span>  I[lon][lat] · 경도 12칸 × 15° = −90…+90<br>
+            <span class="cm">// 띠 가중치</span>  w_i = |[λ−5, λ+5] ∩ cell_i| / 10<br>
+            strip_v550_logmed(h) = Σ w_i · log_median_i / Σ w_i<br>
+            <span class="cm">// 커버리지 &lt; 0.5 이면 NaN, age &gt; 6h 면 stale</span>
+          </div>
+          <div class="note blue"><b>왜 속도별로 띠가 다른가</b> — 빠른 유체(750 km/s)는 55시간,
+            느린 유체(350 km/s)는 117시간 만에 도착합니다. 같은 도달 시각이라도 <b>출발 경도가 다르므로</b>
+            띠를 5개 속도로 나눠 각각 계산합니다. 느린 유체일수록 더 서쪽(더 이른 시각)에서 출발합니다.</div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="frame" id="sec-align">
+      <div class="flabel"><span class="nm">02 / Align — 한 시간 격자와 결측</span><span class="sz">t0 rule</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">ALIGN</span><h2>주기가 다른 원자료를 1시간 격자에 올린다</h2>
+          <div class="q">모든 특징은 origin 이하 시각의 값, 모든 정답은 origin+1h … +72h.</div></div>
+        <div class="fx b">
+          <span class="cm">// 인과 규칙 (t0 rule)</span><br>
+          X(origin) = 원자료(t ≤ origin)      <span class="cm">// ACE +2h 지연 없음 (2026-10-29 결정)</span><br>
+          y(origin) = speed(origin+1h … origin+72h)<br>
+          <span class="cm">// 학습 라벨 성숙</span>  origin + 144h ≤ cutoff   <span class="cm">// 72h 정답 + 72h 여유</span>
+        </div>
+        <div class="grid g2" style="margin-top:12px">
+          <div><h3 style="font-size:13px;margin-bottom:6px">월별 결측(채운) 비율</h3><div id="miss-chart"></div></div>
+          <div><h3 style="font-size:13px;margin-bottom:6px">정렬 결과의 품질</h3><div class="tw" id="quality-table" style="max-height:none"></div></div>
+        </div>
+        <div class="grid g3" style="margin-top:12px">
+          <div class="card"><h3><span class="tag a">결측</span></h3>
+            <p class="tiny">타깃의 <b>20.2%</b> 시간대에 ACE 속도 관측이 없습니다. 학습 때 빈칸이 생기지 않도록
+            <code>ffill</code>로 채우고 <code>was_missing</code>에 남깁니다.</p></div>
+          <div class="card"><h3><span class="tag b">프리필</span></h3>
+            <p class="tiny">번들 C/E의 NaN은 <b>origin 방향 ffill</b>. 셀 수는 위 표에, 처리 방식은
+            <code>receipt.json</code>에 기록돼 있습니다.</p></div>
+          <div class="card"><h3><span class="tag g">이미지 신선도</span></h3>
+            <p class="tiny">SUVI 슬롯은 <b>status=ok · origin−1h 이전 · S3 수정시각 ≤ origin</b> 중 최신.
+            age &gt; 6h면 stale로 표시하고 스트립을 <b>NaN</b>으로 둡니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="frame" id="sec-features">
+      <div class="flabel"><span class="nm">03 / Features — 원자료에서 번들까지</span><span class="sz">111 → 30</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">X</span><h2>원자료 → 특징 → 모델 입력 번들</h2>
+          <div class="q">이 모델이 쓰는 것은 예측 2개. 그 예측을 만든 모델들이 쓴 번들이 아래입니다.</div></div>
+        <p class="lead">특징 111개 중 상위 실험에서 고른 <b>30개</b>(상수 21 + 가변 9)만 씁니다. 상수는 origin 시점
+   값이라 72시간 고정이고, 가변 9개는 <b>도달 시각에 따라 달라지는</b> 값(27일 회귀, 경도 스트립,
+   ENLIL 도달 시각)이라 72길이 궤적으로 들어갑니다.</p>
+        <div class="grid g2">
+          <div><h3 style="font-size:13px;margin-bottom:6px">특징 패밀리 <span class="chip" id="fam-total"></span></h3>
+            <div class="tw" id="fam-table" style="max-height:none"></div></div>
+          <div><h3 style="font-size:13px;margin-bottom:6px">학습 번들 모양</h3>
+            <div class="fx g" id="bundle-box"></div>
+            <div class="card soft" style="margin-top:10px"><h3><span class="tag b">C / E / past</span></h3>
+              <p class="tiny">C는 origin 시점 값(72시간 고정), E는 <b>72시간 궤적</b>, past는 최근 24시간 속도.
+              블록 모델은 E에서 자기 구간(1–24 / 25–48 / 49–72)만 잘라 씁니다.</p></div>
+          </div>
+        </div>
+        <hr class="sep">
+        <h3 style="font-size:13px;margin-bottom:6px">예시 origin의 원자료 → 특징 (같은 시각의 실제 값)</h3>
+        <div class="tw" id="map-table" style="max-height:none"></div>
+        <hr class="sep">
+        <h3 style="font-size:13px;margin-bottom:4px">손풀이 — SUVI 패치 12칸 → 특징 1개</h3>
+        <p class="tiny" style="color:var(--ink-3);margin-bottom:8px">
+          예시 origin에서 선택된 이미지 슬롯의 lat1 밴드 12칸 값과 h=1 · v=550 km/s 띠의 가중치입니다.
+          같은 식으로 5개 속도 × 72시간을 계산해 번들에 넣습니다. 오른쪽 표의 마지막 두 열이
+          <b>재계산값과 번들 값의 대조</b>입니다.
+        </p>
+        <div class="grid g2">
+          <div class="tw" id="patch-table" style="max-height:none"></div>
+          <div class="note" id="strip-note"></div>
+        </div>
+        <div class="tw" id="strip-out" style="max-height:none;margin-top:12px"></div>
+      </div>
+    </section>
+
+
+<section class="frame" id="sec-lineage">
+      <div class="flabel"><span class="nm">04 / Lineage — 두 예측의 계보</span><span class="sz">4 upstream models</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">ORIGIN</span><h2>base와 arm은 이미 만들어진 두 갈래다</h2>
+          <div class="q">풀링은 이 두 줄기를 섞는 일이므로, 줄기의 성격을 먼저 압니다.</div></div>
+        <div class="grid g2">
+          <div class="card">
+            <h3><span class="tag b">base</span> detroute = 몸통↔꼬리 라우팅</h3>
+            <p class="tiny">
+              몸통 arm <code>tweedie15</code>와 꼬리 arm <code>mixture2comp</code> 사이를
+              <code>binary:logistic</code> 검출기가 (origin, horizon)마다 확률 p로 고릅니다. 임계값
+              τ(=<span class="mono" data-num="lineage.tau" data-fmt="3"></span>)는 <b>채점 전에</b>
+              비용비로 고정했습니다(놓친 이벤트 ≈4045, 오경보 ≈1233).<br>
+              몸통 단독 <span class="mono" data-num="lineage.body.total" data-fmt="1"></span> /
+              꼬리 단독 <span class="mono" data-num="lineage.tail.total" data-fmt="1"></span> →
+              라우팅 <b><span class="mono" data-num="lineage.routed.total" data-fmt="1"></span></b>.
+              POD <span class="mono" data-num="lineage.detector.pod" data-fmt="3"></span>,
+              FAR <span class="mono" data-num="lineage.detector.far" data-fmt="3"></span>.
+            </p>
+          </div>
+          <div class="card">
+            <h3><span class="tag a">arm</span> calib3 gpd = 상한 초과값 대체</h3>
+            <p class="tiny">
+              같은 level 헤드를 쓰되, <b>p ≥ 0.5인 칸은 550 + exp(로그 초과값)</b>으로 바꿔치기합니다
+              (peaks-over-threshold). 확률이 0.5를 넘는 순간 값이 계단처럼 바뀌므로
+              총 <span class="mono" data-num="lineage.arm.total" data-fmt="1"></span>,
+              ≥550 <span class="mono" data-num="lineage.arm.ge550" data-fmt="1"></span> —
+              <b>꼬리는 base보다 낫고 총합은 나쁩니다</b>.
+            </p>
+          </div>
+        </div>
+        <div class="flow" style="margin-top:14px" id="lineage-flow"></div>
+        <p class="tiny" style="color:var(--ink-3);margin-top:10px">
+          두 모델을 섞는 근거가 여기 있습니다 — 오차가 <b>서로 다른 구간</b>에서 생기고,
+          꼬리에서 강한 쪽(gpd)을 조금만 섞으면 몸통 손실이 작습니다.
+          꼬리 arm의 내부는 <a href="e2000fs_calib2_mixture2comp.html">e2000fs_calib2_mixture2comp 문서</a>에서
+          이어서 볼 수 있습니다.
+        </p>
+      </div>
+    </section>
+
+    <div class="conn"><div class="ln"></div><div class="ch">모델</div><div class="ln"></div></div>
+
+<section class="frame" id="sec-pipeline">
+      <div class="flabel"><span class="nm">05 / Pipeline — 풀링 추론의 경로</span><span class="sz">11 nodes</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">FLOW</span><h2>파일 3개 → 357,840개 예측</h2>
+          <div class="q">학습은 0초. 전부 numpy 누적합과 31점 탐색입니다.</div></div>
+        <div class="flow" id="flow"></div>
+        <hr class="sep">
+        <div class="grid g3">
+          <div class="card"><h3><span class="tag b">입력</span> 예측 2개</h3>
+            <p><code>forecast.npz</code> 두 개. 각각 <span class="mono">origins_ns</span> (int64, UTC ns)와
+            <span class="mono">predictions</span> (4970 × 72, km/s). 같은 origin 격자인지 먼저 assert합니다.</p></div>
+          <div class="card"><h3><span class="tag a">실측</span> 채점용 truth</h3>
+            <p><code>speed.parquet</code>에서 origin+1h … origin+72h를 reindex. NaN이 하나라도 있으면 학습이 아니라
+            여기서 <b>즉시 예외</b>입니다.</p></div>
+          <div class="card"><h3><span class="tag g">출력</span> 예측 1개 + 가중 1개</h3>
+            <p><code>forecast.npz</code>(블렌드 결과)와 <code>weights.npz</code>(origin별 w, 성숙 개수 k).
+            가중치를 남기므로 <b>결정 하나하나가 감사 가능</b>합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-inputs">
+      <div class="flabel"><span class="nm">06 / Contract — 입력 계약 (npz · sha256)</span><span class="sz">3 files · 3 sha256</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">IN</span><h2>입력 계약: 두 예측 + 한 줄기 실측</h2>
+          <div class="q">해시 3개가 meta.yaml에 기록되고, 그 해시가 제출물에 다시 들어갑니다.</div></div>
+        <div class="tw" style="max-height:none">
+          <table>
+            <thead><tr><th>역할</th><th style="text-align:left">경로</th><th style="text-align:left">sha256</th></tr></thead>
+            <tbody>
+              <tr><td>base</td><td class="mono-cell wrap" style="text-align:left" id="ip-base"></td><td class="mono-cell" style="text-align:left" id="ip-base-sha"></td></tr>
+              <tr><td>arm</td><td class="mono-cell wrap" style="text-align:left" id="ip-arm"></td><td class="mono-cell" style="text-align:left" id="ip-arm-sha"></td></tr>
+              <tr><td>truth</td><td class="mono-cell wrap" style="text-align:left" id="ip-truth"></td><td class="mono-cell" style="text-align:left" id="ip-truth-sha"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid g2" style="margin-top:12px">
+          <div class="card">
+            <h3>origin 격자</h3>
+            <p class="tiny"><span data-ts="origins.first"></span> UTC → <span data-ts="origins.last"></span> UTC,
+            <b><span data-num="origins.n" data-fmt="0"></span> 시간</b>, 1시간 간격. F1은
+            <span data-num="origins.n_f1" data-fmt="0"></span>개(<span data-ts="origins.f2_cut"></span> 이전),
+            F2는 나머지.</p>
+          </div>
+          <div class="card">
+            <h3>두 예측의 성격</h3>
+            <p class="tiny"><b>base</b> detroute = 몸통이 좋고 꼬리가 약한 라우팅 모델.
+            <b>arm</b> gpd = 총 MSE는 나쁘지만 ≥550에서 강한 모델
+            (arm 단독 총 <span class="mono" data-num="compare.arm_total" data-fmt="1"></span>,
+            ≥550 <span class="mono" data-num="compare.arm_ge550" data-fmt="1"></span>).</p>
+          </div>
+        </div>
+        <div class="note blue" style="margin-top:14px">
+          <b>왜 "블렌드"가 학습보다 유리했나</b> — 두 예측의 오차가 서로 다른 구간에서 생깁니다.
+          base는 550 아래에서, arm은 550 위에서 상대적으로 강합니다. 한 점에서 섞으면 두 장점이 동시에 남습니다.
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-maturity">
+      <div class="flabel"><span class="nm">07 / Causality — 성숙한 잔차만</span><span class="sz">72h maturity</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">GATE</span><h2>미래 잔차는 한 칸도 쓰지 않는다</h2>
+          <div class="q">origin q의 잔차는 q+72h 이후에만 알 수 있습니다.</div></div>
+        <p class="lead">
+          w를 고르려면 "이 두 모델이 최근에 얼마나 틀렸나"를 알아야 합니다. 그런데 origin i 시점에 사용 가능한
+          잔차는 <b>목표 시각이 i 이하인 것</b>뿐입니다. 예측 벡터가 72시간이므로 잔차 하나가 성숙하려면
+          72시간이 필요하고, 따라서 쓸 수 있는 마지막 origin은 <b>i − 72</b>입니다.
+        </p>
+        <div id="mat-chart"></div>
+        <div class="legend" id="mat-legend"></div>
+        <div class="grid g3" style="margin-top:14px">
+          <div class="card"><h3>① 사용 가능 구간</h3>
+            <p class="tiny">origin index <span class="mono">0 … k−1</span>, 여기서
+            <span class="mono">k = <span data-num="worked_main.k" data-fmt="0"></span></span>.
+            i = <span data-num="worked_main.origin_index" data-fmt="0"></span>이므로 k = i − 71.</p></div>
+          <div class="card"><h3>② 겹치지 않는 창</h3>
+            <p class="tiny">창 길이 <span class="mono" data-num="window" data-fmt="0"></span> origin.
+            아직 <span class="mono" data-num="worked_main.rows" data-fmt="0"></span>개뿐이라 잘라내지 않고 전부 사용.</p></div>
+          <div class="card"><h3>③ 최소 조건</h3>
+            <p class="tiny"><span class="mono">rows ≥ 48</span> 그리고 꼬리 셀 <span class="mono">≥ 50</span>.
+            이 조건을 못 넘으면 <b>w = 0</b>으로 두고 base를 그대로 냅니다.</p></div>
+        </div>
+        <hr class="sep">
+        <div class="h"><span class="no">CASE A</span><h3 style="font-size:15px">게이트에 막힌 origin ① — 성숙한 origin이 48개 미만</h3></div>
+        <div class="grid g2">
+          <div class="fx r">
+            origin <span data-ts="worked_gate_rows.origin"></span> UTC · index <span data-num="worked_gate_rows.origin_index" data-fmt="0"></span><br>
+            k = <span class="hl" data-num="worked_gate_rows.k" data-fmt="0"></span> &lt; 48  <span class="cm">← 성숙 잔차 부족</span><br>
+            꼬리 셀 = <span data-num="worked_gate_rows.tail_cells" data-fmt="0"></span>  <span class="cm">(550 이상 셀)</span><br>
+            → w = <span class="hl">0</span>  <span class="cm">base 그대로</span>
+          </div>
+          <div class="card soft">
+            <p class="tiny">k = i − 71 이므로 <b>i &lt; 119</b> 구간에서는 k &lt; 48 입니다. 이 구간의 예측은
+            detroute와 <b>완전히 동일</b>합니다(가중치 0). 공식 창의 첫 origin은
+            <span data-ts="origins.first"></span>이라, 그 앞쪽은 애초에 채점 대상이 아닙니다.</p>
+          </div>
+        </div>
+        <hr class="sep">
+        <div class="h"><span class="no">CASE B</span><h3 style="font-size:15px">게이트에 막힌 origin ② — 성숙했지만 꼬리 셀이 50개 미만</h3></div>
+        <div class="grid g2">
+          <div class="fx r">
+            origin <span data-ts="worked_gate_tail.origin"></span> UTC · index <span data-num="worked_gate_tail.origin_index" data-fmt="0"></span><br>
+            rows = <span class="hl" data-num="worked_gate_tail.rows" data-fmt="0"></span> ≥ 48 <span class="cm">✓</span><br>
+            꼬리 셀 = <span class="hl" data-num="worked_gate_tail.tail_cells" data-fmt="0"></span> &lt; 50 <span class="cm">✗</span><br>
+            → w = <span class="hl">0</span>
+          </div>
+          <div class="card soft">
+            <p class="tiny">이 시점 창에서 ≥550는 <span class="mono" data-num="worked_gate_tail.stats.a1" data-fmt="1"></span>
+            vs <span class="mono" data-num="worked_gate_tail.stats.b1" data-fmt="1"></span>로 arm이 <b>더 좋아 보이는데도</b>
+            w를 올리지 않습니다. 45개 셀로 꼬리를 판단하는 것은 <b>노이즈</b>이기 때문입니다.
+            게이트는 "좋아 보이면 일단 쓴다"를 금지합니다.</p>
+          </div>
+        </div>
+        <p class="lead" style="margin-top:14px">두 게이트 때문에 <b><span data-num="zero_origins" data-fmt="0"></span>개 origin</b>이
+          w=0으로 남고, 첫 w&gt;0은 <b><span data-ts="weights.first_nonzero_origin"></span> UTC</b>입니다.
+          그 뒤로는 <span class="mono" data-num="weights.count_nonzero" data-fmt="0"></span>개 origin이 arm을 씁니다.</p>
+      </div>
+    </section>
+
+<section class="frame" id="sec-stats">
+      <div class="flabel"><span class="nm">08 / Six numbers — 충분통계</span><span class="sz">cumsum 6개</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">STATS</span><h2>창 전체를 6개 숫자로 접는다</h2>
+          <div class="q">MSE(w)는 w에 대한 2차식이므로 계수만 있으면 31점을 전부 즉시 계산할 수 있습니다.</div></div>
+        <div class="fx">
+          <span class="cm">// 잔차</span>  r_b = pred_base − y ,  r_a = pred_arm − y<br>
+          <span class="cm">// 전체 구간 평균제곱 (창 안 모든 셀)</span><br>
+          a0 = mean(r_b²) = <span class="hl" data-num="worked_main.stats.a0" data-fmt="1"></span> &nbsp;
+          b0 = mean(r_a²) = <span class="hl" data-num="worked_main.stats.b0" data-fmt="1"></span> &nbsp;
+          x0 = mean(r_b·r_a) = <span class="hl" data-num="worked_main.stats.x0" data-fmt="1"></span><br>
+          <span class="cm">// 꼬리 구간 (y ≥ 550 셀만, nh = </span><span data-num="worked_main.stats.nh" data-fmt="0"></span><span class="cm"> 개)</span><br>
+          a1 = mean(r_b² | y≥550) = <span class="hl" data-num="worked_main.stats.a1" data-fmt="1"></span> &nbsp;
+          b1 = mean(r_a² | y≥550) = <span class="hl" data-num="worked_main.stats.b1" data-fmt="1"></span> &nbsp;
+          x1 = mean(r_b·r_a | y≥550) = <span class="hl" data-num="worked_main.stats.x1" data-fmt="1"></span>
+        </div>
+        <div class="fx b" style="margin-top:10px">
+          MSE(w)  = (1−w)²·a0 + w²·b0 + 2w(1−w)·x0<br>
+          tail(w) = (1−w)²·a1 + w²·b1 + 2w(1−w)·x1
+        </div>
+        <div class="grid g3" style="margin-top:14px">
+          <div class="card"><h3><span class="tag g">왜 이렇게 접히나</span></h3>
+            <p class="tiny">(1−w)·r_b + w·r_a 를 제곱하면 r_b², r_a², r_b·r_a 세 항만 남습니다.
+            평균은 선형이라 <b>창의 누적합 3개씩</b>만 있으면 어떤 w라도 계산됩니다.</p></div>
+          <div class="card"><h3><span class="tag b">누적합 구현</span></h3>
+            <p class="tiny"><code>np.cumsum(se_base, axis=0)</code>를 앞에 0행을 붙여 쌓고
+            <code>c[k] − c[j]</code>로 창 합을 구합니다. 비용은 origin당 O(31).</p></div>
+          <div class="card"><h3><span class="tag a">검산</span></h3>
+            <p class="tiny">같은 w에서 직접 계산한 값과 2차식 값의 차이는
+            <span class="mono" id="scan_check">—</span> km²/s² 이내(부동소수 오차)입니다.
+            이 문서 <b>10번 프레임(손풀이)</b>에서 둘 다 표시합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-scan">
+      <div class="flabel"><span class="nm">09 / Scan — 31점 + 가드</span><span class="sz">w ∈ [0, 0.75]</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">RULE</span><h2>총 MSE를 최소화하되, 꼬리는 나빠지면 안 된다</h2>
+          <div class="q">규칙·창·그리드는 사전등록 파일에 고정. F1/F2로 튜닝하지 않음.</div></div>
+        <div class="fx g">
+          w* = argmin<sub>w∈G</sub> MSE(w) &nbsp;&nbsp; s.t. &nbsp;&nbsp; tail(w) ≤ tail(0) = a1
+          &nbsp;&nbsp;<span class="cm">// 위반하면 w = 0</span>
+        </div>
+        <div id="scan-chart" style="margin-top:14px"></div>
+        <div class="legend" id="scan-legend"></div>
+        <div class="grid g4" style="margin-top:12px">
+          <div class="kpi"><div class="k">MSE(0) <span class="tag">base</span></div>
+            <div class="v" data-num="worked_main.w0_scan.total" data-fmt="1"></div><div class="d">tail <span data-num="worked_main.w0_scan.tail" data-fmt="1"></span></div></div>
+          <div class="kpi hl"><div class="k">선택된 w</div>
+            <div class="v" data-num="worked_main.chosen" data-fmt="w"></div>
+            <div class="d">가드 통과 <span class="mono">tail ≤ a1</span></div></div>
+          <div class="kpi"><div class="k">MSE(w*) </div>
+            <div class="v" data-num="worked_main.chosen_scan.total" data-fmt="1"></div>
+            <div class="d">창 기준 −<span data-num="scan_gain" data-fmt="1"></span></div></div>
+          <div class="kpi"><div class="k">tail(w*)</div>
+            <div class="v" data-num="worked_main.chosen_scan.tail" data-fmt="1"></div>
+            <div class="d">a1 = <span data-num="worked_main.stats.a1" data-fmt="1"></span></div></div>
+        </div>
+        <hr class="sep">
+        <h3 style="font-size:13.5px;margin-bottom:8px">31점 전부 (예시 origin의 창에서 계산)</h3>
+        <div class="tw" id="scan-table"></div>
+        <p class="tiny" style="color:var(--ink-3);margin-top:8px">
+          * 셋째 열은 창 통계가 아니라 <b>이 origin 한 점</b>에서 실제로 계산한 MSE입니다(사후 확인용).
+          규칙은 이 열을 보지 않습니다.
+        </p>
+        <div class="grid g2" style="margin-top:12px">
+          <div class="note" id="guard-note"></div>
+          <div class="note blue"><b>그리드가 0.75에서 끝나는 이유</b> — w&gt;0.5면 base의 성질이 사라집니다.
+            사전등록에서 상한을 0.75로 고정했고, 그 값까지 후보로 두되 argmin이 스스로 고릅니다.</div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-hand">
+      <div class="flabel"><span class="nm">10 / Hand — 예시 origin 손풀이</span><span class="sz">8 steps</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">HAND</span><h2><span data-ts="worked_main.origin"></span> UTC 한 점을 끝까지 계산</h2>
+          <div class="q">이 origin 하나가 최종 예측 72개 숫자가 되는 과정.</div></div>
+        <div class="steps" id="hand-steps"></div>
+        <hr class="sep">
+        <h3 style="font-size:13.5px;margin-bottom:8px">계산기 검산 — 다른 w를 넣어보기</h3>
+        <div class="slider">
+          <input type="range" id="wSlider" min="0" max="750" step="5" value="275">
+          <span class="val" id="wVal"></span>
+        </div>
+        <div class="grid g2">
+          <div class="fx b" id="wCalc"></div>
+          <div class="fx g" id="wCalcTail"></div>
+        </div>
+        <p class="tiny" style="margin-top:8px;color:var(--ink-3)">
+          슬라이더는 <b>같은 6개 상수</b>로 2차식을 다시 계산합니다. 2차식이므로 31점 표와 정확히 같은 값이 나옵니다.
+        </p>
+      </div>
+    </section>
+
+<section class="frame" id="sec-vector">
+      <div class="flabel"><span class="nm">11 / Vector — 72개 숫자 조립</span><span class="sz">1 × 72</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">BLEND</span><h2>같은 w로 72시간 전 구간을 섞는다</h2>
+          <div class="q">origin마다 w는 하나. horizon마다 다른 가중을 주지 않습니다.</div></div>
+        <div id="vec-chart"></div>
+        <div class="legend" id="vec-legend"></div>
+        <div class="slider">
+          <input type="range" id="hSlider" min="1" max="72" step="1" value="1">
+          <span class="val" id="hVal"></span>
+        </div>
+        <div class="fx" id="hCalc"></div>
+        <div class="note" id="vec-note" style="margin-top:12px"></div>
+        <div class="tw" id="h-table" style="margin-top:12px;max-height:300px"></div>
+      </div>
+    </section>
+
+    <div class="conn"><div class="ln"></div><div class="ch">결과</div><div class="ln"></div></div>
+
+<section class="frame" id="sec-walk">
+      <div class="flabel"><span class="nm">12 / Loop — 4,970번 반복</span><span class="sz">1 h step</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">LOOP</span><h2>매 시간 w를 새로 고른다</h2>
+          <div class="q">w는 상태(state)입니다. 한 번 정한 값이 다음 origin으로 이월되지 않습니다.</div></div>
+        <div id="w-chart"></div>
+        <div class="legend" id="w-legend"></div>
+        <div class="grid g4" style="margin-top:12px">
+          <div class="kpi"><div class="k">평균 w</div><div class="v" data-num="weights.mean" data-fmt="w"></div>
+            <div class="d">중앙값 <span data-num="weights.median" data-fmt="w"></span></div></div>
+          <div class="kpi"><div class="k">10–90%</div><div class="v" data-num="weights.p10" data-fmt="w"></div>
+            <div class="d">p90 <span data-num="weights.p90" data-fmt="w"></span></div></div>
+          <div class="kpi"><div class="k">w = 0 비율</div><div class="v" data-num="weights.share_zero" data-fmt="pct1"></div>
+            <div class="d">Warm-up + 게이트</div></div>
+          <div class="kpi"><div class="k">w &gt; 0 origin</div><div class="v" data-num="weights.count_nonzero" data-fmt="0"></div>
+            <div class="d">/ <span data-num="origins.n" data-fmt="0"></span></div></div>
+        </div>
+        <hr class="sep">
+        <div class="grid g2">
+          <div><h3 style="font-size:13px;margin-bottom:6px">w 분포</h3><div id="w-hist"></div></div>
+          <div class="card soft"><h3>읽을 점</h3>
+            <p class="tiny">Warm-up(<span data-num="origins.n" data-fmt="0"></span>개 중 앞쪽) 이후 w는
+            <b>0.125–0.325 구간에 몰려</b> 있습니다. 즉 이 arm은 "base를 대체"가 아니라
+            <b>20–30% 보험료</b>로만 쓰였습니다. 큰 값(0.5+)은 이벤트가 몰린 구간에서만 나옵니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-notoracle">
+      <div class="flabel"><span class="nm">13 / Not an oracle — 규칙의 대가</span><span class="sz">counter-example</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">HONEST</span><h2>창이 좋다고 지금이 좋은 건 아니다</h2>
+          <div class="q">트레일링 창은 과거만 봅니다. 그래서 개별 origin은 자주 틀립니다.</div></div>
+        <div class="grid g2">
+          <div class="card">
+            <h3><span class="tag r">반례</span> <span data-ts="worked_counter.origin"></span> UTC</h3>
+            <p class="tiny">창 기준으로는 base <span class="mono" data-num="worked_counter.window_mse_base" data-fmt="1"></span>
+            → arm <span class="mono" data-num="worked_counter.window_mse_arm" data-fmt="1"></span>로 arm이 우세,
+            규칙은 <b>w = <span data-num="worked_counter.chosen" data-fmt="w"></span></b>를 선택.
+            그러나 이 origin의 실제 결과는
+            <span class="mono" data-num="worked_counter.origin_mse_base" data-fmt="1"></span> →
+            <span class="mono bad" data-num="worked_counter.origin_mse_blend" data-fmt="1"></span>로 악화.</p>
+          </div>
+          <div class="card">
+            <h3><span class="tag a">그래도 총합이 줄어드는 이유</span></h3>
+            <p class="tiny">w&gt;0인 origin 중 실제로 좋아진 비율은
+            <span class="mono" data-num="compare.share_origins_w_gt0_improved_pct" data-fmt="1"></span>%뿐입니다.
+            손실은 작고(<b>몸통</b>), 이득은 크게(<b>꼬리</b>) 나기 때문에 평균이 남습니다.
+            이 arm은 <b>보험</b>이지 <b>예측기 교체</b>가 아닙니다.</p>
+          </div>
+        </div>
+        <div class="grid g3" style="margin-top:12px">
+          <div class="kpi"><div class="k">개선된 origin</div><div class="v" data-num="compare.origins_improved_pct" data-fmt="1" data-post="%"></div><div class="d">전체 기준</div></div>
+          <div class="kpi"><div class="k">악화된 origin</div><div class="v" data-num="compare.origins_worse_pct" data-fmt="1" data-post="%"></div><div class="d">전체 기준</div></div>
+          <div class="kpi"><div class="k">origin 평균 손익</div><div class="v" data-num="compare.gain_total_mse" data-fmt="signed2"></div><div class="d">MSE 단위 (음수 = 개선)</div></div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-score">
+      <div class="flabel"><span class="nm">14 / Score — 리더보드</span><span class="sz">F1 + F2</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">BOARD</span><h2>어디서 벌고 어디서 잃었나</h2>
+          <div class="q">총 −4.3, 꼬리 −378. 총합은 F2에서만 개선됩니다.</div></div>
+        <div class="grid g2">
+          <div><h3 style="font-size:13px;margin-bottom:8px">base vs pooled</h3><div id="score-bars"></div></div>
+          <div><h3 style="font-size:13px;margin-bottom:8px">horizon 구간별 MSE</h3><div id="band-bars"></div></div>
+        </div>
+        <div class="tw" style="margin-top:14px;max-height:none">
+          <table>
+            <thead><tr><th>지표</th><th>base (detroute)</th><th>pooled (gpd)</th><th>Δ</th></tr></thead>
+            <tbody id="score-table"></tbody>
+          </table>
+        </div>
+        <div class="grid g3" style="margin-top:12px">
+          <div class="card"><h3>CSI <span class="tag">이벤트 검출</span></h3>
+            <p class="tiny"><span class="mono" data-num="scores.csi" data-fmt="3"></span> — base의
+            <span class="mono" data-num="base_scores.csi" data-fmt="3"></span>과 사실상 같습니다.
+            <b>피크 검출은 개선되지 않았습니다.</b> MSE만 좋아졌습니다.</p></div>
+          <div class="card"><h3>bias</h3>
+            <p class="tiny">전체 <span class="mono" data-num="scores.bias" data-fmt="signed"></span>,
+            ≥550 <span class="mono" data-num="scores.bias_ge550" data-fmt="signed"></span> —
+            꼬리에서 <b>과소예측</b>이 줄었습니다.</p></div>
+          <div class="card"><h3>비용</h3>
+            <p class="tiny">origin당 <span class="mono" data-num="scores.inference_us_per_origin" data-fmt="us"></span>.
+            재학습 0회. 전체 재현 <b>1초 미만</b>.</p></div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-run">
+      <div class="flabel"><span class="nm">15 / Receipt — 재현</span><span class="sz">3 commands</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">RUN</span><h2>같은 숫자를 다시 만들려면</h2></div>
+        <div class="steps">
+          <div class="step"><div class="b">풀링 재실행 (가중치 <b>비트 단위 재현</b> 확인됨)</div>
+            <pre>cd ~/sunrun/research/e2000fs_calib4-20261031
+../../.venv/bin/python pool_lane.py --arm gpd \
+    --experiment e2000fs_calib4_detpool_gpd</pre></div>
+          <div class="step"><div class="b">이 문서의 숫자 다시 뽑기</div>
+            <pre>cd ~/sunrun
+.venv/bin/python docs/explainers/code/extract_detpool_gpd.py</pre></div>
+          <div class="step"><div class="b">HTML 다시 빌드</div>
+            <pre>.venv/bin/python docs/explainers/code/build.py detpool</pre></div>
+        </div>
+        <hr class="sep">
+        <div class="grid g2">
+          <div class="card"><h3>내가 확인한 것</h3>
+            <p class="tiny">이 문서의 스크립트는 <code>choose_weights</code>를 다시 실행해
+            <code>weights.npz</code>와 <b>array_equal = True</b>를 확인한 뒤 숫자를 뽑습니다.
+            즉 여기 보이는 w는 제출물의 w와 같습니다.</p></div>
+          <div class="card"><h3>산출물</h3>
+            <p class="tiny"><code>runs/gpd_v1/forecast.npz</code> · <code>weights.npz</code> ·
+            <code>results.json</code> · <code>meta.yaml</code> · 제출 예측 357,840행.</p></div>
+        </div>
+      </div>
+    </section>
+
+<section class="frame" id="sec-limits">
+      <div class="flabel"><span class="nm">16 / Limits</span><span class="sz">known risks</span></div>
+      <div class="fbody">
+        <div class="h"><span class="no">CAVEAT</span><h2>이 모델이 하지 못하는 것</h2></div>
+        <div class="grid g3">
+          <div class="card"><h3><span class="tag r">선택 편향</span></h3>
+            <p class="tiny">규칙·창은 6개 조합을 훑어본 뒤 골랐습니다. 완화책은 <b>사전등록 고정</b>과
+            <b>세 arm에 같은 규칙 적용</b>입니다. 사전 예측치와 실제가 소수점까지 일치했습니다.</p></div>
+          <div class="card"><h3><span class="tag r">꼬리 미달</span></h3>
+            <p class="tiny">F2 ≥550 <span class="mono" data-num="scores.f2_ge550" data-fmt="1"></span>은
+            여전히 6,000을 넘습니다. 목표(total &lt; 3200, 모든 ≥550 &lt; 6000)를 만족하지 못했습니다.</p></div>
+          <div class="card"><h3><span class="tag r">구조</span></h3>
+            <p class="tiny">두 arm 사이의 <b>선형 가중</b>일 뿐입니다. 새 정보를 만들지 않으므로
+            두 arm이 같은 방향으로 틀린 구간은 고칠 수 없습니다.</p></div>
+        </div>
+        <div class="comment" style="margin-top:14px">
+          <div class="ava">S</div>
+          <div class="bub">“풀링은 <b>결정 규칙</b>을 만드는 일입니다. 모델이 좋아지는 게 아니라,
+            이미 있는 두 모델 중 <b>언제 어느 쪽을 믿을지</b>를 데이터로 정하는 것입니다.”</div>
+        </div>
+      </div>
+    </section>
+    <div class="foot">
+      <div><b>e2000fs_calib4_detpool_gpd</b> · 설명용 문서 (추론 재현 아님, 아카이브 산출물 계산)</div>
+      <div class="mono">base sha <span id="foot-sha"></span></div>
+    </div>
+  </div>
+  </main>
+</div>
+
+<script id="payload" type="application/json">__DATA_JSON__</script>
+<script>const DATA = JSON.parse(document.getElementById('payload').textContent);</script>
+<script>/*__JS__*/</script>
+<script>
+(function () {
+  const { $, $$, chart, legend, fmt, ts, nf } = UI;
+  const M = DATA.worked_main, G1 = DATA.worked_gate_rows, G2 = DATA.worked_gate_tail,
+        C = DATA.worked_counter, S = DATA.compare, W = DATA.weights;
+
+  const F = (v, d) => nf(v, d);
+
+
+  /* ---------- interactive scene (detpool) ---------- */
+  function sceneSpec() {
+    const R = DATA.raw.examples.detpool, ph = M.per_horizon;
+    const b = ph.map((r) => r.base), a = ph.map((r) => r.arm), p = ph.map((r) => r.blend);
+    const lo = Math.min(...p), hi = Math.max(...p);
+    const bar = (vals, cls) => '<div class="spark">' + vals.map((v) =>
+      `<i class="${cls || ''}" style="height:${Math.round(6 + 20 * (v - lo) / Math.max(hi - lo, 1))}px"></i>`).join('') + '</div>';
+    const grid = (vals) => '<div class="grid72">' + vals.map((v, i) =>
+      `<i data-h="${i + 1}" title="h${i + 1} · ${F(v, 1)} km/s" style="background:${UI.heat(v, lo, hi)}"></i>`).join('') + '</div>';
+    const S = R.raw_ace.t0, Fq = R.features;
+    return {
+      layers: [
+        { id: 'raw', name: '원자료', sub: '4계열',
+          html: `<span class="numb">ACE <b>${F(S.ace_speed_kms, 1)}</b> km/s</span>
+                 <span class="numb">SUVI slot ${ts(R.img.slot).slice(11)} <b>age ${F(R.img.age_h, 1)}h</b></span>
+                 <span class="numb">CH t055 <b>${F(Fq.ch.ch_ch_t055_area, 3)}</b></span>
+                 <span class="numb">ENLIL pending <b>${F(Fq.enlil.enlil_n_pending, 0)}</b></span>` },
+        { id: 'align', name: '1시간 격자', sub: 't0 rule',
+          html: `<span class="numb">${DATA.raw.grid.hourly_rows.toLocaleString()} h</span>
+                 <span class="numb">결측 채움 <b>${F(DATA.raw.grid.was_missing_pct, 1)}%</b></span>
+                 <span class="numb dim">X(t ≤ origin) · y(t+1…t+72)</span>` },
+        { id: 'bundle', name: '번들', sub: 'origin 1행',
+          html: `<span class="numb">C <b>${DATA.raw.bundle.C_shape[1]}</b></span>
+                 <span class="numb">E <b>${DATA.raw.bundle.E_shape[1]}×${DATA.raw.bundle.E_shape[2]}</b></span>
+                 <span class="numb">past <b>${DATA.raw.bundle.past_shape[1]}</b></span>
+                 <span class="numb dim">선택 30 / 111</span>` },
+        { id: 'preds', name: '두 예측', sub: '72h 벡터',
+          html: `<span class="numb">base h1 <b>${F(b[0], 1)}</b></span>
+                 <span class="numb">arm h1 <b>${F(a[0], 1)}</b></span>` +
+                `<div style="display:flex;gap:6px;width:100%">${bar(b, '').replace('class="spark"', 'class="spark half"')}${bar(a, 'p').replace('class="spark"', 'class="spark half"')}</div>` },
+        { id: 'window', name: '성숙 창', sub: '잔차만',
+          html: `<span class="numb">k <b>${M.k.toLocaleString()}</b> origins</span>
+                 <span class="numb">cells <b>${(M.rows * 72).toLocaleString()}</b></span>
+                 <span class="numb">꼬리 셀 <b>${M.tail_cells.toLocaleString()}</b></span>` },
+        { id: 'stats', name: '6개 상수', sub: 'cumsum',
+          html: `<span class="numb">a0 <b>${F(M.stats.a0, 0)}</b></span>
+                 <span class="numb">b0 <b>${F(M.stats.b0, 0)}</b></span>
+                 <span class="numb">x0 <b>${F(M.stats.x0, 0)}</b></span>
+                 <span class="numb hot">a1 <b>${F(M.stats.a1, 0)}</b></span>
+                 <span class="numb hot">b1 <b>${F(M.stats.b1, 0)}</b></span>
+                 <span class="numb hot">x1 <b>${F(M.stats.x1, 0)}</b></span>` },
+        { id: 'scan', name: '31점 스캔', sub: '가드',
+          html: `<span class="numb">MSE(0) <b>${F(M.w0_scan.total, 1)}</b></span>
+                 <span class="numb hot">w* <b>${F(M.chosen, 3)}</b></span>
+                 <span class="numb">MSE(w*) <b>${F(M.chosen_scan.total, 1)}</b></span>
+                 <span class="numb">tail(w*) <b>${F(M.chosen_scan.tail, 1)}</b></span>` },
+        { id: 'blend', name: '블렌드 72개', sub: '이 origin', html: grid(p) },
+        { id: 'score', name: '채점', sub: 'F1+F2',
+          html: `<span class="numb">total <b>${F(DATA.scores.total, 1)}</b></span>
+                 <span class="numb">≥550 <b>${F(DATA.scores.ge550, 1)}</b></span>
+                 <span class="numb dim">base ${F(DATA.base_scores.total, 1)} → ${F(DATA.scores.total, 1)}</span>` }
+      ],
+      steps: [
+        { layer: 'raw', tag: 'RAW → X', title: '원자료에서 이 한 시점이 시작됩니다',
+          body: `ACE 위성의 시간당 스냅숏, SUVI 영상 슬롯, 코로나홀 지도, WSA-Enlil 실행이
+                 <b>${ts(M.origin)}</b> 시점의 입력을 만듭니다.`,
+          formula: `ACE 속도  ${F(S.ace_speed_kms, 1)} km/s\nSUVI 슬롯  ${ts(R.img.slot)}  (age ${F(R.img.age_h, 2)} h)\nCH t055   ${F(Fq.ch.ch_ch_t055_area, 3)}\nENLIL     pending ${F(Fq.enlil.enlil_n_pending, 0)}`,
+          note: '이 네 줄이 아래 모든 계산의 출발점입니다.' },
+        { layer: 'align', tag: 't0 RULE', title: '모든 값을 origin 이하 시각으로 맞춥니다',
+          body: `원자료는 주기가 제각각입니다. 1시간 격자에 올리고, <b>origin 이하</b> 관측만 씁니다.
+                 정답은 origin+1h … +72h.`,
+          formula: `X(origin) = 원자료(t ≤ origin)\ny(origin) = speed(origin+1h … origin+72h)\n라벨 성숙  origin + 144h ≤ cutoff`,
+          note: `타깃의 ${F(DATA.raw.grid.was_missing_pct, 1)}%는 관측이 없어 ffill로 채웠습니다.` },
+        { layer: 'bundle', tag: 'BUNDLE', title: '한 행이 모델 입력이 됩니다',
+          body: `상수 C ${DATA.raw.bundle.C_shape[1]}열, 72시간 궤적 E ${DATA.raw.bundle.E_shape[1]}×${DATA.raw.bundle.E_shape[2]},
+                 최근 24시간 속도 past. 상위 모델은 그중 <b>30개</b>만 씁니다.`,
+          formula: `C  ${DATA.raw.bundle.C_shape[1]}   (origin 고정)\nE  ${DATA.raw.bundle.E_shape[1]} × ${DATA.raw.bundle.E_shape[2]}   (궤적)\npast  ${DATA.raw.bundle.past_shape[1]}   (최근 24h)`,
+          note: '이 번들로 두 개의 72시간 예측(base, arm)이 만들어져 있습니다.' },
+        { layer: 'preds', tag: 'INPUT', title: '이 모델의 입력은 “예측 두 개”입니다',
+          body: `base는 몸통이 좋고, arm은 꼬리가 좋습니다. 72개 숫자 두 벌이 그대로 들어옵니다.`,
+          formula: `base_1 = ${F(b[0], 2)}   arm_1 = ${F(a[0], 2)}\nbase_2 = ${F(b[1], 2)}   arm_2 = ${F(a[1], 2)}\n…  h = 1 … 72` },
+        { layer: 'window', tag: 'CAUSALITY', title: '잔차는 72시간 뒤에야 성숙합니다',
+          body: `origin i에서 쓸 수 있는 잔차는 목표 시각이 i 이하인 것뿐. 그래서 마지막 사용 가능
+                 origin은 <b>i − 72</b>이고, 이 창에 ${M.rows}개 origin이 들어옵니다.`,
+          formula: `k = ${M.k}      (i = ${M.origin_index} → k = i − 71)\ncells = ${M.k} × 72 = ${(M.rows * 72).toLocaleString()}\n꼬리 셀 (y ≥ 550) = ${M.tail_cells.toLocaleString()}`,
+          note: '미래 잔차를 한 칸도 쓰지 않는 것이 이 규칙의 핵심입니다.' },
+        { layer: 'stats', tag: '6 NUMBERS', title: '창을 여섯 수로 접습니다',
+          body: `두 모델의 제곱오차와 교차항을 전체·꼬리에서 평균한 값. 이 여섯 개만 있으면 어떤 w라도 즉시 계산됩니다.`,
+          formula: `a0 ${F(M.stats.a0, 1)}   b0 ${F(M.stats.b0, 1)}   x0 ${F(M.stats.x0, 1)}\na1 ${F(M.stats.a1, 1)}   b1 ${F(M.stats.b1, 1)}   x1 ${F(M.stats.x1, 1)}`,
+          note: 'MSE(w) = (1−w)²a0 + w²b0 + 2w(1−w)x0 — w에 대한 이차식입니다.' },
+        { layer: 'scan', tag: 'SCAN', title: '31점을 훑어 w를 하나 고릅니다',
+          body: `총 MSE가 최소인 w를 찾되, 꼬리 MSE가 base보다 나빠지면 후보에서 뺍니다.`,
+          formula: `w* = ${F(M.chosen, 3)}\nMSE ${F(M.w0_scan.total, 1)} → ${F(M.chosen_scan.total, 1)}\ntail ${F(M.w0_scan.tail, 1)} → ${F(M.chosen_scan.tail, 1)}  (≤ a1 ✓)` },
+        { layer: 'blend', tag: '72 OUTPUTS', title: '같은 w로 72시간을 섞습니다',
+          body: `horizon마다 다른 가중은 없습니다. 칸을 눌러 그 시간의 계산을 보세요.`,
+          formula: `pred_h = (1 − ${F(M.chosen, 3)})·base_h + ${F(M.chosen, 3)}·arm_h\nh=1  → ${F(p[0], 2)} km/s`,
+          note: `이 origin은 h1–62에서 조금 잃고 h63–72 이벤트에서 크게 벌어 합계 +${F(ph.reduce((s2, r) => s2 + (r.base - r.truth) ** 2 - (r.blend - r.truth) ** 2, 0), 0)} km²/s².`,
+          after: (side) => {
+            const box = document.createElement('div');
+            box.className = 'side-f';
+            box.id = 'cell-detail';
+            box.textContent = '칸을 클릭하세요';
+            side.querySelector('.side-n').after(box);
+            $$('.grid72 i', $('#scene')).forEach((c) => c.addEventListener('click', () => {
+              const h = +c.dataset.h, r = ph[h - 1];
+              $$('.grid72 i', $('#scene')).forEach((x) => x.classList.toggle('on', x === c));
+              box.innerHTML = `h = ${h}   base ${F(r.base, 2)}  arm ${F(r.arm, 2)}\n` +
+                `pred = ${F(1 - M.chosen, 3)}·${F(r.base, 2)} + ${F(M.chosen, 3)}·${F(r.arm, 2)}\n` +
+                `     = <b>${F(r.blend, 2)}</b> km/s   (실측 ${F(r.truth, 2)})`;
+            }));
+          } },
+        { layer: 'score', tag: 'BOARD', title: '결과는 리더보드 점수로 돌아옵니다',
+          body: `총 MSE ${F(DATA.base_scores.total, 2)} → <b>${F(DATA.scores.total, 2)}</b>,
+                 ≥550 ${F(DATA.base_scores.ge550, 2)} → <b>${F(DATA.scores.ge550, 2)}</b>.
+                 F1은 조금 나빠지고 F2에서 벌었습니다.`,
+          formula: `total   ${F(DATA.base_scores.total, 2)} → ${F(DATA.scores.total, 2)}   (${F(DATA.compare.delta_total, 2)})\n≥550    ${F(DATA.base_scores.ge550, 2)} → ${F(DATA.scores.ge550, 2)}   (${F(DATA.compare.delta_ge550, 2)})\nCSI     ${F(DATA.base_scores.csi, 3)} → ${F(DATA.scores.csi, 3)}`,
+          note: `재학습 0회, origin당 ${F(DATA.scores.inference_us_per_origin, 1)} µs.` }
+      ]
+    };
+  }
+
+  function render() {
+    // ---- input table
+    const ip = DATA.inputs;
+    const keys = Object.keys(ip);
+    const base = keys.find((k) => k.includes('detroute'));
+    const arm = keys.find((k) => k.includes('gpd_v1'));
+    const truth = keys.find((k) => k.includes('speed.parquet'));
+    const short = (p2) => p2.replace('/home/t-lab01/sunrun/', '');
+    const setCell = (id, full) => {
+      const el = $(id);
+      el.textContent = short(full);
+      el.title = full;
+    };
+    setCell('#ip-base', DATA.base_path);
+    setCell('#ip-arm', DATA.arm_path);
+    setCell('#ip-truth', truth);
+    $('#ip-base-sha').textContent = ip[base].slice(0, 16) + '…';
+    $('#ip-arm-sha').textContent = ip[arm].slice(0, 16) + '…';
+    $('#ip-truth-sha').textContent = ip[truth].slice(0, 16) + '…';
+    $('#foot-sha').textContent = ip[base].slice(0, 12);
+
+    UI.renderRaw('detpool');
+    UI.scene(sceneSpec());
+    flow();
+    lineage();
+    maturity();
+    scanChart();
+    handSteps();
+    wSlider();
+    vector();
+    walk();
+    histogram();
+    scores();
+    $('#scan_check').textContent = F(scanCheck(), 2);
+  }
+
+  /* ---------- flow ---------- */
+  function flow() {
+    const nodes = [
+      ['in', 'base 예측', 'detroute_v1/forecast.npz<br>4970 × 72'],
+      ['in', 'arm 예측', 'calib3 gpd_v1/forecast.npz<br>4970 × 72'],
+      ['in', '실측', 'speed.parquet<br>reindex(origin+1h…72h)'],
+      ['calc', '성숙 마스크', 'k = i − 71<br>q+72h ≤ i 인 q만'],
+      ['calc', '창 자르기', 'max(0, k−2160) … k<br>예시: ' + F(M.rows, 0) + ' origins'],
+      ['calc', '누적합 6개', 'a0 b0 x0 · a1 b1 x1<br>cumsum[c] − cumsum[j]'],
+      ['calc', '31점 스캔', 'MSE(w) 2차식<br>tail(w) ≤ a1 가드'],
+      ['out', 'w 선택', 'w = ' + F(M.chosen, 3) + '<br>(origin당 1개)'],
+      ['out', '블렌드', '(1−w)·base + w·arm<br>72개 숫자'],
+      ['out', '저장', 'forecast.npz + weights.npz<br>357,840행'],
+      ['out', '채점', 'MSE · ≥550 · CSI']
+    ];
+    const host = $('#flow');
+    host.innerHTML = nodes.map((n, i) =>
+      `<div class="node ${n[0]}"><div class="t">${i + 1}. ${n[1]}</div><div class="s">${n[2]}</div></div>`
+    ).join('');
+    UI.flowArrows(host);
+  }
+
+  /* ---------- lineage chain ---------- */
+  function lineage() {
+    const L = DATA.lineage;
+    const nodes = [
+      ['in', 'tweedie15', '몸통 arm · Tweedie deviance<br>' + F(L.body.total, 1)],
+      ['in', 'mixture2comp', '꼬리 arm · 3헤드 합성<br>' + F(L.tail.total, 1)],
+      ['calc', 'detector', 'binary:logistic<br>τ = ' + F(L.tau, 3)],
+      ['out', 'detroute', '라우팅 결과<br>' + F(L.routed.total, 1)],
+      ['in', 'gpd arm', '별도 학습(형제 모델)<br>550 + exp(초과) · ' + F(L.arm.total, 1)],
+      ['calc', 'pool', '(1−w)·base + w·arm<br>w ≤ 0.75'],
+      ['out', '제출', '357,840행<br>' + F(DATA.scores.total, 1)]
+    ];
+    $('#lineage-flow').innerHTML = nodes.map((n) =>
+      `<div class="node ${n[0]}"><div class="t">${n[1]}</div><div class="s">${n[2]}</div></div>`
+    ).join('');
+    UI.flowArrows($('#lineage-flow'));
+  }
+
+  /* ---------- maturity timeline ---------- */
+  function maturity() {
+    const i = M.origin_index;
+    const qs = [i - 160, i - 96, i - 72, i - 40];
+    const series = [];
+    qs.forEach((q, n) => {
+      const ok = q + 72 <= i;
+      series.push({
+        x: [q, q + 72], y: [3 - n * 0.7, 3 - n * 0.7], color: ok ? '#14ae5c' : '#c9c9d6',
+        width: 9, points: false
+      });
+    });
+    const host = document.createElement('div');
+    host.id = 'matHost';
+    $('#mat-chart').appendChild(host);
+    const PAD = { l: 92, r: 26, t: 16, b: 40 }, CH = 210, X0 = i - 190, X1 = i + 90;
+    chart(host, {
+      h: CH, pad: PAD,
+      x: { min: X0, max: X1, ticks: [i - 168, i - 120, i - 72, i - 24, i],
+        fmt: (v) => (v === i ? 'origin i' : 'i' + (v - i) + 'h'), label: 'origin index (1 h 간격)' },
+      y: { min: 0, max: 3.6, ticks: [], fmt: () => '' },
+      vlines: [{ x: i, color: '#7b61ff', label: '지금 (origin i)', dy: 12 }],
+      series
+    });
+    const ih = CH - PAD.t - PAD.b;
+    const ys = (v) => PAD.t + ih - (v / 3.6) * ih;
+    const xs = (v) => PAD.l + ((v - X0) / (X1 - X0)) * (900 - PAD.l - PAD.r);
+    // row labels + status
+    const svg = host.querySelector('svg');
+    const NS = 'http://www.w3.org/2000/svg';
+    qs.forEach((q, n) => {
+      const ok = q + 72 <= i;
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', 84); t.setAttribute('y', ys(3 - n * 0.7));
+      t.setAttribute('text-anchor', 'end'); t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('class', 'tick');
+      t.textContent = 'q = i' + (q - i) + 'h';
+      svg.appendChild(t);
+      const s = document.createElementNS(NS, 'text');
+      s.setAttribute('x', xs(q + 72) + 8); s.setAttribute('y', ys(3 - n * 0.7));
+      s.setAttribute('dominant-baseline', 'middle');
+      s.setAttribute('class', 'tick'); s.setAttribute('fill', ok ? '#0d8446' : '#a5a5b8');
+      s.textContent = ok ? '성숙 ✓ 사용' : '미성숙 ✗ 제외';
+      svg.appendChild(s);
+    });
+    legend($('#mat-legend'), [
+      { color: '#14ae5c', label: '목표 시각이 i 이하 → 잔차 사용 가능' },
+      { color: '#c9c9d6', label: '목표 시각이 i 이후 → 사용 금지' }
+    ]);
+  }
+
+  /* ---------- scan chart ---------- */
+  function scanChart() {
+    const sc = M.scan;
+    const feas = sc.filter((r) => r.feasible);
+    const wMin = 0, wMax = 0.75;
+    const totLo = Math.min(...sc.map((r) => r.total)) * 0.985;
+    const totHi = Math.max(...sc.map((r) => r.total)) * 1.15;
+    const tailLo = Math.min(...sc.map((r) => r.tail)) * 0.99;
+    const tailHi = Math.max(...sc.map((r) => r.tail)) * 1.02;
+    const feasN = feas.length;
+    $('#guard-note').innerHTML = '<b>가드의 의미</b> — 총 MSE를 줄이는 해가 꼬리를 망치면 후보에서 제외합니다. ' +
+      `이 origin에서는 31점 중 <b>${feasN}점</b>이 가드를 통과했습니다` +
+      (feasN === sc.length
+        ? ' — 즉 argmin은 <b>순수 MSE 최소화</b>로 결정되고, 가드는 이 origin에서 작동하지 않았습니다. 가드는 꼬리를 망치는 해가 나오는 다른 origin을 위한 장치입니다.'
+        : ` — 제외된 ${sc.length - feasN}점은 후보에서 빠집니다.`);
+    chart($('#scan-chart'), {
+      h: 320, pad: { l: 62, r: 62, t: 20, b: 44 },
+      x: { min: wMin, max: wMax, ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
+        fmt: (v) => F(v, 2), label: '가중 w' },
+      y: { min: totLo, max: totHi, ticks: tickVals(totLo, totHi, 4), fmt: UI.yFmt(totLo, totHi),
+        label: '창 MSE (km²/s², 전체)' },
+      bands: [{ x0: Math.min(...feas.map((r) => r.w)), x1: Math.max(...feas.map((r) => r.w)),
+        fill: '#eafaf1', label: '가드 통과 구간' }],
+      series: [{ x: sc.map((r) => r.w), y: sc.map((r) => r.total), color: '#1e1e28', width: 2.4,
+        points: true, tip: (k) => `w=${F(sc[k].w, 3)} · MSE ${F(sc[k].total, 1)}` }],
+      vlines: [{ x: 0, color: '#a5a5b8', dash: '3 3', label: 'w=0' }],
+      marks: [{ x: M.chosen, y: M.chosen_scan.total, color: '#7b61ff',
+        label: 'w* = ' + F(M.chosen, 3) }]
+    });
+    legend($('#scan-legend'), [
+      { color: '#1e1e28', label: 'MSE(w) — 전체 셀' },
+      { color: '#7b61ff', label: '선택된 w' },
+      { color: '#eafaf1', label: 'feasible' }
+    ]);
+    // tail curve on a second axis, drawn separately for clarity
+    const host = document.createElement('div');
+    host.style.marginTop = '10px';
+    $('#scan-chart').appendChild(host);
+    chart(host, {
+      h: 230, pad: { l: 62, r: 26, t: 16, b: 40 },
+      x: { min: 0, max: 0.75, ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7], fmt: (v) => F(v, 2),
+        label: '가중 w' },
+      y: { min: tailLo, max: tailHi, ticks: tickVals(tailLo, tailHi, 4),
+        fmt: UI.yFmt(tailLo, tailHi), label: '꼬리 MSE (y ≥ 550)' },
+      series: [{ x: sc.map((r) => r.w), y: sc.map((r) => r.tail), color: '#f24822', width: 2.4,
+        points: true, tip: (k) => `w=${F(sc[k].w, 3)} · tail ${F(sc[k].tail, 1)}` },
+        ...feas.length ? [{ x: feas.map((r) => r.w), y: feas.map((r) => r.tail), color: '#14ae5c',
+          width: 3.4 }] : []],
+      hlines: [{ y: M.stats.a1, color: '#14ae5c', dash: '5 4', label: 'tail(0) = a1 (가드 기준선)' }],
+      vlines: [{ x: M.chosen, color: '#7b61ff', label: 'w*' }]
+    });
+
+    // table
+    const rows = sc.map((r) => `<tr class="${Math.abs(r.w - M.chosen) < 1e-12 ? 'pick' : (r.feasible ? 'ok' : 'no')}">
+      <td class="mono-cell">${F(r.w, 3)}</td>
+      <td class="mono-cell">${F(r.total, 2)}</td>
+      <td class="mono-cell">${F(r.direct_total, 2)}</td>
+      <td class="mono-cell">${F(r.tail, 2)}</td>
+      <td class="mono-cell">${r.feasible ? '✓' : '✗'}</td></tr>`).join('');
+    $('#scan-table').innerHTML = `<table>
+      <thead><tr><th>w</th><th>MSE(w) 2차식</th><th>실제 이 origin MSE*</th><th>tail(w)</th><th>가드</th></tr></thead>
+      <tbody>${rows}</tbody></table>`;
+  }
+
+  /* ---------- hand calculation ---------- */
+  function handSteps() {
+    const s = M.stats, w = M.chosen;
+    const p1 = (1 - w) ** 2 * s.a0, p2 = w ** 2 * s.b0, p3 = 2 * w * (1 - w) * s.x0;
+    const t1 = (1 - w) ** 2 * s.a1, t2 = w ** 2 * s.b1, t3 = 2 * w * (1 - w) * s.x1;
+    const h1 = M.per_horizon[0], h2 = M.per_horizon[1];
+    const steps = [
+      ['창을 자른다', `origin i = ${ts(M.origin)} UTC, index ${M.origin_index}
+k = ${M.k}  (사용 가능한 마지막 origin = i − 72)
+j = ${M.j}, rows = k − j = ${M.rows}, cells = ${M.rows} × 72 = ${F(M.rows * 72, 0)}
+꼬리 셀 nh = ${F(s.nh, 0)}  (${F(s.nh / (M.rows * 72) * 100, 1)}% 가 550 이상)`],
+      ['잔차를 만든다', `r_b = base − y ,  r_a = arm − y      (창 안 ${M.rows} × 72 셀)
+예: ${ts(M.origin)} +1h →  base ${F(h1.base, 1)},  arm ${F(h1.arm, 1)},  y ${F(h1.truth, 1)}
+   r_b = ${F(h1.base, 2)} − ${F(h1.truth, 2)} = ${F(h1.resid_base, 2)}`],
+      ['6개 상수로 접는다', `a0 = ${F(s.a0, 2)}      b0 = ${F(s.b0, 2)}      x0 = ${F(s.x0, 2)}
+a1 = ${F(s.a1, 2)}      b1 = ${F(s.b1, 2)}      x1 = ${F(s.x1, 2)}
+(해석: 창에서 base가 arm보다 낫다 — a0 < b0 — 하지만 꼬리에서는 a1 > b1)`],
+      ['w = 0 을 먼저 계산', `MSE(0) = a0 = ${F(s.a0, 2)}          ← w를 안 쓰면 base 그대로
+tail(0) = a1 = ${F(s.a1, 2)}`],
+      ['w = ' + F(w, 3) + '을 대입', `MSE(${F(w, 3)}) = (1−w)²·a0 + w²·b0 + 2w(1−w)·x0
+          = ${F((1 - w) ** 2, 4)}·${F(s.a0, 2)} + ${F(w * w, 4)}·${F(s.b0, 2)} + ${F(2 * w * (1 - w), 4)}·${F(s.x0, 2)}
+          = ${F(p1, 2)} + ${F(p2, 2)} + ${F(p3, 2)}
+          = ${F(p1 + p2 + p3, 2)}   ← ${F(M.w0_scan.total - (p1 + p2 + p3), 2)} 개선`],
+      ['꼬리도 같은 w로 계산', `tail(${F(w, 3)}) = (1−w)²·a1 + w²·b1 + 2w(1−w)·x1
+            = ${F(t1, 2)} + ${F(t2, 2)} + ${F(t3, 2)}
+            = ${F(t1 + t2 + t3, 2)}
+가드: ${F(t1 + t2 + t3, 2)} ≤ ${F(s.a1, 2)}  ✓`],
+      ['가드 안에서 최소를 찾는다', `G = {0, 0.025, …, 0.75} (31점)
+feasible = { w : tail(w) ≤ ${F(s.a1, 2)} }
+argmin MSE(w) over feasible  →  w* = ${F(w, 3)}`],
+      ['72개 숫자로 펼친다', `pred_h = (1 − ${F(w, 3)})·base_h + ${F(w, 3)}·arm_h
+h=1 : ${F(h1.base, 2)} · ${F(1 - w, 3)} + ${F(h1.arm, 2)} · ${F(w, 3)} = ${F(h1.blend, 2)}
+h=2 : ${F(h2.base, 2)} · ${F(1 - w, 3)} + ${F(h2.arm, 2)} · ${F(w, 3)} = ${F(h2.blend, 2)}
+… 72개를 만들어 한 행에 저장`]
+    ];
+    $('#hand-steps').innerHTML = steps.map(([t, b]) =>
+      `<div class="step"><div class="b"><b>${t}</b><pre>${b}</pre></div></div>`).join('');
+  }
+
+  /* ---------- w slider ---------- */
+  function wSlider() {
+    const s = M.stats;
+    const upd = () => {
+      const w = +$('#wSlider').value / 1000;
+      const tot = (1 - w) ** 2 * s.a0 + w ** 2 * s.b0 + 2 * w * (1 - w) * s.x0;
+      const tail = (1 - w) ** 2 * s.a1 + w ** 2 * s.b1 + 2 * w * (1 - w) * s.x1;
+      $('#wVal').textContent = 'w = ' + F(w, 3);
+      $('#wCalc').innerHTML =
+        `MSE(w) = ${F((1 - w) ** 2, 4)}·${F(s.a0, 2)} + ${F(w * w, 4)}·${F(s.b0, 2)}` +
+        ` + ${F(2 * w * (1 - w), 4)}·${F(s.x0, 2)}<br>` +
+        `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span class="hl">${F(tot, 2)}</span>` +
+        `  <span class="cm">(${tot < M.w0_scan.total ? '−' : '+'}${F(Math.abs(M.w0_scan.total - tot), 2)} vs w=0)</span>`;
+      $('#wCalcTail').innerHTML =
+        `tail(w) = ${F(tail, 2)} <span class="cm">/ 기준 ${F(s.a1, 2)}</span><br>` +
+        `${tail <= s.a1 ? '<span style="color:#0d8446">가드 통과 ✓</span>' : '<span style="color:#c9320f">가드 위반 ✗ → w=0</span>'}`;
+    };
+    $('#wSlider').addEventListener('input', upd);
+    upd();
+  }
+
+  /* ---------- 72h vector ---------- */
+  function vector() {
+    const ph = M.per_horizon;
+    chart($('#vec-chart'), {
+      h: 330, pad: { l: 60, r: 20, t: 20, b: 44 },
+      x: { min: 0, max: 72, ticks: [1, 12, 24, 36, 48, 60, 72], fmt: (v) => 'h' + v,
+        label: '예보 시간 (h)' },
+      y: { min: 250, max: Math.max(...ph.map((r) => Math.max(r.base, r.arm, r.truth || 0))) * 1.05,
+        ticks: tickVals(250, Math.max(...ph.map((r) => r.truth || 0)) * 1.05, 5), fmt: (v) => F(v, 0),
+        label: 'km/s' },
+      series: [
+        { x: ph.map((r) => r.h), y: ph.map((r) => r.base), color: '#a5a5b8', width: 1.8, points: false },
+        { x: ph.map((r) => r.h), y: ph.map((r) => r.arm), color: '#ffb020', width: 1.8, dash: '5 4' },
+        { x: ph.map((r) => r.h), y: ph.map((r) => r.blend), color: '#7b61ff', width: 2.6 },
+        { x: ph.map((r) => r.h), y: ph.map((r) => r.truth), color: '#1e1e28', width: 2.2,
+          points: true, r: 2, tip: (k) => `h${ph[k].h} · y ${F(ph[k].truth, 1)}` }
+      ],
+      hlines: [{ y: 550, color: '#f24822', dash: '3 3', label: '550 km/s' }]
+    });
+    legend($('#vec-legend'), [
+      { color: '#a5a5b8', label: 'base (detroute)' },
+      { color: '#ffb020', label: 'arm (gpd)' },
+      { color: '#7b61ff', label: 'pooled = 제출값' },
+      { color: '#1e1e28', label: '실측 y' }
+    ]);
+    const upd = () => {
+      const h = +$('#hSlider').value;
+      const r = ph[h - 1];
+      const w = r.w;
+      $('#hVal').textContent = 'h = ' + h + ' (w = ' + F(w, 3) + ')';
+      const errB = r.base - r.truth, errP = r.blend - r.truth;
+      $('#hCalc').innerHTML =
+        `pred_${h} = (1−${F(w, 3)})·${F(r.base, 2)} + ${F(w, 3)}·${F(r.arm, 2)} = <span class="hl">${F(r.blend, 2)}</span> km/s<br>` +
+        `<span class="cm">실측 ${F(r.truth, 2)} → 오차 base ${F(errB, 2)}, pooled ${F(errP, 2)}` +
+        ` (${errP * errP < errB * errB ? '개선' : '악화'} ${F(Math.abs(errP * errP - errB * errB), 1)} km²/s²)</span>`;
+    };
+    $('#hSlider').addEventListener('input', upd);
+    upd();
+    const dlt = ph.map((r) => (r.base - r.truth) ** 2 - (r.blend - r.truth) ** 2);
+    const tailPart = dlt.slice(62), bodyPart = dlt.slice(0, 62);
+    const sum = (a) => a.reduce((x, y) => x + y, 0);
+    $('#vec-note').innerHTML =
+      '<b>이 origin의 손익은 꼬리에 몰려 있습니다</b> — h1–62에서 ' +
+      `${F(sum(bodyPart), 0)} km²/s² (대부분 손해), h63–72에서 ` +
+      `<b>+${F(sum(tailPart), 0)}</b> km²/s²를 벌어 합계 <b>+${F(sum(dlt), 0)}</b> km²/s². ` +
+      '창이 arm을 0.275만큼 섞은 이유가 이 마지막 열 시간에 있습니다(실측이 600 km/s까지 올라간 구간).';
+    $('#h-table').innerHTML = `<table><thead><tr><th>h</th><th>base</th><th>arm</th>
+      <th>pooled</th><th>실측</th><th>오차 개선</th></tr></thead><tbody>` +
+      ph.map((r) => {
+        const d = (r.base - r.truth) ** 2 - (r.blend - r.truth) ** 2;
+        return `<tr><td>${r.h}</td><td class="mono-cell">${F(r.base, 1)}</td>
+          <td class="mono-cell">${F(r.arm, 1)}</td><td class="mono-cell">${F(r.blend, 1)}</td>
+          <td class="mono-cell">${F(r.truth, 1)}</td>
+          <td class="mono-cell" style="color:${d > 0 ? '#0d8446' : '#c9320f'}">${d > 0 ? '+' : ''}${F(d, 0)}</td></tr>`;
+      }).join('') + '</tbody></table>';
+  }
+
+  /* ---------- walk-forward ---------- */
+  function walk() {
+    const xs = W.series.map((r) => (new Date(r.origin) - new Date(W.series[0].origin)) / 36e5);
+    const ys = W.series.map((r) => r.w);
+    const firstNZ = (new Date(W.first_nonzero_origin) - new Date(W.series[0].origin)) / 36e5;
+    const f2 = (new Date(DATA.origins.f2_cut) - new Date(W.series[0].origin)) / 36e5;
+    chart($('#w-chart'), {
+      h: 260, pad: { l: 54, r: 20, t: 18, b: 40 },
+      x: { min: 0, max: xs[xs.length - 1], ticks: [0, 720, 1440, 2160, 2880, 3600, 4320],
+        fmt: (v) => '+' + F(v / 24, 0) + 'd', label: '공식 창 시작 이후 (일)' },
+      y: { min: 0, max: 0.75, ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.75], fmt: (v) => F(v, 2),
+        label: 'w' },
+      bands: [{ x0: 0, x1: f2, fill: '#f8f7ff', label: 'F1' },
+        { x0: f2, x1: xs[xs.length - 1], fill: '#fbfbfd', label: 'F2' }],
+      series: [{ x: xs, y: ys, color: '#7b61ff', width: 1.4, step: true }],
+      hlines: [{ y: W.mean, color: '#0d99ff', dash: '4 4', label: '평균 ' + F(W.mean, 3) }],
+      vlines: [{ x: firstNZ, color: '#14ae5c', label: '첫 w>0 (' + ts(W.first_nonzero_origin) + ')', dy: 26 }]
+    });
+    legend($('#w-legend'), [
+      { color: '#7b61ff', label: 'origin별 w (5시간 간격으로 표시)' },
+      { color: '#0d99ff', label: '평균 w' },
+      { color: '#14ae5c', label: '첫 비영(非零) 가중' }
+    ]);
+  }
+
+  function histogram() {
+    const h = W.histogram;
+    chart($('#w-hist'), {
+      h: 230, pad: { l: 52, r: 16, t: 16, b: 38 },
+      x: { min: -0.02, max: 0.78, ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7], fmt: (v) => F(v, 2),
+        label: 'w' },
+      y: { min: 0, max: Math.max(...h.map((r) => r.count)) * 1.08,
+        ticks: tickVals(0, Math.max(...h.map((r) => r.count)), 4), fmt: (v) => F(v, 0),
+        label: 'origin 수' },
+      series: [{ x: h.map((r) => r.w), y: h.map((r) => r.count), color: '#7b61ff', width: 1,
+        area: { at: 0, opacity: 0.14 }, points: true, r: 3,
+        tip: (k) => `w=${F(h[k].w, 3)} · ${F(h[k].count, 0)} origins` }]
+    });
+  }
+
+  /* ---------- scores ---------- */
+  function scores() {
+    const rows = [
+      ['총 MSE', S.base_total, S.pool_total, 1],
+      ['F1 MSE', S.base_f1, S.pool_f1, 1],
+      ['F2 MSE', S.base_f2, S.pool_f2, 1],
+      ['≥550 MSE', S.base_ge550, S.pool_ge550, 1]
+    ];
+    const mx = Math.max(...rows.flatMap((r) => [r[1], r[2]]));
+    $('#score-bars').innerHTML = rows.map(([k, a, b]) => `
+      <div class="bar-row"><span>${k}</span>
+        <div>
+          <div class="bar" title="base"><span style="width:${a / mx * 100}%;background:#c9c9d6"></span></div>
+          <div class="bar" style="margin-top:3px" title="pooled"><span style="width:${b / mx * 100}%;background:${b < a ? '#14ae5c' : '#f24822'}"></span></div>
+        </div>
+        <span class="v">${F(b, 0)}</span></div>`).join('') +
+      '<div class="legend"><span class="sw"><i style="background:#c9c9d6"></i>base</span>' +
+      '<span class="sw"><i style="background:#14ae5c"></i>pooled (개선)</span>' +
+      '<span class="sw"><i style="background:#f24822"></i>pooled (악화)</span></div>';
+
+    const bands = [['h1–24', 'mse_by_band_base.h1_24', 'mse_by_band_pool.h1_24'],
+      ['h25–48', 'mse_by_band_base.h25_48', 'mse_by_band_pool.h25_48'],
+      ['h49–72', 'mse_by_band_base.h49_72', 'mse_by_band_pool.h49_72']];
+    const bmax = Math.max(...bands.map((b) => UI.get(b[1], S)));
+    $('#band-bars').innerHTML = bands.map(([k, aP, bP]) => {
+      const a = UI.get(aP, S), b = UI.get(bP, S);
+      return `<div class="bar-row"><span>${k}</span>
+        <div><div class="bar"><span style="width:${a / bmax * 100}%;background:#c9c9d6"></span></div>
+        <div class="bar" style="margin-top:3px"><span style="width:${b / bmax * 100}%;background:${b < a ? '#14ae5c' : '#f24822'}"></span></div></div>
+        <span class="v">${F(b - a, 1)}</span></div>`;
+    }).join('') + '<p class="tiny" style="color:var(--ink-3);margin-top:6px">막대: base(회색) vs pooled. 숫자는 Δ.</p>';
+
+    const B = DATA.base_scores;
+    const t = [
+      ['총 MSE', S.base_total, S.pool_total],
+      ['F1', S.base_f1, S.pool_f1],
+      ['F2', S.base_f2, S.pool_f2],
+      ['≥550', S.base_ge550, S.pool_ge550],
+      ['F1 ≥550', B.f1_ge550, DATA.scores.f1_ge550],
+      ['F2 ≥550', B.f2_ge550, DATA.scores.f2_ge550]
+    ];
+    $('#score-table').innerHTML = t.map(([k, a, b]) => {
+      const d = b - a;
+      return `<tr><td>${k}</td><td class="mono-cell">${F(a, 2)}</td>
+        <td class="mono-cell">${F(b, 2)}</td>
+        <td class="mono-cell" style="color:${d < 0 ? '#0d8446' : '#c9320f'}">${d > 0 ? '+' : ''}${F(d, 2)}</td></tr>`;
+    }).join('') + `<tr><td>CSI</td><td class="mono-cell">${F(B.csi, 3)}</td>
+      <td class="mono-cell">${F(DATA.scores.csi, 3)}</td><td class="mono-cell">−0.004</td></tr>`;
+  }
+
+  function scanCheck() {
+    const s = M.stats, w = M.chosen;
+    const q = (1 - w) ** 2 * s.a0 + w ** 2 * s.b0 + 2 * w * (1 - w) * s.x0;
+    return Math.abs(q - M.chosen_scan.total);
+  }
+  const tickVals = UI.niceTicks;
+  window.render = render;
+})();
+</script>
+</body>
+</html>

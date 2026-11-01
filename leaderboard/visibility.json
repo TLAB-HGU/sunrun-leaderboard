@@ -2,6 +2,10 @@
   "hidden": [
     {
       "member": "seongeun",
+      "experiment": "e1604_hsspeak25"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000_direct_s42"
     },
     {
@@ -10,11 +14,71 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_blk0prev"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_budget_complexity"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_budget_covshift"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_budget_primaldual"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_budget_spectral"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib2_capacity_depth5"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib3_era"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_pool_bodytail"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_dirmo_12"
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm_HPO"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last48"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_dirmo_6"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_dirrec"
     },
     {
       "member": "seongeun",
@@ -30,7 +94,19 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_context"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_agnostic_v2_event"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_feat30_extreme"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_extreme_histprior"
     },
     {
       "member": "seongeun",
@@ -42,7 +118,15 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_feat30_lgbm_extreme4"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_feat30_lognormal_crps"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_lognormal_nll"
     },
     {
       "member": "seongeun",
@@ -62,11 +146,35 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_feat30_shape"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_feat30_smooth_error_tail"
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_feat30_smooth_wcrps"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_tailcal_crps"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_feat30_transfer_center"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recency"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_transfer_recent_window"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_feat30_wavelet"
     },
     {
       "member": "seongeun",
@@ -86,11 +194,23 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_mimo"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_point4_high_anchor"
     },
     {
       "member": "seongeun",
       "experiment": "e2000fs_point4_high_regret_guard"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_leaf_refit"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_point4_linear_leaf"
     },
     {
       "member": "seongeun",
@@ -138,6 +258,10 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_recursive"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_stratify_dirrecmo_dirrecmo_24"
     },
     {
@@ -157,6 +281,10 @@
       "experiment": "e2000fs_tabiclv2_recursive"
     },
     {
+      "member": "gjc-main",
+      "experiment": "hsspeak72"
+    },
+    {
       "member": "seongeun",
       "experiment": "xgb_d76_lead_moe_resid_dv_enlil"
     }
@@ -164,27 +292,11 @@
   "bold": [
     {
       "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30"
+      "experiment": "e2000fs_calib5_detpool_all"
     },
     {
       "member": "seongeun",
-      "experiment": "e2000fs_feat30_agnostic_v2_context"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_feat30_transfer_recency"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_dirmo_24_feat30_pointweight4"
-    },
-    {
-      "member": "seongeun",
-      "experiment": "e2000fs_budget_spectral"
+      "experiment": "e2000fs_calib_point4_144h"
     }
   ]
 }
