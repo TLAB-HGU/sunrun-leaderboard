@@ -52,3 +52,8 @@
 ## golab2 폐기 — 사용자 운영 공지
 - golab2의 SSH/rsync/명령 실행/상태 폴링을 전면 금지한다. controller 원격 폴링·수집 코드를 제거했고 launch.remote는 subprocess 호출 전에 예외를 발생시킨다.
 - 추가 회수 파일이 필요하면 `/home/t-lab01/golab2-recovered-20261103/home-yehwan/sunrun-rerun-20261103/`의 로컬 파일만 읽는다. 미완료 실행은 현재 로컬 CPU에 한정한다.
+
+## 완료 결과 표시 정리 — 사용자 최신 지시
+- 전체 S/TIMSE/RMSE에서 다른 완료 모델보다 모두 불리한 결과와 동일 전체 평가 보고서의 중복 결과는 리더보드에서 숨긴다. 예측·모델·점수 저장은 유지한다.
+- 기준 비교 모델 `e2000fs_calib_point4_144h`는 남기고 동일 결과의 dirmo pointweight4 및 rawdf 표기는 숨긴다. 지표별 장점이 있는 TCN·calib11g·shape 등은 유지한다.
+- 이 선택은 표시 정리이며 다음 실험 특징/파라미터 선택이나 모델 채택 근거로 사용하지 않는다. 과거 전체 공개 요청보다 최신 숨김 요청을 우선한다. 자동 게시기는 최신 원격 visibility를 유지한다.
