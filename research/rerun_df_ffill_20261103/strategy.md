@@ -66,3 +66,6 @@
 - 대기 큐 뒤쪽 27개를 `golab2-assignment-2300.json`에 고정하고 로컬 registry에서 제거하여 중복 실행을 방지한다.
 - 이 27개에 한해 이전 golab2 폐기/원격 금지 및 로컬 전용 지시를 최신 사용자 요청으로 변경한다. 나머지 로컬 실험은 유지한다.
 - 23:00 이전 학습 금지. GBM은 CUDA_VISIBLE_DEVICES="" CPU, Kumo는 GPU만 사용한다. 물리 특징 의존 실험은 검증된 특징 완료 후 실행한다.
+- 예약 검증 완료: 2026-11-03 21:17 KST. golab2 작업 스케줄러의 23:00 트리거 및 WakeToRun/StartWhenAvailable 확인. 대기 27개, 학습 실행 0개, 원격 scheduler 정상.
+- 입력 전송 완료: prepared 225,755,615 bytes / raw 213,699,522 bytes, 각 2,816,784행·446열 검증. 원격 소스와 로컬 소스 바이트 일치 및 9개 runner preflight 통과. Kumo GPU 모델 로드 통과. 증거: `golab2-schedule-verification.json`.
+- 동시 최대 3개·각 CPU 4 threads·메모리 admission 적용. `e1604_hsspeak25`는 로컬 물리 특징 계산의 정상 종료 및 검증 후 `golab2_physics_bridge.py`가 특징을 전달하면 실행한다. 학습 종료 후 별도 평가·제출 검증이 필요하며 예약/학습만으로 완료 처리하지 않는다.
