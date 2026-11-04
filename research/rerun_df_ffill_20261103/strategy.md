@@ -80,3 +80,11 @@
 - 기존 사용자 제외 14개는 유지한다. 기존 manifest에 있지만 큐에서 누락된 `realmlp_direct`, `tabiclv2_direct`도 지원되는 원본 foundation runner로 포함해 총 82개 비제외 모델을 대조한다. 기존 제출 28개와 회수 완료 18개를 제외한 36개가 학습 대상이다. 완료는 실제 종료·모델/예측 검증·공식 평가·제출 영수증 확인 후에만 기록한다.
 - 이전 검증 완료: prepared 입력 225,755,615바이트 및 raw 입력 213,699,522바이트의 전체 내용이 로컬과 동일하다. 완료 18개 전부 `publish.validate_run`을 통과했다. 근거는 `local-adoption-20261104.json`, `adopted-validation-20261104.json`, `retry-source-comparison-20261104.json`에 기록했다.
 - 10:15 KST 실행 확인: `sunrun-local-20261104` 컨트롤러와 독립 학습 세션 2개가 가동 중이다. `kumo_direct`는 GPU0에서 F1의 여러 head를 실제 완료하여 기존 Python.h 실패가 재현되지 않았고, `extreme_histprior`는 CUDA가 숨겨진 CPU에서 실행 중이다. 회수분 `agnostic_v2_context`의 첫 공식 제출 영수증이 생성돼 전체 제출 29개, 회수 후 평가/제출 대기 17개, 학습 중 2개, 나머지 학습 대기 34개이다. 이 수치는 전체 캠페인 완료 선언이 아닌 해당 시각의 상태다. `local-execution-health-20261104.json` 참조.
+
+## 2026-11-04 대기 17개 golab2 재배정 — 최신 사용자 지시
+
+- 요청: 학습 대기 34개 중 17개를 golab2의 별도 tmux에서 최대 3개씩 병렬 실행한다. 현재 로컬 학습 2개는 유지한다. 이는 이전 전체 로컬 지시의 해당 17개 배정만 변경한다.
+- `golab2-assignment-20261104-17.json`에 미실행 CPU 모델 17개를 고정했다. 신경망 direct 2개는 로컬 GPU 큐에 유지한다. 원래 모델·특징·seed·rounds 및 평가 프로토콜은 변경하지 않는다.
+- 새 원격 디렉터리는 `/home/yehwan/sunrun-golab2-20261104-17`, 감독 tmux는 `sunrun-golab2-17-20261104`이며 각 실험은 별도 `sr23-<experiment>` 세션, 로그, 종료 코드를 가진다. 이전 원격 큐와 예약은 계속 비활성 상태로 보존한다.
+- 원격 여유 RAM 약 30GiB와 기존 작업 없음 확인 후 배정했다. CPU 실험은 `CUDA_VISIBLE_DEVICES=""`, 각 4 threads, 최대 동시 3개 및 작업당 8GiB admission을 적용한다. 검증된 prepared/raw 입력 및 물리 특징을 기존 원격 원본에서 같은 바이트로 연결하고 입력 크기·mtime과 원래 배포 기록 일치를 확인했다. runner compile 및 17개 예약 사전 검사를 통과했다.
+- 중복 실행 방지: 해당 17개는 로컬 registry에서 제거하고, 로컬 run 경로에 원격 배정 marker를 둔다. 완료 후 수집기는 이 marker를 검증하고 원본 산출물을 보존한 뒤 완전한 실행 디렉터리를 원자적으로 설치해 공식 평가·제출한다. 원격 학습 완료만으로 제출 완료를 선언하지 않는다.
