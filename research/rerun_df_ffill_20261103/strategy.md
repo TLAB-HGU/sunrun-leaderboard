@@ -90,3 +90,7 @@
 - 중복 실행 방지: 해당 17개는 로컬 registry에서 제거하고, 로컬 run 경로에 원격 배정 marker를 둔다. 완료 후 수집기는 이 marker를 검증하고 원본 산출물을 보존한 뒤 완전한 실행 디렉터리를 원자적으로 설치해 공식 평가·제출한다. 원격 학습 완료만으로 제출 완료를 선언하지 않는다.
 - 실행 검증: 10:25:52 KST에 golab2의 `tailcal_crps`, `transfer_center`, `transfer_recency` 3개가 시작됐다. 실제 Python PID 3개, 각각 CPU4threads 및 빈 CUDA_VISIBLE_DEVICES를 확인했고 transfer 두 모델은 F1 horizon19 학습 완료 로그를 확인했다. 나머지 원격 14개는 대기, 로컬 2개 실행·17개 학습 대기를 유지한다. `golab2-execution-health-20261104-17.json`, `split-queue-verification-20261104.json`에 증거를 기록했다.
 - 자동 회수: `collect_remote17.py` 및 테스트 10개를 검증하고 실제 원격 상태/입력 preflight를 통과했다. `sunrun-remote17-collector-20261104`에서 60초 간격으로 원격 완료/실패 산출물을 회수하고, 검증된 성공분은 기존 게시 lock 아래 공식 평가·제출한다. 원본과 오류 로그는 `recovered_golab2_20261104_17/`에 보존한다. 게시 중에는 조회 간격이 길어질 수 있으나 원격 감독 스케줄러는 독립적으로 다음 실험을 실행한다.
+
+## 2026-11-04 10:42 KST 로컬 1개 추가 실행
+
+- 사용자 요청으로 대기 중인 `e2000fs_budget_spectral`을 로컬 CPU2threads 및 빈 CUDA_VISIBLE_DEVICES로 추가 실행했다. 메모리 여유 약20.7GiB를 확인했고 기존 로컬2개와 golab2 배정을 유지했다. 독립 tmux `srff-e2000fs_budget_spectral`, 원본 소스 snapshot 일치와 실제 Python 프로세스를 검증했다. 기존 메모리 admission 및 감독 컨트롤러가 이 실행의 완료·제출을 추적한다.
