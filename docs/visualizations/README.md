@@ -114,3 +114,14 @@ E2000FS 전략 비교(XGBoost)와 Kumo 비교의 나머지 리더보드 기록�
 | 27 | E2000FS Kumo Recursive | 18306.617946 | [e2000fs_kumo_recursive](e2000fs_kumo_recursive/) |
 
 [e2000fs_feat30_pointweight4](e2000fs_feat30_pointweight4/): MSE3732.269, >=550 MSE6071.056; pointwise weighting follow-up, loss/importance and daily-sampled monthly GIFs. High-speed improvement accompanied by ordinary-region degradation.
+
+
+## 2026-11-04 추가 — Offset Roll · Budget Spectral · DetRoute 최신 제출
+
+세 실험의 현재 제출 예측을 공식 채점기(`lead-timse-6h-v1`)로 재계산해 Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 기록과 1e-9 이내로 같은지 확인한 뒤 시각화했습니다. 각 폴더는 lead 곡선, 2026년 1~9월 모든 채점 origin의 예측 GIF 9개, 재현·검증 manifest를 담습니다. Spectral과 DetRoute의 과거 시각화는 그대로 보존했습니다.
+
+| 실험 | 제출 시각 UTC | Total S | 시각화 |
+| --- | --- | ---: | --- |
+| e2000fs_calib_offset_roll | 20261104T034835263Z | 98.76 | [시각화](e2000fs_calib_offset_roll/) |
+| e2000fs_budget_spectral | 20261104T035518124Z | 99.75 | [시각화](e2000fs_budget_spectral/fresh-df-20261103/) |
+| e2000fs_calib2_detroute | 20261104T040143309Z | 100.26 | [시각화](e2000fs_calib2_detroute/fresh-df-20261103/) |
