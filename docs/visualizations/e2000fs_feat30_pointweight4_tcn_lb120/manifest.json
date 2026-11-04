@@ -1,0 +1,286 @@
+{
+  "experiment": "e2000fs_feat30_pointweight4_tcn_lb120",
+  "member": "seongeun",
+  "submitted_utc": "20261103T063059846Z",
+  "created_at_utc": "2026-11-04T02:28:06.428527+00:00",
+  "metric_version": "lead-timse-6h-v1",
+  "sources": {
+    "run": "/home/t-lab01/sunrun/research/rerun_df_ffill_20261103/runs/e2000fs_feat30_pointweight4_tcn_lb120",
+    "predictions": "/home/t-lab01/sunrun/research/rerun_df_ffill_20261103/runs/e2000fs_feat30_pointweight4_tcn_lb120/predictions.parquet",
+    "record": "/home/t-lab01/sunrun/research/rerun_df_ffill_20261103/runs/e2000fs_feat30_pointweight4_tcn_lb120/submission.json",
+    "observations": {
+      "dataset": "tlabtlab/sunrun-lb-store",
+      "file": "competition-observations.parquet",
+      "revision": "abfec4370bff2fc5d4b791c23fda1fc2931f5cab"
+    }
+  },
+  "verification": {
+    "tolerance": 1e-09,
+    "scores": {
+      "total": {
+        "s": 100.00205144152604,
+        "timse": 16565.426875586556,
+        "rmse": 78.57105210949356,
+        "trmse": 127.49874429699145,
+        "bias": 24.119807594067474,
+        "n_pairs": 52619,
+        "n_origins": 1052
+      },
+      "f1": {
+        "s": 107.31586833757302,
+        "timse": 16874.342954015865,
+        "rmse": 91.77630523522305,
+        "trmse": 126.51743384067703,
+        "bias": 33.933027835236,
+        "n_pairs": 17674,
+        "n_origins": 348
+      },
+      "f2": {
+        "s": 96.60901083035873,
+        "timse": 13882.098326928382,
+        "rmse": 80.10850808219223,
+        "trmse": 116.75760824361419,
+        "bias": 20.06169501674514,
+        "n_pairs": 17473,
+        "n_origins": 352
+      },
+      "f3": {
+        "s": 67.62675930782146,
+        "timse": 6131.256725560557,
+        "rmse": 61.30025296157945,
+        "trmse": 75.44867810106045,
+        "bias": 18.251478068033855,
+        "n_pairs": 17472,
+        "n_origins": 352
+      }
+    },
+    "all_equal_to_record": true,
+    "scored_origins": 1052,
+    "rendered_frames": 1052,
+    "complete": true
+  },
+  "fits": [
+    {
+      "period": "F1",
+      "seed": 42,
+      "device": "cuda:0",
+      "training_cutoff": "2025-12-29",
+      "train_start": "2022-11-27 21:00:00+00:00",
+      "train_end": "2025-12-23 00:00:00+00:00",
+      "train_origins": 26908,
+      "selection_train_end": "2025-09-26 23:00:00+00:00",
+      "selection_valid_start": "2025-10-03 00:00:00+00:00",
+      "selection_valid_end": "2025-12-23 00:00:00+00:00",
+      "selected_epoch": 1,
+      "epoch_budget": 100,
+      "patience": 10,
+      "batch_size": 256,
+      "width": 64,
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "kernel": 3,
+      "dropout": 0.0,
+      "optimizer": "Adam",
+      "learning_rate": 0.001,
+      "history_rule": "120 hourly h1 input snapshots ending at origin; causal ffill only",
+      "target_rule": "campaign training-y ffill; remaining missing labels zero loss; point4 weights normalized over finite supplied labels per horizon",
+      "versions": {
+        "numpy": "2.4.6",
+        "pandas": "2.3.3",
+        "torch": "2.7.1+cu126"
+      },
+      "git_commit": "d934ae85a6b57725a9c382a0e57c8d7a50092a59"
+    },
+    {
+      "period": "F2",
+      "seed": 42,
+      "device": "cuda:0",
+      "training_cutoff": "2026-03-29",
+      "train_start": "2022-11-27 21:00:00+00:00",
+      "train_end": "2026-03-23 00:00:00+00:00",
+      "train_origins": 29068,
+      "selection_train_end": "2025-12-25 23:00:00+00:00",
+      "selection_valid_start": "2026-01-01 00:00:00+00:00",
+      "selection_valid_end": "2026-03-23 00:00:00+00:00",
+      "selected_epoch": 1,
+      "epoch_budget": 100,
+      "patience": 10,
+      "batch_size": 256,
+      "width": 64,
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "kernel": 3,
+      "dropout": 0.0,
+      "optimizer": "Adam",
+      "learning_rate": 0.001,
+      "history_rule": "120 hourly h1 input snapshots ending at origin; causal ffill only",
+      "target_rule": "campaign training-y ffill; remaining missing labels zero loss; point4 weights normalized over finite supplied labels per horizon",
+      "versions": {
+        "numpy": "2.4.6",
+        "pandas": "2.3.3",
+        "torch": "2.7.1+cu126"
+      },
+      "git_commit": "d934ae85a6b57725a9c382a0e57c8d7a50092a59"
+    },
+    {
+      "period": "F3",
+      "seed": 42,
+      "device": "cuda:0",
+      "training_cutoff": "2026-06-29",
+      "train_start": "2022-11-27 21:00:00+00:00",
+      "train_end": "2026-06-23 00:00:00+00:00",
+      "train_origins": 31276,
+      "selection_train_end": "2026-03-27 23:00:00+00:00",
+      "selection_valid_start": "2026-04-03 00:00:00+00:00",
+      "selection_valid_end": "2026-06-23 00:00:00+00:00",
+      "selected_epoch": 1,
+      "epoch_budget": 100,
+      "patience": 10,
+      "batch_size": 256,
+      "width": 64,
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "kernel": 3,
+      "dropout": 0.0,
+      "optimizer": "Adam",
+      "learning_rate": 0.001,
+      "history_rule": "120 hourly h1 input snapshots ending at origin; causal ffill only",
+      "target_rule": "campaign training-y ffill; remaining missing labels zero loss; point4 weights normalized over finite supplied labels per horizon",
+      "versions": {
+        "numpy": "2.4.6",
+        "pandas": "2.3.3",
+        "torch": "2.7.1+cu126"
+      },
+      "git_commit": "d934ae85a6b57725a9c382a0e57c8d7a50092a59"
+    }
+  ],
+  "lead_diagnostic": {
+    "f3_truth_max_kms": 743.4,
+    "f3_truth_max_utc": "2026-09-15T18:00:00+00:00",
+    "residue_file": "lead_residue.csv"
+  },
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 250,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "month_grouping": "UTC month of origin + 1 hour",
+    "frames": "every scored origin (00/06/12/18 UTC) of F1/F2/F3"
+  },
+  "footer": "fresh raw-only df + causal ffill rerun · TCN, 120 h input, dilations 1–32 · scored 00/06/12/18 UTC origins · truth = ACE status 0, unfilled · Y 200–850 km/s",
+  "outputs": [
+    {
+      "month": "2026-01",
+      "period": "F1",
+      "file": "forecast_2026-01.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-01-01T00:00:00+00:00",
+      "last_origin_utc": "2026-01-31T18:00:00+00:00",
+      "bytes": 2456333,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-02",
+      "period": "F1",
+      "file": "forecast_2026-02.gif",
+      "frames": 112,
+      "first_origin_utc": "2026-02-01T00:00:00+00:00",
+      "last_origin_utc": "2026-02-28T18:00:00+00:00",
+      "bytes": 2189478,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-03",
+      "period": "F1",
+      "file": "forecast_2026-03.gif",
+      "frames": 112,
+      "first_origin_utc": "2026-03-01T00:00:00+00:00",
+      "last_origin_utc": "2026-03-28T18:00:00+00:00",
+      "bytes": 2213238,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-04",
+      "period": "F2",
+      "file": "forecast_2026-04.gif",
+      "frames": 120,
+      "first_origin_utc": "2026-04-01T00:00:00+00:00",
+      "last_origin_utc": "2026-04-30T18:00:00+00:00",
+      "bytes": 2399210,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-05",
+      "period": "F2",
+      "file": "forecast_2026-05.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-05-01T00:00:00+00:00",
+      "last_origin_utc": "2026-05-31T18:00:00+00:00",
+      "bytes": 2491911,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-06",
+      "period": "F2",
+      "file": "forecast_2026-06.gif",
+      "frames": 108,
+      "first_origin_utc": "2026-06-01T00:00:00+00:00",
+      "last_origin_utc": "2026-06-27T18:00:00+00:00",
+      "bytes": 2123435,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-07",
+      "period": "F3",
+      "file": "forecast_2026-07.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-07-01T00:00:00+00:00",
+      "last_origin_utc": "2026-07-31T18:00:00+00:00",
+      "bytes": 2518120,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-08",
+      "period": "F3",
+      "file": "forecast_2026-08.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-08-01T00:00:00+00:00",
+      "last_origin_utc": "2026-08-31T18:00:00+00:00",
+      "bytes": 2484672,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-09",
+      "period": "F3",
+      "file": "forecast_2026-09.gif",
+      "frames": 104,
+      "first_origin_utc": "2026-09-01T00:00:00+00:00",
+      "last_origin_utc": "2026-09-26T18:00:00+00:00",
+      "bytes": 2111623,
+      "frame_ms": 250
+    }
+  ]
+}

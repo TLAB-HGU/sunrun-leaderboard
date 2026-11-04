@@ -4,6 +4,17 @@
 
 게시 후 2주가 지난 폴더는 정리하여 제거합니다. 2026-10-31에 E1604·HSSPEAK72·E0472 폴더를 2주 경과 기준으로 제거했습니다.
 
+## 2026-11-04 추가 — 새 df 재실행 TCN (현재 채점 지표)
+
+- [e2000fs_feat30_pointweight4_tcn_lb120](e2000fs_feat30_pointweight4_tcn_lb120/) — 게시 기준 리더보드 **1위 / 41**,
+  Total S **100.00**(F1 107.32 / F2 96.61 / F3 67.63), TIMSE 16,565.4, RMSE 78.57. 새 raw-only df + causal ffill 재실행으로
+  제출된 120시간 입력 TCN입니다.
+  - 담은 것: 세 기간의 선택 학습·재학습 loss, lead 곡선, 채점 origin 1,052개 전체의 9개월 예측 GIF.
+  - 세 기간 모두 validation loss가 1 epoch에서 가장 낮아, 제출 모델은 1 epoch 학습입니다.
+  - F3 TIMSE의 6시간 톱니는 00/06/12/18 UTC에 놓인 F3 최고속 관측 두 개(743.4 · 690.0 km/s) 때문임을 확인했습니다.
+- 이 폴더는 **현재 lead-first 지표(`lead-timse-6h-v1`, S/TIMSE/RMSE)와 ACE status 0 무보정 정답**으로 다시 채점·검증했습니다.
+  아래 이전 폴더의 MSE와는 직접 비교하지 마십시오.
+
 ## 2026-11-01 추가 — F1/F2/F3 재적합 lane 2편
 
 2026-10-31 재분할(F1 = 2026-01~03, F2 = 04~06, F3 = 07~09, 6,315 origins, 454,680 pairs) 기준으로 제출된 두 실험을
@@ -17,7 +28,7 @@
 - [e2000fs_calib_point4_144h](e2000fs_calib_point4_144h/) — 게시 기준 10위, MSE **4452.152081**(F1 6426.86 /
   F2 3896.40 / F3 3055.62, ≥550 **8597.82**). tweedie15 lane의 paired control arm으로, 900 round × 9 booster의
   학습·held-out loss(재학습이 archive 예측을 **비트 단위로 재현**), 목표 속도 밴드별 MSE(tweedie15·detpool_gpd와 같은
-  folds에서 비교), 9개월 예측 GIF를 담았습니다.
+  folds에서 비교), 잔차 분포(전체·본체·꼬리 3패널 막대그래프), 9개월 예측 GIF를 담았습니다.
 
 ## 2026-10-31 추가 (B) — 추론 손풀이 앱
 
