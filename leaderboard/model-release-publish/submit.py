@@ -212,18 +212,20 @@ def space_file(space: str, name: str, revision: str) -> dict:
         return {}
 
 
-def render_with_policy(results: list[dict], policy: dict, architecture: dict) -> str:
+def render_with_policy(results: list[dict], policy: dict, architecture: dict,
+                       visualizations: dict | None = None) -> str:
     """Render under `policy` instead of the local visibility.json, restoring the module hook afterwards."""
     local = board.visibility_policy
     board.visibility_policy = lambda: policy
     try:
-        return render(results, architecture=architecture)
+        return render(results, architecture=architecture, visualizations=visualizations)
     finally:
         board.visibility_policy = local
 
 
 def publish(api: HfApi, results: list[dict], space: str, architecture: dict | None = None,
-            attempts: int = 3, dataset: str | None = None, push_policy: bool = False) -> str:
+            attempts: int = 3, dataset: str | None = None, push_policy: bool = False,
+            visualizations: list[dict] | None = None) -> str:
     """Render the page and record this submission's architecture link in one commit, retrying if another publish
     lands first. The code cells must open the architecture, never the replay script, so the mapping is uploaded with
     the page it renders instead of being curated by hand afterwards.
@@ -231,7 +233,10 @@ def publish(api: HfApi, results: list[dict], space: str, architecture: dict | No
     The Space's visibility.json is the policy of record: the page is rendered with it, so a client holding a stale
     local copy cannot re-hide or re-show rows (a 2026-11-04 submission from an old checkout did exactly that).
     The local visibility.json is uploaded only when the Space has none yet, or when `push_policy` is set on purpose
-    (`submit.py --push-policy`)."""
+    (`submit.py --push-policy`).
+
+    The Space's visualizations.json links submissions to their prediction visualisations (docs/visualizations on
+    GitHub); `visualizations` entries are upserted into it in the same commit as the page that shows them."""
     try:
         api.create_repo(space, repo_type="space", space_sdk="static", private=True, exist_ok=True)
     except Exception:  # some plans cannot host private Spaces; the page only exposes metrics
@@ -248,10 +253,17 @@ def publish(api: HfApi, results: list[dict], space: str, architecture: dict | No
         body = json.dumps(mapping, indent=2, ensure_ascii=False) + "\n"
         on_space_policy = space_file(space, "visibility.json", parent)
         policy = visibility_policy() if push_policy or not on_space_policy else on_space_policy
+        on_space_viz = space_file(space, board.VISUALIZATION_FILE, parent)
+        viz = on_space_viz
+        for item in visualizations or []:
+            viz = board.upsert_visualization(viz, item)
         operations = [
             CommitOperationAdd("README.md", b"---\ntitle: Solar wind 72h leaderboard\nsdk: static\napp_file: index.html\n---\n"),
-            CommitOperationAdd("index.html", render_with_policy(results, policy, mapping).encode()),
+            CommitOperationAdd("index.html", render_with_policy(results, policy, mapping, viz).encode()),
         ]
+        if viz != on_space_viz:
+            operations.append(CommitOperationAdd(board.VISUALIZATION_FILE,
+                                                 (json.dumps(viz, indent=2, ensure_ascii=False) + "\n").encode()))
         if body != json.dumps(on_space, indent=2, ensure_ascii=False) + "\n":
             operations.append(CommitOperationAdd(architecture_code.FILE, body.encode()))
         if policy and policy != on_space_policy:  # only a bootstrap or an explicit --push-policy reaches this

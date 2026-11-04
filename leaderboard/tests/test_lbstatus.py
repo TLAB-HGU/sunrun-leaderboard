@@ -165,12 +165,13 @@ def test_trim_ranking_columns_preserves_metrics_and_status_rows():
 
 
 def test_trim_keeps_current_columns_wherever_the_board_places_them():
-    head = ("#", "experiment", "member", "sec/fold", "Total S", "F1 TIMSE", "end-to-end (h)", "code", "retired")
+    head = ("#", "experiment", "member", "sec/fold", "Total S", "F1 TIMSE", "visualization", "code", "end-to-end (h)")
     row = "".join(f"<td>{i}</td>" for i in range(len(head)))
     page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
             f"<tr>{row}</tr></tbody></table>")
     trimmed = lbstatus.trim_ranking_columns(page)
-    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == [label for label in head if label not in ("sec/fold", "retired")]
+    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == [label for label in head
+                                                                        if label not in ("sec/fold", "end-to-end (h)")]
     assert trimmed.count("<td>") == len(head) - 2
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
 
@@ -184,7 +185,7 @@ def test_trim_drops_a_config_column_and_hands_its_sha_to_the_code_cell():
     page = ("<table><thead><tr>" + "".join(f"<th>{h}</th>" for h in head) + "</tr></thead><tbody>"
             f"<tr>{row}</tr></tbody></table>")
     trimmed = lbstatus.trim_ranking_columns(page)
-    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == ["#", "experiment", "member", "end-to-end (h)", "code"]
+    assert [label for label, _ in lbstatus._ranking(trimmed)[2]] == ["#", "experiment", "member", "code"]
     assert f'<td data-config="{sha}" class="l">' in trimmed and "<code>" not in trimmed
     assert lbstatus.trim_ranking_columns(trimmed) == trimmed
 

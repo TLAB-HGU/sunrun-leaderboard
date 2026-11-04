@@ -4,6 +4,28 @@
 
 게시 후 2주가 지난 폴더는 정리하여 제거합니다. 2026-10-31에 E1604·HSSPEAK72·E0472 폴더를 2주 경과 기준으로 제거했습니다.
 
+## 2026-11-04 추가 — 리더보드 상위 10개 예측 시각화 (리더보드 visualization 열)
+
+게시 시점(Space `68490c61e0`, 순위 행 41개)의 리더보드 상위 10개 제출입니다. 각 폴더는 리더보드 dataset에 **저장된 제출 예측 자체**를 현재 채점기(`lead-timse-6h-v1`)로 다시 채점해, 기록과 1e-9 이내로 같을 때만 그렸습니다. 폴더마다 lead 곡선, 채점 origin 1,052개 전체의 9개월 예측 GIF, 점수 검증 manifest가 들어 있습니다. 리더보드의 **visualization** 열은 해당 제출(제출 시각 기준)의 폴더로 연결됩니다. 같은 이름으로 다시 제출하면 새 제출에는 링크가 붙지 않습니다.
+
+- 생성 코드: [code/submission_viz.py](code/submission_viz.py). 모든 멤버의 제출을 같은 방식으로 다룹니다.
+- 1위 폴더에는 TCN 학습 loss가 추가로 있습니다(아래 섹션).
+- `e2000fs_calib_point4_144h`는 이름이 같은 2026-11-01 옛 df 폴더가 이미 있어서, 덮어쓰지 않고 하위 폴더 `fresh-df-20261103/`에 넣었습니다.
+- 10개 모두 F3 TIMSE에 같은 6시간 톱니가 있습니다. 이 톱니는 00/06/12/18 UTC에 놓인 F3 최고속 관측 두 개 때문이며, 각 폴더 README에 진단값이 있습니다.
+
+| 순위 | 실험 | 멤버 | Total S | F1 / F2 / F3 S | Total TIMSE | Total RMSE | 폴더 |
+| ---: | --- | --- | ---: | ---: | ---: | ---: | --- |
+| 1 | e2000fs_feat30_pointweight4_tcn_lb120 | seongeun | 100.00 | 107.32 / 96.61 / 67.63 | 16,565.4 | 78.57 | [e2000fs_feat30_pointweight4_tcn_lb120](e2000fs_feat30_pointweight4_tcn_lb120/) |
+| 2 | e2000fs_calib11g_serarounds2 | seongeun | 100.23 | 122.25 / 76.37 / 61.12 | 22,768.7 | 68.19 | [e2000fs_calib11g_serarounds2](e2000fs_calib11g_serarounds2/) |
+| 3 | e2000fs_calib3_era | seongeun | 100.43 | 124.13 / 74.66 / 59.80 | 23,836.6 | 67.17 | [e2000fs_calib3_era](e2000fs_calib3_era/) |
+| 4 | dirmo_24_feat30_pw4_d12_rawdf | jsy301 | 100.53 | 125.70 / 73.45 / 60.02 | 24,252.8 | 66.68 | [dirmo_24_feat30_pw4_d12_rawdf](dirmo_24_feat30_pw4_d12_rawdf/) |
+| 5 | e2000fs_feat30_pointweight4_tcn_lb120_regskip | seongeun | 100.56 | 112.58 / 92.11 / 67.88 | 19,415.6 | 73.77 | [e2000fs_feat30_pointweight4_tcn_lb120_regskip](e2000fs_feat30_pointweight4_tcn_lb120_regskip/) |
+| 6 | e2000fs_calib_point4_144h | seongeun | 100.62 | 125.43 / 73.75 / 59.73 | 23,906.9 | 67.22 | [e2000fs_calib_point4_144h/fresh-df-20261103](e2000fs_calib_point4_144h/fresh-df-20261103/) |
+| 7 | dirmo_24_feat30_metricfloor4 | jsy301 | 100.80 | 125.51 / 72.80 / 60.55 | 24,059.5 | 67.22 | [dirmo_24_feat30_metricfloor4](dirmo_24_feat30_metricfloor4/) |
+| 8 | e2000fs_calib11d_sera | seongeun | 100.87 | 121.38 / 75.82 / 64.61 | 22,279.8 | 69.83 | [e2000fs_calib11d_sera](e2000fs_calib11d_sera/) |
+| 9 | e2000fs_calib11h_noenlil | seongeun | 100.97 | 121.83 / 77.10 / 64.61 | 22,670.9 | 69.62 | [e2000fs_calib11h_noenlil](e2000fs_calib11h_noenlil/) |
+| 10 | e2000fs_calib11f_serarounds | seongeun | 101.23 | 122.25 / 76.37 / 63.65 | 22,746.9 | 69.60 | [e2000fs_calib11f_serarounds](e2000fs_calib11f_serarounds/) |
+
 ## 2026-11-04 추가 — 새 df 재실행 TCN (현재 채점 지표)
 
 - [e2000fs_feat30_pointweight4_tcn_lb120](e2000fs_feat30_pointweight4_tcn_lb120/) — 게시 기준 리더보드 **1위 / 41**,

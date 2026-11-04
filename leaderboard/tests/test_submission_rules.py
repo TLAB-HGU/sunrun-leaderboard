@@ -164,8 +164,9 @@ def test_board_keeps_total_and_period_competition_columns():
     labels = re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
     assert labels == ["#", "experiment", *[f"{p} {m}" for m in ("S", "TIMSE", "RMSE")
                                            for p in ("Total", "F1", "F2", "F3")],
-                      "lead curves", "member", "end-to-end (h)", "code"]
-    assert "10.00" in page and "100.00" in page and "2.00" in page
+                      "lead curves", "visualization", "member", "code"]
+    assert "end-to-end" not in page
+    assert "10.00" in page and "100.00" in page
 
 
 def test_removed_config_column_keeps_the_row_identity_on_the_code_cell():
@@ -189,7 +190,6 @@ def test_every_publish_marks_the_best_and_second_best_of_each_skill_column():
     assert page.count('<b data-metric-version="lead-timse-6h-v1" class="lb-1">2.00</b>') == 8
     assert page.count('<u data-metric-version="lead-timse-6h-v1" class="lb-2">3.00</u>') == 8
     assert '<td data-v="0.001">0.001000</td>' not in page
-    assert '<td data-v="1.0" title="">1.00</td>' in page
     assert pytest.importorskip("lbstatus").mark_leaders(page) == page
 
 
@@ -263,19 +263,27 @@ def test_concurrent_same_key_is_rechecked_and_rejected(monkeypatch):
         store_submission(FakeApi(conflict=True), "repo", result_record(), b"prediction", replace=False)
 
 
-def test_board_shows_end_to_end_hours_only_when_provided():
-    regimes = {name: {"mse": None, "reliable": False} for name in __import__("board").REGIMES}
-    base = {"team_member": "alice", "submitted_utc": "20261027T000000Z", "skill_vs_naive": 0.1, "mse": 4000.0,
-            "vs_naive": {"beats_reference": True}, "by_regime": regimes, "mse_f1": 5000.0, "mse_f2": 3000.0,
+VIZ = "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/" + "1" * 40 + "/docs/visualizations/model"
+
+
+def test_board_links_a_visualization_only_to_the_submission_it_was_made_from():
+    import board
+    base = {"team_member": "alice", "experiment": "model", "mse": 4000.0, "mse_f1": 5000.0, "mse_f2": 3000.0,
             "mse_f3": 3200.0}
-    page = render([
-        {**base, "experiment": "timed", "config_sha256": "a" * 64,
-         "extras": {"end_to_end_seconds": 5400.0, "end_to_end_note": "select + F1 + F2 fits"}},
-        {**base, "experiment": "untimed", "config_sha256": "b" * 64},
-    ])
-    assert "end-to-end (h)" in page
-    assert '<td data-v="1.5" title="select + F1 + F2 fits">1.50</td>' in page
-    assert '<td data-v="" title=""><span class="dash">–</span></td>' in page
+    mapping = {"models": [{"member": "alice", "experiment": "model", "submitted_utc": "20261027T000000Z", "url": VIZ},
+                          {"member": "alice", "experiment": "model", "submitted_utc": "20261028T000000Z",
+                           "url": "https://example.com/not-github"}]}
+    page = render([{**base, "submitted_utc": "20261027T000000Z"}], visualizations=mapping)
+    assert f'class="visualization-link" href="{VIZ}"' in page
+    assert '<th class="l" data-sortable="0">visualization</th>' in page
+    # a resubmission does not inherit the older pictures, and a non-pinned url is never linked
+    for submitted in ("20261029T000000Z", "20261028T000000Z"):
+        assert "visualization-link" not in render([{**base, "submitted_utc": submitted}], visualizations=mapping)
+    with pytest.raises(ValueError, match="pinned"):
+        board.upsert_visualization({}, mapping["models"][1])
+    updated = board.upsert_visualization(mapping, {**mapping["models"][0], "url": VIZ.replace("/model", "/model2")})
+    assert [e["url"] for e in updated["models"]][:1] == [VIZ.replace("/model", "/model2")]
+    assert len(updated["models"]) == 2
 
 
 def test_extras_attach_to_matching_results_only(monkeypatch, tmp_path):
@@ -353,9 +361,10 @@ def test_publish_records_the_architecture_link_in_the_same_commit_as_the_page(mo
     assert f'href="{ARCHITECTURE}"' in page and ">architecture</a>" in page and script not in page
 
 
-def _publish_ops(monkeypatch, space_policy, **kwargs):
+def _publish_ops(monkeypatch, space_policy, space_viz=None, **kwargs):
     monkeypatch.setattr("submit.space_file",
-                        lambda space, name, revision: space_policy if name == "visibility.json" else {})
+                        lambda space, name, revision: space_policy if name == "visibility.json"
+                        else (space_viz or {}) if name == "visualizations.json" else {})
     api = FakeApi()
     api.create_repo = lambda *args, **kwargs: None
     publish(api, [], "space", **kwargs)
@@ -383,3 +392,17 @@ def test_publish_renders_with_the_space_policy_not_a_stale_local_copy(monkeypatc
     files = _publish_ops(monkeypatch, space_policy, push_policy=True)  # only an explicit push replaces it
     assert seen == [board.visibility_policy()]
     assert json.loads(files["visibility.json"]) == board.visibility_policy()
+
+
+def test_publish_keeps_the_space_visualizations_and_records_new_ones_with_the_page(monkeypatch):
+    import board
+    kept = {"member": "other", "experiment": "kept", "submitted_utc": "20260101T000000Z", "url": VIZ}
+    seen = []
+    real = board.render
+    monkeypatch.setattr("submit.render", lambda *a, **k: (seen.append(k.get("visualizations")), real(*a, **k))[1])
+    files = _publish_ops(monkeypatch, {"hidden": []}, space_viz={"models": [kept]})
+    assert seen == [{"models": [kept]}] and "visualizations.json" not in files
+    new = {"member": "alice", "experiment": "model", "submitted_utc": "20260102T000000Z", "url": VIZ}
+    seen.clear()
+    files = _publish_ops(monkeypatch, {"hidden": []}, space_viz={"models": [kept]}, visualizations=[new])
+    assert json.loads(files["visualizations.json"]) == {"models": [new, kept]} == seen[0]

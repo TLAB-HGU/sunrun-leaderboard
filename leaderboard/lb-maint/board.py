@@ -14,12 +14,16 @@ from pathlib import Path
 REGIMES = [f"{t}_{s}_{f}" for t in ("low", "high") for s in ("low", "high") for f in ("low", "high")]
 
 HIGHER_IS_BETTER = re.compile(r"^(CSI|skill vs naive)$")
-# end-to-end (h) is cost, not skill; the regime columns of older pages were skill.
+# The regime columns of older pages were skill.
 LOWER_IS_BETTER = re.compile(r"MSE|MAE|≥\d+|^(low|high)_(low|high)_(low|high)$")
 COMPETITION_VERSION = "lead-timse-6h-v1"
 METRIC_COLUMNS = [f"{scope} {metric}" for metric in ("S", "TIMSE", "RMSE")
                   for scope in ("Total", "F1", "F2", "F3")]
-BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "member", "end-to-end (h)", "code"]
+BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "visualization", "member", "code"]
+# Link columns open a page on GitHub; they are not sortable.
+LINK_COLUMNS = {"lead curves", "visualization"}
+VISUALIZATION_FILE = "visualizations.json"
+VISUALIZATION_URL = re.compile(r"https://github\.com/TLAB-HGU/sunrun-leaderboard/(tree|blob)/[0-9a-f]{40}/docs/visualizations/[^?#\s\"<>]+")
 CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
 
 CSS = """
@@ -176,12 +180,6 @@ def event_value(r: dict, key: str):
     return r.get(key) if has_f1(r) else r.get(f"{key}_f2", r.get(key))
 
 
-def end_to_end_hours(r: dict):
-    """Optional end-to-end compute time (training through the submitted F1 + F2 + F3 forecasts), from result extras."""
-    seconds = (r.get("extras") or {}).get("end_to_end_seconds")
-    return None if seconds is None else seconds / 3600
-
-
 def competition_metrics(r: dict) -> dict | None:
     """Only complete, finite scores from the current metric version enter this ranking."""
     metrics = r.get("competition")
@@ -259,6 +257,37 @@ def code_link(r: dict, architecture: dict | None = None) -> tuple[str | None, st
     return (url, "architecture") if url else (r.get("code_url"), "script")
 
 
+def visualization_mapping(visualizations: dict | None = None) -> dict:
+    """`visualizations.json` {"models": [{member, experiment, submitted_utc, url}]}: the prediction visualisation of
+    one stored submission, or the given mapping. Keyed by submission time, so a resubmission never inherits the
+    pictures of an older forecast."""
+    if visualizations is not None:
+        return visualizations
+    path = Path(__file__).resolve().parent / VISUALIZATION_FILE
+    if not path.exists():
+        path = path.parent.parent / VISUALIZATION_FILE
+    return json.loads(path.read_text()) if path.exists() else {}
+
+
+def visualization_url(r: dict, visualizations: dict | None = None) -> str | None:
+    """The pinned GitHub folder that visualises exactly this submission, if one is recorded."""
+    for e in visualization_mapping(visualizations).get("models", []):
+        if ((e.get("member"), e.get("experiment"), e.get("submitted_utc"))
+                == (r["team_member"], r["experiment"], r.get("submitted_utc"))
+                and VISUALIZATION_URL.fullmatch(e.get("url", ""))):
+            return e["url"]
+    return None
+
+
+def upsert_visualization(mapping: dict, entry: dict) -> dict:
+    """Mapping with `entry` replacing any entry for the same submission, newest first."""
+    key = (entry["member"], entry["experiment"], entry["submitted_utc"])
+    if not VISUALIZATION_URL.fullmatch(entry.get("url", "")):
+        raise ValueError(f"visualization url must be a pinned docs/visualizations path on GitHub: {entry.get('url')}")
+    kept = [e for e in mapping.get("models", []) if (e["member"], e["experiment"], e["submitted_utc"]) != key]
+    return {**mapping, "models": [dict(entry)] + kept}
+
+
 def visibility_policy() -> dict:
     """`visibility.json`: the rows hidden from the ranking (hidden) and the experiment names shown in bold. Every
     publish renders with it, and lbstatus.py re-applies it when it rewrites a page."""
@@ -287,17 +316,19 @@ def hidden_before(member: str, submitted_utc: str | None, policy: dict) -> bool:
                and submitted < cutoff for rule in policy.get("hidden_before", []))
 
 
-def render(results: list[dict], note: str = "", architecture: dict | None = None) -> str:
+def render(results: list[dict], note: str = "", architecture: dict | None = None,
+           visualizations: dict | None = None) -> str:
     policy = visibility_policy()
     architecture = architecture_mapping(architecture)
+    visualizations = visualization_mapping(visualizations)
     hidden = {(e["member"], e["experiment"]) for e in policy.get("hidden", [])}
     bold = {(e["member"], e["experiment"]) for e in policy.get("bold", [])}
     rows = [r for r in ranked(results) if (r["team_member"], r["experiment"]) not in hidden
             and not hidden_before(r["team_member"], r.get("submitted_utc"), policy)]
     head = BOARD_COLUMNS
-    left = {"experiment", "member", "code", "lead curves"}
+    left = {"experiment", "member", "code", *LINK_COLUMNS}
     th = "".join(f'<th class="{"l" if h in left else ""}"'
-                 + (' data-sortable="0"' if h == "lead curves" else '')
+                 + (' data-sortable="0"' if h in LINK_COLUMNS else '')
                  + f'>{html.escape(h)}</th>' for h in head)
     table: list[list[tuple[str, str, float | None]]] = []
     rank_no = 0
@@ -335,15 +366,17 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
                     'title="View S, TIMSE and RMSE curves on GitHub">GitHub</a>')
         else:
             plot = '<span class="dash">–</span>'
-        e2e = end_to_end_hours(r)
-        e2e_title = html.escape((r.get("extras") or {}).get("end_to_end_note", ""), quote=True)
+        viz_url = visualization_url(r, visualizations)
+        viz = (f'<a class="visualization-link" href="{html.escape(viz_url, quote=True)}" target="_blank" '
+               'rel="noopener" title="Monthly forecast GIFs and lead curves of this submission on GitHub">GitHub</a>'
+               if viz_url else '<span class="dash">–</span>')
         code_url, code_label = code_link(r, architecture)
         code = (f'<a href="{html.escape(code_url, quote=True)}" target="_blank" rel="noopener">{code_label}</a>'
                 if code_url else '<span class="dash">–</span>')
         cells.extend([
             (' class="l"', plot, None),
+            (' class="l"', viz, None),
             (' class="l"', html.escape(r["team_member"]), None),
-            (f' data-v="{"" if e2e is None else e2e}" title="{e2e_title}"', _num(e2e, 2), None),
             (f' data-config="{html.escape(r.get("config_sha256") or "")}" class="l"', code, None),
         ])
         table.append(cells)
@@ -374,7 +407,7 @@ hover over metrics for persistence replacement rates and mean forecast bias.
 Predictions for F1, F2 and F3 use training data before 2025-12-29, 2026-03-29 and 2026-06-29 00:00 UTC respectively.
 Legacy submissions without a complete current score are marked <b>unscored</b> and excluded from the ranking.
 The lead curves column links to the image on GitHub; images are not embedded in this table.
-<b>end-to-end (h)</b> is the submitter-reported wall-clock time from training through forecast production (hover for scope).
+The visualization column links to that submission's monthly forecast GIFs and lead curves on GitHub, re-scored from the stored forecast.
 In each metric column the best value is <b>bold</b> and the second best <u>underlined</u>; ties share marks.
 Click a numeric or identity header to sort.<br>Generated from {len(results)} scored submissions.</footer>
 </main><script>{JS}</script></body></html>"""
