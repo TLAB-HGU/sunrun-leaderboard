@@ -94,3 +94,9 @@
 ## 2026-11-04 10:42 KST 로컬 1개 추가 실행
 
 - 사용자 요청으로 대기 중인 `e2000fs_budget_spectral`을 로컬 CPU2threads 및 빈 CUDA_VISIBLE_DEVICES로 추가 실행했다. 메모리 여유 약20.7GiB를 확인했고 기존 로컬2개와 golab2 배정을 유지했다. 독립 tmux `srff-e2000fs_budget_spectral`, 원본 소스 snapshot 일치와 실제 Python 프로세스를 검증했다. 기존 메모리 admission 및 감독 컨트롤러가 이 실행의 완료·제출을 추적한다.
+
+- 2026-11-04T01:44:31.396836+00:00 사용자 추가 요청: `e2000fs_feat30_gaussian_pilot`을 CPU2threads/빈 CUDA_VISIBLE_DEVICES로 별도 tmux에 추가 실행. 시작 전 메모리 여유 약19.9GiB 확인. 모델 구조·특징·seed·rounds는 그대로 유지.
+
+- 2026-11-04T01:46:37.812281+00:00 사용자 추가 요청: `e2000fs_feat30_hyper_gain`을 CPU2threads/빈 CUDA_VISIBLE_DEVICES로 별도 tmux에 추가 실행. 여유 RAM 19.2GiB와 캠페인 예약 합 13.6GiB를 확인. 원래 모델·특징·seed·rounds 유지.
+
+- 2026-11-04T01:49:06.387662+00:00 사용자 요청으로 `e2000fs_feat30_lognormal_crps`을 CPU2threads/빈 CUDA_VISIBLE_DEVICES로 추가 실행. 시작 전 실제 여유 RAM 및 캠페인 예약 메모리 검사 통과. 기존 모델·특징·seed·rounds 유지.
