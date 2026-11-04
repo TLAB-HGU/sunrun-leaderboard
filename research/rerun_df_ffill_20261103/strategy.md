@@ -106,3 +106,5 @@
 - `e2000fs_calib5_detpool_all`, `e1604_hsspeak25`는 원격에서 미실행 대기 상태임을 확인한 후 사용자 제외로 등록했다. 로컬 manifest와 배정 기록, 원격 스케줄러 및 리더보드 대기 항목에 반영했다. 기존 코드·물리 특징·과거 제출 및 오류 기록은 보존한다.
 - 원격 감독만 안전하게 재시작했고 실제 학습3개는 유지했다. 검증 결과 학습중3/완료3/대기9/사용자제외2이며 두 제외 항목의 실행 디렉터리는 없다. 제외 상태를 스케줄러·수집기의 정상 종결 상태로 처리하는 회귀 테스트13개를 통과했다.
 - 수집기는 현재 진행 중인 게시를 끝낸 후 `sunrun-collector-reload-heavy` 감독이 새 코드를 재적용하도록 구성했다. 현재 게시 프로세스를 중단하지 않고 제외 모델의 자동 재실행·제출을 방지한다.
+
+- 2026-11-04 13:51 KST 사용자 지시: 실행 중이던 `e2000fs_kumo_direct`(F1 72 head 완료, F2 일부)를 중지하고 registry/manifest에서 제외(`stopped_by_user`, 백업 `registry.before-stop-kumo-direct-20261104.json`). 부분 산출물은 `runs/e2000fs_kumo_direct`에 보존. GPU0 해제 확인 후 대기열 다음 DL 실험 `e2000fs_realmlp_direct`를 원래 레시피·GPU0 lease·CPU2threads로 시작(13:52, tmux `srff-e2000fs_realmlp_direct`). 기록: `local-stop-kumo-direct-20261104.json`.
