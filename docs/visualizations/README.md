@@ -6,7 +6,7 @@
 
 ## 2026-11-04 추가 — 리더보드 상위 10개 예측 시각화 (리더보드 visualization 열)
 
-게시 시점(Space `68490c61e0`, 순위 행 41개)의 리더보드 상위 10개 제출입니다. 각 폴더는 리더보드 dataset에 **저장된 제출 예측 자체**를 현재 채점기(`lead-timse-6h-v1`)로 다시 채점해, 기록과 1e-9 이내로 같을 때만 그렸습니다. 폴더마다 lead 곡선, 채점 origin 1,052개 전체의 9개월 예측 GIF, 점수 검증 manifest가 들어 있습니다. 리더보드의 **visualization** 열은 해당 제출(제출 시각 기준)의 폴더로 연결됩니다. 같은 이름으로 다시 제출하면 새 제출에는 링크가 붙지 않습니다.
+게시 시점(Space `68490c61e0`, 순위 행 41개)의 리더보드 상위 10개 제출입니다. 작업 중 새로 상위 10에 들어온 2개(Space `fc4f3c796e` 기준 순위, `*` 표시)도 추가했습니다. 순위는 각 시점 기준이며, 제출이 계속 들어오면서 바뀝니다. 각 폴더는 리더보드 dataset에 **저장된 제출 예측 자체**를 현재 채점기(`lead-timse-6h-v1`)로 다시 채점해, 기록과 1e-9 이내로 같을 때만 그렸습니다. 폴더마다 lead 곡선, 채점 origin 1,052개 전체의 9개월 예측 GIF, 점수 검증 manifest가 들어 있습니다. 리더보드의 **visualization** 열은 해당 제출(제출 시각 기준)의 폴더로 연결됩니다. 같은 이름으로 다시 제출하면 새 제출에는 링크가 붙지 않습니다.
 
 - 생성 코드: [code/submission_viz.py](code/submission_viz.py). 모든 멤버의 제출을 같은 방식으로 다룹니다.
 - 1위 폴더에는 TCN 학습 loss가 추가로 있습니다(아래 섹션).
@@ -25,6 +25,8 @@
 | 8 | e2000fs_calib11d_sera | seongeun | 100.87 | 121.38 / 75.82 / 64.61 | 22,279.8 | 69.83 | [e2000fs_calib11d_sera](e2000fs_calib11d_sera/) |
 | 9 | e2000fs_calib11h_noenlil | seongeun | 100.97 | 121.83 / 77.10 / 64.61 | 22,670.9 | 69.62 | [e2000fs_calib11h_noenlil](e2000fs_calib11h_noenlil/) |
 | 10 | e2000fs_calib11f_serarounds | seongeun | 101.23 | 122.25 / 76.37 / 63.65 | 22,746.9 | 69.60 | [e2000fs_calib11f_serarounds](e2000fs_calib11f_serarounds/) |
+| 2* | e2000fs_calib2_mixture2comp | seongeun | 100.18 | 123.61 / 73.79 / 60.66 | 22,620.5 | 68.51 | [e2000fs_calib2_mixture2comp](e2000fs_calib2_mixture2comp/) |
+| 8* | e2000fs_budget_complexity | seongeun | 100.78 | 125.12 / 74.74 / 59.96 | 23,919.4 | 67.52 | [e2000fs_budget_complexity](e2000fs_budget_complexity/) |
 
 ## 2026-11-04 추가 — 새 df 재실행 TCN (현재 채점 지표)
 

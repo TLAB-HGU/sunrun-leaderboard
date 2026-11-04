@@ -1,0 +1,187 @@
+{
+  "experiment": "e2000fs_calib2_mixture2comp",
+  "member": "seongeun",
+  "submitted_utc": "20261104T033627801Z",
+  "created_at_utc": "2026-11-04T03:44:10.003697+00:00",
+  "metric_version": "lead-timse-6h-v1",
+  "board": {
+    "rank": 2,
+    "ranked_rows": 53,
+    "space_revision": "fc4f3c796e"
+  },
+  "sources": {
+    "dataset": "tlabtlab/sunrun-lb-store",
+    "record_and_predictions": "stored result record and its prediction parquet",
+    "observations": {
+      "file": "competition-observations.parquet",
+      "revision": "fbd3b913eb51b8efef2d8e8ac4bfd756b596f74b"
+    }
+  },
+  "verification": {
+    "tolerance": 1e-09,
+    "all_equal_to_record": true,
+    "scores": {
+      "total": {
+        "s": 100.18051609186358,
+        "timse": 22620.544784602607,
+        "rmse": 68.50864107326912,
+        "trmse": 147.4789923860561,
+        "bias": 17.55076067220664,
+        "n_pairs": 52619,
+        "n_origins": 1052,
+        "replacement_fraction": 0.0
+      },
+      "f1": {
+        "s": 123.60669744157245,
+        "timse": 37442.756634576675,
+        "rmse": 81.84905595764641,
+        "trmse": 188.5562265562255,
+        "bias": 11.252217257521371,
+        "n_pairs": 17674,
+        "n_origins": 348,
+        "replacement_fraction": 0.0
+      },
+      "f2": {
+        "s": 73.79298150844193,
+        "timse": 7799.482077850071,
+        "rmse": 63.41966971870532,
+        "trmse": 86.33803886378266,
+        "bias": 18.30990908640277,
+        "n_pairs": 17473,
+        "n_origins": 352,
+        "replacement_fraction": 0.0
+      },
+      "f3": {
+        "s": 60.65662425332313,
+        "timse": 4450.641346070799,
+        "rmse": 58.55675920908301,
+        "trmse": 63.864189973708335,
+        "bias": 23.162931921628488,
+        "n_pairs": 17472,
+        "n_origins": 352,
+        "replacement_fraction": 0.0
+      }
+    },
+    "scored_origins": 1052,
+    "rendered_frames": 1052,
+    "complete": true,
+    "persistence_replaced_leads": 0
+  },
+  "lead_diagnostic": {
+    "f3_timse_lead_6k": 10110.443,
+    "f3_timse_other_min": 2811.656,
+    "f3_timse_other_max": 3819.552,
+    "f3_timse_lead_6k_without_peaks": 4506.427354350147,
+    "peaks_left_out": [
+      "2026-09-15T18:00:00Z",
+      "2026-07-23T18:00:00Z"
+    ],
+    "note": "diagnostic only; not a leaderboard score"
+  },
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 250,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "month_grouping": "UTC month of origin + 1 hour",
+    "frames": "every scored origin (00/06/12/18 UTC) of F1/F2/F3"
+  },
+  "footer": "seongeun · e2000fs_calib2_mixture2comp · submitted 20261104T033627801Z · scored 00/06/12/18 UTC origins · truth = ACE status 0, unfilled · Y 200–850 km/s",
+  "outputs": [
+    {
+      "month": "2026-01",
+      "period": "F1",
+      "file": "forecast_2026-01.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-01-01T00:00:00+00:00",
+      "last_origin_utc": "2026-01-31T18:00:00+00:00",
+      "bytes": 2442360,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-02",
+      "period": "F1",
+      "file": "forecast_2026-02.gif",
+      "frames": 112,
+      "first_origin_utc": "2026-02-01T00:00:00+00:00",
+      "last_origin_utc": "2026-02-28T18:00:00+00:00",
+      "bytes": 2155459,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-03",
+      "period": "F1",
+      "file": "forecast_2026-03.gif",
+      "frames": 112,
+      "first_origin_utc": "2026-03-01T00:00:00+00:00",
+      "last_origin_utc": "2026-03-28T18:00:00+00:00",
+      "bytes": 2190987,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-04",
+      "period": "F2",
+      "file": "forecast_2026-04.gif",
+      "frames": 120,
+      "first_origin_utc": "2026-04-01T00:00:00+00:00",
+      "last_origin_utc": "2026-04-30T18:00:00+00:00",
+      "bytes": 2367938,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-05",
+      "period": "F2",
+      "file": "forecast_2026-05.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-05-01T00:00:00+00:00",
+      "last_origin_utc": "2026-05-31T18:00:00+00:00",
+      "bytes": 2454722,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-06",
+      "period": "F2",
+      "file": "forecast_2026-06.gif",
+      "frames": 108,
+      "first_origin_utc": "2026-06-01T00:00:00+00:00",
+      "last_origin_utc": "2026-06-27T18:00:00+00:00",
+      "bytes": 2096502,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-07",
+      "period": "F3",
+      "file": "forecast_2026-07.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-07-01T00:00:00+00:00",
+      "last_origin_utc": "2026-07-31T18:00:00+00:00",
+      "bytes": 2501334,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-08",
+      "period": "F3",
+      "file": "forecast_2026-08.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-08-01T00:00:00+00:00",
+      "last_origin_utc": "2026-08-31T18:00:00+00:00",
+      "bytes": 2462169,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-09",
+      "period": "F3",
+      "file": "forecast_2026-09.gif",
+      "frames": 104,
+      "first_origin_utc": "2026-09-01T00:00:00+00:00",
+      "last_origin_utc": "2026-09-26T18:00:00+00:00",
+      "bytes": 2085639,
+      "frame_ms": 250
+    }
+  ]
+}
