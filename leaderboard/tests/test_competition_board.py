@@ -113,3 +113,45 @@ def test_current_status_wrapper_replaces_legacy_status_markers_once():
     assert upgraded == current
     assert upgraded.count("next (진행)") == 1
     assert upgraded.count(lbstatus.ROWS_BEGIN) == 1
+
+
+def test_submission_cutoff_preserves_new_same_model_and_active_rows(monkeypatch):
+    policy = {
+        "hidden_before": [{"member": "seongeun", "submitted_utc": "20261103T052654000Z"}],
+        "hidden": [{"member": "alice", "experiment": "hidden"}],
+        "bold": [{"member": "seongeun", "experiment": "same"}],
+    }
+    old, new, other, hidden = record("same", 1), record("same", 2), record("other", 3), record("hidden", 4)
+    old["team_member"] = new["team_member"] = "seongeun"
+    new["submitted_utc"] = "20261103T063059846Z"
+    pending = lbstatus.upsert([], "seongeun", "same", "진행", at="2026-11-03T05:26:54Z")
+    pending = lbstatus.upsert(pending, "seongeun", "queued", "대기", at="2026-11-03T05:26:54Z")
+    monkeypatch.setattr(board, "visibility_policy", lambda: {})
+    unfiltered = board.render([old, new, other, hidden], architecture={})
+    refreshed = lbstatus.bold_experiment_names(lbstatus.mark_leaders(lbstatus.hide_ranking_rows(
+        lbstatus.inject(unfiltered, pending), policy)), policy)
+    monkeypatch.setattr(board, "visibility_policy", lambda: policy)
+    rendered = lbstatus.mark_leaders(lbstatus.inject(board.render([old, new, other, hidden], architecture={}), pending))
+    assert refreshed == rendered
+    assert 'data-submitted-utc="20261103T063059846Z"' in rendered
+    assert rendered.count('data-submitted-utc="20261101T000000Z"') == 1  # other member
+    assert "same (진행)" in rendered and "queued (대기)" in rendered
+    assert ">hidden</td>" not in rendered
+    assert '<td>1</td>' in rendered and '<td>2</td>' in rendered
+
+
+@pytest.mark.parametrize("submitted, expected", [
+    ("20261103T052653999Z", True), ("20261103T052654Z", False),
+    ("20261103T052654000Z", False), ("20261103T052654001Z", False),
+    (None, False), ("", False), ("unknown", False),
+])
+def test_submission_cutoff_boundary_and_missing_dates(submitted, expected):
+    policy = {"hidden_before": [{"member": "seongeun", "submitted_utc": "20261103T052654000Z"}]}
+    assert board.hidden_before("seongeun", submitted, policy) is expected
+    assert not board.hidden_before("alice", submitted, policy)
+
+
+def test_submission_cutoff_does_not_guess_age_of_legacy_html():
+    from test_lbstatus import PAGE
+    policy = {"hidden_before": [{"member": "s", "submitted_utc": "20261103T052654000Z"}]}
+    assert lbstatus.hide_ranking_rows(PAGE, policy) == PAGE

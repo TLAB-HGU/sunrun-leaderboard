@@ -353,18 +353,33 @@ def test_publish_records_the_architecture_link_in_the_same_commit_as_the_page(mo
     assert f'href="{ARCHITECTURE}"' in page and ">architecture</a>" in page and script not in page
 
 
-def test_publish_keeps_the_space_visibility_policy_in_step_with_the_page(monkeypatch):
-    import board
-    monkeypatch.setattr("submit.space_file", lambda space, name, revision: {})
+def _publish_ops(monkeypatch, space_policy, **kwargs):
+    monkeypatch.setattr("submit.space_file",
+                        lambda space, name, revision: space_policy if name == "visibility.json" else {})
     api = FakeApi()
     api.create_repo = lambda *args, **kwargs: None
-    publish(api, [], "space")
-    files = {op.path_in_repo: op.path_or_fileobj for op in api.commits[0]["operations"]}
+    publish(api, [], "space", **kwargs)
+    return {op.path_in_repo: op.path_or_fileobj for op in api.commits[0]["operations"]}
+
+
+def test_publish_bootstraps_an_empty_space_with_the_local_policy(monkeypatch):
+    import board
+    files = _publish_ops(monkeypatch, {})
     assert json.loads(files["visibility.json"]) == board.visibility_policy()
     # a Space that already carries the same policy gets no second copy
-    monkeypatch.setattr("submit.space_file",
-                        lambda space, name, revision: board.visibility_policy() if name == "visibility.json" else {})
-    api = FakeApi()
-    api.create_repo = lambda *args, **kwargs: None
-    publish(api, [], "space")
-    assert "visibility.json" not in {op.path_in_repo for op in api.commits[0]["operations"]}
+    assert "visibility.json" not in _publish_ops(monkeypatch, board.visibility_policy())
+
+
+def test_publish_renders_with_the_space_policy_not_a_stale_local_copy(monkeypatch):
+    import board
+    space_policy = {"hidden": [{"member": "space", "experiment": "only"}], "bold": []}
+    seen = []
+    real = board.render
+    monkeypatch.setattr("submit.render", lambda *a, **k: (seen.append(board.visibility_policy()), real(*a, **k))[1])
+    files = _publish_ops(monkeypatch, space_policy)
+    assert seen == [space_policy] and "visibility.json" not in files
+    assert board.visibility_policy() != space_policy  # the module hook is restored after rendering
+    seen.clear()
+    files = _publish_ops(monkeypatch, space_policy, push_policy=True)  # only an explicit push replaces it
+    assert seen == [board.visibility_policy()]
+    assert json.loads(files["visibility.json"]) == board.visibility_policy()

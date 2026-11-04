@@ -268,12 +268,32 @@ def visibility_policy() -> dict:
     return json.loads(policy_path.read_text()) if policy_path.exists() else {}
 
 
+def hidden_before(member: str, submitted_utc: str | None, policy: dict) -> bool:
+    """Hide dated results only; undated rows (including active runs) survive.
+
+    Rules are {"member": ..., "submitted_utc": ...} entries in hidden_before.
+    Submission timestamps use the store's compact UTC format, with optional
+    fractional seconds. Invalid or absent timestamps cannot establish age.
+    """
+    def timestamp(value):
+        match = re.fullmatch(r"(\d{8}T\d{6})(\d{0,6})Z", value or "")
+        return (match[1], match[2].ljust(6, "0")) if match else None
+
+    submitted = timestamp(submitted_utc)
+    if submitted is None:
+        return False
+    return any(rule.get("member") == member
+               and (cutoff := timestamp(rule.get("submitted_utc"))) is not None
+               and submitted < cutoff for rule in policy.get("hidden_before", []))
+
+
 def render(results: list[dict], note: str = "", architecture: dict | None = None) -> str:
     policy = visibility_policy()
     architecture = architecture_mapping(architecture)
     hidden = {(e["member"], e["experiment"]) for e in policy.get("hidden", [])}
     bold = {(e["member"], e["experiment"]) for e in policy.get("bold", [])}
-    rows = [r for r in ranked(results) if (r["team_member"], r["experiment"]) not in hidden]
+    rows = [r for r in ranked(results) if (r["team_member"], r["experiment"]) not in hidden
+            and not hidden_before(r["team_member"], r.get("submitted_utc"), policy)]
     head = BOARD_COLUMNS
     left = {"experiment", "member", "code", "lead curves"}
     th = "".join(f'<th class="{"l" if h in left else ""}"'
@@ -336,7 +356,8 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
                 tag = "b" if place == 1 else "u"
                 inner = f'<{tag} data-metric-version="{COMPETITION_VERSION}" class="lb-{place}">{inner}</{tag}>'
             tds.append(f"<td{attrs}>{inner}</td>")
-        body.append("<tr>" + "".join(tds) + "</tr>")
+        submitted = html.escape(rows[i].get("submitted_utc") or "", quote=True)
+        body.append(f'<tr data-submitted-utc="{submitted}">' + "".join(tds) + "</tr>")
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Solar wind 72h leaderboard</title><style>{CSS}</style></head><body><main>
 <h1>Solar wind 72h leaderboard</h1>

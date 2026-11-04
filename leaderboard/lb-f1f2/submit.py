@@ -27,6 +27,7 @@ from huggingface_hub.utils import HfHubHTTPError
 
 HERE = Path(__file__).resolve().parent
 sys.path[:0] = [str(HERE / "scorer"), str(HERE)]
+import board  # noqa: E402  (render reads board.visibility_policy at call time)
 from board import competition_metrics, ranked, render, visibility_policy
 from competition import prepare_context, score_competition  # noqa: E402
 from metric_assets import publish_plots  # noqa: E402
@@ -88,6 +89,11 @@ def script_location(member: str, experiment: str, config_sha256: str) -> tuple[s
     raw = f"https://raw.githubusercontent.com/{GITHUB_REPO}/{GITHUB_BRANCH}/{path}"
     page = f"https://github.com/{GITHUB_REPO}/blob/{GITHUB_BRANCH}/{path}"
     return path, raw, page
+
+
+def replay_script_path(member: str, experiment: str, config: dict) -> str:
+    """Repository path where a study writes its replay script; the key in the file name stays inside submit.py."""
+    return script_location(member, experiment, canonical_config(config)[1])[0]
 
 
 def architecture_location(meta: dict) -> str:
@@ -206,11 +212,26 @@ def space_file(space: str, name: str, revision: str) -> dict:
         return {}
 
 
+def render_with_policy(results: list[dict], policy: dict, architecture: dict) -> str:
+    """Render under `policy` instead of the local visibility.json, restoring the module hook afterwards."""
+    local = board.visibility_policy
+    board.visibility_policy = lambda: policy
+    try:
+        return render(results, architecture=architecture)
+    finally:
+        board.visibility_policy = local
+
+
 def publish(api: HfApi, results: list[dict], space: str, architecture: dict | None = None,
-            attempts: int = 3, dataset: str | None = None) -> str:
+            attempts: int = 3, dataset: str | None = None, push_policy: bool = False) -> str:
     """Render the page and record this submission's architecture link in one commit, retrying if another publish
     lands first. The code cells must open the architecture, never the replay script, so the mapping is uploaded with
-    the page it renders instead of being curated by hand afterwards."""
+    the page it renders instead of being curated by hand afterwards.
+
+    The Space's visibility.json is the policy of record: the page is rendered with it, so a client holding a stale
+    local copy cannot re-hide or re-show rows (a 2026-11-04 submission from an old checkout did exactly that).
+    The local visibility.json is uploaded only when the Space has none yet, or when `push_policy` is set on purpose
+    (`submit.py --push-policy`)."""
     try:
         api.create_repo(space, repo_type="space", space_sdk="static", private=True, exist_ok=True)
     except Exception:  # some plans cannot host private Spaces; the page only exposes metrics
@@ -225,15 +246,15 @@ def publish(api: HfApi, results: list[dict], space: str, architecture: dict | No
         for item in (architecture or {}).get("models", []):
             mapping = architecture_code.upsert(mapping, item)
         body = json.dumps(mapping, indent=2, ensure_ascii=False) + "\n"
+        on_space_policy = space_file(space, "visibility.json", parent)
+        policy = visibility_policy() if push_policy or not on_space_policy else on_space_policy
         operations = [
             CommitOperationAdd("README.md", b"---\ntitle: Solar wind 72h leaderboard\nsdk: static\napp_file: index.html\n---\n"),
-            CommitOperationAdd("index.html", render(results, architecture=mapping).encode()),
+            CommitOperationAdd("index.html", render_with_policy(results, policy, mapping).encode()),
         ]
         if body != json.dumps(on_space, indent=2, ensure_ascii=False) + "\n":
             operations.append(CommitOperationAdd(architecture_code.FILE, body.encode()))
-        policy = visibility_policy()  # the page was rendered with this policy: keep the Space's copy in step
-        on_space_policy = space_file(space, "visibility.json", parent)
-        if policy and policy != on_space_policy:
+        if policy and policy != on_space_policy:  # only a bootstrap or an explicit --push-policy reaches this
             operations.append(CommitOperationAdd("visibility.json",
                                                  (json.dumps(policy, indent=2, ensure_ascii=False) + "\n").encode()))
         try:
@@ -297,7 +318,6 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
            "f1_training_data_end_utc": f1_end, "f2_training_data_end_utc": train_ends["f2"],
            "f3_training_data_end_utc": train_ends["f3"], "config": config, "config_sha256": config_sha, "inference_seconds_per_fold": seconds,
            "code_url": code_url, "architecture_url": architecture_url, "competition": competition,
-           "competition_provenance": hashlib.sha256(observation_path.read_bytes()).hexdigest(),
            "competition_dataset_revision": data_revision}
     if not dry_run:
         rec = publish_plots([rec], HERE / "assets" / "metrics")[0]
@@ -319,7 +339,13 @@ if __name__ == "__main__":
     ap.add_argument("--dry-run", action="store_true", help="validate and score only; upload nothing")
     ap.add_argument("--replace", action="store_true", help="replace an existing (member, experiment, config) result")
     ap.add_argument("--show", action="store_true", help="print the current leaderboard and exit")
+    ap.add_argument("--push-policy", action="store_true",
+                    help="upload the local visibility.json as the Space policy, re-render the page and exit")
     a = ap.parse_args()
+    if a.push_policy:
+        require_token()
+        print(publish(HfApi(), [], a.space, dataset=a.dataset, push_policy=True))
+        raise SystemExit(0)
     if a.show:
         require_token()
         print(text_table(with_extras(HfApi(), a.dataset, all_results(HfApi(), a.dataset))))

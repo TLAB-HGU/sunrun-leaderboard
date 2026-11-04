@@ -33,7 +33,7 @@ import sys
 import threading
 import time
 
-from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, COMPETITION_VERSION, CELL, apply_architecture_links, mark_sign, ranking as _ranking, script_cells
+from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, COMPETITION_VERSION, CELL, apply_architecture_links, hidden_before, mark_sign, ranking as _ranking, script_cells
 
 SPACE = "tlabtlab/sunrun-leaderboard"
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -176,7 +176,7 @@ def hide_ranking_rows(page: str, visibility: dict) -> str:
     """Hide exact member/experiment identities without changing stored results or active runs."""
     hidden = {(e["member"], e["experiment"]) for e in visibility.get("hidden", [])}
     found = _ranking(page)
-    if not hidden or not found:
+    if not (hidden or visibility.get("hidden_before")) or not found:
         return page
     start, stop, cols = found
     labels = [label for label, _ in cols]
@@ -195,6 +195,9 @@ def hide_ranking_rows(page: str, visibility: dict) -> str:
         values = [html.unescape(re.sub(r"<[^>]+>", "", c.group(2))).strip() for c in cells]
         experiment = re.sub(r" \((?:진행|대기)\)$", "", values[experiment_col])
         if (values[member_col], experiment) in hidden:
+            return ""
+        submitted = re.search(r'^<tr\b[^>]*\bdata-submitted-utc="([^"]*)"', row)
+        if submitted and hidden_before(values[member_col], html.unescape(submitted[1]), visibility):
             return ""
         if values[rank_col].isdigit():
             rank += 1
