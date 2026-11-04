@@ -78,3 +78,5 @@
 - 로컬 이전 실행의 중단 시각에 커널 메모리 부족 로그가 확인됐다. 미완료 4개 원본 산출물을 별도 보관하고 최대 동시 2개, 전략 계열 12GiB/MIMO 20GiB 예약으로 재시도한다. 새 메모리 예약은 모델 설정 변경이 아닌 실행 자원 조정이다.
 - 이전 CPU 전용 실행 지시를 현재 사용자 장치 규칙으로 정정한다. GBM은 CPU 및 `CUDA_VISIBLE_DEVICES=""`, 신경망은 GPU0 및 `CUDA_VISIBLE_DEVICES=0`만 사용한다. GPU가 바쁘면 대기하며 CPU로 우회하지 않는다.
 - 기존 사용자 제외 14개는 유지한다. 기존 manifest에 있지만 큐에서 누락된 `realmlp_direct`, `tabiclv2_direct`도 지원되는 원본 foundation runner로 포함해 총 82개 비제외 모델을 대조한다. 기존 제출 28개와 회수 완료 18개를 제외한 36개가 학습 대상이다. 완료는 실제 종료·모델/예측 검증·공식 평가·제출 영수증 확인 후에만 기록한다.
+- 이전 검증 완료: prepared 입력 225,755,615바이트 및 raw 입력 213,699,522바이트의 전체 내용이 로컬과 동일하다. 완료 18개 전부 `publish.validate_run`을 통과했다. 근거는 `local-adoption-20261104.json`, `adopted-validation-20261104.json`, `retry-source-comparison-20261104.json`에 기록했다.
+- 10:15 KST 실행 확인: `sunrun-local-20261104` 컨트롤러와 독립 학습 세션 2개가 가동 중이다. `kumo_direct`는 GPU0에서 F1의 여러 head를 실제 완료하여 기존 Python.h 실패가 재현되지 않았고, `extreme_histprior`는 CUDA가 숨겨진 CPU에서 실행 중이다. 회수분 `agnostic_v2_context`의 첫 공식 제출 영수증이 생성돼 전체 제출 29개, 회수 후 평가/제출 대기 17개, 학습 중 2개, 나머지 학습 대기 34개이다. 이 수치는 전체 캠페인 완료 선언이 아닌 해당 시각의 상태다. `local-execution-health-20261104.json` 참조.
