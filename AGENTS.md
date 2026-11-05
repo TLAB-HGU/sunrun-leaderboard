@@ -67,6 +67,14 @@ The agent's bash tool kills processes it started when the call ends, so `&`, `no
 - When the user asks for an experiment, the goal is a started run. Once code and smoke checks pass, launch it; do not add further pre-checks.
 - Tell the user in one line what you are doing at least every 5 minutes. Do not spend long stretches on tool calls with no message.
 
+## Experiment Script Scope
+
+**단일 아키텍처 원칙 (2026-11-05 사용자 지시):** 실험별 `experiment.py`(`runs/{이름}/experiment.py` 포함)에는 그 실험 아키텍처가 실제로 실행하는 코드만 남긴다.
+
+- 다른 실험의 분기(`if experiment == ...`/`endswith(...)`), 미사용 컴포넌트·헬퍼·상수·import, 여러 실험을 고르는 `SUPPORTED` 목록을 넣지 않는다. `--experiment`는 해당 실험 이름 하나만 받는다(기본값으로 지정 가능).
+- 공용 러너(예: `pooling.py`, `calib11.py`)에서 실험을 떼어낼 때는 그 실험의 실행 경로만 복사하고, 정리 전 코드와 smoke 실행 예측·상태 산출물이 동일한지 확인한 뒤 교체한다.
+- 여러 실험이 공유하는 코드는 공용 러너에 두고, 실험별 `experiment.py`에 다른 아키텍처 코드를 복제하지 않는다.
+
 ## Coding Style & Naming Conventions
 
 Follow nearby Python code: four-space indentation, `snake_case` functions and modules, and uppercase constants. Use descriptive study directories and `test_*.py` test files. Preserve timestamp, unit, and manifest conventions. No root formatter or lint configuration is established; use component-specific tooling where available.
