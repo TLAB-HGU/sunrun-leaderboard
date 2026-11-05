@@ -8,7 +8,6 @@ weight. Writes $EXPOS_OUT/predictions_official_s{seed}.parquet plus
 poison.json plus meta.json. CPU only. Every array is fit inside this run.
 """
 
-import hashlib
 import json
 import os
 import sys
@@ -47,25 +46,21 @@ DATA_FILES = ["store/ch-v1/ace.parquet", "store/ch-v1/ch-hourly.parquet",
 CHUNK_ORIGINS = 1500
 
 
-def _file_sha(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for b in iter(lambda: f.read(1 << 20), b""):
-            h.update(b)
-    return h.hexdigest()
+def _stat(path):
+    st = path.stat()
+    return [st.st_size, st.st_mtime_ns]
 
 
 def _cache_key():
     payload = {"freq": SP.TRAIN_FREQ, "smoke": False, "axis": "A2b",
-               "code": {f: _file_sha(LB / f) for f in CODE_FILES},
-               "data": {f: [(LB / f).stat().st_size, (LB / f).stat().st_mtime_ns]
-                        for f in DATA_FILES}}
-    return hashlib.sha256(json.dumps(payload, sort_keys=True, default=str).encode()).hexdigest()
+               "code": {f: _stat(LB / f) for f in CODE_FILES},
+               "data": {f: _stat(LB / f) for f in DATA_FILES}}
+    return json.loads(json.dumps(payload, sort_keys=True, default=str))
 
 
 def _cache_get(key):
     d = SCRATCH / "featcache"
-    pq, js = d / (key + ".parquet"), d / (key + ".json")
+    pq, js = d / "train.parquet", d / "train.json"
     if not (pq.is_file() and js.is_file()):
         return None
     try:
@@ -84,10 +79,10 @@ def _cache_put(key, df):
     d = SCRATCH / "featcache"
     d.mkdir(parents=True, exist_ok=True)
     meta = {"key": key, "rows": int(len(df)), "columns": [str(c) for c in df.columns]}
-    tmp = d / (key + ".tmp.parquet")
+    tmp = d / "train.tmp.parquet"
     df.to_parquet(tmp, index=False)
-    (d / (key + ".json")).write_text(json.dumps(meta, sort_keys=True))
-    tmp.rename(d / (key + ".parquet"))
+    (d / "train.json").write_text(json.dumps(meta, sort_keys=True))
+    tmp.rename(d / "train.parquet")
     return df
 
 

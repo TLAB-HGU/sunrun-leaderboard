@@ -31,7 +31,6 @@ def test_inherited_periods_params_horizons_match_scope():
     assert protocol.PARAMS is scope.PARAMS
     assert protocol.HORIZONS is scope.HORIZONS
     assert tuple(protocol.HORIZONS) == tuple(range(1, 73))
-    assert protocol.PLAN_SHA256 == "dd57b8273cc43a6367be03293b04272b18f4475121233df56fff7b8403eb8aff"
 
 
 def test_image_cap_is_own_eleven_not_old_budget():
@@ -280,7 +279,7 @@ def test_evaluator_exit2_absent_evidence_appends(tmp_path):
     lines = p.read_text().strip().split("\n")
     assert len(lines) == 2
     rec = json.loads(lines[0])
-    assert rec["plan_sha256"] == protocol.PLAN_SHA256 and rec["exit"] == 2
+    assert rec["exit"] == 2
 
 
 def test_evaluator_cli_exit2_never_zero(tmp_path):

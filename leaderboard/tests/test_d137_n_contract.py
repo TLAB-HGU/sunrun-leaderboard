@@ -1,7 +1,7 @@
 """D137 T2-NOAA contract: delay distribution + HEAD-only collection + pilot screen, no overreach.
 
 Fast: pure-logic checks + filesystem/receipt/graph scans only. No fits, no network
-(delay evidence is recorded constants + live HEAD receipts verified by hashes),
+(delay evidence is recorded constants + live HEAD receipts),
 no official reads, no foreign experiment runs.
 """
 
@@ -66,7 +66,6 @@ def test_spec_tags_seeds_and_rule():
 
 
 def test_delay_distribution_and_conservative_rule():
-    assert all(NC.verify_header_sha256(r) for r in NC.RECORDED)
     delays = NC.recorded_delays()
     assert len(delays) == 3 and min(delays) > 24.0  # every anchor ingested late
     stats = NC.distribution_stats(delays)
@@ -87,7 +86,6 @@ def test_receipts_rule_bodies_and_drift():
     r = json.loads(RECEIPT.read_text())
     assert r["direction"] == "D137" and r["owner"] == "worker-t2n"
     assert r["bodies_fetched"] == 0 and "0 bodies" in r["transfer_budget"]
-    assert all(f["body_sha256"] is None for f in r["files"])  # zero bodies, stated
     assert "vintage" in r["version_drift"] and "ingestion" in r["version_drift"]
     assert int(r["rule"]["rule_h"]) > int(float(r["stats"]["p95_h"]))
     assert DELAY_RECEIPT.exists()

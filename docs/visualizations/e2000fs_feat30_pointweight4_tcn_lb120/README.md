@@ -1,6 +1,6 @@
 # E2000FS Feat30 PointWeight4 TCN lb120 — lead 곡선 · 학습 loss · F1–F3 월별 예측 GIF
 
-작성자 **seongeun**의 `e2000fs_feat30_pointweight4_tcn_lb120`입니다. 새 raw-only `df.parquet` + causal ffill 재실행(`research/rerun_df_ffill_20261103`)으로 제출됐습니다(제출 `20261103T063059846Z`). 게시 시점(2026-11-04) 리더보드 **1위 / 41**, Total S **100.00**입니다.
+작성자 **seongeun**의 `e2000fs_feat30_pointweight4_tcn_lb120`입니다. 새 raw-only `df.parquet` + causal ffill 재실행(`research/rerun_df_ffill`)으로 제출됐습니다(제출 `20261103T063059846Z`). 게시 시점(2026-11-04) 리더보드 **1위 / 41**, Total S **100.00**입니다.
 
 이 페이지의 모든 그림은 저장된 제출 예측(`predictions.parquet`)을 리더보드 채점기(`leaderboard/scorer/competition.py`, `lead-timse-6h-v1`)로 다시 채점한 값을 씁니다. 채점에 쓴 관측은 기록이 채점된 dataset revision `abfec4370b`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
 
@@ -94,4 +94,4 @@ GIF 한 장의 프레임은 채점 origin 하나입니다. 각 프레임은 orig
 /home/t-lab01/sunrun/.venv/bin/python docs/visualizations/e2000fs_feat30_pointweight4_tcn_lb120/code/render.py
 ```
 
-CPU만 쓰며 약 3분 걸립니다. 입력은 `research/rerun_df_ffill_20261103/runs/e2000fs_feat30_pointweight4_tcn_lb120`의 `predictions.parquet`, `submission.json`, `F*_metadata.json`, `F*_selection_loss.csv`, `F*_train_loss.csv`와 리더보드 dataset의 `competition-observations.parquet`(revision `abfec4370bff2fc5d4b791c23fda1fc2931f5cab`)입니다. [leaderboard-result.json](leaderboard-result.json)은 저장 기록에서 제출 키와 그 키를 담은 URL을 뺀 사본입니다.
+CPU만 쓰며 약 3분 걸립니다. 입력은 `research/rerun_df_ffill/runs/e2000fs_feat30_pointweight4_tcn_lb120`의 `predictions.parquet`, `submission.json`, `F*_metadata.json`, `F*_selection_loss.csv`, `F*_train_loss.csv`와 리더보드 dataset의 `competition-observations.parquet`(revision `abfec4370bff2fc5d4b791c23fda1fc2931f5cab`)입니다. [leaderboard-result.json](leaderboard-result.json)은 저장 기록에서 제출 키와 그 키를 담은 URL을 뺀 사본입니다.

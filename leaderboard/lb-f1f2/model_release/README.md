@@ -10,7 +10,7 @@ python3.12 -m venv .venv
 .venv/bin/python -m model_release --help
 ```
 
-Unzip the package and run from its directory (or add that directory to `PYTHONPATH`). Download the desired PKL separately from the release Drive folder. Verify the SHA-256 in the release manifest before loading; pickle files execute Python during loading and must be trusted.
+Unzip the package and run from its directory (or add that directory to `PYTHONPATH`). Download the desired PKL separately from the release Drive folder. Pickle files execute Python during loading; load only PKLs from the release folder.
 
 ```python
 from model_release import load_model
@@ -60,7 +60,7 @@ Missing values within valid schemas retain source behavior: many numerical predi
 
 ## Reproduction and tests
 
-`identity-audit.json` records source/input identity findings. `suvi_availability.parquet` records source-environment availability. Release manifests and validation receipts alongside the PKLs record fitted-model prediction comparisons and SHA-256 hashes; source metadata is provenance, not a guarantee that arbitrary new inputs match the leaderboard score.
+`identity-audit.json` records source/input identity findings. `suvi_availability.parquet` records source-environment availability. Release manifests and validation receipts alongside the PKLs record fitted-model prediction comparisons; source metadata is provenance, not a guarantee that arbitrary new inputs match the leaderboard score.
 
 ```sh
 .venv/bin/python -m unittest model_release.test_release -v

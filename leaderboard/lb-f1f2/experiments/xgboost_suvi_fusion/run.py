@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import importlib.metadata
 import json
 import platform
@@ -54,17 +53,10 @@ def load_ace(paths: list[str]) -> pd.DataFrame:
 
 def file_identity(path: str | Path) -> dict:
     path = Path(path)
-    digest = hashlib.sha256()
     files = sorted(item for item in path.rglob("*") if item.is_file()) if path.is_dir() else [path]
-    size = 0
-    for item in files:
-        if path.is_dir():
-            digest.update(str(item.relative_to(path)).encode())
-        with item.open("rb") as handle:
-            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(chunk)
-        size += item.stat().st_size
-    return {"path": str(path.resolve()), "bytes": size, "files": len(files), "sha256": digest.hexdigest()}
+    stats = [item.stat() for item in files]
+    return {"path": str(path.resolve()), "bytes": sum(st.st_size for st in stats), "files": len(files),
+            "mtime_ns": max((st.st_mtime_ns for st in stats), default=0)}
 
 
 def save_json(path: str | Path, value: dict) -> None:
@@ -91,15 +83,14 @@ def make_features(args, ace: pd.DataFrame):
 
 
 def data_identity(args) -> dict:
-    cache_manifest = Path(args.feature_cache).with_suffix(Path(args.feature_cache).suffix + ".json")
     identity = {
         "leaderboard_revision": args.leaderboard_revision,
-        "ace_sha256": [file_identity(path)["sha256"] for path in args.ace],
-        "suvi_metadata_sha256": file_identity(args.suvi_meta)["sha256"],
-        "suvi_cache_source_sha256": json.loads(cache_manifest.read_text())["source_sha256"],
+        "ace": [file_identity(path) for path in args.ace],
+        "suvi_metadata": file_identity(args.suvi_meta),
+        "suvi_feature_cache": file_identity(args.feature_cache),
     }
     if args.origin_features:
-        identity["origin_features_sha256"] = file_identity(args.origin_features)["sha256"]
+        identity["origin_features"] = file_identity(args.origin_features)
     return identity
 
 

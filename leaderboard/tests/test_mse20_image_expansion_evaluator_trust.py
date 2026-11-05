@@ -7,7 +7,6 @@ All tests fail closed (exit 2, never 0) until actual native/instrumented
 verifiers exist. Pure gate checks below are pure logic, not acceptance.
 """
 
-import hashlib
 import json
 import sys
 from datetime import datetime, timedelta, timezone
@@ -22,7 +21,6 @@ from mse20_image_expansion import evaluate, final_contract as ic, protocol  # no
 from mse20_scope_expansion import final_contract as fc  # noqa: E402
 from mse20_scope_expansion import selection  # noqa: E402
 
-HEX = "ab" * 32
 BASE = datetime(2026, 6, 1, tzinfo=timezone.utc)
 
 
@@ -42,15 +40,11 @@ def _score_doc(total=100.0, created="2026-10-02T00:00:00Z"):
            "candidate_tp": [10, 2, 1], "candidate_fp": [2, 0, 1], "candidate_fn": [1, 1, 1],
            "champion_tp": [1, 0, 0], "champion_fp": [2, 2, 2], "champion_fn": [3, 3, 3],
            "created_utc": created}
-    doc["digest"] = ic.canonical_numeric_digest(
-        {"total_mse": total, "cells": cells,
-         "candidate": [doc["candidate_tp"], doc["candidate_fp"], doc["candidate_fn"]],
-         "champion": [doc["champion_tp"], doc["champion_fp"], doc["champion_fn"]]})
     return doc
 
 
 def _forged_perfect_run(root: Path):
-    """All 13 bound artifacts forged self-consistent: valid shapes/hashes,
+    """All 13 bound artifacts forged self-consistent: valid shapes,
     perfect gates, verified flags, byte-identical pred+replay."""
     pd = pytest.importorskip("pandas")
     run = root / "mse20-image-expansion" / "run-20261005"
@@ -65,17 +59,10 @@ def _forged_perfect_run(root: Path):
     payload = frame.to_parquet()
     (bound / "predictions.parquet").write_bytes(payload)
     (bound / "replay.parquet").write_bytes(payload)  # copy-identical forgery
-    pred_sha = hashlib.sha256(payload).hexdigest()
-    keys = [[r["origin_utc"], h] for r in origins for h in range(1, 73)]
-    key_digest = ic.assert_exact_image_grid(keys, keys)
     score = _score_doc()
     docs = {
-        "freeze.json": {"freeze_utc": "2026-10-01T00:00:00Z",
-                        "prediction_sha256": pred_sha, "key_digest": key_digest},
-        "closure.json": {"plan_sha256": ic.PLAN_SHA256, "amendment_sha256": ic.AMENDMENT_SHA256,
-                         "snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256,
-                         "evaluator_sha256": evaluate._evaluator_live_sha(),
-                         "source_shas": {"suvi_fe195": HEX}},
+        "freeze.json": {"freeze_utc": "2026-10-01T00:00:00Z"},
+        "closure.json": {},
         "ledger.json": {"new": {"a_per_period": 1, "a_oof_conditional": 0,
                                 "cnn_conditional": 0, "final_constituents": 0},
                         "new_total": 1,
@@ -90,17 +77,15 @@ def _forged_perfect_run(root: Path):
                              "a_positive": True, "b_eligible": True},
         "causality.json": {"origins": origins},
         "provenance.json": {"files": [{"file_id": "f0", "obs_end_utc": "2026-05-01T00:00:00Z",
-                                       "avail_utc": "2026-05-01T01:00:00Z", "sha256": HEX,
+                                       "avail_utc": "2026-05-01T01:00:00Z",
                                        "avail_source": "independent-verification",
                                        "verified_available": True}]},
-        "support.json": {"snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256, "total_keys": 203976},
-        "truth_hash.json": {"snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256,
-                            "truth_sha256": HEX, "support_sha256": HEX},
+        "support.json": {"total_keys": 203976},
+        "truth_hash.json": {},
         "score_a.json": dict(score),
         "score_b.json": dict(score),
         "regression.json": {"suite_total": 5, "suite_passed": 5,
-                            "created_utc": "2026-10-03T00:00:00Z",
-                            "numeric_digest": score["digest"]},
+                            "created_utc": "2026-10-03T00:00:00Z"},
     }
     for nm, obj in docs.items():
         (bound / nm).write_text(json.dumps(obj), encoding="utf-8")

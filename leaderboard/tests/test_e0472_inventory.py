@@ -1,6 +1,5 @@
 """Synthetic evidence contracts for the historical audit (no scientific data access)."""
 import importlib.util
-import hashlib
 import json
 import sqlite3
 from pathlib import Path
@@ -107,22 +106,11 @@ def test_trial_extraction_preserves_split_and_failure_and_does_not_invent_grid_s
     assert inv.extract_trials({"best_trial": 3, "best_params": {"depth": 4}}, "summary.json") == []
 
 
-def test_device_requires_metadata_or_matching_code_hash(tmp_path):
+def test_device_requires_metadata(tmp_path):
     reg = registration("E0500", "E0472", "CPU baseline, GPU candidate")
     assert inv.infer_device(reg, [], tmp_path)[0] == "unknown"
     assert inv.infer_device(reg, [("meta", {"fit": {"device": "cpu"}})], tmp_path)[0] == "cpu"
     assert inv.infer_device(reg, [("meta", {"base": {"device": "cpu"}, "candidate": {"device": "cuda"}})], tmp_path)[0] == "mixed"
-
-
-def test_exported_CONFIG_requires_matching_digest_and_registered_sources(tmp_path):
-    folder = tmp_path / "leaderboard/scripts/seongeun/xgb_d76_lead_moe_resid_dv_enlil"
-    folder.mkdir(parents=True)
-    config = {"data": {"source_sha256": {"lean.py": "registered"}}, "hyperparameters": {"device": "cpu"}}
-    payload = json.dumps(config, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    digest = hashlib.sha256(payload.encode()).hexdigest()
-    (folder / (digest + ".py")).write_text("CONFIG = json.loads(" + repr(payload) + ")\nraise RuntimeError('must not import')\n")
-    assert len(list(inv.exported_baseline_metadata(tmp_path, {"code": {"lean.py": "registered"}}))) == 1
-    assert not list(inv.exported_baseline_metadata(tmp_path, {"code": {"lean.py": "different"}}))
 
 
 def test_sqlite_trials_preserve_failures_and_decode_categories(tmp_path):

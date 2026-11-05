@@ -43,8 +43,6 @@ config:
       F3:
         count: 2113
     input: data-v2/input/df.parquet
-    source_sha256:
-      experiment.py: 4a418df7452383a757c055d10cc70d3864921317d88db748067d5296c18b36d5
   hyperparameters:
     fitting_scheme:
       name: XGBoostLSS

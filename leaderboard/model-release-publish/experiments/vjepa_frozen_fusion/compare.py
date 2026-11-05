@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import time
@@ -24,9 +23,7 @@ def score(predictions, frames, origins):
     observed = frames['observed'].reindex(targets).to_numpy(bool)
     truth = frames['speed'].reindex(targets).to_numpy(float)
     error = np.square(p.pred_kms.to_numpy() - truth)
-    result.update(n_origins=len(origins), n_targets=len(p), n_observed=int(observed.sum()),
-                  target_observation_mask_sha256=hashlib.sha256(observed.tobytes()).hexdigest(),
-                  prediction_keys_sha256=hashlib.sha256(pd.util.hash_pandas_object(p[protocol.KEY], index=False).values.tobytes()).hexdigest())
+    result.update(n_origins=len(origins), n_targets=len(p), n_observed=int(observed.sum()))
     result['horizon_buckets'] = {}
     for lo, hi in ((1, 24), (25, 48), (49, 72)):
         mask = p.horizon_hours.between(lo, hi).to_numpy()
@@ -83,7 +80,7 @@ def run(run_dir, embeddings=None, device='cpu', plan_only=False, source_metadata
         return prereg
     if embeddings is None:
         raise ValueError('--embeddings required unless --plan-only')
-    code_ref = {str(path): protocol.digest(path) for path in [Path(__file__), Path(numeric.__file__), Path(tree.__file__)]}
+    code_ref = {str(path): numeric.file_stat(path) for path in [Path(__file__), Path(numeric.__file__), Path(tree.__file__)]}
     code_path = run_dir / 'comparison_code_identity.json'
     if code_path.exists() and json.loads(code_path.read_text()) != code_ref:
         raise ValueError('comparison code changed across restart')
@@ -137,10 +134,11 @@ def run(run_dir, embeddings=None, device='cpu', plan_only=False, source_metadata
             protocol.write_json(complete, record)
             results[phase][arm] = record
             baseline = results[phase]['baseline']
-            for key in ('prediction_keys_sha256', 'target_observation_mask_sha256'):
+            for key in ('n_targets', 'n_observed'):
                 if record['metrics'][key] != baseline['metrics'][key]:
                     raise ValueError('arms differ in scoring support')
-            if metadata['train_origin_sha256'] != baseline['metadata']['train_origin_sha256']:
+            if (metadata['n_train_origins'] != baseline['metadata']['n_train_origins']
+                    or pd.Timestamp(metadata['train_label_max']) != pd.Timestamp(baseline['metadata']['train_label_max'])):
                 raise ValueError('arms differ in training origins')
             protocol.write_json(run_dir / 'comparison_results.json', results)
     protocol.write_json(run_dir / 'comparison_progress.json', dict(stage='complete', winner=winner, updated_utc=protocol.utcnow()))

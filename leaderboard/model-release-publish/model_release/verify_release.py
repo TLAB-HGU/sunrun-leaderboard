@@ -1,6 +1,5 @@
 """Verify every released PKL through the isolated public inference interface."""
 import argparse
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -16,7 +15,7 @@ def main():
     parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--experiment", help="Verify one available model without opening the publication gate")
     parser.add_argument("--available", action="store_true", help="Verify all currently completed model files")
-    parser.add_argument("--resume", action="store_true", help="Reuse evidence only for identical package, inputs and PKL bytes")
+    parser.add_argument("--resume", action="store_true", help="Reuse evidence only for unchanged package, inputs and PKL files (size and mtime)")
     args = parser.parse_args()
     release, source = args.release_dir.resolve(), args.source_root.resolve()
     records = json.loads((release / "selection.json").read_text())
@@ -44,36 +43,33 @@ def main():
         isolated = Path(directory)
         with ZipFile(release / "sunrun_inference.zip") as archive:
             archive.extractall(isolated)
-        with (release / "sunrun_inference.zip").open("rb") as stream:
-            package_sha = hashlib.file_digest(stream, "sha256").hexdigest()
+        stat = (release / "sunrun_inference.zip").stat()
+        package = {"size": stat.st_size, "mtime_ns": stat.st_mtime_ns}
         input_files = [Path(inputs[key]) for key in ("speed_parquet", "ch_parquet", "suvi_parquet", "suvi_manifest")]
         input_files += sorted(Path(inputs["raw_ace_dir"]).glob("year=*/part.parquet"))
         input_files += sorted(donki.glob("*.json"))
-        fingerprint = hashlib.sha256()
+        input_identity = []
         for path in input_files:
-            with path.open("rb") as stream:
-                digest = hashlib.file_digest(stream, "sha256").hexdigest()
-            fingerprint.update((str(path) + "\t" + digest + "\n").encode())
-        input_sha = fingerprint.hexdigest()
+            stat = path.stat()
+            input_identity.append([str(path), stat.st_size, stat.st_mtime_ns])
         prior_reports = []
         previous = release / "partial-integration-verification.json"
         if args.resume and previous.is_file():
             prior = json.loads(previous.read_text())
-            if prior.get("package_sha256") == package_sha and prior.get("input_sha256") == input_sha:
+            if prior.get("package") == package and prior.get("input_identity") == input_identity:
                 for record in records:
                     matches = [row for row in prior.get("models", []) if row["experiment"] == record["experiment"]]
                     if len(matches) == 1 and matches[0].get("passed") and matches[0].get("config_sha256") == record["config_sha256"]:
-                        with (release / (record["experiment"] + "_seongeun.pkl")).open("rb") as stream:
-                            current = hashlib.file_digest(stream, "sha256").hexdigest()
-                        if current == matches[0]["sha256"]:
+                        stat = (release / (record["experiment"] + "_seongeun.pkl")).stat()
+                        if [stat.st_size, stat.st_mtime_ns] == [matches[0].get("size"), matches[0].get("mtime_ns")]:
                             prior_reports.append(matches[0])
         completed = {row["experiment"] for row in prior_reports}
         records = [record for record in records if record["experiment"] not in completed]
         payload = {"release": str(release), "records": records, "inputs": inputs,
-                   "package_sha256": package_sha, "input_sha256": input_sha,
+                   "package": package, "input_identity": input_identity,
                    "prior_reports": prior_reports}
         (isolated / "verification-inputs.json").write_text(json.dumps(payload))
-        program = '''import hashlib,json,sys
+        program = '''import json,sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -98,16 +94,15 @@ for row in payload["records"]:
     assert len(joined)==len(predicted)==len(reference)==2833*72
     delta=float(np.abs(joined.pred_kms_new-joined.pred_kms_old).max())
     assert np.isfinite(predicted.pred_kms).all() and delta<=1e-3,(name,delta)
-    with path.open("rb") as stream:
-        digest=hashlib.file_digest(stream,"sha256").hexdigest()
-    report={"experiment":name,"config_sha256":row["config_sha256"],"rows":len(predicted),"submission_max_abs":delta,"sha256":digest,"passed":True}
+    stat=path.stat()
+    report={"experiment":name,"config_sha256":row["config_sha256"],"rows":len(predicted),"submission_max_abs":delta,"size":stat.st_size,"mtime_ns":stat.st_mtime_ns,"passed":True}
     reports.append(report)
     (root/(name+".isolated-verification.json")).write_text(json.dumps(report,indent=2))
     print(json.dumps(report),flush=True)
     del model,predicted,reference,joined
 foreign=[name for name in sys.modules if name=="experiments" or name.startswith("experiments.") or name=="expos" or name.startswith("expos.")]
 assert not foreign,foreign
-report={"passed":True,"models":reports,"rows_per_model":2833*72,"isolated_runtime":True,"experiment_imports":foreign,"package_sha256":payload["package_sha256"],"input_sha256":payload["input_sha256"]}
+report={"passed":True,"models":reports,"rows_per_model":2833*72,"isolated_runtime":True,"experiment_imports":foreign,"package":payload["package"],"input_identity":payload["input_identity"]}
 target="integration-verification.json" if len(reports)==10 else "partial-integration-verification.json"
 (root/target).write_text(json.dumps(report,indent=2))
 '''

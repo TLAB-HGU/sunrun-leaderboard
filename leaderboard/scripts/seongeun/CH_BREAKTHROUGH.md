@@ -9,7 +9,7 @@ Run from this repository with Python 3.12 and `requirements.txt` (XGBoost 2.1.4)
 Download the official `folds.parquet` as described in the root README, then:
 
 ```bash
-.venv-fusion/bin/python scripts/seongeun/<experiment>/<config_sha256>.py \
+.venv-fusion/bin/python scripts/seongeun/<experiment>/<submission-key>.py \
   --folds folds.parquet --output predictions.parquet --device auto \
   --ace store/ch-v1/ace.parquet --ch-hourly store/ch-v1/ch-hourly.parquet \
   --raw-pattern '/path/to/pinned-raw-ace/year=*/part.parquet'

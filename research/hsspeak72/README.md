@@ -19,7 +19,7 @@ Explicit HSS peak injection on the frozen E0472 champion. An asymmetric Gaussian
 
 ## 참고
 
-- fresh-df 재실행 불가: HUXt 궤적 입력이 현재 df.parquet에 없음 (`research/rerun_df_ffill_20261103/special-blockers.md`).
+- fresh-df 재실행 불가: HUXt 궤적 입력이 현재 df.parquet에 없음 (`research/rerun_df_ffill/special-blockers.md`).
 - 시각화: `leaderboard/lb-f1f2/docs/visualizations/hsspeak72/`.
 
 Total S는 리더보드 store의 `competition.total.s`(공식 scorer, F1/F2/F3, 낮을수록 좋음).

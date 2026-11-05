@@ -283,7 +283,6 @@ def test_fit_predict_provenance_and_tamper_rejection(monkeypatch, tmp_path):
     meta = mean_level.fit_mean_level(train, cols, tmp_path, cutoff=cutoff,
                                      registration={"ref": "root-claim-1"})
     assert (tmp_path / mean_level.MODEL_FILENAME).is_file()
-    assert meta["model_sha256"] == protocol.sha256_file(tmp_path / mean_level.MODEL_FILENAME)
     assert meta["registration"] == {"ref": "root-claim-1"}
     assert meta["normalizer"] is None
     assert "UNVERIFIED" in meta["versions"]["xgboost"]

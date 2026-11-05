@@ -120,11 +120,10 @@ def test_live_submission_stores_original_predictions_metrics_and_plot_atomically
     assert "/" + "b" * 40 + "/" in stored["metric_plot_url"]
     assert calls["pages"][0]["dataset"] == client.DATASET
     assert stored["competition_dataset_revision"] == "frozen-parent"
-    assert len(stored["competition_provenance"]) == 64
 
 
 def notebook_parser():
-    notebook = json.loads((ROOT / "metric.ipynb").read_text())
+    notebook = json.loads((ROOT / "metric" / "metric.ipynb").read_text())
     for cell in notebook["cells"]:
         source = "".join(cell.get("source", []))
         if "def parse_month(" not in source:
@@ -135,7 +134,7 @@ def notebook_parser():
                      "RAW_COLUMNS": ["year", "month", "day", "hhmm", "mjd", "seconds_of_day",
                                      "status", "density", "speed_raw_kms", "temperature"],
                      "MONTH_FILE_PATTERN": re.compile(r"^\d{6}_ace_swepam_1h\.txt$")}
-        exec(compile(ast.Module(body=[function], type_ignores=[]), "metric.ipynb", "exec"), namespace)
+        exec(compile(ast.Module(body=[function], type_ignores=[]), "metric/metric.ipynb", "exec"), namespace)
         return namespace["parse_month"]
     raise AssertionError("notebook parser not found")
 

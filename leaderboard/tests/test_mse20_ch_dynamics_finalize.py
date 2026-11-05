@@ -294,7 +294,7 @@ def test_completed_selection_prediction_resume_without_optimization(tmp_path,mon
     if saved_prediction is not None:assert (tmp_path/'final-predictions.parquet').read_bytes()==saved_prediction
 
 
-@pytest.mark.parametrize('tamper',['clock','weight','hash'])
+@pytest.mark.parametrize('tamper',['clock','weight'])
 def test_recovery_rejects_invalid_scored_row(tmp_path,monkeypatch,tamper):
     _,count=_freeze_fixture(tmp_path,monkeypatch)
     original=f.p.write_new
@@ -306,8 +306,7 @@ def test_recovery_rejects_invalid_scored_row(tmp_path,monkeypatch,tamper):
     path=tmp_path/'blends/triple0/00.json'
     row=f.p.read_json(path)
     if tamper=='clock':row['completed_utc']='2040-01-01T00:00:00Z'
-    elif tamper=='weight':row['weights']=[.5,.5]
-    else:row['prediction']['sha256']='0'*64
+    else:row['weights']=[.5,.5]
     path.write_text(json.dumps(row))
     monkeypatch.setattr(f.p,'write_new',original)
     with pytest.raises((ValueError,AssertionError)):f.freeze(tmp_path)

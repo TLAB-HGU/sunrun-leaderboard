@@ -119,7 +119,7 @@ def producer(tmp_path,monkeypatch):
         meta=dict(config=config,cutoff=cutoff.isoformat(),train_label_max=cutoff.isoformat())
         (directory/'metadata.json').write_text(json.dumps(meta))
         return {},meta
-    fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'shape_label_sha256':'synthetic','censor_mask_sha256':'synthetic'})
+    fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'n_train_origins':1})
     monkeypatch.setattr(package,'model',fake,raising=False)
     return tmp_path,frames,origins,calls
 
@@ -133,7 +133,7 @@ def test_final_refit_once_and_paired24causality_checks(producer):
     assert len(proof['checks'])==24 and len(proof['subset_checks'])==3
     assert sum(row['kind']=='raw' for row in proof['checks'])==18
     assert all(row['max_abs_diff_kms']=={'mse':0.,'peak':0.} for row in proof['checks'])
-    assert f.p.read_json(proof['provenance']['path'])['reconstructed']['censor_mask_sha256']=='synthetic'
+    assert f.p.read_json(proof['provenance']['path'])['reconstructed']['n_train_origins']==1
     with np.load(proof['inventory']['path']) as data:assert set(data.files)==set(f.RAW+f.DERIVED)
 
 
@@ -223,10 +223,8 @@ def test_actual_cpu_model_metadata_matches_independent_evaluator(tmp_path):
     assert actual==metadata
     actual['family']='wrong'
     path=tmp_path/'model/metadata.json';path.write_text(json.dumps(actual))
-    (path.parent/'metadata.sha256').write_text(e.p.digest(path))
     with pytest.raises(Exception,match='same fitted configuration'):
         e.verify_metadata(e.p.file_ref(path),e.p.file_ref(path.parent/'model.pt'),config,cutoff,refs)
-import hashlib
 import json
 import subprocess
 from pathlib import Path
@@ -286,26 +284,24 @@ def metadata_fixture(tmp_path):
            'experiments/ch_breakthrough_v2/physical_quality.py','experiments/ch_breakthrough_v2/recurrence.py']
     sources={name:e.p.file_ref(e.p.ROOT/name) for name in names}
     meta=dict(family='hss_state_recurrence',schema=dict(version=3,shape_definition={'decoder':'anchored'}),
-        train_profile_sha256='1'*64,train_arrival_sha256='2'*64,train_shape_label_sha256='3'*64,config=config,model_sha256=e.p.digest(model),cutoff=e.p.CUTOFF,
-        train_origins=[x.isoformat() for x in pool],train_origin_sha256=hashlib.sha256(pool.asi8.tobytes()).hexdigest(),
+        config=config,cutoff=e.p.CUTOFF,
+        train_origins=[x.isoformat() for x in pool],
         train_label_max=(pool.max()+pd.Timedelta(hours=96)).isoformat(),train_profile_label_max=(pool.max()+pd.Timedelta(hours=72)).isoformat(),
         epochs=1,history=[{}],input_width=4,normalizer=dict(mean=[0.,0.],scale=[1.,1.],count=[2,2]),
-        sources={str((e.p.ROOT/name).resolve()):sources[name]['sha256'] for name in names})
+        sources=[str((e.p.ROOT/name).resolve()) for name in names])
     def save():
-        path=tmp_path/'metadata.json';path.write_text(json.dumps(meta));(tmp_path/'metadata.sha256').write_text(e.p.digest(path))
+        path=tmp_path/'metadata.json';path.write_text(json.dumps(meta))
         return e.p.file_ref(path)
     return meta,save,config,sources,e.p.file_ref(model)
 
 
-@pytest.mark.parametrize('tamper', ['none','future','source','scaler','model','shape_hash','shape_schema'])
+@pytest.mark.parametrize('tamper', ['none','future','source','scaler','shape_schema'])
 def test_actual_metadata_cutoff_sources_and_scaler(tmp_path,tamper):
     meta,save,config,sources,model=metadata_fixture(tmp_path)
-    if tamper=='shape_hash':meta['train_shape_label_sha256']=''
     if tamper=='shape_schema':meta['schema']['version']=1
     if tamper=='future':meta['train_label_max']='2026-06-01T00:00:00Z'
     if tamper=='source':meta['sources']={}
     if tamper=='scaler':meta['normalizer']['scale'][0]=0
-    if tamper=='model':Path(model['path']).write_bytes(b'changed')
     if tamper=='none':assert e.verify_metadata(save(),model,config,e.p.CUTOFF,sources)==meta
     else:
         with pytest.raises(ValueError):e.verify_metadata(save(),model,config,e.p.CUTOFF,sources)
@@ -335,7 +331,7 @@ def replay_fixture(tmp_path,monkeypatch):
     index=pd.date_range(origins.min(),origins.max()+pd.Timedelta(hours=72),freq='h')
     inventory={key:index for key in e.shared.RAW+e.shared.DERIVED}
     monkeypatch.setattr(e.shared,'verify_inventory',lambda *a:inventory)
-    monkeypatch.setattr(e,'reconstruct_training',lambda *a:{'normalizer':{'mean':[0.]},'train_shape_label_sha256':'3'*64})
+    monkeypatch.setattr(e,'reconstruct_training',lambda *a:{'normalizer':{'mean':[0.]}})
     def js(name,value):
         path=tmp_path/name;path.write_text(json.dumps(value));return e.p.file_ref(path)
     def pred(name,subset=origins,offset=0):
@@ -345,7 +341,7 @@ def replay_fixture(tmp_path,monkeypatch):
         return e.p.file_ref(path)
     meta=js('metadata.json',{});files={'model_metadata':meta}
     proof=dict(model_metadata=meta,frames_end_utc=index.max().isoformat(),source_files={},inventory={},checks=[],subset_checks=[],outputs={})
-    proof['provenance']=js('provenance.json',dict(metadata=meta,source_files={},reconstructed={'normalizer':{'mean':[0.]},'train_shape_label_sha256':'3'*64}))
+    proof['provenance']=js('provenance.json',dict(metadata=meta,source_files={},reconstructed={'normalizer':{'mean':[0.]}}))
     source=e.p.file_ref(e.p.ROOT/'experiments/mse20_ch_dynamics/inputs.py')
     for mode in e.MODES:
         files[mode+'_predictions']=pred(mode)
@@ -363,17 +359,15 @@ def replay_fixture(tmp_path,monkeypatch):
     return proof,files,benchmark,{'sources':{'experiments/mse20_ch_dynamics/inputs.py':source}}
 
 
-@pytest.mark.parametrize('tamper',['none','count','coverage','cpu','normalizer','snapshot','shape_hash','missing_shape'])
+@pytest.mark.parametrize('tamper',['none','count','coverage','cpu','normalizer','snapshot'])
 def test_paired_replay_complete_and_tamper_failures(tmp_path,monkeypatch,tamper):
     proof,files,bench,registration=replay_fixture(tmp_path,monkeypatch)
-    if tamper=='shape_hash':monkeypatch.setattr(e,'reconstruct_training',lambda *a:{'normalizer':{'mean':[0.]},'train_shape_label_sha256':'4'*64})
-    if tamper=='missing_shape':monkeypatch.setattr(e,'reconstruct_training',lambda *a:{'normalizer':{'mean':[0.]}})
     if tamper=='count':proof['checks'][0]['mutation_counts']['ace']=0
     if tamper=='coverage':proof['checks'].pop()
     if tamper=='cpu':proof['outputs']['peak']['cpu']=proof['outputs']['peak']['gpu']
-    if tamper=='normalizer':monkeypatch.setattr(e,'reconstruct_training',lambda *a:{'normalizer':{'mean':[1.]},'train_shape_label_sha256':'3'*64})
+    if tamper=='normalizer':monkeypatch.setattr(e,'reconstruct_training',lambda *a:{'normalizer':{'mean':[1.]}})
     if tamper=='snapshot':proof['checks'][0]['max_abs_diff_kms']['peak']=.0002
-    def verify():return e.verify_replay(proof,files,bench,registration,{'normalizer':{'mean':[0.]},'train_shape_label_sha256':'3'*64},tmp_path)
+    def verify():return e.verify_replay(proof,files,bench,registration,{'normalizer':{'mean':[0.]}},tmp_path)
     if tamper=='none':assert set(verify())=={'mse','peak'}
     else:
         with pytest.raises(ValueError):verify()

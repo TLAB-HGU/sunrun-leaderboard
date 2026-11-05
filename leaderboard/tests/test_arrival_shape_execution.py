@@ -119,7 +119,7 @@ def producer(tmp_path,monkeypatch):
         meta=dict(config=config,cutoff=cutoff.isoformat(),train_label_max=cutoff.isoformat())
         (directory/'metadata.json').write_text(json.dumps(meta))
         return {},meta
-    fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'shape_label_sha256':'synthetic','censor_mask_sha256':'synthetic'})
+    fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'labels':'synthetic'})
     monkeypatch.setattr(package,'model',fake,raising=False)
     return tmp_path,frames,origins,calls
 
@@ -133,7 +133,7 @@ def test_final_refit_once_and_paired24causality_checks(producer):
     assert len(proof['checks'])==24 and len(proof['subset_checks'])==3
     assert sum(row['kind']=='raw' for row in proof['checks'])==18
     assert all(row['max_abs_diff_kms']=={'mse':0.,'peak':0.} for row in proof['checks'])
-    assert f.p.read_json(proof['provenance']['path'])['reconstructed']['censor_mask_sha256']=='synthetic'
+    assert f.p.read_json(proof['provenance']['path'])['reconstructed']=={'labels':'synthetic'}
     with np.load(proof['inventory']['path']) as data:assert set(data.files)==set(f.RAW+f.DERIVED)
 
 

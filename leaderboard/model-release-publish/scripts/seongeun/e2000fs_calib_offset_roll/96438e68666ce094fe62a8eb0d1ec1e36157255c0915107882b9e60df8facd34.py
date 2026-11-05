@@ -2,12 +2,11 @@
 
 Causal rolling per-horizon offset applied to the archived e2000fs_budget_spectral official forecast. Window 336 origins, alpha 0.25, both selected on the D1-D3/C internal stages with the preregistered three-condition rule. Each offset uses only residuals whose target time is at or before the origin, so the 72 h maturity delay is respected.
 
-Inputs are archived, hash-pinned artefacts of the sunrun monorepo; nothing is retrained.
+Inputs are archived artefacts of the sunrun monorepo; nothing is retrained.
 Run:  python e2000fs_calib_offset_roll.py --out /tmp/replay
 """
 from __future__ import annotations
 import argparse
-import hashlib
 from pathlib import Path
 import numpy as np
 import pandas as pd

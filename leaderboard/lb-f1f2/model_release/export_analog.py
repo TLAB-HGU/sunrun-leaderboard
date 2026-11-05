@@ -1,7 +1,6 @@
 """Re-fit the three registered analog recipes and export fitted, portable state."""
 import argparse
 import fcntl
-import hashlib
 import importlib.util
 import json
 import os
@@ -158,6 +157,6 @@ def export(args):
     path=args.output_dir/f'{name}_seongeun.pkl'
     path.write_bytes(raw)
     checkpoint.unlink(missing_ok=True)
-    print(json.dumps({**report,'path':str(path),'sha256':hashlib.sha256(raw).hexdigest()}),flush=True)
+    print(json.dumps({**report,'path':str(path)}),flush=True)
 
 if __name__=='__main__':main()

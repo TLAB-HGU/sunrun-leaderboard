@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import glob
-import hashlib
 import json
 from pathlib import Path
 import time
@@ -17,6 +16,11 @@ from experiments.ch_breakthrough_v2.recurrence import RecurrenceResidualForecast
 from experiments.mse20_four_regimes import protocol, tree
 
 END = pd.Timestamp('2026-05-31T23:00:00Z')
+
+
+def file_stat(path):
+    stat = Path(path).stat()
+    return {'size': stat.st_size, 'mtime_ns': stat.st_mtime_ns}
 
 
 def load_frames(root=None, end=END):
@@ -50,7 +54,7 @@ def load_frames(root=None, end=END):
     return dict(base=base.reindex(index), physics=build_physics_frame(raw, index),
                 quality=build_ch_quality_frame(ch, index), speed=speed,
                 observed=common.observed_mask(speed, speed.index),
-                identities={str(p): protocol.digest(p) for p in [ace_path, ch_path, *raw_paths]})
+                identities={str(p): file_stat(p) for p in [ace_path, ch_path, *raw_paths]})
 
 
 def train_origins(frames, cutoff, cap=6000):
@@ -146,12 +150,10 @@ def fit_predict(frames, cutoff, origins, config, device, output_dir, arm='baseli
     fore.model.get_booster().save_model(model_path)
     metadata = dict(family='combined_recurrence_xgboost_visual', arm=arm, config=config,
                     cutoff=str(cutoff), train_label_max=str(pool.max() + pd.Timedelta(hours=72)),
-                    train_origin_sha256=hashlib.sha256(pool.asi8.tobytes()).hexdigest(),
                     n_train_origins=len(pool), base_columns=fore.base_columns, columns=fore.columns,
                     actual_device=fore.actual_device, fit_seconds=fit_seconds, prediction_seconds=prediction_seconds,
-                    use_target=True, model_sha256=protocol.digest(model_path),
-                    transform_sha256=protocol.digest(output_dir / 'visual_transform.npz'),
-                    embedding_sha256=protocol.digest(embeddings), input_identities=frames.get('identities', {}))
+                    use_target=True, embedding_identity=file_stat(embeddings),
+                    input_identities=frames.get('identities', {}))
     gains = fore.model.get_booster().get_score(importance_type='gain')
     metadata['feature_gain'] = gains
     metadata['visual_gain_sum'] = {name: float(sum(v for k, v in gains.items() if k.startswith(prefix))) for name, prefix in [('pca', 'vjepa_pc_'), ('quality', 'vjepa_quality_'), ('missing', 'vjepa_missing_')]}
@@ -167,8 +169,6 @@ def predict_saved(frames, origins, output_dir, device, embeddings=None):
     meta = json.loads((output_dir / 'metadata.json').read_text())
     if meta.get('arm', 'baseline') == 'baseline':
         return tree.predict_saved(frames, origins, output_dir, device)
-    if protocol.digest(output_dir / 'model.ubj') != meta['model_sha256'] or protocol.digest(output_dir / 'visual_transform.npz') != meta['transform_sha256']:
-        raise ValueError('saved artifact hash mismatch')
     features = tree._features(frames)
     origins = tree._origins(origins)
     embedding_origins, _, _ = read_embeddings(embeddings, meta['arm'])

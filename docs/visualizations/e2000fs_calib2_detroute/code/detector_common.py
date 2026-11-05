@@ -7,7 +7,6 @@ archived booster and the leaderboard MSE before it writes a figure.
 """
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import os
@@ -38,9 +37,6 @@ HIGH = 550.0
 PARAMS = dict(objective="binary:logistic", eval_metric="logloss", tree_method="hist", device="cpu",
               max_depth=4, eta=0.05, subsample=0.8, colsample_bytree=0.7, min_child_weight=20,
               reg_lambda=5, nthread=3, seed=42, verbosity=0)
-
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def imported(name, path):

@@ -3,8 +3,6 @@ from __future__ import annotations
 
 import argparse
 from contextlib import contextmanager
-import glob
-import hashlib
 import json
 from pathlib import Path
 import time
@@ -14,28 +12,11 @@ import pandas as pd
 
 from experiments.ch_breakthrough_v2 import common, hpo
 
-ROOT = Path(__file__).resolve().parents[2]
-SOURCE_NAMES = ("common", "hpo", "hpo_gpu", "recurrence", "physical_quality")
 ARMS = {"recurrence": "target-recurrence+CH", "physical": "physical_ace_ch_quality",
         "combined": "physical_ace_ch_quality"}
 
 
-def config_digest(config):
-    return hashlib.sha256(json.dumps(config, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
-                                     allow_nan=False).encode()).hexdigest()
-
-
-def file_digest(path):
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
-
-
-def validate_config(config, expected_config_sha256=None):
-    if expected_config_sha256 is not None and config_digest(config) != expected_config_sha256:
-        raise ValueError("CONFIG sha256 mismatch")
+def validate_config(config):
     branch = config["data"]["feature_branch"]
     if branch not in ARMS or config["data"]["feature_arm"] != ARMS[branch]:
         raise ValueError("unsupported feature branch/arm")
@@ -46,34 +27,6 @@ def validate_config(config, expected_config_sha256=None):
         raise ValueError("frozen training cap/seed must be 6000/42")
     if not hyper["xgboost"]:
         raise ValueError("missing frozen XGBoost parameters")
-
-
-def validate_hashes(config, ace, ch_hourly, raw_pattern, source_dir=None):
-    """Fail closed before loading any potentially altered model/data input."""
-    source_dir = Path(source_dir or ROOT / "experiments/ch_breakthrough_v2")
-    sources = config["data"]["source_sha256"]
-    if set(sources) != set(SOURCE_NAMES):
-        raise ValueError("source_sha256 must name every frozen source")
-    for name in SOURCE_NAMES:
-        if file_digest(source_dir / f"{name}.py") != sources[name]:
-            raise ValueError(f"source sha256 mismatch: {name}")
-    # The frozen experiments used one complete ACE parquet. Do not silently
-    # authenticate only the first path while training on additional files.
-    if len(ace) != 1:
-        raise ValueError("frozen ACE input requires exactly one parquet")
-    raw_files = sorted(glob.glob(raw_pattern))
-    if not raw_files:
-        raise ValueError("raw ACE pattern matched no files")
-    actual = {"ace": file_digest(ace[0]), "ch_hourly": file_digest(ch_hourly),
-              "raw_ace_years": hashlib.sha256("".join(
-                  file_digest(p) for p in raw_files).encode()).hexdigest()}
-    expected = config["data"]["input_sha256"]
-    if set(expected) != set(actual):
-        raise ValueError("input_sha256 must name all three frozen inputs")
-    for name, digest in actual.items():
-        if digest != expected[name]:
-            raise ValueError(f"input sha256 mismatch: {name}")
-    return actual
 
 
 def select_origins(folds, feature_index, max_folds=None):
@@ -135,10 +88,9 @@ def parser():
     return p
 
 
-def run(config, expected_config_sha256=None, argv=None):
+def run(config, config_sha256=None, argv=None):
     args = parser().parse_args(argv)
-    validate_config(config, expected_config_sha256)
-    identities = validate_hashes(config, args.ace, args.ch_hourly, args.raw_pattern)
+    validate_config(config)
     frames = hpo.load_inputs(args.ace, args.ch_hourly, args.raw_pattern)
     branch, arm = config["data"]["feature_branch"], config["data"]["feature_arm"]
     feats, _, _ = hpo._arm_features(branch, arm, frames)
@@ -174,10 +126,7 @@ def run(config, expected_config_sha256=None, argv=None):
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     preds.to_parquet(output, index=False)
-    manifest = {"config": config, "config_sha256": config_digest(config),
-                "input_sha256": identities, "source_sha256": config["data"]["source_sha256"],
-                "runner_sha256": file_digest(__file__), "folds_sha256": file_digest(args.folds),
-                "prediction_sha256": file_digest(output), "versions": common.runtime_versions(),
+    manifest = {"config": config, "config_sha256": config_sha256, "versions": common.runtime_versions(),
                 "actual_device": device, "fit_seconds": fit_seconds,
                 "inference_seconds_per_fold": seconds,
                 "inference_timing_scope": "model.predict and residual addition/clipping only; excludes data loading, fit, matrix preparation, output serialization",

@@ -1,6 +1,6 @@
 # E2000FS Feat30 Extreme — train·validation loss, feature importance, F1+F2 월별 예측 GIF
 
-2026-10-28 게시 기준 리더보드 **14위**, 작성자 **seongeun**인 `e2000fs_feat30_extreme`입니다. E2000FS DirMO-24의 30개 선택 특징과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)를 쓰되, 고속 태양풍 또는 급상승 trajectory에 4배 sample weight를 주는 모델입니다. 24시간 블록별 multi-output booster 3개가 h1–24 / h25–48 / h49–72를 예측합니다. 제출 설정 SHA256은 `b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1`이며, 공개 재현 소스는 [제출 스크립트](../../../scripts/seongeun/e2000fs_feat30_extreme/b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1.py)와 [release](../../../releases/e2000fs_followups_20261028/extreme/)에 있습니다.
+2026-10-28 게시 기준 리더보드 **14위**, 작성자 **seongeun**인 `e2000fs_feat30_extreme`입니다. E2000FS DirMO-24의 30개 선택 특징과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)를 쓰되, 고속 태양풍 또는 급상승 trajectory에 4배 sample weight를 주는 모델입니다. 24시간 블록별 multi-output booster 3개가 h1–24 / h25–48 / h49–72를 예측합니다. 공개 재현 소스는 [제출 스크립트](../../../scripts/seongeun/e2000fs_feat30_extreme/b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1.py)와 [release](../../../releases/e2000fs_followups_20261028/extreme/)에 있습니다.
 
 > **공개 평가 노출 주의.** 30개 특징은 이미 채점된 공식 F1/F2 permutation importance를 이용해 사후 선택했습니다. 이 결과는 fresh holdout 성능이 아닙니다. `extreme_4.0` arm 자체는 공식 점수가 아니라 2025-12-04~2026-02-22 내부 validation에서 `extreme_2.0`과 비교해 선택했습니다.
 
@@ -39,7 +39,7 @@
 
 제출 F1·F2 모델의 특징 중요도입니다. 위 행은 F1, 아래 행은 F2이고, 왼쪽은 permutation 중요도, 오른쪽은 split 횟수(각 상위 25개)입니다.
 
-**저장된 제출 모델 검증.** 원 학습에서 저장한 booster 6개를 그대로 사용했습니다. booster 예측은 제출 예측과 최대 차이 **0 km/s**로 같고, 재계산 MSE도 F1 `4025.011233`, F2 `3254.204262`로 리더보드 값과 일치한 뒤에만 중요도를 계산했습니다. 모델 SHA256과 검증 값은 [feature_importance_receipt.json](feature_importance_receipt.json)에 있습니다.
+**저장된 제출 모델 검증.** 원 학습에서 저장한 booster 6개를 그대로 사용했습니다. booster 예측은 제출 예측과 최대 차이 **0 km/s**로 같고, 재계산 MSE도 F1 `4025.011233`, F2 `3254.204262`로 리더보드 값과 일치한 뒤에만 중요도를 계산했습니다. 검증 값은 [feature_importance_receipt.json](feature_importance_receipt.json)에 있습니다.
 
 **계산 방법.** 30개 특징은 이미 공식 평가를 본 뒤 고른 집합이므로 아래 값 역시 **진단용**입니다.
 
@@ -97,4 +97,4 @@
 
 ## 검증 ([manifest.json](manifest.json))
 
-`scripts/visualize_enlil_validation.py --experiment E2000FS_FEAT30_EXTREME`로 렌더링했습니다. 렌더러는 예측·truth가 **4,970 origins × h1..72 = 357,840쌍**에 정확히 1:1 대응하는지, 재계산 MSE가 리더보드 값 `3585.6357500367762`와 1e-7 이내로 일치하는지, 월별 프레임 수와 모든 GIF 디코딩·크기·100ms duration·무한 반복 설정을 확인합니다. 입력 파일과 GIF SHA256은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
+`scripts/visualize_enlil_validation.py --experiment E2000FS_FEAT30_EXTREME`로 렌더링했습니다. 렌더러는 예측·truth가 **4,970 origins × h1..72 = 357,840쌍**에 정확히 1:1 대응하는지, 재계산 MSE가 리더보드 값 `3585.6357500367762`와 1e-7 이내로 일치하는지, 월별 프레임 수와 모든 GIF 디코딩·크기·100ms duration·무한 반복 설정을 확인합니다. 학습이나 예측 변경은 하지 않았습니다.

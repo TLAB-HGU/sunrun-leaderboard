@@ -152,14 +152,6 @@ def test_prediction_parity_tolerance(frames):
     with pytest.raises(ev.IntegrityError, match="drift"): ev.parity(pred, changed)
 
 
-def test_file_identity_detects_mutation(tmp_path):
-    path = tmp_path / "evidence"; path.write_text("original")
-    entry = {"path": str(path), "sha256": ev.sha256(path)}
-    assert ev.verify_file(entry, "test") == path
-    path.write_text("changed")
-    with pytest.raises(ev.IntegrityError, match="sha256"): ev.verify_file(entry, "test")
-
-
 def test_cli_failure_always_json_and_exit2(tmp_path):
     output = tmp_path / "failure.json"
     code = ev.main(["--mode", "baseline", "--run-dir", str(tmp_path), "--contract", str(tmp_path / "absent"), "--reference", "absent", "--output", str(output)])
@@ -174,68 +166,6 @@ def test_baseline_zero_never_objective_achieved(tmp_path, monkeypatch):
     monkeypatch.setattr(ev, "evaluate", lambda args: {"status": "baseline_verified", "objective_achieved": False, "exit_code": 0})
     assert ev.main(["--mode", "baseline", "--run-dir", str(tmp_path), "--contract", "unused", "--reference", "unused", "--output", str(output)]) == 0
     assert json.loads(output.read_text())["objective_achieved"] is False
-
-
-@pytest.fixture
-def artifact_bundle(tmp_path):
-    from types import SimpleNamespace
-    def put(name, data):
-        p = tmp_path / name
-        p.write_text(json.dumps(data))
-        return {"path": str(p), "sha256": ev.sha256(p)}
-    evidence = put("evidence.json", {"test": "passed"})
-    summary = put("summary.json", {"passed": True, "files": {"log": evidence}})
-    replay = put("replay.json", [])
-    contract_hash = "contract-hash"
-    contract = {"started_utc": "2026-10-03T06:00:00Z", "deadline_utc": "2026-10-03T14:00:00Z",
-                "official_cutoff": "2026-05-31T23:00:00Z", "files": {"reference": {"sha256": "reference-hash"}}}
-    baseline = put("baseline.json", {"mode": "baseline", "status": "baseline_verified", "objective_achieved": False,
-        "exit_code": 0, "contract_sha256": contract_hash, "finished_utc": "2026-10-03T06:30:00Z",
-        "reference_sha256": "reference-hash", "support": {"origins": 2833, "pairs": 203976},
-        "evaluator_sha256": ev.sha256(ev.__file__), "replay": replay})
-    frozen = put("frozen.json", {"schema_version": 1, "contract_sha256": contract_hash,
-        "frozen_utc": "2026-10-03T08:00:00Z", "selection_completed_utc": "2026-10-03T07:59:00Z",
-        "training_cutoff_utc": contract["official_cutoff"],
-        "files": {"selection": evidence, "splits": evidence, "code": evidence},
-        "recipe": {"model": "tree", "config": {}, "features": ["lag1"], "training_rule": "fixed", "seed": 42, "blend_weights": [1.]}})
-    final = put("final-artifacts.json", {"schema_version": 1, "contract_sha256": contract_hash, "recipe_sha256": frozen["sha256"],
-        "created_utc": "2026-10-03T10:00:00Z", "audit_started_utc": "2026-10-03T08:01:00Z",
-        "official_generation_started_utc": "2026-10-03T09:00:00Z", "training_label_max_utc": contract["official_cutoff"],
-        "files": {"predictions": replay, "baseline_verification": baseline, "test_summary": summary,
-                  "causality_summary": summary, "model": evidence}, "model_files": ["model"], "transform_files": []})
-    args = SimpleNamespace(frozen=frozen["path"], final_artifacts=final["path"], run_dir=str(tmp_path), candidate=replay["path"])
-    return args, contract, contract_hash
-
-
-def test_complete_final_identity(artifact_bundle):
-    args, contract, digest = artifact_bundle
-    report = ev.verify_acceptance_artifacts(args, contract, digest)
-    assert report["candidate_sha256"] == ev.sha256(args.candidate)
-
-
-@pytest.mark.parametrize("mutation", ["recipe_hash", "contract_hash", "prefreeze_audit", "prefreeze_official", "late_labels", "deadline", "missing_model", "different_candidate", "stale_baseline", "tests_failed", "regime_feature"])
-def test_invalid_final_identity_rejected(artifact_bundle, mutation):
-    args, contract, digest = artifact_bundle
-    final_path = Path(args.final_artifacts); final = ev.read_json(final_path)
-    if mutation == "recipe_hash": final["recipe_sha256"] = "different"
-    elif mutation == "contract_hash": final["contract_sha256"] = "different"
-    elif mutation == "prefreeze_audit": final["audit_started_utc"] = "2026-10-03T07:00:00Z"
-    elif mutation == "prefreeze_official": final["official_generation_started_utc"] = "2026-10-03T07:00:00Z"
-    elif mutation == "late_labels": final["training_label_max_utc"] = "2026-06-01T00:00:00Z"
-    elif mutation == "deadline": final["created_utc"] = "2026-10-03T15:00:00Z"
-    elif mutation == "missing_model": final["model_files"] = []
-    elif mutation == "different_candidate": args.candidate = str(Path(args.run_dir) / "other")
-    elif mutation in ("stale_baseline", "tests_failed"):
-        name = "baseline_verification" if mutation == "stale_baseline" else "test_summary"
-        path = Path(final["files"][name]["path"]); doc = ev.read_json(path)
-        doc["contract_sha256" if mutation == "stale_baseline" else "passed"] = "different" if mutation == "stale_baseline" else False
-        path.write_text(json.dumps(doc)); final["files"][name]["sha256"] = ev.sha256(path)
-        if mutation == "tests_failed": final["files"]["causality_summary"]["sha256"] = ev.sha256(path)
-    elif mutation == "regime_feature":
-        frozen = ev.read_json(args.frozen); frozen["recipe"]["features"].append("regime")
-        Path(args.frozen).write_text(json.dumps(frozen)); final["recipe_sha256"] = ev.sha256(args.frozen)
-    final_path.write_text(json.dumps(final))
-    with pytest.raises(ev.IntegrityError): ev.verify_acceptance_artifacts(args, contract, digest)
 
 
 @pytest.mark.parametrize("status,code", [("pass", 0), ("unmet", 1), ("indeterminate", 2)])

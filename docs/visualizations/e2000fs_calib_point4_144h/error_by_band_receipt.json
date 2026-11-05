@@ -14,16 +14,13 @@
  },
  "inputs": {
   "point4_144h": {
-   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1",
-   "forecast_sha256_12": "386479f76220"
+   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1"
   },
   "tweedie15": {
-   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/tweedie15_v1",
-   "forecast_sha256_12": "6eff95e690c9"
+   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/tweedie15_v1"
   },
   "detpool_gpd": {
-   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_gpd_v1",
-   "forecast_sha256_12": "4571ef9be163"
+   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_gpd_v1"
   }
  },
  "outputs": [

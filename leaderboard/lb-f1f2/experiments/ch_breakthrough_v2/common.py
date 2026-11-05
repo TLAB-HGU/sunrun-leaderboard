@@ -12,7 +12,6 @@ and serialized with its manifest.
 from __future__ import annotations
 
 import contextlib
-import hashlib
 import inspect
 import json
 import platform
@@ -79,20 +78,12 @@ def read_table(path) -> pd.DataFrame:
 
 
 def file_identity(path) -> dict:
-    """SHA-256 identity of a file or directory tree (mirrors run.py)."""
+    """Size/mtime identity of a file or directory tree."""
     path = Path(path)
-    digest = hashlib.sha256()
     files = sorted(p for p in path.rglob("*") if p.is_file()) if path.is_dir() else [path]
-    size = 0
-    for item in files:
-        if path.is_dir():
-            digest.update(str(item.relative_to(path)).encode())
-        with item.open("rb") as handle:
-            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-                digest.update(chunk)
-        size += item.stat().st_size
-    return {"path": str(path.resolve()), "bytes": size,
-            "files": len(files), "sha256": digest.hexdigest()}
+    stats = [item.stat() for item in files]
+    return {"path": str(path.resolve()), "bytes": sum(s.st_size for s in stats),
+            "files": len(files), "mtime_ns": max((s.st_mtime_ns for s in stats), default=0)}
 
 
 def load_ace_hourly(paths) -> pd.DataFrame:
@@ -641,13 +632,18 @@ def score_forecast(predictions, target, observed, origins=None) -> dict:
 # Replay manifests (identity-checked cache reuse, never existence-only)
 # ---------------------------------------------------------------------------
 
-def code_hash(path=None) -> str:
+def code_identity(path=None) -> dict:
     target = Path(path) if path is not None else Path(__file__)
-    return hashlib.sha256(target.read_bytes()).hexdigest()
+    st = target.stat()
+    return {"path": str(target.resolve()), "bytes": st.st_size, "mtime_ns": st.st_mtime_ns}
+
+
+def _same_file_state(saved, current) -> bool:
+    return all(saved.get(k) == current.get(k) for k in ("bytes", "mtime_ns"))
 
 
 def _caller_identity(explicit=None) -> dict | None:
-    """Hash of the lane/caller source file alongside common.py."""
+    """Size/mtime identity of the lane/caller source file alongside common.py."""
     candidate = Path(explicit) if explicit is not None else None
     if candidate is None:
         here = Path(__file__).resolve()
@@ -661,36 +657,27 @@ def _caller_identity(explicit=None) -> dict | None:
                 break
     if candidate is None or not candidate.is_file():
         return None
-    return {"path": str(candidate), "sha256": code_hash(candidate),
-            "bytes": candidate.stat().st_size}
+    return code_identity(candidate)
 
 
-def code_hashes(caller_file=None) -> dict:
-    hashes = {"common": {"path": str(Path(__file__).resolve()),
-                         "sha256": code_hash()}}
+def code_identities(caller_file=None) -> dict:
+    identities = {"common": code_identity()}
     caller = _caller_identity(caller_file)
     if caller is not None:
-        hashes["caller"] = caller
-    return hashes
+        identities["caller"] = caller
+    return identities
 
 
 def prediction_identity(path) -> dict:
-    """SHA-256 identity of a prediction parquet for manifests."""
+    """Path and size of a prediction parquet for manifests."""
     path = Path(path)
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return {"path": str(path.resolve()), "bytes": path.stat().st_size,
-            "sha256": digest.hexdigest()}
+    return {"path": str(path.resolve()), "bytes": path.stat().st_size}
 
 
 def write_manifest(path, *, mode, train_cutoff, params, tree_counts,
                    columns, input_identities, seed, inference_seconds_per_origin,
                    sampling=None, extra=None, caller_file=None,
-                   actual_device=None, prediction_path=None,
-                   prediction_sha256=None) -> dict:
-    hashes = code_hashes(caller_file)
+                   actual_device=None, prediction_path=None) -> dict:
     manifest = {
         "mode": mode,
         "train_cutoff": utc(train_cutoff).isoformat(),
@@ -699,8 +686,7 @@ def write_manifest(path, *, mode, train_cutoff, params, tree_counts,
         "columns": list(columns),
         "n_columns": len(list(columns)),
         "input_identities": {k: dict(v) for k, v in input_identities.items()},
-        "code_hash": hashes["common"]["sha256"],
-        "code_hashes": hashes,
+        "code_identities": code_identities(caller_file),
         "code_file": str(Path(__file__).resolve()),
         "seed": seed,
         "inference_seconds_per_origin": inference_seconds_per_origin,
@@ -712,8 +698,6 @@ def write_manifest(path, *, mode, train_cutoff, params, tree_counts,
         manifest["actual_device"] = str(actual_device)
     if prediction_path is not None:
         manifest["prediction"] = prediction_identity(prediction_path)
-    elif prediction_sha256 is not None:
-        manifest["prediction"] = {"sha256": str(prediction_sha256)}
     if extra:
         manifest["extra"] = dict(extra)
     path = Path(path)
@@ -724,13 +708,11 @@ def write_manifest(path, *, mode, train_cutoff, params, tree_counts,
 
 
 def validate_manifest_identities(manifest, current_identities,
-                                 current_code_hash=None,
                                  current_columns=None):
-    """Cache reuse guard: identities must match, not merely exist.
+    """Cache reuse guard: identities (size + mtime) must match, not merely exist.
 
-    Source fixes invalidate previous fitted/predicted artifacts: a stale
-    ``code_hash`` (common) or caller hash mismatch fails validation even when
-    input hashes still match.
+    Source changes invalidate previous fitted/predicted artifacts: a changed
+    common.py or caller source fails validation even when the inputs still match.
     """
     manifest = json.loads(Path(manifest).read_text()) \
         if not isinstance(manifest, dict) else manifest
@@ -739,26 +721,22 @@ def validate_manifest_identities(manifest, current_identities,
         saved = manifest.get("input_identities", {}).get(name)
         if saved is None:
             problems.append(f"{name}: not recorded in manifest")
-        elif saved.get("sha256") != ident.get("sha256"):
-            problems.append(f"{name}: sha256 mismatch")
+        elif not _same_file_state(saved, ident):
+            problems.append(f"{name}: size/mtime mismatch")
     if manifest.get("columns") is None:
         problems.append("manifest has no recorded columns")
     elif current_columns is not None and list(manifest.get("columns")) != list(current_columns):
         problems.append("columns mismatch: refit required")
-    saved_hash = manifest.get("code_hash")
-    expected = current_code_hash if current_code_hash is not None else code_hash()
-    if saved_hash is not None and saved_hash != expected:
-        problems.append("code_hash mismatch: common.py changed, refit required")
-    saved_hashes = manifest.get("code_hashes") or {}
-    saved_common = saved_hashes.get("common", {}).get("sha256")
-    if saved_common is not None and saved_common != code_hash():
-        problems.append("code_hashes.common mismatch: refit required")
-    saved_caller = saved_hashes.get("caller")
+    saved_code = manifest.get("code_identities") or {}
+    saved_common = saved_code.get("common")
+    if saved_common is not None and not _same_file_state(saved_common, code_identity()):
+        problems.append("code_identities.common mismatch: common.py changed, refit required")
+    saved_caller = saved_code.get("caller")
     if isinstance(saved_caller, dict) and saved_caller.get("path"):
         try:
             caller_path = Path(saved_caller["path"])
-            if caller_path.is_file() and code_hash(caller_path) != saved_caller.get("sha256"):
-                problems.append("code_hashes.caller mismatch: lane source changed, refit required")
+            if caller_path.is_file() and not _same_file_state(saved_caller, code_identity(caller_path)):
+                problems.append("code_identities.caller mismatch: lane source changed, refit required")
         except Exception:
             pass
     if problems:

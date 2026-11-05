@@ -31,7 +31,6 @@ skipped, poison kept) outside expos before any registered run.
 """
 
 import argparse
-import hashlib
 import json
 import os
 import sys
@@ -69,32 +68,6 @@ SMOKE_ORIGINS = 12
 SMOKE_TRAIN_ROWS = 20000
 
 
-def _file_sha(path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for b in iter(lambda: f.read(1 << 20), b""):
-            h.update(b)
-    return h.hexdigest()
-
-
-def _origins_sha(df) -> str:
-    o = pd.DatetimeIndex(pd.to_datetime(df["origin"], utc=True)).asi8.tobytes()
-    return hashlib.sha256(o + np.ascontiguousarray(df["h"].to_numpy()).tobytes()).hexdigest()
-
-
-def fcache_key(kind: str, payload: dict) -> str:
-    blob = json.dumps({"v": XO2.FCACHE_VERSION, "kind": kind, "payload": payload,
-                       "code": {f: _file_sha(LB / f) for f in
-                                ("experiments/d46_xover2/runner.py",
-                                 "experiments/d46_xover2/xover2.py")},
-                       "data": {f: [(LB / f).stat().st_size, (LB / f).stat().st_mtime_ns]
-                                for f in ("store/suvi-fusion/suvi-hourly-v2.parquet",
-                                          "store/ch-v1/ch-hourly.parquet",
-                                          "store/ch-v1/ace.parquet")}},
-                      sort_keys=True, default=str)
-    return hashlib.sha256(blob.encode()).hexdigest()
-
-
 def add_strips(df: pd.DataFrame, meta, block) -> tuple:
     """Join per-(origin,h) strip features onto a long table (via ST import)."""
     origins = pd.DatetimeIndex(df["origin"].unique())
@@ -111,16 +84,15 @@ def add_strips(df: pd.DataFrame, meta, block) -> tuple:
 
 
 def build_train(freq: str, cols_extra: list) -> pd.DataFrame:
-    """Strip-augmented train frame, reused via the hash-keyed feat cache."""
-    key = fcache_key("train", {"freq": freq, "extra": cols_extra})
+    """Strip-augmented train frame, reused via the stat-keyed feat cache."""
+    key = XO2.fcache_key("train", {"freq": freq, "extra": cols_extra})
     d = SCRATCH / "featcache"
-    pq, js = d / (key + ".parquet"), d / (key + ".json")
+    pq, js = d / f"train_{freq}.parquet", d / f"train_{freq}.json"
     if pq.is_file() and js.is_file():
         try:
             meta = json.loads(js.read_text())
             df = REAL_READ_PARQUET(pq)  # cache-hit path (poison-safe: rebuilt on miss)
-            if (meta.get("key") == key and len(df) == meta.get("rows")
-                    and _origins_sha(df) == meta.get("origins_sha")):
+            if meta.get("key") == key and len(df) == meta.get("rows"):
                 return df
         except Exception:
             pass
@@ -128,8 +100,8 @@ def build_train(freq: str, cols_extra: list) -> pd.DataFrame:
     meta, block = ST.load_inputs()
     df, _ = add_strips(df, meta, block)
     d.mkdir(parents=True, exist_ok=True)
-    meta_rec = {"key": key, "rows": int(len(df)), "origins_sha": _origins_sha(df)}
-    tmp = d / (key + ".tmp.parquet")
+    meta_rec = {"key": key, "rows": int(len(df))}
+    tmp = d / f"train_{freq}.tmp.parquet"
     df.to_parquet(tmp, index=False)
     js.write_text(json.dumps(meta_rec, sort_keys=True))
     tmp.rename(pq)
@@ -148,10 +120,9 @@ def _ace():
 
 def analog_table(scratch, freq, window, origins, state, filled_s, scaler):
     keys, metric = XO2.split_config(XO2.PINNED_KEY)
+    o = pd.DatetimeIndex(pd.to_datetime(origins, utc=True))
     payload = {"freq": freq, "window": window, "config": XO2.PINNED_KEY,
-               "origins": hashlib.sha256(
-                   pd.DatetimeIndex(pd.to_datetime(origins, utc=True)).asi8.tobytes()
-               ).hexdigest()}
+               "origins": [str(o.min()), str(o.max()), len(o)]}
     return XO2.fcache_table(
         scratch, "analog", payload,
         lambda: XO2.analog_long(origins, state, filled_s, keys, metric, scaler))

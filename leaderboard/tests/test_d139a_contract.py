@@ -12,7 +12,7 @@ CME = ["DONKI", "CME", "LASCO", "CCOR"]
 OTHER_SCRATCH = ["worker-t2gr", "worker-t2gf", "worker-t2n2", "worker-t2nr",
                  "worker-t2p", "worker-t2n/", "worker-t2n\""]
 # Physics lives in the parent pipeline; ablation files must reuse it by import.
-PHYSICS_DUP = ["lpmv", "upwind", "ThreadPoolExecutor", "body_sha256", "pfss_brss"]
+PHYSICS_DUP = ["lpmv", "upwind", "ThreadPoolExecutor", "pfss_brss"]
 
 
 def _code():

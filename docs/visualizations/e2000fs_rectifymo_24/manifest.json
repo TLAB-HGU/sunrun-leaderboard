@@ -1,13 +1,11 @@
 {
   "model": "e2000fs_rectifymo_24",
-  "model_config_sha256": "bd171fb6322878beb6b473aaffe811ae3d783483b1b142ed7ec387cfbca7a092",
   "experiment": "E2000FS_RECTIFYMO_24",
   "seeds": [
     42
   ],
   "aggregation": "single model",
   "created_at_utc": "2026-10-27T13:28:40.544278+00:00",
-  "script_sha256": "8e97593f13a2fc2d69aac2a5f8f828f536cf7e588d13cb3699610c960419a621",
   "config": {
     "width": 1000,
     "height": 500,
@@ -31,23 +29,18 @@
     "month_grouping": "UTC month of origin + 1 hour",
     "palette": "RGB cube + greys; no dithering"
   },
-  "rendering_config_sha256": "aecd19d2a677db2743733d8b566fb55bf16438545f37706af9ad5e5b645886e7",
   "sources": {
     "predictions": {
-      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/e2000fs_rectifymo_24.parquet",
-      "sha256": "ec646fd1eec444ddcec5d655ece4a273a0455ecda8e86d347b94394a2387370d"
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/e2000fs_rectifymo_24.parquet"
     },
     "folds": {
-      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/folds.parquet",
-      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/folds.parquet"
     },
     "truth": {
-      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/truth.parquet",
-      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/truth.parquet"
     },
     "history": {
-      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
     }
   },
   "verification": {
@@ -86,8 +79,7 @@
       "first_origin_utc": "2026-02-28T23:00:00+00:00",
       "last_origin_utc": "2026-03-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 23256816,
-      "sha256": "f462d6ea15ce305edc9e69a2f9f0a16dc4e00c26195af8d52f723aefe786a554"
+      "bytes": 23256816
     },
     {
       "month": "2026-04",
@@ -98,8 +90,7 @@
       "first_origin_utc": "2026-03-31T23:00:00+00:00",
       "last_origin_utc": "2026-04-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 22942122,
-      "sha256": "9175d3ad0f2b5b6a6834c54a6b83153fbcefbf2adeb42802d48385035d1beaa3"
+      "bytes": 22942122
     },
     {
       "month": "2026-05",
@@ -110,8 +101,7 @@
       "first_origin_utc": "2026-04-30T23:00:00+00:00",
       "last_origin_utc": "2026-05-28T23:00:00+00:00",
       "duration_ms": 67300,
-      "bytes": 21230456,
-      "sha256": "92ad70874f8ab7a1383e3aa7a31a680525170a584ec888c05a977a6b547259e8"
+      "bytes": 21230456
     },
     {
       "month": "2026-06",
@@ -122,8 +112,7 @@
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 22743751,
-      "sha256": "8cfe2c4f57c8cd8e191a67332f16a2e2688c04be1447b209f9edbefb9d82866d"
+      "bytes": 22743751
     },
     {
       "month": "2026-07",
@@ -134,8 +123,7 @@
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 23835735,
-      "sha256": "babf2fdfc00e8cdc9d192a50f8537ea14215b3f438e5db5e734a1afb6d03d068"
+      "bytes": 23835735
     },
     {
       "month": "2026-08",
@@ -146,8 +134,7 @@
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 23325586,
-      "sha256": "2a6ec60402c29d6c3b62253b4593f27f03a3e85ffd5dd73605c2721596f97ea4"
+      "bytes": 23325586
     },
     {
       "month": "2026-09",
@@ -158,8 +145,7 @@
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
       "duration_ms": 62500,
-      "bytes": 20148664,
-      "sha256": "d4beb198d033767c733bea35e51bba0f0c8fbabb1e4cee7affb7170e7e0125cf"
+      "bytes": 20148664
     }
   ]
 }

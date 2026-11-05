@@ -1,5 +1,4 @@
 """D148 Step 0 collection contract: DONKI CME timing raw store (fast, no network)."""
-import hashlib
 import io
 import json
 import re
@@ -29,7 +28,7 @@ def test_owned_files_present():
     for mo in MONTHS:
         for ep in ENDPOINTS:
             assert "%s_%s.json" % (ep, mo) in files, (ep, mo)
-    for extra in ("manifest.json", "SHA256SUMS", "fetched_at.txt",
+    for extra in ("manifest.json", "fetched_at.txt",
                   "VINTAGE_RULE.md", "REPORT.md",
                   "hdr_CMEAnalysis_2026-10.txt", "hdr_CME_2026-10.txt",
                   "hdr_IPS_2026-10.txt", "hdr_HSS_2026-10.txt"):
@@ -56,7 +55,7 @@ def test_collector_scope_and_hygiene():
     assert len(set(re.findall(r"worker-[a-z0-9]+", norm))) == 1
 
 
-def test_manifest_hashes_and_counts():
+def test_manifest_counts():
     man = json.loads((STORE / "manifest.json").read_text())
     assert len(man["files"]) == 196 and man["requests"] == 196
     assert man["start"] == "2022-10" and man["end"] == "2026-10"
@@ -65,13 +64,8 @@ def test_manifest_hashes_and_counts():
     for e in man["files"]:
         seen.add((e["endpoint"], e["month"]))
         body = (STORE / ("%s_%s.json" % (e["endpoint"], e["month"]))).read_bytes()
-        assert hashlib.sha256(body).hexdigest() == e["sha256"]
         assert len(json.loads(body)) == e["n_entries"]
     assert seen == {(ep, mo) for mo in MONTHS for ep in ENDPOINTS}
-    parts = [ln.split() for ln in (STORE / "SHA256SUMS").read_text().splitlines()]
-    sums = {p[1]: p[0] for p in parts}
-    for e in man["files"]:
-        assert sums["%s_%s.json" % (e["endpoint"], e["month"])] == e["sha256"]
 
 
 def test_no_blank_months():

@@ -1,8 +1,7 @@
 """Render the seven monthly forecast GIFs of the submitted e2000fs_calib2_detroute forecast.
 
 The frames show the forecast that was actually submitted to the leaderboard: `forecast.npz` of
-`research/e2000fs_calib2-20261031/runs/detroute_v1` (sha256 pinned in the study meta.yaml, replayed by the
-submission script). Each frame is one of the 4,970 official origins: 168 h of observed ACE speed ending at the
+`research/e2000fs_calib2-20261031/runs/detroute_v1` (replayed by the submission script). Each frame is one of the 4,970 official origins: 168 h of observed ACE speed ending at the
 origin, then the 72 h truth and the 72 h routed forecast. Hollow markers are values that the input store had to fill.
 
 The script refuses to write a GIF when the prediction/truth join, the recomputed MSE or the monthly frame counts
@@ -13,7 +12,6 @@ disagree with the leaderboard receipt (`leaderboard-result.json`, copied from th
 Use --months 2026-03 --limit 24 for a quick check; all seven months take a few minutes.
 """
 import argparse
-import hashlib
 import io
 import json
 from pathlib import Path
@@ -29,11 +27,10 @@ ROOT = Path("/home/t-lab01/sunrun")
 RUN = ROOT / "research/e2000fs_calib2-20261031/runs/detroute_v1"
 OUT = Path(__file__).resolve().parents[1]
 STORE = Path("/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store")
-FORECAST_SHA = "e7bbdbdf7cd211b95a87186b0d2f79e0ca17c2c132dd8da8ebb4964655438985"  # study meta.yaml
-FOLDS_SHA = "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
-TRUTH_SHA = "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
-HISTORY = ROOT / "data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
-SPEED = ROOT / "data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet"
+# Pinned leaderboard-dataset snapshot: folds/truth of the F1/F2 split the forecast was scored on.
+SNAPSHOT = STORE / "snapshots/d4c55349a4828f09a4e3e9e6b7e04ef3443a1612"
+HISTORY = ROOT / "data-v2/processed/ACE/ace.parquet"
+SPEED = ROOT / "data-v2/bundles/frozen/speed.parquet"
 
 INPUT_HOURS, FORECAST_HOURS = 168, 72
 WIDTH, HEIGHT, FRAME_MS = 1000, 500, 100
@@ -45,28 +42,21 @@ FOOTER = ("e2000fs_calib2_detroute · detector-routed tweedie15 body / mixture2c
           "direct 72 h blocks, Top30 features, ACE lag 0 · Y axis fixed at 200–850 km/s")
 
 
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
-def pinned(suffix, expected):
-    """Locate the pinned parquet in the local leaderboard-dataset cache and verify its hash."""
-    matches = sorted(STORE.glob(f"snapshots/*/*{suffix}"))
-    matches = [p for p in matches if sha(p) == expected]
-    assert matches, f"no cached {suffix} matches the pinned sha256 {expected}"
-    return matches[-1]
+def pinned(name):
+    """The pinned parquet in the local leaderboard-dataset cache."""
+    path = SNAPSHOT / name
+    assert path.exists(), f"missing pinned input {path}"
+    return path
 
 
 def load():
     receipt = json.loads((OUT / "leaderboard-result.json").read_text())
     forecast_path = RUN / "forecast.npz"
-    assert sha(forecast_path) == FORECAST_SHA == receipt["config"]["data"]["asset"]["sha256"], \
-        "forecast.npz is not the submitted asset"
     bundle = np.load(forecast_path)
     origins = pd.DatetimeIndex(bundle["origins_ns"], tz="UTC")
     predictions = bundle["predictions"]
 
-    folds_path, truth_path = pinned("folds.parquet", FOLDS_SHA), pinned("truth.parquet", TRUTH_SHA)
+    folds_path, truth_path = pinned("folds.parquet"), pinned("truth.parquet")
     folds = pd.read_parquet(folds_path)
     truth = pd.read_parquet(truth_path)
     fold_origins = pd.DatetimeIndex(folds["origin_last_input_utc"])
@@ -219,8 +209,7 @@ def main():
         outputs.append(dict(month=month, file=name, frames=len(indices), first_fold=first, last_fold=last,
                             first_origin_utc=data["origins"][indices[0]].isoformat(),
                             last_origin_utc=data["origins"][indices[-1]].isoformat(),
-                            duration_ms=FRAME_MS * len(indices), bytes=len(payload),
-                            sha256=hashlib.sha256(payload).hexdigest()))
+                            duration_ms=FRAME_MS * len(indices), bytes=len(payload)))
         print(json.dumps(outputs[-1]), flush=True)
 
     if args.suffix:
@@ -243,10 +232,10 @@ def main():
                        y_limits_kms=list(Y_LIMITS), month_grouping="UTC month of origin + 1 hour",
                        palette="256-colour palette fixed from the month's first frame; no dithering"),
         "sources": {
-            "predictions": {"file": str(data["forecast_path"]), "sha256": sha(data["forecast_path"])},
-            "truth": {"file": str(data["truth_path"]), "sha256": sha(data["truth_path"])},
-            "folds": {"file": str(data["folds_path"]), "sha256": sha(data["folds_path"])},
-            "history": {"file": str(HISTORY), "sha256": sha(HISTORY)},
+            "predictions": {"file": str(data["forecast_path"])},
+            "truth": {"file": str(data["truth_path"])},
+            "folds": {"file": str(data["folds_path"])},
+            "history": {"file": str(HISTORY)},
         },
         "verification": {
             "folds": int(len(data["origins"])), "pairs": int(data["target"].size),

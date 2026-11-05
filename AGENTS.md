@@ -1,88 +1,127 @@
-# Repository Guidelines
+# [실험 및 연구 파이프라인 지침]
 
-## Project Structure & Module Organization
+### 1. 목표 및 반복 루프
+- 연구 루프: `문헌조사 -> 가설 수립 -> 통제 실험 할당 -> 실행 완료 확인 -> 정량 검증 -> 원인 분석 -> 다음 문헌조사` 순서로 반복할 것.
+- 실험 사전 확정: 각 실험의 가설, 변경 요소, 비교 기준, 성공/실패 조건을 실행 전에 확정할 것.
+- 실패 분석 필수: 개선되지 않는 실험을 설정만 변경하여 무의미하게 반복하지 말고, 실패 원인을 철저히 진단한 뒤 다음 가설을 수립할 것.
 
-This workspace supports solar-wind forecasting, data collection, and reproducible research.
+- 목표 지표:
+    - Hugging Face Leaderboard(`https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard`) 상의 SOTA 대비 전체 성능 2% 이상 개선을 최종 목표로 함.
+    - 기존 최고 실험, SOTA, 신규 실험의 비교 기준을 명확히 분리할 것.
 
-- `research/`: experiment records, runners, and verification receipts. Read its `AGENTS.md` and `CUMULATIVE-WORKER-CONTRACT.md` before experiments.
-- `analysis/`: topic-specific studies containing scripts, tests, reports, and figures.
-- `data-v2/`: the only data root — raw RawDB and pinned snapshots under `raw-store/`, model-input store under `model-inputs/leaderboard-store/`, plus feature builders, manifests and tests. There is no `store/` path any more (removed 2026-10-30); use `paths.STORE_ROOT`/`paths.STORE`/`paths.RAW_STORE`.
-- `nrt-collect/`: near-real-time collection and source availability evidence.
-- `leaderboard/`: evaluation board, status poster and submission tooling; merged into this repository as a subtree (commit `bfd7c9cc2`, 2026-10-30), so it is versioned here. `lb-f1f2/`, `lb-maint/` and `model-release-publish/` code is tracked too; their `docs/`, `releases/`, `experiments/` and caches stay local.
-- `leaderboard/model-release-publish/`: submission tools, reproducible model scripts, and release tests.
+- 누적 개선 및 통제된 Ablation Study:
+    - 개선점은 검증된 구성 요소를 유지하면서 누적하고, 매 단계에서 독립적인 Ablation study를 수행할 것.
+    - 현재 검증된 최고 단일 모델을 고정 기준선(Baseline)으로 사용한다.
+    - 신규 실험은 기준선에 하나의 가설에 해당하는 구성 요소만 추가하거나 변경한다.
+    - 누적 개선을 목표로 하는 실험에서 기존 특징을 다른 특징으로 암묵적으로 대체하는 행위는 엄격히 금지한다.
+    - 추가 특징을 평가할 때는 기존 특징 집합과 신규 특징 집합의 합집합을 명시적으로 구성한다.
+    - 특징 대체가 연구 목적일 경우에는 별도의 `replacement ablation`으로 분류한다.
+    - 기준선 A, 신규 요소 B, 결합 모델 A+B의 차이를 명확히 기록한다.
+    - 개선이 통계적·정량적으로 검증된 구성만 다음 누적 기준선에 반영하고, 실패한 구성은 반영하지 않는다.
 
-The root `.gitignore` excludes most workspace directories. Check repository ownership and `git status` before staging; do not force-add datasets or model artifacts.
+- 자원 할당 원칙:
+    - 로컬, golab2, colab cli의 실제 가용 CPU/GPU 메모리와 실행 중인 작업을 확인한 뒤 독립적인 실험 루프를 추가할 것.
+    - 로컬, golab2 의 여유 자원 내에서 가능한 최대의 컴퓨팅 사용
+    - **장치 규칙 (2026-11-03 사용자 지시):** DL 모델(TCN·RealMLP·TabICL·Kumo 등 신경망/파운데이션 모델)은 **GPU**, GBM 계열(XGBoost·LightGBM·CatBoost)은 **CPU만** 쓴다.
+        - GBM 실행은 반드시 `CUDA_VISIBLE_DEVICES=""`로 띄운다. CUDA 빌드 XGBoost는 `device="cpu"`여도 CUDA 컨텍스트를 만들어 GPU 메모리를 점유한다.
+        - DL 실행은 `CUDA_VISIBLE_DEVICES=0` 기본. 띄우기 전에 `nvidia-smi`로 여유 메모리를 확인하고, GPU가 차 있으면 CPU로 우회하지 말고 대기한다.
+        - 자원을 잡아두기 위한 `sleep` 플레이스홀더 프로세스를 띄우지 않는다.
+    - 실행 중인 실험과 동일한 가설을 중복 할당하지 말 것.
+    - 가용 자원이 있더라도 검증 가능한 구체적 가설이 없으면 무작정 실험을 돌리지 말고 우선 EDA 및 문헌조사를 수행할 것.
 
-### Git topology (single repository)
+---
 
-This workspace is one Git repository at `/home/t-lab01/sunrun`. The former standalone `leaderboard/` clone (remote `TLAB-HGU/sunrun-leaderboard`) was merged on 2026-10-30: its history is the second parent of `bfd7c9cc2`, its branches are preserved as `refs/remotes/lb/*`, and every path is now tracked at `leaderboard/`.
+### 2. 문헌조사
+- 병목 진단:
+    - 새로운 실험을 제안하기 전에 `analysis/`와 `research/`의 기존 실험 코드, 특징 구성, 평가 지표 및 실패 기록을 확인하여 병목을 진단할 것.
+    - 최근 실패한 실험이 있다면 가설 실패, 구현 결함, 데이터 누수, 과적합, 최적화 실패를 명확히 구분할 것.
+    - 특히 기존 기준선에서 어떤 구성 요소가 제거되거나 대체되었는지 코드 `diff`로 확인할 것.
 
-- Remote `github` is `TLAB-HGU/sunrun-leaderboard`, a public repository. Local history holds blobs over GitHub's 100 MB limit, so `master` is never pushed directly: its `main` carries snapshot commits made with `git commit-tree` on top of `github/main`, with the same tree as `master` minus `research/policy-archive`. No full-history backup bundle exists any more; `.git` here is the only full copy.
-- Publication pipelines still clone `origin/main` in their own checkouts and push their release there, at the repository root. Reconcile deliberately with the monorepo layout before running one.
-- The experiment catalog those pipelines link into is local (`leaderboard/experiments`, untracked); the `leaderboard/scripts` and `leaderboard/releases` entries that pointed at the missing `/home/t-lab01/sunrun/experiments` catalog were dropped in `2e72b60b5`/`5c74f5c58` and remain readable in earlier commits.
-- `research/chatgpt-skill/solar-queue-harness/` is still a separate clone inside an ignored path; it is not part of this repository.
+- 문헌 근거 제시:
+    - Exa AI 및 웹 검색으로 문헌을 조사하고, 실험 가설과 직접 관련된 이론적/실험적 근거를 제시할 것.
+    - 문헌의 문제 정의, 데이터 조건, 핵심 메커니즘, 기대 효과와 현재 문제에 적용 가능한 범위를 명확히 기록할 것.
+    - 해당 문헌에서 직접 확인되지 않은 개선 효과를 이미 검증된 사실처럼 기술하지 말 것.
 
-- Prefill to empty data
+- 기존 라이브러리 우선 검토:
+    - XGBoost, LightGBM, pytorch, scikit-learn 등 필요한 공식 문서와 관련 검증된 GitHub 구현을 확인하여, 이미 제공되는 검증된 기능을 우선 활용할 것.
 
+---
 
-## Build, Test, and Development Commands
+### 3. 병렬 실행
+- 충돌 방지 및 명세:
+    - 로컬, golab2 의 여유 자원 내에서 가능한 최대의 컴퓨팅 사용 가능한 범위내에서 독립 실험을 병렬 진행하되, 자원 충돌과 데이터·출력 파일 경로 충돌을 철저히 방지할 것.
+    - Sub-agent마다 가설, 변경 허용 범위, 기준선, 평가 조건, 산출물 및 완료 조건을 사전에 명시할 것.
+    - 실험 종료 시 동일한 평가 프로토콜로 결과를 일관되게 검증한 뒤 피드백을 반영할 것.
 
-There is no workspace-wide build command. Use the relevant component’s README and the shared uv environment below.
+- 세션 및 프로세스 라이프사이클 관리:
+    - 각 실험에 독립적인 tmux 세션과 로그 파일을 할당할 것.
+    - 단순히 실행 명령 제출 및 tmux 세션 생성만으로 실험 완료를 선언하지 말 것.
+    - 프로세스 종료 코드, 학습 로그, 예측 파일, 평가 결과, 메타데이터가 모두 정상 기록되어야 완료로 판정할 것.
+    - 실패 시 오류 로그를 보존하고, 정상 완료 후에는 tmux 세션을 정리할 것.
 
-### Shared Python environment
+- 실험 현황 TUI(`sunrun`) 표시 양식:
+    - 앞으로 진행하는 모든 실험은 로컬·golab2 모두 `sunrun` TUI(`tools/sunrun_monitor.py`, power TUI와 같은 화면 양식)에 자동으로 표시되는 레이아웃으로 띄울 것. 표시되지 않으면 TUI를 실험별로 고치지 말고 실험 쪽 레이아웃을 맞출 것.
+    - 실행 프로세스는 python으로 `experiment.py`를 실행하거나 `--experiment {이름}`·`--out {출력 폴더}` 인자를 주고, 장치는 `--device cuda|cpu`, `--threads N`으로 명시한다. GBM/CPU 계열은 `CUDA_VISIBLE_DEVICES=''`로 띄운다(장치 규칙 검사).
+    - 출력 폴더는 캠페인 아래 `runs/{이름}/`에 두고 `launch.json`(`family`, `tmux_session`, `started_utc`, `host`/`training_host`)을 실행 전에 기록한다.
+    - 캠페인은 로컬 `research/{캠페인}/registry.json`(+`runtime.json`, `manifest.json`) 또는 golab2 `~/sunrun-{캠페인}/assignment.json`(+`scheduler-state.json`) 구조를 따르고, 서비스 스크립트 이름에 controller/scheduler/collect/publish/monitor 중 하나를 넣는다(대기열·서비스 표시).
+    - 진행률이 보이도록 `train.log`에 JSON 한 줄 레코드(`period`, `horizon`/`block`/`head`)를 남기고, 기간별 산출물 `F{1,2,3}_predictions.npz` 또는 `F{n}_metadata.json`을 기록한다. 종료 시 `train.exit`(종료 코드), 게시 시 `submission.json`(`competition.total.s`)을 남긴다.
+    - 기간 안의 학습 단위가 여러 개면 레코드에 `unit`(완료 수)·`units`(전체 수)를 함께 남긴다(`stage`/`component`/`block`은 표시용).
+    - 제출 후보가 아닌 실험(대조군·게이트 미통과)은 `complete.json`에 `"publish": "not_required"`와 `publish_reason`을 기록한다. 그래야 "게시 대기"로 잡히지 않는다.
+    - Colab에서 도는 실험은 호스트를 `colab`으로 표시한다: `colab_run.py watch`가 캠페인 아래 `colab_*/status.json`에 sunrun 형식 스냅숏을 기록하게 하고, `launch.json`에 `"host": "colab"`, `"training_host": "colab"`을 기록한다. local로 표시하지 않는다.
+    - 실험을 띄운 직후 `sunrun --once`로 "실행 중"에 진행·단계·로그가 표시되는지, 종료 후 "최근 8개"에 결과·Total S가 표시되는지 확인한다.
 
-- Use `/home/t-lab01/sunrun/.venv` for all Python work in this workspace, including subprojects, tests, and experiments. This is the user-selected uv environment (Python 3.12).
-- Activate with `source /home/t-lab01/sunrun/.venv/bin/activate`, or invoke `/home/t-lab01/sunrun/.venv/bin/python` explicitly. Prefer the absolute interpreter path in tool calls and background jobs, where activation may not persist.
-- Install dependencies with `uv pip install --python /home/t-lab01/sunrun/.venv/bin/python <packages>` (or `-r <requirements.txt>`). Do not create or select another virtual environment for new work.
-- `wandb` is installed in this shared environment. Install additional task dependencies here as needed.
+---
 
-- `python3 -m pytest analysis/peak72_eda/`: run focused EDA tests from the workspace root.
-- `python3 -m pytest data-v2/tests/`: run data infrastructure tests with component dependencies installed.
-- `uv pip install --python /home/t-lab01/sunrun/.venv/bin/python -r leaderboard/model-release-publish/requirements.txt`: install submission-client dependencies in the shared environment.
-- From `leaderboard/model-release-publish/`, run `python3 submit.py my_predictions.parquet meta.yaml --dry-run` to validate and score without uploading. Private evaluation data access is required.
+### 4. 구현 구조
+- 스크립트 구성:
+    - `research/{실험}/`의 단일 `실험.py`에 데이터 로더, 특징 생성, 학습, 검증, 예측 조립 및 아티팩트 기록을 모두 포함할 것.
+    - **단일 아키텍처 원칙 (2026-11-05 사용자 지시):** 실험별 `experiment.py`(`runs/{이름}/experiment.py` 포함)에는 그 실험 아키텍처가 실제로 실행하는 코드만 남긴다.
+        - 다른 실험의 분기(`if experiment == ...`/`endswith(...)`), 미사용 컴포넌트·헬퍼·상수·import, 여러 실험을 고르는 `SUPPORTED` 목록을 넣지 않는다. `--experiment`는 해당 실험 이름 하나만 받는다(기본값으로 지정 가능).
+        - 공용 러너(예: `pooling.py`, `calib11.py`)에서 실험을 떼어낼 때는 그 실험의 실행 경로만 복사하고, 정리 전 코드와 smoke 실행 예측·상태 산출물이 동일한지 확인한 뒤 교체한다.
+        - 여러 실험이 공유하는 코드는 공용 러너에 두고, 실험별 `experiment.py`에 다른 아키텍처 코드를 복제하지 않는다.
+    - PyTorch를 활용하는 보조 모델 실험에 한하여 torch 파이프라인을 사용하고, 해당 실험은 명시적으로 구분할 것.
+    - 검증 데이터에 적합(fit)시키는 사후 보정, 앙상블, 예측 산출물 재조합 행위는 데이터 누수로 간주하여 엄격히 금지함.
+    - 특징 및 형상 관리:
+    - 기준선 코드에서 변경된 특징 및 학습 설정을 실행 전에 `diff`로 기록할 것.
+    - 누적 실험에서는 이전에 채택된 특징 그룹이 실제 입력 행렬에 유지되고 있는지 코드와 특징 목록(Feature list)으로 검증할 것.
+    - 특징 개수, 특징 이름, 학습 및 검증 데이터 범위를 아티팩트에 명시적으로 기록할 것.
 
-## Input Timing (t0 rule)
+- 전략 문서 (`strategy.md`):
+    - `research/{실험}/strategy.md`에 참고 문헌, 가설, 기준선 실험 ID, 변경 특징 목록, 유지 특징 목록, 예상 개선 메커니즘, 검증 기준을 실험 실행 전에 작성할 것.
+    - 실험 종료 후 실제 변경 diff, 실행 상태, 최종 결과, 실패 원인 분석 및 다음 실험 채택 여부를 누적 기록할 것.
 
-For an origin t0 (`origin_last_input_utc`), a model may use every input row with `timestamp_utc <= t0`, as the leaderboard rule states. Per user instruction 2026-10-29, the former ACE +2h availability delay is removed: new experiments, features and runners apply no 2h input shift, and training-label maturity is target + 72h (not 74h). Runners, frozen inputs (e.g. the E0472/E1149/cumulative base111 parquets) and results made under the old rule keep their original timing as historical records; label them ACE+2h when comparing them with new runs, and do not copy their 2h shift into new code.
+---
 
-## Leaderboard Experiment Status (required, Codex and Claude Code)
+### 5. 검증 및 재현성
+- **평가 기간 규칙 (2026-11-04 사용자 지시):** 모든 실험(대기열 포함)은 내부 검증을 하지 않는다. 2025 분기 fold 같은 별도 내부 평가·선별 단계 없이 리더보드 F1/F2/F3 기간만 평가한다.
+    - 학습은 각 기간의 공식 학습 마감(cutoff) 이전 데이터만 쓰고, 채점은 `leaderboard/scorer/competition.py`와 리더보드 store의 관측 파일로 한다(로컬 S가 공식 scorer와 일치해야 함).
+    - 학습 데이터 안의 holdout(epoch early stopping, 보정용 최근 구간 등)은 모델 적합의 일부이므로 허용한다.
+    - 리더보드 기간 정답은 적합이 끝난 뒤 채점에만 쓰고, 학습·특징·계수 적합에는 넣지 않는다.
+- 검증 정책 분리 및 재현성:
+    - 각 실험의 완벽한 재현성을 위해 Git commit ID, 라이브러리 버전, 데이터 분할 구간, 특징 목록, 하이퍼파라미터 및 seed를 반드시 기록할 것.
+    - 독립적인 성능 개선 없이 검증 정책 변경만으로 새 실험 ID를 생성하지 말 것.
 
-Post every solar-wind forecasting experiment to the leaderboard Space (https://huggingface.co/spaces/tlabtlab/sunrun-leaderboard) before it runs, whatever the launcher (expos, `launch.py`, analysis `run.py`, notebooks). `leaderboard/lbstatus.py` adds each 대기 / 진행 experiment as a row at the top of the ranking table, shown as `<experiment> (진행)` or `<experiment> (대기)` with dashes for the metrics. A finished experiment leaves those rows by entering the ranking: submit its result to the leaderboard, and its entry is retired (완료) once the dataset holds a result with the same `team_member`/`experiment` submitted after the entry was registered. Per user instruction 2026-10-29, this replaces the no-upload rule for leaderboard results. Unit tests and smoke checks need no entry.
+- 랜덤 시드 취급 원칙:
+- 랜덤 시드만 변경한 실험을 새로운 구조적 개선 가설로 취급하지 말 것.
+- 유망한 구조적 개선을 검증할 때는 동일 조건에서 복수 seed(Multi-seed)를 실행하여 평균, 분산, 최악의 성능을 확인할 것.
+- seed 변경으로 우연히 얻은 단일 최고 성능(Cherry-picking)만 선택하여 개선 효과로 주장하지 말 것.
 
-- When an experiment is planned, register it as 대기: `/home/t-lab01/sunrun/.venv/bin/python /home/t-lab01/sunrun/leaderboard/lbstatus.py set <experiment> --status 대기 --desc "<what it tests>"`. Name it exactly as its result will be submitted (`experiment` in meta.yaml, `[A-Za-z0-9._-]`); a run that submits several experiment names gets one entry per name. `--member` defaults to `seongeun` (env `SUNRUN_MEMBER`); the agent (codex / claude-code) is detected automatically.
-- Launch through the wrapper: `lbstatus.py run <experiment> -- <command ...>`. It posts 진행 at start and puts the rows and the best/second-best marks back every 5 minutes while the run lasts. On rc 0 the entry stays 진행 ("awaiting leaderboard submission"); on failure it posts 실패, on SIGTERM/SIGINT 중단.
-- After a successful run, submit the result (`leaderboard/model-release-publish/submit.py` or the study's publication pipeline), then run `lbstatus.py sync`. Publishing rewrites `index.html` and drops the status rows and marks. `sync` retires the submitted entry and restores them.
-- A run that cannot use the wrapper: `lbstatus.py set <experiment> --status 진행` right before it starts, then submit and `sync` as above.
-- No internal gate may stop official evaluation (user instruction 2026-10-29). A study may compute internal or development checks, such as seasonal folds, a confirmation window or a parent comparison, and record them. It must not use them to skip the F1/F2/F3 fits, the official forecasts or the leaderboard submission. Per user instruction 2026-10-31 the periods are F1 = Jan-Mar, F2 = Apr-Jun, F3 = Jul-Sep 2026. Every experiment whose training completes fits F1 (targets < 2025-12-29), F2 (targets < 2026-03-29) and F3 (targets < 2026-06-29), writes the 454,680-row official forecast (6,315 origins), submits it and runs `sync`. Record the internal result in the description (e.g. "internal check failed; not promoted"). Do not write `completed_rejected`-style exits that end a run before F1/F2/F3. Runners, frozen inputs and results made for the earlier F1 (03..05) / F2 (06..09) windows keep their original windows as historical records.
-- An experiment that ends without a leaderboard result (failed or interrupted run, or a diagnostic that produces no official forecast by design): `lbstatus.py set <experiment> --status 실패|중단|완료 --note "<reason>"` so it leaves the list. "Gate not passed" is not such a reason; see the rule above.
-- If posting 대기 fails, fix it (HF token in `~/.cache/huggingface/token`) before launching. Do not start an unposted experiment.
-- `lbstatus.py list` shows active entries and recent history; `lbstatus.py rm <experiment>` deletes a mistaken entry.
+- 과적합/과소적합 대응:
+  - 과적합 또는 과소적합이 확인되면 학습·검증 오차 추이, 시간 구간별 오차, 사이트별 오류를 심층 분석하여 원인을 기록할 것.
+  - 원인에 대한 구체적 가설과 통제 실험을 수립한 뒤 후속 실험을 진행할 것.
+  - 평가 대상 기간의 정답(Target)을 특징 선택, 하이퍼파라미터 탐색, 사후 보정 적합에 절대 사용하지 말 것.
 
-## Long-Running Experiments
+- 리더보드 제출 기준:
+  - 동일 검증 조건의 기존 최고 단일 모델 대비 $W$가 1% 이상 감소하고, 보조 지표에서 중대한 악화가 없을 때만 리더보드 제출 후보로 선정할 것.
+  - 제출 기준에 사용한 모델, 비교 대상, 검증 구간, W/MAE/RMSE, 복수 seed 결과를 명시할 것.
+  - 최종 목표인 SOTA 대비 $W$ 2% 개선 여부는 별도로 판정할 것.
+  - 리더보드 점수를 반복적인 특징 선택이나 파라미터 튜닝의 피드백 학습 신호(Leakage)로 사용하지 말 것.
 
-The agent's bash tool kills processes it started when the call ends, so `&`, `nohup`, and `expos run --background` die silently (empty log, no run record).
+---
 
-- Launch any run longer than a few minutes outside the tool's process tree, wrapped by the status poster: `systemd-run --user --unit=<eid>-run --working-directory=$HOME/sunrun/leaderboard /home/t-lab01/sunrun/.venv/bin/python /home/t-lab01/sunrun/leaderboard/lbstatus.py run <eid> -- /home/t-lab01/sunrun/.venv/bin/python -m expos run <eid> --timeout 21600`. Check it with `systemctl --user status <eid>-run` and the `research/expos/runs/<eid>/run*.log` file.
-- If a background launch fails once, run it in the foreground right away (`expos run <eid> --timeout ...` with a matching tool timeout). Do not diagnose the launcher or run extra timing/benchmark scripts instead of the requested experiment.
-- When the user asks for an experiment, the goal is a started run. Once code and smoke checks pass, launch it; do not add further pre-checks.
-- Tell the user in one line what you are doing at least every 5 minutes. Do not spend long stretches on tool calls with no message.
+### 6. 실험 종료 후 피드백
 
-## Experiment Script Scope
-
-**단일 아키텍처 원칙 (2026-11-05 사용자 지시):** 실험별 `experiment.py`(`runs/{이름}/experiment.py` 포함)에는 그 실험 아키텍처가 실제로 실행하는 코드만 남긴다.
-
-- 다른 실험의 분기(`if experiment == ...`/`endswith(...)`), 미사용 컴포넌트·헬퍼·상수·import, 여러 실험을 고르는 `SUPPORTED` 목록을 넣지 않는다. `--experiment`는 해당 실험 이름 하나만 받는다(기본값으로 지정 가능).
-- 공용 러너(예: `pooling.py`, `calib11.py`)에서 실험을 떼어낼 때는 그 실험의 실행 경로만 복사하고, 정리 전 코드와 smoke 실행 예측·상태 산출물이 동일한지 확인한 뒤 교체한다.
-- 여러 실험이 공유하는 코드는 공용 러너에 두고, 실험별 `experiment.py`에 다른 아키텍처 코드를 복제하지 않는다.
-
-## Coding Style & Naming Conventions
-
-Follow nearby Python code: four-space indentation, `snake_case` functions and modules, and uppercase constants. Use descriptive study directories and `test_*.py` test files. Preserve timestamp, unit, and manifest conventions. No root formatter or lint configuration is established; use component-specific tooling where available.
-
-## Testing Guidelines
-
-Use pytest and run the smallest suite covering changed behavior. Add regression tests for fixes, especially timestamp alignment, source availability, and data integrity. No workspace-wide coverage threshold is defined. Record validation commands, outcomes, and required data or environment limitations alongside research evidence.
-
-## Commit & Pull Request Guidelines
-
-Recent commits use experiment identifiers followed by concrete findings or corrections, such as `G004: align rounding across the dispersion note`. Follow that pattern when applicable. PRs should describe scope, affected experiments, validation commands, and linked issues; include figures for visual changes. Preserve historical results and protected inputs. Never commit tokens or private datasets.
+- 원인 분석 및 기준선 갱신:
+  - 결과가 개선되지 않았다면 (1) 가설 결함, (2) 구현 오류, (3) 검증 조건 불일치 중 무엇인지 우선 진단할 것.
+  - 엄격히 유효한 개선만 차기 누적 기준선(Baseline)으로 편입하고 후속 실험을 생성할 것.
+  - 각 루프 종료 시마다 현재 최고 모델, Sota 대비 격차, 새로 확인된 인사이트, 실패 원인, 다음 우선순위 가설을 갱신하여 문서화할 것.

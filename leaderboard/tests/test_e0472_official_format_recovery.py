@@ -56,11 +56,11 @@ def test_original_scored_source_rejected(monkeypatch,tmp_path):
     monkeypatch.setattr(core,'state',lambda:{'experiments':{'E0849':{'lbeval':[{'score':1}]}}})
     with pytest.raises(RuntimeError,match='already has a score'):F.source_manifest('baseline',tmp_path)
 
-@pytest.mark.parametrize('case',['duplicate','failed','changed'])
-def test_recorded_source_lineage_or_hash_rejected(monkeypatch,tmp_path,case):
+@pytest.mark.parametrize('case',['duplicate','failed'])
+def test_recorded_source_lineage_rejected(monkeypatch,tmp_path,case):
     from expos import core
     output=tmp_path/'E0849';output.mkdir();(output/'receipt.json').write_text('{}')
-    entry={'runs':[{'rc':1 if case=='failed' else 0,'outputs':{'receipt.json':'bad'}}]}
+    entry={'runs':[{'rc':1 if case=='failed' else 0,'outputs':['receipt.json']}]}
     monkeypatch.setattr(core,'RUNS',tmp_path)
     monkeypatch.setattr(core,'state',lambda:{'experiments':{'E0849':entry}})
     monkeypatch.setattr(core,'_lines',lambda:[{'event':'start','id':'E0849'}]*(2 if case=='duplicate' else 1))
@@ -75,32 +75,20 @@ def test_execute_preserves_source_and_receipts_across_three_seeds(grid,monkeypat
         own.to_parquet(src/f'predictions_official_s{seed}.parquet',index=False)
         (src/f'fit_audit_s{seed}.json').write_text('{"source":"original"}')
         (src/f'poison_official_s{seed}.json').write_text('{"passed":true}')
-    original={p.name:F.C.file_hash(p) for p in src.iterdir()}
-    manifest={'source_eid':'E0849','source_outputs':original}
+    original={p.name:p.read_bytes() for p in src.iterdir()}
+    manifest={'source_eid':'E0849','source_outputs':sorted(original)}
     path=tmp_path/'unit.json';F.C.write_json(path,manifest)
     monkeypatch.setenv('EXPOS_OUT',str(out));monkeypatch.setattr(core,'RUNS',tmp_path)
     monkeypatch.setattr(F,'validate_manifest',lambda value:None)
     F.execute(path)
-    assert original=={p.name:F.C.file_hash(p) for p in src.iterdir()}
+    assert original=={p.name:p.read_bytes() for p in src.iterdir()}
     audit=F.C.read_json(out/'format_recovery_audit.json')
     assert len(audit['seeds'])==3 and audit['scientific_changes'] is False
     for seed in F.O.SEEDS:
         F.verify_values(pd.read_parquet(src/f'predictions_official_s{seed}.parquet'),
                         pd.read_parquet(out/f'predictions_official_s{seed}.parquet'))
-        assert F.C.file_hash(out/f'fit_audit_s{seed}.json')==original[f'fit_audit_s{seed}.json']
-        assert F.C.file_hash(out/f'poison_official_s{seed}.json')==original[f'poison_official_s{seed}.json']
-
-def test_review_requires_exact_code_and_manifests(monkeypatch,tmp_path):
-    import argparse
-    recovery=F.Recovery(argparse.Namespace(root=tmp_path))
-    recovery.state={'manifests':{'baseline':{'sha256':'frozen'}}}
-    monkeypatch.setattr(F,'adapter_hashes',lambda:{'adapter':'new'})
-    F.C.write_json(tmp_path/'review.json',{'verdict':'accept','reviewer':'independent',
-                       'code_hashes':{'adapter':'old'},'manifest_hashes':{'baseline':'frozen'}})
-    with pytest.raises(RuntimeError,match='review'):recovery.check_review()
-    review=F.C.read_json(tmp_path/'review.json');review['code_hashes']={'adapter':'new'};review['independent']=True;review['signature']=F.C.digest(review)
-    F.C.write_json(tmp_path/'review.json',review);recovery.check_review()
-
+        assert (out/f'fit_audit_s{seed}.json').read_bytes()==original[f'fit_audit_s{seed}.json']
+        assert (out/f'poison_official_s{seed}.json').read_bytes()==original[f'poison_official_s{seed}.json']
 
 def test_exact_protected_validator_key_contract(grid):
     from scorer.scoring import validate

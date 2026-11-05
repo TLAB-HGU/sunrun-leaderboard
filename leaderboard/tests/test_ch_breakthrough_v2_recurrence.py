@@ -202,7 +202,7 @@ def test_extension_label_present_in_manifest_extra_and_readme():
         assert manifest["extra"]["extension"] == recurrence.EXTENSION_LABEL
         saved = json.loads((Path(tmp) / "m.json").read_text())
         assert saved["extra"]["extension"] == recurrence.EXTENSION_LABEL
-        assert "common" in saved["code_hashes"]
+        assert "common" in saved["code_identities"]
 
 
 def test_predict_covers_horizons_1_to_72():
@@ -302,24 +302,23 @@ def test_manifest_carries_required_identity_fields():
             params={"n_estimators": 5, "max_depth": 2}, device="cpu",
             device_info={"lease": "cpu-fallback"}, seed=42,
             max_train_origins=40, outdir=tmp,
-            input_identities={"ace": {"sha256": "x", "path": "p", "bytes": 1,
-                                              "files": 1}})
+            input_identities={"ace": {"path": "p", "bytes": 1, "files": 1,
+                                              "mtime_ns": 0}})
         manifest = json.loads(
             (Path(tmp) / "target-recurrence__dev-A.manifest.json")
             .read_text())
-        assert "common" in manifest["code_hashes"]
-        assert "caller" in manifest["code_hashes"]
+        assert "common" in manifest["code_identities"]
+        assert "caller" in manifest["code_identities"]
         assert manifest["train_cutoff"] == cutoff.isoformat()
         assert manifest["params"]["n_estimators"] == 5
         assert manifest["tree_counts"]["n_estimators"] == 5
         assert manifest["columns"] == list(fore.columns)
-        assert manifest["input_identities"]["ace"]["sha256"] == "x"
+        assert manifest["input_identities"]["ace"]["bytes"] == 1
         assert manifest["sampling"]["kept"] == 2
         assert manifest["seed"] == 42
         assert manifest["inference_seconds_per_origin"] >= 0
         assert "versions" in manifest
-        assert manifest["prediction"]["sha256"] == \
-            manifest["extra"]["prediction_sha256"]
+        assert manifest["prediction"]["bytes"] > 0
         assert manifest["extra"]["extension"] == recurrence.EXTENSION_LABEL
         assert manifest["extra"]["arm"] == "target-recurrence"
         assert manifest["extra"]["use_target"] is True

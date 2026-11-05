@@ -14,7 +14,6 @@ the 72 h horizon (b0/b1/b2, 24 outputs per tree) for two paired arms:
 
     /home/t-lab01/sunrun/.venv/bin/python docs/visualizations/e2000fs_budget_spectral/code/plot_loss.py
 """
-import hashlib
 import json
 import shutil
 from pathlib import Path
@@ -42,33 +41,25 @@ ARM_STYLE = {"control": dict(color="#4c72b0", ls="-", lw=2.8, alpha=1., label="c
              "spectral": dict(color="#c44e52", ls="-", lw=1.2, alpha=1., label="spectral (submitted)")}
 
 
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def load(name):
     return pd.read_csv(LOSSES / f"{name}.csv")
 
 
 def collect():
-    """{stage: {(arm, block): frame}} for every archived boosters, hash-checked against the study config."""
-    config = json.loads((RESULTS / "config.json").read_text())
-    pinned = config["data"]["loss_sha256"]
-    frames, receipt = {}, {}
+    """{stage: {(arm, block): frame}} for every archived boosters, plus the copied log names."""
+    frames, names = {}, []
     for stage, _ in OFFICIAL + DEV:
         for arm in ARMS:
             for block in range(3):
                 name = f"{stage}_{arm}_b{block}"
                 path = LOSSES / f"{name}.csv"
-                digest = sha(path)
-                assert digest == pinned[f"losses/{name}.csv"], f"loss log changed: {path}"
                 frame = pd.read_csv(path)
                 assert list(frame.columns) == COLUMNS, f"unexpected columns in {path}"
                 assert len(frame) == 900 and frame["round"].iloc[0] == 1 and frame["round"].iloc[-1] == 900
                 assert np.isfinite(frame[COLUMNS[1:]].to_numpy()).all(), f"non-finite loss in {path}"
                 frames[(stage, arm, block)] = frame
-                receipt[name] = digest
-    return frames, receipt
+                names.append(name)
+    return frames, names
 
 
 def mean_over_blocks(frames, stage, arm, column):
@@ -183,17 +174,17 @@ def plot_development(frames):
 
 
 def main():
-    frames, receipt = collect()
+    frames, names = collect()
     (OUT / "loss_history").mkdir(parents=True, exist_ok=True)
-    for name in receipt:
+    for name in names:
         shutil.copyfile(LOSSES / f"{name}.csv", OUT / "loss_history" / f"{name}.csv")
     out = summary(frames)
     out.to_csv(OUT / "loss_summary.csv", index=False)
     plot_official(frames)
     plot_blocks(frames)
     plot_development(frames)
-    files = {p.name: sha(p) for p in (OUT / "loss_history.png", OUT / "loss_history_blocks.png",
-                                      OUT / "loss_history_development.png", OUT / "loss_summary.csv")}
+    files = [p.name for p in (OUT / "loss_history.png", OUT / "loss_history_blocks.png",
+                              OUT / "loss_history_development.png", OUT / "loss_summary.csv")]
     (OUT / "loss_receipt.json").write_text(json.dumps(dict(
         source="research/e2000fs_budget_spectral/results/runs/full_v1/publication/package/releases/"
                "e2000fs_budget_spectral/losses",
@@ -201,7 +192,7 @@ def main():
                "official stages are 'f1' and 'final', development windows are D1/D2/D3/C",
         columns=COLUMNS,
         note="weighted_mse is the point4 training objective, not the official unweighted leaderboard MSE",
-        loss_sha256=receipt,
+        loss_logs=names,
         outputs=files), indent=2) + "\n")
     print(json.dumps(files, indent=2))
 

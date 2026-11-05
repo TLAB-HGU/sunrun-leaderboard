@@ -15,7 +15,6 @@ from test_mse20_hss_arrival_model import frames
 def test_two_fixed_ablations_config_and_chronological_assignments():
     configs = m.candidate_configs()
     assert [c['id'] for c in configs] == ['shift_only', 'shift_gain']
-    assert m._hash(m.fixed_backbone_config()) == m.BACKBONE_CONFIG_SHA
     for config in configs: m.validate_config(config)
     with pytest.raises(ValueError): m.validate_config(dict(configs[0], epochs=2))
     cutoff = pd.Timestamp('2025-01-01T00:00Z')
@@ -64,7 +63,9 @@ def test_features_future_poison_and_soft_label_cutoff():
     np.testing.assert_allclose(labels['soft_shift'].sum(1), 1, atol=1e-6)
     assert (labels['soft_shift'] > 0).all()
     poison = copy.deepcopy(f); poison['speed'].loc[poison['speed'].index > cutoff] = 1e7
-    assert m.label_hashes(m.make_labels(poison, origins, cutoff, features)) == m.label_hashes(labels)
+    poisoned = m.make_labels(poison, origins, cutoff, features)
+    for key, value in labels.items():
+        np.testing.assert_array_equal(poisoned[key], value)
     with pytest.raises(ValueError, match='crosses cutoff'):
         m.make_labels(f, origins, cutoff-pd.Timedelta(hours=1), features)
 
@@ -84,10 +85,8 @@ def _fake_backbone(monkeypatch):
         (directory/'model-band0.ubj').write_bytes(b'synthetic-native-placeholder')
         metadata = dict(family='adaptive_tree', config=config, cutoff=pd.Timestamp(cutoff).isoformat(),
             train_label_max=proof['train_label_max'], n_train_origins=proof['n_train_origins'],
-            train_origin_sha256=proof['train_origin_sha256'],
-            model_files=[dict(path='model-band0.ubj', sha256=m.digest(directory/'model-band0.ubj'))])
+            model_files=[dict(path='model-band0.ubj')])
         (directory/'metadata.json').write_text(json.dumps(metadata))
-        (directory/'metadata.sha256').write_text(m.digest(directory/'metadata.json'))
         return predict(f, origins, directory, device), metadata
     monkeypatch.setattr(m.backbone, 'fit_predict', fit)
     monkeypatch.setattr(m.backbone, 'predict_saved', predict)
@@ -108,8 +107,7 @@ def test_composite_shared_cache_actual_oof_scaler_restore_provenance(tmp_path, m
         restored = m.predict_saved(f, origins, directory)
         for key in ('mse', 'peak', 'backbone'):
             np.testing.assert_allclose(pair[key].pred_kms, restored[key].pred_kms, rtol=0, atol=1e-3)
-        proof = m.verify_training_provenance(f, directory)
-        assert proof['train_label_hashes'] == meta['train_label_hashes']
+        m.verify_training_provenance(f, directory)
         assert meta['train_assignment'] == [0, 1] and meta['input_width'] == 1340
         for record in meta['backbones']:
             m._verify(record['result']); m._verify(record['training_provenance'])
@@ -117,10 +115,10 @@ def test_composite_shared_cache_actual_oof_scaler_restore_provenance(tmp_path, m
             assert claim['owner_birth'] and claim['claimed_utc']
     assert len(calls) == 3  # Both heads share exactly three successful fits.
     assert metadata[0]['backbones'] == metadata[1]['backbones']
-    # Rehashing an altered learned scaler cannot evade independent reconstruction.
+    # An altered learned scaler cannot evade independent reconstruction.
     path = tmp_path/'shift_gain/model/metadata.json'; meta = json.loads(path.read_text())
     meta['normalizer']['mean'][0] += 1
-    path.write_text(json.dumps(meta)); (path.parent/'metadata.sha256').write_text(m.digest(path))
+    path.write_text(json.dumps(meta))
     with pytest.raises(ValueError, match='scaler'):
         m.verify_training_provenance(f, path.parent)
 
@@ -147,7 +145,7 @@ def test_small_real_cpu_backbone_native_fields_and_training_proof(tmp_path):
     proof = json.loads(Path(record['training_provenance']['path']).read_text())
     metadata = json.loads((Path(record['model_dir'])/'metadata.json').read_text())
     assert proof == m.backbone_training_proof(f, cutoff)
-    for key in ('train_origin_sha256', 'n_train_origins', 'train_label_max'):
+    for key in ('n_train_origins', 'train_label_max'):
         assert proof[key] == metadata[key]
     assert proof['n_train_origins'] <= 3
     _, cached = m.cached_backbone(f, cutoff, cutoff, origins, 'deployment', 'cpu', tmp_path)

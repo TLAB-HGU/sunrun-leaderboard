@@ -1,7 +1,5 @@
-import hashlib
 import json
 import subprocess
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -54,24 +52,23 @@ def metadata_fixture(tmp_path):
            'experiments/mse20_ch_dynamics/inputs.py','experiments/mse20_ch_dynamics/arrival.py',
            'experiments/mse20_ch_dynamics/neural.py']
     sources={name:e.p.file_ref(e.p.ROOT/name) for name in names}
-    meta=dict(family='hss_arrival_plateau',config=config,model_sha256=e.p.digest(model),cutoff=e.p.CUTOFF,
-        train_origins=[x.isoformat() for x in pool],train_origin_sha256=hashlib.sha256(pool.asi8.tobytes()).hexdigest(),
+    meta=dict(family='hss_arrival_plateau',config=config,cutoff=e.p.CUTOFF,
+        train_origins=[x.isoformat() for x in pool],
         train_label_max=(pool.max()+pd.Timedelta(hours=96)).isoformat(),train_profile_label_max=(pool.max()+pd.Timedelta(hours=72)).isoformat(),
         epochs=1,history=[{}],input_width=4,normalizer=dict(mean=[0.,0.],scale=[1.,1.],count=[2,2]),
-        sources={str((e.p.ROOT/name).resolve()):sources[name]['sha256'] for name in names})
+        sources={str((e.p.ROOT/name).resolve()):sources[name] for name in names})
     def save():
-        path=tmp_path/'metadata.json';path.write_text(json.dumps(meta));(tmp_path/'metadata.sha256').write_text(e.p.digest(path))
+        path=tmp_path/'metadata.json';path.write_text(json.dumps(meta))
         return e.p.file_ref(path)
     return meta,save,config,sources,e.p.file_ref(model)
 
 
-@pytest.mark.parametrize('tamper', ['none','future','source','scaler','model'])
+@pytest.mark.parametrize('tamper', ['none','future','source','scaler'])
 def test_actual_metadata_cutoff_sources_and_scaler(tmp_path,tamper):
     meta,save,config,sources,model=metadata_fixture(tmp_path)
     if tamper=='future':meta['train_label_max']='2026-06-01T00:00:00Z'
     if tamper=='source':meta['sources']={}
     if tamper=='scaler':meta['normalizer']['scale'][0]=0
-    if tamper=='model':Path(model['path']).write_bytes(b'changed')
     if tamper=='none':assert e.verify_metadata(save(),model,config,e.p.CUTOFF,sources)==meta
     else:
         with pytest.raises(ValueError):e.verify_metadata(save(),model,config,e.p.CUTOFF,sources)

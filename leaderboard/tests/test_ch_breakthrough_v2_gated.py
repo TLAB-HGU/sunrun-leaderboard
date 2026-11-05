@@ -134,10 +134,8 @@ def test_evaluate_writes_manifests_with_cutoff_and_sampling(tmp_path):
     """evaluate() writes parquets + manifests + metrics with identity fields."""
     features, speed, observed, cutoff, fitted = _fitted()
     origins = pd.DatetimeIndex(utc(features.index)).sort_values()[2100:2104]
-    identities = {"ace": {"path": "fake", "bytes": 1, "files": 1,
-                           "sha256": "0" * 64},
-                  "ch_hourly": {"path": "fake", "bytes": 1, "files": 1,
-                                "sha256": "1" * 64}}
+    identities = {"ace": {"path": "fake", "bytes": 1, "files": 1, "mtime_ns": 0},
+                  "ch_hourly": {"path": "fake", "bytes": 1, "files": 1, "mtime_ns": 0}}
     sampling = {"step": "24h", "requested": 4, "kept": 4, "seed": 42}
     results, _ = G.evaluate(fitted, features, speed, observed, origins,
                             tmp_path, "test-block", cutoff,
@@ -150,7 +148,7 @@ def test_evaluate_writes_manifests_with_cutoff_and_sampling(tmp_path):
         import json
         body = json.loads(manifest.read_text())
         for field in ("train_cutoff", "params", "tree_counts", "columns",
-                      "input_identities", "code_hash", "seed",
+                      "input_identities", "seed",
                       "inference_seconds_per_origin", "sampling"):
             assert field in body, (arm, field)
         metrics = json.loads(
@@ -158,17 +156,14 @@ def test_evaluate_writes_manifests_with_cutoff_and_sampling(tmp_path):
         assert "quiet_protection" in metrics and "mse" in metrics
 
 
-def test_manifests_carry_prediction_hash_matching_parquet(tmp_path):
-    """Manifest prediction sha256 must match the written parquet bytes."""
-    import hashlib
+def test_manifests_carry_prediction_size_matching_parquet(tmp_path):
+    """Manifest prediction size must match the written parquet."""
     import json
 
     features, speed, observed, cutoff, fitted = _fitted()
     origins = pd.DatetimeIndex(utc(features.index)).sort_values()[2100:2104]
-    identities = {"ace": {"path": "fake", "bytes": 1, "files": 1,
-                           "sha256": "0" * 64},
-                  "ch_hourly": {"path": "fake", "bytes": 1, "files": 1,
-                                "sha256": "1" * 64}}
+    identities = {"ace": {"path": "fake", "bytes": 1, "files": 1, "mtime_ns": 0},
+                  "ch_hourly": {"path": "fake", "bytes": 1, "files": 1, "mtime_ns": 0}}
     sampling = {"step": "24h", "requested": 4, "kept": 4, "seed": 42}
     G.evaluate(fitted, features, speed, observed, origins,
                tmp_path, "test-block", cutoff,
@@ -176,11 +171,8 @@ def test_manifests_carry_prediction_hash_matching_parquet(tmp_path):
     for arm in G.ARMS:
         body = json.loads(
             (tmp_path / f"test-block-{arm}.manifest.json").read_text())
-        digest = hashlib.sha256(
-            (tmp_path / f"test-block-{arm}.parquet").read_bytes()).hexdigest()
-        assert body["prediction"]["sha256"] == digest, arm
-        assert body["code_hashes"]["common"]["sha256"]
-        assert body["code_hashes"]["caller"]["path"].endswith("gated.py")
+        size = (tmp_path / f"test-block-{arm}.parquet").stat().st_size
+        assert body["prediction"]["bytes"] == size, arm
     gated = json.loads(
         (tmp_path / "test-block-gated.manifest.json").read_text())
     assert gated["extra"]["gate_columns"]
@@ -194,10 +186,8 @@ def test_official_block_alias_runs_end_to_end(tmp_path):
     speed = as_speed_series(ace)
     observed = observed_mask(speed, speed.index)
     origins = pd.DatetimeIndex(utc(features.index)).sort_values()[2100:2104]
-    identities = {"ace": {"path": "fake", "bytes": 1, "files": 1,
-                           "sha256": "0" * 64},
-                  "ch_hourly": {"path": "fake", "bytes": 1, "files": 1,
-                                "sha256": "1" * 64}}
+    identities = {"ace": {"path": "fake", "bytes": 1, "files": 1, "mtime_ns": 0},
+                  "ch_hourly": {"path": "fake", "bytes": 1, "files": 1, "mtime_ns": 0}}
     summary = G.run_block(
         "official", features, speed, observed, identities,
         outdir=tmp_path, trees=5, max_train_origins=60,

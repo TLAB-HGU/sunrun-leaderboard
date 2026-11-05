@@ -103,10 +103,10 @@ def test_unrelated_extra_source_fails_closed(tmp_path):
 
 
 def test_drifted_inventory_pin_fails_closed():
-    stored = [{"path": "/a/f.parquet", "bytes": 3, "sha256": "x" * 64}]
-    live_same = [{"path": "/a/f.parquet", "bytes": 3, "sha256": "x" * 64}]
-    live_drift = [{"path": "/a/f.parquet", "bytes": 3, "sha256": "y" * 64}]
-    live_extra = live_same + [{"path": "/a/g.parquet", "bytes": 1, "sha256": "z" * 64}]
+    stored = [{"path": "/a/f.parquet", "bytes": 3, "mtime_ns": 1}]
+    live_same = [{"path": "/a/f.parquet", "bytes": 3, "mtime_ns": 1}]
+    live_drift = [{"path": "/a/f.parquet", "bytes": 3, "mtime_ns": 2}]
+    live_extra = live_same + [{"path": "/a/g.parquet", "bytes": 1, "mtime_ns": 1}]
     assert mean_verify_v1._input_pin(stored) == mean_verify_v1._input_pin(live_same)
     assert mean_verify_v1._input_pin(stored) != mean_verify_v1._input_pin(live_drift)
     assert mean_verify_v1._input_pin(stored) != mean_verify_v1._input_pin(live_extra)

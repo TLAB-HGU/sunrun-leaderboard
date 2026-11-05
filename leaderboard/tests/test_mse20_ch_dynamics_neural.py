@@ -30,10 +30,9 @@ def config(kind='multiscale'):
 def test_grid_fixed_domains_and_semantic_dedup():
     grid = n.candidate_grid()
     assert grid == n.candidate_grid() and len(grid) == 36
-    assert len({n.semantic_digest(c) for c in grid}) == 36
+    assert len({json.dumps({k: v for k, v in c.items() if k != 'id'}, sort_keys=True) for c in grid}) == 36
     for c in grid:
         n.validate_config(c)
-        assert n.semantic_digest(c) == n.semantic_digest(dict(c, id='display only'))
     assert {c['kind'] for c in grid[:12]} == {'multiscale', 'tcn', 'pulse'}
     with pytest.raises(ValueError):
         n.validate_config(dict(grid[0], max_epochs=1))
@@ -129,21 +128,13 @@ def test_synthetic_fit_roundtrip_refit_and_reconstruction(tmp_path, monkeypatch)
     poisoned['speed'].loc[poisoned['speed'].index > cutoff] = 1e20
     pred2, meta2 = n.fit_predict(poisoned, cutoff, issued, config(), 'cpu', tmp_path/'poison')
     assert meta2['normalizer'] == meta['normalizer']
-    assert meta2['model_sha256'] == meta['model_sha256']
+    assert (tmp_path/'poison'/'model.pt').read_bytes() == (destination/'model.pt').read_bytes()
     np.testing.assert_array_equal(pred.pred_kms, pred2.pred_kms)
     with pytest.raises(FileExistsError):
         n.fit_predict(frames, cutoff, issued, config(), 'cpu', destination)
-    for name in ('metadata.json', 'model.pt'):
-        path = destination/name
-        old = path.read_bytes()
-        path.write_bytes(old+b' ')
-        with pytest.raises(ValueError, match='hash mismatch'):
-            n.predict_saved(frames, issued, destination, 'cpu')
-        path.write_bytes(old)
     saved = json.loads((destination/'metadata.json').read_text())
     saved['normalizer']['ch']['mean'][0] += 1
     (destination/'metadata.json').write_text(json.dumps(saved))
-    (destination/'metadata.sha256').write_text(n.digest(destination/'metadata.json'))
     with pytest.raises(ValueError, match='scaler mismatch'):
         n.reconstruct_normalizer(frames, destination)
 

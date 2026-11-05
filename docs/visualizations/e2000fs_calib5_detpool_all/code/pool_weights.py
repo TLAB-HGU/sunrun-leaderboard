@@ -15,7 +15,6 @@ F1+F2-window run) to show the arm-weight distribution of "attach every archived 
 """
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import sys
@@ -77,8 +76,8 @@ def main() -> None:
     origins = pd.DatetimeIndex(base["origins_ns"], tz="UTC")
     base_pred = base["predictions"].astype(np.float64)
 
-    names, mats, hashes = [], [], []
-    seen = {hashlib.sha256(base_pred.tobytes()).hexdigest()[:12]}
+    names, mats = [], []
+    seen = [base_pred]
     for name in ALLOWED:
         try:
             arm_origins, arm_pred = load(name)
@@ -88,13 +87,11 @@ def main() -> None:
             continue
         if not np.isfinite(arm_pred).all():
             continue
-        digest = hashlib.sha256(arm_pred.tobytes()).hexdigest()[:12]
-        if digest in seen:
+        if any(np.array_equal(arm_pred, other) for other in seen):
             continue
-        seen.add(digest)
+        seen.append(arm_pred)
         names.append(name)
         mats.append(arm_pred - base_pred)
-        hashes.append(digest)
     assert len(names) == 16, f"expected the 16-arm refit lane, found {len(names)}: {names}"
     delta = np.stack(mats)                               # (arms, origins, 72)
 
@@ -131,7 +128,6 @@ def main() -> None:
 
     by_arm = pd.DataFrame({
         "arm": names,
-        "forecast_sha256_12": hashes,
         "mean_beta": betas.mean(axis=0),
         "share_origins_nonzero": (betas > 0).mean(axis=0),
         "mean_beta_when_nonzero": np.divide(betas.sum(axis=0), np.maximum((betas > 0).sum(axis=0), 1)),
@@ -170,18 +166,16 @@ def main() -> None:
 
     receipt = {
         "experiment": data["receipt"]["experiment"],
-        "config_sha256": data["receipt"]["config_sha256"],
         "created_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
         "rule": pool_all.RULE,
         "constants": {"arms": len(names), "window": pool_all.WINDOW, "refit": pool_all.REFIT, "ridge": pool_all.RIDGE,
                       "shrink_ladder": list(pool_all.SHRINK), "high_threshold_kms": 550.0},
         "arm_order": names,
         "inputs": {
-            "base": {"file": str(BASE_FILE), "sha256": V.sha(BASE_FILE)},
-            "submission": {"file": str(ARCHIVE), "sha256": V.sha(ARCHIVE)},
-            "legacy_weights": {"file": str(LEGACY), "sha256": V.sha(LEGACY)},
-            "arms": {name: {"file": str(RUNS / f"{name}_v1"), "forecast_sha256_12": digest}
-                     for name, digest in zip(names, hashes)},
+            "base": {"file": str(BASE_FILE)},
+            "submission": {"file": str(ARCHIVE)},
+            "legacy_weights": {"file": str(LEGACY)},
+            "arms": {name: {"file": str(RUNS / f"{name}_v1")} for name in names},
         },
         "verification": {
             "recomputed_stack_equals_submission": True,

@@ -3,11 +3,11 @@
 Everything here is read from the frozen raw sources and the model-input bundle, so the pages can
 start at ACE/SUVI/coronal-hole/ENLIL instead of at "a forecast.npz already exists":
 
-  raw hourly ACE snapshot   ch-breakthrough-v2/upload/raw-ace-snapshot/year=*.parquet
-  SUVI hourly stage         data-v2/stage/suvi_hourly/year=*.parquet  (+ suvi-fusion patches)
-  coronal-hole hourly       ch-v1/ch-hourly.parquet
-  WSA-Enlil run JSON        donki-live/ + headroom-audit/donki/
-  target series             ch-v1/ace.parquet  (filled_speed_kms, was_missing)
+  merged hourly ACE table   data-v2/processed/ACE/ace-hourly/year=*/part.parquet
+  SUVI hourly stage         data-v2/raw/SUVI/slots/year=*/part.parquet  (+ processed/SUVI/hourly-v2.parquet)
+  coronal-hole hourly       data-v2/processed/SUVI/ch-hourly.parquet
+  WSA-Enlil run JSON        data-v2/raw/ENLIL/donki/
+  target series             data-v2/processed/ACE/ace.parquet  (filled_speed_kms, was_missing)
   model-input bundle        analysis/A0014/outputs/cache/{train,f1,official}.npz
 
 The longitude-strip numbers are recomputed with the frozen arithmetic in
@@ -29,8 +29,10 @@ import pandas as pd
 
 ROOT = Path('/home/t-lab01/sunrun')
 OUT = ROOT / 'docs/explainers/data'
-STORE = (ROOT / 'data-v2/raw-store/v2/solar-pivot-noanalog72-20261015/pinned-v1/repo/'
-         'leaderboard/store')
+DATA = ROOT / 'data-v2'
+ACE, ACE_RAW = DATA / 'processed/ACE/ace.parquet', DATA / 'processed/ACE/ace-hourly'
+CH, SUVI = DATA / 'processed/SUVI/ch-hourly.parquet', DATA / 'processed/SUVI/hourly-v2.parquet'
+SLOTS, ENLIL, BUNDLES = DATA / 'raw/SUVI/slots', DATA / 'raw/ENLIL', DATA / 'bundles'
 CACHE = ROOT / 'analysis/A0014/outputs/cache'
 H = 72
 
@@ -60,20 +62,20 @@ def sanitize(x):
 
 def load_sources():
     raw = []
-    for p in sorted(glob.glob(str(STORE / 'ch-breakthrough-v2/upload/raw-ace-snapshot/year=*/*.parquet'))):
+    for p in sorted(glob.glob(str(ACE_RAW / 'year=*/*.parquet'))):
         raw.append(pd.read_parquet(p))
     ace_raw = pd.concat(raw, ignore_index=True)
     ace_raw['t'] = pd.to_datetime(ace_raw['timestamp_utc'], utc=True)
     ace_raw = ace_raw.set_index('t').sort_index()
 
-    target = pd.read_parquet(STORE / 'ch-v1/ace.parquet')
+    target = pd.read_parquet(ACE)
     target['t'] = pd.to_datetime(target['timestamp_utc'], utc=True)
     target = target.set_index('t').sort_index()
 
-    ch = pd.read_parquet(STORE / 'ch-v1/ch-hourly.parquet').sort_index()
-    suvi = pd.read_parquet(STORE / 'suvi-fusion/suvi-hourly-v2.parquet').sort_index()
+    ch = pd.read_parquet(CH).sort_index()
+    suvi = pd.read_parquet(SUVI).sort_index()
     meta = pd.concat([pd.read_parquet(p) for p in
-                      sorted(glob.glob(str(ROOT / 'data-v2/stage/suvi_hourly/year=*/*.parquet')))],
+                      sorted(glob.glob(str(ROOT / 'data-v2/raw/SUVI/slots/year=*/*.parquet')))],
                      ignore_index=True)
     meta['slot'] = pd.to_datetime(meta['slot'], utc=True)
     meta['obs_end'] = pd.to_datetime(meta['obs_end'], utc=True)
@@ -86,8 +88,7 @@ def sources_table(ace_raw, target, ch, suvi, meta):
     def span(df):
         return str(df.index[0]), str(df.index[-1])
 
-    enlil_hist = sorted((STORE / 'headroom-audit/donki').glob('WSAEnlilSimulations_*.json'))
-    enlil_live = sorted((STORE / 'donki-live').glob('WSAEnlilSimulations_*.json'))
+    enlil_runs_all = sorted((ENLIL / 'donki').glob('WSAEnlilSimulations_*.json'))
     a0, a1 = span(ace_raw)
     t0, t1 = span(target)
     c0, c1 = span(ch)
@@ -95,34 +96,34 @@ def sources_table(ace_raw, target, ch, suvi, meta):
     return [
         {'id': 'ace', 'title': 'ACE 원자료 (L1 in-situ)', 'cadence': '1시간',
          'rows': int(len(ace_raw)), 'first': a0, 'last': a1, 'cols': int(ace_raw.shape[1] - 1),
-         'path': 'ch-breakthrough-v2/upload/raw-ace-snapshot/year=*/part.parquet',
+         'path': 'processed/ACE/ace-hourly/year=*/part.parquet',
          'makes': 'ace_*, v_lag*, v_m*, v_sd*, speed_d24, epam_p1_d6, rec26/27/28',
          'note': '플라스마(속도·밀도·온도)·자기장·EPAM·SIS. 79.8% 시간대에 속도 관측이 있음(나머지는 결측).'},
         {'id': 'suvi', 'title': 'SUVI EUV 영상 (GOES-18)', 'cadence': '1시간 슬롯',
          'rows': int(len(suvi)), 'first': s0, 'last': s1, 'cols': int(suvi.shape[1]),
-         'path': 'stage/suvi_hourly/year=*.parquet + suvi-fusion/suvi-hourly-v2.parquet',
+         'path': 'raw/SUVI/slots/year=*.parquet + processed/SUVI/hourly-v2.parquet',
          'makes': 'strip_v350…750 × {logmed, dark, cover}, img_age_h, img_stale',
          'note': '디스크를 경도 12칸 × 위도 3밴드로 나눈 패치 통계. 원본 netCDF는 data-v2/suvi.'},
         {'id': 'ch', 'title': '코로나홀 지도', 'cadence': '1시간',
          'rows': int(len(ch)), 'first': c0, 'last': c1, 'cols': int(ch.shape[1]),
-         'path': 'ch-v1/ch-hourly.parquet',
+         'path': 'processed/SUVI/ch-hourly.parquet',
          'makes': 'ch_ch_t035/t045/t055_* (면적·최대·상위3 홀·자오선·적도)',
          'note': '임계 0.35/0.45/0.55 세 세트. valid_fraction 평균 0.999로 거의 전 시간 존재.'},
         {'id': 'enlil', 'title': 'WSA-Enlil 모델 실행', 'cadence': '월별 실행 파일',
-         'rows': len(enlil_hist) + len(enlil_live), 'first': enlil_hist[0].stem[-7:] if enlil_hist else None,
-         'last': enlil_live[-1].stem[-7:] if enlil_live else None, 'cols': 5,
-         'path': 'donki-live/ + headroom-audit/donki/WSAEnlilSimulations_*.json',
+         'rows': len(enlil_runs_all), 'first': enlil_runs_all[0].stem[-7:] if enlil_runs_all else None,
+         'last': enlil_runs_all[-1].stem[-7:] if enlil_runs_all else None, 'cols': 5,
+         'path': 'raw/ENLIL/donki/WSAEnlilSimulations_*.json',
          'makes': 'enlil_next_arr_h, enlil_since_arr_h, enlil_n_pending, enlil_kp, enlil_glancing, enlil_dt_target',
-         'note': f'{len(enlil_hist)}개 과거 + {len(enlil_live)}개 라이브 실행 파일(DONKI JSON).'},
+         'note': f'{len(enlil_runs_all)}개 월별 실행 파일(DONKI JSON, 2022-07~2026-10).'},
         {'id': 'target', 'title': '타깃 시계열 (ACE 속도)', 'cadence': '1시간',
          'rows': int(len(target)), 'first': t0, 'last': t1, 'cols': 2,
-         'path': 'ch-v1/ace.parquet',
+         'path': 'processed/ACE/ace.parquet',
          'makes': 'y = filled_speed_kms (평가 정답)',
          'note': '관측 결측은 ffill로 채우고 was_missing 플래그로 남김.'},
         {'id': 'meta', 'title': 'SUVI 슬롯 메타데이터', 'cadence': '1시간',
          'rows': int(len(meta)), 'first': str(meta['slot'].min()), 'last': str(meta['slot'].max()),
          'cols': int(meta.shape[1]),
-         'path': 'data-v2/stage/suvi_hourly/year=*.parquet (status/obs_end/s3_modified)',
+         'path': 'data-v2/raw/SUVI/slots/year=*.parquet (status/obs_end/s3_modified)',
          'makes': 'img_age_h, img_stale, 슬롯 선택',
          'note': 'status=ok 인 슬롯만 후보. origin−1h 이전, S3 수정시각 ≤ origin 인 최신 슬롯을 고름.'},
     ]
@@ -330,8 +331,7 @@ def upstream(suvi_meta_rows: int, ok_slots: int, missing_slots: int) -> dict:
     hourly_frames = [f for f in hourly_frames if Path(f).is_file()]
 
     enl_f, enl_runs = 0, 0
-    for f in sorted(_glob.glob(str(STORE / 'headroom-audit/donki/WSAEnlilSimulations_*.json'))) + \
-            sorted(_glob.glob(str(STORE / 'donki-live/WSAEnlilSimulations_*.json'))):
+    for f in sorted(_glob.glob(str((ENLIL / 'donki/WSAEnlilSimulations_*.json')))):
         try:
             d = json.loads(Path(f).read_text())
             enl_runs += len(d) if isinstance(d, list) else 1
@@ -357,12 +357,12 @@ def upstream(suvi_meta_rows: int, ok_slots: int, missing_slots: int) -> dict:
             {'id': 'fits', 'name': 'FITS.gz', 'path': 'gong-mrzqs/maps/…',
              'note': f'{len(gong):,} 지도 · {gong_bytes / 1e9:.1f} GB',
              'value': f'{len(hourly_frames):,} 시간프레임'},
-            {'id': 'json', 'name': 'DONKI JSON', 'path': 'donki-live/WSAEnlilSimulations_*.json',
+            {'id': 'json', 'name': 'DONKI JSON', 'path': 'raw/ENLIL/donki/WSAEnlilSimulations_*.json',
              'note': f'{enl_f} 파일 · {enl_runs:,} 실행', 'value': 'kp_18/90/135/180'}
         ],
         'ingest': [
             {'id': 'collect', 'name': 'collector', 'note': 'builders/raw_sources.py',
-             'value': '다운로드 + sha256'},
+             'value': '다운로드'},
             {'id': 'db', 'name': 'RawDB', 'note': 'raw-store/solar_raw.duckdb',
              'value': 'MANIFEST/FILES'},
             {'id': 'hourly', 'name': 'hourly parquet', 'note': 'stage/*/year=*/part.parquet',
@@ -386,10 +386,10 @@ def main():
     monthly['m'] = monthly.index.to_period('M').astype(str)
     miss = monthly.groupby('m')['was_missing'].agg(['mean', 'size'])
     ok_slots = int((pd.concat([pd.read_parquet(p) for p in
-                               sorted(glob.glob(str(ROOT / 'data-v2/stage/suvi_hourly/year=*/*.parquet')))],
+                               sorted(glob.glob(str(ROOT / 'data-v2/raw/SUVI/slots/year=*/*.parquet')))],
                               ignore_index=True)['status'] == 'ok').sum())
     meta_all = pd.concat([pd.read_parquet(p) for p in
-                          sorted(glob.glob(str(ROOT / 'data-v2/stage/suvi_hourly/year=*/*.parquet')))],
+                          sorted(glob.glob(str(ROOT / 'data-v2/raw/SUVI/slots/year=*/*.parquet')))],
                          ignore_index=True)
     out = {
         'upstream': upstream(len(meta_all), ok_slots, len(meta_all) - ok_slots),

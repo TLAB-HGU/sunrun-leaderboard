@@ -48,15 +48,6 @@ def test_ace_fill_is_forward_only_and_tracks_missingness(tmp_path):
     assert result.was_missing.tolist() == [0, 1, 0]
 
 
-def test_config_hash_matches_submission_contract():
-    from submit import canonical_config, validate_meta
-    config = {"data": {"lookback_hours": 120}, "hyperparameters": {"seed": 42}}
-    payload = report.submission_payload(config, 0.1)
-    assert payload["config_sha256"] == canonical_config(config)[1]
-    assert Path(payload["script_path"]).stem == payload["config_sha256"]
-    assert validate_meta(payload["meta"])[1] == payload["config_sha256"]
-
-
 def test_evaluate_cli_writes_report_with_manifest(tmp_path):
     series, folds, pred = fixture_data()
     for name, frame in (("ace", series), ("folds", folds), ("pred", pred)):
@@ -69,7 +60,6 @@ def test_evaluate_cli_writes_report_with_manifest(tmp_path):
     assert result["models"]["fusion"]["official"]["n_pairs"] == 72
     assert not result["eligible_for_submission"]
     assert len(result["input_manifest"]) == 3
-    assert all(len(item["sha256"]) == 64 for item in result["input_manifest"])
 
 
 def test_final_holdout_failure_never_runs_leaderboard(monkeypatch, tmp_path):
@@ -96,12 +86,12 @@ def test_final_holdout_failure_never_runs_leaderboard(monkeypatch, tmp_path):
     cache_path = tmp_path / "cache.parquet"
     pd.DataFrame({"value": [1]}).to_parquet(ace_path)
     pd.DataFrame({"value": [1]}).to_parquet(suvi_path)
-    cache_path.with_suffix(".parquet.json").write_text(json.dumps({"source_sha256": "c" * 64}))
+    pd.DataFrame({"value": [1]}).to_parquet(cache_path)
     config = {"data": {"median_fit_cutoff": "2025-07-31T23:00:00Z", "train_end_utc": "2026-05-31T23:00:00Z",
                        "leaderboard_revision": "bcf5d5417d99eaa331ddca40581d48953e09a58e",
-                       "ace_sha256": [run.file_identity(ace_path)["sha256"]],
-                       "suvi_metadata_sha256": run.file_identity(suvi_path)["sha256"],
-                       "suvi_cache_source_sha256": "c" * 64},
+                       "ace": [run.file_identity(ace_path)],
+                       "suvi_metadata": run.file_identity(suvi_path),
+                       "suvi_feature_cache": run.file_identity(cache_path)},
               "hyperparameters": {"estimator": {}, "peak_weight": 1, "rise_weight": 1,
                                   "rounds_by_horizon": {str(i): 1 for i in range(1, 73)}}}
     path = tmp_path / "config.json"

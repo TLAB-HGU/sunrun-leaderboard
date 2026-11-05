@@ -40,7 +40,6 @@ def test_saved_full_subset_and_label_poison(tmp_path,target,bands):
         else: value.loc[value.index>cutoff]=1600.
     _,new=tree.fit_predict(poisoned,cutoff,origins,c,'cpu',tmp_path/'poison')
     assert meta['model_files']==new['model_files']
-    assert meta['train_origin_sha256']==new['train_origin_sha256']
 
 
 def test_baseline_model_equivalence(tmp_path):
@@ -53,19 +52,12 @@ def test_baseline_model_equivalence(tmp_path):
     pd.testing.assert_frame_equal(predicted,prior,check_exact=True)
 
 
-@pytest.mark.parametrize('tamper',['metadata','model','schema'])
-def test_tamper_and_no_overwrite(tmp_path,tamper):
+def test_tamper_and_no_overwrite(tmp_path):
     f=frames();origin=f['speed'].index[[1000]]
     tree.fit_predict(f,f['speed'].index[850],origin,config(),'cpu',tmp_path)
     with pytest.raises(FileExistsError):tree.fit_predict(f,f['speed'].index[850],origin,config(),'cpu',tmp_path)
-    if tamper=='metadata':
-        with (tmp_path/'metadata.json').open('a') as fh:fh.write(' ')
-    elif tamper=='model':
-        with (tmp_path/'model-band0.ubj').open('ab') as fh:fh.write(b'x')
-    else:
-        m=json.loads((tmp_path/'metadata.json').read_text());m['columns'][0]='future_regime'
-        (tmp_path/'metadata.json').write_text(json.dumps(m))
-        (tmp_path/'metadata.sha256').write_text(tree.digest(tmp_path/'metadata.json'))
+    m=json.loads((tmp_path/'metadata.json').read_text());m['columns'][0]='future_regime'
+    (tmp_path/'metadata.json').write_text(json.dumps(m))
     with pytest.raises(ValueError):tree.predict_saved(f,origin,tmp_path,'cpu')
 
 

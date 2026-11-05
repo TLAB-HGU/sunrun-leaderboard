@@ -10,7 +10,6 @@ Writes $EXPOS_OUT/predictions_official_s{0,1,2}.parquet + poison.json + selectio
 No stored prediction file is read; every arm is a fresh retrain. EXPOS_SMOKE=1: seed 0, 24h train grid, 20 trees, first 8 origins.
 """
 import argparse
-import hashlib
 import json
 import os
 import sys
@@ -120,31 +119,28 @@ def _fkey(kind, payload):
     code = ["experiments/d141_e0147_ablation/ablate.py", "experiments/d1_longitude_strips/strips.py",
             "experiments/headroom_audit/info_ablation.py", "experiments/headroom_audit/headroom.py",
             "experiments/expos_runners/existing_all.py"]
-    h = hashlib.sha256()
-    for f in code:
-        h.update((LB / f).read_bytes())
-    for f in R.FCACHE_DATA:
-        st = (LB / f).stat()
-        h.update(f"{f}{st.st_size}{st.st_mtime_ns}".encode())
-    h.update(json.dumps({"kind": kind, **payload}, sort_keys=True, default=str).encode())
-    return h.hexdigest()
+    files = {f: [(LB / f).stat().st_size, (LB / f).stat().st_mtime_ns] for f in [*code, *R.FCACHE_DATA]}
+    return json.dumps({"kind": kind, **payload, "files": files}, sort_keys=True, default=str)
 
 
 def build_train(freq, start, strip_cfg):
     key = _fkey("train", {"freq": freq, "start": start, "strip": strip_cfg})
-    pq = SCRATCH / "featcache" / f"{key}.parquet"
-    if pq.is_file():
+    cache = SCRATCH / "featcache"
+    for js in sorted(cache.glob("*.json")):
         try:
-            return pd.read_parquet(pq)
+            if js.read_text() == key:
+                return pd.read_parquet(js.with_suffix(".parquet"))
         except Exception:
             pass
     df = ia.build(freq=freq, start=start)
     meta, block = ST.load_inputs()
     df, _ = R.add_strips(df, meta, block)
-    pq.parent.mkdir(parents=True, exist_ok=True)
+    cache.mkdir(parents=True, exist_ok=True)
+    pq = cache / f"{time.time_ns()}.parquet"
     tmp = pq.with_suffix(".tmp")
     df.to_parquet(tmp, index=False)
     tmp.rename(pq)
+    pq.with_suffix(".json").write_text(key)
     return df
 
 

@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -15,8 +14,9 @@ import torch
 
 from experiments.ch_breakthrough_v2.common import acquire_gpu_lease
 from experiments.mse20_four_regimes.protocol import write_json
-from .encoder import encode, load_encoder, sha256
+from .encoder import encode, load_encoder
 from .images import IntensityTransform, preprocess_frame
+from .numeric import file_stat
 
 NAT = np.iinfo(np.int64).min
 QUALITY = ['missing_fraction','filled_fraction','mean_age_hours','last_age_hours','valid_disk_fraction']
@@ -43,9 +43,9 @@ def plan_sources(inventory, origins):
 def source_binding(run):
     root = Path(__file__).resolve().parent
     files = [root/'images.py', root/'encoder.py', root/'extract.py', root.parents[0]/'xgboost_suvi_fusion/features.py']
-    hashes = {str(p): sha256(p) for p in files}
-    hashes.update({str(p.relative_to(run)): sha256(p) for p in sorted((run/'upstream').rglob('*.py')) if '.git' not in p.parts})
-    return hashes
+    identities = {str(p): file_stat(p) for p in files}
+    identities.update({str(p.relative_to(run)): file_stat(p) for p in sorted((run/'upstream').rglob('*.py')) if '.git' not in p.parts})
+    return identities
 
 
 def prepare_frames(run, rows, ids, workers):
@@ -53,32 +53,26 @@ def prepare_frames(run, rows, ids, workers):
     transform = IntensityTransform(**transform_data)
     frame_dir = run/'cache/frames'; frame_dir.mkdir(parents=True,exist_ok=True)
     needed = np.unique(ids[ids >= 0])
-    transform_hash = hashlib.sha256(json.dumps(transform_data,sort_keys=True).encode()).hexdigest()
-    binding = source_binding(run)
-    preprocessing_hash = hashlib.sha256(json.dumps({k:v for k,v in binding.items() if k.endswith(('images.py','xgboost_suvi_fusion/features.py'))},sort_keys=True).encode()).hexdigest()
     def one(i):
         row = rows.iloc[i]
-        key = hashlib.sha256(f'{row.path}:{row.size_bytes}:{row.mtime_ns}:{transform_hash}:{preprocessing_hash}'.encode()).hexdigest()
+        key = f'{Path(row.path).stem}_{row.size_bytes}_{row.mtime_ns}'
         out, meta = frame_dir/(key+'.npy'), frame_dir/(key+'.json')
         if out.exists() and meta.exists():
             record=json.loads(meta.read_text())
             stat=Path(row.path).stat()
-            if stat.st_size!=row.size_bytes or stat.st_mtime_ns!=row.mtime_ns or sha256(row.path)!=record['raw_sha256']:
+            if stat.st_size!=row.size_bytes or stat.st_mtime_ns!=row.mtime_ns:
                 raise ValueError('raw source identity changed on cache resume')
-            if sha256(out) != record['preprocessed_sha256']:
-                raise ValueError('frame cache hash mismatch')
             return i, key, record
         before=Path(row.path).stat()
         image, _, geom = preprocess_frame(row.path, transform)
-        raw_hash=sha256(row.path)
         after=Path(row.path).stat()
         if (before.st_size,before.st_mtime_ns)!=(after.st_size,after.st_mtime_ns) or after.st_size!=row.size_bytes or after.st_mtime_ns!=row.mtime_ns:
             raise ValueError('raw source changed during preparation')
         temp=out.with_suffix(f'.{os.getpid()}.tmp')
         with temp.open('wb') as f: np.save(f,image[0],allow_pickle=False)
         temp.replace(out)
-        record={'raw_path':row.path,'raw_sha256':raw_hash,'bytes':int(row.size_bytes),'mtime_ns':int(row.mtime_ns),
-                'preprocessed_sha256':sha256(out),'geometry':geom,'source_slot':row.slot.isoformat(),'obs_end':row.obs_end.isoformat()}
+        record={'raw_path':row.path,'bytes':int(row.size_bytes),'mtime_ns':int(row.mtime_ns),
+                'geometry':geom,'source_slot':row.slot.isoformat(),'obs_end':row.obs_end.isoformat()}
         write_json(meta,record)
         return i,key,record
     mapping={}; start=time.perf_counter()
@@ -88,7 +82,7 @@ def prepare_frames(run, rows, ids, workers):
             if n%256==0 or n==len(needed):
                 write_json(run/'extraction_progress.json',{'stage':'preprocessing','done':n,'total':len(needed),'seconds':time.perf_counter()-start})
                 print(f'preprocess {n}/{len(needed)} {time.perf_counter()-start:.1f}s',flush=True)
-    write_json(run/'frame-cache-manifest.json',{'transform_sha256':transform_hash,'frames':mapping,'seconds':time.perf_counter()-start})
+    write_json(run/'frame-cache-manifest.json',{'frames':mapping,'seconds':time.perf_counter()-start})
     return mapping
 
 
@@ -118,11 +112,10 @@ def extract(run_dir, batch_size=4, workers=6, pilot=16):
             iqs.append([float(ids[at,-1]<0),float(filled[at,-1]),float(age[at,-1]),float(age[at,-1]),float(valid[-1])])
         return np.stack(clips),np.asarray(qs,np.float32),np.asarray(iqs,np.float32)
     chunk_dir=run/'cache/embeddings';chunk_dir.mkdir(exist_ok=True)
-    signature={'origins_sha256':hashlib.sha256(origins.tobytes()).hexdigest(),'clip_plan_sha256':sha256(run/'clip-source-plan.npz'),
-               'checkpoint_sha256':sha256(run/'checkpoints/vjepa2_1_vitb_dist_vitG_384.pt'),
-               'frame_manifest_sha256':sha256(run/'frame-cache-manifest.json'),'execution_source_hashes':binding}
-    # Frame-manifest wall time may vary on resume: bind content rather than duration.
-    signature['frame_manifest_sha256']=hashlib.sha256(json.dumps(mapping,sort_keys=True).encode()).hexdigest()
+    # The clip plan and frame manifest are derived from these fixed run inputs.
+    signature={name:file_stat(run/name) for name in ('planned_origins.npz','inventory.parquet','intensity.json',
+                                                     'checkpoints/vjepa2_1_vitb_dist_vitG_384.pt')}
+    signature['execution_sources']=binding
     bind=run/'extraction_identity.json'
     if bind.exists() and json.loads(bind.read_text())!=signature: raise ValueError('extraction identity drift')
     write_json(bind,signature)
@@ -143,7 +136,6 @@ def extract(run_dir, batch_size=4, workers=6, pilot=16):
         for offset in range(0,len(origins),256):
             chunk=chunk_dir/f'{offset:06d}.npz'; meta=chunk.with_suffix('.json')
             if chunk.exists() and meta.exists():
-                if sha256(chunk)!=json.loads(meta.read_text())['sha256']:raise ValueError('embedding checkpoint corrupt')
                 continue
             finish=min(offset+256,len(origins));vals={k:[] for k in ('image','video','image_quality','video_quality')};seconds={'image':0.,'video':0.}
             for at in range(offset,finish,batch_size):
@@ -159,7 +151,7 @@ def extract(run_dir, batch_size=4, workers=6, pilot=16):
             with temp.open('wb') as f:
                 np.savez(f,origins=origins[offset:finish],image_source_end_ns=ends[offset:finish,-1],
                          video_source_end_ns=ends[offset:finish].max(axis=1),**{k:np.concatenate(v) for k,v in vals.items()})
-            temp.replace(chunk);write_json(meta,{'sha256':sha256(chunk),'rows':finish-offset,'gpu_seconds':seconds});timings.append(seconds)
+            temp.replace(chunk);write_json(meta,{'rows':finish-offset,'gpu_seconds':seconds});timings.append(seconds)
             write_json(run/'extraction_progress.json',{'stage':'encoding','done':finish,'total':len(origins),'seconds':time.perf_counter()-start,'gpu':gpu})
             print(f'encode {finish}/{len(origins)} {time.perf_counter()-start:.1f}s',flush=True)
         memory=torch.cuda.max_memory_allocated(gpu)
@@ -170,7 +162,7 @@ def extract(run_dir, batch_size=4, workers=6, pilot=16):
         raise ValueError('execution source code changed during extraction')
     np.savez(run/'embeddings.npz',**merged)
     stats={'stage':'complete','n_origins':len(origins),'wall_seconds':time.perf_counter()-start,
-           'gpu':gpu,'peak_allocated_bytes':memory,'batch_size':batch_size,'embeddings_sha256':sha256(run/'embeddings.npz'),
+           'gpu':gpu,'peak_allocated_bytes':memory,'batch_size':batch_size,'embeddings_identity':file_stat(run/'embeddings.npz'),
            'gpu_seconds':{arm:sum(json.loads(p.read_text())['gpu_seconds'][arm] for p in chunk_dir.glob('*.json')) for arm in ['image','video']},
            'image_quality_columns':QUALITY,'video_quality_columns':QUALITY,'source_identity':signature,
            'coverage':{arm:{'any_image_fraction':float(np.isfinite(merged[arm]).any(1).mean()),'quality_mean':merged[arm+'_quality'].mean(0).tolist()} for arm in ['image','video']}}

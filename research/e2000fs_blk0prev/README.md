@@ -19,6 +19,6 @@ Negative result: block-0 (1-24h) uses the t0-12h SUVI strip, blocks 25-72h keep 
 
 ## 참고
 
-- 재현 불가로 fresh-df 재실행에서 제외됨 (`research/rerun_df_ffill_20261103/special-blockers.md`, `strategy.md`).
+- 재현 불가로 fresh-df 재실행에서 제외됨 (`research/rerun_df_ffill/special-blockers.md`, `strategy.md`).
 
 Total S는 리더보드 store의 `competition.total.s`(공식 scorer, F1/F2/F3, 낮을수록 좋음).

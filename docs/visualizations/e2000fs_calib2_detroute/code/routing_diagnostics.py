@@ -18,7 +18,7 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from detector_common import HIGH, OUT, RUN, TAU, archived_probabilities, load_features, official_arrays, \
-    receipt, routed_score, sha
+    receipt, routed_score
 
 BANDS = ((0, "h1-24", "h1–24"), (24, "h25-48", "h25–48"), (48, "h49-72", "h49–72"))
 TAUS = (0.05, 0.10, 0.15, 0.20, 0.234, 0.30, 0.40, 0.50, 0.60)
@@ -89,8 +89,6 @@ def main():
         pairs=int(target.size), pairs_ge550=int(high.sum()),
         arms={name: {k: (round(v, 6) if isinstance(v, float) else v) for k, v in block.items()}
               for name, block in scores.items()},
-        sensitivity_sha256=sha(OUT / "routing_sensitivity.csv"),
-        band_sha256=sha(OUT / "routing_by_band.csv"),
         note="recomputed from exceedance_prob.npz, the two archived arm forecasts and the official truth; every "
              "value that results.json also reports is asserted equal before writing")
     (OUT / "routing_diagnostics.json").write_text(json.dumps(summary, indent=2) + "\n")

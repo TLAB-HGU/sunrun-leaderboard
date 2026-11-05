@@ -1,7 +1,7 @@
 """D138 T2b-flux contract: collect receipt + causal PFSS-free features + pilot screen, no overreach.
 
 Fast: pure-logic checks + filesystem/receipt/graph scans only. No fits, no network
-(collection evidence is recorded constants + cached bytes verified by hashes),
+(collection evidence is recorded constants + cached bytes),
 no forbidden reads, no foreign experiment runs.
 """
 
@@ -64,8 +64,7 @@ def test_spec_tags_seeds_and_rule():
     assert str(SP.SCRATCH) == "store/scratch/worker-t2b"
 
 
-def test_proxy_verdicts_and_header_hashes():
-    assert all(FC.verify_header_sha256(s) for s in FC.SAMPLES)
+def test_proxy_verdicts():
     verdicts = [(p["period"], p["proxy_obs_plus_2h"], p["usable_for_features"])
                 for p in (FC.proxy_row(s) for s in FC.SAMPLES)]
     assert verdicts == [("dev", "PASS-timing-only", True),
@@ -73,7 +72,7 @@ def test_proxy_verdicts_and_header_hashes():
                         ("audit", "FAIL", False)]
 
 
-def test_receipt_matches_and_hashes():
+def test_receipt_matches():
     assert RECEIPT.exists(), "run flux_collect.collect() before testing"
     r = json.loads(RECEIPT.read_text())
     assert r["direction"] == "D138" and r["owner"] == "worker-t2b"
@@ -83,7 +82,7 @@ def test_receipt_matches_and_hashes():
     assert "PFSS" in r["version_drift"]
     assert "<1MB" in r["transfer_budget"]
     for f in r["files"]:
-        assert len(f["body_sha256"]) == 64 and f["content_length_ok"] is True
+        assert f["content_length_ok"] is True
         assert f["gunzip_simple_ok"] is True
 
 

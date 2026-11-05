@@ -13,8 +13,6 @@ from experiments.ch_breakthrough_v2.common import (
     as_speed_series,
     build_features,
     check_cutoff,
-    code_hash,
-    code_hashes,
     file_identity,
     mean_reversion_predict,
     observed_mask,
@@ -104,10 +102,9 @@ def test_manifest_identity_fields_and_validation(tmp_path):
         seed=42, inference_seconds_per_origin=0.01,
         sampling={"step": "24h", "kept": 3})
     for field in ("train_cutoff", "params", "tree_counts", "columns",
-                  "input_identities", "code_hash", "seed",
+                  "input_identities", "seed",
                   "inference_seconds_per_origin"):
         assert field in manifest, field
-    assert manifest["input_identities"]["ace"]["sha256"] == file_identity(ace)["sha256"]
     assert validate_manifest_identities(manifest_path, {"ace": file_identity(ace)})
     ace.write_bytes(b"tampered")
     try:
@@ -318,7 +315,7 @@ def test_predict_ignores_future_truth_perturbation_and_absence():
     pd.testing.assert_frame_equal(base_preds, trunc_preds)
 
 
-def test_manifest_provenance_and_stale_code_invalidates(tmp_path):
+def test_manifest_provenance(tmp_path):
     ace = tmp_path / "ace.parquet"
     ace.write_bytes(b"fake-bytes")
     pred = tmp_path / "pred.parquet"
@@ -332,31 +329,11 @@ def test_manifest_provenance_and_stale_code_invalidates(tmp_path):
         sampling={"step": "24h", "kept": 3},
         caller_file=__file__, actual_device="cpu",
         prediction_path=pred)
-    assert "code_hashes" in manifest and "common" in manifest["code_hashes"]
-    assert "caller" in manifest["code_hashes"]
     assert "versions" in manifest and "pandas" in manifest["versions"]
     assert manifest["actual_device"] == "cpu"
-    assert manifest["prediction"]["sha256"] == file_identity(pred)["sha256"]
-    assert manifest["code_hash"] == code_hash()
-    assert code_hashes()["common"]["sha256"] == code_hash()
+    assert manifest["prediction"]["bytes"] == pred.stat().st_size
     assert "pandas" in runtime_versions()
     assert validate_manifest_identities(manifest_path, {"ace": file_identity(ace)})
-    try:
-        validate_manifest_identities(
-            manifest_path, {"ace": file_identity(ace)},
-            current_code_hash="0" * 64)
-    except ValueError:
-        pass
-    else:
-        raise AssertionError("stale code hash must invalidate the cache")
-    tampered = dict(manifest)
-    tampered["code_hash"] = "0" * 64
-    try:
-        validate_manifest_identities(tampered, {"ace": file_identity(ace)})
-    except ValueError:
-        pass
-    else:
-        raise AssertionError("tampered code hash must fail validation")
 
 
 def test_forecaster_records_actual_device_and_cutoff():

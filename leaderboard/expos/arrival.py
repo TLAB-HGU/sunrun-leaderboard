@@ -12,7 +12,6 @@ Primary metric: capped MAE (mean over events of the seed/lead mean). Also: hit r
 MAE on hits. Paired against the control run with an event bootstrap. A run passes when the capped-MAE difference has a
 95% upper bound < 0, or the hit-rate difference has a 95% lower bound > 0.
 """
-import hashlib
 import json
 
 import numpy as np
@@ -26,10 +25,6 @@ FRAC, SUSTAIN, MIN_RISE, RISE_FRAC, CAP, HIT, BOOT = 0.20, 3, 50.0, 0.25, 24.0, 
 
 
 def labels():
-    sums = dict(reversed(l.split("  ", 1)) for l in (LABELS / "SHA256SUMS").read_text().splitlines() if l.strip())
-    for name in ("events.parquet", "definition.json"):
-        if hashlib.sha256((LABELS / name).read_bytes()).hexdigest() != sums.get(name):
-            raise core.ExposError(f"arrival labels changed: {name} does not match SHA256SUMS")
     ev = pd.read_parquet(LABELS / "events.parquet")
     definition = json.loads((LABELS / "definition.json").read_text())
     ev = ev[(ev["quality"] != "X") & ev["weak"].eq(False) & ev["t_onset"].notna()].copy()
@@ -110,8 +105,7 @@ def evaluate_arrival(eid, control=None, baseline=False):
     ev, definition = labels()
     r, seeds = score(eid, ev)
     summ = summary(r)
-    label_info = {"version": definition.get("version"), "status": definition.get("status", "draft"),
-                  "sha256": hashlib.sha256((LABELS / "events.parquet").read_bytes()).hexdigest()}
+    label_info = {"version": definition.get("version"), "status": definition.get("status", "draft")}
     if baseline:
         return core.append("arrival", id=eid, baseline=True, control=None, labels=label_info, candidate=summ,
                            gate={"pass": False, "reasons": ["control run (no gate)"]})

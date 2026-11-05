@@ -244,7 +244,7 @@ def test_proof_rejects_changed_source_closures(tmp_path):
     run_dir, original, registration, proof = _build_synthetic_proof(tmp_path, "p1")
     proof["model_sources"] = dict(proof["model_sources"])
     proof["model_sources"]["experiments/mse20_hss_phase_ff1/model.py"] = {
-        "path": "/tmp/swapped.py", "sha256": "0" * 64}
+        "path": "/tmp/swapped.py", "size": 0, "mtime_ns": 0}
     ff1.write_new(run_dir / "regression-summary.json", proof)
     with pytest.raises(Exception, match="changed sources"):
         overlay_evaluate._verify_proof(run_dir, original, registration)

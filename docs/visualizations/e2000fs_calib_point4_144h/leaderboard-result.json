@@ -5,12 +5,7 @@
  "config": {
   "data": {
    "asset": {
-    "filename": "forecast.npz",
-    "sha256": "306d9313b4c4c31b12b91c44354ba70f5fb85688049ddda5c0594927a392530a"
-   },
-   "inputs_sha256": {
-    "research/e2000fs_calib-20261030/runs/tweedie15_v1/control_f1_predictions.npz": "dafd533f06133b4a388fd63a28c6f39a4ed8e634be8f6bd6298f7bfd8f5af87c",
-    "research/e2000fs_calib-20261030/runs/tweedie15_v1/control_final_predictions.npz": "1a52eee8717eec6b2c2e10b97cd2cf3691a5ae57606afcce258bce929d8cafc5"
+    "filename": "forecast.npz"
    },
    "origins": 4970,
    "rows": 357840,
@@ -52,7 +47,6 @@
    "selection": {}
   }
  },
- "config_sha256": "23c5e8e20f829e50460253954e24a88b903cfc92c6a4d8e025a4933a26730721",
  "inference_seconds_per_fold": 8.481123926908797e-06,
  "code_url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/main/scripts/seongeun/e2000fs_calib_point4_144h/23c5e8e20f829e50460253954e24a88b903cfc92c6a4d8e025a4933a26730721.py",
  "description": "Refit 2026-10-31 for the F1/F2/F3 quarters: the same recipe retrained with training cutoffs 2025-12-29 (F1), 2026-03-29 (F2) and 2026-06-29 (F3), 72 h target maturity, forecast for all 6,315 origins. Earlier description: Paired control arm of the e2000fs_calib_tweedie15 lane, reported on its own: the e2000fs_dirmo_24_feat30_pointweight4 recipe (three 24-output vector trees, frozen Top30 237 columns/block, 900 rounds depth3 eta0.03 seed42) with the training mask changed to origin+144h<=cutoff so every 72h training vector is fully matured at the cutoff. Only the mask differs from the archived parent. Measured against the archived parent: total MSE 3491.0 vs 3556.2 and >=550 MSE 5763.5 vs 5923.5, both improved. Archived replay; training sources and models preserved in research/e2000fs_calib-20261030/runs/tweedie15_v1.",

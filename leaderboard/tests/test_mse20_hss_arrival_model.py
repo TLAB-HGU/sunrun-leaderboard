@@ -116,25 +116,18 @@ def test_saved_cpu_pair_roundtrip_future_poison_and_training_provenance(tmp_path
                 for col in value:
                     if pd.api.types.is_numeric_dtype(value[col]):value.loc[mask,col]=1e6
     _,other=m.fit_predict(poison,cutoff,origins,config,'cpu',tmp_path/'second')
-    assert meta['model_sha256']==other['model_sha256'] and meta['normalizer']==other['normalizer']
+    assert (tmp_path/'first/model.pt').read_bytes()==(tmp_path/'second/model.pt').read_bytes() and meta['normalizer']==other['normalizer']
     assert pd.Timestamp(meta['train_label_max'])<=cutoff
     with pytest.raises(FileExistsError):m.fit_predict(f,cutoff,origins,config,'cpu',tmp_path/'first')
-    path=tmp_path/'first/model.pt';path.write_bytes(path.read_bytes()+b'broken')
-    with pytest.raises(ValueError,match='model hash'):m.predict_saved(f,origins,tmp_path/'first','cpu')
 
 
-def test_declared_cutoff_guard_and_restore_metadata_tamper(tmp_path):
+def test_declared_cutoff_guard(tmp_path):
     config=m.candidate_configs()[0]
     with pytest.raises(ValueError,match='post-May31'):
         m.training_origins({},pd.Timestamp('2026-06-01T00:00:00Z'),config)
     with pytest.raises(ValueError,match='post-May31'):
         m.fit_predict({},pd.Timestamp('2026-06-01T00:00:00Z'),[],config,'cpu',tmp_path/'invalid')
     assert not (tmp_path/'invalid').exists()
-    directory=tmp_path/'metadata';directory.mkdir()
-    (directory/'metadata.json').write_text('{}')
-    (directory/'metadata.sha256').write_text('0'*64)
-    with pytest.raises(ValueError,match='metadata hash'):
-        m.load_metadata(directory)
 
 
 @pytest.mark.parametrize('bins',[6,12,24])

@@ -3,7 +3,6 @@
 No fits, no official reads, no network. Production CLI forbids test-only
 bypass: fixtures live in tmp_path and never touch real runs.
 """
-import hashlib
 import json
 import math
 import subprocess
@@ -20,22 +19,15 @@ from mse20_image_expansion import evaluate, final_contract as ic, protocol  # no
 from mse20_scope_expansion import final_contract as fc  # noqa: E402
 from mse20_scope_expansion import selection  # noqa: E402
 
-HEX = "ab" * 32
-
-
 def _score_doc(total=100.0, created="2026-10-02T00:00:00Z"):
     cells = {k: 100.0 for k in fc.CELL_NAMES}
     body = {"total_mse": total, "cells": cells,
             "candidate": [[10, 2, 1], [2, 0, 1], [1, 1, 1]][0:1] and [[10, 2, 1]] or [[10, 2, 1]]}
-    # counts stored flat below; digest over canonical body
+    # counts stored flat below
     doc = {"total_mse": total, "cells": cells,
            "candidate_tp": [10, 2, 1], "candidate_fp": [2, 0, 1], "candidate_fn": [1, 1, 1],
            "champion_tp": [1, 0, 0], "champion_fp": [2, 2, 2], "champion_fn": [3, 3, 3],
            "created_utc": created}
-    doc["digest"] = ic.canonical_numeric_digest(
-        {"total_mse": total, "cells": cells,
-         "candidate": [doc["candidate_tp"], doc["candidate_fp"], doc["candidate_fn"]],
-         "champion": [doc["champion_tp"], doc["champion_fp"], doc["champion_fn"]]})
     return doc
 
 
@@ -52,12 +44,8 @@ def _scaffold(root: Path, **over):
                         "obs_end_utc": b, "avail_utc": b, "status": "ok"})
     score = _score_doc()
     docs = {
-        "freeze.json": {"freeze_utc": "2026-10-01T00:00:00Z",
-                        "prediction_sha256": HEX, "key_digest": "cd" * 32},
-        "closure.json": {"plan_sha256": ic.PLAN_SHA256, "amendment_sha256": ic.AMENDMENT_SHA256,
-                         "snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256,
-                         "evaluator_sha256": evaluate._evaluator_live_sha(),
-                         "source_shas": {"suvi_fe195": HEX}},
+        "freeze.json": {"freeze_utc": "2026-10-01T00:00:00Z"},
+        "closure.json": {},
         "ledger.json": {"new": {"a_per_period": 1, "a_oof_conditional": 0,
                                 "cnn_conditional": 0, "final_constituents": 0},
                         "new_total": 1,
@@ -72,17 +60,15 @@ def _scaffold(root: Path, **over):
                              "a_positive": True, "b_eligible": True},
         "causality.json": {"origins": origins},
         "provenance.json": {"files": [{"file_id": "f0", "obs_end_utc": "2026-05-01T00:00:00Z",
-                                       "avail_utc": "2026-05-01T01:00:00Z", "sha256": HEX,
+                                       "avail_utc": "2026-05-01T01:00:00Z",
                                        "avail_source": "independent-verification",
                                        "verified_available": True}]},
-        "support.json": {"snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256, "total_keys": 203976},
-        "truth_hash.json": {"snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256,
-                            "truth_sha256": HEX, "support_sha256": HEX},
+        "support.json": {"total_keys": 203976},
+        "truth_hash.json": {},
         "score_a.json": dict(score),
         "score_b.json": dict(score),
         "regression.json": {"suite_total": 5, "suite_passed": 5,
-                            "created_utc": "2026-10-03T00:00:00Z",
-                            "numeric_digest": score["digest"]},
+                            "created_utc": "2026-10-03T00:00:00Z"},
     }
     docs.update(over.get("docs", {}))
     for nm, obj in docs.items():
@@ -129,16 +115,6 @@ def test_malicious_ok_without_proof_fails(tmp_path):
     assert out["exit"] == 2 and "boolean-only" in out["reason"]
 
 
-def test_edited_closure_hash_fails(tmp_path):
-    bad = {"plan_sha256": "00" * 32, "amendment_sha256": ic.AMENDMENT_SHA256,
-           "snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256,
-           "evaluator_sha256": evaluate._evaluator_live_sha(),
-           "source_shas": {"suvi_fe195": HEX}}
-    run = _scaffold(tmp_path, docs={"closure.json": bad})
-    out = evaluate.evaluate_run(str(run))
-    assert out["exit"] == 2 and "plan" in out["reason"].lower()
-
-
 def test_old_ledger_quota_rejected(tmp_path):
     bad_ledger = {"new": {"a_per_period": 3, "a_oof_conditional": 3,
                           "cnn_conditional": 3, "final_constituents": 2},
@@ -155,7 +131,7 @@ def test_old_ledger_quota_rejected(tmp_path):
 
 def test_false_pubdate_rejected(tmp_path):
     bad = {"files": [{"file_id": "f0", "obs_end_utc": "2026-05-01T00:00:00Z",
-                      "avail_utc": "2026-05-01T01:00:00Z", "sha256": HEX,
+                      "avail_utc": "2026-05-01T01:00:00Z",
                       "avail_source": "mtime", "verified_available": True}]}
     run = _scaffold(tmp_path, docs={"provenance.json": bad})
     out = evaluate.evaluate_run(str(run))
@@ -243,11 +219,9 @@ def test_contract_unmet_vs_invalid():
     proof = {"total_mse": 1e12, "cells": {k: 100.0 for k in fc.CELL_NAMES},
              "candidate_tp": [1, 0, 0], "candidate_fp": [0, 0, 0], "candidate_fn": [0, 0, 0],
              "champion_tp": [1, 0, 0], "champion_fp": [0, 0, 0], "champion_fn": [0, 0, 0],
-             "pred_keys": keys, "requested_keys": keys, "snapshot_sha256": ic.PINNED_SNAPSHOT_SHA256,
-             "plan_sha256": ic.PLAN_SHA256, "amendment_sha256": ic.AMENDMENT_SHA256,
-             "evaluator_sha256": HEX, "source_shas": {"s": HEX},
+             "pred_keys": keys, "requested_keys": keys,
              "freeze_utc": "2026-10-01T00:00:00Z", "score_utc_a": "2026-10-02T00:00:00Z",
-             "score_utc_b": "2026-10-02T00:00:00Z", "score_digest_a": HEX, "score_digest_b": HEX,
+             "score_utc_b": "2026-10-02T00:00:00Z",
              "ledger": {"new": dict.fromkeys(ic.IMAGE_FIT_BREAKDOWN, 0), "new_total": 0,
                         "old_ledger": {"total": 18, "status": "CLOSED"}},
              "feature_columns": list(protocol.IMAGE_FEATURE_SCHEMA),

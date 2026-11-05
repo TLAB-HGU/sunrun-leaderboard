@@ -18,18 +18,17 @@ def frozen_fixture(tmp_path, monkeypatch):
         config['name'] = name
         path = source_root / f'{name}.json'
         C.write_json(path, config)
-        configs[name] = dict(config=config, hash=C.digest(config), source_path=str(path))
+        configs[name] = dict(config=config, source_path=str(path))
         source_configs[name] = dict(config=config, kind='ablation')
     source = dict(started_at=1000, max_hours=72, configs=source_configs, units={})
     C.write_json(source_root / 'state.json', source)
     request = dict(candidates=list(O.CANDIDATES), baseline='baseline', configs=configs,
-                   seeds=[0, 1, 2], source_code_hashes={'helper.py': 'unchanged'},
+                   seeds=[0, 1, 2],
                    deadline_epoch=1000+72*3600, policy=dict(official_only=True,
                    official_fit_target_before='2026-05-29', n_jobs=5, max_parallel=2,
                    submit=False, lb_eval_once_per_experiment=True))
     request_path = tmp_path / 'request.json'
     C.write_json(request_path, request)
-    monkeypatch.setattr(C, 'code_hashes', lambda: {'helper.py': 'unchanged'})
     return request_path, source_root, request
 
 
@@ -43,15 +42,13 @@ def test_exact_candidates_configs_and_original_deadline(tmp_path, monkeypatch):
         O.frozen_request(path, source)
 
 
-@pytest.mark.parametrize('mutation', ['deadline', 'config', 'source', 'seeds'])
+@pytest.mark.parametrize('mutation', ['deadline', 'config', 'seeds'])
 def test_frozen_request_rejects_mutation(tmp_path, monkeypatch, mutation):
     path, source, request = frozen_fixture(tmp_path, monkeypatch)
     if mutation == 'deadline':
         request['deadline_epoch'] += 1
     elif mutation == 'config':
         request['configs']['xgb_003']['config']['k'] = 60
-    elif mutation == 'source':
-        request['source_code_hashes']['helper.py'] = 'changed'
     else:
         request['seeds'] = [0]
     C.write_json(path, request)
@@ -89,7 +86,6 @@ def test_observation_preserves_fit_arguments_return_and_restores_method():
     assert Model.fit is original
     assert calls == [((x, y), {'verbose': False})]
     assert traces[0]['parameters']['random_state'] == 4
-    assert traces[0]['booster_sha256'] == O.hashlib.sha256(b'actual-model').hexdigest()
 
 
 def test_fit_observation_restores_after_error():
@@ -161,11 +157,11 @@ def test_duplicate_evaluation_history_rejected(tmp_path, monkeypatch):
 
 def test_dry_run_does_not_write_promotion_or_source(tmp_path, monkeypatch, capsys):
     path, source, request = frozen_fixture(tmp_path, monkeypatch)
-    before = C.file_hash(source / 'state.json')
+    before = (source / 'state.json').read_bytes()
     root = tmp_path / 'promotion'
     O.main(['--dry-run', '--root', str(root), '--request', str(path), '--source-root', str(source)])
     assert not root.exists()
-    assert C.file_hash(source / 'state.json') == before
+    assert (source / 'state.json').read_bytes() == before
     result = json.loads(capsys.readouterr().out)
     assert result['official_only'] and result['seeds'] == [0, 1, 2]
     assert result['max_parallel'] == 2 and result['n_jobs'] == 5

@@ -2,7 +2,6 @@
   "strategy": "RectifyMO-24",
   "canonical": "RectifyMO-24",
   "experiment": "e2000fs_rectifymo_24",
-  "config_sha256": "bd171fb6322878beb6b473aaffe811ae3d783483b1b142ed7ec387cfbca7a092",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 4050.898245466135,

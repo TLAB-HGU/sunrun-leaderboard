@@ -122,9 +122,7 @@ def main() -> None:
         "pairs": int(target.size),
         "overall_mse": overall,
         "verified_against": {"point4_144h": receipt["mse"], "detpool_gpd": 4360.208035478823},
-        "inputs": {label: {"file": str(RUNS / f"{name}_v1"), "forecast_sha256_12": V.sha(
-            (RUNS / f"{name}_v1/forecast.npz") if (RUNS / f"{name}_v1/forecast.npz").exists()
-            else (RUNS / f"{name}_v1/F1_predictions.npz"))[:12]} for label, (name, _) in ARMS.items()},
+        "inputs": {label: {"file": str(RUNS / f"{name}_v1")} for label, (name, _) in ARMS.items()},
         "outputs": ["error_by_band.csv", "error_by_horizon.csv", "error_by_band.png"],
         "notes": ["Bands are target speed (truth), not forecast speed; the same pairs are counted for every arm.",
                   "This is a diagnostic on the published window; nothing here selected a hyper-parameter."],

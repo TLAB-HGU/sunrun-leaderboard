@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>e2000fs_calib5_detpool_all · 81개 arm을 전부 붙이면</title>
+<style>/*__CSS__*/</style>
+<style>
+.kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+@media(max-width:860px){.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi .card{padding:12px 14px}
+.kpi .k{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.kpi .v{font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:2px 0}
+.kpi .s{font-size:12px;color:var(--ink-2)}
+.up{color:var(--warn)} .down{color:var(--ok)}
+.beta{display:grid;grid-template-columns:1fr 130px 70px;gap:6px;align-items:center;font-size:12px;padding:2px 0}
+.beta .t{height:11px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.beta .t i{display:block;height:100%;background:var(--img)}
+.beta code{font-size:11px;background:none;padding:0;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+</style>
+</head>
+<body>
+<nav><div class="wrap" id="nav">
+  <a href="#s0"><b>0</b>한눈에</a><a href="#s1"><b>1</b>질문·사전등록</a><a href="#s2"><b>2</b>arm 81개</a><a href="#s3"><b>3</b>조합식</a>
+  <a href="#s4"><b>4</b>적합·가드</a><a href="#s5"><b>5</b>재구성 검증</a><a href="#s6"><b>6</b>β 분포</a><a href="#s7"><b>7</b>상관 구조</a>
+  <a href="#s8"><b>8</b>예측 차이</a><a href="#s9"><b>9</b>성적</a><a href="#s10"><b>10</b>반사실 진단</a><a href="#s11"><b>11</b>재현·한계</a>
+</div></nav>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">e2000fs_calib5_detpool_all · <span id="h-dir"></span></div>
+  <h1>보드 1위 예측에 <b>아카이브된 arm 81개</b>를 전부 붙이면</h1>
+  <p class="lead">기준(<code>calib4 detpool_gpd</code>, 보드 1위 3,208.9)에 손으로 고른 1~2개가 아니라
+  <b>존재하는 모든 357,840행 예측</b>을 비음수 스택으로 얹었습니다. arm 선택은 사전등록에서 금지됐고,
+  조합 규칙도 실행 전에 고정했습니다. 결과는 <b>3,243.1</b> — 기준보다 나빠졌습니다.</p>
+</header>
+
+<section id="s0">
+  <div class="num">0 · 한눈에</div>
+  <h2>“전부 붙이기”는 이겼지 않았다</h2>
+  <div class="kpi" id="kpis"></div>
+  <div class="note key"><b>한 줄 요약.</b> 총 MSE 목적함수는 <b>몸통</b>에 유리한 조합으로 수렴합니다.
+  그 결과 스택은 detroute(꼬리가 약한 arm)에 26%를 실어, gpd 혼합으로 얻은 <b>꼬리 이득을 부분적으로 되돌렸습니다</b>.
+  F2 고속 MSE만 −5.5 좋아지고 나머지는 모두 나빠졌습니다.</div>
+  <div class="flow" id="flow" style="grid-template-columns:repeat(5,minmax(0,1fr))"></div>
+</section>
+
+<section id="s1">
+  <div class="num">1 · 질문과 사전등록</div>
+  <h2>실행 전에 고정한 것</h2>
+  <div class="grid2">
+    <div class="card"><h3>질문</h3>
+      <p>기준 예측에 <b>가능한 모든 arm</b>을 동시에 붙이면 1-arm/2-arm 풀보다 좋아지는가?</p>
+      <p class="sub">기대치는 사전등록에 “총 MSE ±30 수준의 작은 변화, 꼬리는 200~400 개선되면 성공”이라고 적혀 있었습니다.
+      실제 결과는 총 MSE <b>+34.3</b>, 꼬리 <b>+107.5</b> — 기대의 반대 방향입니다.</p></div>
+    <div class="card"><h3>고정한 규칙 (사전등록)</h3>
+      <table class="tb"><tbody>
+        <tr><td>기준(base)</td><td class="m"><code>calib4/runs/gpd_v1</code></td></tr>
+        <tr><td>arm 집합</td><td>“존재하는 모든 forecast.npz” — <b>성적으로 고르지 않음</b></td></tr>
+        <tr><td>조합</td><td class="m">base + Σβ(arm−base), β≥0, Σβ≤1</td></tr>
+        <tr><td>적합 창</td><td class="m">2,160 성숙 원점 · 168 원점마다 재적합</td></tr>
+        <tr><td>리지</td><td class="m">1e-3 × n_rows</td></tr>
+        <tr><td>꼬리 가드</td><td class="m">shrink 1.0/0.75/0.5/0.25</td></tr>
+        <tr><td>F1/F2</td><td>학습·선택에 <b>사용 금지</b>, 마지막에 한 번 채점</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="num">2 · arm 81개는 어떻게 모였나</div>
+  <h2>성적표가 아니라 “파일이 있는가”로 정해진 집합</h2>
+  <p><code>research/**/forecast.npz</code>를 전부 훑어 아래 조건을 통과한 것만 arm으로 씁니다.
+  이 규칙 덕분에 “좋은 arm만 골라 넣었다”는 비판이 원천적으로 막힙니다 — 대신 <b>나쁜 arm도 그대로 들어옵니다</b>.</p>
+  <div class="eq">① <code>predictions</code> 키가 있고 &nbsp;② <code>origins_ns</code>가 기준과 <b>완전히 일치</b>하고 &nbsp;③ 전부 유한값이고<br>
+④ 예측 배열 해시가 중복이 아니고 &nbsp;⑤ 기준 자신과 <code>publication/</code> 사본은 제외 &nbsp;→&nbsp; <b id="nArms"></b>개</div>
+  <div class="grid2">
+    <div class="card"><h3>arm 목록의 성격</h3>
+      <table class="tb" id="armTbl"></table>
+      <p class="sub">같은 실험의 변형(시드·손실·마스크 차이)이 대부분이라 서로 닮은 예측이 많습니다 — 7절에서 측정합니다.</p></div>
+    <div class="card"><h3>기준(base)은 무엇인가</h3>
+      <p><code>calib4 detpool_gpd</code>의 최종 예측입니다. 즉 <b>이미 한 번 최적화된 산출물</b>에 다시 스택을 얹는 구조이고,
+      스택의 β는 “기준에서 얼마나 벗어날지”를 정합니다.</p>
+      <div class="wk"><span class="lt">기준 성적</span>MSE <b id="baseMse"></b> · ≥550 <b id="baseGe"></b> · bias <b id="baseBias"></b></div></div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="num">3 · 조합식</div>
+  <h2>기준에서 출발하는 비음수 볼록 결합</h2>
+  <div class="eq">pred[i] = base[i] + Σ<sub>j</sub> β<sub>j</sub> · ( arm<sub>j</sub>[i] − base[i] )<br>
+β<sub>j</sub> ≥ 0, &nbsp; Σ<sub>j</sub> β<sub>j</sub> ≤ 1</div>
+  <p>β를 <b>base-상대 증분</b>에 걸기 때문에 β = 0이면 정확히 기준이고, Σβ ≤ 1이면 “기준과 arm들의 볼록 결합” 범위를
+  벗어나지 않습니다. 음수를 금지하는 이유는 <b>해석 가능성</b>입니다 — β<sub>j</sub>는 “arm j 쪽으로 얼마나 이동했는가”가 됩니다.</p>
+  <div class="note"><b>주의.</b> Σβ ≤ 1은 <b>볼록결합</b>이라 예측을 “평균 쪽으로 당깁니다”. 서로 다른 arm의 평균은
+  대개 <b>분산이 작고 꼬리가 눌린</b> 예측이므로, 이 제약 자체가 꼬리에 불리한 방향으로 작동할 수 있습니다.
+  실제로 detroute에 26%가 실렸습니다(6절).</div>
+</section>
+
+<section id="s4">
+  <div class="num">4 · 적합 절차</div>
+  <h2>매 168 원점마다, 성숙한 과거만으로 다시 푼다</h2>
+  <div class="steps">
+    <div class="step"><h3>창과 성숙</h3>
+      <div class="eq">사용 구간 = [ 최근 2,160 성숙 원점 ] &nbsp;·&nbsp; 성숙 조건 = 목표 시각 ≤ 재적합 원점<br>
+재적합 주기 = 168 원점 &nbsp;→&nbsp; 전체 <b id="nRefits"></b>회</div>
+      <p class="sub">채점 대상 원점의 정답은 절대 쓰지 않습니다. 72시간 성숙 조건이 그 경계입니다.</p></div>
+    <div class="step"><h3>표준화 → NNLS + 리지</h3>
+      <div class="eq">X<sub>j</sub> = Δ<sub>j</sub> / rms(Δ<sub>j</sub>) &nbsp;<em>// arm별 증분 스케일 정규화</em><br>
+min ‖ [X ; √(ridge·n)·I] β − [resid ; 0] ‖, &nbsp; β ≥ 0 &nbsp;<em>// scipy.nnls</em><br>
+β ← β / rms &nbsp;<em>// 원래 단위로 되돌림</em></div>
+      <p class="sub">표준화가 없으면 스케일이 큰 arm이 무조건 선택됩니다. 리지는 1e-3·n_rows로 <b>약하게</b> 겁니다.</p></div>
+    <div class="step"><h3>심플렉스 캡 → 꼬리 가드</h3>
+      <div class="eq">Σβ &gt; 1 이면 β ← β / Σβ<br>
+s ∈ {1.0, 0.75, 0.5, 0.25} 를 차례로: tail(w) ≤ tail(base) 인 첫 s 채택<br>
+모두 실패하면 β = 0 (그 구간은 기준 그대로)</div>
+      <p class="sub">가드는 “trailing에서 <b>나빠지지 않기</b>”만 요구합니다. 꼬리를 <b>개선하라</b>는 압력은 없습니다 — 9절의 핵심.</p>
+      <div class="wk"><span class="lt">사다리가 만드는 이산값</span>
+        원래 합이 S<sub>0</sub>일 때 각 단의 합 = min(1, S<sub>0</sub>·s). 그래서 실제 Σβ는
+        <b>0 · 0.5 · 0.6 · 1</b> 같은 몇 개 값에만 몰립니다(6절 분포). 연속적으로 조금씩 섞는 것이 아니라
+        <b>“몇 %로 줄일지”를 네 단계 중에서 고르는</b> 구조입니다.</div></div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="num">5 · 재구성 검증</div>
+  <h2>산식이 실제 산출물과 맞는지 확인</h2>
+  <p>저장된 β와 arm 배열로 예측을 <b>다시 조립</b>해 실제 제출 예측과 비교했습니다. 이 값이 0이 아니면 이 페이지의
+  설명은 틀린 것이므로, 스크립트가 여기서 멈춥니다.</p>
+  <div class="eq">max | base + Σβ(arm−base) − forecast.npz | = <b id="recon"></b></div>
+  <p class="sub">즉 3절의 한 줄이 이 실험의 전부이고, 나머지는 “β를 어떻게 정했는가”입니다.</p>
+</section>
+
+<section id="s6">
+  <div class="num">6 · β는 어디에 실렸나</div>
+  <h2>detroute 26%, 나머지는 잘게 — 그리고 절반의 시점은 β=0</h2>
+  <div class="grid2">
+    <div class="card"><h3>평균 β 상위 arm</h3><div id="topArms"></div>
+      <p class="sub">막대 = 평균 β. 오른쪽 숫자 = 그 arm <b>단독</b> 성적의 기준 대비 증감(MSE / ≥550).
+      detroute는 단독으로 보면 기준보다 <b>둘 다 나쁜데</b> 가장 큰 가중을 받았습니다.</p></div>
+    <div class="card"><h3>β 합의 분포</h3><svg class="chart" id="sumSvg" viewBox="0 0 520 260"></svg>
+      <p class="sub" id="sumNote"></p></div>
+  </div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><h3>재적합마다 다시 정해지는 β</h3><svg class="chart" id="seriesSvg" viewBox="0 0 900 280"></svg>
+      <p class="sub">168 원점마다 계단처럼 바뀝니다. 파랑 = Σβ, 주황 = detroute β. β=0 구간(회색)은 가드가 전부 실패한 구간입니다.</p></div>
+    <div class="card"><h3>요약 통계</h3><table class="tb" id="betaTbl"></table></div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="num">7 · 상관 구조</div>
+  <h2>“81개 고상관 arm”이라는 말을 측정해 보면</h2>
+  <p>arm들이 서로 얼마나 닮았는지는 <b>무엇의 상관을 재는지</b>에 따라 달라집니다. 두 가지를 모두 쟀습니다.</p>
+  <table class="tb" id="corrTbl"></table>
+  <div class="note">수준(예측값) 상관은 중앙값 0.94로 매우 높지만, <b>base-상대 증분</b>의 상관은 중앙값 0.35로 훨씬 낮습니다.
+  NNLS는 증분에 걸리므로, “고상관이라 잡음만 더해진다”는 설명은 <b>절반만 맞습니다</b> —
+  실제로는 서로 다른 방향의 증분이 섞이며, 그 조합이 꼬리를 눌렀습니다.</div>
+</section>
+
+<section id="s8">
+  <div class="num">8 · 예측 차이</div>
+  <h2>스택은 기준을 거의 건드리지 않는다</h2>
+  <div class="grid2">
+    <div class="card"><h3>(스택 − 기준) 분포</h3><svg class="chart" id="diffSvg" viewBox="0 0 520 260"></svg></div>
+    <div class="card"><h3>숫자</h3><table class="tb" id="diffTbl"></table>
+      <p class="sub">셀의 86%가 ±5 km/s 안입니다. 그런데 <b>그 작은 이동이 꼬리에서 손해</b>가 됩니다 —
+      고속 셀은 수가 적어 조금만 눌려도 MSE 기여가 크게 바뀝니다.</p></div>
+  </div>
+</section>
+
+<section id="s9">
+  <div class="num">9 · 성적</div>
+  <h2>전부 붙이면 나빠진다 — 어디서 나빠졌나</h2>
+  <table class="tb" id="scoreTbl"></table>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><h3>구간별</h3><table class="tb" id="bandTbl"></table></div>
+    <div class="card"><h3>왜</h3>
+      <p class="sub" id="csiNote"></p>
+      <ul style="font-size:13.5px;color:var(--ink-2);margin:0;padding-left:18px">
+        <li><b>목적함수가 총 MSE</b>입니다. 총 MSE는 몸통(정상 구간)이 지배하므로, 꼬리를 좋게 하는 arm보다
+        <b>몸통을 안정화하는 arm</b>이 선택됩니다.</li>
+        <li>detroute 26%가 정확히 그 선택입니다. detroute는 단독 성적이 기준보다 나쁘지만, 스택에 넣으면
+        <b>총 MSE를 낮추는 방향</b>(분산 감소)으로 작동합니다.</li>
+        <li><b>가드는 “나빠지지 않기”</b>만 요구합니다. 그래서 꼬리 개선 압력이 0입니다.</li>
+        <li>리지 1e-3은 약합니다 — β가 0이 아닌 셀이 5.5%(=22,344/402,570)이고, Σβ는 43.9%의 시점에서 <b>캡 1</b>에 붙습니다.</li>
+      </ul></div>
+  </div>
+</section>
+
+<section id="s10">
+  <div class="num">10 · 반사실 진단</div>
+  <h2>detroute 가중만 0으로 두면 어떻게 되나 (사후 진단)</h2>
+  <p>사전등록 결과가 아니라 <b>설명용 진단</b>입니다. 저장된 β에서 detroute 열만 0으로 두고, 나머지 β는 그대로 써서 다시 조립·채점했습니다.</p>
+  <table class="tb" id="cfTbl"></table>
+  <p class="sub">해석: detroute 가중을 빼면 <b>총 MSE는 나빠지고</b>(3243.1 → 3258.2) <b>꼬리는 좋아집니다</b>(7072.8 → 6981.0).
+  즉 detroute 26%는 “총 MSE를 사고 꼬리를 파는” 거래였습니다. 사전등록된 목적함수가 총 MSE였으므로, 이 선택은
+  <b>규칙에 충실한 결과</b>입니다 — 규칙이 틀렸다는 것이 이 실험의 결론입니다.</p>
+</section>
+
+<section id="s11">
+  <div class="num">11 · 재현·한계</div>
+  <h2>무엇을 주장할 수 있고, 다음에 무엇을 할 수 있나</h2>
+  <div class="grid2">
+    <div class="card"><h3>주장할 수 있는 것</h3>
+      <ul style="font-size:13.5px;color:var(--ink-2);margin:0;padding-left:18px">
+        <li>사전등록된 “전부 붙이기” 규칙은 이 기준에서 <b>기준보다 나쁘다</b>(총 +34.3, 꼬리 +107.5).</li>
+        <li>그 원인은 <b>목적함수(총 MSE)와 가드(악화 방지)</b>이며, detroute 26%가 그 증거다.</li>
+        <li>스택은 예측을 거의 바꾸지 않는다(86% 셀이 ±5).</li>
+      </ul></div>
+    <div class="card"><h3>주장할 수 없는 것 / 다음 후보</h3>
+      <ul style="font-size:13.5px;color:var(--ink-2);margin:0;padding-left:18px">
+        <li>“arm을 많이 붙이면 항상 나쁘다”는 일반화 — 이 기준·이 창·이 가드에서의 결과입니다.</li>
+        <li>다음 후보(미실행): 꼬리 목적의 스태킹(NNLS 목적을 <b>trailing ≥550 MSE</b>로 바꾸고 총 MSE를 가드로), 또는 꼬리 상위 3~5개 arm만으로 재적합.</li>
+      </ul></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>산출물</h3><table class="tb"><tbody id="fileTbl"></tbody></table></div>
+  <div class="note"><b>재현.</b> <code>.venv/bin/python docs/explainers/code/extract_calib5.py &amp;&amp; .venv/bin/python docs/explainers/code/build_calib5.py</code> —
+  β와 arm 배열로 예측을 다시 조립해 제출 파일과 <b>최대오차 0</b>인지 확인하고, 점수를 results.json과 대조합니다.</div>
+</section>
+
+<footer>
+  <div>원본 실행: <code id="f-dir"></code></div>
+  <div>기준: <code id="f-base"></code></div>
+  <div>다른 문서: <a href="e2000fs_calib4_detpool_gpd.html">detpool_gpd</a> · <a href="e2000fs_calib_tweedie15.html">tweedie15</a> · <a href="e2000fs_calib_point4_144h.html">point4_144h</a></div>
+</footer>
+</div>
+<div class="tip" id="tip"></div>
+<script id="data" type="application/json">__DATA_JSON__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById('data').textContent);
+const NS = 'http://www.w3.org/2000/svg';
+const $ = (s, el = document) => el.querySelector(s);
+const fmt = (v, n = 2) => v == null || !isFinite(v) ? '—' : Number(v).toFixed(n);
+const int = v => v == null ? '—' : Number(v).toLocaleString('en-US');
+const sgn = (v, n = 1) => (v > 0 ? '+' : '') + fmt(v, n);
+function S(tag, attrs = {}, kids = []) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (Array.isArray(kids) ? kids : [kids]).forEach(c => c != null && e.append(c.nodeType ? c : document.createTextNode(String(c))));
+  return e;
+}
+function H(tag, attrs = {}, kids = []) {
+  const e = document.createElement(tag);
+  for (const k in attrs) k === 'html' ? e.innerHTML = attrs[k] : e.setAttribute(k, attrs[k]);
+  (Array.isArray(kids) ? kids : [kids]).forEach(c => c != null && e.append(c.nodeType ? c : document.createTextNode(String(c))));
+  return e;
+}
+const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0 || 1) * (r1 - r0);
+const axisText = (g, x, y, t, anchor = 'middle', extra = {}) =>
+  g.append(S('text', Object.assign({ x, y, 'text-anchor': anchor, 'font-size': 11, fill: 'var(--ink-3)' }, extra), t));
+const B = D.scores.base.pooled, K = D.scores.stack.pooled, W = D.weights;
+
+/* 0 · KPI + flow */
+(function () {
+  const d = (a, b) => (b / a - 1) * 100;
+  const cards = [
+    ['통합 MSE', fmt(K.mse, 1), `${fmt(B.mse, 1)} → ${fmt(K.mse, 1)} (${sgn(d(B.mse, K.mse), 2)}%)`, d(B.mse, K.mse)],
+    ['고속(≥550) MSE', fmt(K.ge, 1), `${fmt(B.ge, 1)} → ${fmt(K.ge, 1)} (${sgn(d(B.ge, K.ge), 2)}%)`, d(B.ge, K.ge)],
+    ['arm 수', int(D.arms.count), `평균 Σβ ${fmt(W.mean_sum, 3)}`, 0],
+    ['β=0 시점', fmt(W.share_all_zero * 100, 1) + '%', '가드가 전부 실패한 구간', 0],
+  ];
+  cards.forEach(([k, v, s, dd]) => {
+    const c = H('div', { class: 'card' });
+    c.append(H('div', { class: 'k' }, k), H('div', { class: 'v' }, v), H('div', { class: 's ' + (dd > 0 ? 'up' : dd < 0 ? 'down' : '') }, s));
+    $('#kpis').append(c);
+  });
+  const nodes = [
+    ['s2', 'arm 81개', ['파일 존재로 결정', '성적 사용 안 함']],
+    ['s3', '조합식', ['base + Σβ(arm−base)', 'β≥0, Σβ≤1']],
+    ['s4', '적합', ['2,160 창 · 168 재적합', 'NNLS + 리지 + 가드']],
+    ['s9', '채점', ['한 번만', '총 +34.3 · 꼬리 +107.5']],
+    ['s10', '원인', ['detroute 26%', '총 MSE를 사고 꼬리를 팜']],
+  ];
+  nodes.forEach((nd, i) => {
+    const a = H('a', { class: 'node', href: '#' + nd[0] });
+    a.append(H('div', { class: 'k' }, '단계 ' + (i + 1)), H('h3', {}, nd[1]));
+    const ul = H('ul'); nd[2].forEach(t => ul.append(H('li', {}, t))); a.append(ul);
+    $('#flow').append(a);
+  });
+})();
+
+/* 2 · arms */
+(function () {
+  $('#nArms').textContent = int(D.arms.count) + '개';
+  $('#baseMse').textContent = fmt(B.mse, 1);
+  $('#baseGe').textContent = fmt(B.ge, 1);
+  $('#baseBias').textContent = fmt(B.bias, 2);
+  const groups = {};
+  D.arms.names.forEach(n => { const k = n.split('/')[0]; groups[k] = (groups[k] || 0) + 1; });
+  const top = Object.entries(groups).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const tb = $('#armTbl');
+  tb.innerHTML = '<thead><tr><th>실험군</th><th class="m">arm 수</th></tr></thead>';
+  const body = H('tbody');
+  top.forEach(([k, v]) => body.append(H('tr', { html: `<td><code>${k}</code></td><td class="m">${v}</td>` })));
+  body.append(H('tr', { html: `<td style="color:var(--ink-3)">그 외 ${Object.keys(groups).length - top.length}개 군</td><td class="m">${D.arms.count - top.reduce((a, b) => a + b[1], 0)}</td>` }));
+  tb.append(body);
+})();
+
+/* 4 · refits */
+$('#nRefits').textContent = int(D.run.refits);
+
+/* 5 · reconstruction */
+$('#recon').textContent = D.recon.max_abs_error === 0 ? '0.0 km/s (완전 일치)'
+  : D.recon.max_abs_error.toExponential(2) + ' km/s';
+
+/* 6 · betas */
+(function () {
+  const box = $('#topArms'), mx = Math.max(...W.top.map(t => t.mean_beta));
+  W.top.forEach(t => {
+    const row = H('div', { class: 'beta' });
+    const name = t.arm.replace('research/', '').replace('/forecast.npz', '');
+    row.append(H('div', { class: 't', html: `<i style="width:${t.mean_beta / mx * 100}%"></i>` }),
+      H('div', { class: 'm', style: 'text-align:right' }, `${fmt(t.mean_beta, 3)}  (${fmt(t.mean_beta / 0.4829 * 100, 0)}%)`),
+      H('div', { class: 'm', style: `font-size:11px;color:${t.alone_delta_ge > 0 ? 'var(--warn)' : 'var(--ok)'}` }, `${sgn(t.alone_delta_mse, 0)} / ${sgn(t.alone_delta_ge, 0)}`));
+    const lab = H('div', { style: 'grid-column:1/-1;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:-2px 0 2px' }, name);
+    box.append(lab, row);
+  });
+  const h = W.hist, svg = $('#sumSvg'), Wd = 520, Hh = 260, m = { l: 44, r: 12, t: 14, b: 46 };
+  const labels = ['0', '0–0.1', '0.1–0.2', '0.2–0.3', '0.3–0.4', '0.4–0.5', '0.5–0.6', '0.6–0.8', '0.8–1'];
+  const x = lin(0, h.counts.length, m.l, Wd - m.r), y = lin(0, Math.max(...h.share) * 1.15, Hh - m.b, m.t);
+  h.counts.forEach((c, i) => {
+    const w = (Wd - m.r - m.l) / h.counts.length;
+    const r = S('rect', { x: x(i) + 1, y: y(h.share[i]), width: w - 2, height: Hh - m.b - y(h.share[i]), rx: 2,
+      fill: i === 0 ? 'var(--route)' : 'var(--img)', 'fill-opacity': i === 0 ? 1 : .85 });
+    r.append(S('title', {}, `Σβ ${labels[i]} : ${(h.share[i] * 100).toFixed(1)}%`));
+    svg.append(r);
+    if (h.share[i] > 0.02) axisText(svg, x(i) + w / 2, y(h.share[i]) - 4, (h.share[i] * 100).toFixed(0) + '%');
+  });
+  labels.forEach((t, i) => { if (i % 2 === 0) axisText(svg, x(i) + 4, Hh - 26, t); });
+  axisText(svg, (m.l + Wd - m.r) / 2, Hh - 6, 'Σβ (한 시점의 가중치 합)');
+  $('#sumNote').innerHTML = `Σβ는 <b>0(가드 실패) · 0.5 · 0.6 · 1</b> 네 값에 몰립니다 — 가드 사다리의 각 단(1.0/0.75/0.5/0.25)이
+    만드는 이산적인 결과입니다. <b>${fmt(W.share_sum_capped * 100, 1)}%</b>의 시점이 캡(Σβ=1)에 붙습니다.`;
+  const tb = $('#betaTbl');
+  tb.innerHTML = '<thead><tr><th>항목</th><th class="m">값</th></tr></thead>';
+  const body = H('tbody');
+  [['평균 Σβ', fmt(W.mean_sum, 4)], ['중앙값 Σβ', fmt(W.median_sum, 4)], ['Σβ = 0 시점', fmt(W.share_all_zero * 100, 1) + '%'],
+   ['Σβ 캡(1) 시점', fmt(W.share_sum_capped * 100, 1) + '%'], ['β>0 셀', `${int(W.n_positive_cells)} / ${int(W.n_cells)} (${fmt(W.n_positive_cells / W.n_cells * 100, 1)}%)`],
+   ['β>0 셀의 평균값', fmt(W.mean_nonzero_betas, 4)]].forEach(([a, b]) => body.append(H('tr', { html: `<td>${a}</td><td class="m">${b}</td>` })));
+  tb.append(body);
+
+  const ser = W.series, svg2 = $('#seriesSvg'), W2 = 900, H2 = 280, m2 = { l: 48, r: 14, t: 16, b: 32 };
+  const mx2 = Math.max(...ser.map(q => q.sum), ...ser.map(q => q.detroute));
+  const x2 = lin(0, ser.length - 1, m2.l, W2 - m2.r), y2 = lin(0, mx2 * 1.1, H2 - m2.b, m2.t);
+  for (let i = 0; i <= 4; i++) {
+    const v = mx2 * 1.1 * i / 4;
+    svg2.append(S('line', { x1: m2.l, x2: W2 - m2.r, y1: y2(v), y2: y2(v), stroke: 'var(--line)' }));
+    axisText(svg2, m2.l - 6, y2(v) + 4, fmt(v, 1), 'end');
+  }
+  ser.forEach((q, i) => { if (q.sum <= 0) svg2.append(S('rect', { x: x2(i) - 2, y: m2.t, width: 4, height: H2 - m2.b - m2.t, fill: 'var(--line)', 'fill-opacity': .8 })); });
+  [['sum', 'var(--ace)'], ['detroute', 'var(--img)']].forEach(([k, col]) => {
+    const d = ser.map((q, i) => (i ? 'L' : 'M') + x2(i).toFixed(1) + ',' + y2(q[k]).toFixed(1)).join('');
+    svg2.append(S('path', { d, fill: 'none', stroke: col, 'stroke-width': 2.2 }));
+  });
+  [0, Math.floor(ser.length / 2), ser.length - 1].forEach(i => axisText(svg2, x2(i), H2 - 14, ser[i].origin.slice(0, 10)));
+  axisText(svg2, 12, 120, 'β', 'middle', { transform: 'rotate(-90 12 120)' });
+})();
+
+/* 7 · correlations */
+(function () {
+  const c = D.arms.corr, l = D.arms.level_corr;
+  const tb = $('#corrTbl');
+  tb.innerHTML = '<thead><tr><th>비교 대상</th><th class="m">평균</th><th class="m">중앙값</th><th class="m">10%</th><th class="m">90%</th><th class="m">기타</th></tr></thead>';
+  const body = H('tbody');
+  body.append(H('tr', { html: `<td>예측 수준 (arm 끼리)</td><td class="m">${fmt(l.mean, 3)}</td><td class="m">${fmt(l.median, 3)}</td><td class="m">—</td><td class="m">—</td><td class="m">최소 ${fmt(l.min, 3)} · 0.99 초과 ${fmt(l.share_above_99 * 100, 1)}%</td>` }));
+  body.append(H('tr', { class: 'hl', html: `<td>base-상대 증분 (NNLS가 보는 것)</td><td class="m">${fmt(c.mean, 3)}</td><td class="m">${fmt(c.median, 3)}</td><td class="m">${fmt(c.p10, 3)}</td><td class="m">${fmt(c.p90, 3)}</td><td class="m">0.9 초과 ${fmt(c.share_above_90 * 100, 1)}% · ${int(c.n_pairs)}쌍</td>` }));
+  tb.append(body);
+})();
+
+/* 8 · diff */
+(function () {
+  const d = D.diff, svg = $('#diffSvg'), Wd = 520, Hh = 260, m = { l: 44, r: 12, t: 14, b: 44 };
+  const x = lin(0, d.counts.length, m.l, Wd - m.r), y = lin(0, Math.max(...d.share) * 1.15, Hh - m.b, m.t);
+  d.counts.forEach((c, i) => {
+    const w = (Wd - m.r - m.l) / d.counts.length;
+    const r = S('rect', { x: x(i) + 1, y: y(d.share[i]), width: w - 2, height: Hh - m.b - y(d.share[i]), rx: 2,
+      fill: d.edges[i] < 0 ? 'var(--ace)' : 'var(--img)' });
+    r.append(S('title', {}, `${d.edges[i]} ~ ${d.edges[i + 1]} : ${(d.share[i] * 100).toFixed(2)}%`));
+    svg.append(r);
+    if (d.share[i] > 0.05) axisText(svg, x(i) + w / 2, y(d.share[i]) - 4, (d.share[i] * 100).toFixed(0) + '%');
+  });
+  d.edges.forEach((e, i) => { if (i % 2 === 0) axisText(svg, x(i) + 2, Hh - 24, e); });
+  axisText(svg, (m.l + Wd - m.r) / 2, Hh - 4, '스택 − 기준 (km/s)');
+  const tb = $('#diffTbl');
+  tb.innerHTML = '<thead><tr><th>항목</th><th class="m">값</th></tr></thead>';
+  const body = H('tbody');
+  [['평균', fmt(d.mean, 2) + ' km/s'], ['표준편차', fmt(d.sd, 2)], ['|차이| ≤ 5 비율', fmt(d.share[4] * 100, 1) + '%'],
+   ['|차이| > 15 비율', fmt(d.share_beyond_15 * 100, 1) + '%'], ['최대 |차이|', fmt(d.max_abs, 1) + ' km/s']].forEach(([a, b]) =>
+    body.append(H('tr', { html: `<td>${a}</td><td class="m">${b}</td>` })));
+  tb.append(body);
+})();
+
+/* 9 · scores */
+(function () {
+  const tb = $('#scoreTbl');
+  tb.innerHTML = '<thead><tr><th>폴드</th><th class="m">MSE 기준</th><th class="m">MSE 스택</th><th class="m">Δ</th><th class="m">≥550 기준</th><th class="m">≥550 스택</th><th class="m">Δ</th><th class="m">CSI 기준</th><th class="m">CSI 스택</th></tr></thead>';
+  const body = H('tbody');
+  [['F1', 'f1'], ['F2', 'f2'], ['통합', 'pooled']].forEach(([lab, k]) => {
+    const a = D.scores.base[k], b = D.scores.stack[k];
+    body.append(H('tr', { class: k === 'pooled' ? 'hl' : '', html: `<td>${lab}</td>` +
+      `<td class="m">${fmt(a.mse, 1)}</td><td class="m"><b>${fmt(b.mse, 1)}</b></td><td class="m" style="color:${b.mse < a.mse ? 'var(--ok)' : 'var(--warn)'}">${sgn(b.mse - a.mse, 1)}</td>` +
+      `<td class="m">${fmt(a.ge, 1)}</td><td class="m"><b>${fmt(b.ge, 1)}</b></td><td class="m" style="color:${b.ge < a.ge ? 'var(--ok)' : 'var(--warn)'}">${sgn(b.ge - a.ge, 1)}</td>` +
+      `<td class="m">${k === 'pooled' ? fmt(a.csi, 4) : '—'}</td><td class="m">${k === 'pooled' ? fmt(b.csi, 4) : '—'}</td>` }));
+  });
+  tb.append(body);
+  const bt = $('#bandTbl');
+  bt.innerHTML = '<thead><tr><th>구간</th><th class="m">기준</th><th class="m">스택</th><th class="m">Δ</th></tr></thead>';
+  const bb = H('tbody');
+  ['f1', 'f2', 'pooled'].forEach(f => {
+    const a = D.scores.base[f].band, b = D.scores.stack[f].band;
+    ['h1–24', 'h25–48', 'h49–72'].forEach((lab, i) => {
+      bb.append(H('tr', { html: `<td>${f === 'pooled' ? '통합' : f.toUpperCase()} · ${lab}</td><td class="m">${fmt(a[i], 1)}</td><td class="m"><b>${fmt(b[i], 1)}</b></td><td class="m" style="color:${b[i] < a[i] ? 'var(--ok)' : 'var(--warn)'}">${sgn(b[i] - a[i], 1)}</td>` }));
+    });
+  });
+  bt.append(bb);
+})();
+
+/* 10 · counterfactual */
+(function () {
+  const c = D.counterfactual, tb = $('#cfTbl');
+  tb.innerHTML = '<thead><tr><th>예측</th><th class="m">총 MSE</th><th class="m">≥550 MSE</th><th class="m">bias</th><th class="m">기준 대비</th></tr></thead>';
+  const body = H('tbody');
+  [['기준 (β=0)', c.base], ['스택 (저장된 β)', D.scores.stack.pooled], ['스택, detroute 열=0', c.without_detroute],
+   ['detroute 단독 (β=1)', c.detroute_alone]].forEach(([lab, s], i) => {
+    body.append(H('tr', { class: i === 1 ? 'hl' : '', html: `<td>${lab}</td><td class="m">${fmt(s.mse, 1)}</td><td class="m">${fmt(s.ge, 1)}</td><td class="m">${fmt(s.bias, 2)}</td><td class="m">${sgn(s.mse - c.base.mse, 1)} / ${sgn(s.ge - c.base.ge, 1)}</td>` }));
+  });
+  tb.append(body);
+})();
+
+/* 9b · event metric note */
+(function () {
+  const a = D.scores.base.pooled, b = D.scores.stack.pooled;
+  $('#csiNote').innerHTML = `이벤트 지표는 CSI ${fmt(a.csi, 4)} → ${fmt(b.csi, 4)}, POD ${fmt(a.pod, 3)} → ${fmt(b.pod, 3)},
+    FAR ${fmt(a.far, 3)} → ${fmt(b.far, 3)}입니다. 고속 탐지 자체는 조금 좋아졌는데(CSI·POD↑, FAR은 0.5370 → 0.5368로 사실상 동일)
+    <b>고속 MSE는 나빠졌습니다</b> — “더 자주 맞히지만, 맞힐 때의 크기가 더 틀린다”는 뜻입니다.`;
+})();
+
+/* 11 · footer */
+(function () {
+  $('#h-dir').textContent = D.run.dir;
+  $('#f-dir').textContent = D.run.dir;
+  $('#f-base').textContent = D.run.base;
+  const files = [
+    ['runs/poolall_v1/forecast.npz', '최종 스택 예측 (4,970 × 72)'],
+    ['runs/poolall_v1/weights.npz', 'β 행렬 (4,970 × 81) + arm 이름'],
+    ['runs/poolall_v1/results.json', '점수·arm 목록·가중 통계'],
+    ['runs/poolall_v1/predictions.parquet', '제출 포맷 357,840행'],
+    ['preregistration.md', '실행 전 고정한 규칙'],
+  ];
+  const body = $('#fileTbl');
+  files.forEach(([n, s]) => body.append(H('tr', { html: `<td><code>${n}</code></td><td>${s}</td>` })));
+})();
+</script>
+</body>
+</html>

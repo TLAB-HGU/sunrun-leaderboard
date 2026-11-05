@@ -252,18 +252,27 @@ def test_concurrent_same_key_is_rechecked_and_rejected(monkeypatch):
         store_submission(FakeApi(conflict=True), "repo", result_record(), b"prediction", replace=False)
 
 
-def test_board_shows_end_to_end_hours_only_when_provided():
-    regimes = {name: {"mse": None, "reliable": False} for name in __import__("board").REGIMES}
-    base = {"team_member": "alice", "submitted_utc": "20261027T000000Z", "skill_vs_naive": 0.1, "mse": 4000.0,
-            "vs_naive": {"beats_reference": True}, "by_regime": regimes, "mse_f1": 5000.0, "mse_f2": 3000.0}
-    page = render([
-        {**base, "experiment": "timed", "config_sha256": "a" * 64,
-         "extras": {"end_to_end_seconds": 5400.0, "end_to_end_note": "select + F1 + F2 fits"}},
-        {**base, "experiment": "untimed", "config_sha256": "b" * 64},
-    ])
-    assert "end-to-end (h)" in page
-    assert '<td data-v="1.5" title="select + F1 + F2 fits">1.50</td>' in page
-    assert '<td data-v="" title=""><span class="dash">–</span></td>' in page
+VIZ = "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/" + "1" * 40 + "/docs/visualizations/model"
+
+
+def test_board_links_a_visualization_only_to_the_submission_it_was_made_from():
+    import board
+    base = {"team_member": "alice", "experiment": "model", "mse": 4000.0, "mse_f1": 5000.0, "mse_f2": 3000.0,
+            "mse_f3": 3200.0}
+    mapping = {"models": [{"member": "alice", "experiment": "model", "submitted_utc": "20261027T000000Z", "url": VIZ},
+                          {"member": "alice", "experiment": "model", "submitted_utc": "20261028T000000Z",
+                           "url": "https://example.com/not-github"}]}
+    page = render([{**base, "submitted_utc": "20261027T000000Z"}], visualizations=mapping)
+    assert f'class="visualization-link" href="{VIZ}"' in page
+    assert '<th class="l" data-sortable="0">visualization</th>' in page
+    # a resubmission does not inherit the older pictures, and a non-pinned url is never linked
+    for submitted in ("20261029T000000Z", "20261028T000000Z"):
+        assert "visualization-link" not in render([{**base, "submitted_utc": submitted}], visualizations=mapping)
+    with pytest.raises(ValueError, match="pinned"):
+        board.upsert_visualization({}, mapping["models"][1])
+    updated = board.upsert_visualization(mapping, {**mapping["models"][0], "url": VIZ.replace("/model", "/model2")})
+    assert [e["url"] for e in updated["models"]][:1] == [VIZ.replace("/model", "/model2")]
+    assert len(updated["models"]) == 2
 
 
 def test_extras_attach_to_matching_results_only(monkeypatch, tmp_path):

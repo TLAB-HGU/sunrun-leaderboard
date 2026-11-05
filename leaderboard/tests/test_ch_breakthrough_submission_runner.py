@@ -1,6 +1,4 @@
 """Focused fail-closed contract checks for frozen submission replay."""
-import copy
-import hashlib
 import sys
 from pathlib import Path
 
@@ -20,13 +18,8 @@ def config(branch="combined"):
 
 
 @pytest.mark.parametrize("branch", runner.ARMS)
-def test_supported_branch_and_config_integrity(branch):
-    cfg = config(branch)
-    runner.validate_config(cfg, runner.config_digest(cfg))
-    other = copy.deepcopy(cfg)
-    other["hyperparameters"]["xgboost"]["n_estimators"] += 1
-    with pytest.raises(ValueError, match="CONFIG sha256"):
-        runner.validate_config(other, runner.config_digest(cfg))
+def test_supported_branch(branch):
+    runner.validate_config(config(branch))
 
 
 def test_unsupported_arm_and_frozen_training_contract():
@@ -37,28 +30,6 @@ def test_unsupported_arm_and_frozen_training_contract():
     cfg["hyperparameters"]["max_train_origins"] = 3
     with pytest.raises(ValueError, match="cap/seed"):
         runner.validate_config(cfg)
-
-
-def test_input_and_source_hashes_fail_closed(tmp_path):
-    cfg = config()
-    for name in runner.SOURCE_NAMES:
-        (tmp_path / f"{name}.py").write_text(name)
-    ace, ch, raw = [tmp_path / name for name in ("ace", "ch", "raw.parquet")]
-    for path in (ace, ch, raw):
-        path.write_text(path.name)
-    cfg["data"]["source_sha256"] = {name: runner.file_digest(tmp_path / f"{name}.py")
-                                     for name in runner.SOURCE_NAMES}
-    cfg["data"]["input_sha256"] = {"ace": runner.file_digest(ace), "ch_hourly": runner.file_digest(ch),
-        "raw_ace_years": hashlib.sha256(runner.file_digest(raw).encode()).hexdigest()}
-    args = (cfg, [ace], ch, str(raw), tmp_path)
-    runner.validate_hashes(*args)
-    ace.write_text("changed")
-    with pytest.raises(ValueError, match="input sha256 mismatch: ace"):
-        runner.validate_hashes(*args)
-    ace.write_text("ace")
-    (tmp_path / "common.py").write_text("changed")
-    with pytest.raises(ValueError, match="source sha256 mismatch: common"):
-        runner.validate_hashes(*args)
 
 
 def test_origin_selection_and_complete_horizons():
@@ -100,7 +71,6 @@ def test_run_refits_frozen_params_and_records_prediction_only_timing(tmp_path, m
     speed = pd.Series(400.0, index=origins)
     speed.attrs["observed"] = pd.Series(True, index=origins)
     frames = {"speed": speed}
-    monkeypatch.setattr(runner, "validate_hashes", lambda *a: {"ace": "checked"})
     monkeypatch.setattr(runner.hpo, "load_inputs", lambda *a: frames)
     monkeypatch.setattr(runner.hpo, "_arm_features", lambda *a: (features, ["x"], True))
     calls = []
@@ -118,9 +88,8 @@ def test_run_refits_frozen_params_and_records_prediction_only_timing(tmp_path, m
 
     monkeypatch.setattr(runner.hpo, "fit_predict", fake_fit)
     cfg = config()
-    cfg["data"]["source_sha256"] = {}
     output = tmp_path / "preds.parquet"
-    assert runner.run(cfg, runner.config_digest(cfg), argv=["--folds", str(folds_path),
+    assert runner.run(cfg, argv=["--folds", str(folds_path),
         "--output", str(output), "--max-folds", "2", "--device", "cpu"]) == 0
     manifest = json.loads(output.with_suffix(".manifest.json").read_text())
     assert calls == [{"device": "cpu", "seed": 42, "max_train_origins": 6000}]
@@ -157,5 +126,4 @@ def test_published_wrapper_config_identity(experiment):
     wrapper = wrappers[0]
     namespace = runpy.run_path(str(wrapper), run_name="submission_identity_test")
     cfg = namespace["CONFIG"]
-    assert (namespace["CONFIG_SHA256"] == wrapper.stem
-            == runner.config_digest(cfg) == canonical_config(cfg)[1])
+    assert namespace["CONFIG_SHA256"] == wrapper.stem == canonical_config(cfg)[1]

@@ -58,8 +58,9 @@ origins = folds["origin_last_input_utc"]   # `period` is F1 or F2; ignore the re
 **meta.yaml**: see `meta.example.yaml`. `no_future_leakage: true` means only data with timestamp ≤ `origin_last_input_utc`
 was used for that origin. The truth is public NASA/ACE data, so this is an honour statement, not a technical guarantee.
 
-Every new result is uniquely identified by `(team_member, experiment, config_sha256)`. `config_sha256` is computed by
-`submit.py` from the canonical JSON form of `config.data` and `config.hyperparameters`; YAML key order does not affect it.
+Every new result is uniquely identified by `(team_member, experiment, submission key)`. `submit.py` derives the key
+internally from the canonical JSON form of `config.data` and `config.hyperparameters`; YAML key order does not affect it,
+and you never compute or check it yourself.
 The same key cannot be submitted twice unless `--replace` is explicitly supplied.
 
 `inference_seconds_per_fold` is the mean wall-clock time needed to produce one 72-hour forecast after data loading,
@@ -68,7 +69,7 @@ with `time.perf_counter()` over multiple folds.
 
 Each config must have one reproducible script at:
 ```text
-scripts/<team_member>/<experiment>/<config_sha256>.py
+scripts/<team_member>/<experiment>/<submission-key>.py
 ```
 `--dry-run` checks the local path. A real submission checks that the script is already available on this repository's
 `main` branch, so push the script before uploading the result. Existing entries without config, timing, or code metadata

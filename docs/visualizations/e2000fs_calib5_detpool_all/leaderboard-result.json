@@ -5,12 +5,7 @@
  "config": {
   "data": {
    "asset": {
-    "filename": "forecast.npz",
-    "sha256": "3b9d05e82ba19a76fcc3623018e403f150627be1d6aede8f712a1cfbbc963123"
-   },
-   "inputs_sha256": {
-    "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet": "96f6e22e1643d79c5dd49f04825128dc25c3b8985a5415fa5828fd7db3012877",
-    "/home/t-lab01/sunrun/research/e2000fs_calib4-20261031/runs/gpd_v1/forecast.npz": "a23779d9191e324ab3397f03f109cf3b1a0a83e912ebc56fd421583862cf820d"
+    "filename": "forecast.npz"
    },
    "origins": 4970,
    "rows": 357840,
@@ -72,7 +67,6 @@
    "window": 2160
   }
  },
- "config_sha256": "13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307",
  "inference_seconds_per_fold": 0.008526509084708457,
  "code_url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/main/scripts/seongeun/e2000fs_calib5_detpool_all/13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307.py",
  "description": "Refit 2026-10-31 for the F1/F2/F3 quarters: the same recipe retrained with training cutoffs 2025-12-29 (F1), 2026-03-29 (F2) and 2026-06-29 (F3), 72 h target maturity, forecast for all 6,315 origins. Earlier description: All 81 archived arms stacked onto detpool_gpd: base-relative non-negative least squares (ridge 1e-3, sum(beta)<=1) refit every 168 origins on the trailing 2160 matured origins, with a trailing >=550 no-regression shrink. No arm selection, no retraining, unconditional F1/F2.",

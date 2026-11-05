@@ -66,7 +66,7 @@ def test_spec_identity_and_scope():
 def test_venv_receipt_pinned():
     rec = json.loads((EXP / "venv_receipt.json").read_text())
     assert rec["huxt"] == "huxt==5.0.3" and rec["venv"] == ".venv-huxt"
-    assert rec["n_packages"] >= 100 and len(rec["freeze_sha256"]) == 64
+    assert rec["n_packages"] >= 100
 
 
 def test_corotation_causal_and_missing_fallback():

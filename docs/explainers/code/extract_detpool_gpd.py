@@ -9,7 +9,6 @@ Run:    /home/t-lab01/sunrun/.venv/bin/python docs/explainers/code/extract_detpo
 """
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import sys
@@ -29,10 +28,6 @@ _spec = importlib.util.spec_from_file_location(
 pool = importlib.util.module_from_spec(_spec)
 sys.modules['pool_lane'] = pool
 _spec.loader.exec_module(pool)
-
-
-def sha(p: Path) -> str:
-    return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
 def grid_scan(i: int, j: int, k: int) -> tuple[list[dict], dict]:
@@ -159,7 +154,7 @@ if __name__ == '__main__':
     out = {
         'model': 'e2000fs_calib4_detpool_gpd',
         'rule': results['rule'], 'window': WINDOW, 'grid': GRID.tolist(),
-        'inputs': results['inputs'],
+        'inputs': sorted(results['inputs']),
         'base_path': str(pool.BASE), 'arm_path': str(pool.ARMS['gpd']),
         'origins': {
             'n': int(len(origins)), 'first': str(origins[0]), 'last': str(origins[-1]),

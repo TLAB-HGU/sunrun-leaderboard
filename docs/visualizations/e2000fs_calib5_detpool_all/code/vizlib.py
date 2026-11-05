@@ -7,7 +7,6 @@ unless every recomputed score equals the leaderboard record to 1e-9. Nothing is 
 """
 from __future__ import annotations
 
-import hashlib
 import io
 import json
 from pathlib import Path
@@ -24,11 +23,10 @@ STORE = Path("/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb
 # Pinned leaderboard-dataset snapshot: folds/truth/naive of the F1/F2/F3 split (2026-10-31).
 SNAPSHOT = STORE / "snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87"
 PINNED = {
-    "folds": (SNAPSHOT / "folds.parquet", "38cf7b8271c8630710d6c40795cfea4981cf1362afe756999bae3e85f2ccba9a"),
-    "truth": (SNAPSHOT / "truth.parquet", "c1b510313c2fe49b44f704653f9efcfa2113f8e3240617abad199460127931eb"),
-    "naive": (SNAPSHOT / "naive.parquet", "598510bb9f83fb19ae023bcb0fccabbd3499f904e7926c55d0f199165a229180"),
-    "history": (ROOT / "data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-                "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"),
+    "folds": SNAPSHOT / "folds.parquet",
+    "truth": SNAPSHOT / "truth.parquet",
+    "naive": SNAPSHOT / "naive.parquet",
+    "history": ROOT / "data-v2/processed/ACE/ace.parquet",
 }
 KEY = ["origin_last_input_utc", "horizon_hours"]
 H = 72
@@ -42,14 +40,9 @@ PERIOD_OF_MONTH = {"2026-01": "F1", "2026-02": "F1", "2026-03": "F1", "2026-04":
                    "2026-06": "F2", "2026-07": "F3", "2026-08": "F3", "2026-09": "F3"}
 
 
-def sha(path) -> str:
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def pinned(name: str) -> Path:
-    path, expected = PINNED[name]
+    path = PINNED[name]
     assert path.exists(), f"missing pinned input {path}"
-    assert sha(path) == expected, f"{name} does not match its pinned sha256"
     return path
 
 
@@ -239,8 +232,7 @@ def render_gifs(out_dir: Path, data: dict, experiment: str, footer: str, months=
                             first_origin_utc=data["origins"][indices[0]].isoformat(),
                             last_origin_utc=data["origins"][indices[-1]].isoformat(),
                             duration_ms=frame_ms * len(indices), bytes=len(payload), stride=stride, dpi=dpi,
-                            frame_ms=frame_ms,
-                            sha256=hashlib.sha256(payload).hexdigest()))
+                            frame_ms=frame_ms))
         print(json.dumps({k: outputs[-1][k] for k in ("month", "file", "frames", "bytes")}), flush=True)
     return outputs
 
@@ -253,7 +245,6 @@ def gif_manifest(out_dir: Path, data: dict, experiment: str, arm: str, aggregati
         "experiment": receipt["experiment"],
         "member": receipt["team_member"],
         "submitted_utc": receipt["submitted_utc"],
-        "config_sha256": receipt["config_sha256"],
         "arm": arm,
         "aggregation": aggregation,
         "created_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
@@ -262,13 +253,12 @@ def gif_manifest(out_dir: Path, data: dict, experiment: str, arm: str, aggregati
                        y_limits_kms=list(Y_LIMITS), month_grouping="UTC month of origin + 1 hour",
                        palette="256-colour palette fixed from the month's first frame; no dithering"),
         "sources": {
-            "predictions": [{"file": str(p), "sha256": sha(p)} for p in files],
+            "predictions": [{"file": str(p)} for p in files],
             "prediction_keys": [list(k) for k in keys],
-            "folds": {"file": str(pinned("folds")), "sha256": sha(pinned("folds"))},
-            "truth": {"file": str(pinned("truth")), "sha256": sha(pinned("truth"))},
-            "history": {"file": str(PINNED["history"][0]), "sha256": PINNED["history"][1]},
-            "receipt": {"file": str(out_dir / "leaderboard-result.json"),
-                        "sha256": sha(out_dir / "leaderboard-result.json")},
+            "folds": {"file": str(pinned("folds"))},
+            "truth": {"file": str(pinned("truth"))},
+            "history": {"file": str(PINNED["history"])},
+            "receipt": {"file": str(out_dir / "leaderboard-result.json")},
         },
         "footer": footer,
         "verification": {
@@ -287,7 +277,6 @@ def gif_manifest(out_dir: Path, data: dict, experiment: str, arm: str, aggregati
             "Hollow markers identify observations filled by the input store (ACE gaps), not model output.",
             "All truth, including filled observations, contributes to the displayed RMSE.",
         ],
-        "diagnostics": [{"file": receipt.name, "sha256": sha(receipt)}
-                        for receipt in sorted(out_dir.glob("*_receipt.json"))],
+        "diagnostics": [{"file": receipt.name} for receipt in sorted(out_dir.glob("*_receipt.json"))],
         "outputs": outputs,
     }

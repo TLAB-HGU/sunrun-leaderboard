@@ -1,0 +1,116 @@
+team_member: seongeun
+experiment: e2000fs_calib11h_noenlil
+description: 'e2000fs_calib11h_noenlil. Single-axis ablation of the board leader e2000fs_calib11g_serarounds2:
+  the two ENLIL columns of the frozen Top30, enlil_n_pending (number of WSA-Enlil
+  Earth-arrival predictions still pending at the origin, vintage rule modelCompletionTime
+  <= origin) and enlil_kp (max Kp over those pending runs), leave the design; every
+  other element is the parent verbatim - SERA relevance weights on the metric''s velocity-space
+  measure w=(y-q0)/(q100-q0) per lead, median-anchored, level target, three 24-h vector-leaf
+  boosters per period, per-period rounds F1/F2 300 and F3 1200, depth 3, seed 42,
+  144 h maturity mask, 19 constant + 24 h x 9 varying = 235 columns instead of 237.
+  Motivation: on the parent''s F1 block-0 booster the two columns take 79 + 96 of
+  3,718 constant-feature splits, but permuting them at prediction time moves RMSE
+  by -0.39 / +1.22 km/s and refitting without them moves F1 h1-24 RMSE by -1.0 / -0.9
+  / -1.3 km/s over seeds 42/43/44 - inside seed noise, with no measured gain, so the
+  ENLIL metadata carry no information the ACE/CH/27-day block does not already carry.
+  No routing, no gate, no blend, no post-processing. F1/F2/F3 use cutoffs 2025-12-29
+  / 2026-03-29 / 2026-06-29 and 72 h target maturity; all 6,315 origins are forecast
+  unconditionally. MEASURED: TOTAL S 101.224 (parent 99.093), TIMSE 23,431.3 (22,579.7),
+  RMSE 68.691 (66.898), F1 S 121.973 (120.871), F2 S 76.576 (75.103), F3 S 64.828
+  (60.960). The prediction-time probe that motivated the arm (F1 block 0, -0.39/+1.22
+  km/s under permutation, -1.0/-0.9/-1.3 km/s under refit over seeds 42/43/44) does
+  not extend to the official periods: the two ENLIL metadata columns are worth 2.13
+  points of TOTAL S and 3.87 points of F3 S, so the arm is recorded as a REJECTED
+  single-axis ablation and is submitted as evidence, not as a candidate. Both arms
+  fit the same per-period round counts (F3 1200; the parent''s published F3 block
+  0 is reproduced bit-exactly at 1200 rounds, max abs diff 0.0), so the difference
+  is the feature axis alone.'
+no_future_leakage: true
+f1_training_data_end_utc: '2025-12-29T00:00:00Z'
+f2_training_data_end_utc: '2026-03-29T00:00:00Z'
+f3_training_data_end_utc: '2026-06-29T00:00:00Z'
+config:
+  data:
+    feature_set: df.parquet frozen Top30 minus the two ENLIL columns (19 constant
+      + 24 h x 9 varying per block = 235 columns); identical to the parent otherwise
+    parent_feature_set: df.parquet Top30 (21 constant + 24 h x 9 varying per block),
+      237 columns
+    dropped_columns:
+    - enlil_n_pending
+    - enlil_kp
+    source: data-v2/input/df.parquet
+    blocks:
+    - 0
+    - 1
+    - 2
+    ace_lag_hours: 0
+    maturity_hours: 72
+    prefill: causal forward fill
+    periods:
+      F1:
+        count: 2089
+      F2:
+        count: 2113
+      F3:
+        count: 2113
+    ablation:
+      parent: e2000fs_calib11g_serarounds2
+      axis: feature_set
+      single_axis: true
+      change: remove enlil_n_pending and enlil_kp from the 21 constant features
+      held_fixed:
+      - SERA weights
+      - level target
+      - 3 x 24-h blocks
+      - rounds F1/F2 300, F3 1200
+      - round count selection windows
+      - depth 3
+      - seed 42
+      - maturity 144 h
+      - predictions for all 6,315 origins
+  hyperparameters:
+    objective:
+      family: SERA relevance-weighted squared error (per-row, per-lead weights), identical
+        to the parent
+      weights: w_i = (y_i - q0)/(q100 - q0) per lead, median-anchored; labels only
+      rho_source: none; the SERA weights need no calibration block and no fitted scalar
+      estimand: E[w(Y)Y|x]/E[w(Y)|x] = probability-weighted mixture of conditional
+        tail means
+      removed_heuristics:
+      - 4x sample weight above 550 km/s
+      - 550 km/s threshold anywhere in training
+      weight_percentiles_by_period:
+        F1:
+          '50': 0.2013607066125567
+          '90': 0.3904167167046956
+          '99': 0.5856263646664408
+          '99.9': 0.766998441060079
+          '100': 1.0
+        F2:
+          '50': 0.2061351157794223
+          '90': 0.39997612795416565
+          '99': 0.5886874024258436
+          '99.9': 0.8131670464084421
+          '100': 1.0
+    target:
+      form: level (y), identical to the parent
+    booster:
+      recipe: frozen e2000fs_calib_point4_144h xgboost recipe, unchanged
+      max_depth: 3
+      learning_rate: 0.03
+      subsample: 0.8
+      colsample_bytree: 0.7
+      min_child_weight: 20
+      reg_lambda: 5
+      multi_strategy: multi_output_tree
+      rounds:
+        F1: 300
+        F2: 300
+        F3: 1200
+      outputs_per_fit: 24 horizons per booster
+      seed: 42
+      rounds_selection: inherited from the parent (rolling-origin argmin on the quarter
+        ending immediately before each period's training cutoff)
+    post_processing: none (no clipping, no calibration lane, no blend)
+inference_seconds_per_fold: 9.69943492613835e-06
+architecture_url: https://github.com/TLAB-HGU/sunrun-leaderboard/blob/424302fdc06bc26216fe738683e1e9f719a79b26/research/e2000fs_calib11h_noenlil/experiment.py

@@ -38,14 +38,14 @@ def better(df, filled):  # half-way to truth: strictly better than persistence w
     return 0.5 * persistence(df, filled) + 0.5 * t
 
 
-def test_chain_detects_tampering(expos):
+def test_sequence_detects_dropped_line(expos):
     core, _, _ = expos
     core.add_direction("D2", "x", "y")
     assert core.verify() == 3
     lines = core.GRAPH.read_text().splitlines()
-    lines[1] = lines[1].replace('"test"', '"edited"')
+    del lines[1]
     core.GRAPH.write_text("\n".join(lines) + "\n")
-    with pytest.raises(core.ExposError, match="chain broken"):
+    with pytest.raises(core.ExposError, match="sequence broken"):
         core.verify()
 
 
@@ -112,11 +112,11 @@ def test_experience_add_and_query(expos):
 def test_protect_rebaselines_and_gpu_order(expos, monkeypatch):
     core, _, _ = expos
     (core.LB / "expos" / "core.py").exists()
-    monkeypatch.setattr(core, "protected_hashes", lambda: {"expos/core.py": "changed"})
+    monkeypatch.setattr(core, "protected_files", lambda: ["expos/core.py"])
     with pytest.raises(core.ExposError, match="reason"):
         core.protect("")
     core.protect("test")
-    assert core.state()["init"]["protected"] == {"expos/core.py": "changed"}
+    assert core.state()["init"]["protected"] == ["expos/core.py"]
 
     class R:
         stdout = "0, 90, 9000\n1, 5, 100\n"

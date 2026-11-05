@@ -32,7 +32,7 @@ import vizlib as V
 
 OUT = Path(__file__).resolve().parents[1]
 STUDY = V.ROOT / "research/e2000fs_f123-20261031"
-BUNDLE = V.ROOT / "data-v2/model-inputs/leaderboard-store/e2000fs-lag0"
+BUNDLE = V.ROOT / "data-v2/bundles/frozen"
 H = 72
 MASK_HOURS = 144
 PERIODS = ("F1", "F2", "F3")

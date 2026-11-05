@@ -31,7 +31,6 @@ EXPOS_SMOKE=1 runs fold 0 / seed 0 only on a 24h train grid with 20 trees on
 CPU (~1 min pipeline gate); it is not an evaluation.
 """
 
-import hashlib
 import json
 import os
 import sys
@@ -75,40 +74,32 @@ FCACHE_DATA = ("store/suvi-fusion/suvi-hourly-v2.parquet", "store/ch-v1/ch-hourl
 _FCACHE_STATS = {"hits": 0, "misses": 0}
 
 
-def _file_sha(path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for b in iter(lambda: f.read(1 << 20), b""):
-            h.update(b)
-    return h.hexdigest()
+def _file_stamp(path) -> list:
+    st = path.stat()
+    return [st.st_size, st.st_mtime_ns]
 
 
-def _origins_sha(df) -> str:
-    o = pd.DatetimeIndex(pd.to_datetime(df["origin"], utc=True)).asi8.tobytes()
-    return hashlib.sha256(o + np.ascontiguousarray(df["h"].to_numpy()).tobytes()).hexdigest()
-
-
-def fcache_key(kind: str, payload: dict) -> str:
+def fcache_key(kind: str, payload: dict) -> tuple:
+    """(file stem, full key); the key records code/data size+mtime and must match on read."""
+    stem = "-".join([kind, *(v for v in payload.values() if isinstance(v, str))])
     blob = json.dumps({"v": FCACHE_VERSION, "kind": kind, "payload": payload,
-                       "code": {f: _file_sha(LB / f) for f in FCACHE_CODE},
-                       "data": {f: [(LB / f).stat().st_size, (LB / f).stat().st_mtime_ns]
-                                for f in FCACHE_DATA}}, sort_keys=True, default=str)
-    return hashlib.sha256(blob.encode()).hexdigest()
+                       "code": {f: _file_stamp(LB / f) for f in FCACHE_CODE},
+                       "data": {f: _file_stamp(LB / f) for f in FCACHE_DATA}}, sort_keys=True, default=str)
+    return stem, blob
 
 
 def fcache_get(key):
+    stem, blob = key
     d = SCRATCH / "featcache"
-    pq, js = d / (key + ".parquet"), d / (key + ".json")
+    pq, js = d / (stem + ".parquet"), d / (stem + ".json")
     if not (pq.is_file() and js.is_file()):
         return None
     try:
         meta = json.loads(js.read_text())
-        if meta.get("key") != key or meta.get("version") != FCACHE_VERSION:
+        if meta.get("key") != blob or meta.get("version") != FCACHE_VERSION:
             return None
         df = pd.read_parquet(pq)
         if len(df) != meta.get("rows") or list(df.columns) != meta.get("columns"):
-            return None
-        if _origins_sha(df) != meta.get("origins_sha"):
             return None
         return df
     except Exception:
@@ -116,14 +107,15 @@ def fcache_get(key):
 
 
 def fcache_put(key, df):
+    stem, blob = key
     d = SCRATCH / "featcache"
     d.mkdir(parents=True, exist_ok=True)
-    meta = {"key": key, "version": FCACHE_VERSION, "rows": int(len(df)),
-            "columns": [str(c) for c in df.columns], "origins_sha": _origins_sha(df)}
-    tmp = d / (key + ".tmp.parquet")
+    meta = {"key": blob, "version": FCACHE_VERSION, "rows": int(len(df)),
+            "columns": [str(c) for c in df.columns]}
+    tmp = d / (stem + ".tmp.parquet")
     df.to_parquet(tmp, index=False)
-    (d / (key + ".json")).write_text(json.dumps(meta, sort_keys=True))
-    tmp.rename(d / (key + ".parquet"))
+    (d / (stem + ".json")).write_text(json.dumps(meta, sort_keys=True))
+    tmp.rename(d / (stem + ".parquet"))
     return df
 
 
@@ -143,7 +135,7 @@ def add_strips(df: pd.DataFrame, meta, block) -> pd.DataFrame:
 
 
 def build_train(freq: str, cols_extra: list) -> pd.DataFrame:
-    """Strip-augmented train frame, reused via the hash-keyed feat cache."""
+    """Strip-augmented train frame, reused via the feat cache."""
     key = fcache_key("train", {"freq": freq, "extra": cols_extra})
     hit = fcache_get(key)
     if hit is not None:

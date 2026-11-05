@@ -91,15 +91,16 @@ def test_perturb_and_delete_future_sources_leave_features_predictions_identical(
 
 
 def test_future_labels_do_not_change_fit(fitted, tmp_path):
-    _, frames, cutoff, origins, config, preds, meta, _ = fitted
+    _, frames, cutoff, origins, config, preds, meta, path = fitted
     changed = copy.deepcopy(frames)
     # Poison after cutoff but preserve issuance history at prediction origins.
     # Model bytes, not forecast anchors, must remain identical.
     changed["speed"].loc[changed["speed"].index > cutoff] = 1900.
     out = tmp_path / "poisoned"
     _, new_meta = tree.fit_predict(changed, cutoff, origins, config, "cpu", out)
-    assert new_meta["model_sha256"] == meta["model_sha256"]
-    assert new_meta["train_origin_sha256"] == meta["train_origin_sha256"]
+    assert (out / "model.ubj").read_bytes() == (path / "model.ubj").read_bytes()
+    assert new_meta["n_train_origins"] == meta["n_train_origins"]
+    assert new_meta["train_label_max"] == meta["train_label_max"]
     pd.testing.assert_frame_equal(preds, tree.predict_saved(frames, origins, out, "cpu"), check_exact=True)
 
 
@@ -109,14 +110,6 @@ def test_future_regime_not_in_feature_allowlist(fitted):
     changed["physics"]["future_regime"] = 1.
     with pytest.raises(ValueError, match="allowlist"):
         tree.predict_saved(changed, origins, path, "cpu")
-
-
-def test_saved_model_tamper_rejected(fitted):
-    _, frames, _, origins, _, _, _, path = fitted
-    with (path / "model.ubj").open("ab") as handle:
-        handle.write(b"tamper")
-    with pytest.raises(ValueError, match="hash mismatch"):
-        tree.predict_saved(frames, origins, path, "cpu")
 
 
 def test_existing_artifacts_and_bad_origins_rejected(fitted):

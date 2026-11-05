@@ -12,7 +12,6 @@ is a diagnostic; nothing here selected features or rounds. Correlated inputs (fo
 
     /home/t-lab01/sunrun/.venv/bin/python docs/visualizations/e2000fs_budget_spectral/code/feature_importance.py
 """
-import hashlib
 import json
 from pathlib import Path
 
@@ -28,17 +27,13 @@ STUDY = ROOT / "research/e2000fs_budget_spectral"
 RESULTS = STUDY / "results"
 RUN = RESULTS / "runs/full_v1"
 RELEASE = RUN / "publication/package/releases/e2000fs_budget_spectral"
-DATA = ROOT / "data-v2/model-inputs/leaderboard-store/e2000fs-lag0"
+DATA = ROOT / "data-v2/bundles/frozen"
 OUT = Path(__file__).resolve().parents[1]
 STAGES = (("f1", "f1", "F1 model (fit targets < 2026-02-26)", "mse_f1"),
           ("final", "official", "F2 model (fit targets < 2026-05-29)", "mse_f2"))
 REPEATS = 5
 SEED = 42
 CLIP = (1.0, 3000.0)
-
-
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def targets(stage_grid, truth):
@@ -79,7 +74,7 @@ def main():
         return np.hstack([stage_grid["C"][:, constant], values]).astype(np.float32)
 
     rng = np.random.default_rng(SEED)
-    rows, model_hashes, parity = [], {}, {}
+    rows, model_files, parity = [], [], {}
     for stage, grid_name, title, score_key in STAGES:
         grid = dict(np.load(DATA / f"{grid_name}.npz"))
         origins, y = targets(grid, truth)
@@ -89,9 +84,7 @@ def main():
         models = []
         for block in range(3):
             path = RELEASE / "models" / f"{stage}_spectral_b{block}.ubj"
-            digest = sha(path)
-            assert digest == config["data"]["model_sha256"][f"models/{path.name}"], f"model changed: {path}"
-            model_hashes[str(path.relative_to(ROOT))] = digest
+            model_files.append(str(path.relative_to(ROOT)))
             models.append(xgb.Booster(model_file=str(path)))
 
         def predict(mats):
@@ -149,10 +142,8 @@ def main():
                "feature's columns shuffled; predictions clipped to 1-3000 km/s; ΔMSE vs the submitted forecast",
         repeats=REPEATS, seed=SEED, stages={k: v for k, v in parity.items()},
         native_importance="unavailable: XGBoost 2.1.4 cannot dump multi-target trees and get_score crashes",
-        model_sha256=model_hashes,
-        note="official-exposed window; not used for feature selection or model choice",
-        outputs={"feature_importance.csv": sha(OUT / "feature_importance.csv"),
-                 "feature_importance.png": sha(OUT / "feature_importance.png")}), indent=2) + "\n")
+        models=model_files,
+        note="official-exposed window; not used for feature selection or model choice"), indent=2) + "\n")
     print(table.groupby("stage").delta_mse_mean.describe().to_string())
     print("wrote feature_importance.{csv,png} and the receipt")
 

@@ -62,8 +62,9 @@ origins = folds["origin_last_input_utc"]   # `period` is F1 or F2; ignore the re
 **meta.yaml**: see `meta.example.yaml`. `no_future_leakage: true` means only data with timestamp ≤ `origin_last_input_utc`
 was used for that origin. The truth is public NASA/ACE data, so this is an honour statement, not a technical guarantee.
 
-Every new result is uniquely identified by `(team_member, experiment, config_sha256)`. `config_sha256` is computed by
-`submit.py` from the canonical JSON form of `config.data` and `config.hyperparameters`; YAML key order does not affect it.
+Every new result is uniquely identified by `(team_member, experiment, submission key)`. `submit.py` derives the key
+internally from the canonical JSON form of `config.data` and `config.hyperparameters`; YAML key order does not affect it,
+and you never compute or check it yourself.
 The same key cannot be submitted twice unless `--replace` is explicitly supplied.
 
 `inference_seconds_per_fold` is the mean wall-clock time needed to produce one 72-hour forecast after data loading,
@@ -72,11 +73,30 @@ with `time.perf_counter()` over multiple folds.
 
 Each config must have one reproducible script at:
 ```text
-scripts/<team_member>/<experiment>/<config_sha256>.py
+scripts/<team_member>/<experiment>/<submission-key>.py
 ```
+Get that path from `submit.replay_script_path(member, experiment, config)`.
 `--dry-run` checks the local path. A real submission checks that the script is already available on this repository's
 `main` branch, so push the script before uploading the result. Existing entries without config, timing, or code metadata
 remain visible as `legacy` records.
+
+**The board's `code` column links the architecture, not that replay script.** `meta.yaml` must also carry
+`architecture_url`: the study source that defines the model, pinned to a commit, e.g.
+`https://github.com/TLAB-HGU/sunrun-leaderboard/blob/6b85acc0b00d731bf31b6885e0b847c18ee395d0/research/e2000fs_f123-20261031/qxgb.py`
+(optionally `#Lx-Ly`). Publish the study directory first, then submit: `submit.py` rejects a URL on a branch instead of a
+commit, a directory, and the `scripts/<member>/<experiment>/<submission-key>.py` replay script itself. It records the link
+in the result (`architecture_url`) and writes the matching entry to the Space's `architecture-code.json` in the same
+commit as the page, so a new row is published as `architecture` and never needs hand curation:
+
+```bash
+python architecture_code.py check                  # ranking rows whose code cell is not an architecture link (exit 1)
+python architecture_code.py add <member> <exp> <submission-key> <url>   # repair an older row
+python architecture_code.py publish                # upload the mapping and rewrite the code cells
+python architecture_code.py verify                 # every mapped URL answers 200
+```
+
+`lbstatus.py sync` reports any row that is still on a replay script, and `lbstatus.py` re-applies the mapping whenever it
+rewrites the page.
 
 To intentionally replace an existing result with the same three-part key:
 ```bash

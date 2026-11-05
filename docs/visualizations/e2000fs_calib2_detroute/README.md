@@ -1,6 +1,6 @@
 # E2000FS Calib2 DetRoute — detector 학습 loss, 라우팅 진단, permutation 중요도, F1+F2 월별 예측 GIF
 
-**2026-10-31 게시 기준 리더보드 1위**, 작성자 **seongeun**인 `e2000fs_calib2_detroute`입니다(제출 `20261031T000632213Z`, 게시 기준 2위는 tweedie15 3227.596508). 두 archive arm 사이를 **학습한 이진 분류기로 라우팅**한 제출입니다. E2000 입력(Top30 features, ACE lag 0)을 쓰는 고정 XGBoost recipe의 `tweedie15` arm(몸통)과 `mixture2comp` arm(꼬리) 두 예측을 그대로 두고, `binary:logistic` detector가 (origin, horizon) 쌍마다 확률 `p`를 내어 `p ≥ 0.234`이면 꼬리 arm, 아니면 몸통 arm을 고릅니다. 제출 설정 SHA256은 `e2457303ad54fe568c2b239ebf6b4f9b53657e60473284c276097f14f34a2acb`이며, 재현 소스는 [scripts/seongeun/e2000fs_calib2_detroute](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/main/scripts/seongeun/e2000fs_calib2_detroute/e2457303ad54fe568c2b239ebf6b4f9b53657e60473284c276097f14f34a2acb.py), 연구 기록은 [research/e2000fs_calib2-20261031](../../../research/e2000fs_calib2-20261031/)입니다.
+**2026-10-31 게시 기준 리더보드 1위**, 작성자 **seongeun**인 `e2000fs_calib2_detroute`입니다(제출 `20261031T000632213Z`, 게시 기준 2위는 tweedie15 3227.596508). 두 archive arm 사이를 **학습한 이진 분류기로 라우팅**한 제출입니다. E2000 입력(Top30 features, ACE lag 0)을 쓰는 고정 XGBoost recipe의 `tweedie15` arm(몸통)과 `mixture2comp` arm(꼬리) 두 예측을 그대로 두고, `binary:logistic` detector가 (origin, horizon) 쌍마다 확률 `p`를 내어 `p ≥ 0.234`이면 꼬리 arm, 아니면 몸통 arm을 고릅니다. 재현 소스는 [scripts/seongeun/e2000fs_calib2_detroute](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/main/scripts/seongeun/e2000fs_calib2_detroute/e2457303ad54fe568c2b239ebf6b4f9b53657e60473284c276097f14f34a2acb.py), 연구 기록은 [research/e2000fs_calib2-20261031](../../../research/e2000fs_calib2-20261031/)입니다.
 
 | 지표 | 제출 (routed) | tweedie15 (몸통 arm) | mixture2comp (꼬리 arm) | oracle arm 선택 |
 | --- | ---: | ---: | ---: | ---: |
@@ -144,7 +144,7 @@ split 횟수 1위는 두 단계 모두 `strip_v450_logmed`(F1 1,076 / F2 1,035)�
 | F2 | 2026-08 | 744 | [validation_2026-08.gif](validation_2026-08.gif) |
 | F2 | 2026-09 | 625 | [validation_2026-09.gif](validation_2026-09.gif) |
 
-리더보드에 실제 제출한 예측(`runs/detroute_v1/forecast.npz`, SHA256 `e7bbdbdf…438985`)을 그대로 읽습니다. 각 프레임은 공식 평가 시작점 하나이며, 파란 선은 시작점까지 최근 **168시간 관측**, 검은 선은 이후 **72시간 실제값**, 주황 선은 제출 예측입니다. 빈 원은 입력 저장소에서 채워진 값(원 관측 없음)입니다. 제목에 전체 폴드 번호(4,970개 중), UTC 시작 시각, 해당 72시간 RMSE를 표시합니다.
+리더보드에 실제 제출한 예측(`runs/detroute_v1/forecast.npz`)을 그대로 읽습니다. 각 프레임은 공식 평가 시작점 하나이며, 파란 선은 시작점까지 최근 **168시간 관측**, 검은 선은 이후 **72시간 실제값**, 주황 선은 제출 예측입니다. 빈 원은 입력 저장소에서 채워진 값(원 관측 없음)입니다. 제목에 전체 폴드 번호(4,970개 중), UTC 시작 시각, 해당 72시간 RMSE를 표시합니다.
 
 첫 예측 시각(`origin+1h`)의 UTC 월로 나누고 시간순으로 재생합니다. 1000×500, **200–850 km/s 고정 Y축**, 100ms/프레임, 무한 반복입니다. 2026-05-29 ~ 05-31은 72시간 창이 F1·F2 경계에 걸쳐 어느 기간에도 속하지 않으므로 5월 프레임이 673개입니다.
 
@@ -152,13 +152,12 @@ split 횟수 1위는 두 단계 모두 `strip_v450_logmed`(F1 1,076 / F2 1,035)�
 
 [code/render_gifs.py](code/render_gifs.py)가 렌더링 전에 다음을 확인하고, 하나라도 어긋나면 멈춥니다.
 
-- 예측 파일이 study `meta.yaml`에 고정된 자산(SHA256 `e7bbdbdf…438985`)인지
 - origin 4,970개가 리더보드 folds와 **같은 순서**인지
 - 예측·truth가 fold × h1..72에 1:1로 대응해 357,840쌍이 되는지
 - 다시 계산한 MSE가 리더보드 값과 1e-9 이내로 일치하는지(전체 3213.191868, F1 3551.740118, F2 2957.816786, ≥550 7343.427493)
 - 월별 프레임 수(744 / 720 / 673 / 720 / 744 / 744 / 625)와 GIF 디코딩, 각 프레임의 왕복 일치, 100ms·무한 반복
 
-같은 방식으로 detector loss는 archive booster와의 예측 차이 0.0([loss_receipt.json](loss_receipt.json)), 중요도는 archived 확률·제출 예측과의 비트 단위 일치([feature_importance_receipt.json](feature_importance_receipt.json)), 라우팅 진단은 `results.json`과의 값 일치([routing_diagnostics.json](routing_diagnostics.json))를 확인합니다. 리더보드가 보관한 제출 기록은 [leaderboard-result.json](leaderboard-result.json)에 그대로 복사했고, 입력 파일과 GIF의 SHA256·렌더링 설정은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
+같은 방식으로 detector loss는 archive booster와의 예측 차이 0.0([loss_receipt.json](loss_receipt.json)), 중요도는 archived 확률·제출 예측과의 비트 단위 일치([feature_importance_receipt.json](feature_importance_receipt.json)), 라우팅 진단은 `results.json`과의 값 일치([routing_diagnostics.json](routing_diagnostics.json))를 확인합니다. 리더보드가 보관한 제출 기록은 [leaderboard-result.json](leaderboard-result.json)에 그대로 복사했고, 렌더링 설정은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
 
 ## 재현
 

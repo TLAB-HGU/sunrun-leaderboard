@@ -74,9 +74,8 @@ def diagnostics(output):
                  'evaluation_mse_by_origin.csv', 'loss_history_audit.json']:
         path = output / name
         manifest.setdefault('diagnostic_outputs', []).append(
-            {'file': name, 'sha256': renderer.sha256(path), 'bytes': path.stat().st_size})
+            {'file': name, 'bytes': path.stat().st_size})
     manifest['training_loss_status'] = 'Not applicable; E1789 performs no training.'
-    manifest['entrypoint_script_sha256'] = renderer.sha256(__file__)
     manifest['notes'][0] = 'Displayed history is 168 hours of observations, not the full input history of all five constituent models.'
     manifest['evaluation_scope'] = 'Historical official/test comparison; not training validation or current-contract certification'
     manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')

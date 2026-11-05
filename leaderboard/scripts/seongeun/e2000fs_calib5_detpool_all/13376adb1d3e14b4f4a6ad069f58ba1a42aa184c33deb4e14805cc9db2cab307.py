@@ -6,7 +6,7 @@ beta is refit every 168 origins from the trailing 2160 matured origins (target t
 origin) by standardised NNLS with a 1e-3 ridge, then shrunk until sum(beta) <= 1 and until the
 trailing >=550 MSE does not exceed the base's. Arm set, window, cadence, ridge and shrink ladder
 are frozen in research/e2000fs_calib5-20261031/preregistration.md; nothing is tuned on F1/F2.
-No retraining; inputs are the archived forecasts (sha256 in meta.yaml).
+No retraining; inputs are the archived forecasts (recorded in meta.yaml).
 """
 from __future__ import annotations
 

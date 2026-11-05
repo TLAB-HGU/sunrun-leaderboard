@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Verify saved Feat30 Extreme boosters, then compute grouped split and permutation importance."""
+"""Verify saved Feat30 Extreme boosters reproduce the submission, then compute grouped split and permutation importance."""
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -28,14 +27,6 @@ STAGES = {
 REPEATS = 5
 SEED = 20261028
 TOP = 25
-
-
-def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as source:
-        for block in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
 
 
 def kind(name: str) -> str:
@@ -72,7 +63,7 @@ def load_models(stage: str) -> list[xgb.Booster]:
     for block in range(3):
         path = RUN / stage / "extreme_4.0" / f"b{block:02}.ubj"
         receipt = json.loads(path.with_suffix(".receipt.json").read_text())
-        if sha256(path) != receipt["sha256"] or receipt["columns"] != 237:
+        if receipt["columns"] != 237:
             raise SystemExit(f"saved model receipt mismatch: {path}")
         model = xgb.Booster(model_file=str(path))
         model.set_param({"nthread": 3})
@@ -139,7 +130,6 @@ def compute(out: Path) -> None:
             "mse": base_mse,
             "leaderboard_mse": record[metric],
             "total_splits": int(splits.sum()),
-            "model_sha256": [sha256(RUN / stage / "extreme_4.0" / f"b{i:02}.ubj") for i in range(3)],
         }
         rng = np.random.default_rng(SEED)
         for name in selected:

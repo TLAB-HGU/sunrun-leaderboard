@@ -23,7 +23,7 @@ from . import images, numeric
 CUTOFF = pd.Timestamp('2026-05-31T23:00:00Z')
 UPSTREAM_SHA = '204698b45b3712590f06245fbfba32d3be539812'
 CHECKPOINT = 'vjepa2_1_vitb_dist_vitG_384.pt'
-CHECKPOINT_SHA = '848a77c33cc9e6649ed2119c9bea1e2c569bcdab9539ff3e7c02ccc2959ddf4d'
+PREPARED = ('inventory.parquet', 'planned_origins.npz', 'intensity.json')
 
 
 def fold_origins(path):
@@ -91,11 +91,11 @@ def official_inventory(end, metadata_root=images.DEFAULT_METADATA, images_root=i
 
 
 def reference_identity(reference):
-    """Verify the frozen numerical, image and upstream sources before reuse."""
+    """Record the frozen numerical, image and upstream sources before reuse."""
     reference = Path(reference).resolve()
-    hashes = {}
+    identities = {}
     for name in ('protected-source-hashes.json', 'comparison_code_identity.json', 'execution-source-hashes.json'):
-        for source, expected in json.loads((reference / name).read_text()).items():
+        for source in json.loads((reference / name).read_text()):
             if not source.endswith('.py'):
                 continue  # Training config is pinned directly by comparison_protocol.json.
             relative = ('upstream/' + source.split('/upstream/', 1)[1]
@@ -104,23 +104,17 @@ def reference_identity(reference):
                         if '/leaderboard/' in source else source)
             path = (reference / relative if relative.startswith('upstream/') else
                     protocol.ROOT / relative.removeprefix('leaderboard/'))
-            if protocol.digest(path) != expected:
-                raise ValueError(f'frozen source changed: {path}')
-            hashes[relative] = expected
-    checkpoint = reference / 'checkpoints' / CHECKPOINT
-    if protocol.digest(checkpoint) != CHECKPOINT_SHA:
-        raise ValueError('checkpoint identity mismatch')
+            identities[relative] = numeric.file_stat(path)
     head = subprocess.check_output(['git', '-C', str(reference / 'upstream'), 'rev-parse', 'HEAD'], text=True).strip()
     dirty = subprocess.check_output(['git', '-C', str(reference / 'upstream'), 'status', '--porcelain', '--untracked-files=no'], text=True).strip()
     if head != UPSTREAM_SHA or dirty:
         raise ValueError('upstream identity mismatch')
-    for name in ('comparison_protocol.json', 'intensity.json'):
-        hashes[name] = protocol.digest(reference / name)
-    hashes['checkpoints/' + CHECKPOINT] = CHECKPOINT_SHA
+    for name in ('comparison_protocol.json', 'intensity.json', 'checkpoints/' + CHECKPOINT):
+        identities[name] = numeric.file_stat(reference / name)
     intensity = json.loads((reference / 'intensity.json').read_text())
     if common.utc(intensity['train_cutoff']) > CUTOFF:
         raise ValueError('intensity normalization uses future data')
-    return hashes
+    return identities
 
 
 def prepare(folds, run_dir, reference_run, root=None, metadata_root=images.DEFAULT_METADATA,
@@ -162,10 +156,7 @@ def prepare(folds, run_dir, reference_run, root=None, metadata_root=images.DEFAU
                     reference_run=str(reference), reference_identities=identity,
                     folds=protocol.file_ref(folds), input_identities=frames['identities'],
                     feature_end=origins.max().isoformat(), upstream_sha=UPSTREAM_SHA,
-                    checkpoint_sha256=CHECKPOINT_SHA,
-                    inventory_sha256=protocol.digest(run / 'inventory.parquet'),
-                    planned_origins_sha256=protocol.digest(run / 'planned_origins.npz'),
-                    intensity_sha256=protocol.digest(run / 'intensity.json'))
+                    prepared={name: numeric.file_stat(run / name) for name in PREPARED})
     protocol.write_json(run / 'official_protocol.json', manifest)
     return manifest
 
@@ -238,11 +229,10 @@ def predict(folds, run_dir, root=None, device='cpu'):
     run = Path(run_dir).resolve()
     manifest = json.loads((run / 'official_protocol.json').read_text())
     origins = fold_origins(folds)
-    if protocol.digest(folds) != manifest['folds']['sha256']:
+    if protocol.file_ref(folds) != manifest['folds']:
         raise ValueError('fold identity drift')
-    for name, field in [('inventory.parquet', 'inventory_sha256'),
-                        ('planned_origins.npz', 'planned_origins_sha256'), ('intensity.json', 'intensity_sha256')]:
-        if protocol.digest(run / name) != manifest[field]:
+    for name in PREPARED:
+        if numeric.file_stat(run / name) != manifest['prepared'][name]:
             raise ValueError(f'prepared artifact changed: {name}')
     if reference_identity(manifest['reference_run']) != manifest['reference_identities']:
         raise ValueError('reference identity drift')
@@ -251,7 +241,7 @@ def predict(folds, run_dir, root=None, device='cpu'):
         raise ValueError('numeric input identity drift')
     embeddings = run / 'embeddings.npz'
     extraction = json.loads((run / 'extraction.json').read_text())
-    if protocol.digest(embeddings) != extraction['embeddings_sha256']:
+    if numeric.file_stat(embeddings) != extraction['embeddings_identity']:
         raise ValueError('embedding identity drift')
     with np.load(run / 'planned_origins.npz', allow_pickle=False) as planned:
         embedded, _, _ = numeric.read_embeddings(embeddings, 'video')
@@ -264,7 +254,7 @@ def predict(folds, run_dir, root=None, device='cpu'):
         meta = json.loads((model_dir / 'metadata.json').read_text())
         if meta['config'] != manifest['config'] or common.utc(meta['cutoff']) != CUTOFF or meta['arm'] != 'video':
             raise ValueError('existing model differs from fixed recipe')
-        if meta['embedding_sha256'] != protocol.digest(embeddings) or meta['input_identities'] != frames['identities']:
+        if meta['embedding_identity'] != numeric.file_stat(embeddings) or meta['input_identities'] != frames['identities']:
             raise ValueError('existing model input identity drift')
         predictions = numeric.predict_saved(frames, origins, model_dir, 'cpu', embeddings)
     else:

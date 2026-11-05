@@ -38,7 +38,6 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures
-import hashlib
 import json
 import multiprocessing
 import os
@@ -60,7 +59,7 @@ from .common import (  # noqa: E402 (frozen foundation, read-only)
     N_THREADS,
     SEED,
     acquire_gpu_lease,
-    code_hash,
+    code_identity,
     ensure_device,
     runtime_versions,
     utc,
@@ -117,8 +116,8 @@ def ram_snapshot() -> dict:
     return info
 
 
-def source_hashes() -> dict:
-    """Dependency hashes: common/hpo/recurrence/physical + this runner."""
+def source_files() -> dict:
+    """Dependency size/mtime: common/hpo/recurrence/physical + this runner."""
     here = Path(__file__).resolve()
     root = here.parent
     targets = {
@@ -131,11 +130,7 @@ def source_hashes() -> dict:
     out = {}
     for name, path in targets.items():
         try:
-            out[name] = {
-                "path": str(path),
-                "sha256": code_hash(path),
-                "bytes": path.stat().st_size,
-            }
+            out[name] = code_identity(path)
         except Exception as exc:
             out[name] = {"path": str(path), "error": str(exc)}
     return out
@@ -235,7 +230,6 @@ def _write_trial_artifacts(*, outdir: Path, branch: str, trial: int, split: str,
     name = f"{branch}_trial{trial:02d}_{split}"
     ppath = outdir / f"{name}.parquet"
     preds.to_parquet(ppath, index=False)
-    pred_sha = hashlib.sha256(ppath.read_bytes()).hexdigest()
     metrics = {
         "branch": branch, "trial": int(trial), "split": split, "arm": arm,
         **scored,
@@ -278,14 +272,14 @@ def _write_trial_artifacts(*, outdir: Path, branch: str, trial: int, split: str,
         "device_requested": gpu_info["device"],
         "ram_before": ram_before,
         "ram_after": ram_after,
-        "source_hashes": source_hashes(),
+        "source_files": source_files(),
         "threads_per_fit": N_THREADS,
         "role": extra_role,
         "selection_use": ("dev/selection only; holdout never tie-break; "
                           "official never used"),
         "vintage_verified": False,
     }
-    manifest = write_manifest(
+    write_manifest(
         outdir / f"{name}.manifest.json", mode=name,
         train_cutoff=cutoff, params=params,
         tree_counts={"n_estimators": params["n_estimators"]},
@@ -296,7 +290,6 @@ def _write_trial_artifacts(*, outdir: Path, branch: str, trial: int, split: str,
         caller_file=str(Path(__file__).resolve()),
         actual_device=fore.actual_device,
         prediction_path=ppath)
-    assert manifest.get("prediction", {}).get("sha256") == pred_sha
     return {"metrics": metrics, "fit_seconds": float(fit_secs),
             "secs_per_origin": float(inf_secs),
             "actual_device": gpu_info["actual_device"],
@@ -456,7 +449,7 @@ def run_gpu_hpo(ace=("store/ch-v1/ace.parquet",),
             "device_policy": ("actual cuda:N via acquire_gpu_lease; never "
                               "device=auto; fail visibly, never CPU fallback"),
             "versions": runtime_versions(),
-            "source_hashes": source_hashes(),
+            "source_files": source_files(),
         },
         "branches": {},
     }
@@ -496,7 +489,7 @@ def run_gpu_hpo(ace=("store/ch-v1/ace.parquet",),
                 "feasibility_label": summary["branches"][b]["feasibility_label"],
                 "n_trials_complete": summary["branches"][b]["n_trials_complete"]}
             for b in BRANCHES},
-        "source_hashes": source_hashes(),
+        "source_files": source_files(),
         "versions": runtime_versions(),
         "selection_use": "dev/selection only; holdout never tie-break; official never used",
     }
@@ -563,7 +556,7 @@ def run_gpu_hpo(ace=("store/ch-v1/ace.parquet",),
                            "lease_gpu": gpu_info["lease_gpu"],
                            "device_requested": gpu_info["device"],
                            "ram_before": ram_b, "ram_after": ram_a,
-                           "source_hashes": source_hashes(),
+                           "source_files": source_files(),
                            "threads_per_fit": N_THREADS,
                            "role": "matched ablation, dev/selection only"},
                     caller_file=str(Path(__file__).resolve()),
@@ -609,7 +602,7 @@ def run_gpu_hpo(ace=("store/ch-v1/ace.parquet",),
         "physical_select_score": phy_w.get("select_score_dev_selection_mean"),
         "features": ("numerical base ACE+CH + physics + quality + horizon "
                      "target-relative recurrence, no imageNN"),
-        "source_hashes": source_hashes(),
+        "source_files": source_files(),
         "selection_use": ("dev/selection only; no holdout/official input; "
                           "no retune after official"),
     }
@@ -662,7 +655,7 @@ def run_gpu_hpo(ace=("store/ch-v1/ace.parquet",),
                        "lease_gpu": gpu_info["lease_gpu"],
                        "device_requested": gpu_info["device"],
                        "ram_before": ram_b, "ram_after": ram_a,
-                       "source_hashes": source_hashes(),
+                       "source_files": source_files(),
                        "threads_per_fit": N_THREADS,
                        "no_retune_after_official": True},
                 caller_file=str(Path(__file__).resolve()),

@@ -40,16 +40,16 @@ def test_prediction_checkpoint_is_immutable(tmp_path):
     assert path.read_bytes()==original
 
 
-def test_evidence_restart_preserves_frozen_hash_and_rejects_changed_claim(tmp_path):
+def test_evidence_restart_preserves_frozen_claim_and_rejects_changed_claim(tmp_path):
     path=tmp_path/'validation.json'
-    first={'passed':True,'created_utc':'first','wall_seconds':1.,'sha256':'original'}
+    first={'passed':True,'created_utc':'first','wall_seconds':1.,'n_rows':1}
     assert official_predict.immutable_evidence(path,first)==first
     original=path.read_bytes()
     second={**first,'created_utc':'later','wall_seconds':99.}
     assert official_predict.immutable_evidence(path,second)==first
     assert path.read_bytes()==original
     with pytest.raises(ValueError,match='evidence drift'):
-        official_predict.immutable_evidence(path,{**second,'sha256':'changed'})
+        official_predict.immutable_evidence(path,{**second,'n_rows':2})
 
 
 def test_saved_official_extension_future_numeric_and_image_rows_are_invariant(tmp_path):

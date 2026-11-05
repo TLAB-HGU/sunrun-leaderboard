@@ -69,7 +69,6 @@ def test_spec_tags_seeds_and_operational_rule():
 
 
 def test_operational_collection_receipt():
-    assert all(NC.verify_header_sha256(r) for r in NC.RECORDED)
     assert NC.RULE_H == 12
     assert len(NC.CANDIDATE_INITS) >= 20  # rocv-window coverage, not 9
     for init in NC.CANDIDATE_INITS:
@@ -81,7 +80,6 @@ def test_operational_collection_receipt():
     assert int(r["rule"]["rule_h"]) == 12 and "12h" in r["rule"]["rule"]
     assert "operational" in r["rule"]["rule"]
     assert r["bodies_fetched"] == 0 and "0 bodies" in r["transfer_budget"]
-    assert all(f["body_sha256"] is None for f in r["files"])
     assert len(r["eligible_inits"]) >= 20  # 12h rule admits the window
     assert "operational_proxy" in r and "vintage" in r["operational_proxy"]
     assert set(r["experience"]) == {"X0195", "X0005", "X0004"}

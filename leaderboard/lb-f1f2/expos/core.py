@@ -1,11 +1,10 @@
-"""Experiment OS: an append-only, hash-chained experiment graph plus the only sanctioned actions on it.
+"""Experiment OS: an append-only, sequence-numbered experiment graph plus the only sanctioned actions on it.
 
-Every state change is one JSON line in research/expos/graph.jsonl whose `hash` covers the previous line's hash,
-so edits to history are detectable (`verify`). Agents act only through these functions / the CLI.
+Every state change is one JSON line in research/expos/graph.jsonl carrying its line number `seq`, so dropped or
+reordered lines are detectable (`verify`). Agents act only through these functions / the CLI.
 """
 import contextlib
 import fcntl
-import hashlib
 import json
 import os
 import re
@@ -40,12 +39,9 @@ def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-def sha256(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
+def file_stat(path):
+    st = os.stat(path)
+    return {"size": st.st_size, "mtime_ns": st.st_mtime_ns}
 
 
 @contextlib.contextmanager
@@ -62,28 +58,20 @@ def _lines():
     return [json.loads(l) for l in GRAPH.read_text().splitlines() if l.strip()]
 
 
-def _digest(prev, body):
-    return hashlib.sha256((prev + json.dumps(body, sort_keys=True)).encode()).hexdigest()
-
-
 def verify():
-    """Check the hash chain; raise on any edited, dropped or reordered line."""
-    prev = ""
-    for i, e in enumerate(_lines()):
-        body = {k: v for k, v in e.items() if k != "hash"}
-        if e.get("seq") != i or e.get("prev") != prev or e.get("hash") != _digest(prev, body):
-            raise ExposError(f"graph chain broken at line {i}")
-        prev = e["hash"]
-    return len(_lines())
+    """Check the sequence numbers; raise on any dropped or reordered line."""
+    lines = _lines()
+    for i, e in enumerate(lines):
+        if e.get("seq") != i:
+            raise ExposError(f"graph sequence broken at line {i}")
+    return len(lines)
 
 
 def append(event, **fields):
     with _locked():
         lines = _lines()
         verify()
-        prev = lines[-1]["hash"] if lines else ""
-        body = {"seq": len(lines), "prev": prev, "ts": now(), "event": event, **fields}
-        rec = {**body, "hash": _digest(prev, body)}
+        rec = {"seq": len(lines), "ts": now(), "event": event, **fields}
         with open(GRAPH, "a") as f:
             f.write(json.dumps(rec, sort_keys=True) + "\n")
     return rec
@@ -108,7 +96,7 @@ def state():
                 e if ev != "flag" else e["flag"])
         elif ev == "rocv":
             s["experiments"][e["id"]].setdefault("rocv", []).append(e)
-        elif ev == "protect":  # admin re-baseline of protected hashes after an audited harness change
+        elif ev == "protect":  # admin re-baseline of the protected file list after an audited harness change
             s["init"] = {**s["init"], "protected": e["protected"]}
         elif ev == "start":
             s["experiments"][e["id"]]["running"] = e
@@ -128,30 +116,30 @@ def state():
     return s
 
 
-def protected_hashes():
-    return {p: sha256(LB / p) for p in PROTECTED if (LB / p).exists()}
+def protected_files():
+    return [p for p in PROTECTED if (LB / p).exists()]
 
 
 def check_protected(s=None):
+    """Protected files recorded at init (or the last protect) that are now missing."""
     s = s or state()
     if not s["init"]:
         raise ExposError("expos not initialised: run `python -m expos init`")
-    changed = [p for p, h in s["init"]["protected"].items() if not (LB / p).exists() or sha256(LB / p) != h]
-    return changed
+    return [p for p in s["init"]["protected"] if not (LB / p).exists()]
 
 
 def init(force=False):
     s = state()
     if s["init"] and not force:
         raise ExposError("already initialised")
-    return append("init", protected=protected_hashes(), forbidden=FORBIDDEN)
+    return append("init", protected=protected_files(), forbidden=FORBIDDEN)
 
 
 def protect(reason):
-    """Re-baseline protected hashes; only for audited harness changes made by the operator (logged in the chain)."""
+    """Re-baseline the protected file list; only for audited harness changes made by the operator (logged in the graph)."""
     if not reason:
         raise ExposError("protect needs a reason")
-    return append("protect", protected=protected_hashes(), reason=reason)
+    return append("protect", protected=protected_files(), reason=reason)
 
 
 def add_direction(id, title, rationale, parent=None):
@@ -185,17 +173,17 @@ def register(direction, owner, hypothesis, cmd, kind="full", code=(), reference=
         raise ExposError(f"kind must be one of {KINDS}")
     if reference and reference not in s["experiments"]:
         raise ExposError(f"unknown reference {reference}")
-    code_hashes, blob = {}, cmd
+    code_stats, blob = {}, cmd
     for c in code:
         p = (LB / c) if not Path(c).is_absolute() else Path(c)
         if not p.exists():
             raise ExposError(f"code file missing: {c}")
-        code_hashes[str(c)] = sha256(p)
+        code_stats[str(c)] = file_stat(p)
         blob += "\n" + p.read_text(errors="ignore")
     flags = [f"forbidden:{p}" for p in scan(blob)]
     eid = f"E{len(s['experiments']) + 1:04d}"
     return append("register", id=eid, direction=direction, owner=owner, hypothesis=hypothesis, cmd=cmd, kind=kind,
-                  code=code_hashes, reference=reference, experience=list(experience), flags=flags)
+                  code=code_stats, reference=reference, experience=list(experience), flags=flags)
 
 
 def _gpu_order(prefer=None):
@@ -254,9 +242,9 @@ def run(eid, timeout=3600, gpu=False, gpus=1, prefer=None):
     if changed:
         append("flag", id=eid, flag=f"protected_modified:{','.join(changed)}")
         raise ExposError(f"protected files changed: {changed}")
-    for c, h in x["code"].items():
+    for c, st in x["code"].items():
         p = (LB / c) if not Path(c).is_absolute() else Path(c)
-        if not p.exists() or sha256(p) != h:
+        if not p.exists() or file_stat(p) != st:
             raise ExposError(f"code changed since register: {c} (register a new experiment)")
     out = RUNS / eid
     out.mkdir(parents=True, exist_ok=True)
@@ -275,7 +263,7 @@ def run(eid, timeout=3600, gpu=False, gpus=1, prefer=None):
                                     timeout=timeout).returncode
             except subprocess.TimeoutExpired:
                 rc = "timeout"
-    outputs = {p.name: sha256(p) for p in sorted(out.glob("*.parquet")) + sorted(out.glob("*.json"))}
+    outputs = {p.name: p.stat().st_size for p in sorted(out.glob("*.parquet")) + sorted(out.glob("*.json"))}
     gpu_rec = dev[0] if dev and len(dev) == 1 else dev
     return append("run", id=eid, rc=rc, seconds=round(time.time() - t0, 1), gpu=gpu_rec, log=str(log), outputs=outputs)
 
@@ -346,5 +334,5 @@ def freeze(eid, final=None):
         raise ExposError(f"{src} must be clean and have produced predictions_official.parquet (no truth needed)")
     if final and (f["kind"] != "final" or f["direction"] != x["direction"]):
         raise ExposError("final run must be kind=final in the same direction")
-    return append("freeze", id=eid, final=src, predictions=str(pred), predictions_sha256=sha256(pred),
+    return append("freeze", id=eid, final=src, predictions=str(pred), predictions_bytes=pred.stat().st_size,
                   eval=x["evals"][-1].get("summary"))

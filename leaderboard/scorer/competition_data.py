@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from hashlib import sha256
 from io import StringIO
 from pathlib import Path
 import re
@@ -62,7 +61,7 @@ def download_observations(cache: Path) -> tuple[pd.DataFrame, dict]:
         expected = pd.date_range(month, month + pd.offsets.MonthBegin(1), freq="h", inclusive="left")
         if not pd.DatetimeIndex(frame.timestamp_utc).sort_values().equals(expected):
             raise ValueError(f"Incomplete NASA monthly file: {name}")
-        return frame, {"name": name, "url": BASE_URL + name, "sha256": sha256(payload).hexdigest()}
+        return frame, {"name": name, "url": BASE_URL + name, "bytes": len(payload)}
 
     with ThreadPoolExecutor(max_workers=4) as pool:
         loaded = list(pool.map(fetch, names))

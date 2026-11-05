@@ -88,8 +88,7 @@ def run_one(period: str, block: int, threads: int, rounds: int, verify: bool = T
                          "valid_point4_rmse": float(frame["valid_point4_rmse"].iloc[-1])},
                "valid_point4_rmse_min": float(frame["valid_point4_rmse"].min()), "valid_min_round": best,
                "reproduces_archive": True, "max_abs_difference_kms": difference,
-               "archived_part": {"file": str(RUN / f"{period}_part{block}.npz"),
-                                 "sha256": V.sha(RUN / f"{period}_part{block}.npz")}}
+               "archived_part": {"file": str(RUN / f"{period}_part{block}.npz")}}
     (HISTORY / f"{period.lower()}_b{block}.json").write_text(json.dumps(receipt, indent=1) + "\n")
     print(json.dumps({k: receipt[k] for k in ("period", "block", "train_rows", "queries")}
                      | {"valid_point4_rmse": round(receipt["final"]["valid_point4_rmse"], 4),

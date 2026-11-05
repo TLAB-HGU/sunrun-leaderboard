@@ -1,0 +1,9 @@
+{"phase": "fit", "period": "F1", "block": 0, "train_origins": 9433, "queries": 2089, "rounds": 300, "inference_seconds_per_fold": 4.083932983827661e-06, "seconds": 156}
+{"phase": "fit", "period": "F1", "block": 1, "train_origins": 9433, "queries": 2089, "rounds": 300, "inference_seconds_per_fold": 7.7099755841948e-06, "seconds": 149}
+{"phase": "fit", "period": "F1", "block": 2, "train_origins": 9433, "queries": 2089, "rounds": 300, "inference_seconds_per_fold": 8.478479656266461e-06, "seconds": 149}
+{"phase": "fit", "period": "F2", "block": 0, "train_origins": 10153, "queries": 2113, "rounds": 300, "inference_seconds_per_fold": 6.050144811348185e-06, "seconds": 155}
+{"phase": "fit", "period": "F2", "block": 1, "train_origins": 10153, "queries": 2113, "rounds": 300, "inference_seconds_per_fold": 6.99127781477268e-06, "seconds": 154}
+{"phase": "fit", "period": "F2", "block": 2, "train_origins": 10153, "queries": 2113, "rounds": 300, "inference_seconds_per_fold": 5.6433000514117166e-06, "seconds": 153}
+{"phase": "fit", "period": "F3", "block": 0, "train_origins": 10889, "queries": 2113, "rounds": 300, "inference_seconds_per_fold": 4.199612406388779e-06, "seconds": 159}
+{"phase": "fit", "period": "F3", "block": 1, "train_origins": 10889, "queries": 2113, "rounds": 300, "inference_seconds_per_fold": 1.0181001904435981e-05, "seconds": 154}
+{"phase": "fit", "period": "F3", "block": 2, "train_origins": 10889, "queries": 2113, "rounds": 300, "inference_seconds_per_fold": 3.8105986804789097e-06, "seconds": 160}

@@ -2,7 +2,7 @@
 
 E0380 (D141 arm=enlil) read only store/headroom-audit/donki, a local copy fetched 2026-10-04 that ends 2026-06-30,
 so official origins in July-September saw "no pending CME". The DONKI API itself serves runs through 2026-10-07
-(receipt: store/donki-live/{fetched_at.txt,SHA256SUMS,hdr_*.txt}); the live June file is identical to the local one.
+(receipt: store/donki-live/{fetched_at.txt,hdr_*.txt}); the live June file is identical to the local one.
 
 Only change vs E0380: ia.enlil_runs reads the local files up to 2026-05 plus store/donki-live (2026-06..2026-10).
 Training rows (targets < 2026-05-29) are unchanged; causality is the same rule (modelCompletionTime <= origin).

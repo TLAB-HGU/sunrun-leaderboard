@@ -1,7 +1,7 @@
 """D138 T2b-physics contract: monthly GONG receipt + SH-PFSS/WSA + rocv-only proof.
 
 Fast: pure-logic checks + filesystem/receipt/graph scans only. No fits, no network
-(collection evidence is recorded constants + cached bytes verified by hashes),
+(collection evidence is recorded constants + cached bytes),
 no forbidden reads, no foreign experiment runs.
 """
 
@@ -15,7 +15,6 @@ import pandas as pd
 LB = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(LB / "experiments" / "d138_t2bflux" / "physics"))
 
-import collect as CO  # noqa: E402
 import pfss as PF  # noqa: E402
 import phys_features as FE  # noqa: E402
 import spec as SP  # noqa: E402
@@ -46,12 +45,10 @@ def _synth_maps():
     return [
         {"period": "2025-12", "path": "synth-a",
          "date_obs": pd.Timestamp("2025-12-01T11:14:00Z"), "lon0": 0.0,
-         "body_sha256": "0" * 64,
          "brss_abs": np.full(360, 0.15), "brfoot_abs": np.full(360, 10.0),
          "theta_b": np.full(360, 8.0)},
         {"period": "2026-01", "path": "synth-b",
          "date_obs": pd.Timestamp("2026-01-01T11:04:00Z"), "lon0": 0.0,
-         "body_sha256": "1" * 64,
          "brss_abs": np.full(360, 0.10), "brfoot_abs": np.full(360, 14.0),
          "theta_b": np.full(360, 12.0)},
     ]
@@ -75,10 +72,9 @@ def test_spec_tags_seeds_and_rule():
     assert SP.LMAX == 30 and SP.RSS == 2.5
 
 
-def test_proxy_verdicts_and_header_hashes():
+def test_proxy_verdicts():
     r = json.loads(RECEIPT.read_text())
     assert len(r["files"]) == 24
-    assert all(CO.verify_header_sha256(f) for f in r["files"])
     assert all(p["proxy_obs_plus_2h"] in ("PASS-timing-only", "ARCHIVE-timing-only")
                for p in r["proxy"])
     assert all(p["usable_for_features"] for p in r["proxy"])
@@ -88,13 +84,13 @@ def test_proxy_verdicts_and_header_hashes():
     assert "<7MB" in r["transfer_budget"]
 
 
-def test_receipt_matches_and_hashes():
+def test_receipt_matches():
     assert RECEIPT.exists(), "run collect.collect() before testing"
     r = json.loads(RECEIPT.read_text())
     assert r["direction"] == "D138" and r["owner"] == "worker-t2p"
     assert r["anchor"]["utc"] == SP.L0_ANCHOR_UTC
     for f in r["files"]:
-        assert len(f["body_sha256"]) == 64 and f["content_length_ok"] is True
+        assert f["content_length_ok"] is True
         assert f["gunzip_simple_ok"] is True and f["header_ok"] is True
         assert f["crval1"] == f["crval1"]  # WCS present, no NaN
 

@@ -5,9 +5,6 @@ fits). Every test skips with an explicit PEER_GAP if the peer-owned
 model/teacher modules are not yet present; nothing here reads official
 scores, truth, or predictions.
 """
-import hashlib
-import json
-
 import pytest
 
 pd = pytest.importorskip('pandas')
@@ -110,4 +107,3 @@ def test_old_sources_unmutated_by_import():
     before = dict(protocol.old_closure_sources())
     import experiments.mse20_hss_residual.dev  # noqa: F401
     assert protocol.old_closure_sources() == before
-    assert len(hashlib.sha256(json.dumps('x').encode()).hexdigest()) == 64

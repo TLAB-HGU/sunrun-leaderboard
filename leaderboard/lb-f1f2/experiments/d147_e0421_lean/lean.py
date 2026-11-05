@@ -19,7 +19,6 @@ paths and the full fit (targets < 2026-05-29) for the base, exactly as E0421. No
 prediction of another experiment is read. CPU only.
 """
 import argparse
-import hashlib
 import json
 import os
 import sys
@@ -77,13 +76,15 @@ def build_train(strip_cfg):
         if hit is not None:
             print(f"train featcache (E0421) hit rows={len(hit)}", flush=True)
             return hit
-    h = hashlib.sha256()
-    for f in ("experiments/d147_e0421_lean/lean.py", "experiments/d1_longitude_strips/strips.py",
-              "experiments/headroom_audit/info_ablation.py", "experiments/headroom_audit/headroom.py"):
-        h.update((LB / f).read_bytes())
-    h.update(json.dumps({"strip": strip_cfg, "freq": SP.TRAIN_FREQ, "smoke": SMOKE}, sort_keys=True).encode())
-    pq = SCRATCH / "featcache" / (h.hexdigest() + ".parquet")
-    if pq.is_file():
+    code = ("experiments/d147_e0421_lean/lean.py", "experiments/d1_longitude_strips/strips.py",
+            "experiments/headroom_audit/info_ablation.py", "experiments/headroom_audit/headroom.py")
+    key = json.dumps({"strip": strip_cfg, "freq": SP.TRAIN_FREQ, "smoke": SMOKE,
+                      "code": {f: [(LB / f).stat().st_size, (LB / f).stat().st_mtime_ns] for f in code}},
+                     sort_keys=True)
+    stem = "_".join(["train", SP.TRAIN_FREQ, "smoke" if SMOKE else "full",
+                     *(f"{k}={v}" for k, v in sorted(strip_cfg.items()))])
+    pq, js = SCRATCH / "featcache" / (stem + ".parquet"), SCRATCH / "featcache" / (stem + ".json")
+    if pq.is_file() and js.is_file() and js.read_text() == key:
         return pd.read_parquet(pq)
     df = ia.build(freq=SP.TRAIN_FREQ)
     meta, block = ST.load_inputs()
@@ -92,6 +93,7 @@ def build_train(strip_cfg):
     tmp = pq.with_suffix(".tmp")
     df.to_parquet(tmp, index=False)
     tmp.rename(pq)
+    js.write_text(key)
     return df
 
 

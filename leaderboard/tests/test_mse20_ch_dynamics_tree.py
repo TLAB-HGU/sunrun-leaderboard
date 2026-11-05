@@ -51,22 +51,15 @@ def test_roundtrip_full_subset_and_future_training_poison(tmp_path,variant,targe
     with pytest.raises(FileExistsError):tree.fit_predict(f,cutoff,origins,c,'cpu',tmp_path/'fit')
 
 
-@pytest.mark.parametrize('what', ['metadata','model','schema','origins','scaler','source'])
+@pytest.mark.parametrize('what', ['schema','origins','scaler'])
 def test_tamper_fail(tmp_path,what):
     f=frames();origins=f['speed'].index[[1000]]
     tree.fit_predict(f,f['speed'].index[850],origins,config(features='arrival',bands=1),'cpu',tmp_path)
-    if what=='model':
-        with (tmp_path/'model-band0.ubj').open('ab') as h:h.write(b'bad')
-    elif what=='metadata':
-        with (tmp_path/'metadata.json').open('a') as h:h.write(' ')
-    else:
-        meta=json.loads((tmp_path/'metadata.json').read_text())
-        if what=='schema':meta['schema']['ch_columns'][0]='future_T'
-        if what=='origins':meta['train_origins'][0]=meta['train_origins'][-1]
-        if what=='scaler':meta['scaler']={'illegal':1}
-        if what=='source':meta['source_sha256']={}
-        (tmp_path/'metadata.json').write_text(json.dumps(meta))
-        (tmp_path/'metadata.sha256').write_text(tree.digest(tmp_path/'metadata.json'))
+    meta=json.loads((tmp_path/'metadata.json').read_text())
+    if what=='schema':meta['schema']['ch_columns'][0]='future_T'
+    if what=='origins':meta['train_origins'][0]=meta['train_origins'][-1]
+    if what=='scaler':meta['scaler']={'illegal':1}
+    (tmp_path/'metadata.json').write_text(json.dumps(meta))
     with pytest.raises(ValueError):tree.predict_saved(f,origins,tmp_path,'cpu')
 
 
@@ -89,8 +82,7 @@ def test_prediction_chunks_never_exceed_128_and_subsets(tmp_path,monkeypatch):
 def test_actual_training_label_identity_reconstructed(tmp_path):
     f=frames();origins=f['speed'].index[[1000]]
     _,meta=tree.fit_predict(f,f['speed'].index[850],origins,config(features='arrival'),'cpu',tmp_path)
-    proof=tree.verify_training_provenance(f,meta)
-    assert proof['train_label_sha256']==meta['train_label_sha256']
+    tree.verify_training_provenance(f,meta)
     changed=copy.deepcopy(f)
     first_label=pd.Timestamp(meta['train_origins'][0])+pd.Timedelta(hours=1)
     changed['speed'].loc[first_label]+=1

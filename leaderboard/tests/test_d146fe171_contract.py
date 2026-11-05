@@ -180,15 +180,6 @@ def test_gap_rows_for_bad_inputs(tmp_path):
     assert FH._row_path(base | {"nc_path": str(p), "nc_size": 4}) is None
 
 
-def test_source_identity_deterministic(tmp_path):
-    FH = _load(EXP, "fe171_hourly", "d146_hourly_d")
-    meta, _ = _synth(tmp_path, n_slots=8)
-    a = FH.source_identity(meta)["source_sha256"]
-    b = FH.source_identity(meta.iloc[::-1].reset_index(drop=True))["source_sha256"]
-    assert a != b  # order matters: identity is slot-ordered
-    assert FH.source_identity(meta)["source_sha256"] == a
-
-
 def test_poison_invariance_and_positive_control(tmp_path):
     ST = _load(EXP, "strips171", "d146_strips_h")
     meta, block = _synth(tmp_path, n_slots=72, start="2026-05-01")

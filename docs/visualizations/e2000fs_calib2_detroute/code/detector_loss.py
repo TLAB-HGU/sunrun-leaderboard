@@ -21,7 +21,7 @@ import pandas as pd  # noqa: E402
 
 from detector_common import (BANDS, LANE, OUT, ROUNDS, RUN, STAGES, TAU, archived_booster,
                              archived_probabilities, load_features, official_arrays, receipt, refit_detector,
-                             routed_score, sha)
+                             routed_score)
 
 BAND_LABEL = {0: "b0 · h1–24", 24: "b1 · h25–48", 48: "b2 · h49–72"}
 BAND_COLOR = {0: "#1f77b4", 24: "#e8620c", 48: "#2ca02c"}
@@ -106,10 +106,9 @@ def main():
                           archived_routed_mse=scores_archived["total"],
                           leaderboard_mse=receipt()["mse"], mse_tolerance=1e-9),
         boosters=refit,
-        outputs={name: sha(OUT / name) for name in
-                 ("loss_history.png", "routing_curve.png", "loss_summary.csv", "routing_curve.csv",
-                  *[f"loss_history/{stage}_b{index}.csv" for stage in STAGES for index in range(3)])},
-        sources={name: {"file": str(path), "sha256": sha(path)} for name, path in (
+        outputs=["loss_history.png", "routing_curve.png", "loss_summary.csv", "routing_curve.csv",
+                 *[f"loss_history/{stage}_b{index}.csv" for stage in STAGES for index in range(3)]],
+        sources={name: {"file": str(path)} for name, path in (
             ("detector_f1_b0", RUN / "detector_f1_b0.ubj"), ("detector_f1_b1", RUN / "detector_f1_b1.ubj"),
             ("detector_f1_b2", RUN / "detector_f1_b2.ubj"), ("detector_final_b0", RUN / "detector_final_b0.ubj"),
             ("detector_final_b1", RUN / "detector_final_b1.ubj"), ("detector_final_b2", RUN / "detector_final_b2.ubj"),

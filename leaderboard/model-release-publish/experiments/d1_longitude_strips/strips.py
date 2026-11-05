@@ -23,7 +23,6 @@ truth is read anywhere in this module.
 from __future__ import annotations
 
 import glob
-import hashlib
 import json
 import os
 from concurrent.futures import ThreadPoolExecutor
@@ -196,16 +195,8 @@ def _head(url: str, timeout=20) -> dict:
         return {"status": None, "error": f"{type(exc).__name__}: {exc}"}
 
 
-def _md5(path: str) -> str:
-    h = hashlib.md5()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
 def build_manifest(periods, n_per=200, seed=0, workers=24) -> dict:
-    """200 samples/period: local MD5 vs S3 ETag HEAD + proxy-timing record."""
+    """200 samples/period: local size vs S3 HEAD Content-Length + proxy-timing record."""
     meta, _ = load_inputs()
     meta["slot"] = pd.to_datetime(meta["slot"], utc=True)
     rng = np.random.default_rng(seed)
@@ -226,13 +217,11 @@ def build_manifest(periods, n_per=200, seed=0, workers=24) -> dict:
         p = resolve_nc(str(row["nc_path"]))
         if not (p and os.path.isfile(p)):
             return rec | {"local": "missing"}
-        rec["local_md5"] = _md5(p)
         rec["local_bytes"] = os.path.getsize(p)
         head = _head(f"{S3_BASE}/{key}")
         rec["head"] = head
         if head.get("status") == 200:
-            etag = head.get("etag", "")
-            rec["etag_match"] = ("multipart" if "-" in etag else (etag == rec["local_md5"]))
+            rec["size_match"] = head.get("length", "") == str(rec["local_bytes"])
             try:
                 lm = pd.Timestamp(head["last_modified"]).tz_convert("UTC")
                 rec["head_last_modified"] = lm.isoformat()
@@ -245,9 +234,8 @@ def build_manifest(periods, n_per=200, seed=0, workers=24) -> dict:
     with ThreadPoolExecutor(max_workers=workers) as ex:
         rows = list(ex.map(one, jobs))
     out = {"n_per_period": n_per, "seed": seed, "samples": rows}
-    ok = [r for r in rows if r.get("etag_match") is True]
-    out["summary"] = {"n": len(rows), "md5_etag_match": len(ok),
-                      "multipart": sum(1 for r in rows if r.get("etag_match") == "multipart"),
+    ok = [r for r in rows if r.get("size_match") is True]
+    out["summary"] = {"n": len(rows), "size_match": len(ok),
                       "head_fail": sum(1 for r in rows if r.get("head", {}).get("status") != 200),
                       "local_missing": sum(1 for r in rows if r.get("local") == "missing")}
     return out

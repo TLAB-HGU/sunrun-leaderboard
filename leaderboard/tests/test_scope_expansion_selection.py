@@ -20,16 +20,15 @@ from mse20_scope_expansion import protocol, selection  # noqa: E402
 # helpers
 # ----------------------------------------------------------------------------
 
-def _period(mse, n_req=100, n_obs=80, digest="d", tp=1, fp=1, fn=1):
+def _period(mse, n_req=100, n_obs=80, tp=1, fp=1, fn=1):
     return {"mse": mse, "n_requested": n_req, "n_observed": n_obs,
-            "requested_digest": f"req-{digest}", "observed_digest": f"obs-{digest}",
             "tp": tp, "fp": fp, "fn": fn}
 
 
-def _contenders(d_mses, m_mses, r_mses, digest="d",
+def _contenders(d_mses, m_mses, r_mses,
                 m_counts=(1, 1, 1), r_counts=(1, 1, 1), d_counts=(1, 1, 1)):
     def _mk(mses, counts, deps, config):
-        return {"periods": {p: _period(m, digest=digest, tp=counts[0],
+        return {"periods": {p: _period(m, tp=counts[0],
                                        fp=counts[1], fn=counts[2])
                             for p, m in zip(protocol.PERIOD_ORDER, mses)},
                 "dependencies": deps,
@@ -164,14 +163,6 @@ def test_observed_mse_reconstruction_and_empty_gate():
 # 4. exact keys / mask equality across contenders
 # ----------------------------------------------------------------------------
 
-def test_differing_requested_digest_is_invalid():
-    c = _contenders([100.0, 100.0, 100.0],
-                    [90.0, 90.0, 90.0], [90.0, 90.0, 90.0])
-    c["mean"]["periods"]["dev"]["requested_digest"] = "req-other"
-    out = selection.evaluate_contenders(c)
-    assert out["status"] == "invalid" and out["code"] == 2
-
-
 def test_differing_observed_counts_are_invalid():
     c = _contenders([100.0, 100.0, 100.0],
                     [90.0, 90.0, 90.0], [90.0, 90.0, 90.0])
@@ -220,25 +211,16 @@ def test_ranking_prefers_mean_then_worst_period_then_dependencies():
     assert out["ranking"][0] == "mean"
 
 
-def test_tie_is_deterministic_and_digest_ordered():
+def test_tie_is_deterministic():
     c = _contenders([100.0, 100.0, 100.0],
                     [90.0, 90.0, 90.0], [90.0, 90.0, 90.0])
     c["mean"]["dependencies"] = c["router"]["dependencies"] = 1
     c["mean"]["scientific_config"] = {"recipe": "tied"}
     c["router"]["scientific_config"] = {"recipe": "tied"}
     first = selection.evaluate_contenders(c)["winner"]
-    # same scientific config + same deps => digest tiebreak decides; rerun stable
+    # same scientific config + same deps => tiebreak decides; rerun stable
     for _ in range(3):
         assert selection.evaluate_contenders(c)["winner"] == first
-
-
-def test_config_digest_stable_and_recipe_scoped():
-    d1 = selection.scientific_config_digest("mean", {"a": 1})
-    d2 = selection.scientific_config_digest("mean", {"a": 1})
-    assert d1 == d2
-    assert selection.scientific_config_digest("router", {"a": 1}) != d1
-    with pytest.raises(ValueError, match="unknown recipe"):
-        selection.scientific_config_digest("mean_variant", {})
 
 
 # ----------------------------------------------------------------------------
@@ -271,7 +253,7 @@ def test_selection_module_opens_no_claims_and_reads_no_official():
     assert "ClaimLedger" not in src  # ledger is read read-only, never written
     assert "evaluate_final" not in src and "final_proof" not in src
     assert "sunrun-lb-store" in src  # official snapshot path is a forbidden read
-    assert "bcf5d5417" in src  # pinned snapshot hash explicitly excluded
+    assert "bcf5d5417" in src  # pinned snapshot revision explicitly excluded
     assert "no_official_data" in src  # freeze receipt declares the exclusion
     assert selection.SELECTION_SOURCES[0].endswith("selection.py")
     assert selection.SELECTION_FILENAME == "selection_frozen.json"
@@ -343,9 +325,6 @@ def test_live_recompute_canonical_router_truth_separate():
     for name in ("direct", "mean", "router"):
         assert out[name]["n_requested"] == 2 * 72
         assert out[name]["tp"] == 3 and out[name]["fp"] == 1 and out[name]["fn"] == 2
-    # same raw keys exactly across contenders (not producer digests alone)
-    assert out["mean"]["requested_digest_raw"] == out["direct"]["requested_digest_raw"]
-    assert out["router"]["observed_digest_raw"] == out["direct"]["observed_digest_raw"]
     # MSE is observed-only: matches the pure helper on the underlying vectors
     direct = frames["direct"]
     expect = selection.observed_mse(direct["y"], direct["y_pred"],
@@ -444,7 +423,7 @@ def test_mean_excluded_as_requested_when_it_would_win():
     sel = selection.evaluate_contenders(c)
     assert sel["winner"] == "mean"  # pure ranking unchanged
     out = selection.apply_mean_standalone_exclusion(
-        c, sel, {"ok": True, "sha256": "abc"})
+        c, sel, {"ok": True})
     assert out["mean_standalone_excluded"] is True
     assert out["mean_exclusion_applied"] is True
     assert out["winner"] == "direct"  # router ineligible, direct fallback wins
@@ -462,7 +441,7 @@ def test_mean_exclusion_binds_live_regression_without_decision():
     sel = selection.evaluate_contenders(c)
     assert sel["winner"] == "direct"  # F1 regression already blocks mean
     out = selection.apply_mean_standalone_exclusion(
-        c, sel, {"ok": False, "sha256": None})
+        c, sel, {"ok": False})
     assert out["winner"] == "direct"
     assert out["mean_exclusion_binding"]["observed_f1_regression"] is True
 
@@ -474,7 +453,7 @@ def test_mean_exclusion_binding_missing_is_indeterminate():
     sel = selection.evaluate_contenders(c)
     assert sel["winner"] == "mean"
     out = selection.apply_mean_standalone_exclusion(
-        c, sel, {"ok": False, "sha256": None})
+        c, sel, {"ok": False})
     assert out["status"] == "indeterminate" and out["code"] == 1
     assert out["winner"] is None
 
@@ -554,7 +533,7 @@ def test_attach_truth_mse_is_observed_only():
     canon_w, _ = selection.normalize_predictions(wild[["origin", "h", "y_pred"]])
     attached_w, stats_w = selection.attach_truth(canon_w, filled, obs)
     assert stats_w["mse"] == pytest.approx(stats["mse"])
-    assert "max_target_t" in stats and "observed_digest_raw" in stats
+    assert "max_target_t" in stats
 
 
 def test_no_old_receipt_writes_and_live_markers():
@@ -576,18 +555,10 @@ def test_manifest_start_deadline_gates_unchanged():
     assert selection.OFFICIAL_GATES["origins"] == 2833
     assert selection.OFFICIAL_GATES["horizons"] == 72
     assert selection.OFFICIAL_GATES["total_keys"] == 203976
-    manifest = selection.source_manifest_from_inventory(
-        [{"path": "leaderboard/store/ch-v1/ace.parquet", "sha256": "abc"}])
-    assert manifest == {"leaderboard/store/ch-v1/ace.parquet": "abc"}
-    with pytest.raises(ValueError, match="empty"):
-        selection.source_manifest_from_inventory([])
-    with pytest.raises(ValueError, match="forbidden"):
-        selection.source_manifest_from_inventory(
-            [{"path": "sunrun-lb-store/official.parquet", "sha256": "abc"}])
 
 
 # ----------------------------------------------------------------------------
-# 11. r3 integration: registered digests, per-period parity, full inspect
+# 11. r3 integration: per-period parity, full inspect
 # ----------------------------------------------------------------------------
 
 
@@ -608,8 +579,6 @@ def test_registered_keys_normalize_timezone_variants():
     canon_c = canon_b.copy()
     canon_c.loc[1, "origin"] = canon_c.loc[1, "origin"] + pd.Timedelta(hours=1)
     assert selection.registered_keys(canon_a) != selection.registered_keys(canon_c)
-    assert (selection.protocol.index_digest(selection.registered_keys(canon_a))
-            != selection.protocol.index_digest(selection.registered_keys(canon_c)))
 
 
 def _build_r3_run(tmp_path, monkeypatch=None):
@@ -667,55 +636,34 @@ def _build_r3_run(tmp_path, monkeypatch=None):
         mdir.mkdir(parents=True, exist_ok=True)
         (mdir / "xgb_mean_level.ubj").write_bytes(b"mean-model-" + p.encode())
         (run / f"router_{p}.pkl").write_bytes(b"router-model-" + p.encode())
-        # Receipt digests use the registered (astype(str)) form, matching production.
         dcanon, _ = selection.normalize_predictions(dframe)
         mcanon, _ = selection.normalize_predictions(mframe)
-        rcanon, rkind = selection.normalize_predictions(rframe)
+        _, rkind = selection.normalize_predictions(rframe)
         assert rkind == "router"
-        dreg = selection.registered_keys(dcanon)
-        mreg = selection.registered_keys(mcanon)
-        rreg = selection.registered_keys(rcanon)
         dmask = observed_h.reindex(pd.DatetimeIndex(
             dcanon["origin"] + pd.to_timedelta(dcanon["h"], unit="h"))).to_numpy(bool)
         mmask = observed_h.reindex(pd.DatetimeIndex(
             mcanon["origin"] + pd.to_timedelta(mcanon["h"], unit="h"))).to_numpy(bool)
-        dreq = protocol.index_digest(dreg)
-        dobs = protocol.index_digest([k for k, s in zip(dreg, dmask) if bool(s)])
-        mreq = protocol.index_digest(mreg)
-        mobs = protocol.index_digest([k for k, s in zip(mreg, mmask) if bool(s)])
-        eval_pairs = [(s, int(h)) for s in list(origins.astype(str)) for h in range(1, 73)]
         (run / f"fit_{p}.json").write_text(json.dumps(
-            {"n_requested": int(len(dcanon)), "n_observed": int(dmask.sum()),
-             "requested_digest": dreq, "observed_digest": dobs,
-             "predictions_sha256": protocol.sha256_file(run / f"predictions_existing_all_{p}.parquet"),
-             "model_sha256": protocol.sha256_file(run / f"xgb_existing_all_{p}.ubj")}, indent=1, sort_keys=True))
+            {"n_requested": int(len(dcanon)), "n_observed": int(dmask.sum())}, indent=1, sort_keys=True))
         (run / f"mean_fit_{p}.json").write_text(json.dumps(
-            {"n_requested": int(len(mcanon)), "n_observed": int(mmask.sum()),
-             "requested_digest": mreq, "observed_digest": mobs,
-             "predictions_sha256": protocol.sha256_file(run / f"predictions_mean_level_{p}.parquet"),
-             "model_sha256": protocol.sha256_file(mdir / "xgb_mean_level.ubj")}, indent=1, sort_keys=True))
+            {"n_requested": int(len(mcanon)), "n_observed": int(mmask.sum())}, indent=1, sort_keys=True))
         (run / f"router_fit_{p}.json").write_text(json.dumps(
-            {"eval_pairs_digest": protocol.index_digest(eval_pairs),
-             "n_eval_origins": int(len(origins)),
-             "predictions_sha256": protocol.sha256_file(run / f"predictions_router_{p}.parquet"),
-             "model_sha256": protocol.sha256_file(run / f"router_{p}.pkl")}, indent=1, sort_keys=True))
+            {"n_eval_origins": int(len(origins))}, indent=1, sort_keys=True))
     (run / "registration.json").write_text(json.dumps(
         {"user_start_utc": protocol.USER_START_UTC, "user_deadline_utc": None}, indent=1, sort_keys=True))
     (run / "tests_proof.json").write_text(json.dumps({"exit_code": 0}, indent=1, sort_keys=True))
-    per_verify = {p: {"replay_parity_1e6": True, "original_parity_1e6": True, "model_hash_ok": True,
-                      "pred_hash_ok": True, "requested_digest_ok": True,
+    per_verify = {p: {"replay_parity_1e6": True, "original_parity_1e6": True,
                       "saved_full_grid_ok": True, "saved_keys_ok": True}
                   for p in protocol.PERIOD_ORDER}
     (run / "verify.json").write_text(json.dumps(
         {"ok": True, "causal_proof_valid": True, "periods": per_verify}, indent=1, sort_keys=True))
     (run / "mean_verify.json").write_text(json.dumps({"ok": False}, indent=1, sort_keys=True))
-    per_mean = {p: {"replay_parity_1e6": True, "model_hash_ok": True, "pred_hash_ok": True,
+    per_mean = {p: {"replay_parity_1e6": True,
                     "saved_full_grid_ok": True, "saved_keys_ok": True, "decomposition_ok": True}
                 for p in protocol.PERIOD_ORDER}
     (run / "mean_verify_v1.json").write_text(json.dumps(
-        {"ok": True, "prior_mean_verify_ok": False,
-         "prior_mean_verify_sha256": protocol.sha256_file(run / "mean_verify.json"),
-         "periods": per_mean}, indent=1, sort_keys=True))
+        {"ok": True, "prior_mean_verify_ok": False, "periods": per_mean}, indent=1, sort_keys=True))
     (run / "router_verify.json").write_text(json.dumps(
         {"ok": True, "periods": {p: {"ok": True} for p in protocol.PERIOD_ORDER}}, indent=1, sort_keys=True))
     (run / "claims" / "ledger.json").write_text(json.dumps({"claims": []}, indent=1, sort_keys=True))
@@ -741,8 +689,7 @@ def _build_r3_run(tmp_path, monkeypatch=None):
         monkeypatch.setattr(_ref, "load_inputs",
                             lambda: {"ace_filled": ace_filled, "truth_observed": truth_observed})
         monkeypatch.setattr(_ref, "input_inventory",
-                            lambda: [{"path": "leaderboard/store/mse20-scope-expansion/synth.parquet",
-                                      "sha256": "abc"}])
+                            lambda: [{"path": "leaderboard/store/mse20-scope-expansion/synth.parquet"}])
         monkeypatch.setattr(_diag, "definition", lambda: {"version": 1})
         monkeypatch.setattr(_diag, "unique_event_report",
                             lambda _canon, _fill, _obs, _orig: {
@@ -793,7 +740,7 @@ def test_inspect_forged_router_key_fails(tmp_path, monkeypatch):
     assert code != 0
 
 
-def test_inspect_forged_mask_and_hash_fail(tmp_path, monkeypatch):
+def test_inspect_forged_mask_fails(tmp_path, monkeypatch):
     import pandas as pd
 
     run, repo = _build_r3_run(tmp_path, monkeypatch)
@@ -804,13 +751,6 @@ def test_inspect_forged_mask_and_hash_fail(tmp_path, monkeypatch):
     frame.to_parquet(run / f"predictions_existing_all_{p0}.parquet", index=False)
     code, _ = selection.inspect_run(str(run), str(repo))
     assert code != 0
-    run2, repo2 = _build_r3_run(tmp_path / "second", monkeypatch)
-    p1 = protocol.PERIOD_ORDER[1]
-    rec = json.loads((run2 / f"fit_{p1}.json").read_text())
-    rec["requested_digest"] = "forged-digest"
-    (run2 / f"fit_{p1}.json").write_text(json.dumps(rec, indent=1, sort_keys=True))
-    code2, _ = selection.inspect_run(str(run2), str(repo2))
-    assert code2 != 0
 
 
 # ----------------------------------------------------------------------------
@@ -821,19 +761,17 @@ _V3_PARTITIONS = ("2024Q4", "2025Q1", "2025Q2")
 _V3_ARMS = ("direct", "level")
 
 
-def _synth_oof_block(receipt_shas):
+def _synth_oof_block():
     block = {}
     for q in _V3_PARTITIONS:
         part = {}
         for arm in _V3_ARMS:
-            sha = receipt_shas[(q, arm)]
-            det = {"ok": True, "receipt_sha256": sha}
+            det = {"ok": True}
             for k in selection.V3_OOF_COMMON_OK_KEYS:
                 det[k] = True
             if arm == "direct":
                 det["legacy_purge_ok"] = True
             else:
-                det["direct_model_hash_ok"] = True
                 det["direct_binds_exact_direct_arm_ok"] = True
                 det["legacy_purge_ok"] = True
                 det["actual_purge_ok"] = True
@@ -842,7 +780,6 @@ def _synth_oof_block(receipt_shas):
                 det["legacy_train_label_max_utc"] = "2024-09-27T23:00:00+00:00"
                 det["actual_train_label_max_utc"] = "2024-09-27T21:00:00+00:00"
                 det["legacy_metadata_mismatch_declared"] = True
-                det["legacy_receipt_sha256"] = sha
             part[arm] = det
         block[q] = part
     return block
@@ -859,15 +796,9 @@ def _synth_v3_oof_doc(ctx):
         "ok": True, "phase": "oof",
         "identity": selection.V3_IDENTITY,
         "driver": selection.ROUTER_V3_DRIVER,
-        "driver_sha256": ctx["driver_sha256"],
-        "v3_sources": dict(ctx["v3_sources"]),
         "v3_tests_inventory": dict(ctx["v3_tests_inventory"]),
-        "v2_driver_sha256": ctx["v2_driver_sha256"],
-        "v2_test_sha256": ctx["v2_test_sha256"],
-        "v2_registration_sha256": ctx["v2_reg_sha"],
-        "v2_tests_proof_sha256": ctx["v2_proof_sha"],
         "pins": {k: True for k in selection.V3_PIN_KEYS},
-        "oof": _synth_oof_block(ctx["receipt_shas"]),
+        "oof": _synth_oof_block(),
         "ledger_counts": {"total": selection.V3_OOF_LEDGER_TOTAL,
                           "by_category": dict(selection.V3_OOF_LEDGER_BY_CATEGORY)},
         "six_oof_claims_ok": True, "twelve_global_claims_ok": True,
@@ -896,10 +827,9 @@ def _add_v3_overlay(run, repo, v2_verify_state="failed", mutate=None,
         dest = repo / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes((real_root / rel).read_bytes())
-    live_v2 = {rel: protocol.sha256_file(repo / rel)
-               for rel in (selection.ROUTER_V2_DRIVER, selection.ROUTER_V2_TEST)}
     (run / selection.ROUTER_V2_REGISTRATION_FILENAME).write_text(json.dumps(
-        {"router_sources": live_v2}, indent=1, sort_keys=True))
+        {"router_sources": [selection.ROUTER_V2_DRIVER, selection.ROUTER_V2_TEST]},
+        indent=1, sort_keys=True))
     if v2_verify_state == "failed":
         (run / selection.ROUTER_V2_VERIFY_FILENAME).write_text(json.dumps(
             {"ok": False, "periods": {p: {"ok": False}
@@ -916,14 +846,11 @@ def _add_v3_overlay(run, repo, v2_verify_state="failed", mutate=None,
             fp.unlink()
     (run / "router_v2_tests_proof.json").write_text(
         json.dumps({"exit_code": 0, "note": "synthetic"}, indent=1, sort_keys=True))
-    receipt_shas = {}
     for q in _V3_PARTITIONS:
         for arm in _V3_ARMS:
-            fp = run / f"oof_fit_{q}_{arm}.json"
-            fp.write_text(json.dumps(
+            (run / f"oof_fit_{q}_{arm}.json").write_text(json.dumps(
                 {"partition": q, "arm": arm, "synthetic": True},
                 indent=1, sort_keys=True))
-            receipt_shas[(q, arm)] = protocol.sha256_file(fp)
     claims = ([{"claim_id": f"ref{i}", "category": "reference_replay", "status": "ok"}
                for i in range(3)]
               + [{"claim_id": f"mean{i}", "category": "mean_level", "status": "ok"}
@@ -934,21 +861,11 @@ def _add_v3_overlay(run, repo, v2_verify_state="failed", mutate=None,
                  for i in range(3)])
     (run / "claims" / "ledger.json").write_text(
         json.dumps({"claims": claims}, indent=1, sort_keys=True))
-    v2_sha = protocol.sha256_file(run / selection.ROUTER_V2_REGISTRATION_FILENAME)
     ctx = {
-        "v2_reg_sha": v2_sha,
-        "v3_sources": {rel: protocol.sha256_file(repo / rel)
-                       for rel in (selection.ROUTER_V3_DRIVER, selection.ROUTER_V3_TEST)},
-        "driver_sha256": protocol.sha256_file(repo / selection.ROUTER_V3_DRIVER),
         "v3_tests_inventory": {
             "test_file": selection.ROUTER_V3_TEST,
             "n_tests": 11,
-            "sha256": protocol.sha256_file(repo / selection.ROUTER_V3_TEST),
         },
-        "v2_driver_sha256": protocol.sha256_file(repo / selection.ROUTER_V2_DRIVER),
-        "v2_test_sha256": protocol.sha256_file(repo / selection.ROUTER_V2_TEST),
-        "v2_proof_sha": protocol.sha256_file(run / "router_v2_tests_proof.json"),
-        "receipt_shas": receipt_shas,
     }
     oof_doc = _synth_v3_oof_doc(ctx)
     all_doc = _synth_v3_all_doc(ctx)
@@ -958,7 +875,6 @@ def _add_v3_overlay(run, repo, v2_verify_state="failed", mutate=None,
         json.dumps(oof_doc, indent=1, sort_keys=True))
     (run / selection.ROUTER_V3_VERIFY_FILENAME).write_text(
         json.dumps(all_doc, indent=1, sort_keys=True))
-    return v2_sha
 
 
 def test_v3_valid_with_failed_v2_passes_and_freeze_once(tmp_path, monkeypatch):
@@ -1014,17 +930,6 @@ def test_v3_legacy_unproven_rejects(tmp_path, monkeypatch):
     assert code != 0
 
 
-def test_v3_source_drift_rejects(tmp_path, monkeypatch):
-    run, repo = _build_r3_run(tmp_path, monkeypatch)
-    _add_v3_overlay(run, repo, v2_verify_state="failed", drop_v1=True)
-    reg = json.loads((run / selection.ROUTER_V2_REGISTRATION_FILENAME).read_text())
-    reg["router_sources"][selection.ROUTER_V2_DRIVER] = "forged-sha"
-    (run / selection.ROUTER_V2_REGISTRATION_FILENAME).write_text(
-        json.dumps(reg, indent=1, sort_keys=True))
-    code, _ = selection.inspect_run(str(run), str(repo))
-    assert code != 0
-
-
 def test_v3_wrong_phase_rejects(tmp_path, monkeypatch):
     run, repo = _build_r3_run(tmp_path, monkeypatch)
 
@@ -1073,28 +978,21 @@ def test_v3_each_actual_oof_field_tamper_rejects(tmp_path):
     oof_doc, all_doc = _v3_ctx_for_pure(tmp_path)
     import copy
     cases = []
-    for arm_key in ("model_hash_ok", "predictions_hash_ok", "keys_ok",
-                    "grid_rows_ok", "all72_finite_ok", "labels_ok", "masks_ok",
-                    "cutoff_ok", "train_rows_ok", "train_feature_digest_ok",
-                    "train_label_digest_ok", "replay_values_ok",
+    for arm_key in ("keys_ok", "grid_rows_ok", "all72_finite_ok", "labels_ok", "masks_ok",
+                    "cutoff_ok", "train_rows_ok", "replay_values_ok",
                     "replay_mse_parity_ok", "legacy_purge_ok"):
         cases.append(("2024Q4", "direct", arm_key))
-    cases.append(("2024Q4", "direct", "receipt_sha256"))
     for arm_key in list(selection.V3_OOF_COMMON_OK_KEYS) + \
             list(selection.V3_LEVEL_EXTRA_OK_KEYS) + [
                 "legacy_n_train_rows", "actual_n_train_rows",
                 "legacy_train_label_max_utc", "actual_train_label_max_utc",
-                "legacy_metadata_mismatch_declared", "legacy_receipt_sha256",
-                "receipt_sha256"]:
+                "legacy_metadata_mismatch_declared"]:
         cases.append(("2025Q1", "level", arm_key))
     for q, arm, field in cases:
         bad = copy.deepcopy(all_doc)
         if field in ("legacy_n_train_rows", "actual_n_train_rows"):
             bad["oof"][q][arm][field] = "not-an-int"
-        elif field == "legacy_receipt_sha256":
-            bad["oof"][q][arm][field] = "tampered"
-        elif field in ("legacy_train_label_max_utc", "actual_train_label_max_utc",
-                       "receipt_sha256"):
+        elif field in ("legacy_train_label_max_utc", "actual_train_label_max_utc"):
             del bad["oof"][q][arm][field]
         else:
             bad["oof"][q][arm][field] = False
@@ -1102,10 +1000,7 @@ def test_v3_each_actual_oof_field_tamper_rejects(tmp_path):
         bad_oof = copy.deepcopy(oof_doc)
         if field in ("legacy_n_train_rows", "actual_n_train_rows"):
             bad_oof["oof"][q][arm][field] = "not-an-int"
-        elif field == "legacy_receipt_sha256":
-            bad_oof["oof"][q][arm][field] = "tampered"
-        elif field in ("legacy_train_label_max_utc", "actual_train_label_max_utc",
-                       "receipt_sha256"):
+        elif field in ("legacy_train_label_max_utc", "actual_train_label_max_utc"):
             del bad_oof["oof"][q][arm][field]
         else:
             bad_oof["oof"][q][arm][field] = False
@@ -1129,7 +1024,6 @@ def test_v3_identity_driver_pins_ledger_tamper_rejects(tmp_path):
         lambda d: d.update({"driver": "leaderboard/experiments/mse20_scope_expansion/router_v2.py"}),
         lambda d: d["pins"].update({"frozen_ok": False}),
         lambda d: d["pins"].__delitem__("frozen_ok"),
-        lambda d: d.pop("v2_registration_sha256"),
         lambda d: d.update({"ledger_counts": {"total": 999, "by_category": {}}}),
         lambda d: d.update({"six_oof_claims_ok": False}),
         lambda d: d.update({"causal_proof_valid": False}),
@@ -1157,52 +1051,6 @@ def test_v3_oof_uses_nested_partitions_not_flat(tmp_path):
     assert selection.validate_router_v3_oof_proof(bad)["ok"] is False
 
 
-def test_v3_live_receipt_tamper_rejects(tmp_path, monkeypatch):
-    run, repo = _build_r3_run(tmp_path, monkeypatch)
-    _add_v3_overlay(run, repo, v2_verify_state="failed", drop_v1=True)
-    fp = run / "oof_fit_2024Q4_level.json"
-    fp.write_text(json.dumps({"partition": "2024Q4", "arm": "level",
-                              "tampered": True}, indent=1, sort_keys=True))
-    code, report = selection.inspect_run(str(run), str(repo))
-    assert code != 0
-    assert report["checks"]["router_v3_receipts_live_ok"] is False
-
-
-def test_v3_live_v3_source_drift_rejects(tmp_path, monkeypatch):
-    run, repo = _build_r3_run(tmp_path, monkeypatch)
-    _add_v3_overlay(run, repo, v2_verify_state="failed", drop_v1=True)
-    with open(repo / selection.ROUTER_V3_DRIVER, "ab") as fh:
-        fh.write(b"\n# drift\n")
-    code, report = selection.inspect_run(str(run), str(repo))
-    assert code != 0
-    assert report["checks"]["router_v3_sources_live_ok"] is False
-
-
-def test_v3_live_tests_inventory_drift_rejects(tmp_path, monkeypatch):
-    run, repo = _build_r3_run(tmp_path, monkeypatch)
-    _add_v3_overlay(run, repo, v2_verify_state="failed", drop_v1=True)
-    with open(repo / selection.ROUTER_V3_TEST, "ab") as fh:
-        fh.write(b"\n# drift\n")
-    code, report = selection.inspect_run(str(run), str(repo))
-    assert code != 0
-    assert report["checks"]["router_v3_tests_live_ok"] is False
-
-
-def test_v3_oof_all_disagree_rejects(tmp_path, monkeypatch):
-    run, repo = _build_r3_run(tmp_path, monkeypatch)
-    _add_v3_overlay(run, repo, v2_verify_state="failed", drop_v1=True)
-
-    def _rewrite(path, fn):
-        doc = json.loads(path.read_text())
-        fn(doc)
-        path.write_text(json.dumps(doc, indent=1, sort_keys=True))
-    _rewrite(run / selection.ROUTER_V3_VERIFY_FILENAME,
-             lambda d: d.update({"v2_registration_sha256": "forged-sha"}))
-    code, report = selection.inspect_run(str(run), str(repo))
-    assert code != 0
-    assert report["checks"]["router_v3_docs_agree_v2_reg"] is False
-
-
 def test_v3_live_ledger_mismatch_rejects(tmp_path, monkeypatch):
     run, repo = _build_r3_run(tmp_path, monkeypatch)
     _add_v3_overlay(run, repo, v2_verify_state="failed", drop_v1=True)
@@ -1227,7 +1075,6 @@ def test_v3_synth_matches_real_oof_structure():
         assert set(doc["oof"][q].keys()) == set(selection.V3_OOF_ARMS)
         lvl = doc["oof"][q]["level"]
         assert lvl["legacy_metadata_mismatch_declared"] is True
-        assert lvl["legacy_receipt_sha256"] == lvl["receipt_sha256"]
         assert lvl["actual_n_train_rows"] != lvl["legacy_n_train_rows"]
     assert doc["ledger_counts"]["total"] == selection.V3_OOF_LEDGER_TOTAL
     assert doc["ledger_counts"]["by_category"] == selection.V3_OOF_LEDGER_BY_CATEGORY

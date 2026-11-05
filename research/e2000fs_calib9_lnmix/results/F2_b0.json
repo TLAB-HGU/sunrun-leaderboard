@@ -1,0 +1,82 @@
+{
+ "period": "F2",
+ "block": 0,
+ "train_rows": 10153,
+ "queries": 2113,
+ "rounds": 450,
+ "cycles": 2,
+ "k": 2,
+ "threads": 2,
+ "seconds": 4106,
+ "mean_pi_fast": 0.4439128888289391,
+ "mean_sigma": [
+  0.07217955450958106,
+  0.06519032567250707
+ ],
+ "mean_mu": [
+  5.988440121923687,
+  6.181708053263363
+ ],
+ "history": [
+  {
+   "cycle": 0,
+   "group": "eta0",
+   "train_nll": -0.521382,
+   "seconds": 354.0
+  },
+  {
+   "cycle": 0,
+   "group": "m00",
+   "train_nll": -0.750467,
+   "seconds": 701.9
+  },
+  {
+   "cycle": 0,
+   "group": "delta0",
+   "train_nll": -0.779497,
+   "seconds": 1058.7
+  },
+  {
+   "cycle": 0,
+   "group": "rho0",
+   "train_nll": -1.019049,
+   "seconds": 1410.6
+  },
+  {
+   "cycle": 0,
+   "group": "rho1",
+   "train_nll": -1.311587,
+   "seconds": 1820.7
+  },
+  {
+   "cycle": 1,
+   "group": "eta0",
+   "train_nll": -1.338251,
+   "seconds": 2219.9
+  },
+  {
+   "cycle": 1,
+   "group": "m00",
+   "train_nll": -1.385927,
+   "seconds": 2476.0
+  },
+  {
+   "cycle": 1,
+   "group": "delta0",
+   "train_nll": -1.409399,
+   "seconds": 3042.0
+  },
+  {
+   "cycle": 1,
+   "group": "rho0",
+   "train_nll": -1.443805,
+   "seconds": 3676.3
+  },
+  {
+   "cycle": 1,
+   "group": "rho1",
+   "train_nll": -1.476273,
+   "seconds": 4104.3
+  }
+ ]
+}

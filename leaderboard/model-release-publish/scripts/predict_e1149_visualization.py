@@ -8,13 +8,13 @@ Outputs are reference visualizations, not experiment registration or scoring.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import glob
 import shutil
 from contextlib import contextmanager
 import json
 import os
 from pathlib import Path
+import re
 import sys
 import types
 
@@ -26,9 +26,9 @@ from threadpoolctl import threadpool_limits
 HOUR = pd.Timedelta(hours=1)
 
 
-def sha256(path):
-    with Path(path).open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+def stamp(path):
+    stat = Path(path).stat()
+    return dict(size=stat.st_size, mtime_ns=stat.st_mtime_ns)
 
 
 def replace_once(source, old, new):
@@ -65,7 +65,7 @@ def load_recipes(root, latency, threads):
     proxy = types.ModuleType(f'_e1149_visualization_latency{latency}')
     proxy.__file__ = str(proxy_path)
     exec(compile(source, str(proxy_path), 'exec'), proxy.__dict__)
-    return base, proxy, {str(p): sha256(p) for p in (base_path, proxy_path,
+    return base, proxy, {str(p): stamp(p) for p in (base_path, proxy_path,
         root.parent / 'research/e0472-ablation-hpo/campaign/configs/baseline.json',
         root / 'experiments/e0472_ablation_hpo/configs.py')}
 
@@ -189,7 +189,7 @@ def compare_original(frame, reference):
     delta = float(np.max(np.abs(expected.pred_kms.to_numpy() - actual.pred_kms.to_numpy())))
     if not np.isfinite(delta) or delta > 1e-5:
         raise ValueError(f'E1149 original reconstruction mismatch: maxabs={delta}')
-    return dict(max_abs_delta=delta, tolerance=1e-5, reference_sha256=sha256(reference), passed=True)
+    return dict(max_abs_delta=delta, tolerance=1e-5, passed=True)
 
 
 def reference_inputs(snapshot):
@@ -243,7 +243,7 @@ def switch_to_reference(data, snapshot, latency):
 
 def verify_sources(sources):
     for path, receipt in sources.items():
-        if sha256(path) != receipt['sha256']:
+        if stamp(path) != dict(size=receipt['size'], mtime_ns=receipt['mtime_ns']):
             raise ValueError(f'Source changed during reconstruction: {path}')
 
 
@@ -265,17 +265,17 @@ def pin_training_inputs(base, root, out):
         paths += list((E.L.ia.OUT / 'donki').glob('WSAEnlilSimulations_*.json'))
         paths += list(E.LIVE.glob('WSAEnlilSimulations_*.json'))
         mapping = {}
-        for path in paths:
+        for number, path in enumerate(paths):
             path = path.resolve()
-            target = directory / (hashlib.sha256(str(path).encode()).hexdigest()[:16] + '_' + path.name)
-            before = sha256(path)
+            target = directory / f'{number:05d}_{path.name}'
+            before = stamp(path)
             shutil.copyfile(path, target)
-            if sha256(target) != before or sha256(path) != before:
+            if stamp(path) != before or stamp(target)['size'] != before['size']:
                 raise ValueError(f'Training source changed while copied: {path}')
-            mapping[str(path)] = dict(path=str(target), sha256=before)
+            mapping[str(path)] = dict(path=str(target), **stamp(target))
         mapping_path.write_text(json.dumps(mapping, indent=2) + '\n')
     for entry in mapping.values():
-        if sha256(entry['path']) != entry['sha256']:
+        if stamp(entry['path']) != dict(size=entry['size'], mtime_ns=entry['mtime_ns']):
             raise ValueError('Training snapshot identity mismatch')
     def snapshot_path(path):
         return Path(mapping[str(Path(path).resolve())]['path'])
@@ -292,7 +292,7 @@ def pin_training_inputs(base, root, out):
                 if kwargs.pop('filters', None):
                     raise ValueError('Source guard owns timestamp filters')
                 kwargs['filters'] = [('timestamp_utc', '<=', cap.to_pydatetime())]
-            access[entry['path']] = dict(sha256=entry['sha256'], cap=str(cap), original_path=key)
+            access[entry['path']] = dict(size=entry['size'], mtime_ns=entry['mtime_ns'], cap=str(cap), original_path=key)
             frame = original(entry['path'], *args, **kwargs)
             if isinstance(frame.index, pd.DatetimeIndex):
                 frame = frame.loc[pd.to_datetime(frame.index, utc=True) <= cap]
@@ -325,10 +325,13 @@ def pin_training_inputs(base, root, out):
         json.load = original_json
     # Keep frozen glob inventory for lazy helper source reads and poison tests.
     # Only this dedicated process uses these imported helper globals.
-    source = replace_once(base.__source__, "self.access[path] = {'sha256': sha256(path)}",
-                          "self.access[str(snapshot_path(path))] = {'sha256': sha256(snapshot_path(path)), 'original_path': path}")
+    source, count = re.subn(r"self\.access\[path\] = \{[^}]*\}",
+                            "self.access[str(snapshot_path(path))] = {**stamp(snapshot_path(path)), 'original_path': path}",
+                            base.__source__)
+    if count != 1:
+        raise ValueError('Research recipe changed: expected one source access record')
     exec(compile(source, base.__file__, 'exec'), base.__dict__)
-    base.source_guard, base.snapshot_path = source_guard, snapshot_path
+    base.source_guard, base.snapshot_path, base.stamp = source_guard, snapshot_path, stamp
 
 
 def main():
@@ -347,13 +350,12 @@ def main():
     root, out, snapshot = args.leaderboard_root.resolve(), args.output_dir.resolve(), args.reference_input_dir.resolve()
     out.mkdir(parents=True, exist_ok=args.resume)
     with threadpool_limits(limits=args.threads):
-        base, proxy, code_hashes = load_recipes(root, args.latency_hours, args.threads)
+        base, proxy, code_identity = load_recipes(root, args.latency_hours, args.threads)
         pin_training_inputs(base, root, out)
         proxy.Features, proxy.Fit, proxy.residual = base.Features, base.Fit, base.residual
         data = base.Features(proxy.END)
-        code_hashes.update(data.code_hashes)
         identity = dict(ace_latency_h=args.latency_hours, seed=0, source_access=data.access,
-                        code_hashes=code_hashes, script_sha256=sha256(__file__), config=proxy.CFG)
+                        code=code_identity, script=stamp(__file__), config=proxy.CFG)
         identity_path = out / 'checkpoint_identity.json'
         if identity_path.exists():
             if json.loads(identity_path.read_text()) != identity:
@@ -391,33 +393,31 @@ def main():
                               for k, v in augmented.items()},
             candidate={k: v for k, v in candidate.__dict__.items() if k not in ('data', 'model', 'cal')})
         save_checkpoint(out / 'final_model_state.joblib', final_state)
-        model_hash = sha256(out / 'final_model_state.joblib')
         del final_state
-        reference_hashes = {str(p.relative_to(snapshot)): sha256(p) for p in sorted(snapshot.rglob('*')) if p.is_file()}
+        reference_stamps = {str(p.relative_to(snapshot)): stamp(p) for p in sorted(snapshot.rglob('*')) if p.is_file()}
         origins, october = switch_to_reference(data, snapshot, args.latency_hours)
         for model in augmented.values():
             model.features.cache = {}
         # Raw replays for level heads retain their fitted pools and scales, but compute
         # current query paths from the newly installed source tables.
         prediction_frame(origins, candidate.paths(origins)).to_parquet(out / 'predictions_october_s0.parquet', index=False)
-        for path, expected in reference_hashes.items():
-            if sha256(snapshot / path) != expected:
+        for path, expected in reference_stamps.items():
+            if stamp(snapshot / path) != expected:
                 raise ValueError(f'Reference snapshot changed: {path}')
         verify_sources(identity['source_access'])
         provenance = dict(**identity, experiment='E1149' if args.latency_hours == 2 else 'E1149_NO_DELAY',
                           purpose='Seed-0 reference visualization; no registration or official scoring',
-                          refit_from_training=True, model_sha256=model_hash, threads=args.threads, label_cutoff=str(proxy.CUTOFF),
+                          refit_from_training=True, threads=args.threads, label_cutoff=str(proxy.CUTOFF),
                           label_maturity_hours=144, hindcast_lag_hours=12 + args.latency_hours,
                           oof=bank.diagnostic, replay=candidate.receipt, poison=poison,
                           original_comparison=comparison, official_origins=len(proxy.OFFICIAL),
                           october={**october, 'input_migration_status': 'pending_validation; reference use',
-                                   'sources': reference_hashes},
+                                   'sources': reference_stamps},
                           train_feature_coverage=candidate.model.features.coverage,
-                          excluded_initial_training_rows=candidate.model.features.excluded_rows,
-                          predictions_sha256={p.name: sha256(p) for p in out.glob('predictions_*_s0.parquet')})
+                          excluded_initial_training_rows=candidate.model.features.excluded_rows)
         proxy.dump(out / 'provenance.json', provenance)
         for period in ('official', 'october'):
-            period_provenance = {**provenance, 'predictions_sha256': sha256(out / f'predictions_{period}_s0.parquet')}
+            period_provenance = dict(provenance)
             if period == 'october':
                 period_provenance.update(october)
             proxy.dump(out / f'provenance_{period}.json', period_provenance)

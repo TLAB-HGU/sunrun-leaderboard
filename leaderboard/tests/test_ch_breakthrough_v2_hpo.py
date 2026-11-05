@@ -81,7 +81,7 @@ def test_selection_cutoff_respected():
         assert step in ("24h", "6h", "1h", "daily", "6hourly", "hourly"), (path, step)
         assert man.get("seed") == 42
         assert man.get("params", {}).get("n_estimators") is not None
-        assert man.get("prediction", {}).get("sha256")
+        assert man.get("prediction", {}).get("bytes")
     # Selection basis excludes holdout/official.
     basis = summary["protocol"]["select_basis"]
     assert "holdout is evaluation" in basis and "official truth never" in basis

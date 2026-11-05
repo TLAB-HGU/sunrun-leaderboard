@@ -24,7 +24,7 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from detector_common import (BANDS, HIGH, OUT, RUN, STAGES, TAU, archived_booster, archived_probabilities,
-                             column_names, load_features, official_arrays, receipt, routed_score, sha)
+                             column_names, load_features, official_arrays, receipt, routed_score)
 
 REPEATS = 5
 SEED = 20261031
@@ -62,14 +62,14 @@ def main():
     truth = {"f1": data["y_f1"], "final": data["y_f2"]}
     arms = {"f1": (official["body"][:n_f1], official["tail"][:n_f1]),
             "final": (official["body"][n_f1:], official["tail"][n_f1:])}
-    split_rows, permutation_rows, parity, model_hashes = [], [], {}, {}
+    split_rows, permutation_rows, parity, model_files = [], [], {}, []
 
     for stage in STAGES:
         designs = [data["tw"].design(grids[stage], data["names"], data["selected"], start) for start in BANDS]
         boosters = []
         for position, start in enumerate(BANDS):
             path = RUN / f"detector_{stage}_b{position}.ubj"
-            model_hashes[str(path.relative_to(data["tw"].ROOT))] = sha(path)
+            model_files.append(str(path.relative_to(data["tw"].ROOT)))
             boosters.append(archived_booster(stage, start))
 
         def probabilities(mats):
@@ -145,9 +145,7 @@ def main():
         parity=parity,
         split_counts="xgboost get_dump over the 400 trees of each of the six archived boosters; design column -> "
                      "source feature, hourly features summed over their 24 lead copies",
-        model_sha256=model_hashes,
-        outputs={"feature_importance.csv": sha(OUT / "feature_importance.csv"),
-                 "feature_importance.png": sha(OUT / "feature_importance.png")}), indent=2) + "\n")
+        models=model_files), indent=2) + "\n")
 
     for stage in STAGES:
         part = merged[merged.stage == stage]

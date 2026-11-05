@@ -6,7 +6,7 @@ frozen point4 direct-72h recipe. Reproduce with:
     cd /home/t-lab01/sunrun/research/e2000fs_calib3-20261031
     python lanes3.py --lane era --out runs/era_v1 --rounds 900
 
-Inputs are frozen (sha256 in meta.yaml): the archived e2000fs_budget_spectral forecast and the
+Inputs are frozen (recorded in meta.yaml): the archived e2000fs_budget_spectral forecast and the
 shared model-input cache; maturity mask origin + 144h <= cutoff; unconditional F1 + F2, no gate.
 """
 from __future__ import annotations

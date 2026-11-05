@@ -9,6 +9,7 @@ Usage: /home/t-lab01/sunrun/.venv/bin/python docs/explainers/code/extract_calib5
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -17,7 +18,7 @@ import pandas as pd
 ROOT = Path('/home/t-lab01/sunrun')
 RUN = ROOT / 'research/e2000fs_calib5-20261031/runs/poolall_v1'
 BASE = ROOT / 'research/e2000fs_calib4-20261031/runs/gpd_v1/forecast.npz'
-SERIES = ROOT / 'data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet'
+SERIES = ROOT / 'data-v2/bundles/frozen/speed.parquet'
 FLOW = ROOT / 'docs/explainers/data/flow.json'
 OUT = ROOT / 'docs/explainers/data/calib5.json'
 
@@ -57,11 +58,18 @@ def main() -> None:
     assert n_f1 == 2137
     folds = {'f1': slice(0, n_f1), 'f2': slice(n_f1, None)}
 
+    sys.path.insert(0, str(ROOT / 'leaderboard'))
+    sys.path.insert(0, str(ROOT / 'research/e2000fs_calib4-20261031'))
+    from pool_lane import score as lane_score            # csi/pod/far for the pooled rows
+
     out_scores = {'base': {}, 'stack': {}}
     for name, arr in (('base', base), ('stack', stack)):
         for fold, sl in folds.items():
             out_scores[name][fold] = scores(arr[sl], truth[sl])
         out_scores[name]['pooled'] = scores(arr, truth)
+        ev = lane_score(arr, truth, origins, n_f1)
+        for k in ('csi', 'pod', 'far', 'timing_mae_h'):
+            out_scores[name]['pooled'][k] = float(ev[k])
 
     # cross-checks: results.json (stack) and the sibling detpool page (base)
     off = res['official']
@@ -144,7 +152,9 @@ def main() -> None:
     d_edges = [-200, -60, -30, -15, -5, 5, 15, 30, 60, 200]
     dc, _ = np.histogram(d, bins=d_edges)
     diff = dict(edges=d_edges, counts=[int(c) for c in dc], share=[r(c / d.size, 4) for c in dc],
-                mean=r(d.mean(), 2), sd=r(d.std(), 2), share_beyond_15=r(float((np.abs(d) > 15).mean()), 4))
+                mean=r(d.mean(), 2), sd=r(d.std(), 2), share_beyond_15=r(float((np.abs(d) > 15).mean()), 4),
+                max_abs=r(float(np.abs(d).max()), 1),
+                share_center=r(float((np.abs(d) <= 5).mean()), 4))
 
     # ---- worked example origins --------------------------------------------------
     per = ((stack - truth) ** 2).mean(1) - ((base - truth) ** 2).mean(1)   # >0 → stack worse

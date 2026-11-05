@@ -2,12 +2,11 @@
 
 Paired control arm of the e2000fs_calib_tweedie15 lane: the point4 direct-24 recipe with training rows restricted to origin+144h<=cutoff so every 72 h training vector is fully matured. Training code, models and per-round losses are preserved in research/e2000fs_calib-20261030/runs/tweedie15_v1.
 
-Inputs are archived, hash-pinned artefacts of the sunrun monorepo; nothing is retrained.
+Inputs are archived artefacts of the sunrun monorepo; nothing is retrained.
 Run:  python e2000fs_calib_point4_144h.py --out /tmp/replay
 """
 from __future__ import annotations
 import argparse
-import hashlib
 from pathlib import Path
 import numpy as np
 import pandas as pd

@@ -127,3 +127,30 @@ def test_standard_publishers_load_mapping_and_preserve_visibility(tmp_path, monk
     assert 'https://example.org/2.py' in result and '>script</a>' in result
     assert '<strong class="lb-experiment">model</strong>' in result
     assert '>hidden</td>' not in result
+
+
+def test_mapping_entries_upsert_by_full_identity_and_validate_the_link():
+    import architecture_code
+    first = architecture_code.entry("s", "model", SHA_A, URL_A)
+    second = architecture_code.entry("s", "model", SHA_A, URL_B)  # a re-pin replaces the entry for the same key
+    mapping = architecture_code.upsert(architecture_code.upsert({"models": []}, first), second)
+    assert mapping["models"] == [second]
+    assert architecture_code.is_architecture_url(URL_A)
+    assert architecture_code.is_architecture_url(URL_A + "#L29-L122")
+    assert not architecture_code.is_architecture_url(URL_A.replace("/1" * 1, "/main", 1))
+    assert not architecture_code.is_architecture_url(
+        "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/" + "1" * 40 + f"/scripts/s/model/{SHA_A}.py")
+    assert "replay script" in architecture_code.why_not_architecture(
+        "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/" + "1" * 40 + f"/scripts/s/model/{SHA_A}.py")
+
+
+def test_script_cells_lists_every_row_without_an_architecture_link():
+    import architecture_code
+    original = page(row(), row(SHA_B), row(member="other"))
+    assert [experiment for experiment, _ in architecture_code.script_rows(original)] == ["model", "model", "model"]
+    mapped = lbstatus.apply_architecture_links(original, MAPPING)
+    remaining = architecture_code.script_rows(mapped)  # only the unmapped member still shows its replay script
+    assert len(remaining) == 1 and remaining[0][0] == "model" and "/scripts/other/model/" in remaining[0][1]
+    # a 대기/진행 status row carries dashes in every metric column: it is not a code link waiting to be repaired
+    status = page(row(experiment="pending_run (진행)"), row(experiment="queued_run (대기)"))
+    assert architecture_code.script_rows(status) == []

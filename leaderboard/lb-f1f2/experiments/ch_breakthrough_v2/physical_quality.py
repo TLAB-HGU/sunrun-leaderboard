@@ -35,7 +35,6 @@ from __future__ import annotations
 import argparse
 import fcntl
 import glob
-import hashlib
 import json
 import sys
 import warnings
@@ -401,15 +400,13 @@ def run_split(split: str, *, ace_paths, ch_path, raw_pattern, outdir: Path,
     observed = observed_mask(speed, speed.index)
     raw_files = sorted(glob.glob(raw_pattern))
     raw_parts = [file_identity(path) for path in raw_files]
-    raw_digest = hashlib.sha256(
-        "".join(part["sha256"] for part in raw_parts).encode()).hexdigest()
     identities = {"ace": file_identity(ace_paths[0]),
                   "ch_hourly": file_identity(ch_path),
                   "raw_ace_years": {"pattern": raw_pattern,
                                     "files": raw_files,
                                     "file_identities": raw_parts,
-                                    "sha256": raw_digest,
-                                    "bytes": sum(part["bytes"] for part in raw_parts)}}
+                                    "bytes": sum(part["bytes"] for part in raw_parts),
+                                    "mtime_ns": max((part["mtime_ns"] for part in raw_parts), default=0)}}
     header_report = header_conventions_report()
 
     # Chronological OOF: train pool strictly before the cutoff (labels

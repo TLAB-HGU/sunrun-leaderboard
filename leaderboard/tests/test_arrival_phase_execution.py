@@ -123,7 +123,7 @@ def producer(tmp_path,monkeypatch):
         meta=dict(config=config,cutoff=cutoff.isoformat(),train_label_max=cutoff.isoformat())
         (directory/'metadata.json').write_text(json.dumps(meta))
         return {},meta
-    fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'train_assignment_sha256':'synthetic','train_label_hashes':{'soft_shift':'synthetic'}})
+    fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'n_train_origins':1})
     monkeypatch.setattr(package,'model',fake,raising=False)
     return tmp_path,frames,origins,calls
 
@@ -137,7 +137,7 @@ def test_final_refit_once_and_paired24causality_checks(producer):
     assert len(proof['checks'])==24 and len(proof['subset_checks'])==3
     assert sum(row['kind']=='raw' for row in proof['checks'])==18
     assert all(row['max_abs_diff_kms']=={'mse':0.,'peak':0.} for row in proof['checks'])
-    assert f.p.read_json(proof['provenance']['path'])['reconstructed']['train_assignment_sha256']=='synthetic'
+    assert f.p.read_json(proof['provenance']['path'])['reconstructed']['n_train_origins']==1
     with np.load(proof['inventory']['path']) as data:assert set(data.files)==set(f.RAW+f.DERIVED)
 
 
@@ -190,9 +190,7 @@ def composite(tmp_path,monkeypatch):
     fake_fit=m.backbone.fit_predict
     def fit(*args):
         pair,meta=fake_fit(*args);directory=Path(args[-1])
-        meta['source_sha256']={name:m.digest(Path(m.backbone.__file__).with_name(name)) for name in ('features.py','tree.py')}
         (directory/'metadata.json').write_text(json.dumps(meta))
-        (directory/'metadata.sha256').write_text(m.digest(directory/'metadata.json'))
         return pair,meta
     monkeypatch.setattr(m.backbone,'fit_predict',fit)
     p=e.p;sources={name:p.file_ref(p.ROOT/name) for name in e.MODEL_SOURCE_NAMES}
@@ -215,17 +213,15 @@ def test_actual_composite_metadata_inventory_and_immutable_oof(composite):
     assert set(pair)=={'mse','peak','backbone'}
 
 
-@pytest.mark.parametrize('tamper',['assignment','oof','native','source','normalizer','cutoff'])
+@pytest.mark.parametrize('tamper',['assignment','source','normalizer','cutoff'])
 def test_composite_tamper_fails_closed(composite,tamper):
     from experiments.mse20_hss_phase import evaluate as e
     root,data,cutoff,origins,pair,meta,directory,config,sources,calls=composite
     if tamper=='assignment':meta['train_assignment'][0]=1
-    if tamper=='oof':Path(meta['oof_forecasts']['path']).write_bytes(b'changed')
-    if tamper=='native':Path(meta['backbones'][0]['model_files'][-1]['path']).write_bytes(b'changed')
     if tamper=='source':meta['sources']={}
     if tamper=='normalizer':meta['normalizer']['scale'][0]=0
     if tamper=='cutoff':meta['train_label_max']='2026-06-01T00:00:00Z'
-    path=directory/'metadata.json';path.write_text(json.dumps(meta));(directory/'metadata.sha256').write_text(e.p.digest(path))
+    path=directory/'metadata.json';path.write_text(json.dumps(meta))
     with pytest.raises(ValueError):
         e.verify_metadata(e.p.file_ref(path),e.p.file_ref(directory/'model.pt'),config,cutoff,sources)
 

@@ -3,7 +3,7 @@
 QXGB (arXiv:2608.15290): convolution-smoothed quantile regression fitted jointly over a dense quantile grid with
 XGBoost multi-output (vector-leaf) trees; the official forecast is the predictive mean read out of the estimated CDF.
 Predictions are archived in research/e2000fs_f123-20261031/runs/qxgb_v1 ({F1,F2,F3}_predictions.npz) and are replayed
-here. Training code: research/e2000fs_f123-20261031/{common.py,arms.py,qxgb.py}; config sha256 291c9fd5f23bc5a3.
+here. Training code: research/e2000fs_f123-20261031/{common.py,arms.py,qxgb.py}; config_sha256 291c9fd5f23bc5a3.
 """
 from __future__ import annotations
 import argparse

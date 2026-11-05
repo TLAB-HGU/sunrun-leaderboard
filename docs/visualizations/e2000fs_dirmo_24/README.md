@@ -1,6 +1,6 @@
 # E2000FS DirMO-24 — train·validation loss와 F1+F2 월별 예측 GIF
 
-2026-10-27 기준 리더보드 **1위**, 작성자 **seongeun**인 `e2000fs_dirmo_24`입니다. E2000 입력(111 features, ACE lag 0)과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)로 24시간 블록별 독립 multi-output 모델 3개(h1–24 / h25–48 / h49–72)를 학습한 DirMO(σ=24) 전략입니다. 제출 설정 SHA256은 `6fc76b1836f3a22669108823c6bf6833082b4d9a74bedf80edd8199f66183037`이며, 재현 소스는 [releases/e2000fs/dirmo_24](../../../releases/e2000fs/dirmo_24/)에 있습니다.
+2026-10-27 기준 리더보드 **1위**, 작성자 **seongeun**인 `e2000fs_dirmo_24`입니다. E2000 입력(111 features, ACE lag 0)과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)로 24시간 블록별 독립 multi-output 모델 3개(h1–24 / h25–48 / h49–72)를 학습한 DirMO(σ=24) 전략입니다. 재현 소스는 [releases/e2000fs/dirmo_24](../../../releases/e2000fs/dirmo_24/)에 있습니다.
 
 | 지표 | 값 |
 | --- | ---: |
@@ -38,7 +38,7 @@
 
 **모델 재학습과 재현 확인.** 원래 학습한 booster는 저장되지 않아, 같은 recipe(seed 42, 900 rounds)로 F1·F2 단계의 블록 모델 6개를 다시 학습했습니다. 다시 학습한 예측은 저장된 제출 예측과 **완전히 같고(최대 차이 0 km/s)**, MSE도 리더보드 값(F1 3878.876144, F2 3179.592068)과 일치합니다. 일치하지 않으면 계산을 멈추도록 했습니다. 기록은 [feature_importance_receipt.json](feature_importance_receipt.json)에 있습니다.
 
-- 2026-10-27 14:44 이후 작업 공간의 `leaderboard/experiments/e2000` 등 소스가 깨진 링크로 바뀌어, 재학습은 2026-10-26에 컴파일된 `.pyc`로 `experiments.e2000`과 `experiments.cumulative_20261024`를 불러왔습니다(`--pyc-shim`). 사용한 `.pyc`의 SHA256은 receipt에 있습니다. 결과가 제출 예측과 바이트 단위로 일치하므로 원 코드와 같은 모델입니다.
+- 2026-10-27 14:44 이후 작업 공간의 `leaderboard/experiments/e2000` 등 소스가 깨진 링크로 바뀌어, 재학습은 2026-10-26에 컴파일된 `.pyc`로 `experiments.e2000`과 `experiments.cumulative_20261024`를 불러왔습니다(`--pyc-shim`). 결과가 제출 예측과 바이트 단위로 일치하므로 원 코드와 같은 모델입니다.
 
 **계산 방법.** XGBoost 2.1.4는 multi-output tree에서 gain 중요도(`get_score`)와 SHAP(`pred_contribs`)을 계산하면 segfault가 나서 직접 계산했습니다.
 
@@ -99,4 +99,4 @@
 
 ## 검증 ([manifest.json](manifest.json))
 
-`scripts/visualize_enlil_validation.py --experiment E2000FS_DIRMO24`로 렌더링했습니다. 렌더러는 예측·truth가 4,970 origin × h1..72에 정확히 1:1로 대응하는지, 다시 계산한 MSE가 리더보드 값 3480.2701508981454와 1e-7 이내로 일치하는지, 월별 프레임 수와 GIF 디코딩이 맞는지 확인하며, 하나라도 어긋나면 멈춥니다. 입력 파일과 GIF의 SHA256은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
+`scripts/visualize_enlil_validation.py --experiment E2000FS_DIRMO24`로 렌더링했습니다. 렌더러는 예측·truth가 4,970 origin × h1..72에 정확히 1:1로 대응하는지, 다시 계산한 MSE가 리더보드 값 3480.2701508981454와 1e-7 이내로 일치하는지, 월별 프레임 수와 GIF 디코딩이 맞는지 확인하며, 하나라도 어긋나면 멈춥니다. 학습이나 예측 변경은 하지 않았습니다.

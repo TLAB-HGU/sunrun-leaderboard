@@ -47,7 +47,7 @@
 
 내부 개발 창(D1/D2/D3/C)의 학습 곡선입니다. 창마다 학습 행과 cutoff가 다르고, 점선은 그 창 자체(성숙도 purge 후)로 **held-out**입니다. spectral 항의 이득이 창마다 일관되지 않다는 점이 위 표의 실패 판정과 같은 방향입니다.
 
-원본 CSV 36개(6단계 × 2 arm × 3 부스터, `round` + train/validation × rmse·weighted_mse·spectral_loss·joint_loss)는 [loss_history/](loss_history/)에 있고 study 출력과 바이트 단위로 같습니다(SHA256은 [loss_receipt.json](loss_receipt.json)). 마지막 라운드 값 요약은 [loss_summary.csv](loss_summary.csv)입니다. 그림은 [code/plot_loss.py](code/plot_loss.py)로 다시 만들 수 있습니다.
+원본 CSV 36개(6단계 × 2 arm × 3 부스터, `round` + train/validation × rmse·weighted_mse·spectral_loss·joint_loss)는 [loss_history/](loss_history/)에 있고 study 출력과 바이트 단위로 같습니다([loss_receipt.json](loss_receipt.json)). 마지막 라운드 값 요약은 [loss_summary.csv](loss_summary.csv)입니다. 그림은 [code/plot_loss.py](code/plot_loss.py)로 다시 만들 수 있습니다.
 
 ## Permutation importance
 
@@ -55,7 +55,7 @@
 
 제출한 spectral arm의 특징 중요도입니다. 왼쪽이 F1 모델, 오른쪽이 F2 모델이고, 30개 특징 각각을 origin 사이에서 섞은 뒤 **72시간 전략 전체를 다시 예측**해 MSE 증가량(ΔMSE)을 쟀습니다. 5회 섞은 평균 ± 표준편차이며 단위는 (km/s)²입니다.
 
-**모델 확인.** 저장된 booster 6개(F1·F2 × b0..b2)의 SHA256이 study config와 같은지 확인하고, 저장된 예측 파일과 **비트 단위로 동일한** 예측을 재현한 뒤에만 계산했습니다(최대 차이 0.0, 재현 MSE F1 4028.972970 / F2 3093.252503). 일치하지 않으면 계산을 멈추도록 했습니다.
+**모델 확인.** 저장된 booster 6개(F1·F2 × b0..b2)로 저장된 예측 파일과 **비트 단위로 동일한** 예측을 재현한 뒤에만 계산했습니다(최대 차이 0.0, 재현 MSE F1 4028.972970 / F2 3093.252503). 일치하지 않으면 계산을 멈추도록 했습니다.
 
 **계산 방법과 한계.**
 
@@ -93,7 +93,7 @@
 | F2 | 2026-08 | 744 | [validation_2026-08.gif](validation_2026-08.gif) |
 | F2 | 2026-09 | 625 | [validation_2026-09.gif](validation_2026-09.gif) |
 
-리더보드에 실제 제출한 예측(`results/forecast.npz`, SHA256 `da0e22f1…c007ac`)을 그대로 읽습니다. 각 프레임은 공식 평가 시작점 하나이며, 파란 선은 시작점까지 최근 **168시간 관측**, 검은 선은 이후 **72시간 실제값**, 주황 선은 제출 예측입니다. 빈 원은 입력 저장소에서 채워진 값(원 관측 없음)입니다. 제목에 전체 폴드 번호(4,970개 중), UTC 시작 시각, 해당 72시간 RMSE를 표시합니다.
+리더보드에 실제 제출한 예측(`results/forecast.npz`)을 그대로 읽습니다. 각 프레임은 공식 평가 시작점 하나이며, 파란 선은 시작점까지 최근 **168시간 관측**, 검은 선은 이후 **72시간 실제값**, 주황 선은 제출 예측입니다. 빈 원은 입력 저장소에서 채워진 값(원 관측 없음)입니다. 제목에 전체 폴드 번호(4,970개 중), UTC 시작 시각, 해당 72시간 RMSE를 표시합니다.
 
 첫 예측 시각(`origin+1h`)의 UTC 월로 나누고 시간순으로 재생합니다. 1000×500, **200–850 km/s 고정 Y축**, 100ms/프레임, 무한 반복입니다. 2026-05-29 ~ 05-31은 72시간 창이 F1·F2 경계에 걸쳐 어느 기간에도 속하지 않으므로 5월 프레임이 673개입니다.
 
@@ -101,13 +101,12 @@
 
 `code/render_gifs.py`가 렌더링 전에 다음을 확인하고, 하나라도 어긋나면 멈춥니다.
 
-- 예측 파일 SHA256이 study config에 고정된 제출 asset과 같은지
 - origin 4,970개가 리더보드 folds와 **같은 순서**인지
 - 예측·truth가 fold × h1..72에 1:1로 대응해 357,840쌍이 되는지
 - 다시 계산한 MSE가 리더보드 값과 1e-9 이내로 일치하는지(전체 3495.593477, F1 4028.972970, F2 3093.252503)
 - 월별 프레임 수(744 / 720 / 673 / 720 / 744 / 744 / 625)와 GIF 디코딩, 각 프레임의 왕복 일치, 100ms·무한 반복
 
-입력 파일과 GIF의 SHA256, 렌더링 설정은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
+렌더링 설정은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
 
 ## 재현
 

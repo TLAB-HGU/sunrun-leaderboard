@@ -60,7 +60,7 @@ def test_template_and_protocol_markers():
     hx = (EXP / "huxt.py").read_text()
     assert "huxt_run" in hx and "upwind" in hx.lower()
     col = (EXP / "collect.py").read_text()
-    assert "ThreadPoolExecutor" in col and "body_sha256" in col and "header_sha256" in col
+    assert "ThreadPoolExecutor" in col
 
 
 def test_seed_and_artifact_keys():

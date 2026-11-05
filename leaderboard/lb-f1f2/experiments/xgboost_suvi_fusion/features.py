@@ -5,7 +5,6 @@ NetCDF reader explicitly decodes packing once; image interpolation is never used
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 from concurrent.futures import ProcessPoolExecutor
@@ -157,10 +156,10 @@ def build_hourly_cache(metadata, images_root, cache_path=None, frame_loader=read
                 "files": [(str(p), p.stat().st_size, p.stat().st_mtime_ns) if p else None for p in paths]}
     if extractor_version is not None:
         identity["extractor_version"] = extractor_version
-    digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+    identity = json.loads(json.dumps(identity, sort_keys=True))
     cache = Path(cache_path) if cache_path else None
     manifest = cache.with_suffix(cache.suffix + ".json") if cache else None
-    if cache and cache.exists() and manifest.exists() and json.loads(manifest.read_text())["source_sha256"] == digest:
+    if cache and cache.exists() and manifest.exists() and json.loads(manifest.read_text()).get("source") == identity:
         return _hourly(pd.read_parquet(cache))
     if workers < 1:
         raise ValueError("workers must be positive")
@@ -171,7 +170,7 @@ def build_hourly_cache(metadata, images_root, cache_path=None, frame_loader=read
     records = []
     if partial_cache and partial_cache.exists() and partial_manifest.exists():
         info = json.loads(partial_manifest.read_text())
-        if info.get("source_sha256") == digest:
+        if info.get("source") == identity:
             saved = pd.read_parquet(partial_cache)
             if list(saved.columns) != columns or not saved.index.equals(pd.DatetimeIndex(rows.slot[:len(saved)], name="slot")):
                 raise ValueError("partial cache schema/timestamps do not match")
@@ -189,7 +188,7 @@ def build_hourly_cache(metadata, images_root, cache_path=None, frame_loader=read
                         temp = partial_cache.with_suffix(".tmp")
                         saved.to_parquet(temp)
                         temp.replace(partial_cache)
-                        partial_manifest.write_text(json.dumps({"source_sha256": digest, "rows": completed}))
+                        partial_manifest.write_text(json.dumps({"source": identity, "rows": completed}))
     else:
         records += [extractor(*frame_loader(p)) if p else {} for p in paths[len(records):]]
     # Stable schema even if the supplied metadata contains only missing slots.
@@ -197,7 +196,7 @@ def build_hourly_cache(metadata, images_root, cache_path=None, frame_loader=read
     if cache:
         cache.parent.mkdir(parents=True, exist_ok=True)
         result.to_parquet(cache)
-        manifest.write_text(json.dumps({"source_sha256": digest, "version": CACHE_VERSION}, sort_keys=True))
+        manifest.write_text(json.dumps({"source": identity, "version": CACHE_VERSION}, sort_keys=True))
     return result
 
 

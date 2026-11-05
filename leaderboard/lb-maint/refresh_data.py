@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
 import math
 import urllib.request
@@ -75,12 +74,12 @@ def main() -> None:
     for mo in months(FIRST_MONTH, MONTH):
         if mo == MONTH:
             rows.update(parse(data))
-            sources.append({"month": mo, "file": str(path.relative_to(HERE)), "sha256": hashlib.sha256(data).hexdigest(),
+            sources.append({"month": mo, "file": str(path.relative_to(HERE)),
                             "issued": next((l for l in data.decode().splitlines() if l.startswith(":Issued:")), "")})
         else:
             b = (OLD_RAW / f"{mo}_ace_swepam_1h.txt").read_bytes()
             rows.update(parse(b))
-            sources.append({"month": mo, "file": f"analysis/naive_baselines/raw/{mo}_ace_swepam_1h.txt", "sha256": hashlib.sha256(b).hexdigest()})
+            sources.append({"month": mo, "file": f"analysis/naive_baselines/raw/{mo}_ace_swepam_1h.txt"})
 
     first, last = min(rows), max(rows)
     if iso(last) < a.min_last:

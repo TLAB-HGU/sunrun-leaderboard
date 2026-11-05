@@ -35,11 +35,11 @@
   0.725,
   0.75
  ],
- "inputs": {
-  "/home/t-lab01/sunrun/research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz": "e7bbdbdf7cd211b95a87186b0d2f79e0ca17c2c132dd8da8ebb4964655438985",
-  "/home/t-lab01/sunrun/research/e2000fs_calib3-20261031/runs/gpd_v1/forecast.npz": "4826d653a173dfb1f65c719690b69a2720cdad440b48cc76fd68905da09a8725",
-  "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet": "96f6e22e1643d79c5dd49f04825128dc25c3b8985a5415fa5828fd7db3012877"
- },
+ "inputs": [
+  "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet",
+  "/home/t-lab01/sunrun/research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz",
+  "/home/t-lab01/sunrun/research/e2000fs_calib3-20261031/runs/gpd_v1/forecast.npz"
+ ],
  "base_path": "/home/t-lab01/sunrun/research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz",
  "arm_path": "/home/t-lab01/sunrun/research/e2000fs_calib3-20261031/runs/gpd_v1/forecast.npz",
  "origins": {

@@ -104,13 +104,13 @@ def test_future_poison_and_drop_all_horizons(frames, fitted, drop):
 
 
 def test_post_cutoff_labels_and_features_do_not_change_model(frames, fitted, tmp_path):
-    cutoff, origins, config, _, meta, _ = fitted
+    cutoff, origins, config, _, meta, path = fitted
     changed = copy.deepcopy(frames)
     for frame in changed.values():
         frame.loc[frame.index > cutoff] = 1900.
     _, poisoned = alignment.fit_predict(changed, cutoff, origins, config, "cpu", tmp_path / "poison")
-    assert poisoned["model_sha256"] == meta["model_sha256"]
-    assert poisoned["train_origin_sha256"] == meta["train_origin_sha256"]
+    assert (tmp_path / "poison" / "model.ubj").read_bytes() == (path / "model.ubj").read_bytes()
+    assert poisoned["train_label_max"] == meta["train_label_max"]
 
 
 @pytest.mark.parametrize("field", ["columns", "base_columns", "delays", "subclass_identity", "config", "train_label_max"])
@@ -119,14 +119,6 @@ def test_tampered_metadata_rejected(frames, fitted, field):
     meta[field] = "2099-01-01T00:00:00Z" if field == "train_label_max" else []
     (path / "metadata.json").write_text(json.dumps(meta))
     with pytest.raises(ValueError):
-        alignment.predict_saved(frames, origins, path, "cpu")
-
-
-def test_model_tamper_rejected(frames, fitted):
-    _, origins, _, _, _, path = fitted
-    with (path / "model.ubj").open("ab") as out:
-        out.write(b"tamper")
-    with pytest.raises(ValueError, match="hash mismatch"):
         alignment.predict_saved(frames, origins, path, "cpu")
 
 

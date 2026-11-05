@@ -38,7 +38,5 @@
       "f2_ge550": 5604.262345
     }
   },
-  "sensitivity_sha256": "a0fe73ecb80da2930f241ace830ae2cada8b944b46efa2cfcdce9411cefd3a4d",
-  "band_sha256": "54f45e2193b063c88e9d4b8ce7217935f5e861c85d229d3555e70e778d238163",
   "note": "recomputed from exceedance_prob.npz, the two archived arm forecasts and the official truth; every value that results.json also reports is asserted equal before writing"
 }

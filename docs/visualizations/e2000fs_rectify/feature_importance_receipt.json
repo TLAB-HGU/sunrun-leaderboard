@@ -2,7 +2,6 @@
   "strategy": "Rectify",
   "canonical": "Rectify",
   "experiment": "e2000fs_rectify",
-  "config_sha256": "f0142d38c7dddd7668e9d5f87fd702dcad5ff729ecf064d9533d3564f8bba207",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 4002.5582863416353,

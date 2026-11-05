@@ -334,8 +334,7 @@ def main() -> None:
                   control=[loss_curve(f'losses_control_internal_b{b}.csv') for b in range(3)],
                   tweedie_f1=loss_curve('losses_tweedie_f1_b0.csv'),
                   control_f1=loss_curve('losses_control_f1_b0.csv')),
-        provenance=dict(inputs=json.loads((RUN / 'results.json').read_text())['inputs'],
-                        manifest_sha=json.loads((RUN / 'results.json').read_text())['frozen']['manifest_sha256']),
+        provenance=dict(inputs=sorted(json.loads((RUN / 'results.json').read_text())['inputs'])),
     )
     payload['recipe']['params'] = {k: payload['recipe']['params'][k] for k in
                                    sorted(payload['recipe']['params'])}

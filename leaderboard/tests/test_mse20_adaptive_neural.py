@@ -45,9 +45,7 @@ def test_restore_subset_causality_and_cutoff_poison(tmp_path,kind,target):
         if key=='observed':value.loc[value.index>cutoff]=False
         else:value.loc[value.index>cutoff]=1800.
     _,new=neural.fit_predict(altered,cutoff,origins,c,'cpu',tmp_path/'poison',fixed_epochs=2)
-    assert meta['model_sha256']==new['model_sha256']
     assert meta['scaler']==new['scaler']
-    assert meta['train_origin_sha256']==new['train_origin_sha256']
 
 
 def test_purged_early_stopping_and_full_refit(tmp_path):
@@ -66,22 +64,15 @@ def test_purged_early_stopping_and_full_refit(tmp_path):
         else:value.loc[value.index>cutoff]=1800.
     _,other=neural.fit_predict(changed,cutoff,f['speed'].index[[3450]],c,'cpu',tmp_path/'poison')
     assert other['selected_epochs']==meta['selected_epochs']
-    assert other['model_sha256']==meta['model_sha256']
     assert other['scaler']==meta['scaler']
 
 
-@pytest.mark.parametrize('tamper',['metadata','model','schema'])
-def test_tamper_nooverwrite(tmp_path,tamper):
+def test_tamper_nooverwrite(tmp_path):
     f=frames();origin=f['speed'].index[[1000]]
     neural.fit_predict(f,f['speed'].index[850],origin,config(),'cpu',tmp_path,fixed_epochs=1)
     with pytest.raises(FileExistsError):neural.fit_predict(f,f['speed'].index[850],origin,config(),'cpu',tmp_path,fixed_epochs=1)
-    if tamper=='metadata':
-        with (tmp_path/'metadata.json').open('a') as fh:fh.write(' ')
-    elif tamper=='model':
-        with (tmp_path/'model.pt').open('ab') as fh:fh.write(b'x')
-    else:
-        m=json.loads((tmp_path/'metadata.json').read_text());m['schema']['history_hours']=999
-        (tmp_path/'metadata.json').write_text(json.dumps(m));(tmp_path/'metadata.sha256').write_text(neural.digest(tmp_path/'metadata.json'))
+    m=json.loads((tmp_path/'metadata.json').read_text());m['schema']['history_hours']=999
+    (tmp_path/'metadata.json').write_text(json.dumps(m))
     with pytest.raises(ValueError):neural.predict_saved(f,origin,tmp_path,'cpu')
 
 

@@ -2,7 +2,6 @@
   "strategy": "DirRec",
   "canonical": "DirRec",
   "experiment": "e2000fs_dirrec",
-  "config_sha256": "59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 4772.612431787331,

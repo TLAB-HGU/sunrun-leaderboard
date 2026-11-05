@@ -1,7 +1,7 @@
 """Render the seven monthly forecast GIFs of the submitted budget-spectral forecast.
 
 The frames show the forecast that was actually submitted to the leaderboard: `results/forecast.npz` of
-`research/e2000fs_budget_spectral` (the spectral arm, sha256 pinned in the study config), joined one-to-one with
+`research/e2000fs_budget_spectral` (the spectral arm), joined one-to-one with
 the official truth. Each frame is one of the 4,970 official origins: 168 h of observed ACE speed ending at the
 origin, then the 72 h truth and the 72 h forecast. Hollow markers are values that the input store had to fill.
 
@@ -13,7 +13,6 @@ disagree with the leaderboard receipt.
 Use --months 2026-03 --limit 24 for a quick check; all seven months take a few minutes.
 """
 import argparse
-import hashlib
 import io
 import json
 from pathlib import Path
@@ -29,8 +28,8 @@ ROOT = Path("/home/t-lab01/sunrun")
 STUDY = ROOT / "research/e2000fs_budget_spectral"
 RESULTS = STUDY / "results"
 OUT = Path(__file__).resolve().parents[1]
-HISTORY = ROOT / "data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
-SPEED = ROOT / "data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet"
+HISTORY = ROOT / "data-v2/processed/ACE/ace.parquet"
+SPEED = ROOT / "data-v2/bundles/frozen/speed.parquet"
 
 INPUT_HOURS, FORECAST_HOURS = 168, 72
 WIDTH, HEIGHT, FRAME_MS = 1000, 500, 100
@@ -40,21 +39,14 @@ EXPECTED_MONTHS = {"2026-03": 744, "2026-04": 720, "2026-05": 673,
                    "2026-06": 720, "2026-07": 744, "2026-08": 744, "2026-09": 625}
 
 
-def sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def pinned(config, suffix):
     identity = config["data"]["input_identity"]
-    path = next(p for p in identity if p.endswith(suffix))
-    assert sha(path) == identity[path], f"pinned input changed: {path}"
-    return Path(path)
+    return Path(next(p for p in identity if p.endswith(suffix)))
 
 
 def load(config):
     receipt = json.loads((RESULTS / "leaderboard-result.json").read_text())
     forecast_path = RESULTS / "forecast.npz"
-    assert sha(forecast_path) == config["data"]["asset"]["sha256"], "forecast.npz is not the submitted asset"
     bundle = np.load(forecast_path)
     origins = pd.DatetimeIndex(bundle["origins_ns"], tz="UTC")
     predictions = bundle["predictions"]
@@ -211,8 +203,7 @@ def main():
         outputs.append(dict(month=month, file=name, frames=len(indices), first_fold=first, last_fold=last,
                             first_origin_utc=data["origins"][indices[0]].isoformat(),
                             last_origin_utc=data["origins"][indices[-1]].isoformat(),
-                            duration_ms=FRAME_MS * len(indices), bytes=len(payload),
-                            sha256=hashlib.sha256(payload).hexdigest()))
+                            duration_ms=FRAME_MS * len(indices), bytes=len(payload)))
         print(json.dumps(outputs[-1]), flush=True)
 
     if args.suffix:
@@ -234,10 +225,10 @@ def main():
                        y_limits_kms=list(Y_LIMITS), month_grouping="UTC month of origin + 1 hour",
                        palette="256-colour palette fixed from the month's first frame; no dithering"),
         "sources": {
-            "predictions": {"file": str(RESULTS / "forecast.npz"), "sha256": sha(RESULTS / "forecast.npz")},
-            "truth": {"file": str(pinned(config, "/truth.parquet")), "sha256": sha(pinned(config, "/truth.parquet"))},
-            "folds": {"file": str(pinned(config, "/folds.parquet")), "sha256": sha(pinned(config, "/folds.parquet"))},
-            "history": {"file": str(HISTORY), "sha256": sha(HISTORY)},
+            "predictions": {"file": str(RESULTS / "forecast.npz")},
+            "truth": {"file": str(pinned(config, "/truth.parquet"))},
+            "folds": {"file": str(pinned(config, "/folds.parquet"))},
+            "history": {"file": str(HISTORY)},
         },
         "verification": {
             "folds": int(len(data["origins"])), "pairs": int(data["target"].size),

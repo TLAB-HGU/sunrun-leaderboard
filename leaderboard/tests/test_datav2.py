@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from experiments.datav2.paths import DatasetPaths, pin_snapshot, sha256
+from experiments.datav2.paths import DatasetPaths, pin_snapshot
 from experiments.datav2.recipe import Features, source_guard
 from experiments.datav2.sources import ace_features, enlil_runs
 
@@ -17,9 +17,14 @@ def hourly(frame):
     return frame.loc[~frame.index.duplicated(keep='last')].sort_index()
 
 
+def stamp(path):
+    stat = path.stat()
+    return {'size': stat.st_size, 'mtime_ns': stat.st_mtime_ns}
+
+
 def publish_ready(root, stage):
-    files = {str(p.relative_to(root)): sha256(p) for p in DatasetPaths(root).parquet_files() if p.is_file()}
-    files.update({str(Path('suvi-meta') / p.relative_to(stage)): sha256(p)
+    files = {str(p.relative_to(root)): stamp(p) for p in DatasetPaths(root).parquet_files() if p.is_file()}
+    files.update({str(Path('suvi-meta') / p.relative_to(stage)): stamp(p)
                   for p in stage.glob('year=*/part.parquet')})
     (root / 'CHAMPION_READY.json').write_text(json.dumps({'files': files}))
 

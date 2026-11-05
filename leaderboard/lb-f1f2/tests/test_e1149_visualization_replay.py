@@ -69,7 +69,7 @@ class ReplayTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'source'
             path.write_text('first')
-            sources = {str(path): {'sha256': replay.sha256(path)}}
+            sources = {str(path): replay.stamp(path)}
             replay.verify_sources(sources)
             path.write_text('second')
             with self.assertRaises(ValueError):

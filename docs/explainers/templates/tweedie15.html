@@ -344,7 +344,6 @@ official: MSE 3,227.6 (control 3,491.0) → <b>−7.5%</b></div>
 
 <footer>
   <div>원본 실행: <code id="f-dir"></code></div>
-  <div>입력 해시·매니페스트: <code id="f-sha"></code></div>
   <div>다른 문서: <a href="e2000fs_calib4_detpool_gpd.html">detpool_gpd</a> · <a href="e2000fs_calib2_mixture2comp.html">mixture2comp</a></div>
 </footer>
 </div>
@@ -724,7 +723,6 @@ const nm = n => NAME[n] || (n.startsWith('strip_') ? n.replace('strip_v', '줄 '
 (function(){
   $('#h-run').textContent = 'e2000fs_calib_tweedie15 · ' + D.run.dir;
   $('#f-dir').textContent = D.run.dir;
-  $('#f-sha').textContent = D.provenance.manifest_sha.slice(0, 16) + '… (manifest)';
   const files = [
     ['forecast.npz', '통합 72h 예측 (4,970 × 72)'],
     ['forecast_control.npz', '짝 control의 같은 격자'],

@@ -3,7 +3,6 @@
   "experiment": "e2000fs_calib_point4_144h",
   "member": "seongeun",
   "submitted_utc": "20261031T165951000Z",
-  "config_sha256": "23c5e8e20f829e50460253954e24a88b903cfc92c6a4d8e025a4933a26730721",
   "arm": "point4 144 h control arm: reg:squarederror with 4x weight on targets >= 550 km/s, training mask origin + 144 h <= cutoff",
   "aggregation": "single model per period; one multi_output_tree booster per 24 h block (3 per stage), 900 rounds, seed 42",
   "created_at_utc": "2026-11-01T02:11:48.468873+00:00",
@@ -31,16 +30,13 @@
   "sources": {
     "predictions": [
       {
-        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1/F1_predictions.npz",
-        "sha256": "386479f7622095cf217140664cfe3b3b490baa3e88b4e72675fe5957a49dfbb3"
+        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1/F1_predictions.npz"
       },
       {
-        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1/F2_predictions.npz",
-        "sha256": "e46cb3a67cc63541f31cdae90a0fd1be0b1a5a7875e084a49318655ef59c0ee8"
+        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1/F2_predictions.npz"
       },
       {
-        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1/F3_predictions.npz",
-        "sha256": "19995bbdd1268040586695cc2c0ef410779e7e63136eb1a2b6d8c74b38f4a140"
+        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1/F3_predictions.npz"
       }
     ],
     "prediction_keys": [
@@ -58,20 +54,16 @@
       ]
     ],
     "folds": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/folds.parquet",
-      "sha256": "38cf7b8271c8630710d6c40795cfea4981cf1362afe756999bae3e85f2ccba9a"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/folds.parquet"
     },
     "truth": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/truth.parquet",
-      "sha256": "c1b510313c2fe49b44f704653f9efcfa2113f8e3240617abad199460127931eb"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/truth.parquet"
     },
     "history": {
-      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
     },
     "receipt": {
-      "file": "/home/t-lab01/sunrun/docs/visualizations/e2000fs_calib_point4_144h/leaderboard-result.json",
-      "sha256": "9c7a0eb4cd9e24fe2c9619bd01545bdc621988547fb1ae52d2872a7cdd8c0a1f"
+      "file": "/home/t-lab01/sunrun/docs/visualizations/e2000fs_calib_point4_144h/leaderboard-result.json"
     }
   },
   "footer": "e2000fs_calib_point4_144h \u00b7 point4 (4x high-speed weight), 144 h maturity mask, 24 h multi-output blocks \u00b7 F1 01\u201303 / F2 04\u201306 / F3 07\u201309 2026 \u00b7 Y axis fixed at 200\u2013850 km/s",
@@ -123,12 +115,10 @@
   ],
   "diagnostics": [
     {
-      "file": "error_by_band_receipt.json",
-      "sha256": "e9b8fdc3c69a33e2437761a4e49fcfadb489d286a63d31e361e43bf137edf917"
+      "file": "error_by_band_receipt.json"
     },
     {
-      "file": "loss_receipt.json",
-      "sha256": "7a2c86c916345856b089d98fb6c7d4d9d202cbdde78e729cd3d5d3b757400c54"
+      "file": "loss_receipt.json"
     }
   ],
   "outputs": [
@@ -142,8 +132,7 @@
       "first_origin_utc": "2025-12-31T23:00:00+00:00",
       "last_origin_utc": "2026-01-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16853486,
-      "sha256": "5f410438cd5545f7a03c1fdb09835ff5d40f2d422633eb6e451ba3e59f0f39a0"
+      "bytes": 16853486
     },
     {
       "month": "2026-02",
@@ -155,8 +144,7 @@
       "first_origin_utc": "2026-01-31T23:00:00+00:00",
       "last_origin_utc": "2026-02-28T22:00:00+00:00",
       "duration_ms": 67200,
-      "bytes": 14614954,
-      "sha256": "22ad518d757d6e54bfc67ff015a4bf30e4bd4deb011680650806c5380ac3a0a2"
+      "bytes": 14614954
     },
     {
       "month": "2026-03",
@@ -168,8 +156,7 @@
       "first_origin_utc": "2026-02-28T23:00:00+00:00",
       "last_origin_utc": "2026-03-28T23:00:00+00:00",
       "duration_ms": 67300,
-      "bytes": 14711912,
-      "sha256": "6d9a40a9600e610f23874029d7db33a150ec17c3841f05e1aa1a2ab9572b1582"
+      "bytes": 14711912
     },
     {
       "month": "2026-04",
@@ -181,8 +168,7 @@
       "first_origin_utc": "2026-03-31T23:00:00+00:00",
       "last_origin_utc": "2026-04-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 16318742,
-      "sha256": "2890940512f0d0734f99fe379378ae69bb198fa8c35bfdd42845c4970a34342b"
+      "bytes": 16318742
     },
     {
       "month": "2026-05",
@@ -194,8 +180,7 @@
       "first_origin_utc": "2026-04-30T23:00:00+00:00",
       "last_origin_utc": "2026-05-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16567198,
-      "sha256": "dc4a4cb164f72d88d6de93127155724a2c83ed1c382c1a8f73b5b371a2c5f4e3"
+      "bytes": 16567198
     },
     {
       "month": "2026-06",
@@ -207,8 +192,7 @@
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-27T23:00:00+00:00",
       "duration_ms": 64900,
-      "bytes": 14157162,
-      "sha256": "6ff207dbf0ee760b7425273a2da0dfcb8d512dad47aca6cde15ddc8fcffd4b80"
+      "bytes": 14157162
     },
     {
       "month": "2026-07",
@@ -220,8 +204,7 @@
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 17403201,
-      "sha256": "89fa9d0f87677b15a7663fdacaad9d4ae5f60522dd4ef08ee2d0792e4d673df5"
+      "bytes": 17403201
     },
     {
       "month": "2026-08",
@@ -233,8 +216,7 @@
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16703017,
-      "sha256": "e7e0a6223a6c7746c7b4f33dd9d9dec9398e8e46c3662710acc6078e8bef628d"
+      "bytes": 16703017
     },
     {
       "month": "2026-09",
@@ -246,8 +228,7 @@
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
       "duration_ms": 62500,
-      "bytes": 14688384,
-      "sha256": "5be1aa58f0f05bfd01029d4497dc1ba0d36c16c57077d7db721ca5d0ba4782a3"
+      "bytes": 14688384
     }
   ],
   "previews": [
@@ -264,8 +245,7 @@
       "bytes": 2812273,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "cfc8d67113cc772268e405d13acf7c2fbcf176099ddd75627ef1b12893ea46f4"
+      "frame_ms": 400
     },
     {
       "month": "2026-02",
@@ -280,8 +260,7 @@
       "bytes": 2444881,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "858ca3650d2823529970918bf186d0f99c7341918273ae62b81c75d80d9c3286"
+      "frame_ms": 400
     },
     {
       "month": "2026-03",
@@ -296,8 +275,7 @@
       "bytes": 2460815,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "e694c5e6ecc5d33d591c2f09fe608e8f09dd4ab9591d1ced78ad959221049f29"
+      "frame_ms": 400
     },
     {
       "month": "2026-04",
@@ -312,8 +290,7 @@
       "bytes": 2725777,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "73ce1a6d12170c64893769e8f7d0685bf0b56158554363047fa987e75831b9fe"
+      "frame_ms": 400
     },
     {
       "month": "2026-05",
@@ -328,8 +305,7 @@
       "bytes": 2763486,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "6ec12e19fd48617018d9a352ed93314f04a73a48821d4eb8985007fd87260f0f"
+      "frame_ms": 400
     },
     {
       "month": "2026-06",
@@ -344,8 +320,7 @@
       "bytes": 2363156,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "d2c3b03caa371750fefa940f5b9fd45c68be1a2fc0fb401f5a8ad46f3f11349b"
+      "frame_ms": 400
     },
     {
       "month": "2026-07",
@@ -360,8 +335,7 @@
       "bytes": 2867824,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "8520a1cfeec0aff42588377a5679fed4689ada0fd73517cb5762ddb7b971ca53"
+      "frame_ms": 400
     },
     {
       "month": "2026-08",
@@ -376,8 +350,7 @@
       "bytes": 2792603,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "016b62cc5f79888201c2b70b5e937847a31ecf190b9b25e7a62d558209bf1dac"
+      "frame_ms": 400
     },
     {
       "month": "2026-09",
@@ -392,8 +365,7 @@
       "bytes": 2461144,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "810479b477c497b20287c9557ba54fe658bd7f8c88f09d0f41ad7c15fbcbaf83"
+      "frame_ms": 400
     }
   ],
   "previews_config": {

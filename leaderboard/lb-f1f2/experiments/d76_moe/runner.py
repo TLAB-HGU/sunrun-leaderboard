@@ -7,17 +7,17 @@ only; no member prediction file is read). Per-lead convex weights come from
 the fixed pre-rule in moe.py on dev-period OOF only; selection/audit truth
 never feeds any weight. Writes predictions_{dev,selection,audit}.parquet plus
 a real future-poison test, selection/weights record, importance, and proxy
-manifest. Scratch is isolated to store/scratch/worker-d76 with a hash-keyed
+manifest. Scratch is isolated to store/scratch/worker-d76 with a stat-keyed
 feat cache.
 """
 
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -59,55 +59,41 @@ FCACHE_DATA = ("store/suvi-fusion/suvi-hourly-v2.parquet", "store/ch-v1/ch-hourl
 _FCACHE_STATS = {"hits": 0, "misses": 0}
 
 
-def _file_sha(path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for b in iter(lambda: f.read(1 << 20), b""):
-            h.update(b)
-    return h.hexdigest()
-
-
-def _origins_sha(df) -> str:
-    o = pd.DatetimeIndex(pd.to_datetime(df["origin"], utc=True)).asi8.tobytes()
-    return hashlib.sha256(o + np.ascontiguousarray(df["h"].to_numpy()).tobytes()).hexdigest()
+def _file_stat(rel) -> list:
+    st = (LB / rel).stat()
+    return [st.st_size, st.st_mtime_ns]
 
 
 def fcache_key(kind: str, payload: dict) -> str:
-    blob = json.dumps({"v": FCACHE_VERSION, "kind": kind, "payload": payload,
-                       "code": {f: _file_sha(LB / f) for f in FCACHE_CODE},
-                       "data": {f: [(LB / f).stat().st_size, (LB / f).stat().st_mtime_ns]
-                                for f in FCACHE_DATA}}, sort_keys=True, default=str)
-    return hashlib.sha256(blob.encode()).hexdigest()
+    return json.dumps({"v": FCACHE_VERSION, "kind": kind, "payload": payload,
+                       "code": {f: _file_stat(f) for f in FCACHE_CODE},
+                       "data": {f: _file_stat(f) for f in FCACHE_DATA}}, sort_keys=True, default=str)
 
 
 def fcache_get(key):
-    d = SCRATCH / "featcache"
-    pq, js = d / (key + ".parquet"), d / (key + ".json")
-    if not (pq.is_file() and js.is_file()):
-        return None
-    try:
-        meta = json.loads(js.read_text())
-        if meta.get("key") != key or meta.get("version") != FCACHE_VERSION:
-            return None
-        df = pd.read_parquet(pq)
-        if len(df) != meta.get("rows") or list(df.columns) != meta.get("columns"):
-            return None
-        if _origins_sha(df) != meta.get("origins_sha"):
-            return None
-        return df
-    except Exception:
-        return None
+    for js in sorted((SCRATCH / "featcache").glob("*.json")):
+        try:
+            meta = json.loads(js.read_text())
+            if meta.get("key") != key or meta.get("version") != FCACHE_VERSION:
+                continue
+            df = pd.read_parquet(js.with_suffix(".parquet"))
+            if len(df) == meta.get("rows") and list(df.columns) == meta.get("columns"):
+                return df
+        except Exception:
+            continue
+    return None
 
 
 def fcache_put(key, df):
     d = SCRATCH / "featcache"
     d.mkdir(parents=True, exist_ok=True)
+    name = str(time.time_ns())
     meta = {"key": key, "version": FCACHE_VERSION, "rows": int(len(df)),
-            "columns": [str(c) for c in df.columns], "origins_sha": _origins_sha(df)}
-    tmp = d / (key + ".tmp.parquet")
+            "columns": [str(c) for c in df.columns]}
+    tmp = d / (name + ".tmp.parquet")
     df.to_parquet(tmp, index=False)
-    (d / (key + ".json")).write_text(json.dumps(meta, sort_keys=True))
-    tmp.rename(d / (key + ".parquet"))
+    (d / (name + ".json")).write_text(json.dumps(meta, sort_keys=True))
+    tmp.rename(d / (name + ".parquet"))
     return df
 
 
@@ -127,7 +113,7 @@ def add_strips(df: pd.DataFrame, meta, block) -> pd.DataFrame:
 
 
 def build_train(freq: str, cols_extra: list) -> pd.DataFrame:
-    """Strip-augmented train frame, reused via the hash-keyed feat cache."""
+    """Strip-augmented train frame, reused via the stat-keyed feat cache."""
     key = fcache_key("train", {"freq": freq, "extra": cols_extra})
     hit = fcache_get(key)
     if hit is not None:

@@ -14,4 +14,5 @@ config:
     num_leaves: 31
     learning_rate: 0.05
     n_estimators: 500
+architecture_url: https://github.com/TLAB-HGU/sunrun-leaderboard/blob/<commit>/research/<study>/<file>[#Lx-Ly]  # REQUIRED: the study source that defines the model, pinned to a commit; the board's code column never links the replay script
 inference_seconds_per_fold: 0.012345  # mean time to produce one 72h forecast; excludes load/train/init/save

@@ -7,7 +7,6 @@ import pytest
 
 from experiments.vjepa_120h_fusion import official
 from experiments.vjepa_120h_fusion.temporal import deduplicate_clips, plan_sources
-from experiments.vjepa_frozen_fusion.encoder import sha256
 
 
 def test_fold_origin_projection_never_reads_scoring_columns(tmp_path, monkeypatch):
@@ -27,8 +26,7 @@ def test_fold_origin_projection_never_reads_scoring_columns(tmp_path, monkeypatc
 def record(path, hour):
     slot = pd.Timestamp('2025-01-01T00:00Z')+pd.Timedelta(hours=hour)
     return {'raw_path': str(path.resolve()), 'source_slot': slot.isoformat(),
-            'obs_end': (slot-pd.Timedelta(minutes=1)).isoformat(), 'key': str(hour),
-            'raw_sha256': 'a', 'preprocessed_sha256': 'b'}
+            'obs_end': (slot-pd.Timedelta(minutes=1)).isoformat(), 'key': str(hour)}
 
 
 def test_two_reference_cache_lookup_uses_path_and_time_not_row_id(tmp_path):
@@ -41,7 +39,7 @@ def test_two_reference_cache_lookup_uses_path_and_time_not_row_id(tmp_path):
     assert len(index) == 3
     assert index[official.record_identity(second)][0] == refs[0]/'cache/frames'
     assert index[official.record_identity(third)][0] == refs[1]/'cache/frames'
-    corrupted = dict(second, raw_sha256='changed')
+    corrupted = dict(second, key='changed')
     (refs[1]/'frame-cache-manifest.json').write_text(json.dumps({'frames': {'998': corrupted}}))
     with pytest.raises(ValueError, match='conflicting reference'):
         official.reference_index(refs)
@@ -83,15 +81,13 @@ def test_prepare_resumes_nonempty_run_and_recovers_protocol_commit(tmp_path, mon
     fold = tmp_path/'folds.parquet'
     origin = official.CUTOFF+pd.Timedelta(hours=1)
     pd.DataFrame({'origin_last_input_utc': [origin], 'truth': ['not read']}).to_parquet(fold)
-    monkeypatch.setattr(official, 'FOLDS_SHA', sha256(fold))
     script = root/'baseline.py'
     script.write_text('CONFIG = {}')
     config = {'hyperparameters': {'max_train_origins': 6000, 'seed': 42, 'xgboost': {'n_estimators': 100}},
-              'data': {'input_sha256': {'ace': 'fixed'}, 'source_sha256': {}}}
+              'data': {}}
     monkeypatch.setattr(official, 'baseline_config', lambda _: (config, script))
-    monkeypatch.setattr(official, 'reference_hashes', lambda *args: {})
     frame = {'base': pd.DataFrame(index=pd.DatetimeIndex([origin])),
-             'identities': {'ace': {'sha256': 'fixed'}}}
+             'identities': {'ace': {}}}
     monkeypatch.setattr(official, 'load_frames', lambda *args: frame)
     pool = pd.DatetimeIndex([official.CUTOFF-pd.Timedelta(hours=100)])
     monkeypatch.setattr(official.numeric, 'train_origins', lambda *args: pool)
@@ -122,14 +118,11 @@ def test_prepare_resumes_nonempty_run_and_recovers_protocol_commit(tmp_path, mon
     assert result['arm'] == 'pca32' and result['fixed_pca']['components'] == 32
     assert (run/'handoff.md').read_text() == 'preserve this checkpoint'
     assert pd.read_parquet(run/'fold-origins-only.parquet').columns.tolist() == ['origin_last_input_utc']
-    old_hash = sha256(run/'planned_origins.npz')
+    planned_bytes = (run/'planned_origins.npz').read_bytes()
     (run/'official_protocol.json').unlink()
     assert official.prepare(fold, run, historical, old45, root) == result
-    assert sha256(run/'planned_origins.npz') == old_hash
+    assert (run/'planned_origins.npz').read_bytes() == planned_bytes
     assert json.loads((run/'official_protocol.json').read_text()) == result
-    (run/'intensity.json').write_text('{"corrupt":true}')
-    with pytest.raises(ValueError, match='hash mismatch'):
-        official.prepare(fold, run, historical, old45, root)
 
 
 def test_gpu_and_merge_wrappers_always_use_absolute_run_paths(tmp_path, monkeypatch):

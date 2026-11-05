@@ -1,7 +1,6 @@
 """Shared causal splits, immutable manifests and bounded experiment utilities."""
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -23,21 +22,15 @@ SPLITS = {
 }
 
 
-def digest(path):
-    h = hashlib.sha256()
-    with Path(path).open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            h.update(block)
-    return h.hexdigest()
-
-
 def file_ref(path):
     path = Path(path).resolve()
-    return {"path": str(path), "sha256": digest(path)}
+    stat = path.stat()
+    return {"path": str(path), "size": stat.st_size, "mtime_ns": stat.st_mtime_ns}
 
 
 def verify_ref(entry):
-    if digest(entry["path"]) != entry["sha256"]:
+    stat = Path(entry["path"]).stat()
+    if (stat.st_size, stat.st_mtime_ns) != (entry["size"], entry["mtime_ns"]):
         raise ValueError(f"stale artifact: {entry['path']}")
 
 

@@ -30,20 +30,16 @@
   },
   "sources": {
     "predictions": {
-      "file": "/home/t-lab01/sunrun/research/e2000fs_budget_spectral/results/forecast.npz",
-      "sha256": "da0e22f16857be8f57104a491214105a7084575a8bb1e1a9006aa1de9fc007ac"
+      "file": "/home/t-lab01/sunrun/research/e2000fs_budget_spectral/results/forecast.npz"
     },
     "truth": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/truth.parquet",
-      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/truth.parquet"
     },
     "folds": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/folds.parquet",
-      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/5c274be8a920ce98832d14f7e56f66f341bc0833/folds.parquet"
     },
     "history": {
-      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
     }
   },
   "verification": {
@@ -86,8 +82,7 @@
       "first_origin_utc": "2026-02-28T23:00:00+00:00",
       "last_origin_utc": "2026-03-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16294291,
-      "sha256": "5b4b7803ec38d5f8ec25b657dd82f3cc75e08ddf76f6f9ccda19cec7799252dd"
+      "bytes": 16294291
     },
     {
       "month": "2026-04",
@@ -98,8 +93,7 @@
       "first_origin_utc": "2026-03-31T23:00:00+00:00",
       "last_origin_utc": "2026-04-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 16411236,
-      "sha256": "0f59b299f48e6588acd8bed3c9315f7d2dca8125dab453d7767c0c5921fe2397"
+      "bytes": 16411236
     },
     {
       "month": "2026-05",
@@ -110,8 +104,7 @@
       "first_origin_utc": "2026-04-30T23:00:00+00:00",
       "last_origin_utc": "2026-05-28T23:00:00+00:00",
       "duration_ms": 67300,
-      "bytes": 15009813,
-      "sha256": "cc1ef5a8588d7701771acaa6bb51a0ca1dbd26cbac582f040936177e0bd6e6fb"
+      "bytes": 15009813
     },
     {
       "month": "2026-06",
@@ -122,8 +115,7 @@
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 15814690,
-      "sha256": "86dfa1091da6f8e736380b3dfa57da7516e6a9ac697853c59e0f5ab2860e647c"
+      "bytes": 15814690
     },
     {
       "month": "2026-07",
@@ -134,8 +126,7 @@
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 17406985,
-      "sha256": "08e94c299c3ab8c4c4f91be36d3c06881f6947f9fec491f9c0ca79bee46239db"
+      "bytes": 17406985
     },
     {
       "month": "2026-08",
@@ -146,8 +137,7 @@
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16791314,
-      "sha256": "0358dee21b77a1995bf1feeff270ab0f31d75f3bb3b93a2de367e03b177e4582"
+      "bytes": 16791314
     },
     {
       "month": "2026-09",
@@ -158,8 +148,7 @@
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
       "duration_ms": 62500,
-      "bytes": 14713491,
-      "sha256": "24ff0ce926dfdd9934a8edb9dceac34549b800ec71a3e9d4c39c5880f8a2e54a"
+      "bytes": 14713491
     }
   ]
 }

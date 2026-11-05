@@ -1,7 +1,7 @@
 """D136 T2-GONG contract: collect receipt + causal features + pilot screen, no overreach.
 
 Fast: pure-logic checks + filesystem/receipt/graph scans only. No fits, no network
-(collection evidence is recorded constants + cached bytes verified by hashes),
+(collection evidence is recorded constants + cached bytes),
 no official reads, no foreign experiment runs.
 """
 
@@ -40,9 +40,9 @@ OTHER_WORKERS = ["worker-d35", "worker-d134", "worker-d135", "worker-t1b", "work
 def _synth_files():
     return [
         {"period": "a", "path": "synth-a", "date_obs": pd.Timestamp("2025-09-15T12:14:00Z"),
-         "body_sha256": "0" * 64, "flux": 7.0, "dipole": 0.05},
+         "flux": 7.0, "dipole": 0.05},
         {"period": "b", "path": "synth-b", "date_obs": pd.Timestamp("2026-01-15T11:14:00Z"),
-         "body_sha256": "1" * 64, "flux": 6.0, "dipole": 0.30},
+         "flux": 6.0, "dipole": 0.30},
     ]
 
 
@@ -61,8 +61,7 @@ def test_spec_tags_seeds_and_rule():
     assert str(SP.SCRATCH) == "store/scratch/worker-t2g"
 
 
-def test_proxy_verdicts_and_header_hashes():
-    assert all(GC.verify_header_sha256(s) for s in GC.SAMPLES)
+def test_proxy_verdicts():
     verdicts = [(p["period"], p["proxy_obs_plus_2h"], p["usable_for_features"])
                 for p in (GC.proxy_row(s) for s in GC.SAMPLES)]
     assert verdicts == [("dev", "PASS-timing-only", True),
@@ -70,7 +69,7 @@ def test_proxy_verdicts_and_header_hashes():
                         ("audit", "FAIL", False)]
 
 
-def test_receipt_matches_and_hashes():
+def test_receipt_matches():
     assert RECEIPT.exists(), "run gong_collect.collect() before testing"
     r = json.loads(RECEIPT.read_text())
     assert r["direction"] == "D136" and r["owner"] == "worker-t2g"
@@ -79,7 +78,7 @@ def test_receipt_matches_and_hashes():
     assert "reprocess" in r["version_drift"] or "vintage" in r["version_drift"]
     assert "<1MB" in r["transfer_budget"]
     for f in r["files"]:
-        assert len(f["body_sha256"]) == 64 and f["content_length_ok"] is True
+        assert f["content_length_ok"] is True
         assert f["gunzip_simple_ok"] is True
 
 

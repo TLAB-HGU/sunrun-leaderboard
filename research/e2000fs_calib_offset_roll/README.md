@@ -11,7 +11,7 @@ Fresh raw-only df.parquet + causal feature ffill rerun of e2000fs_calib_offset_r
 
 | 제출일 (UTC) | Total S | 아키텍처 소스 (고정 커밋) |
 |---|---:|---|
-| 2026-11-04 | 98.763 | [`research/rerun_df_ffill_20261103/e2000fs_calib_offset_roll/experiment.py`](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/38fc345ca8f7a31a8215b8942ce6e596019af500/research/rerun_df_ffill_20261103/e2000fs_calib_offset_roll/experiment.py) @ `38fc345ca` |
+| 2026-11-04 | 98.763 | [`research/rerun_df_ffill/e2000fs_calib_offset_roll/experiment.py`](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/38fc345ca8f7a31a8215b8942ce6e596019af500/research/rerun_df_ffill_20261103/e2000fs_calib_offset_roll/experiment.py) @ `38fc345ca` |
 | 2026-10-31 | 101.542 | [`research/e2000fs_calib-20261030/lanes.py#L101-L192`](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib-20261030/lanes.py#L101-L192) @ `b930cc556` |
 
 ## 이 폴더의 파일

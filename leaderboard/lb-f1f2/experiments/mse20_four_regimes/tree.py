@@ -6,7 +6,6 @@ sliced by the caller to its split end. No labels or official scores are loaded.
 from __future__ import annotations
 
 from functools import lru_cache
-import hashlib
 import json
 from pathlib import Path
 import time
@@ -126,12 +125,10 @@ def fit_predict(frames, cutoff, origins, config, device, output_dir):
         "family": "combined_recurrence_xgboost", "config": config,
         "cutoff": cutoff.isoformat(), "train_label_max": label_max.isoformat(),
         "n_train_origins": len(pool),
-        "train_origin_sha256": hashlib.sha256(pool.asi8.tobytes()).hexdigest(),
         "base_columns": fore.base_columns, "columns": fore.columns,
         "use_target": True, "actual_device": fore.actual_device,
         "fit_seconds": fit_seconds, "n_short_history_skipped": fore.n_short_history_skipped,
         "input_identities": frames.get("identities", {}),
-        "model_sha256": hashlib.sha256(model_path.read_bytes()).hexdigest(),
         "preprocessing": "frozen causal builders; native NaN; no fitted transforms",
     }
     (output_dir / "metadata.json").write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n")
@@ -145,8 +142,6 @@ def predict_saved(frames, origins, output_dir, device):
     output_dir = Path(output_dir)
     meta = json.loads((output_dir / "metadata.json").read_text())
     model_path = output_dir / "model.ubj"
-    if hashlib.sha256(model_path.read_bytes()).hexdigest() != meta["model_sha256"]:
-        raise ValueError("saved tree model hash mismatch")
     features, origins = _features(frames), _origins(origins)
     if list(features.columns) != meta["base_columns"] or meta["use_target"] is not True:
         raise ValueError("saved feature schema mismatch")

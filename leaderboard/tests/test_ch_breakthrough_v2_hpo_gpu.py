@@ -1,6 +1,5 @@
 """GPU HPO confirmation tests (Stage1, dev/selection only)."""
 import glob
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -19,7 +18,7 @@ from experiments.ch_breakthrough_v2.hpo import (
 )
 from experiments.ch_breakthrough_v2.hpo_gpu import (
     is_event_feasible,
-    source_hashes,
+    source_files,
 )
 
 HPO_GPU = Path("store/ch-breakthrough-v2/validated/hpo-gpu")
@@ -210,20 +209,19 @@ def test_gpu_lease_and_device_evidence():
         assert man["extra"]["device_requested"].startswith("cuda")
         assert man["extra"]["lease_gpu"] in (0, 1)
         assert man["extra"]["threads_per_fit"] == 4
-        assert man["extra"]["source_hashes"].keys() >= {
+        assert man["extra"]["source_files"].keys() >= {
             "common", "hpo", "recurrence", "physical_quality", "hpo_gpu"}
-        assert man["prediction"]["sha256"] and len(man["prediction"]["sha256"]) == 64
+        assert man["prediction"]["bytes"]
         assert man["inference_seconds_per_origin"] is not None
         if man.get("mode", "").startswith(("recurrence_trial", "physical_trial")):
             assert man["extra"]["fit_seconds"] is not None, man_path
         assert man["versions"]["xgboost"] and man["seed"] == 42
     assert "cuda:0" in devices and "cuda:1" in devices
-    hashes = source_hashes()
-    assert set(hashes) == {"common", "hpo", "recurrence", "physical_quality", "hpo_gpu"}
-    for name, info in hashes.items():
-        assert len(info["sha256"]) == 64
-    # Prediction hash matches the real parquet bytes.
+    sources = source_files()
+    assert set(sources) == {"common", "hpo", "recurrence", "physical_quality", "hpo_gpu"}
+    for name, info in sources.items():
+        assert info["bytes"] > 0
+    # Prediction size matches the real parquet.
     man = _load_json(HPO_GPU / "recurrence_trial00_dev-A.manifest.json")
-    digest = hashlib.sha256(
-        (HPO_GPU / "recurrence_trial00_dev-A.parquet").read_bytes()).hexdigest()
-    assert man["prediction"]["sha256"] == digest
+    size = (HPO_GPU / "recurrence_trial00_dev-A.parquet").stat().st_size
+    assert man["prediction"]["bytes"] == size

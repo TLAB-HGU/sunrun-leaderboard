@@ -15,6 +15,8 @@
 | --- | --- | --- |
 | [`e2000fs_calib4_detpool_gpd.html`](e2000fs_calib4_detpool_gpd.html) | base `detroute` + arm `calib3_gpd` (이미지 → 30개 피처 → 트리 모델 4개 → 블렌드) | **실제 SUVI 이미지 1장**(2026-04-03 19:00 UTC)이 픽셀 → 12×3 패치 통계 → 경도 줄 → 30개 피처 → 237열 입력이 되고, body·tail·탐지기·gpd가 72시간 예측을 만든 뒤 2,160 시점 창의 잔차로 w를 골라 섞기까지 (스크롤형 12절, 3D 없음) |
 | [`e2000fs_calib_tweedie15.html`](e2000fs_calib_tweedie15.html) | 단일 arm: point4 가중 L2 → **Tweedie deviance**(p=1.5, S=500) | 같은 입력·같은 트리·같은 마스크에서 **손실만 교체**하고 짝 control과 비교. 손실 유도(g/h), 300~700 구간 그래디언트·헤시안·deviance 비용, 900라운드 누적 곡선, 밴드별 MSE/deviance, 사전등록 3조건 판정 (스크롤형 13절) |
+| [`e2000fs_calib_point4_144h.html`](e2000fs_calib_point4_144h.html) | point4 · 학습 마스크 72h → **144h** | 라벨 성숙(+72h) 때문에 컷오프 72시간 전까지로 학습 원점을 자름 → 원점 23개(3시간 격자)만 줄었는데 통합 MSE 3556.2 → 3491.0, 고속 5923.5 → 5763.5. 짝 부트스트랩·h별 Δ·사례 곡선 포함 (11절) |
+| [`e2000fs_calib5_detpool_all.html`](e2000fs_calib5_detpool_all.html) | 보드 1위 base + **아카이브 arm 81개** | 비음수 볼록 스택(NNLS + 리지 + Σβ≤1 + 꼬리 가드 사다리)을 2,160 창에서 168 원점마다 재적합 → 3,208.9 → 3,243.1로 악화. β 분포·상관 측정·반사실 진단(detroute 열=0) (12절) |
 | [`e2000fs_calib2_mixture2comp.html`](e2000fs_calib2_mixture2comp.html) | level / P(y≥550) / gap 3헤드 × 3블록 | `pred = level + p·(gap − level)` 로 72시간 조립 (F2 단계 부스터 9개) |
 
 ## detpool 페이지 12절
@@ -51,6 +53,40 @@
 | 10 | 채점·판정 | internal/F1/F2/통합 표, 3조건 판정(통과·실패·통과), 내부↔공식 부호 반전 |
 | 11 | 최종 예측에서 | detroute body · detpool base(A=3,586.30, w=0.25) |
 | 12 | 재현·한계 | 산출물 지도, 주장할 수 없는 것 3개, 남은 질문 |
+
+
+### point4_144h 페이지 11절
+
+| # | 절 | 계산 내용 |
+| --- | --- | --- |
+| 0 | 한눈에 | 3491.0/5763.5, 원점 −23, 부트스트랩 구간 |
+| 1 | 마스크 한 줄 | `origin+72h < cutoff` vs `origin+144h ≤ cutoff`, 경계 시각 표 |
+| 2 | 왜 144h | `라벨 끝 + 72h ≤ 컷오프` 항등식, 부모 라벨이 **평가 시작 2시간 전**에야 확정되는 사실 |
+| 3 | 3시간 격자 | 72h가 원점 23개만 지우는 이유, 빠진 원점 목록 |
+| 4 | 동일 레시피 | 파라미터·스테이지 표 |
+| 5 | 예측 차이 | 74.8%가 중앙 ±5 구간, 최대 200 km/s |
+| 6 | 성적 | 폴드/구간 표, CSI·POD·FAR, **h별 Δ 차트** |
+| 7 | 효과의 크기 | 짝 부트스트랩 4,000회 CI, 개선 원점 51.4%, 메커니즘 후보 3개 |
+| 8 | 사례 | 가장 좋아진/나빠진 원점 72h 곡선 |
+| 9 | 위치·맥락 | tweedie15 control → 마스크 규칙이 표준이 됨 |
+| 10 | 재현·한계 | 산출물, 일반화 금지 3개 |
+
+### calib5_detpool_all 페이지 12절
+
+| # | 절 | 계산 내용 |
+| --- | --- | --- |
+| 0 | 한눈에 | 3208.9 → 3243.1, 꼬리 6965.4 → 7072.8, arm 81, β=0 시점 49.3% |
+| 1 | 질문·사전등록 | 기대치 ±30/200~400 vs 실제 +34.3/+107.5, 고정 규칙 표 |
+| 2 | arm 81개 | 발견 규칙 5조건(해시 중복 제거 포함), arm 군 분포, 기준 성적 |
+| 3 | 조합식 | `base + Σβ(arm−base)`, β≥0·Σβ≤1의 의미와 볼록결합의 부작용 |
+| 4 | 적합·가드 | 창 2,160·재적합 168·72h 성숙, 표준화→NNLS→리지, 심플렉스 캡→shrink 사다리(이산값) |
+| 5 | 재구성 검증 | 저장 β로 재조립한 예측과 제출 파일의 최대오차 0 |
+| 6 | β 분포 | 상위 arm(β·단독 성적), Σβ 히스토그램(0/0.5/0.6/1), 재적합 시계열 |
+| 7 | 상관 구조 | 수준 corr(중앙 0.94) vs 증분 corr(0.35) — “고상관” 주장 검증 |
+| 8 | 예측 차이 | 86%가 ±5, 평균 +0.93 |
+| 9 | 성적 | 폴드/구간 표, CSI·POD·FAR, 악화 원인 4개 |
+| 10 | 반사실 진단 | detroute 열=0 → 총 3258.2/꼬리 6981.0 (“총 MSE를 사고 꼬리를 팜”) |
+| 11 | 재현·한계 | 주장 가능/불가, 다음 후보(꼬리 목적 스태킹), 산출물 |
 
 페이지의 **실제 값**은 `data/flow.json`(이미지·패치·strip·코로나홀·30피처·예측 곡선·w 스캔·채점)에서 오고,
 `계산 예시`로 표시한 블록(픽셀 5개 중앙값, gap/tail 조립, Tweedie 그래디언트, gpd 조립)만 산식 설명용 숫자입니다.
@@ -113,6 +149,12 @@ cd ~/sunrun
 # tweedie15: 실행 산출물에서 다시 계산 → 인라인
 .venv/bin/python docs/explainers/code/extract_tweedie15.py
 .venv/bin/python docs/explainers/code/build_tweedie15.py
+
+# point4_144h / calib5_detpool_all
+.venv/bin/python docs/explainers/code/extract_point4_144h.py
+.venv/bin/python docs/explainers/code/build_point4_144h.py
+.venv/bin/python docs/explainers/code/extract_calib5.py
+.venv/bin/python docs/explainers/code/build_calib5.py
 
 # 0) 원자료 사슬(두 문서 공통): ACE/SUVI/코로나홀/ENLIL → 특징 → 번들
 .venv/bin/python docs/explainers/code/extract_raw_chain.py

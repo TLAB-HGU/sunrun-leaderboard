@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from .publish_release import sha256, verify_gate
+from .publish_release import file_stat, verify_gate
 
 
 class PublicationGateTests(unittest.TestCase):
@@ -17,10 +17,10 @@ class PublicationGateTests(unittest.TestCase):
         for model in self.models:
             path = self.root / (model["experiment"] + "_seongeun.pkl")
             path.write_bytes(model["experiment"].encode())
-            reports.append({**model, "sha256": sha256(path), "rows": 2833 * 72, "passed": True})
+            reports.append({**model, **file_stat(path), "rows": 2833 * 72, "passed": True})
         package = self.root / "sunrun_inference.zip"
         package.write_bytes(b"verified package")
-        self.receipt = {"passed": True, "models": reports, "package_sha256": sha256(package)}
+        self.receipt = {"passed": True, "models": reports, "package": file_stat(package)}
 
     def test_complete_current_artifacts_pass(self):
         verify_gate(self.root, self.models, self.receipt)

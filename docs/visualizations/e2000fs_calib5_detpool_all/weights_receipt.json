@@ -1,6 +1,5 @@
 {
  "experiment": "e2000fs_calib5_detpool_all",
- "config_sha256": "13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307",
  "created_at_utc": "2026-11-01T01:28:40.552172+00:00",
  "rule": "trailing-window non-negative least squares on base-relative arm increments (ridge 1e-3, sum(beta)<=1) with a trailing >=550 no-regression shrink; matured targets only, refit every 168 origins",
  "constants": {
@@ -36,81 +35,62 @@
  ],
  "inputs": {
   "base": {
-   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_gpd_v1/forecast.npz",
-   "sha256": "4571ef9be1630201cf423e0715aab44e8702662e3fa3a52faf6752b0d46ce264"
+   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_gpd_v1/forecast.npz"
   },
   "submission": {
-   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz",
-   "sha256": "a4e4cb20674daf958794cb02576bbb443fb6c7e07b819b41c72fb160ecc7934f"
+   "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz"
   },
   "legacy_weights": {
-   "file": "/home/t-lab01/sunrun/research/e2000fs_calib5-20261031/runs/poolall_v1/weights.npz",
-   "sha256": "36d55be15ebed01346b7cc8869919d8551907418f1924bcc3d6c4cc1d31ed9cc"
+   "file": "/home/t-lab01/sunrun/research/e2000fs_calib5-20261031/runs/poolall_v1/weights.npz"
   },
   "arms": {
    "pointweight4": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/pointweight4_v1",
-    "forecast_sha256_12": "dd5f8d4a1f5a"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/pointweight4_v1"
    },
    "point4_144h": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1",
-    "forecast_sha256_12": "3a2254d23a9f"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/point4_144h_v1"
    },
    "tweedie15": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/tweedie15_v1",
-    "forecast_sha256_12": "8a728de92166"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/tweedie15_v1"
    },
    "mixture": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/mixture_v1",
-    "forecast_sha256_12": "aa0b965f91e2"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/mixture_v1"
    },
    "era": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/era_v1",
-    "forecast_sha256_12": "5b1b2d1a31ae"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/era_v1"
    },
    "gpd": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/gpd_v1",
-    "forecast_sha256_12": "37edc9bf42c7"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/gpd_v1"
    },
    "spectral": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/spectral_v1",
-    "forecast_sha256_12": "a2b0ddeca978"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/spectral_v1"
    },
    "dirmo24": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/dirmo24_v1",
-    "forecast_sha256_12": "0d34ddcbdb5f"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/dirmo24_v1"
    },
    "detroute": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detroute_v1",
-    "forecast_sha256_12": "b3b9ec715775"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detroute_v1"
    },
    "offset_roll": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/offset_roll_v1",
-    "forecast_sha256_12": "186c6727da59"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/offset_roll_v1"
    },
    "pool_bodytail": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/pool_bodytail_v1",
-    "forecast_sha256_12": "590af1e8b233"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/pool_bodytail_v1"
    },
    "detpool_era": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_era_v1",
-    "forecast_sha256_12": "eac15a2d6dff"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_era_v1"
    },
    "detpool_mixture": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_mixture_v1",
-    "forecast_sha256_12": "e9d8bf802006"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/detpool_mixture_v1"
    },
    "lgbm_extreme4": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/lgbm_extreme4_v1",
-    "forecast_sha256_12": "63ca8b516cd2"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/lgbm_extreme4_v1"
    },
    "lgbm_point4": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/lgbm_point4_v1",
-    "forecast_sha256_12": "07cc3915511d"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/lgbm_point4_v1"
    },
    "lgbm_recent": {
-    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/lgbm_recent_v1",
-    "forecast_sha256_12": "f4e92a488050"
+    "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/lgbm_recent_v1"
    }
   }
  },
@@ -151,7 +131,6 @@
   "top": [
    {
     "arm": "gpd",
-    "forecast_sha256_12": "37edc9bf42c7",
     "mean_beta": 0.19325644317144214,
     "share_origins_nonzero": 0.5477434679334917,
     "mean_beta_when_nonzero": 0.3528229079582703,
@@ -161,7 +140,6 @@
    },
    {
     "arm": "detroute",
-    "forecast_sha256_12": "b3b9ec715775",
     "mean_beta": 0.1482240701902461,
     "share_origins_nonzero": 0.49453681710213776,
     "mean_beta_when_nonzero": 0.2997230237756658,
@@ -171,7 +149,6 @@
    },
    {
     "arm": "lgbm_recent",
-    "forecast_sha256_12": "f4e92a488050",
     "mean_beta": 0.1137035944091153,
     "share_origins_nonzero": 0.5743467933491686,
     "mean_beta_when_nonzero": 0.197970278106855,
@@ -181,7 +158,6 @@
    },
    {
     "arm": "detpool_mixture",
-    "forecast_sha256_12": "e9d8bf802006",
     "mean_beta": 0.049034476095090075,
     "share_origins_nonzero": 0.21282660332541567,
     "mean_beta_when_nonzero": 0.23039636647358172,
@@ -191,7 +167,6 @@
    },
    {
     "arm": "tweedie15",
-    "forecast_sha256_12": "8a728de92166",
     "mean_beta": 0.016930530087161007,
     "share_origins_nonzero": 0.22850356294536817,
     "mean_beta_when_nonzero": 0.07409306826086054,
@@ -201,7 +176,6 @@
    },
    {
     "arm": "lgbm_point4",
-    "forecast_sha256_12": "07cc3915511d",
     "mean_beta": 0.013354105713781539,
     "share_origins_nonzero": 0.23942992874109265,
     "mean_beta_when_nonzero": 0.0557745883482344,
@@ -211,7 +185,6 @@
    },
    {
     "arm": "dirmo24",
-    "forecast_sha256_12": "0d34ddcbdb5f",
     "mean_beta": 0.01206853604416821,
     "share_origins_nonzero": 0.1330166270783848,
     "mean_beta_when_nonzero": 0.09072952990347886,
@@ -221,7 +194,6 @@
    },
    {
     "arm": "offset_roll",
-    "forecast_sha256_12": "186c6727da59",
     "mean_beta": 0.007134326049707507,
     "share_origins_nonzero": 0.04228028503562945,
     "mean_beta_when_nonzero": 0.16873883522061012,

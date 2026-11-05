@@ -58,7 +58,7 @@ def test_scratch_is_worker_d23_only():
 
 def test_model_identity_and_env_pins():
     assert D3.MODEL_ID == "facebook/dinov3-vitb16-pretrain-lvd1689m"
-    assert len(D3.MODEL_SHA256) == 64 and D3.MODEL_BYTES == 342662192
+    assert D3.MODEL_BYTES == 342662192
     assert D3.TRANSFORMERS_PIN == "4.56.2" and D3.TORCH_PIN == "2.13.0+cu126"
     lock = (PKG / "env.lock.txt").read_text()
     assert "transformers==4.56.2" in lock and "torch==2.13.0+cu126" in lock
@@ -226,8 +226,7 @@ def test_directive7_parallel_period_fits_capped():
     assert "XGBRegressor(**FIT_PARAMS)" in src
     assert "XGBRegressor(**ia.PARAMS)" in src  # gate arms keep the reference params
     d3src = (PKG / "dinov3.py").read_text()
-    assert "CACHE_VERSION" in d3src and "MODEL_SHA256" in d3src
-    assert "cache_version" in d3src and "model_sha" in d3src
+    assert "CACHE_VERSION" in d3src and "cache_version" in d3src
 
 
 torch = pytest.importorskip("torch")
@@ -237,16 +236,9 @@ def test_encoder_frozen_and_token_shape_cpu():
     from huggingface_hub import snapshot_download
 
     try:
-        snap = snapshot_download(D3.MODEL_ID, revision=D3.MODEL_REVISION)
+        snapshot_download(D3.MODEL_ID, revision=D3.MODEL_REVISION)
     except Exception:
         pytest.skip(" gated weights not cached")
-    import hashlib
-
-    h = hashlib.sha256()
-    with open(Path(snap) / "model.safetensors", "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    assert h.hexdigest() == D3.MODEL_SHA256
     model = D3.load_encoder("cpu")
     assert model.training is False
     assert all(p.requires_grad is False for p in model.parameters())

@@ -13,7 +13,6 @@ feature's 24 copies are one feature here (counted and shuffled together).
     python feature_importance.py --pyc-shim DIR  # import experiments.* from compiled caches in DIR (sources lost)
 """
 import argparse
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -138,9 +137,8 @@ def compute(shim=None):
     pd.DataFrame(rows).to_csv(ROOT / "feature_importance.csv", index=False, float_format="%.6g")
     receipt.update({"repeats": REPEATS, "seed": SEED, "sigma": SIGMA, "recipe": cfg.params()})
     if shim is not None:
-        receipt["pyc_shim"] = {str(f.relative_to(shim)): hashlib.sha256(f.read_bytes()).hexdigest()
-                               for f in sorted(Path(shim).rglob("*.pyc"))
-                               if f.parts[-2] == "e2000" or f.stem == "contracts"}
+        receipt["pyc_shim"] = [str(f.relative_to(shim)) for f in sorted(Path(shim).rglob("*.pyc"))
+                               if f.parts[-2] == "e2000" or f.stem == "contracts"]
     (ROOT / "feature_importance_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
 
 

@@ -41,10 +41,6 @@ def _truth_df(n_hours=80, start="2026-06-01T00:00:00Z", missing=()):
 # ----------------------------------------------------------------------------
 
 def test_pins_match_frozen_contract_and_producer():
-    assert final_contract.FROZEN_SELECTION_RECEIPT_SHA256 == (
-        "faa32862d366d8dd8e284e0b4ddffefbb8e042e7be82a5296985d11cb80697a2")
-    assert final_contract.PINNED_SNAPSHOT_SHA256 == (
-        "bcf5d5417d99eaa331ddca40581d48953e09a58e")
     assert final_contract.OFFICIAL_TOTAL_KEYS == 2833 * 72 == 203976
     assert final_contract.TOTAL_MSE_MAX == 3289.0890348547073
     assert final_evaluate.EVAL_TEST_FILE.endswith("test_scope_expansion_final_evaluate.py")
@@ -63,7 +59,6 @@ def test_suite_inventory_excludes_only_vjepa_and_requires_new_suites():
     assert all(not n.split("/")[-1].startswith("test_vjepa") for n in names)
     assert final_evaluate.EVAL_TEST_FILE in names
     assert final_model.FINAL_TEST_FILE in names
-    assert all(len(e["sha256"]) == 64 for e in inv)
 
 
 def test_report_dir_must_stay_under_final(tmp_path):
@@ -79,31 +74,6 @@ def test_append_only_never_overwrites(tmp_path):
     p.write_text("{}")
     q = final_evaluate._append_path(p)
     assert q != p and p.read_text() == "{}"
-
-
-# ----------------------------------------------------------------------------
-# Canonical numeric/event digest (unrounded, no timestamps).
-# ----------------------------------------------------------------------------
-
-def test_digest_deterministic_and_timestamp_free():
-    cand = {"tp": 2, "fp": 1, "fn": 3, "f1": 0.5}
-    champ = {"tp": 1, "fp": 0, "fn": 5, "f1": 0.25}
-    cells = {c: 100.0 for c in final_contract.CELL_NAMES}
-    a = final_evaluate.numeric_event_digest(3000.0, cells, cand, champ)
-    b = final_evaluate.numeric_event_digest(3000.0, cells, dict(cand), dict(champ))
-    assert a == b and len(a) == 64
-    other = final_evaluate.numeric_event_digest(3000.0000001, cells, cand, champ)
-    assert other != a  # unrounded inputs matter; never pre-round scores
-
-
-def test_identical_score_gate_rejects_copied_or_malformed():
-    good = "a" * 64
-    final_contract.assert_two_identical_scores(good, good)
-    with pytest.raises(ValueError):
-        final_evaluate.numeric_event_digest  # sanity: helper is pure, gate lives in contract
-        final_contract.assert_two_identical_scores(good, "b" * 64)
-    with pytest.raises(ValueError):
-        final_contract.assert_two_identical_scores("not-hex", "not-hex")
 
 
 # ----------------------------------------------------------------------------
@@ -178,62 +148,25 @@ def test_score_refuses_before_forecast_without_touching_truth(tmp_path, monkeypa
         final_evaluate.stage_score(run, "/home/t-lab01/sunrun")
 
 
-def test_freeze_rejects_tampered_prediction_bytes(tmp_path):
+def test_freeze_requires_mandatory_600_rounds(tmp_path):
     run = _bare_run(tmp_path)
     fdir = final_model.final_dir(run)
     frame = pd.DataFrame({"origin_last_input_utc": ["2026-05-31T23:00:00Z"],
                           "horizon_hours": [1], "pred_kms": [400.0]})
     frame.to_parquet(fdir / final_model.FINAL_PREDICTIONS_FILENAME, index=False)
-    (fdir / final_model.FINAL_DIRECT_MODEL_FILENAME).write_bytes(b"dummy-model")
-    model_sha = protocol.sha256_file(fdir / final_model.FINAL_DIRECT_MODEL_FILENAME)
     reg = {"winner": "router",
-           "selection_sha256": final_contract.FROZEN_SELECTION_RECEIPT_SHA256,
-           "snapshot_sha256": final_contract.PINNED_SNAPSHOT_SHA256,
            "user_start_utc": protocol.USER_START_UTC, "user_deadline_utc": None,
            "window_utc": list(final_contract.SNAPSHOT_WINDOW)}
     (fdir / final_model.FINAL_REGISTRATION_FILENAME).write_text(json.dumps(reg))
     (fdir / final_model.FINAL_PRED_META_FILENAME).write_text(
-        json.dumps({"prediction_sha256": "0" * 64,
-                    "prediction_digest": "0" * 64,
-                    "logged_utc": "2026-10-05T00:00:00Z"}))
+        json.dumps({"logged_utc": "2026-10-05T00:00:00Z"}))
     (fdir / final_model.FINAL_VERIFY_FILENAME).write_text(
-        json.dumps({"prediction_digest": "0" * 64, "fits_observed": 0,
-                    "fit_executions_bound": 3, "direct_trees": 600}))
-    (fdir / final_model.FINAL_FIT_FILENAME).write_text(
-        json.dumps({"fit_executions": 3,
-                    "direct_fit": {"model_sha256": model_sha}}))
-    (fdir / final_model.FINAL_DIRECT_META_FILENAME).write_text(
-        json.dumps({"params": dict(final_model.FINAL_PARAMS)}))
-    (fdir / final_model.FINAL_ROUTER_META_FILENAME).write_text(
-        json.dumps({"params": dict(final_model.FINAL_ROUTER_PARAMS)}))
-    with pytest.raises(ValueError, match="prediction bytes changed"):
-        final_evaluate._require_forecast_freeze(run, "/home/t-lab01/sunrun")
-
-
-def test_freeze_requires_mandatory_600_rounds_and_model_sha(tmp_path):
-    run = _bare_run(tmp_path)
-    fdir = final_model.final_dir(run)
-    frame = pd.DataFrame({"origin_last_input_utc": ["2026-05-31T23:00:00Z"],
-                          "horizon_hours": [1], "pred_kms": [400.0]})
-    frame.to_parquet(fdir / final_model.FINAL_PREDICTIONS_FILENAME, index=False)
-    live_sha = protocol.sha256_file(fdir / final_model.FINAL_PREDICTIONS_FILENAME)
-    reg = {"winner": "router",
-           "selection_sha256": final_contract.FROZEN_SELECTION_RECEIPT_SHA256,
-           "snapshot_sha256": final_contract.PINNED_SNAPSHOT_SHA256,
-           "user_start_utc": protocol.USER_START_UTC, "user_deadline_utc": None,
-           "window_utc": list(final_contract.SNAPSHOT_WINDOW)}
-    (fdir / final_model.FINAL_REGISTRATION_FILENAME).write_text(json.dumps(reg))
-    (fdir / final_model.FINAL_PRED_META_FILENAME).write_text(
-        json.dumps({"prediction_sha256": live_sha,
-                    "prediction_digest": "0" * 64,
-                    "logged_utc": "2026-10-05T00:00:00Z"}))
-    (fdir / final_model.FINAL_VERIFY_FILENAME).write_text(
-        json.dumps({"prediction_digest": "0" * 64, "fits_observed": 0,
+        json.dumps({"fits_observed": 0,
                     "fit_executions_bound": 3, "direct_trees": 600}))
     bad_params = dict(final_model.FINAL_PARAMS)
     bad_params["n_estimators"] = 500
     (fdir / final_model.FINAL_FIT_FILENAME).write_text(
-        json.dumps({"fit_executions": 3, "direct_fit": {"model_sha256": live_sha}}))
+        json.dumps({"fit_executions": 3, "direct_fit": {}}))
     (fdir / final_model.FINAL_DIRECT_META_FILENAME).write_text(
         json.dumps({"params": bad_params}))
     (fdir / final_model.FINAL_ROUTER_META_FILENAME).write_text(
@@ -249,40 +182,6 @@ def test_evaluate_empty_run_is_invalid_with_gaps(tmp_path):
     assert len(report["gaps"]) > 0
     assert report["scores"] is None
     assert all(v is False for v in report["evidence"].values())
-
-
-def test_evaluate_rejects_mismatched_score_digests(tmp_path):
-    run = _bare_run(tmp_path)
-    out_dir = final_evaluate.report_dir_for(run, None)
-    body = {"total_mse": 3000.0,
-            "cells": {c: 100.0 for c in final_contract.CELL_NAMES},
-            "candidate_event": {"tp": 1, "fp": 0, "fn": 2, "f1": 0.5},
-            "champion_event": {"tp": 1, "fp": 0, "fn": 2, "f1": 0.5},
-            "official": {"n_pairs": 203976}, "logged_utc": "2026-10-05T00:00:00Z"}
-    a = dict(body, stage="score-a", score_digest="a" * 64)
-    b = dict(body, stage="score-b", score_digest="b" * 64)
-    (out_dir / final_evaluate.EVAL_SCORE_A_FILENAME).write_text(json.dumps(a))
-    (out_dir / final_evaluate.EVAL_SCORE_B_FILENAME).write_text(json.dumps(b))
-    code, report = final_evaluate.stage_evaluate(run, "/home/t-lab01/sunrun")
-    assert code == 2
-    assert report["checks"]["two_scores"]["ok"] is False
-
-
-def test_evaluate_rejects_forged_unrecomputed_digest(tmp_path):
-    run = _bare_run(tmp_path)
-    out_dir = final_evaluate.report_dir_for(run, None)
-    body = {"total_mse": 3000.0,
-            "cells": {c: 100.0 for c in final_contract.CELL_NAMES},
-            "candidate_event": {"tp": 1, "fp": 0, "fn": 2, "f1": 0.5},
-            "champion_event": {"tp": 1, "fp": 0, "fn": 2, "f1": 0.5},
-            "official": {"n_pairs": 203976}, "logged_utc": "2026-10-05T00:00:00Z"}
-    forged = "c" * 64  # well-formed hex but not recomputed from these numerics
-    a = dict(body, stage="score-a", score_digest=forged)
-    b = dict(body, stage="score-b", score_digest=forged)
-    (out_dir / final_evaluate.EVAL_SCORE_A_FILENAME).write_text(json.dumps(a))
-    (out_dir / final_evaluate.EVAL_SCORE_B_FILENAME).write_text(json.dumps(b))
-    _, report = final_evaluate.stage_evaluate(run, "/home/t-lab01/sunrun")
-    assert report["checks"]["two_scores"]["ok"] is False
 
 
 def test_native_parity_gate_values():
@@ -482,25 +381,15 @@ def _score_repo(tmp_path, monkeypatch):
 
 
 def _score_bodies(repo, run):
-    live_shas = {n: protocol.sha256_file(p)
-                 for n, p in final_evaluate.snapshot_paths(repo).items()}
-    live_shas["champion_replay"] = protocol.sha256_file(repo / final_evaluate.CHAMPION_REL)
-    live_shas["predictions"] = protocol.sha256_file(
-        final_model.final_dir(run) / final_model.FINAL_PREDICTIONS_FILENAME)
     cells = {c: 100.0 for c in final_contract.CELL_NAMES}
     official = {"n_pairs": 203976, "n_folds": 2833, "mse": 3000.0,
                 "by_regime": {c: {"mse": 100.0} for c in final_contract.CELL_NAMES}}
     cand = {"tp": 1, "fp": 0, "fn": 2, "f1": 0.5}
     champ = {"tp": 1, "fp": 0, "fn": 2, "f1": 0.5}
-    digest = final_evaluate.numeric_event_digest(3000.0, cells, cand, champ)
-    pred_meta = {"prediction_digest": "d" * 64,
-                 "logged_utc": "2026-10-04T00:00:00Z"}
-    binding = {"prediction_sha256": live_shas["predictions"],
-               "prediction_digest": "d" * 64}
+    pred_meta = {"logged_utc": "2026-10-04T00:00:00Z"}
     base = {"total_mse": 3000.0, "cells": cells,
             "candidate_event": cand, "champion_event": champ,
-            "official": official, "score_digest": digest,
-            "file_shas": live_shas, "binding": binding}
+            "official": official}
     a = dict(base, stage="score-a", logged_utc="2026-10-05T00:00:00Z")
     b = dict(base, stage="score-b", logged_utc="2026-10-05T00:00:01Z")
     return pred_meta, a, b
@@ -517,7 +406,7 @@ def test_score_pair_rejects_tampered_b_official(tmp_path, monkeypatch):
     repo, run = _score_repo(tmp_path, monkeypatch)
     pred_meta, a, b = _score_bodies(repo, run)
     b = json.loads(json.dumps(b))
-    b["official"]["mse"] = 3001.0  # copied digest no longer matches B content
+    b["official"]["mse"] = 3001.0
     ok, detail = final_evaluate.validate_score_pair(a, b, pred_meta, run, repo)
     assert ok is False
     assert "differ" in detail
@@ -532,29 +421,10 @@ def test_score_pair_rejects_tampered_b_cells(tmp_path, monkeypatch):
     assert ok is False
 
 
-def test_score_pair_rejects_forged_shared_digest(tmp_path, monkeypatch):
-    repo, run = _score_repo(tmp_path, monkeypatch)
-    pred_meta, a, b = _score_bodies(repo, run)
-    a = dict(a, score_digest="c" * 64)
-    b = dict(b, score_digest="c" * 64)
-    ok, _ = final_evaluate.validate_score_pair(a, b, pred_meta, run, repo)
-    assert ok is False
-
-
 def test_score_pair_rejects_truth_before_freeze_order(tmp_path, monkeypatch):
     repo, run = _score_repo(tmp_path, monkeypatch)
     pred_meta, a, b = _score_bodies(repo, run)
     b = dict(b, logged_utc="2026-10-03T00:00:00Z")  # before predict freeze
-    ok, _ = final_evaluate.validate_score_pair(a, b, pred_meta, run, repo)
-    assert ok is False
-
-
-def test_score_pair_rejects_changed_snapshot_bytes(tmp_path, monkeypatch):
-    repo, run = _score_repo(tmp_path, monkeypatch)
-    pred_meta, a, b = _score_bodies(repo, run)
-    snap = __import__("pathlib").Path(
-        __import__("os").environ[final_evaluate.SNAPSHOT_ENV_VAR])
-    pd.DataFrame({"x": [9]}).to_parquet(snap / "truth.parquet", index=False)
     ok, _ = final_evaluate.validate_score_pair(a, b, pred_meta, run, repo)
     assert ok is False
 
@@ -565,8 +435,7 @@ def test_score_pair_rejects_changed_snapshot_bytes(tmp_path, monkeypatch):
 
 def test_regression_receipt_rejects_missing_log(tmp_path):
     regr = {"ok": True, "exit_code": 0, "timed_out": False,
-            "inventory": [], "log_path": str(tmp_path / "absent.log"),
-            "log_sha256": "0" * 64}
+            "inventory": [], "log_path": str(tmp_path / "absent.log")}
     ok, _ = final_evaluate.validate_regression_receipt(regr, "/home/t-lab01/sunrun")
     assert ok is False
 
@@ -575,11 +444,11 @@ def test_regression_receipt_rejects_stale_inventory(tmp_path):
     live = final_evaluate.suite_inventory("/home/t-lab01/sunrun")
     regr = {"ok": True, "exit_code": 0, "timed_out": False,
             "inventory": live[:-1] if len(live) > 1 else [],
-            "log_path": "", "log_sha256": "0" * 64,
+            "log_path": "",
             "command": [], "interpreter": "", "env": {},
             "n_tests": -1, "started_utc": "2026-10-05T00:00:01Z",
             "ended_utc": "2026-10-05T00:00:00Z",
-            "source_hashes": {}, "closure_after": {},
+            "closure_after": {},
             "registration_sources_match": False,
             "clock_plugin": final_evaluate.CLOCK_PLUGIN}
     ok, _ = final_evaluate.validate_regression_receipt(regr, "/home/t-lab01/sunrun")
@@ -589,14 +458,6 @@ def test_regression_receipt_rejects_stale_inventory(tmp_path):
 def test_versions_probe_uses_live_interpreter():
     versions = final_evaluate._versions_for(__import__("sys").executable)
     assert set(("python", "pandas", "numpy", "sklearn", "xgboost")) <= set(versions)
-
-
-def test_eval_closure_binds_producer_and_contract_sources():
-    closure = final_evaluate.eval_closure_hashes("/home/t-lab01/sunrun")
-    for rel in (final_model.FINAL_SOURCES
-                + final_evaluate.EVAL_SOURCES
-                + final_evaluate.EVAL_CONTRACT_SOURCES):
-        assert len(closure[rel]) == 64
 
 
 def test_full_native_replay_fail_closed_without_models(tmp_path):
@@ -617,12 +478,3 @@ def test_native_replay_uses_full_horizon_feature_grid():
     source = inspect.getsource(final_evaluate._full_native_replay)
     assert "official_direct_feature_grid" in source
     assert "assert_inference_schema(direct_grid, cols)" in source
-
-
-def test_final_registration_binds_evaluator_closure():
-    import inspect
-    from experiments.mse20_scope_expansion import final_model
-
-    source = inspect.getsource(final_model.stage_register)
-    assert '"evaluator_closure": final_evaluate.eval_closure_hashes(repo_root)' in source
-

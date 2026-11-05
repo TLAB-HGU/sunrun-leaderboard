@@ -103,7 +103,7 @@ def test_source_guard_pushes_cap_and_restores_reader(tmp_path):
         with pytest.raises(ValueError):
             pd.read_parquet(tmp_path/'predictions_official.parquet')
     assert pd.read_parquet is reader
-    assert len(access[str(path)]['sha256']) == 64
+    assert str(path) in access
 
 
 def test_prediction_grid_is_complete():
@@ -120,7 +120,7 @@ def test_runner_synthetic_end_to_end(tmp_path, monkeypatch):
     class FakeFeatures:
         def __init__(self, cap):
             self.labels = self.observed = pd.Series(400., index=times)
-            self.access = self.code_hashes = {}
+            self.access = {}
         def poison(self, origin):
             return {'passed': True, 'positive_control': True}
     class FakeFit:

@@ -1,0 +1,1 @@
+User clarification: ffill input features AND training y; official evaluation truth remains unfilled. Earlier feature-only reruns interrupted, logs retained, never submitted. New input snapshot and campaign config must record this policy.

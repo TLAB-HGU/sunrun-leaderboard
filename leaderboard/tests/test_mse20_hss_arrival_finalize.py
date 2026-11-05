@@ -23,7 +23,7 @@ def producer(tmp_path,monkeypatch):
     ch=pd.DataFrame({col:.01 for col in f.inputs.CH_COLUMNS},index=index)
     raw=pd.DataFrame({'ace_density_cm3':5.,'ace_temperature_k':1e5,'ace_bt_nt':5.,'ace_speed_kms':ace.filled_speed_kms},index=index)
     frames=f.inputs.rebuild_frames(ace,ch,raw);origins=index[[900,1100,1400]]
-    config={'id':'chosen'};registration={'sources':{'source':{'path':'synthetic','sha256':'synthetic'}}}
+    config={'id':'chosen'};registration={'sources':{'source':{'path':'synthetic'}}}
     selection={'frozen_utc':'2026-10-03T10:00:00Z','selected_config':config,'selection_uses_official':False}
     write(tmp_path/'registered.json',registration);write(tmp_path/'dev-selection.json',selection);write(tmp_path/'authorization.json',{'regime_cells_final_gate':True})
     monkeypatch.setattr(f,'final_context',lambda run:(tmp_path,registration,selection,config,origins,{}))
@@ -50,7 +50,7 @@ def producer(tmp_path,monkeypatch):
         directory.mkdir(parents=True)
         (directory/'model.pt').write_bytes(b'synthetic model')
         meta=dict(config=config,cutoff=cutoff.isoformat(),train_label_max=cutoff.isoformat())
-        (directory/'metadata.json').write_text(json.dumps(meta));(directory/'metadata.sha256').write_text(f.p.digest(directory/'metadata.json'))
+        (directory/'metadata.json').write_text(json.dumps(meta))
         return {},meta
     fake=types.SimpleNamespace(fit_predict=fit,predict_saved=predict,verify_training_provenance=lambda *a:{'normalizer':{'mean':[1.]}})
     monkeypatch.setattr(package,'model',fake,raising=False)

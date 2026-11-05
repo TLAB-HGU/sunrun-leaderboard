@@ -30,20 +30,16 @@
   },
   "sources": {
     "predictions": {
-      "file": "/home/t-lab01/sunrun/research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz",
-      "sha256": "e7bbdbdf7cd211b95a87186b0d2f79e0ca17c2c132dd8da8ebb4964655438985"
+      "file": "/home/t-lab01/sunrun/research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz"
     },
     "truth": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/ff001c863f177d47ba40489441fe43d6d9685df4/truth.parquet",
-      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/ff001c863f177d47ba40489441fe43d6d9685df4/truth.parquet"
     },
     "folds": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/ff001c863f177d47ba40489441fe43d6d9685df4/folds.parquet",
-      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/ff001c863f177d47ba40489441fe43d6d9685df4/folds.parquet"
     },
     "history": {
-      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
     }
   },
   "verification": {
@@ -88,8 +84,7 @@
       "first_origin_utc": "2026-02-28T23:00:00+00:00",
       "last_origin_utc": "2026-03-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16279986,
-      "sha256": "eca8cc2c94f7a2f49b2a8586f5f87061bca0486c16dbabf43cecc252946d9369"
+      "bytes": 16279986
     },
     {
       "month": "2026-04",
@@ -100,8 +95,7 @@
       "first_origin_utc": "2026-03-31T23:00:00+00:00",
       "last_origin_utc": "2026-04-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 16365739,
-      "sha256": "41da70b3a5b4d960ae197111cf33ff236ee27410cedaf7011d419ca7cfc6cbb7"
+      "bytes": 16365739
     },
     {
       "month": "2026-05",
@@ -112,8 +106,7 @@
       "first_origin_utc": "2026-04-30T23:00:00+00:00",
       "last_origin_utc": "2026-05-28T23:00:00+00:00",
       "duration_ms": 67300,
-      "bytes": 14943398,
-      "sha256": "6ce517ce29c27b56f8773612389a1d3255ae16ca01851e17453b2f325e16972e"
+      "bytes": 14943398
     },
     {
       "month": "2026-06",
@@ -124,8 +117,7 @@
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 15865794,
-      "sha256": "7343abc567c800907a37ce85d0f646fb57eea9ae665608a6c9a905acd908850e"
+      "bytes": 15865794
     },
     {
       "month": "2026-07",
@@ -136,8 +128,7 @@
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 17327831,
-      "sha256": "bc28f900c41780b51cfc1f20a7adc2038cd6cac5e85464ceb83f819bae746223"
+      "bytes": 17327831
     },
     {
       "month": "2026-08",
@@ -148,8 +139,7 @@
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16714310,
-      "sha256": "6f096d7f7583135afe404ace22adcbe7ffde48e3cb7edcc0c63fe348d828b122"
+      "bytes": 16714310
     },
     {
       "month": "2026-09",
@@ -160,8 +150,7 @@
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
       "duration_ms": 62500,
-      "bytes": 14685768,
-      "sha256": "cf4443f4a4208b70ba94a75cb221bb612b0b65f7122356fe2110149f5a393652"
+      "bytes": 14685768
     }
   ]
 }

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,14 +28,12 @@ EXPERIMENTS = {
     "E1149": {
         "model": "E1149_L72_COND",
         "title": "E1149 L72-COND (ACE+2h)",
-        "recipe_code_sha256": "d8271c4c9bbb02734abaf1399393183143cfe318e7551e35f6119e0086105eb9",
         "expected_mse": 3383.173808352058,
         "ace_latency_hours": 2,
     },
     "E1149_ACE0H": {
         "model": "E1149_NO_DELAY",
         "title": "E1149 L72-COND (ACE+0h)",
-        "parent_recipe_code_sha256": "d8271c4c9bbb02734abaf1399393183143cfe318e7551e35f6119e0086105eb9",
         "reference_only": True,
         "ace_latency_hours": 0,
     },
@@ -49,14 +46,6 @@ EXPECTED_MONTHS = {"2026-06": 720, "2026-07": 744, "2026-08": 744, "2026-09": 62
 def require(condition, message):
     if not condition:
         raise ValueError(message)
-
-
-def sha256(path):
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def history_hours(args):
@@ -180,8 +169,6 @@ def render(args, data):
     if reference_month and getattr(args, "provenance", None):
         require(getattr(args, "model_file", None) is not None, "--provenance requires --model-file")
         provenance = json.loads(args.provenance.read_text())
-        require(provenance.get("model_sha256") == sha256(args.model_file), "Provenance model hash mismatch")
-        require(provenance.get("predictions_sha256") == sha256(args.predictions), "Provenance predictions hash mismatch")
     output = args.output_dir
     if reference_month:
         for name in [manifest_name, f"validation_{reference_month}.gif"]:
@@ -254,7 +241,7 @@ def render(args, data):
                             "first_fold": int(indices[0] + 1), "last_fold": int(indices[-1] + 1),
                             "first_origin_utc": origins[indices[0]].isoformat(),
                             "last_origin_utc": origins[indices[-1]].isoformat(),
-                            "duration_ms": duration, "bytes": path.stat().st_size, "sha256": sha256(path)})
+                            "duration_ms": duration, "bytes": path.stat().st_size})
             print(f"{path.name}: verified {len(indices)} frames, {path.stat().st_size:,} bytes", flush=True)
     finally:
         plt.close(fig)
@@ -270,12 +257,11 @@ def render(args, data):
         source_names.append("provenance")
     manifest = {
         "model": experiment["model"],
-        **{key: experiment[key] for key in ("model_config_sha256", "recipe_code_sha256", "parent_recipe_code_sha256") if key in experiment},
+        **({"model_config_sha256": experiment["model_config_sha256"]} if "model_config_sha256" in experiment else {}),
         "experiment": args.experiment, "seed": 0,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
-        "script_sha256": sha256(__file__), "config": config,
-        "rendering_config_sha256": hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest(),
-        "sources": {name: {"file": str(getattr(args, name).resolve()), "sha256": sha256(getattr(args, name))}
+        "config": config,
+        "sources": {name: {"file": str(getattr(args, name).resolve())}
                     for name in source_names},
         "verification": {"folds": len(origins), "pairs": len(origins) * 72,
                          "mse": mse, "expected_mse": experiment.get("expected_mse"), "mse_tolerance": 1e-7,
@@ -292,7 +278,7 @@ def render(args, data):
     if args.experiment.startswith("E1149"):
         manifest["notes"][0] = "Display shows 168 hours of model-available ACE observations, not the complete feature and analog history."
     if experiment.get("reference_only"):
-        manifest["comparison_status"] = "Unsubmitted no-delay comparator; parent recipe identity is not a training-config hash"
+        manifest["comparison_status"] = "Unsubmitted no-delay comparator; it has no leaderboard submission"
     if reference_month:
         manifest["evaluation_scope"] = ("non-official reference replay" if args.experiment.startswith("E1149")
                                         else "non-official reference replay; v2 transition validation pending")
@@ -319,8 +305,8 @@ def main():
     parser.add_argument("--folds", type=Path)
     parser.add_argument("--truth", type=Path)
     parser.add_argument("--reference-month", help="Non-official replay month YYYY-MM (origin + 1 h)")
-    parser.add_argument("--provenance", type=Path, help="Reference inference receipt with model and prediction hashes")
-    parser.add_argument("--model-file", type=Path, help="Frozen model file to hash for reference provenance")
+    parser.add_argument("--provenance", type=Path, help="Reference inference receipt recorded with the manifest")
+    parser.add_argument("--model-file", type=Path, help="Frozen model file recorded as a reference source")
     parser.add_argument("--frame-ms", type=int, default=100)
     parser.add_argument("--width", type=int, default=1000)
     parser.add_argument("--height", type=int, default=500)

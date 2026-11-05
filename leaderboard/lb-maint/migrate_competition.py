@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-from hashlib import sha256
 import json
 from pathlib import Path
 import sys
@@ -45,8 +44,7 @@ def main():
     context = prepare_context(observations)
     observations_path = out / "competition-observations.parquet"
     observations.to_parquet(observations_path, index=False)
-    provenance.update(version=VERSION, observations_sha256=sha256(observations_path.read_bytes()).hexdigest(),
-                      n_origins=len(context["origins"]),
+    provenance.update(version=VERSION, n_origins=len(context["origins"]),
                       origins_by_period={name: int((context["period"] == name).sum())
                                          for name in ("F1", "F2", "F3")})
     api = HfApi()
@@ -83,7 +81,6 @@ def main():
             pred = pd.read_parquet(cached) if pred_path.endswith(".parquet") else pd.read_csv(cached)
             # Historical results stay intact; new scores live in a versioned namespace.
             record["competition"] = score_competition(pred, context)
-            record["competition_provenance"] = provenance["observations_sha256"]
             record.pop("competition_unscored_reason", None)
             print(f"[{index}/{len(paths)}] {old['experiment']}: S={record['competition']['total']['s']:.3f}", flush=True)
         records.append(record)

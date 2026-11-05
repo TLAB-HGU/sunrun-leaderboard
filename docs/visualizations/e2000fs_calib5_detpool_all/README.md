@@ -21,7 +21,7 @@
 
 `pred = base + Σ_j β_j (arm_j − base)`, `β ≥ 0`, `Σβ ≤ 1`입니다. `base`는 `e2000fs_calib4_detpool_gpd`이고, `β`는 **168 origin마다** 그 시점에 72시간 목표가 모두 성숙한 **직전 2,160 origin**만으로 적합합니다(표준화 NNLS, ridge `1e-3`). 적합값은 (1) `Σβ ≤ 1`이 되도록 축소 사다리(1.0 → 0.75 → 0.5 → 0.25)를 거치고, (2) 직전 창의 **≥550 MSE가 base를 넘지 않을 때까지** 줄이며, 어떤 단계에서도 통과하지 못하면 **β = 0**(= base 그대로)입니다. arm 집합, 창, 주기, ridge, 사다리는 [preregistration.md](../../../research/e2000fs_calib5-20261031/preregistration.md)에 실행 전에 고정했습니다.
 
-이 페이지가 다루는 제출 예측은 2026-10-31 F1/F2/F3 재적합 lane(`research/e2000fs_f123-20261031/runs/poolall_v1`)이며 **16개 arm**을 씁니다. 리더보드 레코드의 `config_sha256`(`13376adb…`)은 실험 정체성을 유지하기 위해 남아 있는 **원래 81-arm 재생 스크립트**이고([publish_f123.py](../../../research/e2000fs_f123-20261031/publish_f123.py)가 점수·cutoff만 교체), 저장된 예측은 아래 검증대로 16-arm 재적합 스택과 **비트 단위로 같습니다**. legacy 행은 그 81-arm lane의 원래 수치입니다.
+이 페이지가 다루는 제출 예측은 2026-10-31 F1/F2/F3 재적합 lane(`research/e2000fs_f123-20261031/runs/poolall_v1`)이며 **16개 arm**을 씁니다. 리더보드 레코드가 가리키는 재생 스크립트는 **원래 81-arm 스크립트**로 남아 있고([publish_f123.py](../../../research/e2000fs_f123-20261031/publish_f123.py)가 점수·cutoff만 교체), 저장된 예측은 아래 검증대로 16-arm 재적합 스택과 **비트 단위로 같습니다**. legacy 행은 그 81-arm lane의 원래 수치입니다.
 
 ## arm 가중치
 
@@ -65,8 +65,8 @@
 그림과 표는 모두 **제출된 예측을 다시 계산해서** 만들었고, 재계산이 archive와 어긋나면 스크립트가 멈춥니다.
 
 - `pool_weights.py`는 16개 arm 예측에서 β를 **다시 적합**해 `base + Σβ(arm − base)`를 만들고, 그것이 제출 `forecast.npz`와 **최대 차이 0.0**(float32 비트 단위)임을 확인한 뒤에만 표·그림을 씁니다([weights_receipt.json](weights_receipt.json)).
-- 같은 예측을 리더보드 `folds.parquet`/`truth.parquet`(pinned sha256)에 조인해 다시 채점하면 총 4,154.152633 / F1 6,007.057035 / F2 3,600.168706 / F3 2,876.277924 / ≥550 9,641.590820으로, 리더보드 레코드와 **1e-9 이내**로 일치합니다([leaderboard-result.json](leaderboard-result.json)).
-- GIF는 이 제출 예측을 그대로 그립니다(재학습·재후처리 없음), `manifest.json`에 입력 sha256과 월별 프레임 수가 남아 있습니다.
+- 같은 예측을 리더보드 `folds.parquet`/`truth.parquet`에 조인해 다시 채점하면 총 4,154.152633 / F1 6,007.057035 / F2 3,600.168706 / F3 2,876.277924 / ≥550 9,641.590820으로, 리더보드 레코드와 **1e-9 이내**로 일치합니다([leaderboard-result.json](leaderboard-result.json)).
+- GIF는 이 제출 예측을 그대로 그립니다(재학습·재후처리 없음), `manifest.json`에 월별 프레임 수가 남아 있습니다.
 
 ## 월별 예측 GIF
 
@@ -132,4 +132,4 @@ $PY docs/visualizations/e2000fs_calib5_detpool_all/code/pool_weights.py     # �
 $PY docs/visualizations/e2000fs_calib5_detpool_all/code/render_gifs.py      # 9개월 GIF + manifest.json
 ```
 
-입력은 모두 archive입니다: 제출 예측 `research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz`, base와 16개 arm의 `forecast.npz`, legacy 가중치 `research/e2000fs_calib5-20261031/runs/poolall_v1/weights.npz`, 리더보드 `folds.parquet`·`truth.parquet`, 입력 이력 `data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet`. 학습은 일어나지 않습니다.
+입력은 모두 archive입니다: 제출 예측 `research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz`, base와 16개 arm의 `forecast.npz`, legacy 가중치 `research/e2000fs_calib5-20261031/runs/poolall_v1/weights.npz`, 리더보드 `folds.parquet`·`truth.parquet`, 입력 이력 `data-v2/processed/ACE/ace.parquet`. 학습은 일어나지 않습니다.

@@ -33,7 +33,6 @@ second crossover of the pareto-era cycle (GEAR quota).
 
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -364,52 +363,44 @@ def branch_stats(fired: np.ndarray, votes: np.ndarray) -> dict:
             "mean_votes": float(v.mean()) if n else 0.0}
 
 
-# --- Hash-keyed scratch cache (code + input hashes in the key) ---
+# --- Scratch cache (code + input size/mtime in the key) ---
 
 FCACHE_VERSION = 1
 
 
-def _file_sha(path) -> str:
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def fcache_key(kind: str, payload: dict) -> str:
-    code = {f: _file_sha(LB / f) for f in
-            ("experiments/d46_xover2/runner.py", "experiments/d46_xover2/xover2.py")}
-    data = {}
-    for f in ("store/ch-v1/ace.parquet", "store/ch-v1/ch-hourly.parquet",
+def fcache_key(kind: str, payload: dict) -> dict:
+    stat = {}
+    for f in ("experiments/d46_xover2/runner.py", "experiments/d46_xover2/xover2.py",
+              "store/ch-v1/ace.parquet", "store/ch-v1/ch-hourly.parquet",
               "store/suvi-fusion/suvi-hourly-v2.parquet"):
-        p = LB / f
-        st = p.stat()
-        data[f] = [st.st_size, int(st.st_mtime_ns)]
-    blob = json.dumps({"v": FCACHE_VERSION, "kind": kind, "payload": payload,
-                       "code": code, "data": data}, sort_keys=True, default=str)
-    return hashlib.sha256(blob.encode()).hexdigest()
+        st = (LB / f).stat()
+        stat[f] = [st.st_size, int(st.st_mtime_ns)]
+    return json.loads(json.dumps({"v": FCACHE_VERSION, "kind": kind, "payload": payload,
+                                  "files": stat}, sort_keys=True, default=str))
 
 
-def fcache_get(scratch: Path, key: str):
-    side = scratch / f"fcache_{key[:16]}.json"
-    tab = scratch / f"fcache_{key[:16]}.parquet"
+def _fcache_sides(scratch: Path, kind: str) -> list:
+    return sorted(scratch.glob(f"fcache_{kind}_*.json"))
+
+
+def fcache_get(scratch: Path, key: dict):
     try:
-        if not (side.exists() and tab.exists()):
-            return None
-        if json.loads(side.read_text()).get("key") != key:
-            return None
-        return pd.read_parquet(tab)
+        for side in _fcache_sides(scratch, key["kind"]):
+            tab = side.with_suffix(".parquet")
+            if tab.exists() and json.loads(side.read_text()).get("key") == key:
+                return pd.read_parquet(tab)
+        return None
     except Exception:  # never raise on a cache path; caller rebuilds
         return None
 
 
-def fcache_put(scratch: Path, key: str, df: pd.DataFrame):
+def fcache_put(scratch: Path, key: dict, df: pd.DataFrame):
     scratch.mkdir(parents=True, exist_ok=True)
-    tab, tmp = scratch / f"fcache_{key[:16]}.parquet", scratch / f"fcache_{key[:16]}.tmp.parquet"
+    stem = f"fcache_{key['kind']}_{len(_fcache_sides(scratch, key['kind']))}"
+    tab, tmp = scratch / f"{stem}.parquet", scratch / f"{stem}.tmp.parquet"
     df.to_parquet(tmp, index=False)
     tmp.rename(tab)
-    (scratch / f"fcache_{key[:16]}.json").write_text(json.dumps({"key": key}))
+    (scratch / f"{stem}.json").write_text(json.dumps({"key": key}))
     return df
 
 

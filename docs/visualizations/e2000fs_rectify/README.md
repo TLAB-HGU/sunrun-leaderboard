@@ -1,6 +1,6 @@
 # E2000FS Rectify — Train·validation loss, feature importance, F1+F2 월별 예측 GIF
 
-2026-10-27 게시 기준 리더보드 **12위**, 작성자 **seongeun**인 `e2000fs_rectify`입니다. E2000 입력(111 features, ACE lag 0)과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)로 학습한 Recursive base 예측에 horizon별 residual 모델(DirMO σ=1, 72개)을 더하는 Rectify 전략입니다. 제출 설정 SHA256은 `f0142d38c7dddd7668e9d5f87fd702dcad5ff729ecf064d9533d3564f8bba207`이며, 재현 소스는 [releases/e2000fs/rectify](../../../releases/e2000fs/rectify/)에 있습니다.
+2026-10-27 게시 기준 리더보드 **12위**, 작성자 **seongeun**인 `e2000fs_rectify`입니다. E2000 입력(111 features, ACE lag 0)과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)로 학습한 Recursive base 예측에 horizon별 residual 모델(DirMO σ=1, 72개)을 더하는 Rectify 전략입니다. 재현 소스는 [releases/e2000fs/rectify](../../../releases/e2000fs/rectify/)에 있습니다.
 
 | 지표 | 값 |
 | --- | ---: |
@@ -95,4 +95,4 @@
 
 ## 검증 ([manifest.json](manifest.json))
 
-`scripts/visualize_enlil_validation.py --experiment E2000FS_RECTIFY`로 렌더링했습니다. 렌더러는 예측·truth가 4,970 origin × h1..72에 정확히 1:1로 대응하는지, 다시 계산한 MSE가 리더보드 값 3627.7865871010245와 1e-7 이내로 일치하는지, 월별 프레임 수와 GIF 디코딩이 맞는지 확인하며, 하나라도 어긋나면 멈춥니다. 입력 파일과 GIF의 SHA256은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
+`scripts/visualize_enlil_validation.py --experiment E2000FS_RECTIFY`로 렌더링했습니다. 렌더러는 예측·truth가 4,970 origin × h1..72에 정확히 1:1로 대응하는지, 다시 계산한 MSE가 리더보드 값 3627.7865871010245와 1e-7 이내로 일치하는지, 월별 프레임 수와 GIF 디코딩이 맞는지 확인하며, 하나라도 어긋나면 멈춥니다. 학습이나 예측 변경은 하지 않았습니다.

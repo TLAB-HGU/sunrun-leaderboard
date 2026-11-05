@@ -1,5 +1,4 @@
 """Synthetic-only prefit-audit tests; no real data, no GPU, CPU only."""
-import hashlib
 import json
 from pathlib import Path
 
@@ -23,12 +22,9 @@ def fake_old(monkeypatch, tmp_path):
     return root
 
 
-def _sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def _ref(path):
-    return dict(path=str(Path(path).resolve()), sha256=_sha(path))
+    stat = Path(path).stat()
+    return dict(path=str(Path(path).resolve()), size=stat.st_size, mtime_ns=stat.st_mtime_ns)
 
 
 def _write_model(root, fit):
@@ -37,7 +33,6 @@ def _write_model(root, fit):
     meta = dict(config={'id': 'synth-backbone'}, cutoff=pd.Timestamp(fit).isoformat(),
                 train_label_max=pd.Timestamp(fit).isoformat())
     (model_dir / 'metadata.json').write_text(json.dumps(meta, sort_keys=True))
-    (model_dir / 'metadata.sha256').write_text(_sha(model_dir / 'metadata.json'))
     return model_dir
 
 
@@ -149,7 +144,7 @@ def test_cuda_evidence_never_skips_when_unsupported():
 
 
 def test_cli_writes_new_json_only_and_refuses_overwrite(monkeypatch, tmp_path, fake_old):
-    before = {str(p): _sha(p) for p in sorted(fake_old.rglob('*')) if p.is_file()}
+    before = {str(p): p.read_bytes() for p in sorted(fake_old.rglob('*')) if p.is_file()}
     monkeypatch.setattr(audit, 'audit_data',
                         lambda: dict(passed=True, synthetic=True, errors=[]))
     monkeypatch.setattr(audit, 'cuda_parity_evidence',
@@ -160,7 +155,7 @@ def test_cli_writes_new_json_only_and_refuses_overwrite(monkeypatch, tmp_path, f
     assert set(('data', 'cuda')) <= set(report) and report['passed'] is True
     with pytest.raises(ValueError):
         audit.main(['--output', str(target)])
-    after = {str(p): _sha(p) for p in sorted(fake_old.rglob('*')) if p.is_file()}
+    after = {str(p): p.read_bytes() for p in sorted(fake_old.rglob('*')) if p.is_file()}
     assert before == after
 
 
@@ -257,7 +252,7 @@ def test_feature_finite_mask_semantics():
     assert audit.check_feature_finite_mask(dropped, origins)['passed'] is False
 
 
-def test_label_hashes_cover_full96_and_class_ids():
+def test_labels_cover_full96_and_class_ids():
     from experiments.mse20_hss_residual import model as m
     idx = pd.date_range('2024-01-01T00:00:00Z', periods=720, freq='h', tz='UTC')
     frames = dict(speed=pd.Series(np.where(np.arange(720) < 500, 400., 700.), index=idx),
@@ -265,8 +260,6 @@ def test_label_hashes_cover_full96_and_class_ids():
     onsets = m.state.onset_times(frames['speed'], frames['observed'])
     origin = onsets[0] - pd.Timedelta(hours=6)
     labels = m.make_labels(frames, pd.DatetimeIndex([origin]), origin + pd.Timedelta(hours=96))
-    hashes = m.label_hashes(labels)
-    assert set(('profile96', 'arrival', 'tau_hours')) <= set(hashes)
     assert labels['profile96'].shape == (1, 96) and labels['arrival'].shape == (1,)
 
 

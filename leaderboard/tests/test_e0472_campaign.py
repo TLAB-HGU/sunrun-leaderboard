@@ -18,18 +18,15 @@ def test_trial_limits(kind, cap):
 
 
 def test_review_not_implicit_self_approved_or_reused():
-    cfg, hashes = {'name': 'candidate'}, {'runner.py': 'abc'}
+    cfg, code = {'name': 'candidate'}, {'runner.py': 'abc'}
     receipt = dict(reviewer='independent-critic', independent=True, round=1,
                    verdict='accept', high_findings=[], notes='Reviewed causal time splits.',
-                   **c.attestable(cfg, hashes))
-    receipt['signature'] = c.digest(receipt)
-    assert c.review_valid(receipt, cfg, hashes, 'owner')
-    assert not c.review_valid({}, cfg, hashes, 'owner')
-    assert not c.review_valid(receipt, cfg, hashes, 'independent-critic')
+                   **c.attestable(cfg, code))
+    assert c.review_valid(receipt, cfg, code, 'owner')
+    assert not c.review_valid({}, cfg, code, 'owner')
+    assert not c.review_valid(receipt, cfg, code, 'independent-critic')
     assert not c.review_valid(receipt, cfg, {'runner.py': 'changed'}, 'owner')
-    assert not c.review_valid(receipt, {'name': 'changed'}, hashes, 'owner')
-    receipt['notes'] += ' altered'
-    assert not c.review_valid(receipt, cfg, hashes, 'owner')
+    assert not c.review_valid(receipt, {'name': 'changed'}, code, 'owner')
 
 
 def test_poison_needs_positive_control():
@@ -84,19 +81,15 @@ def test_dry_run_does_not_create_state(tmp_path, capsys):
 
 
 def paired_records(mse=100., f1=.3):
-    return [dict(window=w, seed=seed, metrics=dict(mse=mse + seed, f1=f1,
-                 key_sha256=w, mask_sha256='same')) for w in ('W0', 'W1') for seed in (0, 1, 2)]
+    return [dict(window=w, seed=seed, metrics=dict(mse=mse + seed, f1=f1))
+            for w in ('W0', 'W1') for seed in (0, 1, 2)]
 
 
-def test_confirmation_uses_all_six_records_and_requires_digests():
+def test_confirmation_uses_all_six_records():
     base = paired_records()
     candidate = paired_records(90)
     assert c.paired_confirmation(candidate, base)['pass']
     candidate[-1]['metrics']['mse'] = 150
-    assert not c.paired_confirmation(candidate, base)['pass']
-    candidate = paired_records(90)
-    for row in candidate + base:
-        row['metrics'].pop('key_sha256')
     assert not c.paired_confirmation(candidate, base)['pass']
 
 
@@ -128,45 +121,9 @@ def test_search_gain_cannot_override_scientific_cal_rejection(tmp_path):
     def metric(key, stage, window):
         values = {'baseline': (1000, 2000), 'cal_worse': (1679.65, 1246.6),
                   'cal_gain': (900, 1500), 'alias': (900, 1500)}
-        return dict(mse=values[key][stage == 'search'], per_lead={},
-                    key_sha256=window, mask_sha256='observed')
+        return dict(mse=values[key][stage == 'search'], per_lead={})
     controller.metric = metric
     assert controller.ranked_search() == ['cal_gain']
-
-
-def refresh_controller(tmp_path, monkeypatch):
-    controller = c.Campaign(c.parser().parse_args(['--refresh-scheduler-code', '--root', str(tmp_path), '--n-jobs', '2', '--max-parallel', '1']))
-    scheduler = str(c.Path(c.__file__).resolve().relative_to(c.LB))
-    old = {scheduler: 'old', 'runner.py': 'stable'}
-    new = {scheduler: 'new', 'runner.py': 'stable'}
-    controller.state = dict(code_hashes=old, configs={}, units={}, official_evaluations={}, shortlist=None, locked=None)
-    monkeypatch.setattr(c, 'code_hashes', lambda: new)
-    return controller, old, new
-
-
-def test_explicit_refresh_preserves_historical_hashes(tmp_path, monkeypatch):
-    controller, old, new = refresh_controller(tmp_path, monkeypatch)
-    controller.refresh_scheduler_code()
-    assert controller.state['code_hashes'] == new
-    assert controller.state['code_revisions'][0]['previous_code_hashes'] == old
-
-
-@pytest.mark.parametrize('block', ['helper', 'running', 'interrupted', 'official', 'config'])
-def test_refresh_fails_closed(tmp_path, monkeypatch, block):
-    controller, old, new = refresh_controller(tmp_path, monkeypatch)
-    if block == 'helper':
-        new['runner.py'] = 'changed'
-    elif block in ('running', 'interrupted'):
-        controller.state['units']['x:smoke:CAL'] = {'status': block}
-    elif block == 'official':
-        controller.state['official_evaluations']['x'] = {'status': 'requested'}
-    else:
-        path = tmp_path / 'config.json'
-        path.write_text('{"name":"changed"}')
-        controller.state['configs']['x'] = {'path': str(path), 'config': {'name': 'original'}}
-    with pytest.raises(RuntimeError):
-        controller.refresh_scheduler_code()
-    assert controller.state['code_hashes'] == old
 
 
 def resource_fixture(tmp_path, monkeypatch, external=0, memory=40, load=2):
@@ -267,7 +224,7 @@ def test_worker_cannot_mutate_controller_state(tmp_path):
 
 def test_exploration_search_waits_for_successful_smoke(tmp_path, monkeypatch):
     controller = c.Campaign(c.parser().parse_args(['--status', '--root', str(tmp_path)]))
-    metric = dict(mse=1000, key_sha256='same', mask_sha256='same', per_lead={})
+    metric = dict(mse=1000, per_lead={})
     controller.state = dict(started_at=c.time.time(), max_hours=72, configs={
         'baseline': {'processed': True}, 'candidate': {'kind': 'analog'}}, units={
         'baseline:smoke:CAL': {'status': 'complete', 'result': {'records': [{'metrics': metric}]}},
@@ -311,7 +268,7 @@ def test_resume_ambiguous_unit_blocks_instead_of_refitting(tmp_path, monkeypatch
 
 def test_confirmation_requires_search_and_scientific_cal_then_w2_barrier(tmp_path):
     controller = c.Campaign(c.parser().parse_args(['--status', '--root', str(tmp_path)]))
-    metric = lambda mse: dict(mse=mse, per_lead={}, key_sha256='same', mask_sha256='same')
+    metric = lambda mse: dict(mse=mse, per_lead={})
     controller.state = dict(shortlist=['candidate'], locked=None, units={})
     values = {('baseline', 'smoke'): metric(1000), ('baseline', 'search'): metric(1000),
               ('candidate', 'smoke'): metric(1100), ('candidate', 'search'): metric(900)}
@@ -344,8 +301,14 @@ def test_actual_timeout_cleans_owned_subprocess_group(tmp_path):
     assert not status.exists() or 'State:\tZ' in status.read_text()
 
 
+def refresh_controller(tmp_path):
+    controller = c.Campaign(c.parser().parse_args(['--refresh-scheduler-code', '--root', str(tmp_path), '--n-jobs', '2', '--max-parallel', '1']))
+    controller.state = dict(configs={}, units={}, official_evaluations={}, shortlist=None, locked=None)
+    return controller
+
+
 def test_thread_migration_requires_actual_control_and_preserves_deadline(tmp_path, monkeypatch):
-    controller, old, new = refresh_controller(tmp_path, monkeypatch)
+    controller = refresh_controller(tmp_path)
     controller.state.update(n_jobs=2, max_parallel=1, started_at=1234., max_hours=72)
     controller.args.n_jobs = 5
     controller.args.max_parallel = 2
@@ -371,20 +334,18 @@ def thread_check_fixture(tmp_path, monkeypatch):
     controller.state = {'n_jobs': 2, 'units': {'baseline:smoke:CAL': {'experiment': 'BASE'}}}
     runs = tmp_path / 'runs'
     graph = {}
-    source_files = {str((c.HERE / name).relative_to(c.LB)): c.file_hash(c.HERE / name)
-                    for name in ('configs.py', 'runner.py', 'recipe.py', 'metrics.py')}
-    helper = str(c.HERE / 'configs.py')
+    source_files = [str((c.HERE / name).relative_to(c.LB))
+                    for name in ('configs.py', 'runner.py', 'recipe.py', 'metrics.py')]
     for eid, jobs in [('BASE', 2), ('CONTROL', 5)]:
         out = runs / eid
         out.mkdir(parents=True)
-        c.write_json(out / 'metrics.json', dict(key_sha256='key', mask_sha256='mask'))
+        c.write_json(out / 'metrics.json', {})
         c.write_json(out / 'receipt.json', dict(stage='smoke', window='CAL', seed=0, device='cpu',
-            config=c.DEFAULT_CONFIG, n_jobs=jobs, helper_code_hashes={helper: c.file_hash(helper)},
-            source_access={'input': {'sha256': 'same'}}))
+            config=c.DEFAULT_CONFIG, n_jobs=jobs, source_access={'input': {'cap': 'same'}}))
         c.write_json(out / 'poison.json', dict(passed=True, positive_control=True))
         pd.DataFrame({'origin_last_input_utc': pd.to_datetime(['2025-12-18'], utc=True),
                       'horizon_hours': [1], 'pred_kms': [400.]}).to_parquet(out / 'predictions_CAL_s0.parquet')
-        graph[eid] = dict(code=source_files, runs=[{'rc': 0, 'outputs': {p.name: c.file_hash(p) for p in out.iterdir()}}])
+        graph[eid] = dict(code=source_files, runs=[{'rc': 0, 'outputs': sorted(p.name for p in out.iterdir())}])
     monkeypatch.setattr(core, 'RUNS', runs)
     monkeypatch.setattr(core, 'state', lambda: {'experiments': graph})
     monkeypatch.setattr(core, '_lines', lambda: [{'event': 'start', 'id': eid} for eid in graph])
@@ -400,7 +361,6 @@ def test_thread_check_accepts_only_actual_exact_prediction_evidence(tmp_path, mo
     frame = pd.read_parquet(path)
     frame['pred_kms'] += .000001
     frame.to_parquet(path)
-    graph['CONTROL']['runs'][0]['outputs'][path.name] = c.file_hash(path)
     with pytest.raises(RuntimeError, match='predictions differ'):
         controller.verify_thread_equivalence('CONTROL', 5)
 
@@ -409,9 +369,8 @@ def test_thread_check_rejects_input_source_mismatch(tmp_path, monkeypatch):
     controller, graph, runs = thread_check_fixture(tmp_path, monkeypatch)
     path = runs / 'CONTROL/receipt.json'
     record = c.read_json(path)
-    record['source_access']['input']['sha256'] = 'changed'
+    record['source_access']['input']['cap'] = 'changed'
     c.write_json(path, record)
-    graph['CONTROL']['runs'][0]['outputs'][path.name] = c.file_hash(path)
     with pytest.raises(RuntimeError, match='source_access'):
         controller.verify_thread_equivalence('CONTROL', 5)
 

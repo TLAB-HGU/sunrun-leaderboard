@@ -1,0 +1,85 @@
+{
+ "period": "F3",
+ "block": 1,
+ "train_rows": 10889,
+ "queries": 2113,
+ "rounds": 450,
+ "cycles": 2,
+ "k": 2,
+ "threads": 2,
+ "seconds": 3615,
+ "mean_pi_fast": 0.32313001529480206,
+ "mean_sigma": [
+  0.06918511992275092,
+  0.08167036629464189
+ ],
+ "mean_mu": [
+  5.966386653527099,
+  6.154947609862459
+ ],
+ "history": [
+  {
+   "cycle": 0,
+   "group": "eta0",
+   "train_nll": -0.441111,
+   "seconds": 625.8
+  },
+  {
+   "cycle": 0,
+   "group": "m00",
+   "train_nll": -0.606853,
+   "seconds": 1170.9
+  },
+  {
+   "cycle": 0,
+   "group": "delta0",
+   "train_nll": -0.649003,
+   "seconds": 1577.6
+  },
+  {
+   "cycle": 0,
+   "group": "rho0",
+   "train_nll": -0.752659,
+   "seconds": 1893.4
+  },
+  {
+   "cycle": 0,
+   "group": "rho1",
+   "train_nll": -0.923752,
+   "seconds": 2222.2
+  },
+  {
+   "cycle": 1,
+   "group": "eta0",
+   "train_nll": -0.96357,
+   "seconds": 2509.0
+  },
+  {
+   "cycle": 1,
+   "group": "m00",
+   "train_nll": -1.019646,
+   "seconds": 2783.8
+  },
+  {
+   "cycle": 1,
+   "group": "delta0",
+   "train_nll": -1.047432,
+   "seconds": 3084.8
+  },
+  {
+   "cycle": 1,
+   "group": "rho0",
+   "train_nll": -1.084457,
+   "seconds": 3404.4
+  },
+  {
+   "cycle": 1,
+   "group": "rho1",
+   "train_nll": -1.121723,
+   "seconds": 3610.1
+  }
+ ],
+ "scheme": "xgboostlss-cyclic (Chevalier & Cote 2025, Algorithm 4)",
+ "predict_seconds": 0.178,
+ "predict_rows": 2113
+}

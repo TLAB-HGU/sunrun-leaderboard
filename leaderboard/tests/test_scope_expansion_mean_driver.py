@@ -277,7 +277,6 @@ def test_mean_proof_mark_and_require_roundtrip(tmp_path):
     proof = mean_driver.require_mean_tests_passed(str(tmp_path), str(REPO_ROOT))
     assert proof["exit_code"] == 0
     assert proof["passed_count"] == inv["n_tests"]
-    assert proof["log_sha256"] == protocol.sha256_file(log)
     assert proof["mean_tests_inventory"] == inv
 
 
@@ -400,41 +399,35 @@ def test_cli_mark_tests_passed_flag(tmp_path):
 # 9. prepare/train-ledger binding and poison sensitivity control (synthetic)
 # ----------------------------------------------------------------------------
 def test_prep_pins_refuse_any_drift():
-    prep = {"source_hashes": {"a": "1"}, "mean_sources": {"m": "2"},
+    prep = {"mean_sources": {"m": "2"},
             "mean_tests_inventory": {"n_tests": 3},
-            "input_inventory": [{"path": "p", "bytes": 9, "sha256": "s",
-                                 "mtime_utc": 1.0}],
+            "input_inventory": [{"path": "p", "bytes": 9, "mtime_ns": 1}],
             "versions": {"python": "3.12"},
-            "direct_artifacts": {"dev": {"model_sha256": "x"}}}
-    kw = {"source_hashes": {"a": "1"}, "mean_sources": {"m": "2"},
+            "direct_artifacts": {"dev": {"bytes": 1}}}
+    kw = {"mean_sources": {"m": "2"},
           "mean_tests_inventory": {"n_tests": 3},
-          "input_inventory": [{"path": "p", "bytes": 9, "sha256": "s",
-                               "mtime_utc": 2.0}],  # mtime is informational
+          "input_inventory": [{"path": "p", "bytes": 9, "mtime_ns": 1}],
           "versions": {"python": "3.12"},
-          "direct_artifacts": {"dev": {"model_sha256": "x"}}}
+          "direct_artifacts": {"dev": {"bytes": 1}}}
     assert mean_driver.assert_prep_pins_current(prep, **kw) is None
-    for key, bad in [("source_hashes", {"a": "9"}),
-                     ("mean_sources", {"m": "9"}),
+    for key, bad in [("mean_sources", {"m": "9"}),
                      ("mean_tests_inventory", {"n_tests": 99}),
                      ("versions", {"python": "9"}),
-                     ("direct_artifacts", {"dev": {"model_sha256": "y"}})]:
+                     ("direct_artifacts", {"dev": {"bytes": 2}})]:
         drifted = dict(kw)
         drifted[key] = bad
         with pytest.raises(NotReadyError):
             mean_driver.assert_prep_pins_current(prep, **drifted)
     drifted = dict(kw)
-    drifted["input_inventory"] = [{"path": "p", "bytes": 9, "sha256": "other",
-                                   "mtime_utc": 2.0}]
+    drifted["input_inventory"] = [{"path": "p", "bytes": 9, "mtime_ns": 2}]
     with pytest.raises(NotReadyError):
         mean_driver.assert_prep_pins_current(prep, **drifted)
 
 
 def test_train_ledger_must_match_prepare_bytes():
-    a = {"requested_digest": "r", "eligible_digest": "e", "label_digest": "l",
-         "n_requested": 10, "n_eligible": 7, "n_excluded": 3}
+    a = {"n_requested": 10, "n_eligible": 7, "n_excluded": 3}
     assert mean_driver.assert_train_ledger_matches_prep(dict(a), dict(a)) is None
-    for key, bad in [("label_digest", "x"), ("eligible_digest", "x"),
-                     ("n_eligible", 6), ("n_excluded", 4)]:
+    for key, bad in [("n_eligible", 6), ("n_excluded", 4)]:
         b = dict(a)
         b[key] = bad
         with pytest.raises(ValueError):

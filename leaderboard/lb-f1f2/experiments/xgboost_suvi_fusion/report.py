@@ -1,8 +1,6 @@
 """Official leaderboard scores and observed-only peak diagnostics."""
 from __future__ import annotations
 
-import hashlib
-import json
 import sys
 from pathlib import Path
 
@@ -104,10 +102,7 @@ def submission_payload(config: dict, inference_seconds_per_fold: float) -> dict:
         raise ValueError("config requires non-empty data and hyperparameters mappings")
     if not np.isfinite(inference_seconds_per_fold) or inference_seconds_per_fold <= 0:
         raise ValueError("inference timing must be positive and finite")
-    canonical = json.dumps(config, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
-    digest = hashlib.sha256(canonical.encode()).hexdigest()
-    return {"config_sha256": digest, "script_path": f"scripts/seongeun/xgboost-suvi-fusion/{digest}.py",
-            "meta": {"team_member": "seongeun", "experiment": "xgboost-suvi-fusion",
+    return {"meta": {"team_member": "seongeun", "experiment": "xgboost-suvi-fusion",
                      "description": "Direct 72-hour XGBoost with 120-hour ACE and masked SUVI Fe195 features",
                      "no_future_leakage": True, "config": config,
                      "inference_seconds_per_fold": float(inference_seconds_per_fold)}}

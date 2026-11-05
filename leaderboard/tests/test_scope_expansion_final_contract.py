@@ -1,9 +1,9 @@
 """Synthetic CPU-only tests for the prospective final acceptance contract.
 
 No real data, no fits, no registration, no claims, no network, no official
-reads (snapshot hash appears only as a pinned constant, never fetched).
+reads.
 Every case exercises the actual ``final_contract`` pure helpers with fully
-synthetic numerics/keys/digests and tmp-free in-memory dicts.
+synthetic numerics/keys and tmp-free in-memory dicts.
 """
 import math
 import sys
@@ -63,7 +63,6 @@ def _proof(official=False, **over):
         first = origins[0]
         train_max = "2026-05-28T23:00:00Z"
     keys = _full_keys(origins)
-    digest = fc.canonical_numeric_digest({"total": 1.0})
     base = {
         "total_mse": 100.0,
         "cells": _cells(100.0),
@@ -75,16 +74,11 @@ def _proof(official=False, **over):
         "first_origin_utc": first,
         "max_abs_replay_diff": 1e-10,
         "mse_replay_diff": 1e-7,
-        "score_digest_a": digest,
-        "score_digest_b": digest,
         "ledger_by_category": _full_ledger(),
         "ledger_total": 15,
         "feature_columns": ["v_lag1", "ace_speed_kms"],
         "recipe": "router",
-        "snapshot_sha256": fc.PINNED_SNAPSHOT_SHA256,
         "selection_winner": fc.FROZEN_SELECTION_WINNER,
-        "selection_receipt_sha256": fc.FROZEN_SELECTION_RECEIPT_SHA256,
-        "amendment_sha256": protocol.AMENDMENT_SHA256,
         "predictions_finite": True,
     }
     base.update(over)
@@ -101,10 +95,6 @@ def _evidence(**over):
 # Frozen bindings (no mutation, single-sourced where immutable).
 def test_frozen_bindings():
     assert fc.FROZEN_SELECTION_WINNER == "router"
-    assert fc.FROZEN_SELECTION_RECEIPT_SHA256 == (
-        "faa32862d366d8dd8e284e0b4ddffefbb8e042e7be82a5296985d11cb80697a2")
-    assert fc.PINNED_SNAPSHOT_SHA256 == (
-        "bcf5d5417d99eaa331ddca40581d48953e09a58e")
     assert fc.OFFICIAL_ORIGINS * fc.OFFICIAL_HORIZONS == fc.OFFICIAL_TOTAL_KEYS == 203976
     assert fc.TOTAL_MSE_MAX == 3289.0890348547073
     assert fc.PARAMS == protocol.PARAMS
@@ -112,7 +102,6 @@ def test_frozen_bindings():
     assert sum(fc.CLAIM_ALLOCATION.values()) == 36
     assert fc.CLAIM_ALLOCATION["final"] == 3
     assert fc.CHAMPION_F1 == pytest.approx(0.08333333333333333)
-    assert fc.FROZEN_AMENDMENT_SHA256 == protocol.AMENDMENT_SHA256
     assert fc.EARLIEST_ORIGIN_UTC == "2026-05-31T23:00:00Z"
     assert fc.LATEST_ORIGIN_UTC == "2026-09-26T23:00:00Z"
 
@@ -262,7 +251,7 @@ def test_training_purge_strict():
         fc.assert_training_purge(None, first)
 
 
-# Native parity + two identical canonical digests (no rounded scores).
+# Native parity.
 def test_native_parity_boundaries():
     assert fc.check_native_parity(1e-9, 1e-6)["ok"] is True
     assert fc.check_native_parity(1e-9 + 1e-12, 1e-6)["ok"] is False
@@ -273,26 +262,6 @@ def test_native_parity_negative_fails():
     assert fc.check_native_parity(-1e-10, 1e-7)["ok"] is False
     assert fc.check_native_parity(1e-10, -1e-7)["ok"] is False
     assert fc.check_native_parity(float("nan"), 1e-7)["ok"] is False
-
-
-def test_two_identical_scores_exact():
-    a = fc.canonical_numeric_digest({"mse": 3289.0890348547073})
-    b = fc.canonical_numeric_digest({"mse": 3289.0890348547073})
-    fc.assert_two_identical_scores(a, b)
-    rounded = fc.canonical_numeric_digest({"mse": 3289.089})
-    with pytest.raises(ValueError):
-        fc.assert_two_identical_scores(a, rounded)
-    with pytest.raises(ValueError):
-        fc.assert_two_identical_scores(a, None)
-
-
-def test_score_digests_require_hex64():
-    with pytest.raises(ValueError):
-        fc.assert_two_identical_scores("same", "same")
-    with pytest.raises(ValueError):
-        fc.assert_two_identical_scores("0" * 63, "0" * 63)
-    with pytest.raises(ValueError):
-        fc.assert_two_identical_scores("G" * 64, "G" * 64)
 
 
 # Proof structure: boolean-only / partial proofs never pass.
@@ -308,19 +277,11 @@ def test_boolean_only_and_partial_proof_invalid():
 
 
 def test_proof_requires_pins_champion_predictions():
-    for key in ("champion_f1", "snapshot_sha256", "selection_winner",
-                "selection_receipt_sha256", "amendment_sha256",
-                "predictions_finite", "recipe"):
+    for key in ("champion_f1", "selection_winner", "predictions_finite", "recipe"):
         p = _proof(official=True)
         del p[key]
         code, _ = fc.evaluate_final_contract(p, _evidence())
         assert code == fc.INVALID, key
-    bad = _proof(official=True, snapshot_sha256="0" * 40)
-    code, _ = fc.evaluate_final_contract(bad, _evidence())
-    assert code == fc.INVALID
-    bad = _proof(official=True, amendment_sha256="0" * 64)
-    code, _ = fc.evaluate_final_contract(bad, _evidence())
-    assert code == fc.INVALID
     bad = _proof(official=True, predictions_finite=False)
     code, _ = fc.evaluate_final_contract(bad, _evidence())
     assert code == fc.INVALID

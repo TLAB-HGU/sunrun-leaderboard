@@ -49,7 +49,7 @@ def test_pilot_can_force_early_stop_before_search_deadline(tmp_path, monkeypatch
 def test_claimed_admission_rejection_is_terminal_and_no_fit(tmp_path, monkeypatch):
     cfg = dict(id='synthetic')
     path = tmp_path/'attempts/tree__x.json'
-    p.write_new(path, dict(family='tree',config=cfg,config_sha256='x'))
+    p.write_new(path, dict(family='tree',config=cfg))
     monkeypatch.setattr(s, 'fit_limit', lambda *a: 1000)
     monkeypatch.setattr(p, 'claim', lambda *a: (path, p.read_json(path)))
     monkeypatch.setattr(p, 'verify_registration', lambda *a: {'sources': {}})

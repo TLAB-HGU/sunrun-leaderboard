@@ -6,7 +6,6 @@ local branches, index, and repository history are never pushed or modified.
 from __future__ import annotations
 
 import base64
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -26,17 +25,14 @@ METRICS = (("s", "S (km/s)"), ("timse", "TIMSE ((km/s)²)"), ("rmse", "RMSE (km/
 
 
 def _filename(record: dict) -> str:
-    identity = {key: record.get(key) for key in ("team_member", "experiment", "config_sha256")}
-    payload = {"plot_version": PLOT_VERSION, "identity": identity, "competition": record["competition"]}
-    digest = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":"),
-                                       allow_nan=False).encode()).hexdigest()
-    def safe(value):
-        return re.sub(r"[^A-Za-z0-9._-]+", "_", str(value or "legacy")).strip("._-")[:60] or "legacy"
-    return f"{safe(identity['team_member'])}--{safe(identity['experiment'])}--{digest}.png"
+    def safe(value, limit=60):
+        return re.sub(r"[^A-Za-z0-9._-]+", "_", str(value or "legacy")).strip("._-")[:limit] or "legacy"
+    return (f"{safe(record.get('team_member'))}--{safe(record.get('experiment'))}"
+            f"--{safe(record.get('config_sha256'), 64)}.png")
 
 
 def generate_plot(record: dict, output_dir: str | Path) -> Path:
-    """Write one deterministic 3-panel PNG; the content-keyed filename is immutable."""
+    """Write one deterministic 3-panel PNG named by the submission identity."""
     import matplotlib
     matplotlib.use("Agg")
     from matplotlib import pyplot as plt
@@ -118,7 +114,7 @@ class GitHubAPI:
 
 
 def _remote_assets(api: GitHubAPI, root_tree: str) -> dict[str, str]:
-    """Read only the image directory, avoiding truncated recursive repository trees."""
+    """Return {name: size} for the image directory, avoiding truncated recursive trees."""
     tree_sha = root_tree
     for component in ASSET_DIRECTORY.split("/"):
         tree = api.request("GET", f"git/trees/{tree_sha}")
@@ -132,7 +128,7 @@ def _remote_assets(api: GitHubAPI, root_tree: str) -> dict[str, str]:
     tree = api.request("GET", f"git/trees/{tree_sha}")
     if tree.get("truncated"):
         raise RuntimeError("GitHub returned a truncated image tree")
-    return {item["path"]: item["sha"] for item in tree["tree"] if item["type"] == "blob"}
+    return {item["path"]: item.get("size") for item in tree["tree"] if item["type"] == "blob"}
 
 
 def publish_plots(records: list[dict], output_dir: str | Path, repo: str = GITHUB_REPO,
@@ -157,24 +153,19 @@ def publish_plots(records: list[dict], output_dir: str | Path, repo: str = GITHU
         return output
     api = GitHubAPI(repo)
     files = {path.name: path.read_bytes() for path in paths.values()}
-    blob_ids = {name: hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
-                for name, data in files.items()}
-    uploaded = set()
+    blob_ids = {}
     for attempt in range(3):
         head = api.request("GET", "git/ref/heads/main")["object"]["sha"]
         root = api.request("GET", f"git/commits/{head}")["tree"]["sha"]
         existing = _remote_assets(api, root)
-        changed = {name: data for name, data in files.items() if existing.get(name) != blob_ids[name]}
+        changed = {name: data for name, data in files.items() if existing.get(name) != len(data)}
         if not changed:
             commit_sha = head
             break
         for name, data in changed.items():
-            if blob_ids[name] not in uploaded:
-                blob = api.request("POST", "git/blobs", {"content": base64.b64encode(data).decode(),
-                                                         "encoding": "base64"})
-                if blob["sha"] != blob_ids[name]:
-                    raise RuntimeError("GitHub image blob digest did not match uploaded bytes")
-                uploaded.add(blob["sha"])
+            if name not in blob_ids:
+                blob_ids[name] = api.request("POST", "git/blobs", {"content": base64.b64encode(data).decode(),
+                                                                   "encoding": "base64"})["sha"]
         tree = api.request("POST", "git/trees", {"base_tree": root, "tree": [
             {"path": f"{ASSET_DIRECTORY}/{name}", "mode": "100644", "type": "blob", "sha": blob_ids[name]}
             for name in sorted(changed)]})

@@ -2,7 +2,6 @@
   "strategy": "RecMO-24",
   "canonical": "RecMO-24",
   "experiment": "e2000fs_recmo_24",
-  "config_sha256": "12418deb76bdcda19a8fedf60ba443922464b62580a4861f023738966e232e66",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 4033.432781274747,

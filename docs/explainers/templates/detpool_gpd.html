@@ -34,7 +34,7 @@
     <div class="layer" data-target="sec-features"><span class="ic">◇</span>03 / Features — 원자료에서 번들까지</div>
     <div class="layer" data-target="sec-lineage"><span class="ic">◇</span>04 / Lineage — 두 예측의 계보</div>
     <div class="layer" data-target="sec-pipeline"><span class="ic">◇</span>05 / Pipeline — 풀링 추론의 경로</div>
-    <div class="layer" data-target="sec-inputs"><span class="ic">◇</span>06 / Contract — 입력 계약 (npz · sha256)</div>
+    <div class="layer" data-target="sec-inputs"><span class="ic">◇</span>06 / Contract — 입력 계약 (npz)</div>
     <div class="layer" data-target="sec-maturity"><span class="ic">◇</span>07 / Causality — 성숙한 잔차만</div>
     <div class="layer" data-target="sec-stats"><span class="ic">◇</span>08 / Six numbers — 충분통계</div>
     <div class="layer" data-target="sec-scan"><span class="ic">◇</span>09 / Scan — 31점 + 가드</div>
@@ -288,17 +288,17 @@
     </section>
 
 <section class="frame" id="sec-inputs">
-      <div class="flabel"><span class="nm">06 / Contract — 입력 계약 (npz · sha256)</span><span class="sz">3 files · 3 sha256</span></div>
+      <div class="flabel"><span class="nm">06 / Contract — 입력 계약 (npz)</span><span class="sz">3 files</span></div>
       <div class="fbody">
         <div class="h"><span class="no">IN</span><h2>입력 계약: 두 예측 + 한 줄기 실측</h2>
-          <div class="q">해시 3개가 meta.yaml에 기록되고, 그 해시가 제출물에 다시 들어갑니다.</div></div>
+          <div class="q">세 파일의 경로가 meta.yaml에 기록됩니다.</div></div>
         <div class="tw" style="max-height:none">
           <table>
-            <thead><tr><th>역할</th><th style="text-align:left">경로</th><th style="text-align:left">sha256</th></tr></thead>
+            <thead><tr><th>역할</th><th style="text-align:left">경로</th></tr></thead>
             <tbody>
-              <tr><td>base</td><td class="mono-cell wrap" style="text-align:left" id="ip-base"></td><td class="mono-cell" style="text-align:left" id="ip-base-sha"></td></tr>
-              <tr><td>arm</td><td class="mono-cell wrap" style="text-align:left" id="ip-arm"></td><td class="mono-cell" style="text-align:left" id="ip-arm-sha"></td></tr>
-              <tr><td>truth</td><td class="mono-cell wrap" style="text-align:left" id="ip-truth"></td><td class="mono-cell" style="text-align:left" id="ip-truth-sha"></td></tr>
+              <tr><td>base</td><td class="mono-cell wrap" style="text-align:left" id="ip-base"></td></tr>
+              <tr><td>arm</td><td class="mono-cell wrap" style="text-align:left" id="ip-arm"></td></tr>
+              <tr><td>truth</td><td class="mono-cell wrap" style="text-align:left" id="ip-truth"></td></tr>
             </tbody>
           </table>
         </div>
@@ -643,7 +643,6 @@
     </section>
     <div class="foot">
       <div><b>e2000fs_calib4_detpool_gpd</b> · 설명용 문서 (추론 재현 아님, 아카이브 산출물 계산)</div>
-      <div class="mono">base sha <span id="foot-sha"></span></div>
     </div>
   </div>
   </main>
@@ -774,10 +773,7 @@
 
   function render() {
     // ---- input table
-    const ip = DATA.inputs;
-    const keys = Object.keys(ip);
-    const base = keys.find((k) => k.includes('detroute'));
-    const arm = keys.find((k) => k.includes('gpd_v1'));
+    const keys = DATA.inputs;
     const truth = keys.find((k) => k.includes('speed.parquet'));
     const short = (p2) => p2.replace('/home/t-lab01/sunrun/', '');
     const setCell = (id, full) => {
@@ -788,10 +784,6 @@
     setCell('#ip-base', DATA.base_path);
     setCell('#ip-arm', DATA.arm_path);
     setCell('#ip-truth', truth);
-    $('#ip-base-sha').textContent = ip[base].slice(0, 16) + '…';
-    $('#ip-arm-sha').textContent = ip[arm].slice(0, 16) + '…';
-    $('#ip-truth-sha').textContent = ip[truth].slice(0, 16) + '…';
-    $('#foot-sha').textContent = ip[base].slice(0, 12);
 
     UI.renderRaw('detpool');
     UI.scene(sceneSpec());

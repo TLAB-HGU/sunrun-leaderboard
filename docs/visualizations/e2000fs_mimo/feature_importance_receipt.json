@@ -2,7 +2,6 @@
   "strategy": "MIMO",
   "canonical": "MIMO",
   "experiment": "e2000fs_mimo",
-  "config_sha256": "78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 4071.7847861386495,

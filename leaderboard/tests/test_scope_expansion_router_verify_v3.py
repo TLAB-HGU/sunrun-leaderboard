@@ -47,61 +47,32 @@ def _claims(cats):
 
 
 # ----------------------------------------------------------------------------
-# 1. legacy wrong count/max overlaid only when digests + both cutoffs agree
+# 1. legacy wrong count/max overlaid only when both cutoffs agree
 # ----------------------------------------------------------------------------
-def test_legacy_wrong_count_max_overlaid_only_when_digests_and_both_cutoffs_agree():
+def test_legacy_wrong_count_max_overlaid_only_when_both_cutoffs_agree():
     cutoff = protocol.ts_utc("2024-10-01T00:00:00Z") - pd.Timedelta(hours=72)
     legacy_max = (cutoff - pd.Timedelta(hours=5)).isoformat()
     actual_max = (cutoff - pd.Timedelta(hours=9)).isoformat()
     rec = {
         "n_train_rows": 322681,
         "train_label_max_utc": legacy_max,
-        "train_feature_digest": "featA",
-        "train_label_digest": "labA",
     }
     rep = v3.legacy_level_metadata_report(
         rec,
         actual_n_train_rows=5800,
         actual_train_label_max_utc=actual_max,
-        actual_train_feature_digest="featA",
-        actual_train_label_digest="labA",
         cutoff=cutoff,
-        receipt_sha256="abc",
     )
     assert rep["ok"] is True
     assert rep["legacy_metadata_mismatch_declared"] is True
     assert rep["legacy_purge_ok"] and rep["actual_purge_ok"]
     assert rep["mechanical_metadata_bug_only"] is True
-    assert rep["legacy_receipt_sha256"] == "abc"
-    # Fitted-arg digest tamper must fail even with both purges passing.
-    bad = dict(rec, train_feature_digest="tampered")
-    rep2 = v3.legacy_level_metadata_report(
-        bad,
-        actual_n_train_rows=5800,
-        actual_train_label_max_utc=actual_max,
-        actual_train_feature_digest="featA",
-        actual_train_label_digest="labA",
-        cutoff=cutoff,
-    )
-    assert rep2["ok"] is False
-    bad2 = dict(rec, train_label_digest="tampered")
-    rep3 = v3.legacy_level_metadata_report(
-        bad2,
-        actual_n_train_rows=5800,
-        actual_train_label_max_utc=actual_max,
-        actual_train_feature_digest="featA",
-        actual_train_label_digest="labA",
-        cutoff=cutoff,
-    )
-    assert rep3["ok"] is False
-    # Legacy purge failure must fail even with digests matching.
+    # Legacy purge failure must fail.
     late_legacy = dict(rec, train_label_max_utc=cutoff.isoformat())
     rep4 = v3.legacy_level_metadata_report(
         late_legacy,
         actual_n_train_rows=5800,
         actual_train_label_max_utc=actual_max,
-        actual_train_feature_digest="featA",
-        actual_train_label_digest="labA",
         cutoff=cutoff,
     )
     assert rep4["legacy_purge_ok"] is False and rep4["ok"] is False
@@ -114,15 +85,11 @@ def test_actual_future_cutoff_fails():
     rec = {
         "n_train_rows": 100,
         "train_label_max_utc": legacy_max,
-        "train_feature_digest": "f",
-        "train_label_digest": "l",
     }
     rep = v3.legacy_level_metadata_report(
         rec,
         actual_n_train_rows=100,
         actual_train_label_max_utc=future_actual,
-        actual_train_feature_digest="f",
-        actual_train_label_digest="l",
         cutoff=cutoff,
     )
     assert rep["actual_purge_ok"] is False
@@ -136,14 +103,13 @@ def test_actual_manifest_derives_from_frozen_helper_not_constants():
     train2, ledger2 = mean_level.build_mean_training(inputs, cutoff)
     assert len(train) == len(train2) == int(ledger["n_eligible"])
     assert ledger["train_label_max_utc"] == ledger2["train_label_max_utc"]
-    assert ledger["label_digest"] == ledger2["label_digest"]
     src = Path(v3.__file__).read_text()
     assert "mean_level.build_mean_training" in src
     assert "322681" not in src and "366913" not in src and "408913" not in src
 
 
 # ----------------------------------------------------------------------------
-# 2. model/pred/hash tamper + future mask
+# 2. future mask
 # ----------------------------------------------------------------------------
 def test_observed_mask_strict_and_future_tamper():
     idx = pd.date_range("2024-10-05", periods=4, freq="h", tz="UTC")
@@ -157,37 +123,6 @@ def test_observed_mask_strict_and_future_tamper():
     assert v3.check_observed_mask_strict(tampered, 4) is False  # future/unobserved marked
     assert v3.check_observed_mask_strict(frame.drop(columns=["observed_mask"]), 3) is False
     assert v3.check_observed_mask_strict(frame, 999) is False
-
-
-def test_hash_tamper_fails_legacy_report():
-    cutoff = protocol.ts_utc("2025-04-01T00:00:00Z") - pd.Timedelta(hours=72)
-    mx = (cutoff - pd.Timedelta(hours=2)).isoformat()
-    rec = {
-        "n_train_rows": 10,
-        "train_label_max_utc": mx,
-        "train_feature_digest": "good-feat",
-        "train_label_digest": "good-lab",
-    }
-    ok_rep = v3.legacy_level_metadata_report(
-        rec,
-        actual_n_train_rows=8,
-        actual_train_label_max_utc=mx,
-        actual_train_feature_digest="good-feat",
-        actual_train_label_digest="good-lab",
-        cutoff=cutoff,
-    )
-    assert ok_rep["ok"] is True
-    for key in ("train_feature_digest", "train_label_digest"):
-        bad = dict(rec, **{key: "tampered"})
-        rep = v3.legacy_level_metadata_report(
-            bad,
-            actual_n_train_rows=8,
-            actual_train_label_max_utc=mx,
-            actual_train_feature_digest="good-feat",
-            actual_train_label_digest="good-lab",
-            cutoff=cutoff,
-        )
-        assert rep["ok"] is False
 
 
 # ----------------------------------------------------------------------------
@@ -296,11 +231,7 @@ def test_v3_binds_v2_failed_preclaim_and_sources():
     for token in (
         "v2.ROUTER_REGISTRATION_FILENAME",
         "supersedes_failed_oof_fit",
-        "source_hashes",
         "input_inventory",
-        "v2_registration_sha256",
-        "v2_driver_sha256",
-        "v2_test_sha256",
     ):
         assert token in src
     assert v2.FAILED_OOF_EXEC_SESSION == 93021

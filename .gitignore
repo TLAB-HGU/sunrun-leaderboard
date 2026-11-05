@@ -14,6 +14,15 @@
 !/research/*/
 /research/*/*
 !/research/*/experiment.py
+!/research/rerun_df_ffill/*.py
+!/research/rerun_df_ffill/*.md
+!/research/rerun_df_ffill/manifest.json
+!/research/rerun_df_ffill/registry.json
+!/research/noise_loss_axes/*.py
+!/research/noise_loss_axes/*.md
+!/research/noise_loss_axes/*.sh
+!/research/noise_loss_axes/summary.json
+!/research/noise_loss_axes/seed_results.csv
 !/research/*/results/
 /research/**/worktree/
 /research/**/__pycache__/
@@ -67,13 +76,14 @@
 # tree and cache stays local (all databases live under data-v2/, user
 # instruction 2026-10-30).
 !/data-v2/
-/data-v2/raw-store/
-/data-v2/model-inputs/
+/data-v2/raw/
+/data-v2/processed/
+/data-v2/bundles/
+/data-v2/input/
+/data-v2/metric/
 /data-v2/backups/
 /data-v2/suvi/
 /data-v2/collectors/
-/data-v2/research-inputs/
-/data-v2/stage/
 /data-v2/logs/
 /data-v2/**/__pycache__/
 /data-v2/**/.pytest_cache/
@@ -88,3 +98,9 @@
 /data-v2/**/*.log
 
 /docs/**/__pycache__/
+
+# Metric reference notebook and its specification (data/cache paths stay ignored).
+!/metric
+/metric/*
+!/metric/metric.ipynb
+!/onboarding.md

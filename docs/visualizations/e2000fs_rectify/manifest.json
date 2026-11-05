@@ -1,13 +1,11 @@
 {
   "model": "e2000fs_rectify",
-  "model_config_sha256": "f0142d38c7dddd7668e9d5f87fd702dcad5ff729ecf064d9533d3564f8bba207",
   "experiment": "E2000FS_RECTIFY",
   "seeds": [
     42
   ],
   "aggregation": "single model",
   "created_at_utc": "2026-10-27T13:28:40.999838+00:00",
-  "script_sha256": "8e97593f13a2fc2d69aac2a5f8f828f536cf7e588d13cb3699610c960419a621",
   "config": {
     "width": 1000,
     "height": 500,
@@ -31,23 +29,18 @@
     "month_grouping": "UTC month of origin + 1 hour",
     "palette": "RGB cube + greys; no dithering"
   },
-  "rendering_config_sha256": "aecd19d2a677db2743733d8b566fb55bf16438545f37706af9ad5e5b645886e7",
   "sources": {
     "predictions": {
-      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/e2000fs_rectify.parquet",
-      "sha256": "2c6ac8ad2fbc345f6a23d553fd3e6fa40b32a2f1a6175d19ef53a042d467663d"
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/e2000fs_rectify.parquet"
     },
     "folds": {
-      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/folds.parquet",
-      "sha256": "c9baf5903dd8b1ced5ae33d83ef9f07b93d824b1eb5f285e8eae33fed15fc635"
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/folds.parquet"
     },
     "truth": {
-      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/truth.parquet",
-      "sha256": "39da1247438f7e792c233976b480af4419d1a9bf190e480ba4dd9e5b376afce1"
+      "file": "/home/t-lab01/sunrun/analysis/e2000fs-visualizations/inputs/truth.parquet"
     },
     "history": {
-      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
     }
   },
   "verification": {
@@ -86,8 +79,7 @@
       "first_origin_utc": "2026-02-28T23:00:00+00:00",
       "last_origin_utc": "2026-03-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 23271675,
-      "sha256": "424ef8dd8ec1354b813baf1268b83d0e4bde3bbbabb8b3fac41b94b766b9d1d2"
+      "bytes": 23271675
     },
     {
       "month": "2026-04",
@@ -98,8 +90,7 @@
       "first_origin_utc": "2026-03-31T23:00:00+00:00",
       "last_origin_utc": "2026-04-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 22918849,
-      "sha256": "2509c53368943fe67a2de907d6588d72eac416e99f15a2fe4f51e17247133bd3"
+      "bytes": 22918849
     },
     {
       "month": "2026-05",
@@ -110,8 +101,7 @@
       "first_origin_utc": "2026-04-30T23:00:00+00:00",
       "last_origin_utc": "2026-05-28T23:00:00+00:00",
       "duration_ms": 67300,
-      "bytes": 21182545,
-      "sha256": "4ec2fa87510616e7e580a0dbcba239e6b90578fad893bb99c79b8cd6dcc375b2"
+      "bytes": 21182545
     },
     {
       "month": "2026-06",
@@ -122,8 +112,7 @@
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 22689613,
-      "sha256": "b7128aa9d8fd45e747ad532bd72431cdebb01a959c6d5b6bdd702d3ce13e3db4"
+      "bytes": 22689613
     },
     {
       "month": "2026-07",
@@ -134,8 +123,7 @@
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 23800875,
-      "sha256": "aaebe162fdf895d836b507bbbb56600bba888fe9792416f234e801c871c06b2d"
+      "bytes": 23800875
     },
     {
       "month": "2026-08",
@@ -146,8 +134,7 @@
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 23269074,
-      "sha256": "89b33e8c796de3f1cf18170ce646d2af83f3a1465c291911ce3b18b5f706b948"
+      "bytes": 23269074
     },
     {
       "month": "2026-09",
@@ -158,8 +145,7 @@
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
       "duration_ms": 62500,
-      "bytes": 20092165,
-      "sha256": "e6a8b27ccfaba99d96ad8a3d85d3d4eb0b608d4956ad6d282b3754f47547ae03"
+      "bytes": 20092165
     }
   ]
 }

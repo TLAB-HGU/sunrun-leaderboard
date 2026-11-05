@@ -1,6 +1,5 @@
 """Synthetic CPU evidence for compact recurrence/state-conditioned arrival models."""
 import copy
-import json
 
 import numpy as np
 import pandas as pd
@@ -126,12 +125,7 @@ def test_cpu_fit_reload_provenance_and_postcutoff_invariance(tmp_path):
     for key in ('mse', 'peak'):
         np.testing.assert_allclose(pair[key].pred_kms, reloaded[key].pred_kms, rtol=0, atol=1e-3)
         np.testing.assert_allclose(reloaded[key].pred_kms.to_numpy().reshape(3, 72)[1], subset[key].pred_kms, rtol=0, atol=1e-3)
-    proof = m.verify_training_provenance(f, tmp_path/'first')
-    assert proof['train_shape_label_sha256'] == metadata['train_shape_label_sha256']
+    m.verify_training_provenance(f, tmp_path/'first')
     poisoned = copy.deepcopy(f); poisoned['speed'].loc[poisoned['speed'].index > cutoff] = 1e6
     _, other = m.fit_predict(poisoned, cutoff, origins, config, 'cpu', tmp_path/'second')
-    assert other['model_sha256'] == metadata['model_sha256'] and other['normalizer'] == metadata['normalizer']
-    path = tmp_path/'first/metadata.json'; record = json.loads(path.read_text())
-    record['train_shape_label_sha256'] = '0'*64
-    path.write_text(json.dumps(record)); (path.parent/'metadata.sha256').write_text(m.digest(path))
-    with pytest.raises(ValueError, match='shape/censor'): m.verify_training_provenance(f, tmp_path/'first')
+    assert other['normalizer'] == metadata['normalizer']

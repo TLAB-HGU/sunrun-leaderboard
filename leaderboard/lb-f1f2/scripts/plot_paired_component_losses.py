@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Plot already computed train/validation MSE on a common stage axis."""
 import argparse
-import hashlib
 import json
 from pathlib import Path
 
@@ -51,10 +50,9 @@ def main():
                   'validation_mse': valid.mean(0)}).to_csv(args.directory / 'curves_mean.csv', index=False)
     result = {'model': args.model, 'type': 'Retrospective frozen-model staged reevaluation, not original logged curves',
               'same_metric': 'Raw residual-head MSE for train and validation',
-              'plot_sha256': hashlib.sha256((args.directory / 'train_validation_loss.png').read_bytes()).hexdigest(),
               'final_mean_train_mse': float(train.mean(0)[-1]),
               'final_mean_validation_mse': float(valid.mean(0)[-1]),
-              'seed_curves': [{'file': p.name, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]}
+              'seed_curves': [{'file': p.name, 'rows': len(f)} for p, f in zip(files, frames)]}
     (args.directory / 'plot_manifest.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(result))
 

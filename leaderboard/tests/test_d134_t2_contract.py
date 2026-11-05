@@ -1,7 +1,7 @@
 """D134 T2 scout contract: recon report + proof plan, no collection/training/registration.
 
 Fast: stdlib audit + filesystem checks + graph scan only; no data reads, no fits,
-no network (evidence is recorded constants verified by header hashes)."""
+no network (evidence is recorded constants)."""
 
 import json
 import os
@@ -54,8 +54,6 @@ def test_audit_verdict_and_proxy_tables():
     assert all(row["proxy_init_plus_12h"] == "FAIL" for row in r["noaa_proxy"])
     assert [row["proxy_obs_plus_2h"] for row in r["gong_proxy"]] == [
         "PASS-timing-only", "PASS-timing-only", "FAIL"]
-    assert all(SC.verify_header_sha256(s) for s in SC.NOAA_SAMPLES)
-    assert all(SC.verify_header_sha256(s) for s in SC.GONG_SAMPLES)
     assert [d["n_files"] for d in r["gong_hourly_cadence"]] == [22, 24, 24]
     assert "0 file bodies" in r["transfer_budget"]
 
@@ -99,10 +97,10 @@ def test_scratch_receipt_matches_audit():
     assert json.loads(RECEIPT.read_text()) == SC.audit()
 
 
-def test_reports_carry_paths_hashes_and_gated_plan():
+def test_reports_carry_paths_and_gated_plan():
     recon = RECON.read_text()
     for token in ["archive.data.noaa.gov", "gong.nso.edu", "FAIL",
-                  "header_sha256", "NON_ADMITTED_UNVERIFIED",
+                  "NON_ADMITTED_UNVERIFIED",
                   "0바이트", "worker-d134"]:
         assert token in recon, f"recon missing {token!r}"
     plan = PLAN.read_text()

@@ -2,7 +2,6 @@
   "strategy": "DirMO-12",
   "canonical": "DirMO-12",
   "experiment": "e2000fs_dirmo_12",
-  "config_sha256": "dd80390251b9dffe723176a7b3c0fda7d29dcf8ae99561cbb9e8ef38396754f4",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 3960.741041517486,

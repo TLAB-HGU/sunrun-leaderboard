@@ -2,12 +2,11 @@
 
 Walk-forward body/tail linear pooling of the archived e2000fs_dirmo_24_feat30 (body) and e2000fs_budget_spectral (tail) official forecasts, one weight per 24 h horizon band, fitted by least squares on past origins whose 72 targets have matured.
 
-Inputs are archived, hash-pinned artefacts of the sunrun monorepo; nothing is retrained.
+Inputs are archived artefacts of the sunrun monorepo; nothing is retrained.
 Run:  python e2000fs_calib_pool_bodytail.py --out /tmp/replay
 """
 from __future__ import annotations
 import argparse
-import hashlib
 from pathlib import Path
 import numpy as np
 import pandas as pd

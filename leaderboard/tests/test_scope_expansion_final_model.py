@@ -137,8 +137,7 @@ def test_complete_filled72_gate():
 def test_exact_grid_roundtrip():
     req = final_model.canonical_final_keys(["2026-06-01T00:00:00Z", "2026-06-01T03:00:00Z"])
     assert len(req) == 144
-    digest = final_model.assert_exact_final_grid(list(req), list(req))
-    assert digest == protocol.index_digest(list(req))
+    final_model.assert_exact_final_grid(list(req), list(req))
 
 
 def test_exact_grid_missing_key_fails():
@@ -280,7 +279,7 @@ def test_native_parity_bounds():
 
 
 # ----------------------------------------------------------------------------
-# Readiness proof: actual log, exact command, exit 0, no self-hash, no rewrite.
+# Readiness proof: actual log, exact command, exit 0, no rewrite.
 # ----------------------------------------------------------------------------
 
 def _write_log(path, n, failures=0):
@@ -298,7 +297,7 @@ def test_mark_and_require_proof(tmp_path):
     proof = json.loads(dest.read_text())
     assert proof["exit_code"] == 0 and proof["passed_count"] == inv["n_tests"]
     assert "pytest" in proof["command"] and "test_scope_expansion_final_model.py" in proof["command"]
-    assert final_model.require_final_tests_passed(str(tmp_path), "/home/t-lab01/sunrun")["log_sha256"] == proof["log_sha256"]
+    final_model.require_final_tests_passed(str(tmp_path), "/home/t-lab01/sunrun")
 
 
 def test_mark_rejects_wrong_command(tmp_path):
@@ -385,11 +384,6 @@ def test_official_grid_wrong_size_fails(tmp_path):
         final_model.read_official_origin_grid(p)
 
 
-def test_official_grid_hash_stable():
-    origins = _origins(n=4)
-    assert final_model.official_grid_hash(origins) == final_model.official_grid_hash(list(origins))
-
-
 # ----------------------------------------------------------------------------
 # Provenance closure pins every frozen builder.
 # ----------------------------------------------------------------------------
@@ -399,8 +393,6 @@ def test_transitive_closure_covers_frozen_builders():
     for must in ("protocol.py", "reference.py", "mean_level.py", "router_v2.py",
                  "selection.py", "final_contract.py", "evaluate.py", "scoring.py"):
         assert any(r.endswith(must) for r in rels), must
-    hashes = final_model.transitive_closure_hashes("/home/t-lab01/sunrun")
-    assert set(hashes) == set(rels) and all(len(v) == 64 for v in hashes.values())
 
 
 # ----------------------------------------------------------------------------
@@ -505,7 +497,7 @@ def test_pinned_folds_path_rejects_lookalike(monkeypatch):
     with pytest.raises(protocol.NotReadyError):
         final_model._assert_pinned_folds_path()
     monkeypatch.setenv(final_model.FOLDS_ENV_VAR,
-                       f"/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/{final_model.PINNED_SNAPSHOT_SHA256}/folds.parquet")
+                       "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/bcf5d5417d99eaa331ddca40581d48953e09a58e/folds.parquet")
     final_model._assert_pinned_folds_path()
     monkeypatch.delenv(final_model.FOLDS_ENV_VAR, raising=False)
 

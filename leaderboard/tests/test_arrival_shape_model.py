@@ -1,6 +1,5 @@
 """Synthetic CPU checks; frozen P1 sources are imported read-only."""
 import copy
-import json
 
 import numpy as np
 import pandas as pd
@@ -81,7 +80,7 @@ def test_conditional_cdf_respects_timing_distance_and_noevent_probability():
     assert np.sum(q*ht*per_positive/fraction)==pytest.approx(3.)
 
 
-def test_labels96h_cutoff_hash_and_tail_changes(monkeypatch):
+def test_labels96h_cutoff_and_tail_changes(monkeypatch):
     index=pd.date_range('2024-01-01',periods=200,freq='h',tz='UTC')
     origin=index[50];onset=origin+pd.Timedelta(hours=12)
     speed=pd.Series(400.,index=index)
@@ -95,9 +94,10 @@ def test_labels96h_cutoff_hash_and_tail_changes(monkeypatch):
     later=copy.deepcopy(f);later['speed'].loc[origin+pd.Timedelta(hours=80)]+=25
     after=m.make_labels(later,origins,cutoff,config,np.array([400.]))
     np.testing.assert_array_equal(before['profile'],after['profile'])
-    assert m.shape_label_digest(before)!=m.shape_label_digest(after)
+    assert not np.array_equal(before['profile96'],after['profile96'])
     beyond=copy.deepcopy(f);beyond['speed'].loc[beyond['speed'].index>cutoff]=1e9
-    assert m.label_hashes(before)==m.label_hashes(m.make_labels(beyond,origins,cutoff,config,np.array([400.])))
+    unchanged=m.make_labels(beyond,origins,cutoff,config,np.array([400.]))
+    for key in before:np.testing.assert_array_equal(before[key],unchanged[key])
     with pytest.raises(ValueError,match='crosses cutoff'):
         m.make_labels(f,origins,cutoff-pd.Timedelta(hours=1),config,np.array([400.]))
 
@@ -119,17 +119,12 @@ def test_cpu_fit_pair_provenance_and_postcutoff_poison(tmp_path):
     f=frames();cutoff=f['speed'].index[1040];origins=f['speed'].index[[1041,1042,1043]];config=m.candidate_configs()[0]
     pair,meta=m.fit_predict(f,cutoff,origins,config,'cpu',tmp_path/'first')
     assert meta['family']=='hss_shape_trapezoid' and meta['schema']['version']==2
-    assert meta['train_shape_label_sha256'] and set(meta['train_label_hashes'])=={'profile96','arrival','shape','shape_mask','shape_lower_bound','shape_censored','onset_hours'}
     restored=m.predict_saved(f,origins,tmp_path/'first')
     for key in ('mse','peak'):
         np.testing.assert_allclose(pair[key].pred_kms,restored[key].pred_kms,rtol=0,atol=1e-3)
         subset=m.predict_saved(f,origins[1:2],tmp_path/'first')[key]
         np.testing.assert_allclose(restored[key].pred_kms.to_numpy().reshape(3,72)[1],subset.pred_kms,rtol=0,atol=1e-3)
-    provenance=m.verify_training_provenance(f,tmp_path/'first')
-    assert provenance['train_shape_label_sha256']==meta['train_shape_label_sha256']
+    m.verify_training_provenance(f,tmp_path/'first')
     poisoned=copy.deepcopy(f);poisoned['speed'].loc[poisoned['speed'].index>cutoff]=1e6
     _,other=m.fit_predict(poisoned,cutoff,origins,config,'cpu',tmp_path/'second')
-    assert other['model_sha256']==meta['model_sha256'] and other['normalizer']==meta['normalizer']
-    path=tmp_path/'first/metadata.json';record=json.loads(path.read_text());record['train_shape_label_sha256']='0'*64
-    path.write_text(json.dumps(record));(path.parent/'metadata.sha256').write_text(m.digest(path))
-    with pytest.raises(ValueError,match='shape/censor'):m.verify_training_provenance(f,tmp_path/'first')
+    assert (tmp_path/'second/model.pt').read_bytes()==(tmp_path/'first/model.pt').read_bytes() and other['normalizer']==meta['normalizer']

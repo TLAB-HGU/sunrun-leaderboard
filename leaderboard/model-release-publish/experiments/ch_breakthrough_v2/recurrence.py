@@ -67,7 +67,6 @@ diagnostic and never used for tuning or selection.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import signal
 import sys
@@ -635,14 +634,6 @@ def compare_arms(full_features, speed, cutoff, eval_origins, params=None,
     return result
 
 
-def _sha256_file(path) -> str:
-    digest = hashlib.sha256()
-    with open(path, "rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def _read_pinned_truth():
     """Read-only pinned official truth (diagnostic; never used for tuning)."""
     try:
@@ -733,7 +724,6 @@ def finish_arm_split(*, arm, split_name, full_features, speed, forecaster,
              "device_info": device_info, "n_threads": N_THREADS,
              "fit_seconds": fit_seconds,
              "max_train_origins": max_train_origins,
-             "prediction_sha256": _sha256_file(parquet_path),
              "horizon_note": "horizons 1..72 complete per origin; "
                              "26/27/28d triplet fixed a priori, not picked "
                              "on official truth (uniform weights)"}

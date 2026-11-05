@@ -20,7 +20,8 @@ B. **Anchor-residual target.**  The label is y - v_lag0 and the anchor v_lag0 is
 The population estimator this targets is E[w(Y)Y|x]/E[w(Y)|x], i.e. the probability-weighted mixture of
 conditional tail means that TIMSE minimises - not the conditional mean that plain MSE minimises.
 
-    python experiment.py --all --jobs 9             # F1/F2/F3 -> results/predictions.parquet (454,680 rows)
+    python experiment.py --all --jobs 9              # F1/F2/F3, each period at its ROUNDS_BY_PERIOD count
+    python experiment.py --all --jobs 9 --rounds 900 # same recipe at one round count for every period
     python experiment.py --phase weights --period F1
     python experiment.py --phase fit --period F1 --block 0
     python experiment.py --smoke --out /tmp/smoke
@@ -28,7 +29,6 @@ conditional tail means that TIMSE minimises - not the conditional mean that plai
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import subprocess
@@ -227,7 +227,8 @@ def main() -> None:
     ap.add_argument("--block", type=int, choices=(0, 1, 2))
     ap.add_argument("--out", type=Path, default=RESULTS)
     ap.add_argument("--jobs", type=int, default=9)
-    ap.add_argument("--rounds", type=int, default=ROUNDS)
+    ap.add_argument("--rounds", type=int, default=None,
+                    help="boost rounds for every period; default: each period's ROUNDS_BY_PERIOD entry")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--smoke", action="store_true")
     a = ap.parse_args()
@@ -238,15 +239,19 @@ def main() -> None:
         return
     if a.all:
         a.out.mkdir(parents=True, exist_ok=True)
+        # --rounds overrides every period; by default each period keeps its own selected count. The old
+        # `default=ROUNDS` made `--all` run F3 at the F1 count, so the per-period table is the recipe of record.
+        rounds = {p: (a.rounds or ROUNDS_BY_PERIOD[p]) for p in PERIODS}
+        print(json.dumps({"phase": "rounds", "rounds": rounds}), flush=True)
         with ThreadPoolExecutor(max_workers=a.jobs) as pool:
-            list(pool.map(lambda p: phase_weights(p, a.out, a.rounds), PERIODS))
+            list(pool.map(lambda p: phase_weights(p, a.out, rounds[p]), PERIODS))
         parts = [(p, b) for p in PERIODS for b in range(3)]
         with ThreadPoolExecutor(max_workers=a.jobs) as pool:
-            list(pool.map(lambda pb: phase_fit(pb[0], pb[1], a.out, a.rounds), parts))
+            list(pool.map(lambda pb: phase_fit(pb[0], pb[1], a.out, rounds[pb[0]]), parts))
         merge(a.out)
         return
     if a.phase == "weights":
-        phase_weights(a.period, a.out, a.rounds)
+        phase_weights(a.period, a.out, a.rounds or ROUNDS)
     elif a.phase == "fit":
         phase_fit(a.period, a.block or 0, a.out, a.rounds)
     else:

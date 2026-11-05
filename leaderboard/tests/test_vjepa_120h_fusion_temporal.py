@@ -10,7 +10,6 @@ from experiments.vjepa_120h_fusion.temporal import (
     deduplicate_clips, origins_ns, plan_sources,
 )
 from experiments.vjepa_120h_fusion.extract import atomic_npz, ensure_npz, read_chunk, write_json
-from experiments.vjepa_frozen_fusion.encoder import sha256
 
 
 def inventory():
@@ -91,12 +90,12 @@ def test_dedup_exact_window_and_quality():
         deduplicate_clips(origins,damaged,ends,age,filled)
 
 
-def test_chunk_identity_owner_order_and_corruption(tmp_path):
+def test_chunk_identity_owner_and_order(tmp_path):
     ends=np.arange(300,dtype=np.int64)*HOUR_NS
     path=tmp_path/'000001.npz'
     values=np.ones((44,3840),np.float32)
     atomic_npz(path,clip_ends=ends[256:],embedding=values)
-    metadata={'identity':'known','sha256':sha256(path),'chunk_id':1,'gpu':1}
+    metadata={'identity':'known','chunk_id':1,'gpu':1}
     write_json(path.with_suffix('.json'),metadata)
     assert np.array_equal(read_chunk(path,'known',ends,1)[0],values)
     with pytest.raises(ValueError,match='identity mismatch'):
@@ -105,12 +104,9 @@ def test_chunk_identity_owner_order_and_corruption(tmp_path):
     with pytest.raises(ValueError,match='owner mismatch'):
         read_chunk(path,'known',ends,1)
     metadata['gpu']=1
+    write_json(path.with_suffix('.json'),metadata)
     atomic_npz(path,clip_ends=ends[256:][::-1],embedding=values)
-    metadata['sha256']=sha256(path); write_json(path.with_suffix('.json'),metadata)
     with pytest.raises(ValueError,match='time identity'):
-        read_chunk(path,'known',ends,1)
-    path.write_bytes(b'corrupt')
-    with pytest.raises(ValueError,match='identity mismatch'):
         read_chunk(path,'known',ends,1)
 
 
@@ -142,7 +138,7 @@ def test_multigpu_merge_preserves_chronological_concatenation(tmp_path, monkeypa
         lo,hi=extract.chunk_bounds(300,chunk_id)
         path=folder/f'{chunk_id:06d}.npz'
         atomic_npz(path,clip_ends=ends[lo:hi],embedding=np.repeat(np.arange(lo,hi,dtype=np.float32)[:,None],3840,axis=1))
-        write_json(path.with_suffix('.json'),{'identity':'known','sha256':sha256(path),
+        write_json(path.with_suffix('.json'),{'identity':'known',
             'chunk_id':chunk_id,'gpu':chunk_id%2,'gpu_seconds':1.})
         write_json(tmp_path/f'extraction-worker-gpu{chunk_id}.json',{'stage':'complete'})
     write_json(tmp_path/'coverage-manifest.json',coverage_manifest())

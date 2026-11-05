@@ -2,7 +2,6 @@
   "strategy": "Recursive",
   "canonical": "Recursive",
   "experiment": "e2000fs_recursive",
-  "config_sha256": "7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 6490.14204677113,

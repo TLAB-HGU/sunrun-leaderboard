@@ -11,7 +11,7 @@ w[i] is chosen at origin i from residuals whose target time is at or before that
 not exceeding detroute's. Rule, window and grid are fixed in the preregistration and are
 never tuned on F1/F2. No retraining; the inputs are the archived forecasts listed in meta.yaml.
 
-Inputs (sha256 recorded in meta.yaml):
+Inputs (recorded in meta.yaml):
   research/e2000fs_calib2-20261031/runs/detroute_v1/forecast.npz
   <arm forecast path from pool_lane.ARMS['era']>
   data-v2/model-inputs/leaderboard-store/e2000fs-lag0/speed.parquet

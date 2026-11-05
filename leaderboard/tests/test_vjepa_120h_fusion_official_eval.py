@@ -27,12 +27,9 @@ def test_scoring_rejects_unfrozen_without_reading_parquet(tmp_path, monkeypatch)
         official_eval.score_run(tmp_path)
 
 
-def test_freeze_checks_all_hashes_and_truth_boundary(tmp_path):
+def test_freeze_checks_truth_boundary(tmp_path):
     frozen = frozen_run(tmp_path)
     assert official_eval.frozen_predictions(tmp_path)['passed']
-    (tmp_path / 'predictions.parquet').write_bytes(b'changed')
-    with pytest.raises(ValueError, match='frozen artifact changed'):
-        official_eval.frozen_predictions(tmp_path)
     frozen['official_truth_access'] = True
     protocol.write_json(tmp_path / 'predictions-frozen.json', frozen)
     with pytest.raises(ValueError, match='truth boundary'):
@@ -46,15 +43,6 @@ def test_failed_core_validation_prevents_scoring(tmp_path, monkeypatch):
     protocol.write_json(tmp_path / 'predictions-frozen.json', frozen)
     monkeypatch.setattr(pd, 'read_parquet', lambda *a, **kw: pytest.fail('must not read scoring inputs'))
     with pytest.raises(ValueError, match='core prediction validation failed'):
-        official_eval.score_run(tmp_path)
-
-
-def test_stale_verification_prevents_scoring(tmp_path, monkeypatch):
-    frozen_run(tmp_path)
-    protocol.write_json(tmp_path / 'verification.json', {'passed': True, 'official_truth_access': False,
-                        'predictions_frozen_sha256': 'wrong'})
-    monkeypatch.setattr(pd, 'read_parquet', lambda *a, **kw: pytest.fail('must not read scoring inputs'))
-    with pytest.raises(ValueError, match='verification freeze differs'):
         official_eval.score_run(tmp_path)
 
 

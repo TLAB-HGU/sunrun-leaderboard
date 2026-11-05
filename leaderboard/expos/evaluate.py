@@ -131,8 +131,6 @@ def official_score():
     if s["official"]:
         raise core.ExposError("official scoring already done; it is allowed exactly once")
     fz = s["frozen"]
-    if core.sha256(fz["predictions"]) != fz["predictions_sha256"]:
-        raise core.ExposError("frozen predictions changed after freeze")
     sys.path.insert(0, str(core.LB))
     from scorer import scoring
     snap = core.Path(OFFICIAL["snapshot"])

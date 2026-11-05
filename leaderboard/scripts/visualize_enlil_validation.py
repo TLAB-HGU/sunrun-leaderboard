@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,14 +34,6 @@ EXPECTED_MONTHS = {"2026-06": 720, "2026-07": 744, "2026-08": 744, "2026-09": 62
 def require(condition, message):
     if not condition:
         raise ValueError(message)
-
-
-def sha256(path):
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def load_data(args):
@@ -172,7 +163,7 @@ def render(args, data):
                             "first_fold": int(indices[0] + 1), "last_fold": int(indices[-1] + 1),
                             "first_origin_utc": origins[indices[0]].isoformat(),
                             "last_origin_utc": origins[indices[-1]].isoformat(),
-                            "duration_ms": duration, "bytes": path.stat().st_size, "sha256": sha256(path)})
+                            "duration_ms": duration, "bytes": path.stat().st_size})
             print(f"{path.name}: verified {len(indices)} frames, {path.stat().st_size:,} bytes", flush=True)
     finally:
         plt.close(fig)
@@ -184,9 +175,8 @@ def render(args, data):
         "model": experiment["model"], "model_config_sha256": experiment["model_config_sha256"],
         "experiment": args.experiment, "seed": 0,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
-        "script_sha256": sha256(__file__), "config": config,
-        "rendering_config_sha256": hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest(),
-        "sources": {name: {"file": str(getattr(args, name).resolve()), "sha256": sha256(getattr(args, name))}
+        "config": config,
+        "sources": {name: {"file": str(getattr(args, name).resolve())}
                     for name in ("predictions", "folds", "truth", "history")},
         "verification": {"folds": len(origins), "pairs": len(origins) * 72,
                          "mse": mse, "expected_mse": experiment["expected_mse"], "mse_tolerance": 1e-7,

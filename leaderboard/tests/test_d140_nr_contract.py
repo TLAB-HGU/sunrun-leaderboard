@@ -69,8 +69,7 @@ def test_template_and_protocol_markers():
                    "raw_retained", "no stored-prediction"]:
         assert marker in run, marker
     col = (EXP / "noaa_collect.py").read_text()
-    assert "ThreadPoolExecutor" in col and "body_sha256" in col
-    assert "header_sha256" in col and "suball.nc" in col
+    assert "ThreadPoolExecutor" in col and "suball.nc" in col
     assert "Earth_V1" in col and "Earth_Density" in col
     assert "unlink" in col  # raw tar deleted immediately
     feat = (EXP / "noaa_features.py").read_text()

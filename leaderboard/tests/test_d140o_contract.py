@@ -83,8 +83,6 @@ def test_network_and_tar_only_in_collect():
     assert "urlopen" in col and "tarfile" in col and "suball.nc" in col
     assert "Earth_V1" in col and "Earth_Density" in col
     assert "unlink" in col
-    assert "header_sha256" in col and "body_sha256" in col
-    assert "parquet_sha256" in col
 
 
 def test_official_template_markers():

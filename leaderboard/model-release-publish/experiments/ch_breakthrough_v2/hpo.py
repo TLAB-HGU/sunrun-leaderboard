@@ -31,7 +31,6 @@ from __future__ import annotations
 
 import argparse
 import glob
-import hashlib
 import json
 import sys
 import time
@@ -163,15 +162,14 @@ def load_inputs(ace_paths, ch_path, raw_pattern):
     observed = observed_mask(speed, speed.index)
     raw_files = sorted(glob.glob(raw_pattern))
     raw_parts = [file_identity(p) for p in raw_files]
-    raw_digest = hashlib.sha256(
-        "".join(p["sha256"] for p in raw_parts).encode()).hexdigest()
     ace_key = ace_paths[0] if isinstance(ace_paths, (list, tuple)) else ace_paths
     identities = {
         "ace": file_identity(ace_key),
         "ch_hourly": file_identity(ch_path),
         "raw_ace_years": {"pattern": raw_pattern, "files": raw_files,
-                          "file_identities": raw_parts, "sha256": raw_digest,
-                          "bytes": sum(p["bytes"] for p in raw_parts)},
+                          "file_identities": raw_parts,
+                          "bytes": sum(p["bytes"] for p in raw_parts),
+                          "mtime_ns": max((p["mtime_ns"] for p in raw_parts), default=0)},
     }
     return {"ace": ace, "ch": ch, "raw": raw, "vintage": vintage,
             "speed": speed, "observed": observed, "base": base,

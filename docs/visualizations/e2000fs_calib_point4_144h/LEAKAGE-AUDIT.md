@@ -44,4 +44,4 @@ cd /home/t-lab01/sunrun
 /home/t-lab01/sunrun/.venv/bin/python docs/visualizations/e2000fs_calib_point4_144h/code/leakage_audit.py
 ```
 
-스크립트는 `research/e2000fs_f123-20261031/{common,arms}.py`의 실제 학습 코드로 학습/채점 구간을 다시 만들고, 동결 입력 번들(`data-v2/model-inputs/leaderboard-store/e2000fs-lag0`)과 리더보드 `folds/truth`(pinned sha256)를 읽습니다. 어느 검사든 실패하면 `assert`로 멈추고 `leakage_audit.json`의 `verdict`가 바뀝니다.
+스크립트는 `research/e2000fs_f123-20261031/{common,arms}.py`의 실제 학습 코드로 학습/채점 구간을 다시 만들고, 동결 입력 번들(`data-v2/bundles/frozen`)과 리더보드 `folds/truth`를 읽습니다. 어느 검사든 실패하면 `assert`로 멈추고 `leakage_audit.json`의 `verdict`가 바뀝니다.

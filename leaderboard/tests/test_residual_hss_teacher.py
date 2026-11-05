@@ -1,5 +1,4 @@
 """Synthetic-only teacher tests on a fake old-run tree; never touches real data."""
-import hashlib
 import json
 from pathlib import Path
 
@@ -22,12 +21,9 @@ def fake_old(monkeypatch, tmp_path):
     return root
 
 
-def _sha(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-
-
 def _ref(path):
-    return dict(path=str(Path(path).resolve()), sha256=_sha(path))
+    stat = Path(path).stat()
+    return dict(path=str(Path(path).resolve()), size=stat.st_size, mtime_ns=stat.st_mtime_ns)
 
 
 def _write_model(root, fit, label_max=None):
@@ -36,7 +32,6 @@ def _write_model(root, fit, label_max=None):
     meta = dict(config={'id': 'synth-backbone'}, cutoff=fit.isoformat(),
                 train_label_max=(label_max or fit).isoformat())
     (model_dir / 'metadata.json').write_text(json.dumps(meta, sort_keys=True))
-    (model_dir / 'metadata.sha256').write_text(_sha(model_dir / 'metadata.json'))
     return model_dir
 
 
@@ -130,7 +125,7 @@ def test_scope_excludes_deployment_and_final(fake_old):
     assert list(final_pool) == list(grid('2026-04-02T00:00:00Z', 3))
 
 
-def test_cap_and_hash_stability(fake_old, monkeypatch):
+def test_cap_and_cache_key_stability(fake_old, monkeypatch):
     head = '2024-04-01T00:00:00Z'
     add_claim(fake_old, head, '2024-01-01T00:00:00Z', 'oof0', grid('2024-01-02T00:00:00Z', 30))
     monkeypatch.setitem(t.TEACHER_POLICY, 'max_train_origins', 7)
@@ -159,11 +154,11 @@ def test_no_old_writes_and_merge_roundtrip(fake_old, tmp_path):
     head = '2024-04-01T00:00:00Z'
     origins = grid('2024-02-02T00:00:00Z', 3)
     add_claim(fake_old, head, '2024-02-01T00:00:00Z', 'oof0', origins)
-    before = {str(p): _sha(p) for p in sorted(fake_old.rglob('*')) if p.is_file()}
+    before = {str(p): p.read_bytes() for p in sorted(fake_old.rglob('*')) if p.is_file()}
     pool, assignment = t.calibration_pool(head, 'dev')
     merged, ref = t.merged_forecasts(pool, assignment, out_path=tmp_path / 'new' / 'oof.parquet')
     assert ref is not None and len(merged) == 72 * len(pool)
-    after = {str(p): _sha(p) for p in sorted(fake_old.rglob('*')) if p.is_file()}
+    after = {str(p): p.read_bytes() for p in sorted(fake_old.rglob('*')) if p.is_file()}
     assert before == after
 
 

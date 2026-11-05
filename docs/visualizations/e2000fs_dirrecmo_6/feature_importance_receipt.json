@@ -2,7 +2,6 @@
   "strategy": "DirRecMO-6",
   "canonical": "DirRecMO-6",
   "experiment": "e2000fs_dirrecmo_6",
-  "config_sha256": "c9dd83a2ebd684551c60c551951f4f98188c6effd0984666fe00882738498c50",
   "f1": {
     "max_abs_diff_kms": 0.0,
     "mse": 3925.123782643304,

@@ -11,7 +11,7 @@
 | 최종 목표 (SOTA 대비 2%) | — | ≤ 96.787 | 별도 판정 |
 | 제출 후보 기준 (1%) | — | 3-seed 평균 ΔS ≤ −0.988 | 아래 5절 |
 
-기준선 소스: `research/rerun_df_ffill_20261103/runs/e2000fs_calib_offset_roll/experiment.py`, 실행 코드는 1차 ablation `research/calib_offset_roll_ablation_20261104/experiment.py`에서 파생. 공식 관측 revision `920588c2a716130e19b145acbbd91ace4758faf2`, scorer `competition.py` 고정.
+기준선 소스: `research/rerun_df_ffill/runs/e2000fs_calib_offset_roll/experiment.py`, 실행 코드는 1차 ablation `research/calib_offset_roll_ablation/experiment.py`에서 파생. 공식 관측 revision `920588c2a716130e19b145acbbd91ace4758faf2`, scorer `competition.py` 고정.
 
 ## 2. 1차 ablation 결과(입력 근거, seed42 단일)
 

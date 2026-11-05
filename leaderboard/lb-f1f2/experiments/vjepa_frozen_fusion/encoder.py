@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import sys
@@ -12,14 +11,6 @@ import numpy as np
 import torch
 
 UPSTREAM_SHA = '204698b45b3712590f06245fbfba32d3be539812'
-
-
-def sha256(path):
-    h = hashlib.sha256()
-    with Path(path).open('rb') as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b''):
-            h.update(chunk)
-    return h.hexdigest()
 
 
 def load_encoder(upstream, checkpoint, device):
@@ -97,8 +88,7 @@ def smoke(run_dir):
                   'parameters':sum(x.numel() for x in model.parameters()),
                   'trainable_parameters':sum(x.numel() for x in model.parameters() if x.requires_grad),
                   'eval_mode':not model.training,'precision':'BF16 autocast, FP32 pooling',
-                  'origin':origin.isoformat(),'frame_stats':stats,'arms':results,
-                  'checkpoint_sha256':sha256(p/'checkpoints/vjepa2_1_vitb_dist_vitG_384.pt')}
+                  'origin':origin.isoformat(),'frame_stats':stats,'arms':results}
     (p/'gpu-smoke.json').write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2),flush=True)
 

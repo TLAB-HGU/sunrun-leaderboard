@@ -1,6 +1,6 @@
 # E2000 Direct-pooled — Train·validation loss, feature importance, F1+F2 월별 예측 GIF
 
-2026-10-27 게시 기준 리더보드 **19위**, 작성자 **seongeun**인 `e2000_horizon_conditioned_s42`입니다. E2000 입력과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)로 학습한 1,530 inputs에 horizon을 더한 pooled XGBoost 하나로 72개 horizon을 내는 E2000 원본 Direct-pooled 전략입니다. 제출 설정 SHA256은 `e8a8ea38c97e84381ba467a0244e11a63e8b053eaa77e2086f5ab25940bba85f`이며, 재현 소스는 [releases/e2000/direct_pooled](../../../releases/e2000/direct_pooled/)에 있습니다.
+2026-10-27 게시 기준 리더보드 **19위**, 작성자 **seongeun**인 `e2000_horizon_conditioned_s42`입니다. E2000 입력과 고정 XGBoost recipe(900 rounds, depth 3, lr 0.03, seed 42)로 학습한 1,530 inputs에 horizon을 더한 pooled XGBoost 하나로 72개 horizon을 내는 E2000 원본 Direct-pooled 전략입니다. 재현 소스는 [releases/e2000/direct_pooled](../../../releases/e2000/direct_pooled/)에 있습니다.
 
 | 지표 | 값 |
 | --- | ---: |
@@ -90,4 +90,4 @@
 
 ## 검증 ([manifest.json](manifest.json))
 
-`scripts/visualize_enlil_validation.py --experiment E2000_HORIZON_CONDITIONED_S42`로 렌더링했습니다. 렌더러는 예측·truth가 4,970 origin × h1..72에 정확히 1:1로 대응하는지, 다시 계산한 MSE가 리더보드 값 4266.967935084032와 1e-7 이내로 일치하는지, 월별 프레임 수와 GIF 디코딩이 맞는지 확인하며, 하나라도 어긋나면 멈춥니다. 입력 파일과 GIF의 SHA256은 manifest에 기록했습니다. 학습이나 예측 변경은 하지 않았습니다.
+`scripts/visualize_enlil_validation.py --experiment E2000_HORIZON_CONDITIONED_S42`로 렌더링했습니다. 렌더러는 예측·truth가 4,970 origin × h1..72에 정확히 1:1로 대응하는지, 다시 계산한 MSE가 리더보드 값 4266.967935084032와 1e-7 이내로 일치하는지, 월별 프레임 수와 GIF 디코딩이 맞는지 확인하며, 하나라도 어긋나면 멈춥니다. 학습이나 예측 변경은 하지 않았습니다.

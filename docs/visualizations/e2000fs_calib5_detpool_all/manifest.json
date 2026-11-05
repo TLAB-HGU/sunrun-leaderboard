@@ -3,7 +3,6 @@
   "experiment": "e2000fs_calib5_detpool_all",
   "member": "seongeun",
   "submitted_utc": "20261031T172348000Z",
-  "config_sha256": "13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307",
   "arm": "base e2000fs_calib4_detpool_gpd + 16 refit arms, beta >= 0, sum(beta) <= 1 (trailing NNLS, ridge 1e-3)",
   "aggregation": "single linear stack: pred = base + sum_j beta_j (arm_j - base); beta refit every 168 origins from the trailing 2160 matured origins with a trailing >=550 no-regression shrink",
   "created_at_utc": "2026-11-01T02:08:24.409900+00:00",
@@ -31,8 +30,7 @@
   "sources": {
     "predictions": [
       {
-        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz",
-        "sha256": "a4e4cb20674daf958794cb02576bbb443fb6c7e07b819b41c72fb160ecc7934f"
+        "file": "/home/t-lab01/sunrun/research/e2000fs_f123-20261031/runs/poolall_v1/forecast.npz"
       }
     ],
     "prediction_keys": [
@@ -42,20 +40,16 @@
       ]
     ],
     "folds": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/folds.parquet",
-      "sha256": "38cf7b8271c8630710d6c40795cfea4981cf1362afe756999bae3e85f2ccba9a"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/folds.parquet"
     },
     "truth": {
-      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/truth.parquet",
-      "sha256": "c1b510313c2fe49b44f704653f9efcfa2113f8e3240617abad199460127931eb"
+      "file": "/home/t-lab01/.cache/huggingface/hub/datasets--tlabtlab--sunrun-lb-store/snapshots/dc409fc89c49864bff2760240e0a521afcf5ed87/truth.parquet"
     },
     "history": {
-      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet",
-      "sha256": "700d7f54c31f2499f30780207c8706d8185d37af0fa2d37268f0eabdf150d8af"
+      "file": "/home/t-lab01/sunrun/data-v2/model-inputs/leaderboard-store/ch-v1/ace.parquet"
     },
     "receipt": {
-      "file": "/home/t-lab01/sunrun/docs/visualizations/e2000fs_calib5_detpool_all/leaderboard-result.json",
-      "sha256": "8c90aa73fddda2313f6dcc1a4f5f9569d926e81263e4d74de2f86c628bf18c46"
+      "file": "/home/t-lab01/sunrun/docs/visualizations/e2000fs_calib5_detpool_all/leaderboard-result.json"
     }
   },
   "footer": "e2000fs_calib5_detpool_all \u00b7 detpool_gpd base + 16 archived refit arms, trailing NNLS weights \u00b7 F1 01\u201303 / F2 04\u201306 / F3 07\u201309 2026 \u00b7 Y axis fixed at 200\u2013850 km/s",
@@ -107,8 +101,7 @@
   ],
   "diagnostics": [
     {
-      "file": "weights_receipt.json",
-      "sha256": "482ec84e0f44d5022ab19db91741acd92232dd84aa641c22bfd8aaa40eae84cb"
+      "file": "weights_receipt.json"
     }
   ],
   "outputs": [
@@ -122,8 +115,7 @@
       "first_origin_utc": "2025-12-31T23:00:00+00:00",
       "last_origin_utc": "2026-01-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16985384,
-      "sha256": "4be112eb83a2bdcb02aa75073d6b8220eb3d043fb64ab0e95fe76e36e0cede0e"
+      "bytes": 16985384
     },
     {
       "month": "2026-02",
@@ -135,8 +127,7 @@
       "first_origin_utc": "2026-01-31T23:00:00+00:00",
       "last_origin_utc": "2026-02-28T22:00:00+00:00",
       "duration_ms": 67200,
-      "bytes": 14734590,
-      "sha256": "a1de3074bde3d0f08a21cdae37741c05ccd5610dd8f69d7aacf06f78cfd8428b"
+      "bytes": 14734590
     },
     {
       "month": "2026-03",
@@ -148,8 +139,7 @@
       "first_origin_utc": "2026-02-28T23:00:00+00:00",
       "last_origin_utc": "2026-03-28T23:00:00+00:00",
       "duration_ms": 67300,
-      "bytes": 14780177,
-      "sha256": "16a792965b168ab3f832974039fc2ca9fdb8f668cf1c426b2dd3195075bc7f22"
+      "bytes": 14780177
     },
     {
       "month": "2026-04",
@@ -161,8 +151,7 @@
       "first_origin_utc": "2026-03-31T23:00:00+00:00",
       "last_origin_utc": "2026-04-30T22:00:00+00:00",
       "duration_ms": 72000,
-      "bytes": 16386012,
-      "sha256": "af05d4df1d406fa8803e3b99d5e832a91c6d3bc649ba40ec3426e987c6acb295"
+      "bytes": 16386012
     },
     {
       "month": "2026-05",
@@ -174,8 +163,7 @@
       "first_origin_utc": "2026-04-30T23:00:00+00:00",
       "last_origin_utc": "2026-05-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16577705,
-      "sha256": "ef8bfbab4b8307574df2689822c025d0bf1b42bcc2b3c17a891530c356cfc4cf"
+      "bytes": 16577705
     },
     {
       "month": "2026-06",
@@ -187,8 +175,7 @@
       "first_origin_utc": "2026-05-31T23:00:00+00:00",
       "last_origin_utc": "2026-06-27T23:00:00+00:00",
       "duration_ms": 64900,
-      "bytes": 14166220,
-      "sha256": "6980c64957110860dcee83c30a705694df237d7fae91e58c8839238e410066e4"
+      "bytes": 14166220
     },
     {
       "month": "2026-07",
@@ -200,8 +187,7 @@
       "first_origin_utc": "2026-06-30T23:00:00+00:00",
       "last_origin_utc": "2026-07-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 17328567,
-      "sha256": "e44a457a8ec373e8f382723aae05de47967aed39d097ecb889b94e735d2c044b"
+      "bytes": 17328567
     },
     {
       "month": "2026-08",
@@ -213,8 +199,7 @@
       "first_origin_utc": "2026-07-31T23:00:00+00:00",
       "last_origin_utc": "2026-08-31T22:00:00+00:00",
       "duration_ms": 74400,
-      "bytes": 16738244,
-      "sha256": "57d84128478cc9f6f6d02f00ab6184423363e95ad4694d83c14c7dc122fca0ff"
+      "bytes": 16738244
     },
     {
       "month": "2026-09",
@@ -226,8 +211,7 @@
       "first_origin_utc": "2026-08-31T23:00:00+00:00",
       "last_origin_utc": "2026-09-26T23:00:00+00:00",
       "duration_ms": 62500,
-      "bytes": 14671581,
-      "sha256": "51ed637d8de5f121ccb01527ad100758e47c8d2b8d31a673a846fe9eb1861a44"
+      "bytes": 14671581
     }
   ],
   "previews": [
@@ -244,8 +228,7 @@
       "bytes": 2825311,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "47c91e8c51ee5b1d3acb5f273f290d76f933d4d179ca664ad3f580719f4cb752"
+      "frame_ms": 400
     },
     {
       "month": "2026-02",
@@ -260,8 +243,7 @@
       "bytes": 2441219,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "7f39608f38829979902fc8c2eb4919f709ffe59a97978f4d0a4940d69e2f3043"
+      "frame_ms": 400
     },
     {
       "month": "2026-03",
@@ -276,8 +258,7 @@
       "bytes": 2457540,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "b9801695f93e6263767b3f5420c6a386d2ed9c1ba13e519723fe36a1cf52a0f6"
+      "frame_ms": 400
     },
     {
       "month": "2026-04",
@@ -292,8 +273,7 @@
       "bytes": 2724107,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "9dd63197b02ead371d65ed41754282f373449d4922279a66b374ca8c9949cebd"
+      "frame_ms": 400
     },
     {
       "month": "2026-05",
@@ -308,8 +288,7 @@
       "bytes": 2768981,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "ad92fb2d35427681829b8d4fbb56439c558497cf31b7266d992f44fe666ba416"
+      "frame_ms": 400
     },
     {
       "month": "2026-06",
@@ -324,8 +303,7 @@
       "bytes": 2355665,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "71738b47f2f37e7600a4f3f579043363a3390fc764bc32051fe4639acaf61f70"
+      "frame_ms": 400
     },
     {
       "month": "2026-07",
@@ -340,8 +318,7 @@
       "bytes": 2866570,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "71f243ea4b0b094113f9122c22d1cdff7c9e8f0415b5e85dd70f5c633bdd37b9"
+      "frame_ms": 400
     },
     {
       "month": "2026-08",
@@ -356,8 +333,7 @@
       "bytes": 2780030,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "3ab87a1bf0d8fa1d0a03f746f87f868a771e74d512b5092de2406a58ec71ff40"
+      "frame_ms": 400
     },
     {
       "month": "2026-09",
@@ -372,8 +348,7 @@
       "bytes": 2454588,
       "stride": 4,
       "dpi": 72,
-      "frame_ms": 400,
-      "sha256": "c05cfa6f64eb2daa942c3294badb55f46401a4f0e67afdd17db8d467c608e26e"
+      "frame_ms": 400
     }
   ],
   "previews_config": {

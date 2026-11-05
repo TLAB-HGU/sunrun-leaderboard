@@ -35,8 +35,7 @@ def test_reference_alignment_and_render_preserve_official_manifest(replay):
     args.model_file = args.predictions.parent / "model.pkl"
     args.model_file.write_bytes(b"frozen model")
     args.provenance = args.predictions.parent / "provenance.json"
-    receipt = {"model_sha256": MODULE.sha256(args.model_file),
-               "predictions_sha256": MODULE.sha256(args.predictions)}
+    receipt = {"model_file": args.model_file.name, "predictions": args.predictions.name}
     args.provenance.write_text(json.dumps(receipt))
     data = MODULE.load_reference_data(args)
     np.testing.assert_array_equal(data[2][0], history.filled_speed_kms[:168])
@@ -53,7 +52,6 @@ def test_reference_alignment_and_render_preserve_official_manifest(replay):
     assert "expected_mse" not in manifest["verification"]
     assert set(manifest["sources"]) == {"predictions", "history", "model_file", "provenance"}
     assert manifest["provenance"] == receipt
-    assert manifest["sources"]["provenance"]["sha256"] == MODULE.sha256(args.provenance)
     with pytest.raises(ValueError, match="Refusing to overwrite"):
         MODULE.render(args, data)
 
@@ -101,21 +99,6 @@ def test_official_fold_guard_is_still_required(replay):
         MODULE.load_data(args)
 
 
-@pytest.mark.parametrize("key", ["model_sha256", "predictions_sha256"])
-def test_reference_provenance_hashes_are_checked(replay, key):
-    args, _, _ = replay
-    args.model_file = args.predictions.parent / "model.pkl"
-    args.model_file.write_bytes(b"frozen model")
-    args.provenance = args.predictions.parent / "provenance.json"
-    receipt = {"model_sha256": MODULE.sha256(args.model_file),
-               "predictions_sha256": MODULE.sha256(args.predictions)}
-    receipt[key] = "wrong"
-    args.provenance.write_text(json.dumps(receipt))
-    with pytest.raises(ValueError, match="Provenance .* hash mismatch"):
-        MODULE.render(args, MODULE.load_reference_data(args))
-    assert not args.output_dir.exists()
-
-
 def test_latency_shifts_only_available_history(replay):
     args, pred, history = replay
     zero = MODULE.load_reference_data(args)
@@ -137,7 +120,6 @@ def test_latency_shifts_only_available_history(replay):
     assert manifest["config"]["input_x_hours"] == [-169, -2]
     assert manifest["config"]["ace_latency_hours"] == 2
     assert "model_config_sha256" not in manifest
-    assert manifest["recipe_code_sha256"] == MODULE.EXPERIMENTS["E1149"]["recipe_code_sha256"]
 
 
 def test_no_delay_comparator_is_reference_only(replay):

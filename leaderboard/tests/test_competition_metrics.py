@@ -40,14 +40,14 @@ def predictions(context, values=None):
 
 
 def notebook_scorer():
-    notebook = json.loads((ROOT / "metric.ipynb").read_text())
+    notebook = json.loads((ROOT / "metric" / "metric.ipynb").read_text())
     for cell in notebook["cells"]:
         source = "".join(cell.get("source", []))
         if "def score_predictions(" in source:
             function = next(node for node in ast.parse(source).body
                             if isinstance(node, ast.FunctionDef) and node.name == "score_predictions")
             namespace = {"np": np, "pd": pd, "LEADS": LEADS}
-            exec(compile(ast.Module(body=[function], type_ignores=[]), "metric.ipynb", "exec"), namespace)
+            exec(compile(ast.Module(body=[function], type_ignores=[]), "metric/metric.ipynb", "exec"), namespace)
             return namespace["score_predictions"]
     raise AssertionError("reference notebook scorer not found")
 

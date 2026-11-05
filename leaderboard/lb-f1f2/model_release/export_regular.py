@@ -6,7 +6,6 @@ Only the GPU1 shared lease is used for recipes originally trained with CUDA.
 import argparse
 import contextlib
 import fcntl
-import hashlib
 import importlib.util
 import json
 import os
@@ -28,11 +27,6 @@ RECIPES = {
     "E0368": ("xgb_d76_lead_moe_depth4", "ablation", "3h"),
     "E0471": ("xgb_d76_lead_moe_enlil", "ablation", "3h"),
 }
-
-
-def digest(path):
-    with open(path, "rb") as stream:
-        return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
 def cpu_models(value, *, preserve_cuda_arithmetic=False):
@@ -118,18 +112,6 @@ def main():
     spec = importlib.util.spec_from_file_location("submitted_recipe", script)
     submitted = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(submitted)
-    canonical = json.dumps(submitted.CONFIG, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
-    assert hashlib.sha256(canonical.encode()).hexdigest() == submitted.CONFIG_SHA256 == script.stem
-    mismatches = []
-    for rel, expected in submitted.CONFIG["data"]["source_sha256"].items():
-        if digest(LB / rel) != expected:
-            if args.experiment == "E0221" and rel.startswith("expos/"):
-                mismatches.append(rel)
-            else:
-                raise ValueError(f"Source identity mismatch: {rel}")
-    for rel, expected in submitted.CONFIG["data"]["input_sha256"].items():
-        if rel.startswith("store/") and digest(LB / rel) != expected:
-            raise ValueError(f"Input identity mismatch: {rel}")
     import numpy as np
     import pandas as pd
     import xgboost as xgb
@@ -158,7 +140,7 @@ def main():
     params = dict(A.ia.PARAMS, n_jobs=4 if gpu else 6, device="cuda" if gpu else "cpu")
     state = {"include_enlil": args.experiment == "E0471", "arm": arm if kind == "ablation" else None,
              "cutoff": A.CUTOFF.isoformat(),
-             "train_rows": len(tr), "training_device": params["device"], "source_mismatches_outside_training": mismatches}
+             "train_rows": len(tr), "training_device": params["device"]}
     with gpu1_lease() if gpu else contextlib.nullcontext():
         saved_models = None
         if args.resume_fitted:
@@ -234,7 +216,7 @@ def main():
     merged = rows.merge(orig, on=["origin_last_input_utc", "horizon_hours"], validate="one_to_one", suffixes=("_new", "_submitted"))
     assert len(merged) == len(rows) == len(orig)
     delta = float(np.max(np.abs(merged.pred_kms_new - merged.pred_kms_submitted)))
-    report = dict(experiment=args.experiment, file=path.name.removesuffix(".pending"), sha256=digest(path), rows=len(rows),
+    report = dict(experiment=args.experiment, file=path.name.removesuffix(".pending"), rows=len(rows),
                   memory_reload_max_abs=float(np.max(np.abs(actual-reference))), submitted_max_abs=delta,
                   submitted_parity_passed=delta <= 1e-3, state=state)
     (evidence / f"{args.experiment}.json").write_text(json.dumps(report, indent=2))

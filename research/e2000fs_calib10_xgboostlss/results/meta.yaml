@@ -1,0 +1,147 @@
+team_member: seongeun
+experiment: e2000fs_calib10_xgboostlss
+description: 'e2000fs_calib10_xgboostlss. Removes the four heuristics of e2000fs_calib2_mixture2comp
+  with one likelihood, fitted with the probabilistic-gradient-boosting methodology
+  of Chevalier & Cote (2025, Eur. Actuar. J., 10.1007/s13385-025-00428-5): the forecast
+  is the expectation of a latent-regime log-normal mixture, p(y|x) = sum_k pi_k(x)
+  LogNormal(mu_k(x), sigma_k(x)), every parameter boosted by negative log-likelihood
+  gradients under their Algorithm 4 (XGBoostLSS: two cycles of 450 Newton rounds per
+  parameter group, the other groups held at their most recent prediction function,
+  per-horizon MLE initialisation). (i) the level head''s 4x weight above 550 km/s
+  becomes the unweighted NLL of the same rows, (ii) clip(1, 3000) is dropped because
+  the family is supported on (0, inf), (iii) the binary head regressing 1{y>=550}
+  becomes the latent mixing weight pi(x) - a threshold is never formed and P(y>=c)
+  is read off the fitted CDF for any c, (iv) the gap head on rows whose block crosses
+  550 becomes the component locations and scales fitted from all rows. Components
+  are ordered in log-mean by construction: no post-hoc sorting, no routing, no stacking.
+  K is selected by held-out conditional NLL on matured December data; all xgboost
+  hyper-parameters are the frozen recipe unchanged. Model adequacy is reported with
+  the paper''s own tools (log score, CRPS, PIT, 50/75/95% CI coverage, calibration
+  bins, portfolio balance) in research/e2000fs_calib10_xgboostlss/results/adequacy.json.
+  Refit on the F1/F2/F3 quarters with cutoffs 2025-12-29 / 2026-03-29 / 2026-06-29
+  and 72 h maturity; all 6,315 origins forecast unconditionally. No post-processing,
+  no blending, no calibration lane.'
+no_future_leakage: true
+f1_training_data_end_utc: '2025-12-29T00:00:00Z'
+f2_training_data_end_utc: '2026-03-29T00:00:00Z'
+f3_training_data_end_utc: '2026-06-29T00:00:00Z'
+config:
+  data:
+    feature_set: e2000fs_dirmo_24_feat30 Top30 (21 constant + 24h x 9 varying per
+      block)
+    source: data-v2/input/df.parquet
+    blocks:
+    - 0
+    - 1
+    - 2
+    ace_lag_hours: 0
+    maturity_hours: 72
+    prefill: causal forward fill
+    periods:
+      F1:
+        count: 2089
+      F2:
+        count: 2113
+      F3:
+        count: 2113
+  hyperparameters:
+    objective:
+      family: latent-regime log-normal mixture, maximum likelihood
+      density: p(y|x) = sum_k pi_k(x) LogNormal(mu_k(x), sigma_k(x)); pi = softmax(eta),
+        sigma = exp(rho)
+      point_forecast: mixture expectation sum_k pi_k exp(mu_k + sigma_k^2/2); no clipping
+      identification: mu_0 = m0, mu_k = m0 + sum_{i<=k} softplus(delta_i); label switching
+        impossible
+      gradient: dNLL/dmu_k = -r_k (z-mu_k)/sigma_k^2, dNLL/drho_k = r_k (1-u_k^2),
+        dNLL/deta_j = pi_j - r_j
+      hessian: diagonal Fisher r_k/sigma_k^2, 2 r_k, pi_j(1-pi_j) times a per-group
+        1/mean-Hessian unit conversion
+      removed_heuristics:
+      - 4x sample weight above 550 km/s
+      - clip(1, 3000)
+      - binary head on 1{y>=550}
+      - gap head trained on rows whose block crosses 550
+      adequacy: log score, CRPS, PIT, 50/75/95% CI coverage, calibration bins, portfolio
+        balance (Chevalier & Cote 2025, Sect. 4.2) in results/adequacy.json
+    booster:
+      recipe: frozen e2000fs_dirmo_24_feat30_pointweight4 xgboost recipe, unchanged
+      fit_scheme: 'XGBoostLSS, Algorithm 4 of doi:10.1007/s13385-025-00428-5: CYCLES=2
+        sweeps x GROUP_ROUNDS=450 Newton rounds over the 3K-1 parameter groups (450x2
+        = the frozen 900-round budget per parameter), others held at their most recent
+        function'
+      max_depth: 3
+      learning_rate: 0.03
+      subsample: 0.8
+      colsample_bytree: 0.7
+      min_child_weight: 20
+      reg_lambda: 5
+      multi_strategy: multi_output_tree
+      outputs_per_fit: 24 horizons per parameter group
+    components:
+      k_source: held-out conditional NLL on matured 2025-12-01..2025-12-23
+      pilot:
+        block: 1
+        valid_first: '2025-12-01 00:00:00+00:00'
+        fit_origins: 9209
+        valid_origins: 177
+        marginal_bic:
+          '3':
+            loglik: 127838.82528627923
+            bic: -255570.22148793712
+            pi:
+            - 0.32071999209100494
+            - 0.37047411981512673
+            - 0.30880588809387577
+            mu:
+            - 5.89360855792234
+            - 6.0491186250440085
+            - 6.272218584832675
+            sigma:
+            - 0.11041737513021438
+            - 0.12483221886170928
+            - 0.18785293075720874
+        arm: e2000fs_calib10_xgboostlss
+        scheme: xgboostlss-cyclic
+        pilot_rounds_per_group_per_cycle: 100
+        cycles: 2
+        note: each K fitted in its own process; equal boosting budget across K
+        results:
+          '1':
+            heldout_nll_per_pair: -0.06822004098406674
+            heldout_mse: 10106.233133340013
+            heldout_mse_ge550: 15980.938361368248
+            mean_pi_fast: null
+            mean_mu:
+            - 6.22283727715343
+            mean_sigma:
+            - 0.12906785685168531
+            rounds: 100
+          '2':
+            heldout_nll_per_pair: -0.2140490824569152
+            heldout_mse: 9541.83653943552
+            heldout_mse_ge550: 14873.012721492732
+            mean_pi_fast: 0.7202867003039305
+            mean_mu:
+            - 6.046547798474805
+            - 6.291599531580332
+            mean_sigma:
+            - 0.10025526180035423
+            - 0.10377210529808537
+            rounds: 100
+          '3':
+            heldout_nll_per_pair: -0.15456816646042182
+            heldout_mse: 10084.4319546999
+            heldout_mse_ge550: 16302.221751030465
+            mean_pi_fast: 0.8433023123204072
+            mean_mu:
+            - 5.963779616630673
+            - 6.113702196624539
+            - 6.306148623649977
+            mean_sigma:
+            - 0.13536301451968324
+            - 0.07943021114805177
+            - 0.09452159793248494
+            rounds: 100
+        k_by_heldout_nll: 2
+inference_seconds_per_fold: 0.0032711784193090393
+architecture_url: https://github.com/TLAB-HGU/sunrun-leaderboard/blob/e7d47c38976ee715c7838d6bed08405ff124bd33/research/e2000fs_calib10_xgboostlss/experiment.py

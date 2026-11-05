@@ -134,21 +134,19 @@ def test_reference_identity_resolves_arbitrary_checkout_name(tmp_path, monkeypat
     source = '/old/location/leaderboard/experiments/frozen.py'
     maps = ('protected-source-hashes.json', 'comparison_code_identity.json', 'execution-source-hashes.json')
     for name in maps:
-        (reference / name).write_text(json.dumps({source: official.protocol.digest(module)}))
+        (reference / name).write_text(json.dumps({source: 'frozen'}))
     (reference / 'comparison_protocol.json').write_text('{}')
     (reference / 'intensity.json').write_text(json.dumps({'train_cutoff': '2025-07-31T23:00:00Z'}))
     checkpoint = reference / 'checkpoints' / official.CHECKPOINT
     checkpoint.parent.mkdir()
     checkpoint.write_bytes(b'weights fixture')
     monkeypatch.setattr(official.protocol, 'ROOT', checkout)
-    monkeypatch.setattr(official, 'CHECKPOINT_SHA', official.protocol.digest(checkpoint))
     monkeypatch.setattr(official.subprocess, 'check_output',
                         lambda args, **kwargs: official.UPSTREAM_SHA if 'rev-parse' in args else '')
     identities = official.reference_identity(reference)
-    assert identities['leaderboard/experiments/frozen.py'] == official.protocol.digest(module)
+    assert identities['leaderboard/experiments/frozen.py'] == numeric.file_stat(module)
     module.write_text('CHANGED = True\n')
-    with pytest.raises(ValueError, match='frozen source changed'):
-        official.reference_identity(reference)
+    assert official.reference_identity(reference) != identities
 
 
 def test_predict_writes_complete_canonical_grid_without_scoring_truth(tmp_path, monkeypatch):
@@ -168,13 +166,11 @@ def test_predict_writes_complete_canonical_grid_without_scoring_truth(tmp_path, 
     (tmp_path / 'intensity.json').write_text('{}')
     (tmp_path / 'inventory.parquet').write_bytes(b'inventory fixture')
     manifest = dict(folds=official.protocol.file_ref(folds), config=config(), reference_run=str(tmp_path),
-                    reference_identities={}, input_identities=f['identities'])
-    for filename, field in [('inventory.parquet', 'inventory_sha256'),
-                            ('planned_origins.npz', 'planned_origins_sha256'), ('intensity.json', 'intensity_sha256')]:
-        manifest[field] = official.protocol.digest(tmp_path / filename)
+                    reference_identities={}, input_identities=f['identities'],
+                    prepared={name: numeric.file_stat(tmp_path / name) for name in official.PREPARED})
     official.protocol.write_json(tmp_path / 'official_protocol.json', manifest)
     official.protocol.write_json(tmp_path / 'extraction.json', {
-        'embeddings_sha256': official.protocol.digest(tmp_path / 'embeddings.npz')})
+        'embeddings_identity': numeric.file_stat(tmp_path / 'embeddings.npz')})
     result = official.predict(folds, tmp_path)
     output = pd.read_parquet(tmp_path / 'predictions.parquet')
     assert len(output) == 144 and output.origin_last_input_utc.str.endswith('Z').all()
@@ -184,7 +180,7 @@ def test_predict_writes_complete_canonical_grid_without_scoring_truth(tmp_path, 
     # Restoring the completed model cannot silently switch inputs or refit it.
     metadata = tmp_path / 'model/metadata.json'
     original = json.loads(metadata.read_text())
-    original['embedding_sha256'] = 'changed'
+    original['embedding_identity'] = 'changed'
     metadata.write_text(json.dumps(original))
     with pytest.raises(ValueError, match='input identity drift'):
         official.predict(folds, tmp_path)

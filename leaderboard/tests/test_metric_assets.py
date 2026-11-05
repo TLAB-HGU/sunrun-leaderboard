@@ -1,6 +1,5 @@
 import base64
 import copy
-import hashlib
 import sys
 import urllib.error
 from pathlib import Path
@@ -20,7 +19,7 @@ def record(name="sample"):
                 for scope, factor in zip(("total", "f1", "f2", "f3"), (1, 1.1, 0.9, 1.2))}}}
 
 
-def test_plot_is_reproducible_and_named_by_content(tmp_path):
+def test_plot_is_reproducible_and_named_by_identity(tmp_path):
     original = record("../an experiment")
     first = assets.generate_plot(original, tmp_path / "one")
     second = assets.generate_plot(original, tmp_path / "two")
@@ -28,9 +27,7 @@ def test_plot_is_reproducible_and_named_by_content(tmp_path):
     assert first.read_bytes() == second.read_bytes()
     assert first.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
     assert first.parent == tmp_path / "one"
-    changed = copy.deepcopy(original)
-    changed["competition"]["total"]["by_lead"][0]["s"] += 1
-    assert assets.generate_plot(changed, tmp_path).name != first.name
+    assert first.name == f"alice--an_experiment--{'a' * 64}.png"
 
 
 @pytest.mark.parametrize("change", ["missing", "nonfinite", "negative"])
@@ -76,11 +73,12 @@ class FakeAPI:
             name = path.rsplit("/", 1)[1]
             next_tree = {"root": "leaderboard", "leaderboard": "assets", "assets": "metrics"}.get(name)
             entries = ([{"path": next_tree, "type": "tree", "sha": next_tree}] if next_tree
-                       else [{"path": n, "type": "blob", "sha": sha} for n, sha in self.files.items()])
+                       else [{"path": n, "type": "blob", "sha": sha, "size": len(self.blobs[sha])}
+                             for n, sha in self.files.items()])
             return {"tree": entries}
         if path == "git/blobs":
             data = base64.b64decode(payload["content"])
-            sha = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
+            sha = f"{len(self.blobs) + 1:040d}"
             self.blobs[sha] = data
             return {"sha": sha}
         if path == "git/trees":
