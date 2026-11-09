@@ -2,6 +2,30 @@
   "models": [
     {
       "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_mean3",
+      "submitted_utc": "20261109T051332247Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/81f4d214d6afa7f2d6c7c9277123d615180f9d80/docs/visualizations/e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_mean3"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_mean3",
+      "submitted_utc": "20261108T050039479Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/94bd23bf0f207eb48a6ceddfb545f49c51707e15/docs/visualizations/e2000fs_calib_offset_roll_drop_t035_v650_mean3"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_negative_combined_mean3",
+      "submitted_utc": "20261107T103041788Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/e7920d94af6637f67cdc34d5fc030ec892f07a72/docs/visualizations/e2000fs_calib_offset_roll_negative_combined_mean3"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_equatorial_mean3",
+      "submitted_utc": "20261107T061530270Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/49a0af9b04b9bdc8f427fb86a96449e263fded7a/docs/visualizations/e2000fs_calib_offset_roll_drop_t035_equatorial_mean3"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_calib2_detroute",
       "submitted_utc": "20261104T040143309Z",
       "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/438ac14a9024494cfe0164a1fab909ee104e70ab/docs/visualizations/e2000fs_calib2_detroute/fresh-df-20261103"
