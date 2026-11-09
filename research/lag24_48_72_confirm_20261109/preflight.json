@@ -1,0 +1,113 @@
+{
+  "passed": true,
+  "utc": "2026-11-08T14:28:18.595158+00:00",
+  "source_equivalence": "Exact baseline/scorer/inventory/replay bytes; equal scientific function ASTs",
+  "inherited_three_seed_reproduction": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/preflight.json",
+  "local": {
+    "input_consistency": {
+      "passed": true,
+      "rows": 2816784,
+      "source_features": 437,
+      "constant_features": 417,
+      "varying_features": 20,
+      "unique_origins": 34968,
+      "equal_duplicate_keys": 299088,
+      "target_read": false,
+      "selection_performed": false,
+      "first_origin": "2022-10-01 00:00:00+00:00",
+      "last_origin": "2026-09-26 23:00:00+00:00",
+      "input_identity": {
+        "path": "/home/t-lab01/sunrun/research/rerun_df_ffill_20261103/input/df_ffill_trainy.parquet",
+        "bytes": 225755615,
+        "mtime_ns": 1793684739007946726
+      }
+    },
+    "source_identity": {
+      "baseline.py": {
+        "path": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/baseline.py",
+        "bytes": 3674,
+        "mtime_ns": 1794147696254673652
+      },
+      "core.py": {
+        "path": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/core.py",
+        "bytes": 20631,
+        "mtime_ns": 1794147696258127677
+      },
+      "competition.py": {
+        "path": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/competition.py",
+        "bytes": 9521,
+        "mtime_ns": 1794147696255028905
+      },
+      "inventory.json": {
+        "path": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/inventory.json",
+        "bytes": 994957,
+        "mtime_ns": 1794147696256303429
+      },
+      "replay.py": {
+        "path": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/replay.py",
+        "bytes": 2152,
+        "mtime_ns": 1794147696257621056
+      },
+      "parent-lock.json": {
+        "path": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/parent-lock.json",
+        "bytes": 94747,
+        "mtime_ns": 1794147669324276228
+      }
+    }
+  },
+  "golab2": {
+    "input_consistency": {
+      "input_identity": {
+        "path": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet",
+        "bytes": 225755615,
+        "mtime_ns": 1793684739007946726
+      }
+    },
+    "source_identity": {
+      "baseline.py": {
+        "path": "/home/yehwan/sunrun-lag24-48-72-confirm-20261109/baseline.py",
+        "bytes": 3674,
+        "mtime_ns": 1794147696254673719
+      },
+      "core.py": {
+        "path": "/home/yehwan/sunrun-lag24-48-72-confirm-20261109/core.py",
+        "bytes": 20631,
+        "mtime_ns": 1794147696258127689
+      },
+      "competition.py": {
+        "path": "/home/yehwan/sunrun-lag24-48-72-confirm-20261109/competition.py",
+        "bytes": 9521,
+        "mtime_ns": 1794147696255028963
+      },
+      "inventory.json": {
+        "path": "/home/yehwan/sunrun-lag24-48-72-confirm-20261109/inventory.json",
+        "bytes": 994957,
+        "mtime_ns": 1794147696256303310
+      },
+      "replay.py": {
+        "path": "/home/yehwan/sunrun-lag24-48-72-confirm-20261109/replay.py",
+        "bytes": 2152,
+        "mtime_ns": 1794147696257621049
+      },
+      "parent-lock.json": {
+        "path": "/home/yehwan/sunrun-lag24-48-72-confirm-20261109/parent-lock.json",
+        "bytes": 94747,
+        "mtime_ns": 1794147669324276208
+      }
+    }
+  },
+  "cross_host_input_equality": {
+    "data": {
+      "exact_byte_equality": true,
+      "bytes": 225755615,
+      "local": "/home/t-lab01/sunrun/research/rerun_df_ffill_20261103/input/df_ffill_trainy.parquet",
+      "remote": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet"
+    },
+    "observations": {
+      "exact_byte_equality": true,
+      "bytes": 86451,
+      "local": "/home/t-lab01/sunrun/research/offset_roll_complete_ablation_20261106/competition-observations.parquet",
+      "remote": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "complete": true,
+  "status": "complete",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "records": [
+    {
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_s42",
+      "seed": 42,
+      "submitted_utc": "20261108T164302706Z",
+      "total_s": 96.2530713882869,
+      "remote_score_matches": true,
+      "page_row_present": true,
+      "architecture_reachable": true
+    },
+    {
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_s43",
+      "seed": 43,
+      "submitted_utc": "20261108T164438140Z",
+      "total_s": 96.90637057866141,
+      "remote_score_matches": true,
+      "page_row_present": true,
+      "architecture_reachable": true
+    },
+    {
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_s44",
+      "seed": 44,
+      "submitted_utc": "20261108T164605173Z",
+      "total_s": 96.21114220556612,
+      "remote_score_matches": true,
+      "page_row_present": true,
+      "architecture_reachable": true
+    }
+  ],
+  "visible_rows": 3,
+  "all_scores_match": true,
+  "no_ensemble": true,
+  "verified_utc": "2026-11-08T16:47:45.596621+00:00",
+  "remote_receipts": {
+    "verified": true,
+    "records": [
+      {
+        "run": "lag24_48_72_s42",
+        "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_s42",
+        "submitted_utc": "20261108T164302706Z",
+        "published": true
+      },
+      {
+        "run": "lag24_48_72_s43",
+        "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_s43",
+        "submitted_utc": "20261108T164438140Z",
+        "published": true
+      },
+      {
+        "run": "lag24_48_72_s44",
+        "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_s44",
+        "submitted_utc": "20261108T164605173Z",
+        "published": true
+      }
+    ]
+  },
+  "classification": "exploratory user-selected joint lag addition",
+  "publication": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/publication"
+}

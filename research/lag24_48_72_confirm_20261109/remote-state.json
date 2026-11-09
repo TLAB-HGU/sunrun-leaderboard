@@ -1,0 +1,86 @@
+{
+  "state": {
+    "lag24_48_72_s42": {
+      "state": "trained_validated",
+      "started_utc": "2026-11-08T14:31:05.146618+00:00",
+      "finished_utc": "2026-11-08T16:06:48.692580+00:00",
+      "validation": {
+        "rows": 454680,
+        "total_s": 96.2530713882869,
+        "saved_model_replay": {
+          "F1": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          },
+          "F2": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          },
+          "F3": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          }
+        },
+        "validated_utc": "2026-11-08T16:06:48.691973+00:00"
+      }
+    },
+    "lag24_48_72_s43": {
+      "state": "trained_validated",
+      "started_utc": "2026-11-08T14:31:05.368602+00:00",
+      "finished_utc": "2026-11-08T16:07:13.291910+00:00",
+      "validation": {
+        "rows": 454680,
+        "total_s": 96.90637057866141,
+        "saved_model_replay": {
+          "F1": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          },
+          "F2": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          },
+          "F3": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          }
+        },
+        "validated_utc": "2026-11-08T16:07:13.291310+00:00"
+      }
+    },
+    "lag24_48_72_s44": {
+      "state": "trained_validated",
+      "started_utc": "2026-11-08T14:31:05.586024+00:00",
+      "finished_utc": "2026-11-08T16:06:23.602577+00:00",
+      "validation": {
+        "rows": 454680,
+        "total_s": 96.21114220556612,
+        "saved_model_replay": {
+          "F1": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          },
+          "F2": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          },
+          "F3": {
+            "max_abs_error": 0.0,
+            "boosters": 3,
+            "rounds": 900
+          }
+        },
+        "validated_utc": "2026-11-08T16:06:23.599054+00:00"
+      }
+    }
+  },
+  "scheduler_alive": false
+}

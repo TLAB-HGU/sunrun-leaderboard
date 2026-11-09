@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "utc": "2026-11-08T14:29:06.795517+00:00",
+  "comparisons": {
+    "data": {
+      "exact_byte_equality": true,
+      "bytes": 225755615,
+      "local": "/home/t-lab01/sunrun/research/rerun_df_ffill_20261103/input/df_ffill_trainy.parquet",
+      "remote": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet"
+    },
+    "observations": {
+      "exact_byte_equality": true,
+      "bytes": 86451,
+      "local": "/home/t-lab01/sunrun/research/offset_roll_complete_ablation_20261106/competition-observations.parquet",
+      "remote": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet"
+    }
+  }
+}

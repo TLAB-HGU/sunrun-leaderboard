@@ -1,0 +1,13 @@
+--- /home/t-lab01/sunrun/research/feature_addition_all_20261108/core.py
++++ /home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/core.py
+@@ -379,8 +379,8 @@
+         run_period(config, args.data, args.out, period, args.threads, args.smoke, identity)
+     if not args.smoke and not args.period:
+         score_outputs(args.out, args.observations)
+-        write_json(args.out / 'complete.json', dict(status='complete', publish='not_required',
+-                   publish_reason='User requested report-only feature ablation', experiment=config.get('experiment', args.out.name)))
++        write_json(args.out / 'complete.json', dict(status='complete', publish='pending',
++                   publish_reason='User requested publication of the fixed three-lag combination', experiment=config.get('experiment', args.out.name)))
+ 
+ 
+ if __name__ == '__main__':

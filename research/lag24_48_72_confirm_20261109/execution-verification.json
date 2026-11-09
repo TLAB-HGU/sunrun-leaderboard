@@ -1,0 +1,58 @@
+{
+  "utc": "2026-11-08T14:32:55.487107+00:00",
+  "status": "training",
+  "experiment_complete": false,
+  "publication_complete": false,
+  "parent": "e2000fs_calib_offset_roll_drop_t035_v650_s42",
+  "add_features": [
+    "v_lag24",
+    "v_lag48",
+    "v_lag72"
+  ],
+  "source_feature_count": 31,
+  "expanded_input_count": 215,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "tests_passed": 34,
+  "subtests_passed": 2,
+  "ruff_F_E9": "passed",
+  "actual_data_smoke": {
+    "passed": true,
+    "utc": "2026-11-08T14:29:50.618170+00:00",
+    "source_features": 31,
+    "expanded_features": 215,
+    "smoke_rounds": 2,
+    "period": "F1",
+    "exit_code": 0,
+    "config": {
+      "seed": 42,
+      "add_features": [
+        "v_lag24",
+        "v_lag48",
+        "v_lag72"
+      ]
+    },
+    "resources": {
+      "jobs": 1,
+      "available_gib": 29.070903778076172,
+      "busy_cores": 3.57373046875
+    }
+  },
+  "collector": {
+    "utc": "2026-11-08T14:35:36.373594+00:00",
+    "counts": {
+      "running": 3
+    },
+    "scheduler_alive": true
+  },
+  "publication_controller": {
+    "state": "waiting_for_three_validated_seeds",
+    "utc": "2026-11-08T14:35:35.316862+00:00"
+  },
+  "leaderboard_registered_status": "\uc9c4\ud589",
+  "sunrun_verified": true,
+  "remote_publication_receipt_sync": "implemented and regression-tested; completion requires verified remote sync"
+}

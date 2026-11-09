@@ -1,0 +1,87 @@
+{
+  "before": {
+    "add_features": [],
+    "source_features": {
+      "constant": [
+        "v_lag0",
+        "ace_speed_kms_last",
+        "ace_density_cm3_last",
+        "ace_density_cm3_m6",
+        "ace_temperature_k_last",
+        "ace_temperature_k_m24",
+        "ace_bt_nt_last",
+        "ace_bt_nt_m6",
+        "ace_by_gsm_nt_m24",
+        "ace_epam_p_channel3_last",
+        "ace_sis_gt10_flux_last",
+        "suvi_t035_top2_area",
+        "suvi_t035_meridian15_equatorial_area",
+        "suvi_t035_meridian30_equatorial_area",
+        "suvi_t055_meridian15_area",
+        "suvi_t055_meridian30_equatorial_area",
+        "suvi_t055_equatorial_area",
+        "img_age_h",
+        "enlil_n_pending",
+        "enlil_kp"
+      ],
+      "varying": [
+        "rec26",
+        "rec27",
+        "rec28",
+        "rec_mean",
+        "strip_v350_logmed",
+        "strip_v450_logmed",
+        "strip_v550_dark",
+        "strip_v750_logmed"
+      ]
+    }
+  },
+  "after": {
+    "add_features": [
+      "v_lag24",
+      "v_lag48",
+      "v_lag72"
+    ],
+    "source_features": {
+      "constant": [
+        "v_lag0",
+        "ace_speed_kms_last",
+        "ace_density_cm3_last",
+        "ace_density_cm3_m6",
+        "ace_temperature_k_last",
+        "ace_temperature_k_m24",
+        "ace_bt_nt_last",
+        "ace_bt_nt_m6",
+        "ace_by_gsm_nt_m24",
+        "ace_epam_p_channel3_last",
+        "ace_sis_gt10_flux_last",
+        "suvi_t035_top2_area",
+        "suvi_t035_meridian15_equatorial_area",
+        "suvi_t035_meridian30_equatorial_area",
+        "suvi_t055_meridian15_area",
+        "suvi_t055_meridian30_equatorial_area",
+        "suvi_t055_equatorial_area",
+        "img_age_h",
+        "enlil_n_pending",
+        "enlil_kp",
+        "v_lag24",
+        "v_lag48",
+        "v_lag72"
+      ],
+      "varying": [
+        "rec26",
+        "rec27",
+        "rec28",
+        "rec_mean",
+        "strip_v350_logmed",
+        "strip_v450_logmed",
+        "strip_v550_dark",
+        "strip_v750_logmed"
+      ]
+    }
+  },
+  "source_count_before": 28,
+  "source_count_after": 31,
+  "expanded_count_before": 212,
+  "expanded_count_after": 215
+}

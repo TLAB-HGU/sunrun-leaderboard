@@ -1,0 +1,13 @@
+{
+  "campaign_root": "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109",
+  "tmux_session": "srlag3-publish-controller-20261109",
+  "tmux_session_id": "$353",
+  "started_utc": "2026-11-08T14:31:14.718968+00:00",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109/publication_controller.py",
+    "--root",
+    "/home/t-lab01/sunrun/research/lag24_48_72_confirm_20261109"
+  ]
+}

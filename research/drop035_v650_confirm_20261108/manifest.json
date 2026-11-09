@@ -1,0 +1,9 @@
+{
+  "campaign": "drop035_v650_confirm_20261108",
+  "hosts": [
+    "local",
+    "golab2"
+  ],
+  "global_inventory": "assignment.global.json",
+  "no_automatic_expansion": true
+}

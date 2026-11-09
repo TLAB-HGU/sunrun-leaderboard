@@ -1,0 +1,15 @@
+{
+  "before": {
+    "exclude_features": [],
+    "alpha": 0.25,
+    "spectral_hessian_only": false
+  },
+  "after": {
+    "exclude_features": [
+      "ch_ch_t035_equatorial_area",
+      "strip_v650_dark"
+    ],
+    "alpha": 0.25,
+    "spectral_hessian_only": false
+  }
+}
