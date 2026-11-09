@@ -2,6 +2,12 @@
   "models": [
     {
       "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll",
+      "submitted_utc": "20261109T095603839Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/35bdf266875d29caca99b2ccc74d7b2795bda575/docs/visualizations/e2000fs_calib_offset_roll"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_mean3",
       "submitted_utc": "20261109T051332247Z",
       "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/81f4d214d6afa7f2d6c7c9277123d615180f9d80/docs/visualizations/e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_mean3"
