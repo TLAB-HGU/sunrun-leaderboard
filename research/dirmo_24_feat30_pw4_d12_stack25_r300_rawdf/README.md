@@ -45,3 +45,10 @@ Caveats:
 - **Lab gains have not transferred well:** four lab gains under 2 % shrank on the board (the parent: lab -1.78 % for
   the stack, board -0.24 %).
 - **No board selection:** the entry was not chosen by any board number.
+
+## Folder layout in this repository (2026-11-09)
+
+- `experiment.py` — the submitted script, unchanged (single file; data → training → inference).
+- `results/predictions.parquet`, `results/score.json` — the stored leaderboard prediction and its official score record (`tlabtlab/sunrun-lb-store`).
+- `logs/leaderboard.jsonl` — the stored submission record as JSON lines.
+- `weights/` — empty. The trained models and run logs of this entry exist only on jsy301's machine (none on this host or golab2); a rerun of `experiment.py` recreates them.

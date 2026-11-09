@@ -1,9 +1,0 @@
-{"phase": "fit", "period": "F1", "block": 0, "train_origins": 9433, "queries": 2089, "rounds": 900, "inference_seconds_per_fold": 1.4651479167652407e-05, "seconds": 362}
-{"phase": "fit", "period": "F1", "block": 1, "train_origins": 9433, "queries": 2089, "rounds": 900, "inference_seconds_per_fold": 1.5404501687686277e-05, "seconds": 366}
-{"phase": "fit", "period": "F1", "block": 2, "train_origins": 9433, "queries": 2089, "rounds": 900, "inference_seconds_per_fold": 1.7287598373038475e-05, "seconds": 361}
-{"phase": "fit", "period": "F2", "block": 0, "train_origins": 10153, "queries": 2113, "rounds": 900, "inference_seconds_per_fold": 9.866244680505163e-06, "seconds": 372}
-{"phase": "fit", "period": "F2", "block": 1, "train_origins": 10153, "queries": 2113, "rounds": 900, "inference_seconds_per_fold": 1.787581494592846e-05, "seconds": 365}
-{"phase": "fit", "period": "F2", "block": 2, "train_origins": 10153, "queries": 2113, "rounds": 900, "inference_seconds_per_fold": 1.0293309522926688e-05, "seconds": 373}
-{"phase": "fit", "period": "F3", "block": 0, "train_origins": 10889, "queries": 2113, "rounds": 900, "inference_seconds_per_fold": 1.569430714209114e-05, "seconds": 375}
-{"phase": "fit", "period": "F3", "block": 1, "train_origins": 10889, "queries": 2113, "rounds": 900, "inference_seconds_per_fold": 9.05187647528347e-06, "seconds": 379}
-{"phase": "fit", "period": "F3", "block": 2, "train_origins": 10889, "queries": 2113, "rounds": 900, "inference_seconds_per_fold": 9.754305246818971e-06, "seconds": 381}

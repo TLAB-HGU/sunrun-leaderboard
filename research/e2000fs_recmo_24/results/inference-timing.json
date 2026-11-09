@@ -1,8 +1,0 @@
-{
-  "inference_seconds_per_fold": 4.924848008506427e-05,
-  "scope": "model predict call on prepared inputs only; excludes loading, training, feature preparation and output writing; F1/F2 origin-weighted mean",
-  "per_stage": {
-    "f1": 1.946447918483108e-05,
-    "final": 7.171526791556139e-05
-  }
-}

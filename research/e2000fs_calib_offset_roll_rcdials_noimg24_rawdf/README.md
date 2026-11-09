@@ -66,3 +66,10 @@ Each run writes `artifacts/<P>/` per period. It holds `frozen_calibration_t<t>.j
 `prior_predictions_t<t>.npz`, `selection.json`, `timing.json` (fit seconds per block) and the model files.
 `python experiment.py --df <df.parquet | split dir> --out predictions.parquet` reproduces the run. `--smoke` runs
 2 rounds on subsampled rows and is a code test only.
+
+## Folder layout in this repository (2026-11-09)
+
+- `experiment.py` — the submitted script, unchanged (single file; data → training → inference).
+- `results/predictions.parquet`, `results/score.json` — the stored leaderboard prediction and its official score record (`tlabtlab/sunrun-lb-store`).
+- `logs/leaderboard.jsonl` — the stored submission record as JSON lines.
+- `weights/` — empty. The trained models and run logs of this entry exist only on jsy301's machine (none on this host or golab2); a rerun of `experiment.py` recreates them.

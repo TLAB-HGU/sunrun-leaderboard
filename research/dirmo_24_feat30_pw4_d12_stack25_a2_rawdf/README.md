@@ -54,3 +54,10 @@ Caveats:
 - **Not chosen by any board number;** the step and the thresholds were fixed before this submission.
 - **Lab gains have not transferred well** so far (see above); the lab gain here is also small.
 - The exploratory lab numbers in dirmo_lab LOG.md (A2 combined with other arms) are hypotheses, not part of this entry.
+
+## Folder layout in this repository (2026-11-09)
+
+- `experiment.py` — the submitted script, unchanged (single file; data → training → inference).
+- `results/predictions.parquet`, `results/score.json` — the stored leaderboard prediction and its official score record (`tlabtlab/sunrun-lb-store`).
+- `logs/leaderboard.jsonl` — the stored submission record as JSON lines.
+- `weights/` — empty. The trained models and run logs of this entry exist only on jsy301's machine (none on this host or golab2); a rerun of `experiment.py` recreates them.

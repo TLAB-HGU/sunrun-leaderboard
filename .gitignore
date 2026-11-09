@@ -9,60 +9,17 @@
 !/docs/
 !/research
 /research/*
-# Each experiment contributes its single-file script and its results; logs and
-# the publication worktrees (copies of the board repository) stay local.
+# research/{leaderboard experiment}/: experiment.py (the only script), README.md,
+# results/ (predictions and scores) and logs/ (*.jsonl) are tracked; weights/ stays local.
 !/research/*/
 /research/*/*
 !/research/*/experiment.py
-!/research/rerun_df_ffill/*.py
-!/research/rerun_df_ffill/*.md
-!/research/rerun_df_ffill/manifest.json
-!/research/rerun_df_ffill/registry.json
-!/research/noise_loss_axes/*.py
-!/research/noise_loss_axes/*.md
-!/research/noise_loss_axes/*.sh
-!/research/noise_loss_axes/summary.json
-!/research/noise_loss_axes/seed_results.csv
-!/research/offset_roll_complete_ablation_20261106/*.py
-!/research/offset_roll_complete_ablation_20261106/*.md
-!/research/offset_roll_complete_ablation_20261106/*.diff
-!/research/offset_roll_complete_ablation_20261106/assignment.global.json
-!/research/offset_roll_complete_ablation_20261106/allocation.json
-!/research/offset_roll_complete_ablation_20261106/manifest.json
-!/research/offset_roll_complete_ablation_20261106/provenance.json
-!/research/post_ablation_five_axes_20261108/*.py
-!/research/post_ablation_five_axes_20261108/*.md
-!/research/post_ablation_five_axes_20261108/assignment.json
-!/research/post_ablation_five_axes_20261108/registry.json
-!/research/post_ablation_five_axes_20261108/manifest.json
-!/research/post_ablation_five_axes_20261108/candidate_audit.json
-!/research/post_ablation_five_axes_20261108/sota-reference.json
-!/research/drop035_v650_confirm_20261108/*.py
-!/research/drop035_v650_confirm_20261108/*.md
-!/research/drop035_v650_confirm_20261108/*.diff
-!/research/drop035_v650_confirm_20261108/assignment.global.json
-!/research/drop035_v650_confirm_20261108/assignment.json
-!/research/drop035_v650_confirm_20261108/registry.json
-!/research/drop035_v650_confirm_20261108/manifest.json
-!/research/drop035_v650_confirm_20261108/provenance.json
-!/research/drop035_v650_confirm_20261108/configuration-diff.json
+!/research/*/README.md
 !/research/*/results/
-/research/**/worktree/
+!/research/*/logs/
+/research/*/weights/
 /research/**/__pycache__/
-/research/**/.pytest_cache/
-!/research/ultragoal-20261020
-!/research/ultragoal-20261020/**
-!/research/AGENTS.md
-!/research/CUMULATIVE-REPAIR-20261024.md
-!/research/CUMULATIVE-WORKER-CONTRACT.md
-!/research/worker-prompt.md
-!/research/gjc-worker
-!/research/policy-archive
-!/research/policy-archive/**
-!/research/cumulative-repair-verification-20261024.json
-!/research/cumulative-history-audit-20261024.json
-!/research/cumulative-worker-acks-20261024
-!/research/cumulative-worker-acks-20261024/**
+# research/{leaderboard experiment}/: experiment.py (the only script), README.md,
 
 # Submitted experiment catalog and maintenance code; artifacts remain local.
 !/experiments/
@@ -137,75 +94,4 @@
 !/analysis/w50_audit_20261108/*.md
 !/analysis/w50_audit_20261108/*.json
 !/analysis/w50_audit_20261108/*.csv
-!/research/w50_understanding_20261108/*.py
-!/research/w50_understanding_20261108/*.md
-!/research/w50_understanding_20261108/*.json
-!/research/w50_understanding_20261108/*.diff
-!/research/w50_age_retrain_20261108/*.py
-!/research/w50_age_retrain_20261108/*.md
-!/research/w50_age_retrain_20261108/*.json
-!/research/w50_age_retrain_20261108/*.diff
-!/research/w50_roundselect/*.py
-!/research/w50_roundselect/*.md
-!/research/w50_roundselect/*.json
-!/research/w50_roundselect/*.diff
 
-# User-requested joint lag addition: preserve source and compact verification.
-!/research/lag24_48_72_confirm_20261109/*.py
-!/research/lag24_48_72_confirm_20261109/*.md
-!/research/lag24_48_72_confirm_20261109/*.json
-!/research/lag24_48_72_confirm_20261109/*.diff
-
-# Eight-axis additive follow-up: source and compact evidence, not fitted artifacts.
-!/research/followup_feature_axes8/*.py
-!/research/followup_feature_axes8/*.md
-!/research/followup_feature_axes8/*.json
-!/research/followup_feature_axes8/*.diff
-
-# Four-axis successor: compact source and reproducibility receipts.
-!/research/followup_feature_axes4/*.py
-!/research/followup_feature_axes4/*.md
-!/research/followup_feature_axes4/*.json
-!/research/followup_feature_axes4/*.diff
-
-# Run entrypoints linked from the leaderboard code column (seed-42 run of each 3-seed mean).
-!/research/lag24_48_72_confirm_20261109/runs/
-/research/lag24_48_72_confirm_20261109/runs/*
-!/research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s42/
-/research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s42/*
-!/research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s42/experiment.py
-!/research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s42/core.py
-!/research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s42/baseline.py
-!/research/drop035_v650_confirm_20261108/runs/
-/research/drop035_v650_confirm_20261108/runs/*
-!/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/
-/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/*
-!/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/experiment.py
-!/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/core.py
-!/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/baseline.py
-!/research/offset_roll_complete_ablation_20261106/runs/
-/research/offset_roll_complete_ablation_20261106/runs/*
-!/research/offset_roll_complete_ablation_20261106/runs/drop_ch_ch_t035_equatorial_area_s42/
-/research/offset_roll_complete_ablation_20261106/runs/drop_ch_ch_t035_equatorial_area_s42/*
-!/research/offset_roll_complete_ablation_20261106/runs/drop_ch_ch_t035_equatorial_area_s42/experiment.py
-!/research/offset_roll_complete_ablation_20261106/runs/drop_ch_ch_t035_equatorial_area_s42/core.py
-!/research/offset_roll_complete_ablation_20261106/runs/drop_ch_ch_t035_equatorial_area_s42/baseline.py
-!/research/offset_roll_negative_combined_20261107/runs/
-/research/offset_roll_negative_combined_20261107/runs/*
-!/research/offset_roll_negative_combined_20261107/runs/combined_negative_s42/
-/research/offset_roll_negative_combined_20261107/runs/combined_negative_s42/*
-!/research/offset_roll_negative_combined_20261107/runs/combined_negative_s42/experiment.py
-!/research/offset_roll_negative_combined_20261107/runs/combined_negative_s42/core.py
-!/research/offset_roll_negative_combined_20261107/runs/combined_negative_s42/baseline.py
-!/research/offset_roll_complete_ablation_20261106/runs/baseline_s42/
-/research/offset_roll_complete_ablation_20261106/runs/baseline_s42/*
-!/research/offset_roll_complete_ablation_20261106/runs/baseline_s42/experiment.py
-!/research/offset_roll_complete_ablation_20261106/runs/baseline_s42/baseline.py
-!/research/offset_roll_ablation2/lb_publish/
-/research/offset_roll_ablation2/lb_publish/*
-!/research/offset_roll_ablation2/lb_publish/abl2/
-/research/offset_roll_ablation2/lb_publish/abl2/*
-!/research/offset_roll_ablation2/lb_publish/abl2/l1_spectral_c03_s42/
-/research/offset_roll_ablation2/lb_publish/abl2/l1_spectral_c03_s42/*
-!/research/offset_roll_ablation2/lb_publish/abl2/l1_spectral_c03_s42/experiment.py
-!/research/offset_roll_ablation2/lb_publish/abl2/l1_spectral_c03_s42/baseline.py
