@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "tests_passed": 33,
+  "ruff": "F,E9 passed",
+  "compileall": "passed",
+  "source_smoke": "source-smoke.json",
+  "append_smoke": "append-smoke.json",
+  "registered_runs": 12,
+  "publication": "not_required",
+  "utc": "2026-11-09T00:20:03.684162+00:00"
+}

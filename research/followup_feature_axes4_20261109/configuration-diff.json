@@ -1,0 +1,46 @@
+{
+  "retained_parent": "28sources/212expanded, identical values and prefix; recipe unchanged",
+  "axes": {
+    "1": {
+      "added_constant": [
+        "ace_valid_fraction60",
+        "ace_max_gap60_min",
+        "ace_last_valid_age60_min"
+      ],
+      "added_varying": [],
+      "expected_source_count": 31,
+      "expected_expanded_count": 215
+    },
+    "2": {
+      "added_constant": [
+        "ace_speed_density_corr60",
+        "ace_dspeed_ddensity_cov60"
+      ],
+      "added_varying": [],
+      "expected_source_count": 30,
+      "expected_expanded_count": 214
+    },
+    "3": {
+      "added_constant": [
+        "rec26_past72_corr",
+        "rec26_past72_offset_h",
+        "rec27_past72_corr",
+        "rec27_past72_offset_h",
+        "rec28_past72_corr",
+        "rec28_past72_offset_h"
+      ],
+      "added_varying": [],
+      "expected_source_count": 34,
+      "expected_expanded_count": 218
+    },
+    "4": {
+      "added_constant": [
+        "suvi_t045_meridian30_equatorial_d24",
+        "suvi_t045_meridian30_equatorial_d48"
+      ],
+      "added_varying": [],
+      "expected_source_count": 30,
+      "expected_expanded_count": 214
+    }
+  }
+}

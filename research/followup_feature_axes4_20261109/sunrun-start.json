@@ -1,0 +1,3487 @@
+{
+ "snapshots": {
+  "local": {
+   "host": "local",
+   "collected": 1794183604.1018748,
+   "resources": {
+    "nproc": 24,
+    "load1": 18.72216796875,
+    "mem_total": 31.342750549316406,
+    "mem_available": 21.288570404052734,
+    "gpus": [
+     {
+      "index": 0,
+      "used_mib": 0,
+      "total_mib": 24564,
+      "util": 0
+     },
+     {
+      "index": 1,
+      "used_mib": 956,
+      "total_mib": 24564,
+      "util": 97
+     }
+    ]
+   },
+   "experiments": [
+    {
+     "host": "local",
+     "name": "add_030_s42",
+     "out": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/runs/add_030_s42",
+     "pid": 3700707,
+     "elapsed": 8178,
+     "cpu": 338.0,
+     "rss_gib": 1.1147232055664062,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1",
+       "F2"
+      ],
+      "current": "F3",
+      "detail": "full spectral 4/6",
+      "fraction": 0.8888888888888888,
+      "log_mtime": 1794183181.8586059,
+      "exit": null
+     }
+    },
+    {
+     "host": "local",
+     "name": "add_031_s42",
+     "out": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/runs/add_031_s42",
+     "pid": 3707501,
+     "elapsed": 7624,
+     "cpu": 337.0,
+     "rss_gib": 1.1309890747070312,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1",
+       "F2"
+      ],
+      "current": "F3",
+      "detail": "prior spectral 3/6",
+      "fraction": 0.8333333333333334,
+      "log_mtime": 1794183239.1572018,
+      "exit": null
+     }
+    },
+    {
+     "host": "local",
+     "name": "add_032_s42",
+     "out": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/runs/add_032_s42",
+     "pid": 3730458,
+     "elapsed": 5224,
+     "cpu": 327.0,
+     "rss_gib": 1.0815925598144531,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1"
+      ],
+      "current": "F2",
+      "detail": "full spectral 4/6",
+      "fraction": 0.5555555555555555,
+      "log_mtime": 1794183474.4542248,
+      "exit": null
+     }
+    },
+    {
+     "host": "local",
+     "name": "add_033_s42",
+     "out": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/runs/add_033_s42",
+     "pid": 3733734,
+     "elapsed": 4954,
+     "cpu": 337.0,
+     "rss_gib": 1.0680618286132812,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1"
+      ],
+      "current": "F2",
+      "detail": "full spectral 4/6",
+      "fraction": 0.5555555555555555,
+      "log_mtime": 1794183425.3004174,
+      "exit": null
+     }
+    },
+    {
+     "host": "local",
+     "name": "add_034_s42",
+     "out": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/runs/add_034_s42",
+     "pid": 3751912,
+     "elapsed": 2830,
+     "cpu": 330.0,
+     "rss_gib": 0.949615478515625,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [],
+      "current": "F1",
+      "detail": "full spectral 5/6",
+      "fraction": 0.2777777777777778,
+      "log_mtime": 1794183199.3063512,
+      "exit": null
+     }
+    },
+    {
+     "host": "local",
+     "name": "add_035_s42",
+     "out": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/runs/add_035_s42",
+     "pid": 3784907,
+     "elapsed": 86,
+     "cpu": 313.0,
+     "rss_gib": 0.91595458984375,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [],
+      "current": "F1",
+      "detail": "\ud559\uc2b5 \uc911",
+      "fraction": 0.0,
+      "log_mtime": 1794183508.4016504,
+      "exit": null
+     }
+    }
+   ],
+   "services": [
+    {
+     "script": "/home/t-lab01/sunrun/research/post_ablation_five_axes_20261108/controller.py",
+     "pid": 2913379,
+     "elapsed": 105657
+    },
+    {
+     "script": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/host_scheduler.py",
+     "pid": 3230896,
+     "elapsed": 59736
+    },
+    {
+     "script": "/home/t-lab01/sunrun/research/feature_addition_all_20261108/controller.py",
+     "pid": 3231282,
+     "elapsed": 59700
+    },
+    {
+     "script": "/home/t-lab01/sunrun/research/followup_feature_axes8_20261109/prepare_controller.py",
+     "pid": 3492048,
+     "elapsed": 28160
+    },
+    {
+     "script": "/home/t-lab01/sunrun/research/followup_feature_axes8_20261109/remote_scheduler_controller.py",
+     "pid": 3553158,
+     "elapsed": 22390
+    },
+    {
+     "script": "/home/t-lab01/sunrun/research/w50_output_strategy_20261109/collect_controller.py",
+     "pid": 3762743,
+     "elapsed": 1765
+    },
+    {
+     "script": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/prepare_controller.py",
+     "pid": 3787285,
+     "elapsed": 0
+    }
+   ],
+   "campaigns": [
+    {
+     "host": "local",
+     "campaign": "feature_addition_all_20261108",
+     "layout": "controller",
+     "services": [
+      "controller.py",
+      "host_scheduler.py"
+     ],
+     "registered": 408,
+     "counts": {
+      "running": 6,
+      "queued": 373,
+      "submitted": 29,
+      "trained": 0,
+      "failed": 0,
+      "interrupted": 0
+     },
+     "queue": [
+      {
+       "host": "local",
+       "name": "add_036_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_037_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_038_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_039_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_040_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_041_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_042_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_043_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_044_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_045_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_046_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_047_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_048_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_049_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_050_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_051_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_052_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_056_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_057_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_058_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_059_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_060_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_061_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_062_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_063_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_064_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_065_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_066_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_067_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_068_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_069_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_070_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_071_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_072_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_073_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_074_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_075_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_076_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_077_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_078_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_079_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_080_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_081_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_082_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_083_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_084_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_085_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_086_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_087_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_088_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_089_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_090_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_091_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_092_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_093_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_094_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_095_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_096_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_097_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_098_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_099_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_100_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_101_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_102_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_103_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_104_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_105_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_106_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_107_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_108_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_109_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_110_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_111_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_112_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_113_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_114_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_115_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_116_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_117_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_118_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_119_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_120_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_121_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_122_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_123_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_124_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_125_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_126_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_127_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_128_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_129_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_130_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_131_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_132_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_133_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_134_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_135_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_136_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_137_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_138_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_139_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_140_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_141_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_142_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_143_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_144_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_145_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_146_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_147_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_148_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_149_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_150_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_151_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_152_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_153_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_154_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_155_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_156_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_157_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_158_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_159_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_160_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_161_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_162_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_163_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_164_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_165_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_166_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_167_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_168_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_169_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_170_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_171_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_172_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_173_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_174_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_175_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_176_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_177_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_178_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_179_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_180_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_181_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_182_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_183_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_184_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_185_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_186_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_187_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_188_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_189_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_190_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_191_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_192_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_193_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_194_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_195_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_196_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_197_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_198_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_199_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_200_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_201_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_202_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_203_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_204_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_205_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_206_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_207_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_208_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_209_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_210_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_211_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_212_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_213_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_214_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_215_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_216_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_217_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_218_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_219_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_220_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_221_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_222_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_223_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_225_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_226_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_227_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_228_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_229_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_230_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_231_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_232_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_233_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_234_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_235_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_236_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_237_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_238_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_239_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_240_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_241_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_242_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_243_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_244_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_245_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_246_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_247_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_248_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_249_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_250_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_251_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_252_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_253_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_254_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_255_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_256_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_257_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_258_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_259_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_260_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_261_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_262_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_263_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_264_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_265_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_266_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_267_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_268_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_269_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_270_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_271_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_272_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_273_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_274_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_275_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_276_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_277_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_279_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_281_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_282_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_283_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_284_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_285_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_286_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_287_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_288_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_289_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_290_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_291_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_292_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_293_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_294_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_295_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_296_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_297_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_298_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_299_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_300_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_301_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_302_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_303_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_304_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_305_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_306_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_307_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_308_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_309_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_310_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_311_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_312_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_313_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_314_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_315_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_316_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_317_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_318_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_319_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_320_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_321_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_322_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_323_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_324_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_325_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_326_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_327_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_328_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_329_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_330_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_331_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_332_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_333_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_334_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_335_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_336_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_337_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_339_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_341_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_342_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_343_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_344_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_345_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_346_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_347_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_348_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_349_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_350_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_351_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_352_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_353_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_354_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_355_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_356_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_357_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_358_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_359_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_360_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_361_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_362_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_363_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_364_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_365_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_366_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_367_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_368_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_369_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_370_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_371_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_372_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_373_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_374_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_375_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_376_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_377_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_378_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_379_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_380_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_381_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_382_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_383_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_384_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_385_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_386_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_387_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_388_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_389_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_390_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_391_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_392_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_393_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_394_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_395_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_396_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_397_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_398_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_399_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_400_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_401_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_402_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_403_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_404_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_405_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "add_406_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_ace_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_history_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_suvi_disk_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_suvi_grid_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_suvi_t035_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_suvi_t045_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_suvi_t055_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_strip_cover_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_strip_signal_s42",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "group_enlil_s42",
+       "family": "pooling",
+       "state": "queued"
+      }
+     ],
+     "attention": []
+    },
+    {
+     "host": "local",
+     "campaign": "followup_feature_axes4_20261109",
+     "layout": "controller",
+     "services": [
+      "prepare_controller.py"
+     ],
+     "registered": 0,
+     "counts": {
+      "running": 0,
+      "queued": 0,
+      "submitted": 0,
+      "trained": 0,
+      "failed": 0,
+      "interrupted": 0
+     },
+     "queue": [],
+     "attention": []
+    },
+    {
+     "host": "local",
+     "campaign": "followup_feature_axes8_20261109",
+     "layout": "controller",
+     "services": [
+      "prepare_controller.py",
+      "remote_scheduler_controller.py"
+     ],
+     "registered": 0,
+     "counts": {
+      "running": 0,
+      "queued": 0,
+      "submitted": 0,
+      "trained": 0,
+      "failed": 0,
+      "interrupted": 0
+     },
+     "queue": [],
+     "attention": []
+    },
+    {
+     "host": "local",
+     "campaign": "post_ablation_five_axes_20261108",
+     "layout": "controller",
+     "services": [
+      "controller.py"
+     ],
+     "registered": 26,
+     "counts": {
+      "running": 0,
+      "queued": 11,
+      "submitted": 15,
+      "trained": 0,
+      "failed": 0,
+      "interrupted": 0
+     },
+     "queue": [
+      {
+       "host": "local",
+       "name": "tide_s42",
+       "family": "foundation",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "patchtst_s42",
+       "family": "foundation",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "tide_s44",
+       "family": "foundation",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "patchtst_s44",
+       "family": "foundation",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "onset_weight_s44",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "residual_moe_s44",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "residual_uniform_s44",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "exceedance_s44",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "mean_control_s44",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "quantile_width_s44",
+       "family": "pooling",
+       "state": "queued"
+      },
+      {
+       "host": "local",
+       "name": "quantile_control_s44",
+       "family": "pooling",
+       "state": "queued"
+      }
+     ],
+     "attention": []
+    },
+    {
+     "host": "local",
+     "campaign": "w50_output_strategy_20261109",
+     "layout": "controller",
+     "services": [
+      "collect_controller.py"
+     ],
+     "registered": 0,
+     "counts": {
+      "running": 0,
+      "queued": 0,
+      "submitted": 0,
+      "trained": 0,
+      "failed": 0,
+      "interrupted": 0
+     },
+     "queue": [],
+     "attention": []
+    }
+   ],
+   "recent": [
+    {
+     "host": "local",
+     "name": "add_029_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.8666180298626,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173324.632423,
+     "finished": 1794183479.7577736
+    },
+    {
+     "host": "golab2",
+     "name": "axis04_direct_morphology_s44",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.3580404770535,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173383.998176,
+     "finished": 1794180811.417657
+    },
+    {
+     "host": "golab2",
+     "name": "axis04_direct_morphology_s43",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.33826843442385,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173257.066533,
+     "finished": 1794180763.6167705
+    },
+    {
+     "host": "golab2",
+     "name": "axis04_direct_morphology_s42",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 96.9760873525721,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173069.340888,
+     "finished": 1794180576.6166246
+    },
+    {
+     "host": "local",
+     "name": "add_028_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.61739943656971,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794170137.583871,
+     "finished": 1794180493.7207296
+    },
+    {
+     "host": "local",
+     "name": "add_027_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.71600235044563,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794168249.599854,
+     "finished": 1794178169.1952977
+    },
+    {
+     "host": "local",
+     "name": "add_026_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.66869646219463,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794167889.995903,
+     "finished": 1794177891.1059942
+    },
+    {
+     "host": "golab2",
+     "name": "axis03_recurrence_disagreement_s44",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.85722937892132,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794166808.625694,
+     "finished": 1794175884.9263291
+    },
+    {
+     "host": "golab2",
+     "name": "axis03_recurrence_disagreement_s43",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.36794336926657,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794166808.394992,
+     "finished": 1794175843.8381968
+    },
+    {
+     "host": "golab2",
+     "name": "mature_replay",
+     "campaign": "w50_output_strategy_20261109",
+     "family": "output_strategy_smoke",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794175607.830525,
+     "finished": 1794175611.1241286
+    },
+    {
+     "host": "golab2",
+     "name": "axis03_recurrence_disagreement_s42",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.3028328655655,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794166515.2734,
+     "finished": 1794175603.6563792
+    },
+    {
+     "host": "local",
+     "name": "add_025_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.88046088278546,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165293.043771,
+     "finished": 1794175262.4667866
+    },
+    {
+     "host": "local",
+     "name": "status_reduction_probe",
+     "campaign": "w50_ace_aggregation_audit_20261109",
+     "family": "data_validity_diagnostic",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794174719.278983,
+     "finished": 1794174735.9244564
+    },
+    {
+     "host": "local",
+     "name": "add_024_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.6348266972509,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794163888.488602,
+     "finished": 1794174660.2118428
+    },
+    {
+     "host": "local",
+     "name": "january_aggregation_probe",
+     "campaign": "w50_ace_aggregation_audit_20261109",
+     "family": "data_validity_diagnostic",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794174006.630355,
+     "finished": 1794174018.2068963
+    },
+    {
+     "host": "golab2",
+     "name": "mature_smoke",
+     "campaign": "w50_output_strategy_20261109",
+     "family": "output_strategy_smoke",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794173377.011396,
+     "finished": 1794173381.1327875
+    },
+    {
+     "host": "golab2",
+     "name": "axis02_recurrence_spread_s44",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.42384357032462,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165168.745396,
+     "finished": 1794173375.712639
+    },
+    {
+     "host": "local",
+     "name": "add_023_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.68282728256605,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794163681.878752,
+     "finished": 1794173300.6529388
+    },
+    {
+     "host": "golab2",
+     "name": "axis02_recurrence_spread_s43",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.57613157960913,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165127.635666,
+     "finished": 1794173235.1313581
+    },
+    {
+     "host": "golab2",
+     "name": "host_smoke",
+     "campaign": "w50_output_strategy_20261109",
+     "family": "output_strategy_smoke",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794173059.043313,
+     "finished": 1794173062.6892238
+    },
+    {
+     "host": "golab2",
+     "name": "axis02_recurrence_spread_s42",
+     "campaign": "followup_feature_axes8_20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.2985255750274,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165004.295761,
+     "finished": 1794173047.885645
+    },
+    {
+     "host": "local",
+     "name": "add_022_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.80592684820135,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794159971.271187,
+     "finished": 1794169839.7517564
+    },
+    {
+     "host": "local",
+     "name": "add_021_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.72137220903943,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794158946.803465,
+     "finished": 1794168233.5648737
+    },
+    {
+     "host": "local",
+     "name": "add_020_s42",
+     "campaign": "feature_addition_all_20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.20712565357677,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794158772.300782,
+     "finished": 1794167867.4266124
+    }
+   ]
+  },
+  "colab": null,
+  "golab2": {
+   "host": "golab2",
+   "collected": 1794183605.7454312,
+   "resources": {
+    "nproc": 24,
+    "load1": 19.65966796875,
+    "mem_total": 31.239238739013672,
+    "mem_available": 21.6724853515625,
+    "gpus": [
+     {
+      "index": 0,
+      "used_mib": 0,
+      "total_mib": 24564,
+      "util": 0
+     },
+     {
+      "index": 1,
+      "used_mib": 0,
+      "total_mib": 24564,
+      "util": 0
+     }
+    ]
+   },
+   "experiments": [
+    {
+     "host": "golab2",
+     "name": "axis05_suvi_strip_reprojection_s42",
+     "out": "/home/yehwan/sunrun-followup-feature-axes8-20261109/runs/axis05_suvi_strip_reprojection_s42",
+     "pid": 22118,
+     "elapsed": 7969,
+     "cpu": 334.0,
+     "rss_gib": 1.684814453125,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1",
+       "F2"
+      ],
+      "current": "F3",
+      "detail": "prior spectral 2/6",
+      "fraction": 0.7777777777777778,
+      "log_mtime": 1794183311.1171405,
+      "exit": null
+     }
+    },
+    {
+     "host": "golab2",
+     "name": "axis05_suvi_strip_reprojection_s43",
+     "out": "/home/yehwan/sunrun-followup-feature-axes8-20261109/runs/axis05_suvi_strip_reprojection_s43",
+     "pid": 22454,
+     "elapsed": 7740,
+     "cpu": 319.0,
+     "rss_gib": 1.5417671203613281,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1",
+       "F2"
+      ],
+      "current": "F3",
+      "detail": "\ud559\uc2b5 \uc911",
+      "fraction": 0.6666666666666666,
+      "log_mtime": 1794182960.609674,
+      "exit": null
+     }
+    },
+    {
+     "host": "golab2",
+     "name": "axis05_suvi_strip_reprojection_s44",
+     "out": "/home/yehwan/sunrun-followup-feature-axes8-20261109/runs/axis05_suvi_strip_reprojection_s44",
+     "pid": 22528,
+     "elapsed": 7715,
+     "cpu": 325.0,
+     "rss_gib": 1.7028923034667969,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [
+       "F1",
+       "F2"
+      ],
+      "current": "F3",
+      "detail": "prior spectral 1/6",
+      "fraction": 0.7222222222222222,
+      "log_mtime": 1794183380.667564,
+      "exit": null
+     }
+    },
+    {
+     "host": "golab2",
+     "name": "axis06_ace_minute_variability_s42",
+     "out": "/home/yehwan/sunrun-followup-feature-axes8-20261109/runs/axis06_ace_minute_variability_s42",
+     "pid": 31190,
+     "elapsed": 1971,
+     "cpu": 322.0,
+     "rss_gib": 1.1456756591796875,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [],
+      "current": "F1",
+      "detail": "full spectral 4/6",
+      "fraction": 0.2222222222222222,
+      "log_mtime": 1794183259.7060483,
+      "exit": null
+     }
+    },
+    {
+     "host": "golab2",
+     "name": "axis06_ace_minute_variability_s43",
+     "out": "/home/yehwan/sunrun-followup-feature-axes8-20261109/runs/axis06_ace_minute_variability_s43",
+     "pid": 31197,
+     "elapsed": 1971,
+     "cpu": 326.0,
+     "rss_gib": 1.2310752868652344,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [],
+      "current": "F1",
+      "detail": "full spectral 4/6",
+      "fraction": 0.2222222222222222,
+      "log_mtime": 1794183208.6928456,
+      "exit": null
+     }
+    },
+    {
+     "host": "golab2",
+     "name": "axis06_ace_minute_variability_s44",
+     "out": "/home/yehwan/sunrun-followup-feature-axes8-20261109/runs/axis06_ace_minute_variability_s44",
+     "pid": 31205,
+     "elapsed": 1970,
+     "cpu": 324.0,
+     "rss_gib": 1.1125068664550781,
+     "device": "cpu",
+     "threads": "4",
+     "cuda_env": "",
+     "family": "pooling",
+     "progress": {
+      "done": [],
+      "current": "F1",
+      "detail": "full spectral 4/6",
+      "fraction": 0.2222222222222222,
+      "log_mtime": 1794183245.2071612,
+      "exit": null
+     }
+    }
+   ],
+   "services": [
+    {
+     "script": "/home/yehwan/sunrun-followup-feature-axes8-20261109/host_scheduler.py",
+     "pid": 1384,
+     "elapsed": 24259
+    },
+    {
+     "script": "/home/yehwan/w50-output-strategy-workspace-20261109/research/w50_output_strategy_20261109/admission_scheduler_controller.py",
+     "pid": 31312,
+     "elapsed": 1950
+    }
+   ],
+   "campaigns": [
+    {
+     "host": "golab2",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "layout": "scheduler",
+     "services": [
+      "host_scheduler.py"
+     ],
+     "registered": 21,
+     "counts": {
+      "running": 6,
+      "queued": 3,
+      "trained_validated": 12,
+      "failed": 0,
+      "cancelled_by_user": 0
+     },
+     "queue": [
+      {
+       "host": "golab2",
+       "name": "axis07_ace_minute_trend_s42",
+       "family": "pooling",
+       "state": "waiting"
+      },
+      {
+       "host": "golab2",
+       "name": "axis07_ace_minute_trend_s43",
+       "family": "pooling",
+       "state": "waiting"
+      },
+      {
+       "host": "golab2",
+       "name": "axis07_ace_minute_trend_s44",
+       "family": "pooling",
+       "state": "waiting"
+      }
+     ],
+     "attention": []
+    },
+    {
+     "host": "golab2",
+     "campaign": "w50_output_strategy_20261109",
+     "layout": "scheduler",
+     "services": [
+      "admission_scheduler_controller.py"
+     ],
+     "registered": 3,
+     "counts": {
+      "running": 0,
+      "queued": 3,
+      "trained_validated": 0,
+      "failed": 0,
+      "cancelled_by_user": 0
+     },
+     "queue": [
+      {
+       "host": "golab2",
+       "name": "output_strategy_s42",
+       "family": "pooling",
+       "state": "waiting"
+      },
+      {
+       "host": "golab2",
+       "name": "output_strategy_s43",
+       "family": "pooling",
+       "state": "waiting"
+      },
+      {
+       "host": "golab2",
+       "name": "output_strategy_s44",
+       "family": "pooling",
+       "state": "waiting"
+      }
+     ],
+     "attention": []
+    }
+   ],
+   "recent": [
+    {
+     "host": "golab2",
+     "name": "axis04_direct_morphology_s44",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.3580404770535,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173383.998176,
+     "finished": 1794180811.417657
+    },
+    {
+     "host": "golab2",
+     "name": "axis04_direct_morphology_s43",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.33826843442385,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173257.066533,
+     "finished": 1794180763.6167705
+    },
+    {
+     "host": "golab2",
+     "name": "axis04_direct_morphology_s42",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 96.9760873525721,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794173069.340888,
+     "finished": 1794180576.6166246
+    },
+    {
+     "host": "golab2",
+     "name": "axis03_recurrence_disagreement_s44",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.85722937892132,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794166808.625694,
+     "finished": 1794175884.9263291
+    },
+    {
+     "host": "golab2",
+     "name": "axis03_recurrence_disagreement_s43",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.36794336926657,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794166808.394992,
+     "finished": 1794175843.8381968
+    },
+    {
+     "host": "golab2",
+     "name": "mature_replay",
+     "campaign": "sunrun-w50-output-strategy-20261109",
+     "family": "output_strategy_smoke",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794175607.830525,
+     "finished": 1794175611.1241286
+    },
+    {
+     "host": "golab2",
+     "name": "axis03_recurrence_disagreement_s42",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.3028328655655,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794166515.2734,
+     "finished": 1794175603.6563792
+    },
+    {
+     "host": "golab2",
+     "name": "mature_smoke",
+     "campaign": "sunrun-w50-output-strategy-20261109",
+     "family": "output_strategy_smoke",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794173377.011396,
+     "finished": 1794173381.1327875
+    },
+    {
+     "host": "golab2",
+     "name": "axis02_recurrence_spread_s44",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.42384357032462,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165168.745396,
+     "finished": 1794173375.712639
+    },
+    {
+     "host": "golab2",
+     "name": "axis02_recurrence_spread_s43",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.57613157960913,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165127.635666,
+     "finished": 1794173235.1313581
+    },
+    {
+     "host": "golab2",
+     "name": "host_smoke",
+     "campaign": "sunrun-w50-output-strategy-20261109",
+     "family": "output_strategy_smoke",
+     "exit": "0",
+     "score": null,
+     "submitted": false,
+     "local_scored": false,
+     "no_publish": true,
+     "started": 1794173059.043313,
+     "finished": 1794173062.6892238
+    },
+    {
+     "host": "golab2",
+     "name": "axis02_recurrence_spread_s42",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.2985255750274,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794165004.295761,
+     "finished": 1794173047.885645
+    },
+    {
+     "host": "golab2",
+     "name": "axis01_daily_shape_s44",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.85245465343766,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794159190.208606,
+     "finished": 1794166802.1853588
+    },
+    {
+     "host": "golab2",
+     "name": "axis01_daily_shape_s42",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.32273197629974,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794159189.76146,
+     "finished": 1794166779.221943
+    },
+    {
+     "host": "golab2",
+     "name": "axis01_daily_shape_s43",
+     "campaign": "sunrun-followup-feature-axes8-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.5659725422325,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794159189.985186,
+     "finished": 1794166506.5152695
+    },
+    {
+     "host": "golab2",
+     "name": "timeweight180_s43",
+     "campaign": "sunrun-w50-timeweight-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 97.70395867488078,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794158469.010153,
+     "finished": 1794165158.0004137
+    },
+    {
+     "host": "golab2",
+     "name": "timeweight180_s44",
+     "campaign": "sunrun-w50-timeweight-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.99841135833496,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794158471.015413,
+     "finished": 1794165107.007416
+    },
+    {
+     "host": "golab2",
+     "name": "timeweight180_s42",
+     "campaign": "sunrun-w50-timeweight-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.47201366751807,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794158467.003161,
+     "finished": 1794164993.6565242
+    },
+    {
+     "host": "golab2",
+     "name": "roundselect_s42",
+     "campaign": "sunrun-w50-roundselect-20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 98.94406819690332,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794150532.206812,
+     "finished": 1794155102.1364927
+    },
+    {
+     "host": "golab2",
+     "name": "roundselect_s43",
+     "campaign": "sunrun-w50-roundselect-20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 99.5352074794667,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794150534.215198,
+     "finished": 1794155093.929946
+    },
+    {
+     "host": "golab2",
+     "name": "roundselect_s44",
+     "campaign": "sunrun-w50-roundselect-20261108",
+     "family": "pooling",
+     "exit": "0",
+     "score": 99.72224550591471,
+     "submitted": false,
+     "local_scored": true,
+     "no_publish": true,
+     "started": 1794150536.224502,
+     "finished": 1794155052.0606236
+    },
+    {
+     "host": "golab2",
+     "name": "lag24_48_72_s43",
+     "campaign": "sunrun-lag24-48-72-confirm-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 96.90637057866141,
+     "submitted": true,
+     "local_scored": false,
+     "no_publish": false,
+     "started": 1794148265.368602,
+     "finished": 1794154009.9506066
+    },
+    {
+     "host": "golab2",
+     "name": "lag24_48_72_s42",
+     "campaign": "sunrun-lag24-48-72-confirm-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 96.2530713882869,
+     "submitted": true,
+     "local_scored": false,
+     "no_publish": false,
+     "started": 1794148265.146618,
+     "finished": 1794153985.5631623
+    },
+    {
+     "host": "golab2",
+     "name": "lag24_48_72_s44",
+     "campaign": "sunrun-lag24-48-72-confirm-20261109",
+     "family": "pooling",
+     "exit": "0",
+     "score": 96.21114220556612,
+     "submitted": true,
+     "local_scored": false,
+     "no_publish": false,
+     "started": 1794148265.586024,
+     "finished": 1794153969.013751
+    }
+   ]
+  }
+ },
+ "errors": {}
+}

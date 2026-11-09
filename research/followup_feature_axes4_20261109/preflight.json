@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "local": {
+    "input_identities": {
+      "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis1.parquet": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis1.parquet",
+        "bytes": 225992853,
+        "mtime_ns": 1794210581419544248
+      },
+      "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis2.parquet": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis2.parquet",
+        "bytes": 226225072,
+        "mtime_ns": 1794210645966004526
+      },
+      "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis3.parquet": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis3.parquet",
+        "bytes": 226708485,
+        "mtime_ns": 1794210713168528070
+      },
+      "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis4.parquet": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/input/axis4.parquet",
+        "bytes": 226286752,
+        "mtime_ns": 1794210791430958778
+      }
+    },
+    "source_identity": {
+      "core.py": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/core.py",
+        "bytes": 20637,
+        "mtime_ns": 1794183306462516550
+      },
+      "baseline.py": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/baseline.py",
+        "bytes": 3674,
+        "mtime_ns": 1794183306462630989
+      },
+      "competition.py": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/competition.py",
+        "bytes": 9521,
+        "mtime_ns": 1794183306462740305
+      },
+      "inventory.json": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/inventory.json",
+        "bytes": 996785,
+        "mtime_ns": 1794183409939587812
+      },
+      "replay.py": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/replay.py",
+        "bytes": 2152,
+        "mtime_ns": 1794183306463054794
+      },
+      "scheduler_support.py": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/scheduler_support.py",
+        "bytes": 12918,
+        "mtime_ns": 1794183306463215669
+      },
+      "host_scheduler.py": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/host_scheduler.py",
+        "bytes": 8412,
+        "mtime_ns": 1794183306463398389
+      },
+      "assignment.json": {
+        "path": "/home/t-lab01/sunrun/research/followup_feature_axes4_20261109/assignment.json",
+        "bytes": 7887,
+        "mtime_ns": 1794210835946130974
+      }
+    }
+  },
+  "checks": "parent locked, ready feature cache, original-column equality during local augmentation (input/axis*.validation.json)",
+  "utc": "2026-11-09T07:53:55.947463+00:00"
+}

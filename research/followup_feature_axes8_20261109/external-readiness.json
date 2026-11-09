@@ -1,0 +1,81 @@
+{
+  "generated_utc": "2026-11-08T15:32:20.327753+00:00",
+  "target_columns_read": false,
+  "axes": {
+    "6": {
+      "axis": 6,
+      "ready": true,
+      "state": "ready",
+      "blocked_reason": null,
+      "providers": [
+        "NOAA SWPC ACE SWEPAM daily text"
+      ],
+      "cache_root": "/home/t-lab01/sunrun/data-v2/raw/ACE/daily-txt/swepam",
+      "wanted_count": 1458,
+      "available_count": 1458,
+      "missing_count": 0,
+      "missing_paths": [],
+      "bytes": 154526088,
+      "coverage_check": "nonempty daily files; not a guarantee of valid minute rows",
+      "required_start": "2022-09-30 23:00:00+00:00",
+      "required_end": "2026-09-26 23:00:00+00:00",
+      "collector_processes": [],
+      "collector_status": "not_running",
+      "collector_command": ".venv/bin/python research/ace_1m_to_hourly_20261108/experiment.py fetch --start 2022-09-30 --end 2026-09-26 --device cpu --threads 1",
+      "availability_assumption": "sample timestamp +4min; historical daily publication is not a receipt log"
+    },
+    "7": {
+      "axis": 7,
+      "ready": true,
+      "state": "ready",
+      "blocked_reason": null,
+      "providers": [
+        "NOAA SWPC ACE SWEPAM daily text"
+      ],
+      "cache_root": "/home/t-lab01/sunrun/data-v2/raw/ACE/daily-txt/swepam",
+      "wanted_count": 1458,
+      "available_count": 1458,
+      "missing_count": 0,
+      "missing_paths": [],
+      "bytes": 154526088,
+      "coverage_check": "nonempty daily files; not a guarantee of valid minute rows",
+      "required_start": "2022-09-30 23:00:00+00:00",
+      "required_end": "2026-09-26 23:00:00+00:00",
+      "collector_processes": [],
+      "collector_status": "not_running",
+      "collector_command": ".venv/bin/python research/ace_1m_to_hourly_20261108/experiment.py fetch --start 2022-09-30 --end 2026-09-26 --device cpu --threads 1",
+      "availability_assumption": "sample timestamp +4min; historical daily publication is not a receipt log"
+    },
+    "8": {
+      "axis": 8,
+      "ready": false,
+      "state": "blocked",
+      "blocked_reason": "immutable_as_issued_body_provenance_unproven",
+      "providers": [
+        "NASA DONKI official issued notification archive"
+      ],
+      "archive_root": "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive",
+      "wanted_count": 49,
+      "missing_count": 9,
+      "missing_paths": [
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-01.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-02.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-03.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-04.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-05.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-06.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-07.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-08.json",
+        "/home/t-lab01/sunrun/analysis/w50_audit_20261108/notification_archive/2026-09.json"
+      ],
+      "required_start": "2022-09-28 00:00:00+00:00",
+      "required_end": "2026-09-26 23:00:00+00:00",
+      "collector_status": "not_running",
+      "readiness_requirements": [
+        "All required archive months and receipt metadata",
+        "Evidence that historical issued body versions were not retrospectively overwritten"
+      ],
+      "notes": "Issue time and freshly downloaded archive receipt alone do not establish immutable historical body."
+    }
+  }
+}

@@ -1,0 +1,602 @@
+{
+  "axis08_issued_cme_kinematics_s42": {
+    "state": "blocked_source",
+    "reason": "Historical issued-body provenance unproven"
+  },
+  "axis08_issued_cme_kinematics_s43": {
+    "state": "blocked_source",
+    "reason": "Historical issued-body provenance unproven"
+  },
+  "axis08_issued_cme_kinematics_s44": {
+    "state": "blocked_source",
+    "reason": "Historical issued-body provenance unproven"
+  },
+  "axis01_daily_shape_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T17:33:09.761460+00:00",
+    "finished_utc": "2026-11-08T19:40:03.422450+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.32273197629974,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T19:40:03.421805+00:00"
+    }
+  },
+  "axis01_daily_shape_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T17:33:09.985186+00:00",
+    "finished_utc": "2026-11-08T19:35:15.034135+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.5659725422325,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T19:35:15.033118+00:00"
+    }
+  },
+  "axis01_daily_shape_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T17:33:10.208606+00:00",
+    "finished_utc": "2026-11-08T19:40:08.159464+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.85245465343766,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T19:40:08.158646+00:00"
+    }
+  },
+  "axis02_recurrence_spread_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T19:10:04.295761+00:00",
+    "finished_utc": "2026-11-08T21:24:29.091544+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.2985255750274,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T21:24:29.090200+00:00"
+    }
+  },
+  "axis02_recurrence_spread_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T19:12:07.635666+00:00",
+    "finished_utc": "2026-11-08T21:27:36.813155+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.57613157960913,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T21:27:36.811638+00:00"
+    }
+  },
+  "axis02_recurrence_spread_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T19:12:48.745396+00:00",
+    "finished_utc": "2026-11-08T21:29:43.748280+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.42384357032462,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T21:29:43.747210+00:00"
+    }
+  },
+  "axis03_recurrence_disagreement_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T19:35:15.273400+00:00",
+    "finished_utc": "2026-11-08T22:06:56.001072+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.3028328655655,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T22:06:55.999869+00:00"
+    }
+  },
+  "axis03_recurrence_disagreement_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T19:40:08.394992+00:00",
+    "finished_utc": "2026-11-08T22:11:04.517938+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.36794336926657,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T22:11:04.516974+00:00"
+    }
+  },
+  "axis03_recurrence_disagreement_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T19:40:08.625694+00:00",
+    "finished_utc": "2026-11-08T22:11:30.418129+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.85722937892132,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T22:11:30.415670+00:00"
+    }
+  },
+  "axis04_direct_morphology_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T21:24:29.340888+00:00",
+    "finished_utc": "2026-11-08T23:29:52.794389+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 96.9760873525721,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T23:29:52.793259+00:00"
+    }
+  },
+  "axis04_direct_morphology_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T21:27:37.066533+00:00",
+    "finished_utc": "2026-11-08T23:33:00.443425+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.33826843442385,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T23:33:00.442487+00:00"
+    }
+  },
+  "axis04_direct_morphology_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T21:29:43.998176+00:00",
+    "finished_utc": "2026-11-08T23:33:45.403276+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.3580404770535,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-08T23:33:45.402453+00:00"
+    }
+  },
+  "axis05_suvi_strip_reprojection_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T22:07:16.482393+00:00",
+    "finished_utc": "2026-11-09T00:57:51.607956+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.2845159131007,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T00:57:51.607057+00:00"
+    }
+  },
+  "axis05_suvi_strip_reprojection_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T22:11:04.773230+00:00",
+    "finished_utc": "2026-11-09T01:12:54.208788+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.21566376584227,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T01:12:54.208179+00:00"
+    }
+  },
+  "axis05_suvi_strip_reprojection_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T22:11:30.667669+00:00",
+    "finished_utc": "2026-11-09T01:09:25.300540+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 97.23415902625558,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T01:09:25.299043+00:00"
+    }
+  },
+  "axis06_ace_minute_variability_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T23:47:14.464111+00:00",
+    "finished_utc": "2026-11-09T01:52:06.664246+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.27273374448698,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T01:52:06.663009+00:00"
+    }
+  },
+  "axis06_ace_minute_variability_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T23:47:14.696783+00:00",
+    "finished_utc": "2026-11-09T01:53:12.813357+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.5049224381359,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T01:53:12.812152+00:00"
+    }
+  },
+  "axis06_ace_minute_variability_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-08T23:47:14.926975+00:00",
+    "finished_utc": "2026-11-09T01:54:59.579890+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.68804861517569,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T01:54:59.577764+00:00"
+    }
+  },
+  "axis07_ace_minute_trend_s42": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-09T01:09:25.536572+00:00",
+    "finished_utc": "2026-11-09T03:06:48.657681+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.37378842510356,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T03:06:48.656576+00:00"
+    }
+  },
+  "axis07_ace_minute_trend_s43": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-09T01:53:13.053169+00:00",
+    "finished_utc": "2026-11-09T03:36:34.424623+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.95921933258415,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T03:36:34.423624+00:00"
+    }
+  },
+  "axis07_ace_minute_trend_s44": {
+    "state": "trained_validated",
+    "started_utc": "2026-11-09T01:54:59.815797+00:00",
+    "finished_utc": "2026-11-09T03:38:58.281559+00:00",
+    "validation": {
+      "rows": 454680,
+      "total_s": 98.8069746987266,
+      "official_score_recomputed": true,
+      "saved_model_replay": {
+        "F1": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F2": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        },
+        "F3": {
+          "max_abs_error": 0.0,
+          "boosters": 3,
+          "rounds": 900
+        }
+      },
+      "validated_utc": "2026-11-09T03:38:58.280946+00:00"
+    }
+  }
+}

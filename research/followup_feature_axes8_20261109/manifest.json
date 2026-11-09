@@ -1,0 +1,25 @@
+{
+  "campaign": "followup_feature_axes8_20261109",
+  "registered_axes": 8,
+  "registered_training_runs": 24,
+  "ready_axes": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "blocked_axes": [
+    8
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "parent_policy": "Complete lag-combination gate: adopt if passed, otherwise retain D",
+  "publication": "not_required",
+  "preregistered_utc": "2026-11-08T15:46:03.773256+00:00"
+}
