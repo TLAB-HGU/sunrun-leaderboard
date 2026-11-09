@@ -1,0 +1,13 @@
+{
+  "campaign_root": "/home/t-lab01/sunrun/research/followup_feature_axes4",
+  "tmux_session": "sraxes4-analysis-controller-20261109",
+  "tmux_session_id": "$451",
+  "started_utc": "2026-11-09T07:54:27.068654+00:00",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/research/followup_feature_axes4/local_analysis_controller.py",
+    "--root",
+    "/home/t-lab01/sunrun/research/followup_feature_axes4"
+  ]
+}

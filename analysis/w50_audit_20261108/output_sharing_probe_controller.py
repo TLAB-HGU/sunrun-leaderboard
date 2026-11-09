@@ -237,7 +237,7 @@ def main(argv=None):
         raise ValueError('Pinned XGBoost2.1.4 CPU1 requires CUDA_VISIBLE_DEVICES=""')
     if (args.out / 'report.json').exists() or (args.out / 'complete.json').exists() or (args.out / 'contexts').exists():
         raise ValueError('Existing completed or partial probe output must not be overwritten')
-    runner = module(REPO / 'research/w50_roundselect_20261108/experiment.py', 'sharing_parent_loader')
+    runner = module(REPO / 'research/w50_roundselect/experiment.py', 'sharing_parent_loader')
     math_core = module(ROOT / 'output_sharing_probe_math.py', 'sharing_probe_math')
     baseline, core = runner.parent_modules()
     config = runner.fixed_config(core, 42, 'drop035_v650_s42')
@@ -262,7 +262,7 @@ def main(argv=None):
               'reconstructed_configuration': reconstructed, 'source_receipts': sources, 'data': data_receipt,
               'receipts': {name: identity(path) for name, path in [('controller', Path(__file__)),
                            ('math', ROOT / 'output_sharing_probe_math.py'),
-                           ('parent_loader', REPO / 'research/w50_roundselect_20261108/experiment.py'),
+                           ('parent_loader', REPO / 'research/w50_roundselect/experiment.py'),
                            ('configuration', CONFIG_RECEIPT),
                            ('sealed_training_probe', FIT_RECEIPT), ('strategy', ROOT / 'output_sharing_probe_strategy.md'),
                            ('mechanism_evidence', ROOT / 'output_sharing_mechanism_evidence.json')]}}

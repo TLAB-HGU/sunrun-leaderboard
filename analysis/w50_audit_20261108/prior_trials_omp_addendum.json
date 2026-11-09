@@ -79,10 +79,10 @@
       }
     },
     {
-      "campaign": "w50_roundselect_20261108",
+      "campaign": "w50_roundselect",
       "runs": [
         {
-          "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/runs/roundselect_s42/train.sh",
+          "path": "/home/t-lab01/sunrun/research/w50_roundselect/runs/roundselect_s42/train.sh",
           "bytes": 1246,
           "mtime_ns": 1794150532207073450,
           "experiment": "roundselect_s42",
@@ -96,10 +96,10 @@
           "cli_threads": 4,
           "command_matches_preserved_launch_json": true,
           "xgboost_version_from_provenance": "2.1.4",
-          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/experiment.py --experiment roundselect_s42 --seed 42 --out /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s42 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s42/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s42/train.exit.tmp\nmv -- /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s42/train.exit.tmp /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s42/train.exit\nexit \"$code\"\n"
+          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/experiment.py --experiment roundselect_s42 --seed 42 --out /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s42 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s42/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s42/train.exit.tmp\nmv -- /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s42/train.exit.tmp /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s42/train.exit\nexit \"$code\"\n"
         },
         {
-          "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/runs/roundselect_s43/train.sh",
+          "path": "/home/t-lab01/sunrun/research/w50_roundselect/runs/roundselect_s43/train.sh",
           "bytes": 1246,
           "mtime_ns": 1794150534215342760,
           "experiment": "roundselect_s43",
@@ -113,10 +113,10 @@
           "cli_threads": 4,
           "command_matches_preserved_launch_json": true,
           "xgboost_version_from_provenance": "2.1.4",
-          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/experiment.py --experiment roundselect_s43 --seed 43 --out /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s43 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s43/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s43/train.exit.tmp\nmv -- /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s43/train.exit.tmp /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s43/train.exit\nexit \"$code\"\n"
+          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/experiment.py --experiment roundselect_s43 --seed 43 --out /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s43 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s43/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s43/train.exit.tmp\nmv -- /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s43/train.exit.tmp /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s43/train.exit\nexit \"$code\"\n"
         },
         {
-          "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/runs/roundselect_s44/train.sh",
+          "path": "/home/t-lab01/sunrun/research/w50_roundselect/runs/roundselect_s44/train.sh",
           "bytes": 1246,
           "mtime_ns": 1794150536224887371,
           "experiment": "roundselect_s44",
@@ -130,7 +130,7 @@
           "cli_threads": 4,
           "command_matches_preserved_launch_json": true,
           "xgboost_version_from_provenance": "2.1.4",
-          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/experiment.py --experiment roundselect_s44 --seed 44 --out /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s44 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s44/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s44/train.exit.tmp\nmv -- /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s44/train.exit.tmp /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect_20261108/runs/roundselect_s44/train.exit\nexit \"$code\"\n"
+          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/experiment.py --experiment roundselect_s44 --seed 44 --out /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s44 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s44/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s44/train.exit.tmp\nmv -- /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s44/train.exit.tmp /home/yehwan/w50-roundselect-workspace-20261108/research/w50_roundselect/runs/roundselect_s44/train.exit\nexit \"$code\"\n"
         }
       ],
       "evidence_grade": "B: preserved actual launch script + matching launch command + source snapshots; no captured per-process environment/ICV",
@@ -143,16 +143,16 @@
         "adopted": false
       },
       "decision_source": {
-        "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/results.json",
+        "path": "/home/t-lab01/sunrun/research/w50_roundselect/results.json",
         "bytes": 592501,
         "mtime_ns": 1794155313818658762
       }
     },
     {
-      "campaign": "w50_timeweight_20261109",
+      "campaign": "w50_timeweight",
       "runs": [
         {
-          "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/runs/timeweight180_s42/train.sh",
+          "path": "/home/t-lab01/sunrun/research/w50_timeweight/runs/timeweight180_s42/train.sh",
           "bytes": 1372,
           "mtime_ns": 1794158467003269870,
           "experiment": "timeweight180_s42",
@@ -166,10 +166,10 @@
           "cli_threads": 4,
           "command_matches_preserved_launch_json": true,
           "xgboost_version_from_provenance": "2.1.4",
-          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/experiment.py --experiment timeweight180_s42 --seed 42 --out /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s42 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --original-labels /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/input/original_labels.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s42/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s42/train.exit.tmp\nmv -- /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s42/train.exit.tmp /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s42/train.exit\nexit \"$code\"\n"
+          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/experiment.py --experiment timeweight180_s42 --seed 42 --out /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s42 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --original-labels /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/input/original_labels.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s42/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s42/train.exit.tmp\nmv -- /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s42/train.exit.tmp /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s42/train.exit\nexit \"$code\"\n"
         },
         {
-          "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/runs/timeweight180_s43/train.sh",
+          "path": "/home/t-lab01/sunrun/research/w50_timeweight/runs/timeweight180_s43/train.sh",
           "bytes": 1372,
           "mtime_ns": 1794158469010285552,
           "experiment": "timeweight180_s43",
@@ -183,10 +183,10 @@
           "cli_threads": 4,
           "command_matches_preserved_launch_json": true,
           "xgboost_version_from_provenance": "2.1.4",
-          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/experiment.py --experiment timeweight180_s43 --seed 43 --out /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s43 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --original-labels /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/input/original_labels.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s43/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s43/train.exit.tmp\nmv -- /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s43/train.exit.tmp /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s43/train.exit\nexit \"$code\"\n"
+          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/experiment.py --experiment timeweight180_s43 --seed 43 --out /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s43 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --original-labels /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/input/original_labels.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s43/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s43/train.exit.tmp\nmv -- /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s43/train.exit.tmp /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s43/train.exit\nexit \"$code\"\n"
         },
         {
-          "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/runs/timeweight180_s44/train.sh",
+          "path": "/home/t-lab01/sunrun/research/w50_timeweight/runs/timeweight180_s44/train.sh",
           "bytes": 1372,
           "mtime_ns": 1794158471015700673,
           "experiment": "timeweight180_s44",
@@ -200,7 +200,7 @@
           "cli_threads": 4,
           "command_matches_preserved_launch_json": true,
           "xgboost_version_from_provenance": "2.1.4",
-          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/experiment.py --experiment timeweight180_s44 --seed 44 --out /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s44 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --original-labels /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/input/original_labels.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s44/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s44/train.exit.tmp\nmv -- /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s44/train.exit.tmp /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight_20261109/runs/timeweight180_s44/train.exit\nexit \"$code\"\n"
+          "script_content": "#!/bin/bash\nset -u\ncd /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight\nexport CUDA_VISIBLE_DEVICES=\"\" OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1\n/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python -u /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/experiment.py --experiment timeweight180_s44 --seed 44 --out /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s44 --device cpu --threads 4 --data /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet --original-labels /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/input/original_labels.parquet --observations /home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s44/train.log 2>&1\ncode=$?\nprintf \"%s\\n\" \"$code\" > /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s44/train.exit.tmp\nmv -- /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s44/train.exit.tmp /home/yehwan/w50-timeweight-workspace-20261109/research/w50_timeweight/runs/timeweight180_s44/train.exit\nexit \"$code\"\n"
         }
       ],
       "evidence_grade": "B: preserved actual launch script + matching launch command + source snapshots; no captured per-process environment/ICV",
@@ -213,7 +213,7 @@
         "adopted": false
       },
       "decision_source": {
-        "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/results.json",
+        "path": "/home/t-lab01/sunrun/research/w50_timeweight/results.json",
         "bytes": 592076,
         "mtime_ns": 1794166206258252248
       }
@@ -300,14 +300,14 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/baseline.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/baseline.py",
       "bytes": 6702,
       "mtime_ns": 1794106493062679052,
       "thread_related_lines": [],
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/core.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/core.py",
       "bytes": 20521,
       "mtime_ns": 1794106493062557697,
       "thread_related_lines": [
@@ -335,7 +335,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/code_snapshot/executed_workspace/research/w50_roundselect_20261108/experiment.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/code_snapshot/executed_workspace/research/w50_roundselect/experiment.py",
       "bytes": 17478,
       "mtime_ns": 1794149704890089511,
       "thread_related_lines": [
@@ -363,7 +363,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/code_snapshot/experiment.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/code_snapshot/experiment.py",
       "bytes": 17478,
       "mtime_ns": 1794149704890089455,
       "thread_related_lines": [
@@ -391,7 +391,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/code_snapshot/host_scheduler.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/code_snapshot/host_scheduler.py",
       "bytes": 10295,
       "mtime_ns": 1794149999659782994,
       "thread_related_lines": [
@@ -403,7 +403,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/experiment.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/experiment.py",
       "bytes": 17478,
       "mtime_ns": 1794149704890089455,
       "thread_related_lines": [
@@ -431,7 +431,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/host_scheduler.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/host_scheduler.py",
       "bytes": 10322,
       "mtime_ns": 1794153606877041961,
       "thread_related_lines": [
@@ -443,14 +443,14 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/baseline.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/baseline.py",
       "bytes": 6702,
       "mtime_ns": 1794106493062679159,
       "thread_related_lines": [],
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/core.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/core.py",
       "bytes": 20521,
       "mtime_ns": 1794106493062557604,
       "thread_related_lines": [
@@ -478,14 +478,14 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/baseline.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/baseline.py",
       "bytes": 6702,
       "mtime_ns": 1794106493062679159,
       "thread_related_lines": [],
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/core.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/executed_workspace/research/drop035_v650_confirm_20261108/core.py",
       "bytes": 20521,
       "mtime_ns": 1794106493062557604,
       "thread_related_lines": [
@@ -513,7 +513,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/executed_workspace/research/w50_timeweight_20261109/experiment.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/executed_workspace/research/w50_timeweight/experiment.py",
       "bytes": 20672,
       "mtime_ns": 1794157505515974874,
       "thread_related_lines": [
@@ -541,7 +541,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/executed_workspace/research/w50_timeweight_20261109/host_scheduler.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/executed_workspace/research/w50_timeweight/host_scheduler.py",
       "bytes": 12528,
       "mtime_ns": 1794157772298555739,
       "thread_related_lines": [
@@ -553,7 +553,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/code_snapshot/experiment.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/code_snapshot/experiment.py",
       "bytes": 20672,
       "mtime_ns": 1794157505515974874,
       "thread_related_lines": [
@@ -581,7 +581,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/experiment.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/experiment.py",
       "bytes": 20672,
       "mtime_ns": 1794157505515974874,
       "thread_related_lines": [
@@ -609,7 +609,7 @@
       "ast_parsed": true
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/host_scheduler.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/host_scheduler.py",
       "bytes": 12528,
       "mtime_ns": 1794157772298555739,
       "thread_related_lines": [
@@ -645,7 +645,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/remote_scheduler_controller.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/remote_scheduler_controller.py",
       "bytes": 1318,
       "mtime_ns": 1794150472077500010,
       "thread_related_lines": [
@@ -656,7 +656,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/analysis_controller.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/analysis_controller.sh",
       "bytes": 437,
       "mtime_ns": 1794155238485819545,
       "thread_related_lines": [
@@ -667,7 +667,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/reconcile_controller.py",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/reconcile_controller.py",
       "bytes": 3189,
       "mtime_ns": 1794154001107976815,
       "thread_related_lines": [
@@ -678,7 +678,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_roundselect_20261108/diagnosis_controller.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_roundselect/diagnosis_controller.sh",
       "bytes": 531,
       "mtime_ns": 1794155267104769851,
       "thread_related_lines": [
@@ -689,7 +689,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/collect_exact_service.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/collect_exact_service.sh",
       "bytes": 408,
       "mtime_ns": 1794166058410757398,
       "thread_related_lines": [
@@ -700,7 +700,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/remote_scheduler_controller.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/remote_scheduler_controller.py",
       "bytes": 1316,
       "mtime_ns": 1794157597173721019,
       "thread_related_lines": [
@@ -711,7 +711,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/verify_model_replay.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/verify_model_replay.py",
       "bytes": 18621,
       "mtime_ns": 1794158972253540345,
       "thread_related_lines": [
@@ -722,7 +722,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/replay_service.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/replay_service.sh",
       "bytes": 455,
       "mtime_ns": 1794160024696501194,
       "thread_related_lines": [
@@ -733,7 +733,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/diagnosis_service.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/diagnosis_service.sh",
       "bytes": 456,
       "mtime_ns": 1794166262514745042,
       "thread_related_lines": [
@@ -744,7 +744,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/replay_remote_controller.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/replay_remote_controller.py",
       "bytes": 1194,
       "mtime_ns": 1794159980553101432,
       "thread_related_lines": [
@@ -755,7 +755,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/analysis_service.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/analysis_service.sh",
       "bytes": 380,
       "mtime_ns": 1794165266723052385,
       "thread_related_lines": [
@@ -766,7 +766,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/remote_scheduler_service.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/remote_scheduler_service.sh",
       "bytes": 478,
       "mtime_ns": 1794158445115532733,
       "thread_related_lines": [
@@ -777,7 +777,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/verify_prior_head.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/verify_prior_head.py",
       "bytes": 3853,
       "mtime_ns": 1794159203422731213,
       "thread_related_lines": [
@@ -788,7 +788,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/collect_service.sh",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/collect_service.sh",
       "bytes": 451,
       "mtime_ns": 1794158445139515225,
       "thread_related_lines": [
@@ -799,7 +799,7 @@
       ]
     },
     {
-      "path": "/home/t-lab01/sunrun/research/w50_timeweight_20261109/replay_host_controller.py",
+      "path": "/home/t-lab01/sunrun/research/w50_timeweight/replay_host_controller.py",
       "bytes": 4218,
       "mtime_ns": 1794159980549434766,
       "thread_related_lines": [
@@ -849,11 +849,11 @@
     }
   },
   "baseline_evidence_source": {
-    "path": "/home/t-lab01/sunrun/research/w50_output_strategy_20261109/runtime-omp-correction-review.log",
+    "path": "/home/t-lab01/sunrun/research/w50_output_strategy/runtime-omp-correction-review.log",
     "bytes": 6198,
     "mtime_ns": 1794181547495278388
   },
-  "binary_cap_evidence": "research/w50_output_strategy_20261109/runtime-parallelism-check.log: installed XGBoost2.1.4 OmpGetNumThreads static disassembly",
+  "binary_cap_evidence": "research/w50_output_strategy/runtime-parallelism-check.log: installed XGBoost2.1.4 OmpGetNumThreads static disassembly",
   "runtime_limitations": [
     "No direct training process environment/ICV capture was located in the inspected campaign JSON evidence.",
     "Current preserved contents/stat/byte comparisons are not cryptographic historical attestation.",

@@ -6,11 +6,11 @@
   "goal_achieved": false,
   "fixed_best_single_s": 97.49244208059969,
   "half_s_target": 48.746221040299844,
-  "last_completed_experiment": "w50_roundselect_20261108",
+  "last_completed_experiment": "w50_roundselect",
   "last_experiment_adopted": false,
   "last_mean_s": 99.40050706076158,
-  "independent_audit": "research/w50_roundselect_20261108/verification-independent.json",
-  "report": "research/w50_roundselect_20261108/report.md",
+  "independent_audit": "research/w50_roundselect/verification-independent.json",
+  "report": "research/w50_roundselect/report.md",
   "phase": "active fresh temporal-weight training",
   "next_action": "Wait actual fits, verify completed-period weights/models/offsets, then all-seed official analysis and failure diagnosis",
   "source_audit_agent": null,
@@ -19,7 +19,7 @@
     "issuedkinematics axis8 alreadyregisteredblocked_source",
     "do not retune epoch selection on exposed F123"
   ],
-  "active_experiment": "w50_timeweight_20261109",
+  "active_experiment": "w50_timeweight",
   "actual_live_pids": [
     420,
     442,

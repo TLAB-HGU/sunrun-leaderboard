@@ -196,5 +196,5 @@ new input at the diagnosed Jan18–21origins; fitting-only transfer diagnostics
 also reveal temporal shift/overfit. These are explanations with limits, not a
 claim that all correct-age representations or future observations are useless.
 The failed component is not accumulated. Next preregistered investigation is
-../w50_roundselect_20261108, which changes only the train-only tree-count rule.
+../w50_roundselect, which changes only the train-only tree-count rule.
 All benchmark selection/provenance/public-availability/calibration gaps remain.

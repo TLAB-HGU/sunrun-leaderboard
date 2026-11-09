@@ -1,7 +1,7 @@
 {
-  "evaluator": "../w50_output_strategy_20261109/evaluate_goal.py",
+  "evaluator": "../w50_output_strategy/evaluate_goal.py",
   "reference_s": 97.49244208059969,
   "target_s": 48.746221040299844,
   "reason": "Timeweight rejected. Training-only split diagnostic supports preregistered strategy-only fresh training, tests57pass; no performance claim.",
-  "previous_handoff_archive": "../w50_output_strategy_20261109/previous-goal-handoff.json"
+  "previous_handoff_archive": "../w50_output_strategy/previous-goal-handoff.json"
 }

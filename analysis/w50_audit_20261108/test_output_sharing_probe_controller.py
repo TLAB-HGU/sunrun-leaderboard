@@ -99,7 +99,7 @@ def test_invalid_candidate_alignment_or_statistics_rejected(controller, kind):
 
 @pytest.fixture
 def contracts(controller, tmp_path):
-    runner = controller.module(controller.REPO / 'research/w50_roundselect_20261108/experiment.py', 'synthetic_sharing_loader')
+    runner = controller.module(controller.REPO / 'research/w50_roundselect/experiment.py', 'synthetic_sharing_loader')
     baseline, core = runner.parent_modules()
     config = runner.fixed_config(core, 42, 'drop035_v650_s42')
     names = core.feature_names(config)

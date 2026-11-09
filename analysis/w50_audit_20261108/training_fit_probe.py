@@ -32,7 +32,7 @@ LIMITS = [
 
 
 def load_runner():
-    path = REPO / 'research/w50_roundselect_20261108/experiment.py'
+    path = REPO / 'research/w50_roundselect/experiment.py'
     spec = importlib.util.spec_from_file_location('training_probe_parent_loader', path)
     runner = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(runner)

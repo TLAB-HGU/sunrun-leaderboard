@@ -1,0 +1,306 @@
+{
+  "scope": "fitting subsets only; no official generalization claims or policy changes",
+  "rows": [
+    {
+      "seed": 42,
+      "period": "F1",
+      "selected_rounds": [
+        315,
+        152,
+        135
+      ],
+      "diagnostics": {
+        "stopping": {
+          "origins": 1706,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 98.83823753314401,
+              "mae": 65.75382007565585,
+              "bias": -27.49210169286456,
+              "tail_ge700_n": 13216,
+              "tail_ge700_bias": -190.286541790535
+            },
+            "selected_prior": {
+              "rmse": 91.23711108123914,
+              "mae": 62.08026741974923,
+              "bias": -17.59834281520886,
+              "tail_ge700_n": 13216,
+              "tail_ge700_bias": -175.5435184469523
+            }
+          }
+        },
+        "offset_before_fitting_offset": {
+          "origins": 336,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 88.04503607674287,
+              "mae": 63.86563229283328,
+              "bias": -45.215757913438104,
+              "tail_ge700_n": 2472,
+              "tail_ge700_bias": -92.82267039771217
+            },
+            "selected_prior": {
+              "rmse": 85.0148283583884,
+              "mae": 64.15841154219613,
+              "bias": -32.65245724077578,
+              "tail_ge700_n": 2472,
+              "tail_ge700_bias": -96.95466831787502
+            }
+          }
+        }
+      },
+      "evidence": "research/w50_roundselect/runs/roundselect_s42/F1_model-replay.json"
+    },
+    {
+      "seed": 42,
+      "period": "F2",
+      "selected_rounds": [
+        892,
+        98,
+        68
+      ],
+      "diagnostics": {
+        "stopping": {
+          "origins": 1682,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 85.50907353808,
+              "mae": 62.12225183206469,
+              "bias": 8.996532670357597,
+              "tail_ge700_n": 3598,
+              "tail_ge700_bias": -174.47289883505977
+            },
+            "selected_prior": {
+              "rmse": 82.44051008783659,
+              "mae": 60.02604901579258,
+              "bias": 9.541565927562694,
+              "tail_ge700_n": 3598,
+              "tail_ge700_bias": -190.6582663196269
+            }
+          }
+        },
+        "offset_before_fitting_offset": {
+          "origins": 336,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 63.1440769534414,
+              "mae": 50.06436529361382,
+              "bias": 8.833243782810431,
+              "tail_ge700_n": 0,
+              "tail_ge700_bias": null
+            },
+            "selected_prior": {
+              "rmse": 61.62132183616595,
+              "mae": 48.947553336178814,
+              "bias": 2.6191433399442627,
+              "tail_ge700_n": 0,
+              "tail_ge700_bias": null
+            }
+          }
+        }
+      },
+      "evidence": "research/w50_roundselect/runs/roundselect_s42/F2_model-replay.json"
+    },
+    {
+      "seed": 43,
+      "period": "F1",
+      "selected_rounds": [
+        282,
+        159,
+        133
+      ],
+      "diagnostics": {
+        "stopping": {
+          "origins": 1706,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 98.5188700619307,
+              "mae": 65.6450842680092,
+              "bias": -26.12688790267064,
+              "tail_ge700_n": 13216,
+              "tail_ge700_bias": -189.69799103124953
+            },
+            "selected_prior": {
+              "rmse": 91.4844661520285,
+              "mae": 62.32634601202951,
+              "bias": -16.73087908630649,
+              "tail_ge700_n": 13216,
+              "tail_ge700_bias": -174.91788435975226
+            }
+          }
+        },
+        "offset_before_fitting_offset": {
+          "origins": 336,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 88.74977874426654,
+              "mae": 64.42968413312599,
+              "bias": -43.618415209099105,
+              "tail_ge700_n": 2472,
+              "tail_ge700_bias": -92.38261540236981
+            },
+            "selected_prior": {
+              "rmse": 84.88128827627953,
+              "mae": 64.3114382279613,
+              "bias": -31.189915481446285,
+              "tail_ge700_n": 2472,
+              "tail_ge700_bias": -98.43711376005004
+            }
+          }
+        }
+      },
+      "evidence": "research/w50_roundselect/runs/roundselect_s43/F1_model-replay.json"
+    },
+    {
+      "seed": 43,
+      "period": "F2",
+      "selected_rounds": [
+        867,
+        99,
+        74
+      ],
+      "diagnostics": {
+        "stopping": {
+          "origins": 1682,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 85.06326637693279,
+              "mae": 61.90729834770398,
+              "bias": 9.4894877717145,
+              "tail_ge700_n": 3598,
+              "tail_ge700_bias": -170.0962613184761
+            },
+            "selected_prior": {
+              "rmse": 82.57983766921096,
+              "mae": 60.18276052904627,
+              "bias": 10.043157885553091,
+              "tail_ge700_n": 3598,
+              "tail_ge700_bias": -186.04299341173157
+            }
+          }
+        },
+        "offset_before_fitting_offset": {
+          "origins": 336,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 63.03150592415504,
+              "mae": 49.83296484821058,
+              "bias": 9.412986754361913,
+              "tail_ge700_n": 0,
+              "tail_ge700_bias": null
+            },
+            "selected_prior": {
+              "rmse": 61.07418162063426,
+              "mae": 48.4367512745832,
+              "bias": 3.8473488845522428,
+              "tail_ge700_n": 0,
+              "tail_ge700_bias": null
+            }
+          }
+        }
+      },
+      "evidence": "research/w50_roundselect/runs/roundselect_s43/F2_model-replay.json"
+    },
+    {
+      "seed": 44,
+      "period": "F1",
+      "selected_rounds": [
+        304,
+        150,
+        108
+      ],
+      "diagnostics": {
+        "stopping": {
+          "origins": 1706,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 98.20748946017588,
+              "mae": 65.39846296525334,
+              "bias": -26.364880536809725,
+              "tail_ge700_n": 13216,
+              "tail_ge700_bias": -189.17172047197096
+            },
+            "selected_prior": {
+              "rmse": 91.41148967109012,
+              "mae": 62.552876986987705,
+              "bias": -17.195738041181965,
+              "tail_ge700_n": 13216,
+              "tail_ge700_bias": -176.39336830490146
+            }
+          }
+        },
+        "offset_before_fitting_offset": {
+          "origins": 336,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 89.38606737527812,
+              "mae": 64.70527245506408,
+              "bias": -44.949006876365225,
+              "tail_ge700_n": 2472,
+              "tail_ge700_bias": -96.49066235687353
+            },
+            "selected_prior": {
+              "rmse": 85.45502368886484,
+              "mae": 64.81230252760427,
+              "bias": -32.91157505978983,
+              "tail_ge700_n": 2472,
+              "tail_ge700_bias": -101.43242679336694
+            }
+          }
+        }
+      },
+      "evidence": "research/w50_roundselect/runs/roundselect_s44/F1_model-replay.json"
+    },
+    {
+      "seed": 44,
+      "period": "F2",
+      "selected_rounds": [
+        888,
+        121,
+        76
+      ],
+      "diagnostics": {
+        "stopping": {
+          "origins": 1682,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 84.71318082849444,
+              "mae": 61.733862361537525,
+              "bias": 8.662225902031713,
+              "tail_ge700_n": 3598,
+              "tail_ge700_bias": -176.17708364659512
+            },
+            "selected_prior": {
+              "rmse": 82.39213685941955,
+              "mae": 60.21717158340371,
+              "bias": 10.832129552767858,
+              "tail_ge700_n": 3598,
+              "tail_ge700_bias": -188.84027508093692
+            }
+          }
+        },
+        "offset_before_fitting_offset": {
+          "origins": 336,
+          "raw_prior_metrics": {
+            "prior900": {
+              "rmse": 63.98046652201244,
+              "mae": 50.49772285809592,
+              "bias": 7.757021240708688,
+              "tail_ge700_n": 0,
+              "tail_ge700_bias": null
+            },
+            "selected_prior": {
+              "rmse": 61.23878039518547,
+              "mae": 48.50499775825985,
+              "bias": 3.4198519820258717,
+              "tail_ge700_n": 0,
+              "tail_ge700_bias": null
+            }
+          }
+        }
+      },
+      "evidence": "research/w50_roundselect/runs/roundselect_s44/F2_model-replay.json"
+    }
+  ],
+  "query_truth_used": false
+}

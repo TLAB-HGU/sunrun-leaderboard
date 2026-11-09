@@ -1,0 +1,13 @@
+{
+  "campaign_root": "/home/t-lab01/sunrun/research/followup_feature_axes8",
+  "tmux_session": "sraxes8-remote-controller-20261109",
+  "tmux_session_id": "$374",
+  "started_utc": "2026-11-08T17:33:06.814409+00:00",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/research/followup_feature_axes8/remote_scheduler_controller.py",
+    "--root",
+    "/home/t-lab01/sunrun/research/followup_feature_axes8"
+  ]
+}
