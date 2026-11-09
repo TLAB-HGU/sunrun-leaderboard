@@ -1,0 +1,14 @@
+{
+  "scope": "F1 query input ages only, no target columns or official observations",
+  "posthoc_event_window": "2026-01-18 inclusive to2026-01-22 exclusive; chosen by prior residual diagnosis, not an independent test",
+  "all_F1_origins": 2089,
+  "all_F1_changed_origins": 63,
+  "event_window_origins": 96,
+  "event_window_changed_origins": 0,
+  "event_window_max_repaired_age_h": 0.02058333344777778,
+  "limits": [
+    "No inference of forecast skill from exposure counts.",
+    "Fresh retraining may alter predictions globally even at unchanged query inputs.",
+    "No feature/parameter fitting or ongoing configuration change."
+  ]
+}

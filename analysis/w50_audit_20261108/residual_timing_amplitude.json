@@ -1,0 +1,89 @@
+{
+  "fixed_shift_diagnostics": [
+    {
+      "prediction_lead_shift_hours": -12,
+      "n_pairs": 35059,
+      "seed_mae": [
+        57.914497554152156,
+        57.54073709799067,
+        57.8324536815624
+      ],
+      "mean_mae": 57.762562777901714,
+      "mean_rmse": 76.36039375487165,
+      "mean_bias": 13.931488329955735,
+      "mean_squared_error": 5830.970476885657
+    },
+    {
+      "prediction_lead_shift_hours": -6,
+      "n_pairs": 35059,
+      "seed_mae": [
+        55.623003809933145,
+        55.24204932147962,
+        55.579088327336585
+      ],
+      "mean_mae": 55.481380486249606,
+      "mean_rmse": 73.15407830174665,
+      "mean_bias": 15.714722119857125,
+      "mean_squared_error": 5351.572272534081
+    },
+    {
+      "prediction_lead_shift_hours": 0,
+      "n_pairs": 35059,
+      "seed_mae": [
+        54.9275668617585,
+        54.528321664294786,
+        54.88421053426815
+      ],
+      "mean_mae": 54.78003302010707,
+      "mean_rmse": 71.95698178663208,
+      "mean_bias": 17.130808271348787,
+      "mean_squared_error": 5177.848168775679
+    },
+    {
+      "prediction_lead_shift_hours": 6,
+      "n_pairs": 35059,
+      "seed_mae": [
+        55.53769513759099,
+        55.1407850483762,
+        55.53024636681005
+      ],
+      "mean_mae": 55.40290885092578,
+      "mean_rmse": 72.58229171224754,
+      "mean_bias": 18.306277890415117,
+      "mean_squared_error": 5268.22025149526
+    },
+    {
+      "prediction_lead_shift_hours": 12,
+      "n_pairs": 35059,
+      "seed_mae": [
+        57.22218597829804,
+        56.88172121725924,
+        57.235829318071396
+      ],
+      "mean_mae": 57.11324550454297,
+      "mean_rmse": 74.76835376995668,
+      "mean_bias": 19.24993077776173,
+      "mean_squared_error": 5590.327796372959
+    }
+  ],
+  "amplitude": {
+    "origins_with_at_least_48_observations": 765,
+    "median_observed_range": 168.09999999999997,
+    "median_predicted_range_by_seed": [
+      89.73631511869883,
+      89.36937356222245,
+      89.447638012114
+    ],
+    "median_range_ratio_by_seed": [
+      0.5210032693228369,
+      0.5190823868112923,
+      0.5245187323475508
+    ],
+    "median_absolute_peak_timing_hours_by_seed": [
+      12.0,
+      12.0,
+      12.0
+    ]
+  },
+  "warning": "Truth-dependent diagnostic only; no best shift chosen, no correction, not an attainable lower bound."
+}

@@ -1,0 +1,945 @@
+{
+  "retrieved_utc": "2026-11-08T16:35:17.507360+00:00",
+  "request_type": "bounded implementation reference and mechanism audit",
+  "scope": "Training-era stored Summary sections only; no target data, Notes, current prime, IPS, postevent annotations, plot digitization, or fitting.",
+  "context_from_leader": {
+    "incumbent_official_s": 97.492442,
+    "goal_relative_reduction": 0.5,
+    "attainability_claimed": false,
+    "abandoned_tree_selection_three_seed_mean": 99.4005,
+    "matched_baseline_mean": 97.8136,
+    "baseline_features": 28
+  },
+  "sampling": {
+    "rule": "First two records accepted by the existing strict parser, ordered as inventory, in January/April/July/October of 2023 and 2024. Chosen before reading sample bodies.",
+    "sample_size": 16,
+    "universe_accepted_messages": 882,
+    "not_representative_prevalence_estimate": true
+  },
+  "counts": {
+    "sampled_summaries": 16,
+    "explicit_earth_arrival": 7,
+    "no_explicit_earth_arrival": 9,
+    "event_start": 16,
+    "explicit_time_at_21_5": 0,
+    "explicit_speed_reference_height": 0,
+    "numeric_local_arrival_speed": 0,
+    "numeric_earth_duration": 0
+  },
+  "schema_evidence": {
+    "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/v3/api-docs",
+    "info": {
+      "title": "DONKI-API",
+      "description": "REST API endpoints for CCMC DONKI-API.",
+      "contact": {
+        "name": "CCMC",
+        "url": "https://ccmc.gsfc.nasa.gov"
+      },
+      "version": "2.0"
+    },
+    "endpoint": {
+      "get": {
+        "tags": [
+          "DONKI API"
+        ],
+        "summary": "Get Space Weather Notifications",
+        "description": "Retrieves the notifications sent from DONKI within a maximum 60-day window.",
+        "operationId": "getNotifications",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Start date (yyyy-MM-dd). Defaults to 7 days ago.",
+            "required": false,
+            "schema": {
+              "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End date (yyyy-MM-dd). Defaults to today.",
+            "required": false,
+            "schema": {
+              "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Event type (FLR, SEP, CME, IPS, MPC, GST, RBE, REPORT, ALL)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ALL"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "notification_schema": {
+      "type": "object",
+      "properties": {
+        "messageType": {
+          "type": "string"
+        },
+        "messageID": {
+          "type": "string"
+        },
+        "messageURL": {
+          "type": "string"
+        },
+        "messageIssueTime": {
+          "type": "string"
+        },
+        "messageBody": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "samples": [
+    {
+      "message_id": "20230101-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/23091/1",
+      "api_issue_time": "2023-01-01T17:31Z",
+      "conservative_issue_time": "2023-01-01T17:31:09+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2022-12-30T16:53:00-CME-001"
+      ],
+      "speed_kms": 452.0,
+      "half_angle_deg": 32.0,
+      "longitude_deg": 14.0,
+      "latitude_deg": -24.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-01.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-01-01&endDate=2023-01-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-01-01&endDate=2023-01-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:26.532063+00:00",
+        "status": 200,
+        "response_bytes": 113001,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nUpdate on CME with ID 2022-12-30T16:53:00-CME-001 (see previous notification 20221230-AL-001).  Based on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at the NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Mars (minor impact), Solar Orbiter (minor impact), STEREO A (minor impact), and STEREO B (minor impact).  The leading edge of the CME will reach Mars at 2023-01-05T12:00Z, Solar Orbiter at 2023-01-03T02:00Z, STEREO A at 2023-01-03T06:00Z, and STEREO B at 2023-01-03T00:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may have a glancing blow at NASA missions near Earth.  Simulations indicate that the flank of the CME will reach NASA missions near Earth at about 2023-01-02T20:00Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 2-4 (below minor).\n   \n\nUpdated CME parameters are (event downgraded to S-type):\n\nStart time of the event: 2022-12-30T16:53Z.\n\nEstimated speed: ~452 km/s.\n\nEstimated opening half-angle: 32 deg.\n\nDirection (lon./lat.): 14/-24 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2022-12-30T16:53:00-CME-001\n\n\nLinks to the movies of the modeled event (includes CME: 2022-12-30T16:53:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_ENLIL_CONE_STB_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_ENLIL_CONE_Mars_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20221231_003100_2.0_ENLIL_CONE_SolO_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2023-01-02T20:00Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "2-4"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20230103-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/23110/1",
+      "api_issue_time": "2023-01-03T14:47Z",
+      "conservative_issue_time": "2023-01-03T14:47:33+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-01-03T06:36:00-CME-001"
+      ],
+      "speed_kms": 1035.0,
+      "half_angle_deg": 53.0,
+      "longitude_deg": -131.0,
+      "latitude_deg": -13.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-01.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-01-01&endDate=2023-01-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-01-01&endDate=2023-01-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:26.532063+00:00",
+        "status": 200,
+        "response_bytes": 113001,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nO-type CME detected by SOHO. \n\nStart time of the event: 2023-01-03T06:36Z.\n\nEstimated speed: ~1035 km/s.\n\nEstimated opening half-angle: 53 deg.\n\nDirection (lon./lat.): -131/-13 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-01-03T06:36:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact Parker Solar Probe. The leading edge of the CME will reach Parker Solar Probe at 2023-01-04T10:53Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2023-01-03T06:36:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20230103_095100_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230103_095100_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230103_095100_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230103_095100_2.0_ENLIL_CONE_PSP_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20230401-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/24465/1",
+      "api_issue_time": "2023-04-01T16:42Z",
+      "conservative_issue_time": "2023-04-01T16:42:02+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-04-01T03:36:00-CME-001"
+      ],
+      "speed_kms": 989.0,
+      "half_angle_deg": 50.0,
+      "longitude_deg": 87.0,
+      "latitude_deg": -23.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-04.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-04-01&endDate=2023-04-30&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-04-01&endDate=2023-04-30&type=CME",
+        "fetched_utc": "2026-11-08T13:27:32.107620+00:00",
+        "status": 200,
+        "response_bytes": 96359,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by SOHO. \n\nStart time of the event: 2023-04-01T03:36Z.\n\nEstimated speed: ~989 km/s.\n\nEstimated opening half-angle: 50 deg.\n\nDirection (lon./lat.): 87/-23 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-04-01T03:36:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact Parker Solar Probe, OSIRIS-REx, and Solar Orbiter (glancing blow).  The leading edge or flank of the CME will reach Parker Solar Probe at 2023-04-02T03:26Z and OSIRIS-REx at 2023-04-04T18:15Z, and might give Solar Orbiter a glancing blow at 2023-04-02T00:00Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2023-04-01T03:36:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20230401_065700_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230401_065700_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230401_065700_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230401_065700_2.0_ENLIL_CONE_PSP_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230401_065700_2.0_ENLIL_CONE_SolO_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230401_065700_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20230401-AL-002",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/24468/1",
+      "api_issue_time": "2023-04-01T18:15Z",
+      "conservative_issue_time": "2023-04-01T18:15:06+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-03-31T17:53:00-CME-001"
+      ],
+      "speed_kms": 548.0,
+      "half_angle_deg": 41.0,
+      "longitude_deg": 104.0,
+      "latitude_deg": 26.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-04.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-04-01&endDate=2023-04-30&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-04-01&endDate=2023-04-30&type=CME",
+        "fetched_utc": "2026-11-08T13:27:32.107620+00:00",
+        "status": 200,
+        "response_bytes": 96359,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A. \n\nStart time of the event: 2023-03-31T17:53Z.\n\nEstimated speed: ~548 km/s.\n\nEstimated opening half-angle: 41 deg.\n\nDirection (lon./lat.): 104/26 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-03-31T17:53:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact Parker Solar Probe.  The leading edge of the CME will reach Parker Solar Probe at 2023-04-02T04:31Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2023-03-31T17:53:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20230331_232300_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230331_232300_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230331_232300_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230331_232300_2.0_ENLIL_CONE_PSP_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20230704-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/25811/1",
+      "api_issue_time": "2023-07-04T13:24Z",
+      "conservative_issue_time": "2023-07-04T13:24:34+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-07-04T04:36:00-CME-001"
+      ],
+      "speed_kms": 635.0,
+      "half_angle_deg": 45.0,
+      "longitude_deg": -14.0,
+      "latitude_deg": -22.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-07.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-07-01&endDate=2023-07-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-07-01&endDate=2023-07-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:37.712262+00:00",
+        "status": 200,
+        "response_bytes": 165526,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2023-07-04T04:36Z.\n\nEstimated speed: ~635 km/s.\n\nEstimated opening half-angle: 45 deg.\n\nDirection (lon./lat.): -14/-22 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-07-04T04:36:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect OSIRIS-REx, Parker Solar Probe, and STEREO A. The leading edge of the CME will reach OSIRIS-REx at 2023-07-08T05:45Z, Parker Solar Probe at 2023-07-05T12:27Z, and STEREO A at 2023-07-06T22:45Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2023-07-07T04:27Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-7 (below minor to strong).\n  \nLinks to the movies of the modeled event (includes CME: 2023-07-04T04:36:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_ENLIL_CONE_PSP_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230704_103000_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2023-07-07T04:27Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "4-7"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20230706-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/25836/1",
+      "api_issue_time": "2023-07-06T20:56Z",
+      "conservative_issue_time": "2023-07-06T20:56:21+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-07-06T09:12:00-CME-001"
+      ],
+      "speed_kms": 532.0,
+      "half_angle_deg": 45.0,
+      "longitude_deg": 7.0,
+      "latitude_deg": -21.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-07.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-07-01&endDate=2023-07-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-07-01&endDate=2023-07-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:37.712262+00:00",
+        "status": 200,
+        "response_bytes": 165526,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by SOHO. \n\nStart time of the event: 2023-07-06T09:12Z.\n\nEstimated speed: ~532 km/s.\n\nEstimated opening half-angle: 45 deg.\n\nDirection (lon./lat.): 7/-21 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-07-06T09:12:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect OSIRIS-REx, Parker Solar Probe, and STEREO A.  The leading edge of the CME may reach OSIRIS-REx at 2023-07-10T04:12Z, Parker Solar Probe at 2023-07-07T18:48Z, and STEREO A at 2023-07-09T04:13Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME may reach NASA missions near Earth at about 2023-07-09T07:59Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-6 (below minor to moderate).\n   \n  \nLinks to the movies of the modeled event (includes CME: 2023-07-06T09:12:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_ENLIL_CONE_PSP_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20230706_152300_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2023-07-09T07:59Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "4-6"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20231010-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/27237/1",
+      "api_issue_time": "2023-10-10T13:28Z",
+      "conservative_issue_time": "2023-10-10T13:28:50+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-10-10T10:24:00-CME-001"
+      ],
+      "speed_kms": 1197.0,
+      "half_angle_deg": 50.0,
+      "longitude_deg": -125.0,
+      "latitude_deg": 9.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-10.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-10-01&endDate=2023-10-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-10-01&endDate=2023-10-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:43.171617+00:00",
+        "status": 200,
+        "response_bytes": 79357,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nO-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2023-10-10T10:24Z.\n\nEstimated speed: ~1197 km/s.\n\nEstimated opening half-angle: 50 deg.\n\nDirection (lon./lat.): -125/9 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-10-10T10:24:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact Mars, Parker Solar Probe, and Solar Orbiter.  The leading edge of the CME may reach Mars at 2023-10-14T10:13Z, Parker Solar Probe at 2023-10-11T06:41Z, and Solar Orbiter at 2023-10-10T22:40Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2023-10-10T10:24:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20231010_133200_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231010_133200_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231010_133200_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231010_133200_2.0_ENLIL_CONE_PSP_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231010_133200_2.0_ENLIL_CONE_Mars_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231010_133200_2.0_ENLIL_CONE_SolO_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20231012-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/27262/1",
+      "api_issue_time": "2023-10-12T13:20Z",
+      "conservative_issue_time": "2023-10-12T13:20:42+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-10-11T23:36:00-CME-001"
+      ],
+      "speed_kms": 888.0,
+      "half_angle_deg": 36.0,
+      "longitude_deg": -110.0,
+      "latitude_deg": 11.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2023-10.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-10-01&endDate=2023-10-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2023-10-01&endDate=2023-10-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:43.171617+00:00",
+        "status": 200,
+        "response_bytes": 79357,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2023-10-11T23:36Z.\n\nEstimated speed: ~888 km/s.\n\nEstimated opening half-angle: 36 deg.\n\nDirection (lon./lat.): -110/11 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-10-11T23:36:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact Parker Solar Probe and Solar Orbiter. The leading edge of the CME will reach Parker Solar Probe at 2023-10-13T04:52Z and Solar Orbiter at 2023-10-12T17:37Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2023-10-11T23:36:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20231012_034600_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231012_034600_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231012_034600_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231012_034600_2.0_ENLIL_CONE_PSP_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231012_034600_2.0_ENLIL_CONE_SolO_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20240101-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/28432/1",
+      "api_issue_time": "2024-01-01T16:44Z",
+      "conservative_issue_time": "2024-01-01T16:44:28+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2023-12-31T22:00:00-CME-001"
+      ],
+      "speed_kms": 2184.0,
+      "half_angle_deg": 45.0,
+      "longitude_deg": -60.0,
+      "latitude_deg": -14.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-01.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-01-01&endDate=2024-01-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-01-01&endDate=2024-01-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:48.762335+00:00",
+        "status": 200,
+        "response_bytes": 105617,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nR-type CME detected by SOHO. \n\nStart time of the event: 2023-12-31T22:00Z.\n\nEstimated speed: ~2184 km/s.\n\nEstimated opening half-angle: 45 deg.\n\nDirection (lon./lat.): -60/-14 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2023-12-31T22:00:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Solar Orbiter, Juno, Psyche (glancing blow), and STEREO A (glancing blow).  The leading edge or flank of the CME may reach Solar Orbiter at 2024-01-02T07:00Z, Juno at 2024-01-11T00:18Z, Psyche at 2024-01-03T12:30Z, and STEREO A at 2024-01-02T23:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may have a glancing blow at NASA missions near Earth. Simulations indicate that the flank of the CME may reach NASA missions near Earth at about 2024-01-02T18:00Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 3-5 (below minor to minor).\n   \n  \nLinks to the movies of the modeled event (includes CME: 2023-12-31T22:00:00-CME-001):\n\n(a) 2 AU outer boundary\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_2.0_ENLIL_CONE_SolO_timeline.gif\n\n(b) 5.5 AU outer boundary\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_5.5_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_5.5_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20231231_232300_5.5_ENLIL_CONE_Juno_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2024-01-02T18:00Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "3-5"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20240102-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/28442/1",
+      "api_issue_time": "2024-01-02T19:29Z",
+      "conservative_issue_time": "2024-01-02T19:29:10+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-01-02T11:09:00-CME-001"
+      ],
+      "speed_kms": 617.0,
+      "half_angle_deg": 40.0,
+      "longitude_deg": 122.0,
+      "latitude_deg": -22.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-01.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-01-01&endDate=2024-01-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-01-01&endDate=2024-01-31&type=CME",
+        "fetched_utc": "2026-11-08T13:27:48.762335+00:00",
+        "status": 200,
+        "response_bytes": 105617,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-01-02T11:09Z.\n\nEstimated speed: ~617 km/s.\n\nEstimated opening half-angle: 40 deg.\n\nDirection (lon./lat.): 122/-22 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-01-02T11:09:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact OSIRIS-APEX (glancing blow) and Mars (glancing blow).  The leading edge or flank of the CME will reach OSIRIS-APEX at 2024-01-04T06:00Z and Mars at 2024-01-07T03:00Z  (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2024-01-02T11:09:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20240102_162300_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240102_162300_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240102_162300_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240102_162300_2.0_ENLIL_CONE_Mars_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240102_162300_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20240406-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/29943/1",
+      "api_issue_time": "2024-04-06T15:15Z",
+      "conservative_issue_time": "2024-04-06T15:15:32+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-04-05T17:00:00-CME-001"
+      ],
+      "speed_kms": 777.0,
+      "half_angle_deg": 36.0,
+      "longitude_deg": 139.0,
+      "latitude_deg": -32.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-04.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-04-01&endDate=2024-04-30&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-04-01&endDate=2024-04-30&type=CME",
+        "fetched_utc": "2026-11-08T13:27:54.182995+00:00",
+        "status": 200,
+        "response_bytes": 119467,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-04-05T17:00Z.\n\nEstimated speed: ~777 km/s.\n\nEstimated opening half-angle: 36 deg.\n\nDirection (lon./lat.): 139/-32 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-04-05T17:00:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact OSIRIS-APEX, Mars (minor impact), and Solar Orbiter (glancing blow).  The leading edge of the CME will reach OSIRIS-APEX at 2024-04-09T01:11Z and Mars at 2024-04-10T08:00Z, and the flank may reach Solar Orbiter at 2024-04-06T15:00Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2024-04-05T17:00:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20240405_214600_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240405_214600_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240405_214600_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240405_214600_2.0_ENLIL_CONE_Mars_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240405_214600_2.0_ENLIL_CONE_SolO_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240405_214600_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20240412-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/30008/1",
+      "api_issue_time": "2024-04-12T16:20Z",
+      "conservative_issue_time": "2024-04-12T16:20:19+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-04-12T02:00:00-CME-001"
+      ],
+      "speed_kms": 743.0,
+      "half_angle_deg": 45.0,
+      "longitude_deg": 4.0,
+      "latitude_deg": -17.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-04.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-04-01&endDate=2024-04-30&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-04-01&endDate=2024-04-30&type=CME",
+        "fetched_utc": "2026-11-08T13:27:54.182995+00:00",
+        "status": 200,
+        "response_bytes": 119467,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-04-12T02:00Z.\n\nEstimated speed: ~743 km/s.\n\nEstimated opening half-angle: 45 deg.\n\nDirection (lon./lat.): 4/-17 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-04-12T02:00:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect STEREO A, Lucy (glancing blow), and Psyche (glancing blow).  The leading edge of the CME will reach STEREO A at 2024-04-14T11:45Z and the flank may reach Lucy at 2024-04-17T00:00Z and Psyche at 2024-04-19T06:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2024-04-14T16:20Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-7 (below minor to strong).\n   \n  \nLinks to the movies of the modeled event (includes CME: 2024-04-12T02:00:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20240412_060500_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240412_060500_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240412_060500_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240412_060500_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240412_060500_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240412_060500_2.0_ENLIL_CONE_STA_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2024-04-14T16:20Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "4-7"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20240705-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/31831/1",
+      "api_issue_time": "2024-07-05T15:29Z",
+      "conservative_issue_time": "2024-07-05T15:29:53+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-07-04T20:24:00-CME-001"
+      ],
+      "speed_kms": 773.0,
+      "half_angle_deg": 32.0,
+      "longitude_deg": 85.0,
+      "latitude_deg": -34.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-07.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-07-01&endDate=2024-07-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-07-01&endDate=2024-07-31&type=CME",
+        "fetched_utc": "2026-11-08T13:28:03.018409+00:00",
+        "status": 200,
+        "response_bytes": 161186,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by SOHO. \n\nStart time of the event: 2024-07-04T20:24Z.\n\nEstimated speed: ~773 km/s.\n\nEstimated opening half-angle: 32 deg.\n\nDirection (lon./lat.): 85/-34 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-07-04T20:24:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact Mars (glancing blow) and OSIRIS-APEX (glancing blow).  The flank of the CME will reach Mars at 2024-07-09T03:30Z and OSIRIS-APEX at 2024-07-07T07:30Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2024-07-04T20:24:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20240705_003300_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240705_003300_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240705_003300_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240705_003300_2.0_ENLIL_CONE_Mars_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240705_003300_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20240706-AL-002",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/31856/1",
+      "api_issue_time": "2024-07-06T21:35Z",
+      "conservative_issue_time": "2024-07-06T21:35:56+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-07-06T00:12:00-CME-001"
+      ],
+      "speed_kms": 635.0,
+      "half_angle_deg": 33.0,
+      "longitude_deg": 116.0,
+      "latitude_deg": -30.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-07.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-07-01&endDate=2024-07-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-07-01&endDate=2024-07-31&type=CME",
+        "fetched_utc": "2026-11-08T13:28:03.018409+00:00",
+        "status": 200,
+        "response_bytes": 161186,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nC-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-07-06T00:12Z.\n\nEstimated speed: ~635 km/s.\n\nEstimated opening half-angle: 33 deg.\n\nDirection (lon./lat.): 116/-30 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-07-06T00:12:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that the CME may impact OSIRIS-APEX, Mars (glancing blow), and Solar Orbiter (glancing blow).  The leading edge of the CME will reach OSIRIS-APEX at 2024-07-08T10:05Z, and the flank of the CME may reach Mars at 2024-07-11T08:00Z and Solar Orbiter at 2024-07-09T08:00Z (plus minus 7 hours). \n\nLinks to the movies of the modeled event (includes CME: 2024-07-06T00:12:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20240706_052000_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240706_052000_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240706_052000_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240706_052000_2.0_ENLIL_CONE_Mars_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240706_052000_2.0_ENLIL_CONE_SolO_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20240706_052000_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [],
+      "kp_range": [],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20241002-AL-001",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+      "api_issue_time": "2024-10-02T02:15Z",
+      "conservative_issue_time": "2024-10-02T02:15:47+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-10-01T23:09:00-CME-001"
+      ],
+      "speed_kms": 487.0,
+      "half_angle_deg": 39.0,
+      "longitude_deg": -17.0,
+      "latitude_deg": -5.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-10.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-10-01&endDate=2024-10-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-10-01&endDate=2024-10-31&type=CME",
+        "fetched_utc": "2026-11-08T13:28:09.005292+00:00",
+        "status": 200,
+        "response_bytes": 187075,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nS-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-10-01T23:09Z.\n\nEstimated speed: ~487 km/s.\n\nEstimated opening half-angle: 39 deg.\n\nDirection (lon./lat.): -17/-5 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-10-01T23:09:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Lucy and STEREO A (glancing blow).  The leading edge or flank of the CME will reach Lucy at 2024-10-05T01:14Z and STEREO A at 2024-10-04T21:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2024-10-05T03:32Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-6 (below minor to moderate).   \n  \nLinks to the movies of the modeled event (includes CME: 2024-10-01T23:09:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_Lucy_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2024-10-05T03:32Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "4-6"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    },
+    {
+      "message_id": "20241002-AL-002",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/33676/1",
+      "api_issue_time": "2024-10-02T13:17Z",
+      "conservative_issue_time": "2024-10-02T13:17:33+00:00",
+      "single_cme_forecast_summary": true,
+      "event_ids": [
+        "2024-10-01T23:09:00-CME-001"
+      ],
+      "speed_kms": 594.0,
+      "half_angle_deg": 38.0,
+      "longitude_deg": -19.0,
+      "latitude_deg": -10.0,
+      "notes_excluded": true,
+      "simulation_id_not_inferred": true,
+      "source_file": "analysis/w50_audit_20261108/notification_archive/2024-10.json",
+      "source_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-10-01&endDate=2024-10-31&type=CME",
+      "archive_receipt": {
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2024-10-01&endDate=2024-10-31&type=CME",
+        "fetched_utc": "2026-11-08T13:28:09.005292+00:00",
+        "status": 200,
+        "response_bytes": 187075,
+        "content_type": "application/json"
+      },
+      "summary_only": "\n\nUpdate on CME with ID 2024-10-01T23:09:00-CME-001 (see previous notification 20241002-AL-001). Based on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Lucy, Solar Orbiter (glancing blow), and STEREO A (glancing blow).  The leading edge or flank of the CME may reach Lucy at 2024-10-04T19:43Z, Solar Orbiter at 2024-10-03T00:00Z, and STEREO A at 2024-10-04T16:30Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2024-10-04T20:40Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-6 (below minor to moderate).\n   \n\nUpdated CME parameters are (event upgraded to C-type):\n\nStart time of the event: 2024-10-01T23:09Z.\n\nEstimated speed: ~594 km/s.\n\nEstimated opening half-angle: 38 deg.\n\nDirection (lon./lat.): -19/-10 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-10-01T23:09:00-CME-001\n\n\nLinks to the movies of the modeled event (includes CME: 2024-10-01T23:09:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_ENLIL_CONE_Lucy_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_042200_2.0_ENLIL_CONE_SolO_timeline.gif\n\n\n",
+      "earth_forecast_arrivals": [
+        {
+          "time": "2024-10-04T20:40Z",
+          "stated_plus_minus_hours": 7
+        }
+      ],
+      "kp_range": [
+        "4-6"
+      ],
+      "manual_audit": {
+        "explicit_speed_reference_height": false,
+        "explicit_time_at_21_5_solar_radii": false,
+        "numeric_earth_arrival_speed": false,
+        "numeric_earth_disturbance_duration": false
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "vrsnak2013",
+      "kind": "original_paper",
+      "url": "https://doi.org/10.1007/s11207-012-0035-4",
+      "claim": "Drag adjusts CME speed toward ambient speed; initial conditions required."
+    },
+    {
+      "id": "dbm_upstream",
+      "kind": "author_documentation",
+      "url": "https://oh.geof.unizg.hr/DBM/docs/DBM.pdf",
+      "claim": "a=-gamma(v-w)|v-w|; t0,R0,v0; gamma depends on cross section, mass, wind density; flank geometry."
+    },
+    {
+      "id": "dumbovic2021",
+      "kind": "author_paper",
+      "url": "https://www.frontiersin.org/journals/astronomy-and-space-sciences/articles/10.3389/fspas.2021.639986/full",
+      "claim": "Five DBM tools; shock proxy limitation; geometry and initial conditions."
+    },
+    {
+      "id": "wold2018",
+      "kind": "original_operational_verification",
+      "url": "https://www.swsc-journal.org/articles/swsc/full_html/2018/01/swsc170034/swsc170034.html",
+      "claim": "21.5 solar-radius boundary; Kp compression and clock angle scenarios; historical arrival uncertainty."
+    },
+    {
+      "id": "mays2015",
+      "kind": "original_operational_paper",
+      "url": "https://arxiv.org/abs/1504.04402v2",
+      "claim": "Input uncertainty, ensemble spread and background affect forecast reliability."
+    },
+    {
+      "id": "notifications_guide",
+      "kind": "official_docs",
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/guide/notifications/",
+      "claim": "Full notification message/metadata and unique notification/version links."
+    }
+  ],
+  "exa_queries": [
+    "Vrsnak 2013 propagation interplanetary coronal mass ejections drag based model initial distance time speed ambient wind original paper",
+    "Dumbovic 2021 drag based model tools CME propagation initial time distance speed cone geometry GitHub DBM",
+    "site.swsc-journal.org Wold 2018 verification real time WSA ENLIL cone simulation results 21.5"
+  ],
+  "rejected_fetch": "Initial guessed swsc170064 URL resolved to an unrelated ionospheric paper; excluded. Correct Wold page swsc170034 was subsequently found via Exa and fetched.",
+  "limits": [
+    "Official current archive is not proven immutable as-issued storage or consumer receipt.",
+    "16 selected accepted messages do not estimate full corpus coverage or parser recall.",
+    "No model skill or 50 percent goal attainability established.",
+    "No upstream source-code execution or pinned repository verification performed; operational/author implementations documented by primary papers only."
+  ],
+  "top_level_arrival_semantics_followup": {
+    "retrieved_utc": "2026-11-08T16:38:50.091778+00:00",
+    "schema_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/v3/api-docs",
+    "schemas": {
+      "WSAEnlilObject": {
+        "type": "object",
+        "properties": {
+          "simulationID": {
+            "type": "string"
+          },
+          "modelCompletionTime": {
+            "type": "string"
+          },
+          "au": {
+            "type": "number",
+            "format": "float"
+          },
+          "cmeInputs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CMEInput"
+            }
+          },
+          "estimatedShockArrivalTime": {
+            "type": "string"
+          },
+          "isEarthGB": {
+            "type": "boolean"
+          },
+          "isEarthMinorImpact": {
+            "type": "boolean"
+          },
+          "rmin_re": {
+            "type": "number",
+            "format": "float"
+          },
+          "kp_18": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kp_90": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kp_135": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kp_180": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estimatedDuration": {
+            "type": "number",
+            "format": "float"
+          },
+          "impactList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Impact"
+            }
+          },
+          "link": {
+            "type": "string"
+          }
+        }
+      },
+      "WSAEnlilJSON": {
+        "type": "object",
+        "properties": {
+          "modelCompletionTime": {
+            "type": "string"
+          },
+          "au": {
+            "type": "number",
+            "format": "float"
+          },
+          "estimatedShockArrivalTime": {
+            "type": "string"
+          },
+          "isEarthGB": {
+            "type": "boolean"
+          },
+          "isEarthMinorImpact": {
+            "type": "boolean"
+          },
+          "rmin_re": {
+            "type": "number",
+            "format": "float"
+          },
+          "kp_18": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kp_90": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kp_135": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "kp_180": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estimatedDuration": {
+            "type": "number",
+            "format": "float"
+          },
+          "link": {
+            "type": "string"
+          },
+          "impactList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Impact"
+            }
+          },
+          "cmeIDs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Impact": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "arrivalTime": {
+            "type": "string"
+          },
+          "isGlancingBlow": {
+            "type": "boolean"
+          },
+          "isMinorImpact": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "data_reference_url": "https://ccmc.gsfc.nasa.gov/DONKI/guide/data-reference/",
+    "schema_guarantees_earth_semantics": false,
+    "schema_limitation": "estimatedShockArrivalTime has type string only; no description/target definition. Data reference does not define the field.",
+    "official_ui_url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/33848/1",
+    "official_ui_forecast_excerpt": "Earth Impact: (Glancing Blow) Earth Shock Arrival Time = 2024-10-11T04:00Z (+- 7 hours). Other Location(s) Impact: STEREO A with estimated shock arrival time 2024-10-10T23:43Z; Mars with estimated shock arrival time 2024-10-12T12:00Z (Glancing Blow).",
+    "official_api_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/WSAEnlilSimulations?startDate=2024-10-08&endDate=2024-10-08",
+    "matched_forecast_fields": {
+      "simulationID": "WSA-ENLIL/33848/1",
+      "estimatedShockArrivalTime": "2024-10-11T04:00Z",
+      "isEarthGB": true,
+      "impactList": [
+        {
+          "location": "Mars",
+          "arrivalTime": "2024-10-12T12:00Z",
+          "isGlancingBlow": true,
+          "isMinorImpact": false
+        },
+        {
+          "location": "STEREO A",
+          "arrivalTime": "2024-10-10T23:43Z",
+          "isGlancingBlow": false,
+          "isMinorImpact": false
+        }
+      ],
+      "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/33848/-1"
+    },
+    "conclusion": "Official UI plus matched API support an Earth-specific top-level convention; impactList with other targets only is compatible with Earth impact and is not evidence of target contamination. Universal machine-readable semantic guarantee not found. Do not require Earth in impactList.",
+    "leader_repo_findings_not_independently_reinspected": {
+      "current_28_drop_numeric_arrival_and_horizon_alignment": true,
+      "pending_retains_coarse_dt_ge_minus6h_eligibility": true,
+      "availability_uses_completion_floor_plus1h_not_issue": true
+    },
+    "new_search": "DONKI WSA ENLIL \"Estimated Shock Arrival\" \"Earth\"",
+    "scope": "Training-era official simulation forecast fields used only for schema/UI mapping; no observed truth or post-event annotations used. No new feature adopted."
+  }
+}

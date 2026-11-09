@@ -1,0 +1,222 @@
+{
+  "scope": "Bounded notification source gate only; no scientific targets/scores, fitting, training, source-gate bypass, or other campaign mutation.",
+  "retrieved_utc": "2026-11-08T16:41:53.382654+00:00",
+  "verdict": "inconclusive_for_immutability_at_issue; historical_capture_exists_but_late",
+  "axis8_source_gate": "remains_blocked_source",
+  "official_evidence": {
+    "notification_guide": {
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/guide/notifications/",
+      "establishes": "Full message/metadata; notification/version ID links.",
+      "does_not_establish": "Write-once body after sending, all revisions, original publication/receipt time."
+    },
+    "event_guide": {
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI/guide/events/",
+      "establishes": "Event pages have version picker.",
+      "does_not_establish": "Notification-body immutability; identical rule for event and notification version semantics."
+    },
+    "system_page": {
+      "url": "https://ccmc.gsfc.nasa.gov/tools/DONKI/",
+      "establishes": "Public web/API access and internal DONKI-Editor data entry portal.",
+      "does_not_establish": "That notification bodies can or cannot be edited after issue."
+    },
+    "schema": {
+      "url": "https://ccmc.gsfc.nasa.gov/DONKI-API/v3/api-docs",
+      "version": "2.0",
+      "object": {
+        "type": "object",
+        "properties": {
+          "messageType": {
+            "type": "string"
+          },
+          "messageID": {
+            "type": "string"
+          },
+          "messageURL": {
+            "type": "string"
+          },
+          "messageIssueTime": {
+            "type": "string"
+          },
+          "messageBody": {
+            "type": "string"
+          }
+        }
+      },
+      "endpoint": {
+        "get": {
+          "tags": [
+            "DONKI API"
+          ],
+          "summary": "Get Space Weather Notifications",
+          "description": "Retrieves the notifications sent from DONKI within a maximum 60-day window.",
+          "operationId": "getNotifications",
+          "parameters": [
+            {
+              "name": "startDate",
+              "in": "query",
+              "description": "Start date (yyyy-MM-dd). Defaults to 7 days ago.",
+              "required": false,
+              "schema": {
+                "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string",
+                "default": ""
+              }
+            },
+            {
+              "name": "endDate",
+              "in": "query",
+              "description": "End date (yyyy-MM-dd). Defaults to today.",
+              "required": false,
+              "schema": {
+                "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string",
+                "default": ""
+              }
+            },
+            {
+              "name": "type",
+              "in": "query",
+              "description": "Event type (FLR, SEP, CME, IPS, MPC, GST, RBE, REPORT, ALL)",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "default": "ALL"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "does_not_establish": "No body revision history, original-body endpoint, immutable signature/receipt, or as-of query documented here."
+    }
+  },
+  "independent_mechanism": {
+    "name": "Internet Archive Wayback capture",
+    "official_docs": [
+      "https://archive.org/developers/tutorial-compare-snapshot-wayback.html",
+      "https://archive.org/help/wayback_api.php"
+    ],
+    "docs_meaning": "Timestamp describes archived snapshot; a snapshot is content captured at that moment, not original publication time. Availability API closest result may be before or after requested timestamp.",
+    "cdx_query": "https://web.archive.org/cdx/search/cdx?url=https%3A%2F%2Fkauai.ccmc.gsfc.nasa.gov%2FDONKI%2Fview%2FAlert%2F33664%2F1&output=json&fl=timestamp%2Coriginal%2Cmimetype%2Cstatuscode&limit=20&to=20251228",
+    "cdx_response": [
+      [
+        "timestamp",
+        "original",
+        "mimetype",
+        "statuscode"
+      ],
+      [
+        "20241111233230",
+        "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+        "text/html",
+        "200"
+      ],
+      [
+        "20241211221416",
+        "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+        "text/html",
+        "200"
+      ],
+      [
+        "20250421124549",
+        "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+        "text/html",
+        "200"
+      ],
+      [
+        "20250908061434",
+        "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+        "text/html",
+        "200"
+      ]
+    ],
+    "capture_receipt": {
+      "requested_url": "https://web.archive.org/web/20241111233230id_/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+      "resolved_url": "https://web.archive.org/web/20241111233230id_/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1",
+      "status": 200,
+      "retrieved_utc": "2026-11-08T16:41:52.368032+00:00",
+      "characters": 11688,
+      "headers": {
+        "Server": "nginx",
+        "Date": "Sun, 08 Nov 2026 16:41:53 GMT",
+        "Content-Type": "text/html;charset=ISO-8859-1",
+        "Content-Length": "11688",
+        "Connection": "close",
+        "x-archive-orig-date": "Mon, 11 Nov 2024 23:32:30 GMT",
+        "x-archive-orig-server": "Apache",
+        "x-archive-orig-strict-transport-security": "max-age=63072000; includeSubdomains; preload",
+        "x-archive-orig-set-cookie": "JSESSIONID=C1D492C534E1D6C30C6D1AE4C58A447E.jvm1; Path=/DONKI; Secure; HttpOnly",
+        "x-archive-orig-cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "x-archive-orig-pragma": "no-cache",
+        "x-archive-orig-expires": "0",
+        "x-archive-orig-x-xss-protection": "1; mode=block",
+        "x-archive-orig-x-frame-options": "DENY",
+        "x-archive-orig-x-content-type-options": "nosniff",
+        "x-archive-orig-content-language": "en-US",
+        "x-archive-orig-keep-alive": "timeout=5, max=100",
+        "x-archive-orig-connection": "Keep-Alive",
+        "x-archive-orig-x-crawler-transfer-encoding": "chunked",
+        "x-archive-orig-content-length": "11688",
+        "cache-control": "max-age=1800",
+        "accept-ranges": "bytes",
+        "memento-datetime": "Mon, 11 Nov 2024 23:32:30 GMT",
+        "link": "<https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"original\", <https://web.archive.org/web/timemap/link/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"timemap\"; type=\"application/link-format\", <https://web.archive.org/web/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"timegate\", <https://web.archive.org/web/20241111233230/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"first memento\"; datetime=\"Mon, 11 Nov 2024 23:32:30 GMT\", <https://web.archive.org/web/20241111233230/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"memento\"; datetime=\"Mon, 11 Nov 2024 23:32:30 GMT\", <https://web.archive.org/web/20241211221416/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"next memento\"; datetime=\"Wed, 11 Dec 2024 22:14:16 GMT\", <https://web.archive.org/web/20250908061434/https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/Alert/33664/1>; rel=\"last memento\"; datetime=\"Mon, 08 Sep 2025 06:14:34 GMT\"",
+        "content-security-policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: blob: archive.org web.archive.org web-static.archive.org wayback-api.archive.org athena.archive.org analytics.archive.org pragma.archivelab.org wwwb-events.archive.org",
+        "x-archive-src": "CC-MAIN-2024-46-1730477028240.82-0018/CC-MAIN-20241111222353-20241112012353-00365.warc.gz",
+        "server-timing": "captures_list;dur=0.869530, exclusion.robots;dur=0.092314, exclusion.robots.policy;dur=0.075321, esindex;dur=0.010218, cdx.remote;dur=29.600712, LoadShardBlock;dur=131.799816, PetaboxLoader3.datanode;dur=178.730545, PetaboxLoader3.resolve;dur=244.084390, load_resource;dur=349.725745",
+        "x-app-server": "wwwb-app247-dc8",
+        "x-ts": "200",
+        "x-tr": "561",
+        "set-cookie": "wb-p-SERVER=wwwb-app247; path=/",
+        "X-location": "All",
+        "X-AS": "9318",
+        "X-RL": "0",
+        "X-NA": "0",
+        "X-Page-Cache": "MISS",
+        "Server-Timing": "captures_list;dur=0.869530, exclusion.robots;dur=0.092314, exclusion.robots.policy;dur=0.075321, esindex;dur=0.010218, cdx.remote;dur=29.600712, LoadShardBlock;dur=131.799816, PetaboxLoader3.datanode;dur=178.730545, PetaboxLoader3.resolve;dur=244.084390, load_resource;dur=349.725745",
+        "X-NID": "SK Broadband Co Ltd",
+        "Referrer-Policy": "no-referrer-when-downgrade",
+        "Permissions-Policy": "interest-cohort=()",
+        "X-sd": "0"
+      }
+    },
+    "capture_raw_html": "\r\n \r\n<html>  \r\n  <head>  \r\n    <link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"/DONKI/resources/css/styles.css\">   \r\n    <title>\r\n    View Space Weather Activity\r\n</title>\r\n</head>\r\n<body>\r\n<table width=\"100%\" border=\"1\" cellpadding=\"2\" cellspacing=\"2\" align=\"left\">\r\n    <tr>\r\n        <td colspan=\"2\" align=\"left\">\r\n            \r\n\r\n\r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"description\" content=\"CCMC DONKI Application\">\r\n<meta name=\"orgcode\" content=\"Code674\">\r\n<meta name=\"rno\" content=\"Dr. Masha Kuznetsova\">\r\n<meta name=\"content-owner\" content=\"Dr. Masha Kuznetsova\">\r\n<meta name=\"webmaster\" content=\"Chiu Wiegand\">\r\n<title>DONKI Header</title>\r\n<link rel=\"shortcut icon\" href=\"https://webtools.ccmc.gsfc.nasa.gov/favicon.ico\" type=\"image/x-icon\">\r\n<link rel=\"icon\" href=\"https://webtools.ccmc.gsfc.nasa.gov/favicon.ico\" type=\"image/x-icon\">\r\n<!-- Google tag UA retired by July 2023 -->\r\n<script>\r\n  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\r\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\r\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\r\n  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\r\n\r\n  ga('create', 'UA-43747106-1', 'auto');\r\n  ga('send', 'pageview');\r\n</script>\r\n<!-- Agency Google tag -->\r\n<script language=\"javascript\" id=\"_fed_an_ua_tag\" src=\"https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NASA&subagency=GSFC&yt=true&dclink=true\"></script>\r\n<!-- Google G4 tag (gtag.js) -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-CW9J2XG88Y\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag('js', new Date());\r\n\r\n  gtag('config', 'G-CW9J2XG88Y');\r\n</script>\r\n</head>\r\n<body>\r\n\t<H1>\r\n\t\t<a href=\"https://ccmc.gsfc.nasa.gov\" target=\"_blank\"><img src=\"/DONKI/resources/images/ccmcLogo.gif\"/></a>\r\n\t\tSpace Weather Database Of Notifications, Knowledge, Information (DONKI)\r\n\t</H1>\r\n</body>\r\n</html>\r\n        </td>\r\n    </tr>\r\n    <tr>\r\n        <td valign=\"top\">\r\n            \r\n\r\n\r\n\r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<title>DONKI: Menu Page</title>\r\n</head>\r\n<body>\r\n\t<h4>Go to:</h4>\r\n\t<ul>\r\n\t\t<li><a href=\"https://ccmc.gsfc.nasa.gov/tools/DONKI/\" target=\"_blank\"> About DONKI</a></li>\r\n\t\t<li><a href=\"/DONKI/\"> DONKI Home</a></li>\r\n\t\t\r\n\t\t\t\t\r\n\t\t\r\n\t\t<li><a href=\"/DONKI/search/\"> Search Space Weather Activity</a></li>\r\n\t\t\r\n\t\t<li><a href=\"/DONKI/search/alerts\"> Search Notification Archive</a></li>\r\n\t\t\r\n\t\t\r\n\r\n\t\t\r\n\t\t\r\n\t\t<!-- sec:authorize access=\"hasIpAddress('169.154.198.0/24') or hasIpAddress('128.183.0.0/16') or hasIpAddress('198.120.0.0/16') or hasIpAddress('128.154.0.0/16') or hasIpAddress('156.68.0.0/16') or hasIpAddress('10.250.0.0/16')\"-->\r\n\t\t\t<li><a href=\"/DONKI/login\"> Login</a></li>\r\n\t\t\r\n\t\t\r\n\r\n\r\n\t</ul>\r\n\r\n</body>\r\n</html>\r\n        </td>\r\n        <td width=\"80%\">\r\n            \r\n\r\n\r\n\r\n\r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n\r\n<html>\r\n<script>\r\n\tfunction confirmDeleteLink() {\r\n\t\tvar confirmMessage = \"Are you sure you want to delete the link activity?\";\r\n\r\n\t\tif (confirm(confirmMessage) == false) {\r\n\t\t\treturn false;\r\n\t\t} else {\r\n\t\t\treturn true;\r\n\t\t}\r\n\t}\r\n</script>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<title>DONKI: View SW Activity</title>\r\n</head>\r\n<body>\r\n\r\n\r\n\t<table width=\"100%\">\r\n\t\t\r\n\t\t\r\n\t\t\r\n\t\t\r\n\t\t\r\n\r\n\t\t\r\n\t\t\t<tr>\r\n\t\t\t\t<td>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t<b>Notification Information</b>\r\n\t<br>\r\nMessage ID: 20241002-AL-001<br>\r\nSent Date: 2024-10-02T02:15Z<br>\r\nSubmitted by Chris Stubenrauch<br>\r\n\t<dt>For Event(s) (please click link to see detail):</dt>\r\n\t\r\n\t\t\r\n\t\t\t<dd>\r\n\t\t\t\t<a\r\n\t\t\t\t\thref=\" /DONKI/view/WSA-ENLIL/33663/1 \">\r\n\t\t\t\t\tWSA-ENLIL</a><br>\r\n\t\t\t</dd>\r\n\t\t\r\n\t\t\t<dd>\r\n\t\t\t\t<a\r\n\t\t\t\t\thref=\" /DONKI/view/CMEAnalysis/33662/1 \">\r\n\t\t\t\t\tCMEAnalysis</a><br>\r\n\t\t\t</dd>\r\n\t\t\r\n\t\t\t<dd>\r\n\t\t\t\t<a\r\n\t\t\t\t\thref=\" /DONKI/view/CME/33659/3 \">\r\n\t\t\t\t\tCME</a><br>\r\n\t\t\t</dd>\r\n\t\t\r\n\t\r\nMessage: <br>\r\n\t<textarea cols=\"150\" rows=\"60\">\r\n## Community Coordinated Modeling Center Database Of Notifications, Knowledge, Information ( CCMC DONKI )\n## Message Type: Space Weather Notification - CME (Lucy, STEREO A, Missions Near Earth)\n##\n## Message Issue Date: 2024-10-02T02:15:47Z\n## Message ID: 20241002-AL-001\n##\n## Disclaimer: NOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly.\n\n\n## Summary:\n\nS-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-10-01T23:09Z.\n\nEstimated speed: ~487 km/s.\n\nEstimated opening half-angle: 39 deg.\n\nDirection (lon./lat.): -17/-5 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-10-01T23:09:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Lucy and STEREO A (glancing blow).  The leading edge or flank of the CME will reach Lucy at 2024-10-05T01:14Z and STEREO A at 2024-10-04T21:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2024-10-05T03:32Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-6 (below minor to moderate).   \n  \nLinks to the movies of the modeled event (includes CME: 2024-10-01T23:09:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_Lucy_timeline.gif\n\n\n## Notes: \n\nThis CME event (2024-10-01T23:09:00-CME-001) is associated with X7.1 flare with ID 2024-10-01T21:58:00-FLR-001 which peaked at 2024-10-01T22:20Z (see notifications 20241001-AL-003, 20241001-AL-004). This CME is still in progress and arrival times are based on preliminary data. Updates will be provided when available. \n\n\nSCORE CME typification system:\nS-type: CMEs with speeds less than 500 km/s\nC-type: Common 500-999 km/s\nO-type: Occasional 1000-1999 km/s\nR-type: Rare 2000-2999 km/s\nER-type: Extremely Rare >3000 km/s\n\n\nCommunity Coordinated Modeling Center Database Of Notifications, Knowledge, Information (CCMC DONKI) Disclaimer\n\nData and/or information stored within the CCMC DONKI is provided \"as is\" without any warranty of any kind, either expressed, implied, or statutory, including, but not limited to, any warranty that the data and/or information will conform to specifications, any implied warranties of merchantability, fitness for a particular purpose, or freedom from infringement, any warranty that the information will be error free, or any warranty that documentation, if provided, will conform to the data and/or information. In no event shall the United States Government, or its contractors or subcontractors, be liable for any damages, including, but not limited to, direct, indirect, special or consequential damages, arising out of, resulting from, or in any way connected with this information, whether or not based upon warranty, contract, tort, or otherwise, whether or not injury was sustained by persons or property or otherwise, and whether or not loss was sustained from, or arose out of the results of, or use of, the data and/or information. The United States Government disclaims all warranties and liabilities regarding third party data and/or information, if present in the data and/or information generated and/or compiled by CCMC DONKI, and distributes it \"as is\".\n\nUse of data and/or information stored within the CCMC DONKI does not, in any manner, constitute an endorsement by NASA of any test results, resulting designs, hardware, or other matters. Use of data and/or information stored within the CCMC DONKI does not, in any manner, constitute the grant of a license to RECIPIENT under any NASA copyright, patent, patent application or other intellectual property.\n\nThe terms of this disclaimer shall be construed, and the legal relations between the parties hereto shall be determined, in accordance with United States federal law.\n\nNOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly. \r\n</textarea>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n</td>\r\n\t\t\t</tr>\r\n\t\t\r\n\t\t\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\r\n\t\t\r\n\t\r\n\t\r\n\r\n<tr><td><br><br></td></tr>\r\n\r\n\t\t\r\n\r\n\t</table>\r\n</body>\r\n        </td>\r\n    </tr>\r\n    <tr>\r\n        <td colspan=\"2\"  align=\"left\">\r\n            \r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<title>Insert title here</title>\r\n</head>\r\n<body>\r\n\r\n<p>\r\n<B>The Moon to Mars Space Weather Analysis Office and other entities provide data to DONKI as a courtesy to the community.</B><br>\r\n<B>By visiting this site, you acknowledge that you understand and agree to the <a href=\"/DONKI/Disclaimer\">Important Disclaimer Notice</a></B>\r\n<br><br>\r\n\r\n<B>\r\nIf you are looking for the official U.S. Government forecast for space weather, please go to NOAA's Space Weather Prediction Center (<a href=\"https://swpc.noaa.gov\" target=\"_blank\">https://swpc.noaa.gov</a>). This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly.\r\n</B>\r\n</p>\r\n \r\n<p style=\"padding-bottom: 0pt; padding-top: 0pt;text-align: center \">\r\nCurator: <a title=\"mailto: chiu.wiegand@nasa.gov?\" href=\"mailto:chiu.wiegand@nasa.gov \">Chiu Wiegand</a> |\r\nNASA Official: <a title=\"mailto:Maria.M.Kuznetsova@nasa.gov?subject=DONKI\"\r\nhref=\"mailto:Maria.M.Kuznetsova@nasa.gov?subject=DONKI\">Dr. Masha Kuznetsova</a> |\r\n<a onclick=\"window.open(this.href); return false;\" title=\"https://www.nasa.gov/privacy/\"\r\nhref=\"https://www.nasa.gov/privacy/\" onkeypress=\"window.open(this.href); return\r\nfalse;\">Privacy and Security Notices</a> |\r\n<a onclick=\"window.open(this.href); return false;\" title=\"https://www.nasa.gov/accessibility/\"\r\nhref=\"https://www.nasa.gov/accessibility/\" onkeypress=\"window.open(this.href); return\r\nfalse;\">Accessibility</a> |\r\n<a onclick=\"window.open(this.href); return false;\" title=\"https://ccmc.gsfc.nasa.gov/data-consent-agreement/\"\r\nhref=\"https://ccmc.gsfc.nasa.gov/data-consent-agreement/\" onkeypress=\"window.open(this.href); return\r\nfalse;\">CCMC Data Collection Consent Agreement</a>\r\n</p>\r\n\r\n \r\n\r\n</body>\r\n</html>\r\n        </td>\r\n    </tr>\r\n</table>\r\n</body>  \r\n</html>\r\n\r\n\r\n ",
+    "summary_only": "\n\nS-type CME detected by STEREO A / SOHO. \n\nStart time of the event: 2024-10-01T23:09Z.\n\nEstimated speed: ~487 km/s.\n\nEstimated opening half-angle: 39 deg.\n\nDirection (lon./lat.): -17/-5 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2024-10-01T23:09:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Lucy and STEREO A (glancing blow).  The leading edge or flank of the CME will reach Lucy at 2024-10-05T01:14Z and STEREO A at 2024-10-04T21:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2024-10-05T03:32Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 4-6 (below minor to moderate).   \n  \nLinks to the movies of the modeled event (includes CME: 2024-10-01T23:09:00-CME-001):\n\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20241002_053100_2.0_ENLIL_CONE_Lucy_timeline.gif\n\n\n",
+    "comparison": {
+      "reference_file": "analysis/w50_audit_20261108/notification_archive/2024-10.json",
+      "message_id": "20241002-AL-001",
+      "summary_whitespace_normalized_equal": true,
+      "comparison_limit": "Only HTML-decoded whitespace-normalized Summary compared. Not exact HTTP-byte equality; not identity at issue; linked pages/scripts not used."
+    },
+    "body_issue_time": "2024-10-02T02:15:47Z",
+    "capture_time": "2024-11-11T23:32:30Z",
+    "capture_lag_hours": 981.2786111111111,
+    "earliest_capture_claim": "Earliest returned by bounded exact-URL CDX query; not proven earliest public appearance, consumer receipt, or archive completeness."
+  },
+  "admission_reasoning": {
+    "conditional": "Only for the exact captured body, at origins no earlier than a verified capture (and reported issue time). Later body changes need new capture evidence.",
+    "publication_limit": "Capture demonstrates server content by capture time; it does not establish original publication or immediate public availability through archive service. Actual consumer replay needs receipt/ingest evidence.",
+    "observed_case": "Capture is after the October 5 forecast arrival, so it cannot justify this notification as an advance warning at its original issue or arrival origins.",
+    "local_snapshot_limit": "Current local capture in November 2026 does not admit these messages into 2022-2025 origins."
+  },
+  "smallest_next_check": "Within the same mechanism, bound a pre-registered small training-era notification sample; recover exact dated bodies and compare capture times with issue and forecast-arrival times. Report coverage and lag only, no outcome association. Early captures would support capture-gated records, not a blanket immutability claim.",
+  "search_queries": [
+    "DONKI notification version edit issued message immutable notifications archive",
+    "site.ccmc.gsfc.nasa.gov DONKI notifications edit version sent",
+    "Internet Archive Wayback CDX timestamp capture original URL API documentation"
+  ]
+}

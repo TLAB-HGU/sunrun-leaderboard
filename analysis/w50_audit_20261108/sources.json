@@ -1,0 +1,198 @@
+{
+  "retrieved_date": "2026-11-08",
+  "scope": "training-only early stopping evidence, no fitting or performance claim",
+  "target_version": "XGBoost 2.1.4 (reported in supplied local audit; not imported here)",
+  "status": "evidence_complete_exact_combined_runtime_compatibility_unverified",
+  "required_next_check": "tiny CPU synthetic smoke with 24-output unchanged custom objective, early stopping, explicit prefix, JSON save/load and fresh selected-round refit",
+  "sources": [
+    {
+      "id": "zhang_yu_2005",
+      "kind": "original_paper",
+      "title": "Boosting with early stopping: convergence and consistency",
+      "authors": [
+        "Tong Zhang",
+        "Bin Yu"
+      ],
+      "year": 2005,
+      "url": "https://arxiv.org/pdf/math/0508276",
+      "doi": "10.1214/009053605000000255",
+      "supports": [
+        "early stopping as regularization",
+        "numerical convergence differs from statistical consistency"
+      ],
+      "limits": [
+        "i.i.d. sample assumptions",
+        "not a guarantee for shifted dependent 24-output custom-objective forecasting"
+      ],
+      "retrieval": "Exa search and full-page fetch"
+    },
+    {
+      "id": "kuznetsov_mohri_2015",
+      "kind": "original_paper",
+      "title": "Learning Theory and Algorithms for Forecasting Non-Stationary Time Series",
+      "authors": [
+        "Vitaly Kuznetsov",
+        "Mehryar Mohri"
+      ],
+      "year": 2015,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2015/file/41f1f19176d383480afa65d325c06ed0-Paper.pdf",
+      "supports": [
+        "nonstationary forecasting bounds include sequential complexity and distribution discrepancy"
+      ],
+      "limits": [
+        "bounded-loss assumption",
+        "does not test XGBoost early stopping or round transfer"
+      ],
+      "retrieval": "Exa search and full-page fetch"
+    },
+    {
+      "id": "xgb_multioutput_docs",
+      "kind": "official_docs",
+      "url": "https://xgboost.readthedocs.io/en/release_2.1.0/tutorials/multioutput.html",
+      "supports": [
+        "hist vector-leaf multi_output_tree experimental support"
+      ],
+      "retrieval": "Exa full-page fetch"
+    },
+    {
+      "id": "xgb_multioutput_example",
+      "kind": "official_docs_example",
+      "url": "https://xgboost.readthedocs.io/en/release_2.1.0/python/examples/multioutput_regression.html",
+      "supports": [
+        "custom objective explicit num_target evals_result inplace_predict"
+      ],
+      "limits": [
+        "two targets",
+        "not exact early stopping plus 24-target spectral objective"
+      ],
+      "retrieval": "Exa full-page fetch; exact tag source independently read"
+    },
+    {
+      "id": "xgb_prediction_docs",
+      "kind": "official_docs",
+      "url": "https://xgboost.readthedocs.io/en/release_2.1.0/prediction.html#early-stopping",
+      "supports": [
+        "native prediction defaults to full model; use iteration_range for best prefix"
+      ],
+      "retrieval": "Exa full-page fetch"
+    },
+    {
+      "id": "xgb_api_extraction_rejected",
+      "kind": "official_docs_version_contamination",
+      "url": "https://xgboost.readthedocs.io/en/release_2.1.0/python/python_api.html#xgboost.train",
+      "used_as_version_evidence": false,
+      "issue": "Extracted text contained features marked added in 3.1.0. Exact 2.1.4 source used instead.",
+      "retrieval": "Exa full-page fetch"
+    },
+    {
+      "id": "xgb_tag",
+      "kind": "official_upstream_tag",
+      "url": "https://api.github.com/repos/dmlc/xgboost/git/ref/tags/v2.1.4",
+      "version": "2.1.4",
+      "commit": "62e7923619352c4079b24303b367134486b1c84f",
+      "retrieval": "GitHub API via Python urllib"
+    },
+    {
+      "id": "xgb_example_source",
+      "kind": "official_upstream_source",
+      "repository": "dmlc/xgboost",
+      "commit": "62e7923619352c4079b24303b367134486b1c84f",
+      "path": "demo/guide-python/multioutput_regression.py",
+      "lines": [
+        68,
+        135
+      ],
+      "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/demo/guide-python/multioutput_regression.py#L68-L135",
+      "supports": [
+        "custom objective vector-leaf example and explicit target count"
+      ],
+      "retrieval": "raw.githubusercontent.com exact full SHA via Python urllib"
+    },
+    {
+      "id": "xgb_train_source",
+      "kind": "official_upstream_source",
+      "repository": "dmlc/xgboost",
+      "commit": "62e7923619352c4079b24303b367134486b1c84f",
+      "path": "python-package/xgboost/training.py",
+      "lines": [
+        52,
+        192
+      ],
+      "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/python-package/xgboost/training.py#L52-L192",
+      "supports": [
+        "early_stopping_rounds evals_result custom_metric",
+        "last metric and last eval control stopping",
+        "raw custom-objective margins",
+        "last model returned"
+      ],
+      "retrieval": "raw.githubusercontent.com exact full SHA via Python urllib"
+    },
+    {
+      "id": "xgb_callback_source",
+      "kind": "official_upstream_source",
+      "repository": "dmlc/xgboost",
+      "commit": "62e7923619352c4079b24303b367134486b1c84f",
+      "path": "python-package/xgboost/callback.py",
+      "lines": [
+        349,
+        492
+      ],
+      "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/python-package/xgboost/callback.py#L349-L492",
+      "supports": [
+        "save_best false default",
+        "best epoch and patience trees",
+        "save_best uses slicing"
+      ],
+      "retrieval": "raw.githubusercontent.com exact full SHA via Python urllib"
+    },
+    {
+      "id": "xgb_inplace_source",
+      "kind": "official_upstream_source",
+      "repository": "dmlc/xgboost",
+      "commit": "62e7923619352c4079b24303b367134486b1c84f",
+      "path": "python-package/xgboost/core.py",
+      "lines": [
+        2397,
+        2470
+      ],
+      "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/python-package/xgboost/core.py#L2397-L2470",
+      "supports": [
+        "explicit iteration begin and end forwarded"
+      ],
+      "retrieval": "raw.githubusercontent.com exact full SHA via Python urllib"
+    },
+    {
+      "id": "xgb_best_iteration_source",
+      "kind": "official_upstream_source",
+      "repository": "dmlc/xgboost",
+      "commit": "62e7923619352c4079b24303b367134486b1c84f",
+      "path": "python-package/xgboost/core.py",
+      "lines": [
+        2706,
+        2719
+      ],
+      "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/python-package/xgboost/core.py#L2706-L2719",
+      "supports": [
+        "best_iteration attribute accessor"
+      ],
+      "retrieval": "raw.githubusercontent.com exact full SHA via Python urllib"
+    }
+  ],
+  "local_context": [
+    "research/w50_age_retrain_20261108/age_repair_mechanism.md",
+    "research/w50_age_retrain_20261108/results.json",
+    "analysis/w50_audit_20261108/state_failure_history.md"
+  ],
+  "unverified": [
+    "exact installed runtime version",
+    "24-output custom spectral objective with early stopping and prefix inference",
+    "selected-round transfer to full fit",
+    "any forecast-performance improvement"
+  ],
+  "no_claims": [
+    "guaranteed improvement",
+    "50 percent improvement",
+    "new component adoption",
+    "new internal experiment-selection folds"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "scope": "training-era issued messages only; no fitting/evaluation truth",
+  "cutoff": "2025-12-29T00:00:00+00:00",
+  "errors": [],
+  "message_count": 1174,
+  "unambiguous_single_cme_kinematics": 882,
+  "training_input_coverage": {
+    "scope": "F1 training input origins only; target columns not loaded",
+    "origins": 28297,
+    "unique_events": 806,
+    "origins_with_any_unambiguous_message_issued_in_preceding_72h": 22802,
+    "fraction_with_recent_message": 0.8058098031593455,
+    "speed_quantiles_0_50_90_99_100": [
+      403.0,
+      790.0,
+      1372.0,
+      2137.8299999999967,
+      3180.0
+    ],
+    "warning": "72h is the forecast length, not a selected propagation window; exposure does not prove Earth impact."
+  },
+  "limits": [
+    "Issue records are not consumer receipt logs.",
+    "Current archival response does not by itself prove immutable historical bodies.",
+    "No absent-message inference about absence of eruptions.",
+    "No correspondence with stored ENLIL simulation IDs is assumed.",
+    "Extraction is an inventory, not an adopted feature or demonstrated skill gain."
+  ],
+  "snapshot_dir": "notification_archive",
+  "monthly_receipts": 41,
+  "test_result": "4 tests passed; ruff passed"
+}

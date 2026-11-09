@@ -1,0 +1,70 @@
+{
+  "status": "pass",
+  "checked_utc": "2026-11-08T16:19:42.644245+00:00",
+  "scope": "synthetic mathematical verification only; not scientific performance evidence",
+  "scientific_data_or_outcomes_read": false,
+  "model_fitting_performed": false,
+  "runtime_state_modified": false,
+  "sources": [
+    "leaderboard/scorer/competition.py",
+    "research/post_ablation_five_axes_20261108/analysis_kernel.py"
+  ],
+  "scorer_version": "lead-timse-6h-v1",
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.3"
+  },
+  "fixture": {
+    "periods": {
+      "F1": [
+        "2020-01-02",
+        "2020-01-09"
+      ],
+      "F2": [
+        "2020-01-09",
+        "2020-01-16"
+      ],
+      "F3": [
+        "2020-01-16",
+        "2020-01-23"
+      ]
+    },
+    "hourly_observations": 529,
+    "missing_observations": 1,
+    "scored_origins": 48,
+    "leads": 72,
+    "finite_difference_epsilon": 0.0001,
+    "gradient_rows_checked": [
+      0,
+      8,
+      16,
+      24,
+      32,
+      40
+    ]
+  },
+  "metrics": {
+    "kernel_scorer_total_max_difference": 0.0,
+    "tail_weight_sum_max_error": 4.440892098500626e-16,
+    "per_lead_gradient_finite_difference_max_error": 5.276209157079048e-12,
+    "tied_target_coefficients_equal": true,
+    "shared_mse_timse_quarter_scale": 0.5,
+    "fixed_mse_timse_sixteenth_scale": 0.5,
+    "population_directional_derivative_error": 4.506894857314592e-12
+  },
+  "checks": {
+    "kernel_scorer_parity": true,
+    "normalized_tail_weights": true,
+    "per_lead_gradient": true,
+    "equal_tied_target_weights": true,
+    "shared_scale_factor": true,
+    "tail_only_scale_factor": true,
+    "population_directional_derivative": true
+  },
+  "limits": [
+    "Valid positive scored predictions with no fallback; raw clipping needs a chain rule.",
+    "Per-lead derivative; official total-S derivative additionally carries 1/72.",
+    "Population derivative checked on a fixed finite distribution, not a fitted optimum.",
+    "No statement about achievable gains, generalization, or current experiment outcomes."
+  ]
+}

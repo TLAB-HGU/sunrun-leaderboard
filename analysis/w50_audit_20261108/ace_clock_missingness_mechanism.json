@@ -1,0 +1,158 @@
+{
+  "title": "ACE/SWEPAM fixed-clock missingness: source and mechanism audit",
+  "request_type": "Implementation reference lookup and bounded data-validity research",
+  "retrieved_local_date": "2026-11-09",
+  "scope": {
+    "training_window": "[2025-01-01T00:00Z,2025-02-01T00:00Z)",
+    "frozen_before_values": true,
+    "no_fitting": true,
+    "no_evaluation_or_treatment_access": true,
+    "no_model_filter_target_feature_policy_changes": true,
+    "no_experiment_selected": true
+  },
+  "product": {
+    "name": "202501_ace_swepam_1h.txt",
+    "producer": "NOAA Space Weather Prediction Center",
+    "mirror": "NASA SOHO/SolarSoft",
+    "kind": "Hourly Averaged Real-time Bulk Parameters of the Solar Wind Plasma",
+    "instrument": "ACE SWEPAM",
+    "speed_units": "km/s",
+    "status_header": {
+      "0": "nominal data",
+      "9": "no data",
+      "1_to_8": "bad data record"
+    },
+    "speed_sentinel": -9999.9,
+    "header_issued": "2025 Feb 01 0510 UT",
+    "not_equivalent_to": "ACE Science Center Level2 hand-checked moments"
+  },
+  "context_files": [
+    "data_audit.md",
+    "training_imputation_diagnostic.md",
+    "training_imputation_diagnostic.json"
+  ],
+  "findings": [
+    {
+      "claim": "All744 expected hourly labels exist uniquely; no absent timestamps or nonhour labels.",
+      "classification": "confirmed cached training-month data",
+      "receipt": "ace_clock_missingness/january_counts.json"
+    },
+    {
+      "claim": "494 valid targets;250 invalid =141 speed-sentinel records plus109 positive-finite speed records rejected by nonzero status.",
+      "classification": "confirmed data",
+      "status_counts": {
+        "0": 494,
+        "1": 106,
+        "3": 9,
+        "6": 3,
+        "9": 132
+      }
+    },
+    {
+      "claim": "UTC03,09,15 are each31/31 status9+speed sentinel; UTC21 has16 status9,4 status1,11 valid.",
+      "classification": "confirmed data"
+    },
+    {
+      "claim": "Cached raw and freshly retrieved NASA mirror file are byte-identical, 55191bytes; status/speed mismatches0.",
+      "classification": "confirmed current mirror comparison; not historical availability proof"
+    },
+    {
+      "claim": "Official parse_month output matches direct application of unchanged status0, finite-positive rule on744/744 records.",
+      "classification": "confirmed parser parity"
+    },
+    {
+      "claim": "Clock gaps are already encoded before local filtering/hourbinning; physical instrument absence versus telemetry, producer aggregation or archive artifact remains unresolved.",
+      "classification": "bounded inference"
+    },
+    {
+      "claim": "No exact03/09/15/21 schedule explanation found in reviewed primary sources.",
+      "classification": "bounded search result, not universal absence"
+    },
+    {
+      "claim": "Hourly averaging is documented, but exact interval support relative to label, valid sample threshold and status aggregation are not established by the reviewed RTSW sources.",
+      "classification": "explicit documentation gap"
+    }
+  ],
+  "source_vs_parser": {
+    "target": "No label-time shift; invalid values mapped toNaN.",
+    "feature": "Notebook cell4 maps label T to floor(T,1h)+1h. On these exactly hourly rows this is a one-to-one shift, not averaging; corresponding feature gaps appear one hour later.",
+    "masking": "All141 sentinels also have nonzero status;109 additional finite-positive speeds are rejected by the existing status rule. No status0 nonpositive/nonfinite speeds.",
+    "duplicate_limit": "Notebook uses last file for duplicate labels, official parser uses named month. No duplicates in frozen named-month source; cross-file duplicate equivalence relies on existing sealed audit, not a new all-file scan.",
+    "fetch_limit": "Local insert-only fetch preserves existing records, but cannot uniquely explain this month's gaps because current upstream file is identical."
+  },
+  "mechanisms": [
+    {
+      "name": "Local absent rows or hour-binning creates target03/09/15/21 gaps",
+      "assessment": "refuted for frozen named-month source and observed target parser path"
+    },
+    {
+      "name": "Status rule alone drops otherwise valid-looking numeric values at fixed hours",
+      "assessment": "insufficient for primary pattern:03/09/15 are already status9 and sentinel;21 includes4 numeric status1 rejections"
+    },
+    {
+      "name": "Weekly CEM calibration",
+      "assessment": "documented historical operation, not established cause of six-hour clock gaps"
+    },
+    {
+      "name": "Nominal SWI/SSTI search-track cycle",
+      "assessment": "1998 design:30SWI modes plus1search,64s each, command-adjustable; real-time supplied only in SWI. Can cause short mode gaps but does not document fixed6hour2025 outages."
+    },
+    {
+      "name": "Real-time receiving/telemetry outages",
+      "assessment": "historically documented general source of dropouts; no matching2025clock schedule established"
+    },
+    {
+      "name": "Hourly producer aggregation/publication/archive scheduling",
+      "assessment": "plausible unresolved class;1998 every3h publication schedule is not a six-hour observation-missingness explanation"
+    }
+  ],
+  "official_sources": [
+    {
+      "id": "monthly_source",
+      "url": "https://sohoftp.nascom.nasa.gov/sdb/goes/ace/monthly/202501_ace_swepam_1h.txt",
+      "evidence": "Header identifies producer, real-time hourly product, units, status0/1-8/9 and sentinel; all744 rows archived in bounded receipt.",
+      "receipt": "ace_clock_missingness/remote_202501_ace_swepam_1h.txt"
+    },
+    {
+      "id": "noaa_rtsw",
+      "url": "https://www.spaceweather.gov/products/ace-real-time-solar-wind",
+      "evidence": "Hourly RTSW versus science products;1998 publication every3h beginning0010UT; historical low-speed flagging and tracking/transmission outages;2006 processing update;2012 pointing change.",
+      "version_caveat": "Dated historical announcements, not verified current operation."
+    },
+    {
+      "id": "swepam_instrument",
+      "url": "https://izw1.caltech.edu/ACE/ASC/docs/swepam-ssr-paper.pdf",
+      "citation": "McComas et al.1998 Space Science Reviews86:563\u2013612,sections5.2 and5.4",
+      "evidence": "64s nominal modes, command-adjustable normal cycle;RTSW only in SWI, nominal30/31 sets;RTSW reduced angular samples rather than full science data.",
+      "version_caveat": "1998 design; modes explicitly command-adjustable; not proof of2025schedule."
+    },
+    {
+      "id": "asc_l2_description",
+      "url": "https://izw1.caltech.edu/ACE/ASC/level2/swepam_l2desc.html",
+      "evidence": "Level2 separate64s/hourly/daily products and2021 reprocessing notice.",
+      "version_caveat": "Page last updatedOctober2025; does not specify RTSW hourly interval support."
+    },
+    {
+      "id": "asc_release_notes",
+      "url": "https://izw1.caltech.edu/ACE/ASC/DATA/level2/swepam/swepam_release_notes",
+      "evidence": "Weekly gain-calibration history,hand-checkedLevel2,penetrating-particle/energy-tracking issues,full-range mode eachhalf-hour and2021CEM reprocessing.",
+      "version_caveat": "Specific historical epochs; no basis to assign calendar2025fixed-clock outages."
+    }
+  ],
+  "unresolved_question": "For NOAA ACE RTSW hourly product202501_ace_swepam_1h.txt, why are03/09/15UTC allstatus9 and21UTC frequentlystatus9 despite explicit hourly rows? What exact UTC accumulation interval does labelT represent, what minimum accepted sample count and minute-to-hour status rule are applied, and did2025telemetry/processing/archive schedules omit these bins?",
+  "needed_evidence": "Producer specification/code or operational log and, if separately authorized, frozen same-month minute-data comparison. No outreach or new minute-data download performed.",
+  "cross_instrument_limit": "Hourly nominal cadence or a conjectured timestamp shift cannot establish calibrated ACE\u2013Wind parity; different products,quality,space-time sampling and instrument response remain.",
+  "verification": {
+    "json_validation": "passed with python3; all referenced receipts present",
+    "source_parser_mismatches": 0,
+    "current_mirror_byte_identical": true,
+    "training_window_rows": 744
+  },
+  "receipts": [
+    "ace_clock_missingness/frozen_scope.json",
+    "ace_clock_missingness/january_counts.json",
+    "ace_clock_missingness/cached_header.txt",
+    "ace_clock_missingness/remote_202501_ace_swepam_1h.txt",
+    "ace_clock_missingness/official_doc_receipts.json"
+  ]
+}

@@ -1,0 +1,15 @@
+# Frozen residual audit protocol — 2026-11-08
+
+This is a diagnostic replay of existing A+B1 seed42/43/44 forecasts, not new training or a submitted experiment. All outputs use `residual_*`; existing artifacts and the official scorer remain unchanged.
+
+- Fixed reference: `research/post_ablation_five_axes_20261108/reference/s{42,43,44}/F{1,2,3}_predictions.npz`, original A+B1 incumbent.
+- Official evaluation: root `leaderboard/scorer/competition.py`, frozen campaign observations, official F1/F2/F3; confirm bootstrap kernel matches fresh official scores. The implemented metric is S; W will not silently be treated as S.
+- Deterministic information controls: (1) official causal persistence, latest valid official observation at/before origin, (2) existing input `v_lag0` persistence, (3) existing input `rec27` target-aligned 27-day recurrence. No evaluation targets enter fitting or control parameter selection. No seeds apply to deterministic controls. Missing/nonpositive control values retain official persistence replacement and are counted, never retrospectively imputed with truth.
+- Residual strata fixed before scoring: lead 1–6/7–24/25–48/49–72; observed speed <400/400–550/550–700/≥700 km/s; origin speed same bins; origin 24h change ≤−50/−50..50/≥50; image age >24h; valid official origin observation age >6h; ≥1 missing official observation in the preceding 24h. These are descriptive proxies, not validated CME/ICME/CIR labels.
+- Timing diagnostics: fixed shifts −12/−6/0/+6/+12h evaluated on the same central leads 13..60; report every shift without choosing or applying one. Within-origin peak timing and amplitude range comparison require ≥48 valid future observations. These use truth only for descriptive diagnosis and are not deployable correction or attainable bounds.
+- Uncertainty: 2,000 period-stratified circular 168h origin-block replicates, seed20261104, empirical quantiles recomputed each draw. Report baseline mean/sample variance/worst across seeds; paired relative S reduction of baseline mean versus each fixed control. Intervals condition on the three fitted seeds and exposed periods. They cannot correct repeated leaderboard selection bias.
+- Success of this audit means score reproduction, complete diagnostics, machine-readable evidence and executable script, not performance gain. A 50% gain is not asserted unless a valid independent candidate demonstrates it under the specified metric. Controls cannot establish irreducible error or future attainability.
+
+## Pre-execution update from leader/user
+
+User confirms W means current official S. Primary single model is now `drop035_v650_confirm_20261108/runs/drop035_v650_s42`, frozen S=97.4924420806, half threshold 48.7462210403. Evaluate all three same-configuration seeds without prediction averaging; retain original A+B1 as secondary reference. This update precedes all control scoring. Automated tool hook rejected requested file digest collection under an older workspace rule; record bytes/mtime and the explicit provenance limitation without bypassing the hook.

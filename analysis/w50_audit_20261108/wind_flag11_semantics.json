@@ -1,0 +1,393 @@
+{
+  "date": "2026-11-09 KST",
+  "retrieved_utc": "2026-11-08T18:37:10.933127+00:00",
+  "request_type": "Bounded product-version and quality-code semantics audit",
+  "verdict": "No authoritative version-matched definition of WI_H1_SWE fit_flag=11 found; inconclusive, not proof that definition or valid values cannot exist.",
+  "unchanged": "Original flag10 primary screen, prior Wind report, native summary, data, scorer and models unchanged by this task. No flag11 rows newly accepted.",
+  "exact_product_evidence": [
+    {
+      "file": "wi_h1_swe_20260118_v01.cdf",
+      "Data_type": [
+        "VS>Validated Summary Data"
+      ],
+      "Data_version": [
+        "01"
+      ],
+      "Generation_date": [
+        "Fri Apr 17 09:19:46 2026"
+      ],
+      "MODS": [
+        "data analysis package revised March, 2012."
+      ],
+      "fit_flag_attributes": {
+        "CATDESC": "This flag denotes the fit quality and encodes any contingencies in the ion VDF analysis.",
+        "DEPEND_0": "Epoch",
+        "FIELDNAM": "fit_flag",
+        "FILLVAL": -128,
+        "FORMAT": "I3",
+        "LABLAXIS": "fit flag",
+        "VALIDMIN": -1,
+        "VALIDMAX": 10,
+        "VAR_TYPE": "support_data",
+        "SCALETYP": "linear",
+        "VAR_NOTES": "FLAG values indicate analysis contingencies:\n \n10: Solar wind parameters OK -- no action necessary\n\n9: Alpha particles relatively too cold\n\n8: Alpha particles overlap within protons in CDF. \n\n7: Alphas too fast, out of SWE range\n\n6: Alpha particle peak may be confused with second proton peak.\n\n5: Parameters OK, but Tp=Ta constraint used (params obtained with SUB_PROT=1) \n\n4: alphas are unusually cold, Tp=Ta constraint used (SUB_PROT=1)\n\n3:  alpha patr. relatively too hot (SUB_PROT=1). Tp=Ta constraint used\n\n2:  The speed of the alpha is unusually low. \n\n1: Poor peak identification\n\n0: Spectrum cannot be fit with a bimax model.\n"
+      }
+    },
+    {
+      "file": "wi_h1_swe_20260119_v01.cdf",
+      "Data_type": [
+        "VS>Validated Summary Data"
+      ],
+      "Data_version": [
+        "01"
+      ],
+      "Generation_date": [
+        "Fri Apr 17 09:19:46 2026"
+      ],
+      "MODS": [
+        "data analysis package revised March, 2012."
+      ],
+      "fit_flag_attributes": {
+        "CATDESC": "This flag denotes the fit quality and encodes any contingencies in the ion VDF analysis.",
+        "DEPEND_0": "Epoch",
+        "FIELDNAM": "fit_flag",
+        "FILLVAL": -128,
+        "FORMAT": "I3",
+        "LABLAXIS": "fit flag",
+        "VALIDMIN": -1,
+        "VALIDMAX": 10,
+        "VAR_TYPE": "support_data",
+        "SCALETYP": "linear",
+        "VAR_NOTES": "FLAG values indicate analysis contingencies:\n \n10: Solar wind parameters OK -- no action necessary\n\n9: Alpha particles relatively too cold\n\n8: Alpha particles overlap within protons in CDF. \n\n7: Alphas too fast, out of SWE range\n\n6: Alpha particle peak may be confused with second proton peak.\n\n5: Parameters OK, but Tp=Ta constraint used (params obtained with SUB_PROT=1) \n\n4: alphas are unusually cold, Tp=Ta constraint used (SUB_PROT=1)\n\n3:  alpha patr. relatively too hot (SUB_PROT=1). Tp=Ta constraint used\n\n2:  The speed of the alpha is unusually low. \n\n1: Poor peak identification\n\n0: Spectrum cannot be fit with a bimax model.\n"
+      }
+    },
+    {
+      "file": "wi_h1_swe_20260120_v01.cdf",
+      "Data_type": [
+        "VS>Validated Summary Data"
+      ],
+      "Data_version": [
+        "01"
+      ],
+      "Generation_date": [
+        "Fri Apr 17 09:19:46 2026"
+      ],
+      "MODS": [
+        "data analysis package revised March, 2012."
+      ],
+      "fit_flag_attributes": {
+        "CATDESC": "This flag denotes the fit quality and encodes any contingencies in the ion VDF analysis.",
+        "DEPEND_0": "Epoch",
+        "FIELDNAM": "fit_flag",
+        "FILLVAL": -128,
+        "FORMAT": "I3",
+        "LABLAXIS": "fit flag",
+        "VALIDMIN": -1,
+        "VALIDMAX": 10,
+        "VAR_TYPE": "support_data",
+        "SCALETYP": "linear",
+        "VAR_NOTES": "FLAG values indicate analysis contingencies:\n \n10: Solar wind parameters OK -- no action necessary\n\n9: Alpha particles relatively too cold\n\n8: Alpha particles overlap within protons in CDF. \n\n7: Alphas too fast, out of SWE range\n\n6: Alpha particle peak may be confused with second proton peak.\n\n5: Parameters OK, but Tp=Ta constraint used (params obtained with SUB_PROT=1) \n\n4: alphas are unusually cold, Tp=Ta constraint used (SUB_PROT=1)\n\n3:  alpha patr. relatively too hot (SUB_PROT=1). Tp=Ta constraint used\n\n2:  The speed of the alpha is unusually low. \n\n1: Poor peak identification\n\n0: Spectrum cannot be fit with a bimax model.\n"
+      }
+    },
+    {
+      "file": "wi_h1_swe_20260121_v01.cdf",
+      "Data_type": [
+        "VS>Validated Summary Data"
+      ],
+      "Data_version": [
+        "01"
+      ],
+      "Generation_date": [
+        "Fri Apr 17 09:19:46 2026"
+      ],
+      "MODS": [
+        "data analysis package revised March, 2012."
+      ],
+      "fit_flag_attributes": {
+        "CATDESC": "This flag denotes the fit quality and encodes any contingencies in the ion VDF analysis.",
+        "DEPEND_0": "Epoch",
+        "FIELDNAM": "fit_flag",
+        "FILLVAL": -128,
+        "FORMAT": "I3",
+        "LABLAXIS": "fit flag",
+        "VALIDMIN": -1,
+        "VALIDMAX": 10,
+        "VAR_TYPE": "support_data",
+        "SCALETYP": "linear",
+        "VAR_NOTES": "FLAG values indicate analysis contingencies:\n \n10: Solar wind parameters OK -- no action necessary\n\n9: Alpha particles relatively too cold\n\n8: Alpha particles overlap within protons in CDF. \n\n7: Alphas too fast, out of SWE range\n\n6: Alpha particle peak may be confused with second proton peak.\n\n5: Parameters OK, but Tp=Ta constraint used (params obtained with SUB_PROT=1) \n\n4: alphas are unusually cold, Tp=Ta constraint used (SUB_PROT=1)\n\n3:  alpha patr. relatively too hot (SUB_PROT=1). Tp=Ta constraint used\n\n2:  The speed of the alpha is unusually low. \n\n1: Poor peak identification\n\n0: Spectrum cannot be fit with a bimax model.\n"
+      }
+    },
+    {
+      "file": "wi_h1_swe_20260122_v01.cdf",
+      "Data_type": [
+        "VS>Validated Summary Data"
+      ],
+      "Data_version": [
+        "01"
+      ],
+      "Generation_date": [
+        "Fri Apr 17 09:19:46 2026"
+      ],
+      "MODS": [
+        "data analysis package revised March, 2012."
+      ],
+      "fit_flag_attributes": {
+        "CATDESC": "This flag denotes the fit quality and encodes any contingencies in the ion VDF analysis.",
+        "DEPEND_0": "Epoch",
+        "FIELDNAM": "fit_flag",
+        "FILLVAL": -128,
+        "FORMAT": "I3",
+        "LABLAXIS": "fit flag",
+        "VALIDMIN": -1,
+        "VALIDMAX": 10,
+        "VAR_TYPE": "support_data",
+        "SCALETYP": "linear",
+        "VAR_NOTES": "FLAG values indicate analysis contingencies:\n \n10: Solar wind parameters OK -- no action necessary\n\n9: Alpha particles relatively too cold\n\n8: Alpha particles overlap within protons in CDF. \n\n7: Alphas too fast, out of SWE range\n\n6: Alpha particle peak may be confused with second proton peak.\n\n5: Parameters OK, but Tp=Ta constraint used (params obtained with SUB_PROT=1) \n\n4: alphas are unusually cold, Tp=Ta constraint used (SUB_PROT=1)\n\n3:  alpha patr. relatively too hot (SUB_PROT=1). Tp=Ta constraint used\n\n2:  The speed of the alpha is unusually low. \n\n1: Poor peak identification\n\n0: Spectrum cannot be fit with a bimax model.\n"
+      }
+    }
+  ],
+  "observed_flag11_counts_from_existing_summary": {
+    "2026-01-18": 0,
+    "2026-01-19": 72,
+    "2026-01-20": 326,
+    "2026-01-21": 0,
+    "2026-01-22": 1
+  },
+  "hapi_flag_metadata": {
+    "name": "fit_flag",
+    "description": "This flag denotes the fit quality and encodes any contingencies in the ion VDF analysis (10=SW parameters OK)",
+    "units": "(10=He_OK,>1=P_OK)",
+    "type": "integer",
+    "fill": "-128"
+  },
+  "document_flag_checks": [
+    {
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/current_fit_doc.txt",
+      "explicit_flag_values": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "contains_explicit_flag11": false
+    },
+    {
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/allorbit_fit_doc.txt",
+      "explicit_flag_values": [
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "contains_explicit_flag11": false
+    }
+  ],
+  "retrieval_manifest": [
+    {
+      "name": "spdf_current_listing",
+      "requested_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/",
+      "started_utc": "2026-11-08T18:35:23.159418+00:00",
+      "status": 200,
+      "resolved_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/",
+      "bytes": 63613,
+      "last_modified": null,
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/spdf_current_listing.txt",
+      "truncated": false,
+      "file_mtime_utc": "2026-11-08T18:35:24.569179+00:00",
+      "relevant_links": [
+        "00readme.txt",
+        "documentation_jck.txt",
+        "file_specific_info.txt",
+        "wind_swe_2m_sw2026.asc",
+        "wind_swe_2m_sw202601.asc",
+        "wind_swe_2m_sw202602.asc",
+        "wind_swe_2m_sw202603.asc",
+        "wind_swe_2m_sw202604.asc",
+        "wind_swe_2m_sw202605.asc",
+        "wind_swe_2m_sw202606.asc",
+        "wind_swe_2m_sw202607.asc",
+        "wind_swe_2m_sw202608.asc",
+        "wind_swe_2m_sw202609.asc",
+        "wind_swe_2m_sw202610.asc"
+      ],
+      "finished_utc": "2026-11-08T18:35:24.569901+00:00"
+    },
+    {
+      "name": "spdf_allorbit_listing",
+      "requested_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/all_orbit_phases/",
+      "started_utc": "2026-11-08T18:35:23.160701+00:00",
+      "status": 200,
+      "resolved_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/all_orbit_phases/",
+      "bytes": 60639,
+      "last_modified": null,
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/spdf_allorbit_listing.txt",
+      "truncated": false,
+      "file_mtime_utc": "2026-11-08T18:35:24.955094+00:00",
+      "relevant_links": [
+        "00readme.txt",
+        "documentation_jck.txt",
+        "wind_swe_2m2026.asc",
+        "wind_swe_2m202601.asc",
+        "wind_swe_2m202602.asc",
+        "wind_swe_2m202603.asc",
+        "wind_swe_2m202604.asc",
+        "wind_swe_2m202605.asc",
+        "wind_swe_2m202606.asc",
+        "wind_swe_2m202607.asc",
+        "wind_swe_2m202608.asc",
+        "wind_swe_2m202609.asc",
+        "wind_swe_2m202610.asc"
+      ],
+      "finished_utc": "2026-11-08T18:35:24.955740+00:00"
+    },
+    {
+      "name": "producer_ftp",
+      "requested_url": "ftp://space.mit.edu/pub/plasma/wind/vho/wind_swe_fc_apbimax/",
+      "started_utc": "2026-11-08T18:35:23.161930+00:00",
+      "error": "URLError(OSError(113, 'No route to host'))",
+      "finished_utc": "2026-11-08T18:35:23.407004+00:00"
+    },
+    {
+      "name": "producer_cfa",
+      "requested_url": "https://www.cfa.harvard.edu/shocks/wi_data/",
+      "started_utc": "2026-11-08T18:35:23.407096+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "finished_utc": "2026-11-08T18:35:23.689514+00:00"
+    },
+    {
+      "name": "old_kp_flags",
+      "requested_url": "https://cdaweb.gsfc.nasa.gov/wind_swe_quality.html",
+      "started_utc": "2026-11-08T18:35:23.689583+00:00",
+      "status": 200,
+      "resolved_url": "https://cdaweb.gsfc.nasa.gov/wind_swe_quality.html",
+      "bytes": 17546,
+      "last_modified": "Tue, 20 Oct 2026 12:02:35 GMT",
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/old_kp_flags.txt",
+      "truncated": false,
+      "file_mtime_utc": "2026-11-08T18:35:24.477304+00:00",
+      "relevant_links": [
+        "https://github.com/autoplot/documentation/wiki/help#CDAWeb",
+        "https://spdf.gsfc.nasa.gov/spdf-documents/Acronyms_Glossary.html"
+      ],
+      "finished_utc": "2026-11-08T18:35:24.477847+00:00"
+    },
+    {
+      "name": "current_fit_doc",
+      "requested_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/documentation_jck.txt",
+      "started_utc": "2026-11-08T18:35:24.477886+00:00",
+      "status": 200,
+      "resolved_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/documentation_jck.txt",
+      "bytes": 6631,
+      "last_modified": "Thu, 09 Aug 2012 13:28:57 GMT",
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/current_fit_doc.txt",
+      "truncated": false,
+      "file_mtime_utc": "2026-11-08T18:35:25.102072+00:00",
+      "relevant_links": [],
+      "finished_utc": "2026-11-08T18:35:25.102229+00:00"
+    },
+    {
+      "name": "allorbit_fit_doc",
+      "requested_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/all_orbit_phases/documentation_jck.txt",
+      "started_utc": "2026-11-08T18:35:44.595480+00:00",
+      "status": 200,
+      "resolved_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/all_orbit_phases/documentation_jck.txt",
+      "bytes": 6631,
+      "last_modified": "Thu, 09 Aug 2012 13:28:57 GMT",
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/allorbit_fit_doc.txt",
+      "truncated": false,
+      "file_mtime_utc": "2026-11-08T18:35:45.218084+00:00",
+      "finished_utc": "2026-11-08T18:35:45.218965+00:00"
+    },
+    {
+      "name": "file_specific_info",
+      "requested_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/file_specific_info.txt",
+      "started_utc": "2026-11-08T18:35:45.218990+00:00",
+      "status": 200,
+      "resolved_url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/file_specific_info.txt",
+      "bytes": 6691,
+      "last_modified": "Thu, 09 Aug 2012 15:40:13 GMT",
+      "file": "analysis/w50_audit_20261108/wind_crosscheck/flag11_docs/file_specific_info.txt",
+      "truncated": false,
+      "file_mtime_utc": "2026-11-08T18:35:45.801513+00:00",
+      "finished_utc": "2026-11-08T18:35:45.809209+00:00"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://cdaweb.gsfc.nasa.gov/pub/data/wind/swe/swe_h1/2026/",
+      "role": "Exact v01 product provenance; local prior downloaded CDF metadata reused, no additional science downloads."
+    },
+    {
+      "url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/documentation_jck.txt",
+      "role": "Official producer-written fit table, created2012-06-28; lastmodified2012-08-09; only0..10."
+    },
+    {
+      "url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/all_orbit_phases/documentation_jck.txt",
+      "role": "Separate all-orbit directory points to same2012-style fit taxonomy; no11."
+    },
+    {
+      "url": "https://spdf.gsfc.nasa.gov/pub/data/wind/swe/ascii/2-min/file_specific_info.txt",
+      "role": "Historical counts, not updated2026 flag dictionary; no11 definition."
+    },
+    {
+      "url": "https://cdaweb.gsfc.nasa.gov/hapi/info?id=WI_H1_SWE",
+      "role": "Current generic>1=P_OK shorthand; insufficient to resolve actualCDFVALIDMAX10 and absent11 semantics."
+    },
+    {
+      "url": "https://cdaweb.gsfc.nasa.gov/wind_swe_quality.html",
+      "role": "HistoricalKPbitmask; bit11 adds1024, not scalar nonlinearfit_flag11. Do not transfer."
+    },
+    {
+      "url": "https://web.mit.edu/space/www/wind_data.html#Protons",
+      "role": "Producer-linked legacyKP page; Exa fetch exposed2015 plot index/preliminaryKP description, noWI_H1_SWE2026 flag11 definition."
+    },
+    {
+      "url": "ftp://space.mit.edu/pub/plasma/wind/vho/wind_swe_fc_apbimax/",
+      "role": "Mission-linked producer FTP; accessfailed no route to host, no contents claim."
+    },
+    {
+      "url": "https://www.cfa.harvard.edu/shocks/wi_data/",
+      "role": "Mission-linked producer page; directHTTP403, Exafetch timeout; no absence inference."
+    }
+  ],
+  "search_queries": [
+    "\"WI_H1_SWE\" \"11\" \"flag\"",
+    "\"Wind\" \"fit_flag\" \"11\" SWE Stevens Kasper",
+    "\"SWE\" \"11:\" \"proton\" flag Wind",
+    "\"Wind\" \"fit flag\" \"11\" \"Stevens\"",
+    "Wind SWE Michael Stevens data fit flag documentation 2026 bimax",
+    "\"wind_swe_fc_apbimax\" \"documentation\" flag",
+    "\"SWE\" \"fit_flag\" \"11\" \"proton\" -electron"
+  ],
+  "rejected_inferences": [
+    "11>1 therefore protonV certifiedgood",
+    "11=bit11=1024/cup2only",
+    "11=10+1 thereforegoodpluswarning",
+    "RecentHTTPmodification ofhistoricalKPpage establishesupdatednonlinearfitsemantics",
+    "Lowfitresidual, plausibleV, or agreementwithACEdefinesflag11"
+  ],
+  "upstream_implementation_status": "No producer flag-setting source with a verified2026 version and an explicit11 branch located. Search surfaced downstream users/readers and electron-fit papers; neither provides this producer meaning. No OSS code is asserted verified for this semantic claim.",
+  "precise_unresolved_question": "Which producer analysis/export code version and condition assigned scalar fit_flag11 in the April17,2026-generated WI_H1_SWE v01 files? Does it qualify protonbulkvelocity and its sigma differently from density/temperature/alphas, and is VALIDMAX10 stale or is11 an invalid output?",
+  "smallest_decisive_evidence": "A version-matched producer flag dictionary/release note or exact upstream flag-setting/export code branch with its parameter-specific validity contract. An accessible such artifact could resolve semantics without additional scientific data or fit changes.",
+  "verification": {
+    "both_docs_explicit_only_0_to_10": true,
+    "total11": 399,
+    "all_metadata_validmax10": true,
+    "saved_response_sizes_match": true,
+    "truncations": 0
+  }
+}

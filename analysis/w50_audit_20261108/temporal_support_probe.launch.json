@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-08T16:56:50.291355+00:00",
+  "classification": "training-only inference and fixed-weight audit; no fit",
+  "device": "cpu",
+  "threads": 1,
+  "CUDA_VISIBLE_DEVICES": "",
+  "command": [
+    "/home/t-lab01/sunrun/.venv/bin/python",
+    "-u",
+    "/home/t-lab01/sunrun/analysis/w50_audit_20261108/temporal_support_probe.py"
+  ],
+  "tmux_session": "srw50-temporal-support-probe-controller-20261109"
+}

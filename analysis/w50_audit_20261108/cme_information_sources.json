@@ -1,0 +1,592 @@
+{
+  "retrieved_utc_date": "2026-11-08",
+  "official_schema_url": "https://ccmc.gsfc.nasa.gov/DONKI-API/v3/api-docs",
+  "info": {
+    "title": "DONKI-API",
+    "description": "REST API endpoints for CCMC DONKI-API.",
+    "contact": {
+      "name": "CCMC",
+      "url": "https://ccmc.gsfc.nasa.gov"
+    },
+    "version": "2.0"
+  },
+  "paths": {
+    "/get/CMEAnalysis": {
+      "tags": [
+        "DONKI API"
+      ],
+      "summary": "Get Coronal Mass Ejection (CME) Analysis",
+      "description": "Retrieves CME Analysis information within a maximum 60-day window.",
+      "operationId": "getCMEAnalysis",
+      "parameters": [
+        {
+          "name": "startDate",
+          "in": "query",
+          "description": "Start date (yyyy-MM-dd). Defaults to 30 days ago.",
+          "required": false,
+          "schema": {
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "default": ""
+          },
+          "example": "2023-01-01"
+        },
+        {
+          "name": "endDate",
+          "in": "query",
+          "description": "End date (yyyy-MM-dd). Defaults to today.",
+          "required": false,
+          "schema": {
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "default": ""
+          },
+          "example": "2023-01-30"
+        },
+        {
+          "name": "mostAccurateOnly",
+          "in": "query",
+          "description": "Filter by most accurate analysis. Default to true.",
+          "required": false,
+          "schema": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        {
+          "name": "completeEntryOnly",
+          "in": "query",
+          "description": "Filter by complete entries only. Default to true.",
+          "required": false,
+          "schema": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        {
+          "name": "speed",
+          "in": "query",
+          "description": "Lower limit for speed. Default to 0.",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        {
+          "name": "halfAngle",
+          "in": "query",
+          "description": "Lower limit for half angle. Deafult to 0.",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "default": 0
+          }
+        },
+        {
+          "name": "catalog",
+          "in": "query",
+          "description": "Catalog name. Default to ALL.",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "default": "ALL"
+          }
+        },
+        {
+          "name": "keyword",
+          "in": "query",
+          "description": "Search keyword. Default to NONE.",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "default": "NONE"
+          }
+        },
+        {
+          "name": "feature",
+          "in": "query",
+          "description": "CME feature code. Default to ALL with option to select LE (Leading Edge), SH (Shock Front), etc.",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "default": "ALL"
+          }
+        },
+        {
+          "name": "version",
+          "in": "query",
+          "description": "Data version (e.g., Latest)",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "default": "Latest"
+          }
+        }
+      ],
+      "responses": {
+        "400": {
+          "description": "Invalid date format or range exceeds 60 days",
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "200": {
+          "description": "Successful retrieval",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CMEAnalysisObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/WSAEnlilSimulations": {
+      "tags": [
+        "DONKI API"
+      ],
+      "summary": "Get WSA-Enlil Simulations",
+      "description": "Retrives the WSA-ENLIL simulations within a maximum 60-day window via model completion time.",
+      "operationId": "getWSAEnlilSimulations",
+      "parameters": [
+        {
+          "name": "startDate",
+          "in": "query",
+          "description": "Start date (yyyy-MM-dd).  Defaults to 7-day ago.",
+          "required": false,
+          "schema": {
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "default": ""
+          }
+        },
+        {
+          "name": "endDate",
+          "in": "query",
+          "description": "End date (yyyy-MM-dd). Default to today.",
+          "required": false,
+          "schema": {
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "default": ""
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WSAEnlilObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get/notifications": {
+      "tags": [
+        "DONKI API"
+      ],
+      "summary": "Get Space Weather Notifications",
+      "description": "Retrieves the notifications sent from DONKI within a maximum 60-day window.",
+      "operationId": "getNotifications",
+      "parameters": [
+        {
+          "name": "startDate",
+          "in": "query",
+          "description": "Start date (yyyy-MM-dd). Defaults to 7 days ago.",
+          "required": false,
+          "schema": {
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "default": ""
+          }
+        },
+        {
+          "name": "endDate",
+          "in": "query",
+          "description": "End date (yyyy-MM-dd). Defaults to today.",
+          "required": false,
+          "schema": {
+            "pattern": "^$|^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string",
+            "default": ""
+          }
+        },
+        {
+          "name": "type",
+          "in": "query",
+          "description": "Event type (FLR, SEP, CME, IPS, MPC, GST, RBE, REPORT, ALL)",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "default": "ALL"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NotificationObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "CMEAnalysisObject": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "type": "string"
+        },
+        "isMostAccurate": {
+          "type": "boolean"
+        },
+        "time21_5": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "halfAngle": {
+          "type": "number",
+          "format": "float"
+        },
+        "speed": {
+          "type": "number",
+          "format": "float"
+        },
+        "type": {
+          "type": "string"
+        },
+        "associatedCMEID": {
+          "type": "string"
+        },
+        "associatedCMEstartTime": {
+          "type": "string"
+        },
+        "associatedCMELink": {
+          "type": "string"
+        },
+        "featureCode": {
+          "type": "string"
+        },
+        "dataLevel": {
+          "type": "string"
+        },
+        "measurementTechnique": {
+          "type": "string"
+        },
+        "imageType": {
+          "type": "string"
+        },
+        "tilt": {
+          "type": "number",
+          "format": "float"
+        },
+        "minorHalfWidth": {
+          "type": "number",
+          "format": "float"
+        },
+        "speedMeasuredAtHeight": {
+          "type": "number",
+          "format": "float"
+        },
+        "note": {
+          "type": "string"
+        },
+        "submissionTime": {
+          "type": "string"
+        },
+        "versionId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "link": {
+          "type": "string"
+        }
+      }
+    },
+    "CMEAnalysisJSON": {
+      "type": "object",
+      "properties": {
+        "isMostAccurate": {
+          "type": "boolean"
+        },
+        "levelOfData": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "time21_5": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "halfAngle": {
+          "type": "number",
+          "format": "float"
+        },
+        "speed": {
+          "type": "number",
+          "format": "float"
+        },
+        "type": {
+          "type": "string"
+        },
+        "featureCode": {
+          "type": "string"
+        },
+        "imageType": {
+          "type": "string"
+        },
+        "measurementTechnique": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "minorHalfWidth": {
+          "type": "number",
+          "format": "float"
+        },
+        "speedMeasuredAtHeight": {
+          "type": "number",
+          "format": "float"
+        },
+        "tilt": {
+          "type": "number",
+          "format": "float"
+        },
+        "submissionTime": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "enlilList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/WSAEnlilJSON"
+          }
+        }
+      }
+    },
+    "CMEInput": {
+      "type": "object",
+      "properties": {
+        "cmeStartTime": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "float"
+        },
+        "speed": {
+          "type": "number",
+          "format": "float"
+        },
+        "halfAngle": {
+          "type": "number",
+          "format": "float"
+        },
+        "time21_5": {
+          "type": "string"
+        },
+        "featureCode": {
+          "type": "string"
+        },
+        "isMostAccurate": {
+          "type": "boolean"
+        },
+        "levelOfData": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ipsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/IPSObject"
+          }
+        },
+        "cmeid": {
+          "type": "string"
+        }
+      }
+    },
+    "WSAEnlilObject": {
+      "type": "object",
+      "properties": {
+        "simulationID": {
+          "type": "string"
+        },
+        "modelCompletionTime": {
+          "type": "string"
+        },
+        "au": {
+          "type": "number",
+          "format": "float"
+        },
+        "cmeInputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/CMEInput"
+          }
+        },
+        "estimatedShockArrivalTime": {
+          "type": "string"
+        },
+        "isEarthGB": {
+          "type": "boolean"
+        },
+        "isEarthMinorImpact": {
+          "type": "boolean"
+        },
+        "rmin_re": {
+          "type": "number",
+          "format": "float"
+        },
+        "kp_18": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "kp_90": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "kp_135": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "kp_180": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "estimatedDuration": {
+          "type": "number",
+          "format": "float"
+        },
+        "impactList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Impact"
+          }
+        },
+        "link": {
+          "type": "string"
+        }
+      }
+    },
+    "NotificationObject": {
+      "type": "object",
+      "properties": {
+        "messageType": {
+          "type": "string"
+        },
+        "messageID": {
+          "type": "string"
+        },
+        "messageURL": {
+          "type": "string"
+        },
+        "messageIssueTime": {
+          "type": "string"
+        },
+        "messageBody": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "concrete_availability_counterexample": {
+    "url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/41054/1",
+    "model_completion_utc": "2025-09-05T16:13Z",
+    "version1_submission_utc": "2025-09-05T16:55Z",
+    "delay_minutes": 42,
+    "scope": "One documented example; not a delay-distribution estimate"
+  },
+  "sources": [
+    "https://ccmc.gsfc.nasa.gov/DONKI/guide/data-reference/",
+    "https://ccmc.gsfc.nasa.gov/DONKI/guide/events/",
+    "https://ccmc.gsfc.nasa.gov/DONKI/guide/notifications/",
+    "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/CMEAnalysis/46603/2",
+    "https://ccmc.gsfc.nasa.gov/DONKI/WS/get/WSAEnlilSimulations?startDate=2025-01-01&endDate=2025-01-02",
+    "https://doi.org/10.1051/swsc/2018005",
+    "https://arxiv.org/abs/1504.04402v2",
+    "https://ccmc.gsfc.nasa.gov/tools/API/"
+  ],
+  "limits": [
+    "No current response is asserted to be an as-of historical snapshot.",
+    "Official speed waveform archive availability unresolved.",
+    "No benchmark truth read or fitting performed."
+  ],
+  "target44038_followup": {
+    "legacy_page": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/44038/1",
+    "version1_submission_time": null,
+    "retrieval_status": "Exa crawl timeout; direct legacy host network unreachable; new ccmc page JS-only in Exa",
+    "notification_api": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications?startDate=2026-01-18&endDate=2026-01-19&type=CME",
+    "issued_messages": [
+      {
+        "messageType": "CME",
+        "messageID": "20260118-AL-005",
+        "messageURL": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/44037/1",
+        "messageIssueTime": "2026-01-18T21:39Z",
+        "messageBody": "## Community Coordinated Modeling Center Database Of Notifications, Knowledge, Information ( CCMC DONKI )\n## Message Type: Space Weather Notification - CME (Juno, Solar Orbiter, OSIRIS-APEX, Missions Near Earth)\n##\n## Message Issue Date: 2026-01-18T21:39:21Z\n## Message ID: 20260118-AL-005\n##\n## Disclaimer: NOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly.\n\n\n## Summary:\n\nO-type CME detected by STEREO A / GOES. \n\nStart time of the event: 2026-01-18T18:09Z.\n\nEstimated speed: ~1431 km/s.\n\nEstimated opening half-angle: 41 deg.\n\nDirection (lon./lat.): -27/-3 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2026-01-18T18:09:00-CME-001\n\nBased on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Juno, Solar Orbiter, and OSIRIS-APEX (glancing blow).  The flank of the CME will reach Juno at 2026-01-29T16:01Z, Solar Orbiter at 2026-01-19T18:15Z, and OSIRIS-APEX at 2026-01-20T17:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2026-01-20T02:18Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 8-8 (severe).\n   \n  \nLinks to the movies of the modeled event (includes CME: 2026-01-18T18:09:00-CME-001):\n\n(a) 2 AU outer boundary\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_2.0_ENLIL_CONE_SolO_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n(b) 5.5 AU outer boundary\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_5.5_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_5.5_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201400_5.5_ENLIL_CONE_Juno_timeline.gif\n\n\n## Notes: \n\nThis CME event (2026-01-18T18:09:00-CME-001) is associated with X1.9 flare from Active Region 14341 (S15E20) with ID 2026-01-18T17:27:00-FLR-001 which peaked at 2026-01-18T18:09Z (see notification 20260118-AL-004).\n\n\nSCORE CME typification system:\nS-type: CMEs with speeds less than 500 km/s\nC-type: Common 500-999 km/s\nO-type: Occasional 1000-1999 km/s\nR-type: Rare 2000-2999 km/s\nER-type: Extremely Rare >3000 km/s\n\n\nCommunity Coordinated Modeling Center Database Of Notifications, Knowledge, Information (CCMC DONKI) Disclaimer\n\nData and/or information stored within the CCMC DONKI is provided \"as is\" without any warranty of any kind, either expressed, implied, or statutory, including, but not limited to, any warranty that the data and/or information will conform to specifications, any implied warranties of merchantability, fitness for a particular purpose, or freedom from infringement, any warranty that the information will be error free, or any warranty that documentation, if provided, will conform to the data and/or information. In no event shall the United States Government, or its contractors or subcontractors, be liable for any damages, including, but not limited to, direct, indirect, special or consequential damages, arising out of, resulting from, or in any way connected with this information, whether or not based upon warranty, contract, tort, or otherwise, whether or not injury was sustained by persons or property or otherwise, and whether or not loss was sustained from, or arose out of the results of, or use of, the data and/or information. The United States Government disclaims all warranties and liabilities regarding third party data and/or information, if present in the data and/or information generated and/or compiled by CCMC DONKI, and distributes it \"as is\".\n\nUse of data and/or information stored within the CCMC DONKI does not, in any manner, constitute an endorsement by NASA of any test results, resulting designs, hardware, or other matters. Use of data and/or information stored within the CCMC DONKI does not, in any manner, constitute the grant of a license to RECIPIENT under any NASA copyright, patent, patent application or other intellectual property.\n\nThe terms of this disclaimer shall be construed, and the legal relations between the parties hereto shall be determined, in accordance with United States federal law.\n\nNOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly."
+      },
+      {
+        "messageType": "CME",
+        "messageID": "20260119-AL-001",
+        "messageURL": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/44046/1",
+        "messageIssueTime": "2026-01-19T07:24Z",
+        "messageBody": "## Community Coordinated Modeling Center Database Of Notifications, Knowledge, Information ( CCMC DONKI )\n## Message Type: Space Weather Notification - CME update (Juno, Solar Orbiter, OSIRIS-APEX, STEREO A, Missions Near Earth)\n##\n## Message Issue Date: 2026-01-19T07:24:38Z\n## Message ID: 20260119-AL-001\n##\n## Disclaimer: NOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly.\n\n\n## Summary:\n\nUpdate on CME with ID 2026-01-18T18:09:00-CME-001 (see previous notification 20260118-AL-005). Based on preliminary analysis by the Moon to Mars Space Weather Analysis Office and heliospheric modeling carried out at NASA Community Coordinated Modeling Center, it is estimated that this CME may affect Juno, Solar Orbiter, OSIRIS-APEX (glancing blow), and STEREO A (glancing blow).  The leading edge of the CME will reach Juno at 2026-01-29T09:14Z and Solar Orbiter at 2026-01-19T17:18Z, and its flank may reach OSIRIS-APEX at 2026-01-20T13:00Z and STEREO A at 2026-01-21T04:00Z (plus minus 7 hours). \n\nThe simulation also indicates that the CME may impact NASA missions near Earth. Simulations indicate that the leading edge of the CME will reach NASA missions near Earth at about 2026-01-20T01:07Z (plus minus 7 hours). The roughly estimated expected range of the maximum Kp index is 8-8 (severe).\n\nUpdated CME parameters are (O-type):\n\nStart time of the event: 2026-01-18T18:09Z.\n\nEstimated speed: ~1473 km/s.\n\nEstimated opening half-angle: 46 deg.\n\nDirection (lon./lat.): -22/-6 in Heliocentric Earth Equatorial coordinates.\n\nActivity ID: 2026-01-18T18:09:00-CME-001\n   \n  \nLinks to the movies of the modeled event (includes CME: 2026-01-18T18:09:00-CME-001):\n\n(a) 2 AU outer boundary\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_anim.tim-den-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_anim.tim-vel-Stereo_A.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_ENLIL_CONE_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_ENLIL_CONE_STA_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_ENLIL_CONE_SolO_timeline.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_2.0_ENLIL_CONE_Osiris_timeline.gif\n\n(b) 5.5 AU outer boundary\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_5.5_anim.tim-den.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_5.5_anim.tim-vel.gif\nhttp://iswa.gsfc.nasa.gov/downloads/20260118_201700_5.5_ENLIL_CONE_Juno_timeline.gif\n\n\n## Notes: \n\nThis CME event (2026-01-18T18:09:00-CME-001) is associated with X1.9 flare from Active Region 14341 (S15E20) with ID 2026-01-18T17:27:00-FLR-001 which peaked at 2026-01-18T18:09Z (see notification 20260118-AL-004). It is also associated with SEP at SOHO with ID 2026-01-18T22:33:00-SEP-001 (see notification 20260118-AL-006) and SEP at GOES-P with ID 2026-01-18T22:55:00-SEP-001 (see notification 20260118-AL-007).\n\n\nSCORE CME typification system:\nS-type: CMEs with speeds less than 500 km/s\nC-type: Common 500-999 km/s\nO-type: Occasional 1000-1999 km/s\nR-type: Rare 2000-2999 km/s\nER-type: Extremely Rare >3000 km/s\n\n\nCommunity Coordinated Modeling Center Database Of Notifications, Knowledge, Information (CCMC DONKI) Disclaimer\n\nData and/or information stored within the CCMC DONKI is provided \"as is\" without any warranty of any kind, either expressed, implied, or statutory, including, but not limited to, any warranty that the data and/or information will conform to specifications, any implied warranties of merchantability, fitness for a particular purpose, or freedom from infringement, any warranty that the information will be error free, or any warranty that documentation, if provided, will conform to the data and/or information. In no event shall the United States Government, or its contractors or subcontractors, be liable for any damages, including, but not limited to, direct, indirect, special or consequential damages, arising out of, resulting from, or in any way connected with this information, whether or not based upon warranty, contract, tort, or otherwise, whether or not injury was sustained by persons or property or otherwise, and whether or not loss was sustained from, or arose out of the results of, or use of, the data and/or information. The United States Government disclaims all warranties and liabilities regarding third party data and/or information, if present in the data and/or information generated and/or compiled by CCMC DONKI, and distributes it \"as is\".\n\nUse of data and/or information stored within the CCMC DONKI does not, in any manner, constitute an endorsement by NASA of any test results, resulting designs, hardware, or other matters. Use of data and/or information stored within the CCMC DONKI does not, in any manner, constitute the grant of a license to RECIPIENT under any NASA copyright, patent, patent application or other intellectual property.\n\nThe terms of this disclaimer shall be construed, and the legal relations between the parties hereto shall be determined, in accordance with United States federal law.\n\nNOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly."
+      },
+      {
+        "messageType": "CME",
+        "messageID": "20260119-AL-004",
+        "messageURL": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/44056/1",
+        "messageIssueTime": "2026-01-19T17:22Z",
+        "messageBody": "## Community Coordinated Modeling Center Database Of Notifications, Knowledge, Information ( CCMC DONKI )\n## Message Type: Space Weather Notification - CME update (ensemble) (Missions Near Earth)\n##\n## Message Issue Date: 2026-01-19T17:22:57Z\n## Message ID: 20260119-AL-004\n##\n## Disclaimer: NOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly.\n\n\n## Summary:\n\nBETA PRODUCT. ENSEMBLE PRODUCT IS STILL IN DEVELOPMENT MODE. PLEASE LET US KNOW IF YOU HAVE ANY SUGGESTIONS FOR MODIFICATIONS.  \n\nEnsemble modeling update on CME with ID 2026-01-18T18:09:00-CME-001 (see previous notifications 20260118-AL-005, 20260119-AL-001). Based on heliospheric ensemble modeling carried out at the Moon to Mars Space Weather Analysis Office, it is estimated that the CME may impact NASA missions near Earth. Out of 24 ensemble members (see notes section), 24 (100%) indicate impact at NASA missions near Earth. Ensemble simulations indicate that the leading edge of the CME will reach NASA missions near Earth between about 2026-01-20T00:07Z and 2026-01-20T03:47Z (average arrival 2026-01-20T01:50Z). The ensemble-based forecast indicates that there is a 100% chance for the maximum Kp index to be in the 8-8 range (severe).\n\nLinks to the ensemble details of the modeled event:\nhttps://iswa.gsfc.nasa.gov/ENSEMBLE/2026-01-18_ncmes1_sims24_LAHAINA093/20260118_180900_ncmes1_sims24_LAHAINA093_anim_tim-den.gif\nhttps://iswa.gsfc.nasa.gov/ENSEMBLE/2026-01-18_ncmes1_sims24_LAHAINA093/20260118_180900_ncmes1_sims24_LAHAINA093_arrival_Earth.gif\nhttps://iswa.gsfc.nasa.gov/ENSEMBLE/2026-01-18_ncmes1_sims24_LAHAINA093/20260118_180900_ncmes1_sims24_LAHAINA093_Earth_stack.gif\n\n## Notes:\nThe CME event with ID 2026-01-18T18:09:00-CME-001 is also predicted to impact Juno at 2026-01-29T09:14Z, Solar Orbiter at 2026-01-19T17:18Z, OSIRIS-APEX at 2026-01-20T13:00Z (glancing blow), and STEREO A at 2026-01-21T04:00Z (glancing blow) (plus minus 7 hours) (see notifications 20260118-AL-005, 20260119-AL-001).\n\nThis CME event (2026-01-18T18:09:00-CME-001) is associated with X1.9 flare from Active Region 14341 (S15E20) with ID 2026-01-18T17:27:00-FLR-001 which peaked at 2026-01-18T18:09Z (see notification 20260118-AL-004). It is also associated with SEP at SOHO: COSTEP 15.8-39.8 MeV with ID 2026-01-18T22:33:00-SEP-001 (see notification 20260118-AL-006), SEP at GOES-P with ID 2026-01-18T22:55:00-SEP-001 (see notification 20260118-AL-007), SEP at SOHO: COSTEP 28.2-50.1 MeV with ID 2026-01-19T02:57:00-SEP-001 (see notification 20260119-AL-002), and SEP at STEREO A with ID 2026-01-19T10:58:00-SEP-001 (see notification 20260119-AL-003).\n\nEnsemble CME modeling at M2M is performed by building sets of initial CME parameters and carrying out separate simulations for each set. This approach allows a mapping of initial CME parameter uncertainties into a statistical characterization of CME arrival times and impact at locations of interest.\n\nDescription of links: For each location, the first link shows the WSA-ENLIL+Cone model animation for the median CME input parameters, the second link shows the probabilistic distribution of predicted arrival times histogram, and the third link shows a stack plot of the WSA-ENLIL+Cone modeled magnetic field, velocity, density, and temperature for all ensemble members.\n\nFor the full details of the modeled event, please go here:\nhttps://iswa.gsfc.nasa.gov/ENSEMBLE/2026-01-18_ncmes1_sims24_LAHAINA093/Detailed_results_20260118_180900_ncmes1_sims24_LAHAINA093.txt\n###\n\nCommunity Coordinated Modeling Center Database Of Notifications, Knowledge, Information (CCMC DONKI) Disclaimer\n\nData and/or information stored within the CCMC DONKI is provided \"as is\" without any warranty of any kind, either expressed, implied, or statutory, including, but not limited to, any warranty that the data and/or information will conform to specifications, any implied warranties of merchantability, fitness for a particular purpose, or freedom from infringement, any warranty that the information will be error free, or any warranty that documentation, if provided, will conform to the data and/or information. In no event shall the United States Government, or its contractors or subcontractors, be liable for any damages, including, but not limited to, direct, indirect, special or consequential damages, arising out of, resulting from, or in any way connected with this information, whether or not based upon warranty, contract, tort, or otherwise, whether or not injury was sustained by persons or property or otherwise, and whether or not loss was sustained from, or arose out of the results of, or use of, the data and/or information. The United States Government disclaims all warranties and liabilities regarding third party data and/or information, if present in the data and/or information generated and/or compiled by CCMC DONKI, and distributes it \"as is\".\n\nUse of data and/or information stored within the CCMC DONKI does not, in any manner, constitute an endorsement by NASA of any test results, resulting designs, hardware, or other matters. Use of data and/or information stored within the CCMC DONKI does not, in any manner, constitute the grant of a license to RECIPIENT under any NASA copyright, patent, patent application or other intellectual property.\n\nThe terms of this disclaimer shall be construed, and the legal relations between the parties hereto shall be determined, in accordance with United States federal law.\n\nNOAA's Space Weather Prediction Center is the United States Government official source for space weather forecasts. This \"Experimental Research Information\" consists of preliminary NASA research products and should be interpreted and used accordingly."
+      }
+    ],
+    "interpretation": "Issued messages establish their embedded values/timing only; differing values may represent different simulations or fits and do not prove44038 was revised or leaked. None of the retrieved messages identifies44038; historical availability of current44038 kinematics1820km/s remains unverified."
+  }
+}

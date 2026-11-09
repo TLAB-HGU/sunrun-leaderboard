@@ -1,0 +1,147 @@
+{
+  "retrieved_date": "2026-11-09",
+  "request_type": "Bounded mechanism and implementation-reference research",
+  "scope": "No fitting, experimental implementation, new source policy, scientific/query label reads, or F1/F2/F3 coefficient selection.",
+  "conclusion": "Smooth calendar-recency weighting is a conditional hypothesis for stale mapping/regime mixture; literature does not prove this data has conditional drift or justify a 180-day physical timescale.",
+  "legacy": {
+    "path": "research/rerun_df_ffill_20261103/advanced.py",
+    "recipes_assignment_line": 27,
+    "recipe": "e2000fs_feat30_transfer_recency",
+    "formula": "raw=0.1+0.9*exp(-ln(2)*age_days/180); r=raw/raw.mean()",
+    "clock": "age from maximum origin within fit subset",
+    "properties": "All rows have positive weights; excess above floor halves in 180 days, total raw weight is 0.55 then, not 0.5.",
+    "comparability": "LightGBM 30-feature L2 recency recipe is not current XGBoost 28-feature tail4+spectral+offset A+B.",
+    "history_file": "analysis/w50_audit_20261108/loss_failure_history.md",
+    "covshift_history": "Leader-supplied: prior covshift XGBoost retained point4 but removed spectral/current offset; not independently inspected here."
+  },
+  "sources": [
+    {
+      "id": "nakagawa2019",
+      "type": "original_observational_paper",
+      "url": "https://link.springer.com/article/10.1186/s40623-019-1005-y",
+      "period": "Solar cycles 23 and 24; 1996–2016",
+      "finding": "CH-area distributions, latitude coverage and HSS peak-speed distributions differed across cycles; positive area-speed correlations in both.",
+      "limit": "Does not isolate P(y|all current features) drift, nor current cycle25 drift or recency-weight benefit."
+    },
+    {
+      "id": "hofmeister2018",
+      "type": "original_observational_paper",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5972456/",
+      "doi": "10.1002/2017JA024586",
+      "sample": "115 selected isolated CH/HSS associations, 2010–2017; ICME-contaminated cases excluded.",
+      "finding": "Peak speed depends on both CH area and co-latitude relative to observer.",
+      "limit": "Geometry-driven mixture changes can masquerade as stale area-speed mapping; selected peak-event relation is not all-hour forecast validation."
+    },
+    {
+      "id": "zaidi2018",
+      "type": "original_nonstationary_learning_preprint",
+      "url": "https://arxiv.org/abs/1801.09354v2",
+      "fulltext": "https://ar5iv.labs.arxiv.org/html/1801.09354",
+      "finding": "Hypotheses and experiments relate forgetting rate, drift rate and bias/variance profile.",
+      "limit": "Streaming/classification evidence; no theorem fixes 180 days, no solar-wind/XGBoost official-S guarantee."
+    }
+  ],
+  "xgboost": {
+    "version": "2.1.4",
+    "release_commit": "62e7923619352c4079b24303b367134486b1c84f",
+    "commit_url": "https://github.com/dmlc/xgboost/commit/62e7923619352c4079b24303b367134486b1c84f",
+    "release_date": "2025-02-06",
+    "general_docs_url": "https://xgboost.readthedocs.io/en/release_2.1.0/tutorials/custom_metric_obj.html",
+    "version_caveat": "Readable release_2.1.0 documentation is branch-scoped; exact behavior grounded in v2.1.4 SHA excerpts.",
+    "excerpts": [
+      {
+        "repository": "dmlc/xgboost",
+        "commit": "62e7923619352c4079b24303b367134486b1c84f",
+        "path": "doc/tutorials/custom_metric_obj.rst",
+        "start": 91,
+        "end": 101,
+        "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/doc/tutorials/custom_metric_obj.rst#L91-L101",
+        "text": "In the above code snippet, ``squared_log`` is the objective function we want.  It accepts a\nnumpy array ``predt`` as model prediction, and the training DMatrix for obtaining required\ninformation, including labels and weights (not used here).  This objective is then used as\na callback function for XGBoost during training by passing it as an argument to\n``xgb.train``:\n\n.. code-block:: python\n\n   xgb.train({'tree_method': 'hist', 'seed': 1994},  # any other tree method is fine.\n              dtrain=dtrain,\n              num_boost_round=10,"
+      },
+      {
+        "repository": "dmlc/xgboost",
+        "commit": "62e7923619352c4079b24303b367134486b1c84f",
+        "path": "python-package/xgboost/core.py",
+        "start": 2100,
+        "end": 2108,
+        "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/python-package/xgboost/core.py#L2100-L2108",
+        "text": "            _check_call(\n                _LIB.XGBoosterUpdateOneIter(\n                    self.handle, ctypes.c_int(iteration), dtrain.handle\n                )\n            )\n        else:\n            pred = self.predict(dtrain, output_margin=True, training=True)\n            grad, hess = fobj(pred, dtrain)\n            self.boost(dtrain, iteration=iteration, grad=grad, hess=hess)"
+      },
+      {
+        "repository": "dmlc/xgboost",
+        "commit": "62e7923619352c4079b24303b367134486b1c84f",
+        "path": "python-package/xgboost/core.py",
+        "start": 2167,
+        "end": 2175,
+        "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/python-package/xgboost/core.py#L2167-L2175",
+        "text": "        _check_call(\n            _LIB.XGBoosterTrainOneIter(\n                self.handle,\n                dtrain.handle,\n                iteration,\n                array_interface(grad),\n                array_interface(hess),\n            )\n        )"
+      },
+      {
+        "repository": "dmlc/xgboost",
+        "commit": "62e7923619352c4079b24303b367134486b1c84f",
+        "path": "demo/guide-python/custom_softmax.py",
+        "start": 46,
+        "end": 51,
+        "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/demo/guide-python/custom_softmax.py#L46-L51",
+        "text": "    labels = data.get_label()\n    if data.get_weight().size == 0:\n        # Use 1 as weight if we don't have custom weight.\n        weights = np.ones((kRows, 1), dtype=float)\n    else:\n        weights = data.get_weight()"
+      },
+      {
+        "repository": "dmlc/xgboost",
+        "commit": "62e7923619352c4079b24303b367134486b1c84f",
+        "path": "demo/guide-python/custom_softmax.py",
+        "start": 71,
+        "end": 80,
+        "url": "https://github.com/dmlc/xgboost/blob/62e7923619352c4079b24303b367134486b1c84f/demo/guide-python/custom_softmax.py#L71-L80",
+        "text": "        for c in range(predt.shape[1]):\n            assert target >= 0 or target <= kClasses\n            g = p[c] - 1.0 if c == target else p[c]\n            g = g * weights[r]\n            h = max((2.0 * p[c] * (1.0 - p[c]) * weights[r]).item(), eps)\n            grad[r, c] = g\n            hess[r, c] = h\n\n    # After 2.1.0, pass the gradient as it is.\n    return grad, hess"
+      }
+    ],
+    "conclusion": "Native xgb.train custom objective must supply already row-weighted gradients and Hessians; DMatrix weights alone are not an automatic custom-loss multiplier.",
+    "preservation": "If A loss is per-origin with within-row spectral coupling, multiply entire original gradient and Hessian arrays by one recency scalar per origin exactly once, retaining original tail4 and spectral derivatives/approximation, features, rows and offset. Across-row coupling would need separate derivation.",
+    "checks": [
+      "r=ones reproduces original derivatives exactly",
+      "both gradient and Hessian get same positive row multiplier",
+      "original point4 applied once only",
+      "finite-difference checks on small synthetic arrays for any exact loss derivative; distinguish approximate Hessian",
+      "float/shape/order/maturity/normalization audited",
+      "DMatrix may affect other training/metric machinery; preserve baseline handling rather than assert weights globally irrelevant"
+    ]
+  },
+  "diagnostic": {
+    "status": "Proposed only; leader's fixed-prefix full-model probe already underway, do not duplicate",
+    "question": "Within existing matched-feature support, is the same frozen model directionally miscalibrated on recent mature training rows, beyond a changed regime mix?",
+    "observations": [
+      "Existing training origin timestamps and mature training targets only",
+      "Existing fixed-prefix frozen-model predictions/residuals",
+      "Current 28 features and existing input-quality flags",
+      "Time-only r and original training tail weights"
+    ],
+    "checks": [
+      "Use existing predefined training diagnostic partitions; no new internal score-selection fold or half-life sweep",
+      "Compare age-binned residual direction and error within coarse existing-feature/support strata versus marginal shifts",
+      "Separate source age/missingness/instrument shifts from physical mapping drift",
+      "Report effective sample size and weighted support globally and for existing high-speed training tail, with temporal-dependence caveat",
+      "Preserve older rare regimes; do not infer coverage from positive weight floor alone",
+      "Fixed-prefix full-model residual drift is suggestive, not proof of Bayes conditional drift or a weight-benefit estimate"
+    ]
+  },
+  "mathematical_distinctions": {
+    "covariate_shift": "P_t(X) changes with P_t(Y|X) fixed; exact density-ratio correction requires overlapping support and appropriate ratios.",
+    "conditional_shift": "P_t(Y|X) changes; X-only weights cannot generally restore missing conditional information.",
+    "calendar_weights": "Age-based emphasis is a surrogate assumption that recent joint mapping is more relevant; not an estimated covariate density ratio.",
+    "support": "Positive reweighting cannot create unseen eruptions, missing precursors or new support; it changes influence on existing rows.",
+    "ess": "ESS=(sum w)^2/sum(w^2), a concentration diagnostic rather than independent sample count under serial dependence."
+  },
+  "refutation": [
+    "No persistent within-support recent residual drift after data-quality and composition checks weakens mechanism.",
+    "Recent-only support too sparse or concentrated in few correlated events defeats precision even if raw count large.",
+    "If a controlled cumulative A+B later fails existing multi-seed adoption criteria, reject this fixed recipe rather than tune half-life on F1/F2/F3.",
+    "Any removal of tail4/spectral/features/offset, immature labels, double weighting, or hidden tuning invalidates isolation."
+  ],
+  "not_claimed": [
+    "180 days is a physical solar timescale",
+    "recency weighting has demonstrated improvement",
+    "old confounded failures refute all weighting",
+    "50 percent goal attainability",
+    "new experiment/model quota"
+  ]
+}
