@@ -1,20 +1,20 @@
 {
   "experiment": "e2000fs_calib_offset_roll",
   "member": "seongeun",
-  "submitted_utc": "20261104T034835263Z",
-  "created_at_utc": "2026-11-04T04:51:34.905814+00:00",
+  "submitted_utc": "20261109T095603839Z",
+  "created_at_utc": "2026-11-09T10:01:49.534354+00:00",
   "metric_version": "lead-timse-6h-v1",
   "board": {
-    "rank": 1,
-    "ranked_rows": 49,
-    "space_revision": "7d11918abb2dd2e1539c898e088d765133b0a420"
+    "rank": null,
+    "ranked_rows": null,
+    "space_revision": ""
   },
   "sources": {
     "dataset": "tlabtlab/sunrun-lb-store",
     "record_and_predictions": "stored result record and its prediction parquet",
     "observations": {
       "file": "competition-observations.parquet",
-      "revision": "920588c2a716130e19b145acbbd91ace4758faf2"
+      "revision": "2e7c82576dd4be38faf528d16ed8ff723c94d2f1"
     }
   },
   "verification": {
@@ -22,41 +22,41 @@
     "all_equal_to_record": true,
     "scores": {
       "total": {
-        "s": 98.7626868541542,
-        "timse": 22032.71307286038,
-        "rmse": 67.46581336689594,
-        "trmse": 145.3946505864833,
-        "bias": 15.957092110157806,
+        "s": 96.31074491162094,
+        "timse": 20032.40885110409,
+        "rmse": 67.28822621294339,
+        "trmse": 138.73887442734764,
+        "bias": 15.728430118732634,
         "n_pairs": 52619,
         "n_origins": 1052,
         "replacement_fraction": 0.0
       },
       "f1": {
-        "s": 122.40988758878663,
-        "timse": 34913.29652271621,
-        "rmse": 83.22394172075177,
-        "trmse": 182.01893636657485,
-        "bias": 18.594101443171983,
+        "s": 117.40214319486553,
+        "timse": 30088.04202619305,
+        "rmse": 82.70074346325121,
+        "trmse": 168.87342029750204,
+        "bias": 20.362530475726544,
         "n_pairs": 17674,
         "n_origins": 348,
         "replacement_fraction": 0.0
       },
       "f2": {
-        "s": 74.23206310777239,
-        "timse": 8694.851768792001,
-        "rmse": 60.94215294896943,
-        "trmse": 90.69451673618298,
-        "bias": 11.470519577990904,
+        "s": 75.17785341062807,
+        "timse": 8879.151745793972,
+        "rmse": 61.859613074983294,
+        "trmse": 91.63383279676191,
+        "bias": 12.179905594599708,
         "n_pairs": 17473,
         "n_origins": 352,
         "replacement_fraction": 0.0
       },
       "f3": {
-        "s": 60.4573165226796,
-        "timse": 4900.056022991636,
-        "rmse": 55.67487981352327,
-        "trmse": 66.65396645295954,
-        "bias": 17.776424693883754,
+        "s": 60.935199269409345,
+        "timse": 5176.2235248748875,
+        "rmse": 54.79448135292377,
+        "trmse": 68.67674216939326,
+        "bias": 14.589480902882372,
         "n_pairs": 17472,
         "n_origins": 352,
         "replacement_fraction": 0.0
@@ -68,10 +68,10 @@
     "persistence_replaced_leads": 0
   },
   "lead_diagnostic": {
-    "f3_timse_lead_6k": 11439.303,
-    "f3_timse_other_min": 3002.568,
-    "f3_timse_other_max": 4101.086,
-    "f3_timse_lead_6k_without_peaks": 5006.462539645393,
+    "f3_timse_lead_6k": 11762.742,
+    "f3_timse_other_min": 3443.132,
+    "f3_timse_other_max": 4604.989,
+    "f3_timse_lead_6k_without_peaks": 5165.636534390777,
     "peaks_left_out": [
       "2026-09-15T18:00:00Z",
       "2026-07-23T18:00:00Z"
@@ -91,7 +91,7 @@
     "month_grouping": "UTC month of origin + 1 hour",
     "frames": "every scored origin (00/06/12/18 UTC) of F1/F2/F3"
   },
-  "footer": "seongeun · e2000fs_calib_offset_roll · submitted 20261104T034835263Z · scored 00/06/12/18 UTC origins · truth = ACE status 0, unfilled · Y 200–850 km/s",
+  "footer": "seongeun · e2000fs_calib_offset_roll · submitted 20261109T095603839Z · scored 00/06/12/18 UTC origins · truth = ACE status 0, unfilled · Y 200–850 km/s",
   "outputs": [
     {
       "month": "2026-01",
@@ -100,7 +100,7 @@
       "frames": 124,
       "first_origin_utc": "2026-01-01T00:00:00+00:00",
       "last_origin_utc": "2026-01-31T18:00:00+00:00",
-      "bytes": 2405230,
+      "bytes": 2402441,
       "frame_ms": 250
     },
     {
@@ -110,7 +110,7 @@
       "frames": 112,
       "first_origin_utc": "2026-02-01T00:00:00+00:00",
       "last_origin_utc": "2026-02-28T18:00:00+00:00",
-      "bytes": 2121454,
+      "bytes": 2118865,
       "frame_ms": 250
     },
     {
@@ -120,7 +120,7 @@
       "frames": 112,
       "first_origin_utc": "2026-03-01T00:00:00+00:00",
       "last_origin_utc": "2026-03-28T18:00:00+00:00",
-      "bytes": 2157780,
+      "bytes": 2152031,
       "frame_ms": 250
     },
     {
@@ -130,7 +130,7 @@
       "frames": 120,
       "first_origin_utc": "2026-04-01T00:00:00+00:00",
       "last_origin_utc": "2026-04-30T18:00:00+00:00",
-      "bytes": 2333186,
+      "bytes": 2328513,
       "frame_ms": 250
     },
     {
@@ -140,7 +140,7 @@
       "frames": 124,
       "first_origin_utc": "2026-05-01T00:00:00+00:00",
       "last_origin_utc": "2026-05-31T18:00:00+00:00",
-      "bytes": 2413880,
+      "bytes": 2417489,
       "frame_ms": 250
     },
     {
@@ -150,7 +150,7 @@
       "frames": 108,
       "first_origin_utc": "2026-06-01T00:00:00+00:00",
       "last_origin_utc": "2026-06-27T18:00:00+00:00",
-      "bytes": 2069778,
+      "bytes": 2070050,
       "frame_ms": 250
     },
     {
@@ -160,7 +160,7 @@
       "frames": 124,
       "first_origin_utc": "2026-07-01T00:00:00+00:00",
       "last_origin_utc": "2026-07-31T18:00:00+00:00",
-      "bytes": 2462435,
+      "bytes": 2456614,
       "frame_ms": 250
     },
     {
@@ -170,7 +170,7 @@
       "frames": 124,
       "first_origin_utc": "2026-08-01T00:00:00+00:00",
       "last_origin_utc": "2026-08-31T18:00:00+00:00",
-      "bytes": 2425969,
+      "bytes": 2426144,
       "frame_ms": 250
     },
     {
@@ -180,7 +180,7 @@
       "frames": 104,
       "first_origin_utc": "2026-09-01T00:00:00+00:00",
       "last_origin_utc": "2026-09-26T18:00:00+00:00",
-      "bytes": 2058367,
+      "bytes": 2059648,
       "frame_ms": 250
     }
   ]

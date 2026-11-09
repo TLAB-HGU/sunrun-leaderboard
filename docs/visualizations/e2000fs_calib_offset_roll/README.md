@@ -1,23 +1,23 @@
 # e2000fs_calib_offset_roll — lead 곡선 · F1–F3 월별 예측 GIF
 
-작성자 **seongeun**의 `e2000fs_calib_offset_roll`입니다(제출 `20261104T034835263Z`). 게시 시점(2026-11-04, Space `7d11918abb2dd2e1539c898e088d765133b0a420`) 리더보드 **1위 / 49**, Total S **98.76**입니다.
+작성자 **seongeun**의 `e2000fs_calib_offset_roll`입니다(제출 `20261109T095603839Z`). Total S **96.31**입니다.
 
-이 페이지는 리더보드 dataset에 저장된 **제출 예측 자체**를 리더보드 채점기(`leaderboard/scorer/competition.py`, `lead-timse-6h-v1`)로 다시 채점해 그렸습니다. 관측은 기록이 채점된 dataset revision `920588c2a7`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
+이 페이지는 리더보드 dataset에 저장된 **제출 예측 자체**를 리더보드 채점기(`leaderboard/scorer/competition.py`, `lead-timse-6h-v1`)로 다시 채점해 그렸습니다. 관측은 기록이 채점된 dataset revision `2e7c82576d`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
 
 | 구간 | S | TIMSE | RMSE | tRMSE | bias | 채점 origin | 유효 pair | persistence 대체 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| **Total** | 98.76 | 22,032.7 | 67.47 | 145.39 | +16.0 | 1,052 | 52,619 | 0.00% |
-| F1 (2026-01..03) | 122.41 | 34,913.3 | 83.22 | 182.02 | +18.6 | 348 | 17,674 | 0.00% |
-| F2 (2026-04..06) | 74.23 | 8,694.9 | 60.94 | 90.69 | +11.5 | 352 | 17,473 | 0.00% |
-| F3 (2026-07..09) | 60.46 | 4,900.1 | 55.67 | 66.65 | +17.8 | 352 | 17,472 | 0.00% |
+| **Total** | 96.31 | 20,032.4 | 67.29 | 138.74 | +15.7 | 1,052 | 52,619 | 0.00% |
+| F1 (2026-01..03) | 117.40 | 30,088.0 | 82.70 | 168.87 | +20.4 | 348 | 17,674 | 0.00% |
+| F2 (2026-04..06) | 75.18 | 8,879.2 | 61.86 | 91.63 | +12.2 | 352 | 17,473 | 0.00% |
+| F3 (2026-07..09) | 60.94 | 5,176.2 | 54.79 | 68.68 | +14.6 | 352 | 17,472 | 0.00% |
 
 단위는 km/s(TIMSE는 (km/s)²)입니다. 채점 origin은 00/06/12/18 UTC이고, 정답은 ACE status 0 관측을 채우지 않고 씁니다. 그래서 1,052 × 72 = 75,744 pair 중 69.5%만 유효합니다.
 
 ## 제출 설명 (제출자 작성, 원문)
 
-> Fresh raw-only df.parquet + causal feature ffill rerun of e2000fs_calib_offset_roll. Input features and TRAINING y causally forward filled; official evaluation truth unchanged. Model architecture and seed preserved; current F1/F2/F3 144-hour maturity masks. Full training completed; no evaluation-target calibration or selection. Baseline submission: 20261031T162554000Z. Existing results retained.
+> Fixed arithmetic mean of seeds 42/43/44 of e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72 (original recipe minus ch_t035_equatorial_area and strip_v650_dark, plus v_lag24/v_lag48/v_lag72). Published under the name e2000fs_calib_offset_roll on explicit user request, replacing the earlier record of that name (the 2026-11-04 ffill rerun of the original recipe, S 98.76, deleted). Same forecast as the earlier e2000fs_calib_offset_roll_drop_t035_v650_lag24_48_72_mean3 row. Equal 1/3 weights; no fitted weights, no labels. Official F1/F2/F3, 144h maturity.
 
-- 모델 정의 코드: [architecture](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/38fc345ca8f7a31a8215b8942ce6e596019af500/research/rerun_df_ffill_20261103/e2000fs_calib_offset_roll/experiment.py)
+- 모델 정의 코드: [architecture](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/cd346a75c49f1287e1807bb5996d2cc181bf89ed/research/seed_mean3_board_20261109/published/ensemble.py)
 - 학습 데이터 종료: F1 2025-12-29T00:00:00Z, F2 2026-03-29T00:00:00Z, F3 2026-06-29T00:00:00Z
 
 ## Lead 곡선
@@ -26,7 +26,7 @@
 
 리더보드 lead curves 열과 같은 값을 이 페이지에서 직접 다시 채점해 그렸습니다([lead_metrics.csv](lead_metrics.csv), lead를 6으로 나눈 나머지별 평균은 [lead_residue.csv](lead_residue.csv)).
 
-F3 TIMSE는 lead 6의 배수(6, 12, …, 72)에서 평균 **11,439.3**이고, 그 밖의 lead에서는 3,002.6–4,101.1입니다. 채점 origin이 00/06/12/18 UTC라서, lead 6·k의 목표 시각도 00/06/12/18 UTC에만 놓입니다. F3에서 가장 빠른 관측 두 개(743.4 km/s, 2026-09-15 18:00 UTC · 690.0 km/s, 2026-07-23 18:00 UTC)도 이 시각에 있어서, lead 6·k의 정답 모집단에만 들어갑니다. 두 관측을 정답에서 빼고 다시 계산하면(점수가 아닌 진단값) F3 lead 6·k TIMSE는 **5,006.5**입니다.
+F3 TIMSE는 lead 6의 배수(6, 12, …, 72)에서 평균 **11,762.7**이고, 그 밖의 lead에서는 3,443.1–4,605.0입니다. 채점 origin이 00/06/12/18 UTC라서, lead 6·k의 목표 시각도 00/06/12/18 UTC에만 놓입니다. F3에서 가장 빠른 관측 두 개(743.4 km/s, 2026-09-15 18:00 UTC · 690.0 km/s, 2026-07-23 18:00 UTC)도 이 시각에 있어서, lead 6·k의 정답 모집단에만 들어갑니다. 두 관측을 정답에서 빼고 다시 계산하면(점수가 아닌 진단값) F3 lead 6·k TIMSE는 **5,165.6**입니다.
 
 ## 월별 예측 GIF
 
@@ -48,7 +48,7 @@ GIF 한 장의 프레임은 채점 origin 하나입니다. 각 프레임은 orig
 
 ```bash
 /home/t-lab01/sunrun/.venv/bin/python docs/visualizations/code/submission_viz.py --member seongeun \
-    --experiment e2000fs_calib_offset_roll --submitted-utc 20261104T034835263Z --out docs/visualizations/e2000fs_calib_offset_roll
+    --experiment e2000fs_calib_offset_roll --submitted-utc 20261109T095603839Z --out /home/t-lab01/sunrun/docs/visualizations/e2000fs_calib_offset_roll
 ```
 
 CPU만 씁니다. 입력은 리더보드 dataset `tlabtlab/sunrun-lb-store`에 저장된 이 제출의 결과 기록·예측 parquet과 `competition-observations.parquet`뿐입니다. [leaderboard-result.json](leaderboard-result.json)은 저장 기록에서 제출 키와 그 키를 담은 URL을 뺀 사본입니다.
