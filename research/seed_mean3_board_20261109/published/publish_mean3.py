@@ -8,6 +8,7 @@ label is read; this matches the earlier drop_t035 mean3 rows.
     python publish_mean3.py                # validate + build means + dry-run scores (no external change)
     python publish_mean3.py --apply        # publish missing means, then push the hide policy
     python publish_mean3.py --apply --set union   # the ablation-union arms, after their campaign completes
+    python publish_mean3.py --apply --set all     # the all-negative stack, after its campaign completes
 """
 import argparse
 from concurrent.futures import ThreadPoolExecutor
@@ -63,6 +64,10 @@ SETS = {
               'D + ablation-union Core arm (15 added inputs)'),
         group(f'{OFFSET}_drop_t035_v650_union_broad', R / 'ablation_union_20261109/runs/union_broad_s{seed}',
               'D + ablation-union Broad arm (22 added inputs)'),
+    ],
+    'all': [
+        group(f'{OFFSET}_all_negative_stack', R / 'ablation_all_20261109/runs/all_negative_s{seed}',
+              'D minus 9 further negative removals plus the 22 union-Broad additions (41 inputs)'),
     ],
 }
 # Means already on the board; only their single-seed rows still need hiding.
