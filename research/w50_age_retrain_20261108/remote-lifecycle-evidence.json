@@ -1,0 +1,83 @@
+{
+  "classification": "remote infrastructure lifecycle failure; not model/scientific failure",
+  "diagnostic_scope": "read-only remote commands; no process/config mutations by debugger",
+  "initial_symptom": {
+    "training_launch_utc": "2026-11-08T13:11:42Z",
+    "last_reported_original_scheduler_tick_utc": "2026-11-08T13:12:27Z",
+    "followup": "No tmux or training processes; no normal training exit receipts"
+  },
+  "confirmed_evidence": [
+    {
+      "source": "sudo -n journalctl / dmesg",
+      "finding": "Repeated systemd-journald SIGTERM from PID1(systemd-shutdow), followed by Ubuntu EXT4 unmount/remount"
+    },
+    {
+      "source": "WSL stderr and kernel journal",
+      "message": "/sbin/init failed to start within 10000ms; CreateLoginSession timed out waiting for user session uid1000"
+    },
+    {
+      "source": "loginctl / systemctl initial probes",
+      "message": "Failed to connect to bus: No such file or directory"
+    },
+    {
+      "source": "/etc/wsl.conf",
+      "content": "[boot]\nsystemd=true\n[user]\ndefault=yehwan\n"
+    },
+    {
+      "source": "/etc/systemd/logind.conf",
+      "finding": "Only commented default KillUserProcesses=no; no demonstrated logind user-process killing policy"
+    },
+    {
+      "source": "journalctl at 2026-11-08 22:15:40 KST",
+      "message": "Startup finished in 1min 20.809s; reached multi-user.target; cloud-init finished with DataSourceNone"
+    }
+  ],
+  "fresh_recovery_snapshot": {
+    "remote_wall_time": "2026-11-08T22:16:04+09:00",
+    "processes": [
+      {
+        "pid": 1,
+        "started_local": "2026-11-08 22:14:19",
+        "command": "/sbin/init"
+      },
+      {
+        "pid": 448,
+        "started_local": "2026-11-08 22:14:48",
+        "command": "host_scheduler.py"
+      },
+      {
+        "pid": 454,
+        "started_local": "2026-11-08 22:14:48",
+        "command": "experiment.py --experiment age_retrain_s42 --device cpu --threads 4"
+      },
+      {
+        "pid": 478,
+        "started_local": "2026-11-08 22:14:50",
+        "command": "experiment.py --experiment age_retrain_s43 --device cpu --threads 4"
+      },
+      {
+        "pid": 571,
+        "started_local": "2026-11-08 22:15:39",
+        "command": "dbus-daemon --system"
+      },
+      {
+        "pid": 578,
+        "started_local": "2026-11-08 22:15:39",
+        "command": "systemd-logind"
+      }
+    ],
+    "interpretation": "Leader foreground scheduler recovery is alive; this snapshot does not establish training completion."
+  },
+  "timestamp_correction": "Earlier dmesg --time-format iso shutdown times appeared later than the recovery launch; this conflicted with stable current PID1/training PIDs. Clock changes were logged. Do not use those dmesg wall-time estimates to claim recovery died. Journal/current ps are the stronger evidence.",
+  "unresolved": [
+    "Exact trigger of repeated distribution shutdown is not proven.",
+    "Underlying 80-second startup delay not fully diagnosed.",
+    "No OOM event found in captured diagnostic tail; this is not exhaustive absence proof."
+  ],
+  "recommendation": "Keep actual scheduler in foreground of durable SSH/WSL connection, preserve failed attempt artifacts, verify stable PID1/training PIDs beyond prior failure interval and advancing model progress. No global host configuration change warranted while recovery runs.",
+  "similar_pattern": "research/drop035_v650_confirm_20261108/launch_services.py:21 detached tmux launch through finite remote() call at line27",
+  "code_references": [
+    "research/rerun_df_ffill_20261103/golab2_transport.py:6",
+    "research/w50_age_retrain_20261108/host_scheduler.py:101"
+  ]
+}

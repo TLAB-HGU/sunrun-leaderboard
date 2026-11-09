@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "research/w50_age_retrain_20261108/evaluate_goal.py"
+  ],
+  "returncode": 2,
+  "active_study": "w50_roundselect_20261108",
+  "goal_achieved": false,
+  "fresh_official_scoring": false,
+  "fixed_reference": 97.49244208059969,
+  "fixed_target": 48.746221040299844
+}

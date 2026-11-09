@@ -1,0 +1,25 @@
+{
+  "verdict": "FAIL",
+  "exit_code": 1,
+  "goal_achieved": false,
+  "fixed_best_single_s": 97.49244208059969,
+  "required_max_s": 48.746221040299844,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "all_seed_scores": [
+    98.94406819690332,
+    99.5352074794667,
+    99.72224550591471
+  ],
+  "failures": [
+    "seed 42: S=98.9440681969033 > 48.7462210402998",
+    "seed 43: S=99.5352074794667 > 48.7462210402998",
+    "seed 44: S=99.7222455059147 > 48.7462210402998"
+  ],
+  "gaps": [],
+  "fresh_official_scoring": true,
+  "workflow_state_modified": false
+}

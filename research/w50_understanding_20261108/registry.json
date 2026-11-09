@@ -1,0 +1,23 @@
+{
+  "age_repair_s42": {
+    "family": "pooling",
+    "experiment": "age_repair_s42",
+    "seed": 42,
+    "threads": 1,
+    "execution_host": "local"
+  },
+  "age_repair_s43": {
+    "family": "pooling",
+    "experiment": "age_repair_s43",
+    "seed": 43,
+    "threads": 1,
+    "execution_host": "local"
+  },
+  "age_repair_s44": {
+    "family": "pooling",
+    "experiment": "age_repair_s44",
+    "seed": 44,
+    "threads": 1,
+    "execution_host": "local"
+  }
+}

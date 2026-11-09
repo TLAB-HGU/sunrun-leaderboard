@@ -1,0 +1,32 @@
+{
+  "campaign": "w50_age_retrain_20261108",
+  "host": "golab2",
+  "python": "/home/yehwan/sunrun-golab2-20261104-17/.venv/bin/python",
+  "data": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/input/df_ffill_trainy.parquet",
+  "observations": "/home/yehwan/sunrun-offset-roll-complete-ablation-20261106/competition-observations.parquet",
+  "experiments": [
+    {
+      "experiment": "age_retrain_s42",
+      "seed": 42,
+      "family": "pooling",
+      "threads": 4,
+      "execution_host": "golab2"
+    },
+    {
+      "experiment": "age_retrain_s43",
+      "seed": 43,
+      "family": "pooling",
+      "threads": 4,
+      "execution_host": "golab2"
+    },
+    {
+      "experiment": "age_retrain_s44",
+      "seed": 44,
+      "family": "pooling",
+      "threads": 4,
+      "execution_host": "golab2"
+    }
+  ],
+  "max_jobs": 3,
+  "resource_amendment": "strategy.md resource-only amendment; same three seeds"
+}

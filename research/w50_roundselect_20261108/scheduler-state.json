@@ -1,0 +1,23 @@
+{
+  "roundselect_s42": {
+    "state": "trained_validated",
+    "exit_code": 0,
+    "finished_utc": "2026-11-08T16:25:56.710632+00:00",
+    "error": null,
+    "validation_scope": "artifact structure; independent model/score replay still required"
+  },
+  "roundselect_s43": {
+    "state": "trained_validated",
+    "exit_code": 0,
+    "finished_utc": "2026-11-08T16:25:56.732405+00:00",
+    "error": null,
+    "validation_scope": "artifact structure; independent model/score replay still required"
+  },
+  "roundselect_s44": {
+    "state": "trained_validated",
+    "exit_code": 0,
+    "finished_utc": "2026-11-08T16:25:56.754619+00:00",
+    "error": null,
+    "validation_scope": "artifact structure; independent model/score replay still required"
+  }
+}

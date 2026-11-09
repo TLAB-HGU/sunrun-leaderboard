@@ -1,0 +1,46 @@
+{
+  "commit": "d64c40339d770803cf46415bd383971dd30f00cd",
+  "dirty": true,
+  "reference_s": 97.49244208059969,
+  "half_s_target": 48.746221040299844,
+  "board_revision": "f756e1623af7f0cbd9fd9c0fc181902f542580bf",
+  "observation_revision": "920588c2a716130e19b145acbbd91ace4758faf2",
+  "hash_gap": "Previous automatic approval rejection of hashes; not bypassed",
+  "new_user_instruction": "Fresh model training required; continue campaign until target verified",
+  "active_execution": {
+    "host": "golab2",
+    "seeds_running": [],
+    "seeds_queued": [],
+    "fresh_start_utc": "2026-11-08T13:14:47Z",
+    "remote_scheduler_controller": "srw50-remote-scheduler-controller-20261108",
+    "collector": "srw50-collect-controller-20261108",
+    "research_goal_complete": false,
+    "seeds_completed": [
+      42,
+      43,
+      44
+    ]
+  },
+  "last_turn_classification": "progress",
+  "current_evidence": {
+    "live_process_verification": "live-process-verification.json",
+    "training_only_diagnostic": "../../analysis/w50_audit_20261108/training_imputation_diagnostic.json",
+    "cme_availability_research": "../../analysis/w50_audit_20261108/cme_information_followup.md",
+    "latest_sota": "sota-snapshot.json",
+    "new_official_scores_available": false,
+    "research_goal_complete": false,
+    "restricted_residual_energy": "../../analysis/w50_audit_20261108/residual_energy_budget.json",
+    "dscovr_quality_gap": "../../analysis/w50_audit_20261108/dscovr_crosscheck.md",
+    "prior_failures": "../../analysis/w50_audit_20261108/state_failure_history.md"
+  },
+  "phase": "Allfreshfits complete; independent replay/official rescoring/timebootstrap complete; NOT adopted",
+  "research_goal_complete": false,
+  "calibration_gap": "Official ACE science Level2 event coverage unavailable; zero matched pairs",
+  "experiment_status": "complete_not_adopted",
+  "next_campaign": "w50_roundselect_20261108",
+  "paired_reduction_percent": -0.09143664613438703,
+  "paired_ci95_percent": [
+    -0.3279121872472368,
+    0.05582009712404215
+  ]
+}

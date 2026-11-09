@@ -1,0 +1,8 @@
+{
+  "scope": "Read-only F1 vector-leaf model inspection; no training process affected",
+  "operation": "XGBoost2.1.4 Booster.get_score(importance_type=weight)",
+  "returncode": -11,
+  "status": "unsupported diagnostic path abandoned",
+  "recovery": "Do not call get_score again on vector-leaf boosters; use serialized model if supported.",
+  "training_processes": "Separate PIDs454/478 remain under scheduler448."
+}

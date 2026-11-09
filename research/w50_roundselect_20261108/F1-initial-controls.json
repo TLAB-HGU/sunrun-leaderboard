@@ -1,0 +1,59 @@
+[
+  {
+    "seed": 42,
+    "control": {
+      "passed": true,
+      "max_absolute_difference": 0.0,
+      "tolerance": 1e-06,
+      "frozen_reference": "/home/yehwan/w50-roundselect-workspace-20261108/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F1_models/prior_predictions.npz",
+      "frozen_identity": {
+        "path": "/home/yehwan/w50-roundselect-workspace-20261108/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F1_models/prior_predictions.npz",
+        "bytes": 1216841,
+        "mtime_ns": 1794108840760395288
+      }
+    },
+    "first_minimum_rounds_from_training_curve": [
+      315,
+      152,
+      135
+    ]
+  },
+  {
+    "seed": 43,
+    "control": {
+      "passed": true,
+      "max_absolute_difference": 0.0,
+      "tolerance": 1e-06,
+      "frozen_reference": "/home/yehwan/w50-roundselect-workspace-20261108/research/drop035_v650_confirm_20261108/runs/drop035_v650_s43/F1_models/prior_predictions.npz",
+      "frozen_identity": {
+        "path": "/home/yehwan/w50-roundselect-workspace-20261108/research/drop035_v650_confirm_20261108/runs/drop035_v650_s43/F1_models/prior_predictions.npz",
+        "bytes": 1217455,
+        "mtime_ns": 1794108047056255578
+      }
+    },
+    "first_minimum_rounds_from_training_curve": [
+      282,
+      159,
+      133
+    ]
+  },
+  {
+    "seed": 44,
+    "control": {
+      "passed": true,
+      "max_absolute_difference": 0.0,
+      "tolerance": 1e-06,
+      "frozen_reference": "/home/yehwan/w50-roundselect-workspace-20261108/research/drop035_v650_confirm_20261108/runs/drop035_v650_s44/F1_models/prior_predictions.npz",
+      "frozen_identity": {
+        "path": "/home/yehwan/w50-roundselect-workspace-20261108/research/drop035_v650_confirm_20261108/runs/drop035_v650_s44/F1_models/prior_predictions.npz",
+        "bytes": 1216169,
+        "mtime_ns": 1794108082996543407
+      }
+    },
+    "first_minimum_rounds_from_training_curve": [
+      304,
+      150,
+      108
+    ]
+  }
+]

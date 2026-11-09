@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "local_tests": "11 passed in1.90s; CPU1",
+  "remote_synthetic_smoke": "remote-smoke-validation.json; actual212inputs/24outputs; endpoint andprefixreplay0",
+  "protocol_review": "protocol-review.md:OKAY",
+  "scientific_fits_started": false,
+  "evaluator_contract": "evaluate_goal.py:PASSonlyfreshofficial3seedS<=48.746221040299844plusfullintegrity/uncertainty; incompletePARTIAL",
+  "baseline_control": "Freshprior900 mustmatchoriginaltraining-onlypredictions<=1e-6beforeselection",
+  "feature_lock": "feature-lock.json:28source/212expandedunchanged"
+}

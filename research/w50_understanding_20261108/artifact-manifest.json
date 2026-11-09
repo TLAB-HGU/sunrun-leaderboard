@@ -1,0 +1,170 @@
+{
+  "created_utc": "2026-11-08T12:02:51.316145+00:00",
+  "commit": "d64c40339d770803cf46415bd383971dd30f00cd",
+  "files": {
+    "data-v2/input/df.parquet": {
+      "bytes": 213699522,
+      "mtime_ns": 1793621347454501698
+    },
+    "research/rerun_df_ffill_20261103/input/df_ffill_trainy.parquet": {
+      "bytes": 225755615,
+      "mtime_ns": 1793684739007946726
+    },
+    "leaderboard/scorer/competition.py": {
+      "bytes": 9521,
+      "mtime_ns": 1793525768686703907
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F3_models/full/b1.ubj": {
+      "bytes": 2108437,
+      "mtime_ns": 1794110434537212133
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F3_models/full/b2.ubj": {
+      "bytes": 2112921,
+      "mtime_ns": 1794110648804220676
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F3_models/full/b0.ubj": {
+      "bytes": 2115517,
+      "mtime_ns": 1794110217075653791
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F1_models/full/b1.ubj": {
+      "bytes": 2118112,
+      "mtime_ns": 1794107819600341558
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F1_models/full/b2.ubj": {
+      "bytes": 2112212,
+      "mtime_ns": 1794108046912252426
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F1_models/full/b0.ubj": {
+      "bytes": 2117641,
+      "mtime_ns": 1794107604324965000
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F2_models/full/b1.ubj": {
+      "bytes": 2110325,
+      "mtime_ns": 1794109086299702405
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F2_models/full/b2.ubj": {
+      "bytes": 2111505,
+      "mtime_ns": 1794109301493225336
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s43/F2_models/full/b0.ubj": {
+      "bytes": 2116225,
+      "mtime_ns": 1794108873422190904
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F3_models/full/b1.ubj": {
+      "bytes": 2112919,
+      "mtime_ns": 1794110656844050645
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F3_models/full/b2.ubj": {
+      "bytes": 2110325,
+      "mtime_ns": 1794110833667701244
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F3_models/full/b0.ubj": {
+      "bytes": 2112449,
+      "mtime_ns": 1794110412065057277
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F1_models/full/b1.ubj": {
+      "bytes": 2113388,
+      "mtime_ns": 1794107872182956695
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F1_models/full/b2.ubj": {
+      "bytes": 2111740,
+      "mtime_ns": 1794108082856543064
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F1_models/full/b0.ubj": {
+      "bytes": 2112920,
+      "mtime_ns": 1794107642076730489
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F2_models/full/b1.ubj": {
+      "bytes": 2111032,
+      "mtime_ns": 1794109248392851829
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F2_models/full/b2.ubj": {
+      "bytes": 2107493,
+      "mtime_ns": 1794109481278511762
+    },
+    "research/w50_understanding_20261108/frozen_models/drop035_v650_s44/F2_models/full/b0.ubj": {
+      "bytes": 2114809,
+      "mtime_ns": 1794109004551117181
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s44/F1_predictions.npz": {
+      "bytes": 709619,
+      "mtime_ns": 1794138986606465321
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s44/F2_predictions.npz": {
+      "bytes": 718369,
+      "mtime_ns": 1794138987640465417
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s44/F3_predictions.npz": {
+      "bytes": 716240,
+      "mtime_ns": 1794138988601132172
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s43/F1_predictions.npz": {
+      "bytes": 710366,
+      "mtime_ns": 1794138986859465344
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s43/F2_predictions.npz": {
+      "bytes": 718676,
+      "mtime_ns": 1794138987853132103
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s43/F3_predictions.npz": {
+      "bytes": 715670,
+      "mtime_ns": 1794138988931132202
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s42/F1_predictions.npz": {
+      "bytes": 710675,
+      "mtime_ns": 1794138986753132001
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s42/F2_predictions.npz": {
+      "bytes": 717700,
+      "mtime_ns": 1794138987827465433
+    },
+    "research/w50_understanding_20261108/runs/age_repair_s42/F3_predictions.npz": {
+      "bytes": 715570,
+      "mtime_ns": 1794138988844974207
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F3_models/full/b1.ubj": {
+      "bytes": 2112921,
+      "mtime_ns": 1794113234838603836
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F3_models/full/b2.ubj": {
+      "bytes": 2116461,
+      "mtime_ns": 1794113659514041033
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F3_models/full/b0.ubj": {
+      "bytes": 2112685,
+      "mtime_ns": 1794112852852130192
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F1_models/full/b1.ubj": {
+      "bytes": 2120001,
+      "mtime_ns": 1794108420609304382
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F1_models/full/b2.ubj": {
+      "bytes": 2115516,
+      "mtime_ns": 1794108840571836981
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F1_models/full/b0.ubj": {
+      "bytes": 2117404,
+      "mtime_ns": 1794107994061106174
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F2_models/full/b1.ubj": {
+      "bytes": 2109853,
+      "mtime_ns": 1794110823674231110
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F2_models/full/b2.ubj": {
+      "bytes": 2113865,
+      "mtime_ns": 1794111232049508190
+    },
+    "research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/F2_models/full/b0.ubj": {
+      "bytes": 2114337,
+      "mtime_ns": 1794110432762731987
+    },
+    "analysis/w50_audit_20261108/residual_arrays.npz": {
+      "bytes": 2318838,
+      "mtime_ns": 1794138885557922219
+    },
+    "analysis/w50_audit_20261108/residual_bootstrap.npz": {
+      "bytes": 539603,
+      "mtime_ns": 1794138948408435575
+    }
+  }
+}

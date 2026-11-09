@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-11-08T13:43:54.991567+00:00",
+  "processes": [
+    {
+      "pid": 454,
+      "experiment": "age_retrain_s42",
+      "threads": 4,
+      "device": "cpu",
+      "cuda_visible_devices": ""
+    },
+    {
+      "pid": 478,
+      "experiment": "age_retrain_s43",
+      "threads": 4,
+      "device": "cpu",
+      "cuda_visible_devices": ""
+    },
+    {
+      "pid": 2505,
+      "experiment": "age_retrain_s44",
+      "threads": 4,
+      "device": "cpu",
+      "cuda_visible_devices": ""
+    }
+  ]
+}

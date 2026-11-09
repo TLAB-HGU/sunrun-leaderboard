@@ -1,0 +1,218 @@
+diff --git a/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/experiment.py b/research/w50_age_retrain_20261108/experiment.py
+index 7e7347b95..bc07650f0 100644
+--- a/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/experiment.py
++++ b/research/w50_age_retrain_20261108/experiment.py
+@@ -1,8 +1,207 @@
+-"""Frozen single-experiment entrypoint."""
+-from core import main
++"""Fresh fixed-baseline training with only causal SUVI image age repaired."""
++from __future__ import annotations
+ 
+-EXPERIMENT = 'drop035_v650_s42'
+-CONFIG = {'exclude_features': ['ch_ch_t035_equatorial_area', 'strip_v650_dark'], 'tail_weight': 4, 'spectral': True, 'offset': True, 'offset_scope': 'horizon', 'offset_window': 336, 'alpha': 0.25, 'block_size': 24, 'clip_component': True, 'clip_final': True, 'seed': 42, 'spectral_hessian_only': False, 'experiment': 'drop035_v650_s42'}
++import argparse
++import importlib.util
++import json
++import os
++import platform
++import subprocess
++import sys
++from datetime import UTC, datetime
++from pathlib import Path
+ 
+-if __name__ == "__main__":
+-    main(locked_experiment=EXPERIMENT, locked_config=CONFIG)
++for _key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS'):
++    os.environ.setdefault(_key, '1')
++
++import numpy as np
++import pandas as pd
++import xgboost as xgb
++
++CAMPAIGN = Path(__file__).resolve().parent
++REPO = CAMPAIGN.parents[1]
++PARENT = CAMPAIGN.parent / 'drop035_v650_confirm_20261108'
++
++
++def load_module(path, name):
++    spec = importlib.util.spec_from_file_location(name, path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++def parent_modules():
++    """Private globals prevent changing the parent or another imported runner."""
++    baseline = load_module(PARENT / 'baseline.py', 'age_retrain_baseline')
++    previous = sys.modules.get('baseline')
++    sys.modules['baseline'] = baseline
++    try:
++        core = load_module(PARENT / 'core.py', 'age_retrain_core')
++    finally:
++        if previous is None:
++            del sys.modules['baseline']
++        else:
++            sys.modules['baseline'] = previous
++    return baseline, core
++
++
++def repaired_age(raw_data):
++    raw = pd.read_parquet(raw_data, columns=['origin', 'img_age_h'], filters=[('h', '==', 1)])
++    raw['origin'] = pd.to_datetime(raw.origin, utc=True)
++    if raw.groupby('origin').img_age_h.nunique(dropna=False).gt(1).any():
++        raise ValueError('Conflicting raw image ages at one origin')
++    raw = raw.drop_duplicates('origin').sort_values('origin').set_index('origin')
++    age = raw.img_age_h
++    if (age.dropna() < 0).any() or np.isinf(age).any():
++        raise ValueError('Raw image ages must be nonnegative or missing')
++    origin = pd.Series(raw.index, index=raw.index)
++    source_time = (origin - pd.to_timedelta(age, unit='h')).ffill()
++    # Leading missing observations remain missing. No backward fill or targets.
++    return (origin - source_time).dt.total_seconds() / 3600
++
++
++def repair_grid(grid, names, ages, *, training):
++    if 'img_age_h' not in names['constant']:
++        raise ValueError('Baseline must retain img_age_h')
++    if not grid['origins'].isin(ages.index).all():
++        raise ValueError('Raw image timeline does not cover every input origin')
++    col = names['constant'].index('img_age_h')
++    values = ages.reindex(grid['origins']).to_numpy(np.float32)
++    if np.isinf(values).any() or (values < 0).any() or (not training and np.isnan(values).any()):
++        raise ValueError('Invalid causal image age for input grid')
++    changed = dict(grid, C=grid['C'].copy())
++    changed['C'][:, col] = values
++    keep = [i for i in range(grid['C'].shape[1]) if i != col]
++    if not np.array_equal(grid['C'][:, keep], changed['C'][:, keep], equal_nan=True):
++        raise AssertionError('Non-age constant inputs changed')
++    if not np.array_equal(grid['E'], changed['E'], equal_nan=True):
++        raise AssertionError('Varying inputs changed')
++    equal = (values == grid['C'][:, col]) | (np.isnan(values) & np.isnan(grid['C'][:, col]))
++    finite = values[np.isfinite(values)]
++    receipt = {'training': training, 'origins': len(values), 'changed_column': 'img_age_h',
++                   'changed_origins': int((~equal).sum()), 'missing_age_origins': int(np.isnan(values).sum()),
++                   'max_repaired_age_h': float(finite.max()) if len(finite) else None,
++                   'unchanged_other_inputs': True, 'feature_count': sum(map(len, names.values()))}
++    return changed, receipt
++
++
++def bind_repaired_loader(baseline, ages, receipts):
++    original = baseline.load_grid
++
++    def load_grid(data, period, names, training):
++        grid, labels = original(data, period, names, training)
++        if not training and labels is not None:
++            raise ValueError('Query loader returned evaluation labels')
++        changed, receipt = repair_grid(grid, names, ages, training=training)
++        receipts.append(dict(period=period, **receipt))
++        return changed, labels
++
++    baseline.load_grid = load_grid
++
++
++def fixed_config(core, seed, experiment):
++    return core.normalize_config({'experiment': experiment, 'seed': seed,
++                                     'exclude_features': ['ch_ch_t035_equatorial_area', 'strip_v650_dark']})
++
++
++def assert_parent_contract(core, config, seed):
++    names = core.feature_names(config)
++    if sum(map(len, names.values())) != 28:
++        raise ValueError('Frozen parent requires exactly 28 source features')
++    for period in ('F1', 'F2', 'F3'):
++        path = PARENT / 'runs' / f'drop035_v650_s{seed}' / f'{period}_metadata.json'
++        parent = json.loads(path.read_text())
++        expected = core.normalize_config(parent['config'])
++        if {k: v for k, v in expected.items() if k != 'experiment'} != {
++                k: v for k, v in config.items() if k != 'experiment'}:
++            raise ValueError(f'{period}: settings differ from matched parent')
++        columns = {str(start): core.expanded_names(names, start, 24) for start in (0, 24, 48)}
++        if names != parent['features'] or columns != parent['expanded_features']:
++            raise ValueError(f'{period}: actual feature order differs from matched parent')
++        if parent['rounds'] != 900 or parent['training_cutoff'] != core.baseline.CUTOFFS[period]:
++            raise ValueError(f'{period}: parent rounds or cutoff differs')
++    return names
++
++
++def score_outputs(core, out, observations):
++    # Every period has frozen complete forecasts before official truth is opened.
++    frame = core.prediction_frame(out)
++    frame.to_parquet(out / 'predictions.parquet', index=False)
++    scorer = load_module(REPO / 'leaderboard/scorer/competition.py', 'age_retrain_official_scorer')
++    context = scorer.prepare_context(scorer.load_observations(observations))
++    score = scorer.score_competition(frame, context)
++    aligned = scorer.align_predictions(frame, context)
++    for scope in ('total', 'f1', 'f2', 'f3'):
++        if score[scope]['n_replaced']:
++            raise ValueError('Official scorer replaced forecasts')
++        mask = np.ones(len(aligned), bool) if scope == 'total' else context['period'] == scope.upper()
++        score[scope]['mae'] = float(np.nanmean(np.abs(aligned[mask] - context['truth'][mask])))
++    result = {'competition': score, 'observations': core.file_identity(observations),
++                  'scorer': core.file_identity(scorer.__file__), 'scorer_version': scorer.VERSION}
++    core.write_json(out / 'local_score.json', result)
++    core.write_json(out / 'submission.json', dict(result, local_only=True, published=False))
++    return score
++
++
++def main(argv=None):
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--seed', type=int, choices=(42, 43, 44), required=True)
++    parser.add_argument('--experiment', required=True)
++    parser.add_argument('--data', type=Path, required=True)
++    parser.add_argument('--raw-data', type=Path, default=REPO / 'data-v2/input/df.parquet')
++    parser.add_argument('--observations', type=Path, required=True)
++    parser.add_argument('--out', type=Path, required=True)
++    parser.add_argument('--device', choices=('cpu',), required=True)
++    parser.add_argument('--threads', type=int, required=True)
++    args = parser.parse_args(argv)
++    if args.experiment != f'age_retrain_s{args.seed}':
++        parser.error('experiment must be age_retrain_s followed by the selected seed')
++    if os.environ.get('CUDA_VISIBLE_DEVICES') != '' or args.threads < 1:
++        raise ValueError('Fresh GBM training requires CUDA_VISIBLE_DEVICES="" and positive CPU threads')
++    baseline, core = parent_modules()
++    config = fixed_config(core, args.seed, args.experiment)
++    names = assert_parent_contract(core, config, args.seed)
++    args.out.mkdir(parents=True, exist_ok=True)
++    if any(args.out.glob('F*_models')) or (args.out / 'complete.json').exists():
++        raise ValueError('Output already contains model artifacts; use a fresh run directory')
++    ages = repaired_age(args.raw_data)
++    receipts = []
++    bind_repaired_loader(baseline, ages, receipts)
++    git = subprocess.run(['git', '-C', str(REPO), 'rev-parse', 'HEAD'], capture_output=True, text=True, check=False)
++    dirty = subprocess.run(['git', '-C', str(REPO), 'status', '--porcelain'], capture_output=True, text=True, check=False)
++    campaign_provenance_path = CAMPAIGN / 'provenance.json'
++    campaign_provenance = json.loads(campaign_provenance_path.read_text())
++    identity = {'data': core.file_identity(args.data), 'raw_data': core.file_identity(args.raw_data),
++                    'experiment': core.file_identity(__file__), 'baseline': core.file_identity(baseline.__file__),
++                    'shared_core': core.file_identity(core.__file__), 'git_commit': git.stdout.strip() or None,
++                    'source_commit': campaign_provenance['commit'], 'campaign_provenance': campaign_provenance,
++                    'git_status': dirty.stdout, 'seed': args.seed,
++                    'classification': 'fresh-training single-feature replacement bugfix ablation',
++                    'fresh_training': True, 'reused_model_or_predictions': False,
++                    'repair': 'origin minus last actual SUVI frame time; forward-fill source time only',
++                    'versions': {'python': platform.python_version(), 'numpy': np.__version__,
++                                  'pandas': pd.__version__, 'xgboost': xgb.__version__},
++                    'started_utc': datetime.now(UTC).isoformat()}
++    core.write_json(args.out / 'resolved_config.json', config)
++    core.write_json(args.out / 'provenance.json', identity)
++    core.write_json(args.out / 'feature_contract.json', {'features': names, 'unchanged_feature_names': True,
++                    'changed_values': ['img_age_h'], 'parent': f'drop035_v650_s{args.seed}'})
++    for period in ('F1', 'F2', 'F3'):
++        print(json.dumps({'period': period, 'stage': 'fresh_training', 'unit': 0, 'units': 6}), flush=True)
++        report = core.run_period(config, args.data, args.out, period, args.threads, False, identity)
++        report.update(fresh_training=True, reused_model_or_predictions=False,
++                      age_repair_receipts=[r for r in receipts if r['period'] == period])
++        if len(report['age_repair_receipts']) != 2:
++            raise ValueError('Missing train/query repair receipts')
++        core.write_json(args.out / f'{period}_metadata.json', report)
++    core.write_json(args.out / 'feature_receipts.json', receipts)
++    score = score_outputs(core, args.out, args.observations)
++    core.write_json(args.out / 'complete.json', {'status': 'complete', 'exit_code': 0,
++                    'publish': 'not_required', 'publish_reason': 'pending multi-seed evidence gate; local research run',
++                    'total_s': score['total']['s'], 'fresh_training': True, 'seed': args.seed,
++                    'completed_utc': datetime.now(UTC).isoformat()})
++    print(json.dumps({'stage': 'complete', 'seed': args.seed, 'total_s': score['total']['s']}), flush=True)
++
++
++if __name__ == '__main__':
++    main()

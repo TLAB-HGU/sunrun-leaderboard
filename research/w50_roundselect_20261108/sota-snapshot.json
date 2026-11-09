@@ -1,0 +1,1458 @@
+{
+  "dataset": "tlabtlab/sunrun-lb-store",
+  "revision": "f756e1623af7f0cbd9fd9c0fc181902f542580bf",
+  "retrieved_utc": "2026-11-08T16:12:12.166004+00:00",
+  "records_read": 207,
+  "scored_records": 207,
+  "ranking": [
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_v650_s42/acb7ffc71c1c3376b1adf74b8d1ad1e69d10a52760309953d99fb9234ed29e3b.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_s42",
+      "s": 97.49244208059969,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261108T045615080Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_v650_mean3/94afad410dd929d592efda331660fb394824d3036255392f968abbd52409493c.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_mean3",
+      "s": 97.69469886512542,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261108T050039479Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_equatorial_s44/3c677685fba7edb7d1cc40871bc418106bad5117f4af0494600d3664125a4cce.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_equatorial_s44",
+      "s": 97.78762058165395,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T055909960Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_v650_s43/9465c3ce6412f4a8421cf96ea6051397a6fee38726f7d8b1b8ec86cacb2f6f43.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_s43",
+      "s": 97.87370833197167,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261108T045742363Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_equatorial_mean3/607d4942afd5a74fc6618eafd45d21b8dd4532dca84cf93c0bd06ee93aad0acc.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_equatorial_mean3",
+      "s": 98.05880199690887,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T061530270Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_v650_s44/13f6ed01c035fbffe802bfbc569e8de1e777ec98f0952c956b23bc8ce69a7c90.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_s44",
+      "s": 98.07451343718657,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261108T045911425Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_negative_combined_mean3/6f110d11cd8b6036c0ae2486d2ffede1cdce3d5ab007cd2a22519ca999a2d01a.json",
+      "experiment": "e2000fs_calib_offset_roll_negative_combined_mean3",
+      "s": 98.08355105487853,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T103041788Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_equatorial_s42/c7627e4008c5185e609fd74865c2fcd4b9741fe6fdada2ad98f41837638b22e8.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_equatorial_s42",
+      "s": 98.24894972522877,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T055601030Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_drop_t035_equatorial_s43/5181d46ab5503118e7a7b9f73848763d7961e52d25bb7427be9c79b87c39c5bf.json",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_equatorial_s43",
+      "s": 98.50817135690758,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T055733751Z"
+    },
+    {
+      "path": "results/jsy301/e2000fs_calib_offset_roll_rawdf/66e8b1dac9a0b77532e194b7f62bc43e10f2abf5983694cfa9460cc296ba0a27.json",
+      "experiment": "e2000fs_calib_offset_roll_rawdf",
+      "s": 98.6784582407426,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T234149144Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll/254cc54ea93625785e00004e44da6fbefdaccc023c1ce40b4a5f7d2dca4ba9fd.json",
+      "experiment": "e2000fs_calib_offset_roll",
+      "s": 98.7626868541542,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T034835263Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_c1_rounds300_s42/e403bc8ffd8f0774d0d5e0bdf0d1415f0c4329cfe85d08ef33f3f45321136b33.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_c1_rounds300_s42",
+      "s": 98.92717370489612,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T012016483Z"
+    },
+    {
+      "path": "results/jsy301/e2000fs_calib_offset_roll_noimg24_rawdf/3d641694c798db98bfb9c274df54957a9f1229223cc6d1c63c7d32062e441d23.json",
+      "experiment": "e2000fs_calib_offset_roll_noimg24_rawdf",
+      "s": 99.0502982577446,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T235235002Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_l1_spectral_c03_s42/1924a05d983230ef604fee2fdf48432345beb8084cc746cbd493f0cc6282e11e.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_l1_spectral_c03_s42",
+      "s": 99.06619483028072,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T020033724Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11g_serarounds2/3571a38c373787129aa392b36b4f7cdfd40a03a32922972e9b5ed4c54641b8f7.json",
+      "experiment": "e2000fs_calib11g_serarounds2",
+      "s": 99.09274256149396,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T032421836Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib4_detpool_era/ef464e2ace578285721d32c4fd7ebb5853d16d828489f53af3b354afcf2f52e4.json",
+      "experiment": "e2000fs_calib4_detpool_era",
+      "s": 99.33604971848465,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T140726082Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl1_loss_t4_sp0_offset_s42/96146879a5cb2a64c3cafa0e6f15204edd7f7a90853bb5625dc406a32b70ce22.json",
+      "experiment": "e2000fs_calib_offset_roll_abl1_loss_t4_sp0_offset_s42",
+      "s": 99.55312447696707,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T005202076Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_spectral/0e69a01d08955ce18b37a34aa064332110b854905abfc0cef645523aee0e6b31.json",
+      "experiment": "e2000fs_budget_spectral",
+      "s": 99.751183130935,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T035518124Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl1_loss_t4_sp1_nooffset_s42/5a1f120495da2482c051e0acd25bf130928cb0377817f7f45a851762982a678d.json",
+      "experiment": "e2000fs_calib_offset_roll_abl1_loss_t4_sp1_nooffset_s42",
+      "s": 99.751183130935,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T005830652Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_baseline_s43/0fe0a99de97cd5fbcc214595dcd74ba408c07aa4b4a34e589783382bc96e3ef9.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_baseline_s43",
+      "s": 99.93218855943535,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T010724682Z"
+    },
+    {
+      "path": "results/jsy301/e2000fs_calib_offset_roll_rcdials_noimg24_rawdf/f94558ee95cb659c3aab8da44a2fb4c1e3c3b495a1eba2b3e09656679b475a7d.json",
+      "experiment": "e2000fs_calib_offset_roll_rcdials_noimg24_rawdf",
+      "s": 100.00078493202983,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T235717206Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_pointweight4_tcn_lb120/06d2faddf1cf520c330f8e92e114f3c612bae1a45b761ed7c0c737c85535389c.json",
+      "experiment": "e2000fs_feat30_pointweight4_tcn_lb120",
+      "s": 100.00205144152604,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T063059846Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_pool_bodytail/d2a83b4fc91c3f2aaadf53434bde5137484974e33d3916b5218894cc26af0c7b.json",
+      "experiment": "e2000fs_calib_pool_bodytail",
+      "s": 100.05043690606983,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T053018959Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_c1_rounds300_s43/3d5fa332eb4af275c25cc18e6aaadd86210c7f9563b6cba36f5b323f6b1ac29d.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_c1_rounds300_s43",
+      "s": 100.08905556102196,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T012706040Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_point4_144h/23c5e8e20f829e50460253954e24a88b903cfc92c6a4d8e025a4933a26730721.json",
+      "experiment": "e2000fs_calib_point4_144h",
+      "s": 100.09243083220166,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T165951000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_c1_rounds300_s44/e97c6e3f53c1b2da9cdf8bdb495d573097a4fb38a07fa5d8af0298a04c85c054.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_c1_rounds300_s44",
+      "s": 100.12808680866237,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T013353667Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11f_serarounds/6703e86f4bac4a0070475779e0d8f533cc71f1c3ed2cbf1c2ac0f196370a85ac.json",
+      "experiment": "e2000fs_calib11f_serarounds",
+      "s": 100.14254791714325,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T022818523Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib2_mixture2comp/b5dc7af488f1778b6223e391b211c22959b0380a8d578eefde5b251908549edd.json",
+      "experiment": "e2000fs_calib2_mixture2comp",
+      "s": 100.18051609186358,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T033627801Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib4_detpool_era/8c8cb6a6c193141b2f7726b7ec990715f0de96bbd3c5bd39433f9cf645fbf875.json",
+      "experiment": "e2000fs_calib4_detpool_era",
+      "s": 100.19320749725134,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172206000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_baseline_s44/a7f07f7764057cee6aadf312c0eb7939e8908d3b85d3e24882e723ec933e9b9d.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_baseline_s44",
+      "s": 100.21277355950158,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T011344554Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11g_serarounds2/76038bd5720b81987bac378ef93d3d636262c49f65e8689dda3d628c1b0e1b24.json",
+      "experiment": "e2000fs_calib11g_serarounds2",
+      "s": 100.2280378593261,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T074305262Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_pw4_d12_stack25_r300_rawdf/9e57fadbfd5fda30b76a678901230f40a445ad926b0931bf48207d5c8c5be3de.json",
+      "experiment": "dirmo_24_feat30_pw4_d12_stack25_r300_rawdf",
+      "s": 100.24398805049762,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T042330217Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib2_detroute/dd33cddfed71300ee9f679e7f1e89899f090c5036a31d513559558bab09445e7.json",
+      "experiment": "e2000fs_calib2_detroute",
+      "s": 100.2595795241264,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T040143309Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_pw4_d12_stack25_rawdf/21768d38738efc821dbe25d6d0fd4302e83d1b12cd8c799bdc126d8762de80ac.json",
+      "experiment": "dirmo_24_feat30_pw4_d12_stack25_rawdf",
+      "s": 100.28881371827451,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T125848838Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib2_mixture2comp/88d14fe569ac4bb62d7b77c2a9a4468780e668f9a8163c365c88a38a02aacf7a.json",
+      "experiment": "e2000fs_calib2_mixture2comp",
+      "s": 100.30643844724399,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T152509000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_extreme_histprior/1096cecc229b9f7f1d661c22d2086013b9114a87e56594be279dd2495bdb7952.json",
+      "experiment": "e2000fs_feat30_extreme_histprior",
+      "s": 100.37322624225494,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T095110738Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_pointweight4/748016d3b57ae92ce90a989dfb038ae41deec4703a9282cc4498181a1d4a8def.json",
+      "experiment": "e2000fs_feat30_pointweight4",
+      "s": 100.38998760717725,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T151151000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib4_detpool_mixture/9f0075eaf2016ad57d83f30c121d4503b6942414c585e440cb95d15042af437c.json",
+      "experiment": "e2000fs_calib4_detpool_mixture",
+      "s": 100.41598173328369,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172220000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib3_era/1f28dea973bd39928bea110da96e421ffaaffbfa0be0f562c0e7434334a375ab.json",
+      "experiment": "e2000fs_calib3_era",
+      "s": 100.43192623762383,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T013907870Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_spectral/f56a2f555b44b85a5b0629dce4156950c83eead542c112cb176b59b050d89566.json",
+      "experiment": "e2000fs_budget_spectral",
+      "s": 100.4755367017808,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T162437000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_pointweight4/ba9f568b8b85e99fdbe3c7cebf40497057aaa5855c8619daa0c5cca5d4e77ad6.json",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4",
+      "s": 100.47842725701776,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T163752000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib3_era/f28b9c810e7fedfacbe1047b473e9c580cdfd681f09872929045ee871e3057cc.json",
+      "experiment": "e2000fs_calib3_era",
+      "s": 100.50779680097179,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T163540000Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_pw4_d12_rawdf/8de9cb54f21319424a3e9cda4faf45867f7a04c8f18d193bfcf84260004a11f3.json",
+      "experiment": "dirmo_24_feat30_pw4_d12_rawdf",
+      "s": 100.5288556844927,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T004150585Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_pointweight4_tcn_lb120_regskip/8cf71f00ac9c9fa9b84d972abb1229db38b47633b61d3fb7ec3ea5942dd54889.json",
+      "experiment": "e2000fs_feat30_pointweight4_tcn_lb120_regskip",
+      "s": 100.56420758203663,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T064638710Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_point4_144h/f2585efd2f64b7ea746e5ecbb2f0885a8e25a0ab10893ff4576216c9cebca25e.json",
+      "experiment": "e2000fs_calib_point4_144h",
+      "s": 100.61691352533924,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T082104016Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_point4_144h_rawdf/7e712f67bced8464b26be3c0725692e4fe5f22d305463f839e342be58fe0e586.json",
+      "experiment": "e2000fs_calib_point4_144h_rawdf",
+      "s": 100.61691352533924,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T112226109Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_pointweight4/a2a77b665df712859714e2b9ec14fd1ffe03218311b0c2a3034bdbc1c7d99b65.json",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4",
+      "s": 100.61691352533924,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T083153689Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11e_seramed/6669f95b93a696a9f8ad935c3b9d1a91fc1507f8387af88f1883bb6be38840de.json",
+      "experiment": "e2000fs_calib11e_seramed",
+      "s": 100.66957954083745,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T011820728Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib6_detpool_mix20/709b0aa3647a8059b7036c08bbe0b37450622ba131333ad5b2854d7b130cd726.json",
+      "experiment": "e2000fs_calib6_detpool_mix20",
+      "s": 100.766907726307,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T181731486Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_complexity/09b4e5eefa5dad31e356adb54afc5a7db30550c391bf43cbfc570b79c0ab2947.json",
+      "experiment": "e2000fs_budget_complexity",
+      "s": 100.77564805244762,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T032337395Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_metricfloor4/cca9d044d34ac5c98d8e59c23a0d49ee3eac21956bdb886ddb1814ff608c9c4f.json",
+      "experiment": "dirmo_24_feat30_metricfloor4",
+      "s": 100.80012507416706,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T023848777Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11d_sera/f108b15db3fa1bb4b563a9bb61e3b4a330936128c2863463d969c7a828f91b1a.json",
+      "experiment": "e2000fs_calib11d_sera",
+      "s": 100.86913301457517,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T072846212Z"
+    },
+    {
+      "path": "results/jsy301/e2000fs_calib_offset_roll_rcdials_rawdf/d62895d683d767ffad01824a9473f6d43469062ee365d6e201938afb5174aced.json",
+      "experiment": "e2000fs_calib_offset_roll_rcdials_rawdf",
+      "s": 100.89287633200908,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T234753980Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11h_noenlil/211e7c04ba91cbe76997947132d2c5e6a2a28b602c635075d5d9f43853e21ec8.json",
+      "experiment": "e2000fs_calib11h_noenlil",
+      "s": 100.9663373229587,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T090952888Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib2_detroute/e2457303ad54fe568c2b239ebf6b4f9b53657e60473284c276097f14f34a2acb.json",
+      "experiment": "e2000fs_calib2_detroute",
+      "s": 100.97454763320458,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172108000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11d_sera/d78883ecc6464aa9063ab5d99316044f5525e3668f2f2edd7cef57f39873e972.json",
+      "experiment": "e2000fs_calib11d_sera",
+      "s": 101.22074394566962,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T005023719Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11h_noenlil/bad217a850be36f81403869a7a5723b2b0f6b067c69cdbf5535b7592c3f9b71c.json",
+      "experiment": "e2000fs_calib11h_noenlil",
+      "s": 101.22436027278326,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T075958881Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11f_serarounds/0ef5f6455560cbdf57f38df3cc81483b3d0395d09919931da48dcc2ac2704c75.json",
+      "experiment": "e2000fs_calib11f_serarounds",
+      "s": 101.23222892284792,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T082621886Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_pointweight4/290e8ac325b996ca8c247ae5762ed5055cb746974e2def27c4474eeb61f01bb9.json",
+      "experiment": "e2000fs_feat30_pointweight4",
+      "s": 101.23684719607398,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T122901461Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11c_metricw300/9d99252042a54dddb7cbcc50d3f34e9ca11fde02cbc0d89268b7fe7c032e9d76.json",
+      "experiment": "e2000fs_calib11c_metricw300",
+      "s": 101.3707719826922,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261101T160507547Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_pw4_d12_stack25_a2_rawdf/5aff43b1cd765e2058aaf455c935fa2a9622962943d6c1239a383905937acbdc.json",
+      "experiment": "dirmo_24_feat30_pw4_d12_stack25_a2_rawdf",
+      "s": 101.47925749612325,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261107T034409435Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll/96438e68666ce094fe62a8eb0d1ec1e36157255c0915107882b9e60df8facd34.json",
+      "experiment": "e2000fs_calib_offset_roll",
+      "s": 101.54241084868285,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T162554000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11e_seramed/6d13f4a6dc0899158abbc70c6119dbd25b36f19ac125963bc7d56ddd8291a432.json",
+      "experiment": "e2000fs_calib11e_seramed",
+      "s": 101.68204361137356,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T072350462Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_f1_drop_strip_s43/6d9a27866f840a02003f4afd17ee39597a4b94d32d441d6ac45b898d7d9af952.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_f1_drop_strip_s43",
+      "s": 101.68571551215976,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T014727587Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_leaf_refit/1c4fd1bc3a1ae35efcc721962fe74683c5fd8349ad08851a002e8701887c988f.json",
+      "experiment": "e2000fs_point4_leaf_refit",
+      "s": 101.69432051971486,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T024230826Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_high_anchor/4316817d802d79932d288821fa7d285c8c7238ddf1fec894d03bad05881bc06e.json",
+      "experiment": "e2000fs_point4_high_anchor",
+      "s": 101.80598458726259,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T021855155Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_pointweight4_last48/5aa01729bcf3b8451d73d8e0610fc3e21905b134d5bbc1f413aa62c8855e04d6.json",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last48",
+      "s": 101.83626841551784,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T095559531Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_f1_drop_strip_s42/4eca25e81f5aaa51d54b37c8d98ef7cf3188683bedad4d0fc7bc5829195835a0.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_f1_drop_strip_s42",
+      "s": 101.87073775138407,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T014043537Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11c_metricw300/818c82f5077dde13897aa29c2bdd8c813e63b8c4327d37cb072d1bc74bea4e25.json",
+      "experiment": "e2000fs_calib11c_metricw300",
+      "s": 102.05180207366551,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T080849476Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib5_detpool_all/13376adb1d3e14b4f4a6ad069f58ba1a42aa184c33deb4e14805cc9db2cab307.json",
+      "experiment": "e2000fs_calib5_detpool_all",
+      "s": 102.17005730231898,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172348000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_extreme/09b340c610afe092dcc580046419c8f8220aed16309a744f79c6759a57b23881.json",
+      "experiment": "e2000fs_feat30_extreme",
+      "s": 102.2435361444724,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T105228055Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_recmo_12/f1c0089b41d7152821cde894377a15299db148d6cc060b4a1b40e3e57143f135.json",
+      "experiment": "e2000fs_recmo_12",
+      "s": 102.28778401176129,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T151421673Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl2_f1_drop_strip_s44/4cb0b68030e7e3a83da13e59af696e7f403a7e4bbb42d4db43d4f41726570cd7.json",
+      "experiment": "e2000fs_calib_offset_roll_abl2_f1_drop_strip_s44",
+      "s": 102.28923434800062,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T015401284Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_high_regret_guard/55e18e03fb651eb202cfb8acba3f1766f04dbaf0b97e31d4aa3709d47e83e82d.json",
+      "experiment": "e2000fs_point4_high_regret_guard",
+      "s": 102.30240233631,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T023035406Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_transfer_recency/c8d86ffcf03d1d1f70039799d80ae9139e33e935879be85da944b24ae09b1dc0.json",
+      "experiment": "e2000fs_feat30_transfer_recency",
+      "s": 102.43629714723795,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T015600939Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_point4_144h_rawdf/90e9f39ffe72d3c17835de063772fe632b3cb754f6874febb1b019252cef88f6.json",
+      "experiment": "e2000fs_calib_point4_144h_rawdf",
+      "s": 102.49397255151764,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T145546453Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_stable_retrain/1f5bfa2f220207ee16240fed12b8b59909b80d48c8557864dcfd20684b9f713e.json",
+      "experiment": "e2000fs_point4_stable_retrain",
+      "s": 102.58691400816068,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T031136940Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_lgbm_extreme4/c7c98a41f42ef519e374ad54e4de7e182b64b6433eb5b1be43a6dabc965222d2.json",
+      "experiment": "e2000fs_feat30_lgbm_extreme4",
+      "s": 102.64273837302387,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T145059000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_teacher_trust/81c678f6f87246ddda9d8b3d0d897613e3f7159fcb177ccc094d89259664c3de.json",
+      "experiment": "e2000fs_point4_teacher_trust",
+      "s": 102.7370242038534,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T012159772Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_linear_leaf/dc0e83c701ba34932db271ac223fd7069889e67c5a975f470dcf0c82853ed49f.json",
+      "experiment": "e2000fs_point4_linear_leaf",
+      "s": 102.82220768418458,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T025356623Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_pointweight4_last24/c9c24d7b55e8d781a2e0502e65e59dc0761b53f62f88d03cfe3db351f4fbe4be.json",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24",
+      "s": 102.8672183681084,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T092055178Z"
+    },
+    {
+      "path": "results/seongeun/xgb_d76_lead_moe_resid_dv_enlil/711d3b5a7f1973216eff7cd48da14adf4de8af76f9681199469972b92145a8ef.json",
+      "experiment": "xgb_d76_lead_moe_resid_dv_enlil",
+      "s": 102.9945125743415,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T013327953Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib2_capacity_depth5/9a82953e289950007a393c5ce031cef3a4b287dc8bf05e92dfa8931847ebe31a.json",
+      "experiment": "e2000fs_calib2_capacity_depth5",
+      "s": 103.14382165701542,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T025935681Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_rectifymo_24/9d843b5afe8e78e93fb8b54cfbac21c003c2382777f937b7fe634ada058f0454.json",
+      "experiment": "e2000fs_rectifymo_24",
+      "s": 103.23731748597498,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T091331255Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_offset_roll_abl1_loss_t1_sp1_offset_s42/2250e14f893c93864c8e889b1e243e25e6c6c01393e7ca1fb400103d820f74d0.json",
+      "experiment": "e2000fs_calib_offset_roll_abl1_loss_t1_sp1_offset_s42",
+      "s": 103.25563949515269,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261105T004533774Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_lgbm_extreme4/15d765356ed3c8eead644c8ecd7e0c33f88287216725df932276d2937da74162.json",
+      "experiment": "e2000fs_feat30_lgbm_extreme4",
+      "s": 103.40975125634584,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T124319606Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib6_detpool_mix20/a9299a275fd53d6cf66f689cbcd85bfbd7a938715ff365143eb9e615f5539353.json",
+      "experiment": "e2000fs_calib6_detpool_mix20",
+      "s": 103.70189277321765,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172330000Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_metricweight/6e8bb0a464b7a6f668ea9c7e2f8dd3de7dea06b719ba2f398608dc066dfea526.json",
+      "experiment": "dirmo_24_feat30_metricweight",
+      "s": 103.74795987519923,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T104920597Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_lgbm/8619587e0e0ea2de9ba9d73dd05a52115a31ec9ae12ca4982b5155b97e4fe773.json",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm",
+      "s": 103.75703891460203,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T113810531Z"
+    },
+    {
+      "path": "results/jsy301/dirmo_24_feat30_metricweight_lead/58b156255f5cbbd0f199e09ca4352828f4e8c8df76bdd9de2f17ee957d01366e.json",
+      "experiment": "dirmo_24_feat30_metricweight_lead",
+      "s": 103.84594806958621,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261102T104626283Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11b_metricwt/c0bab15e902dfc6106717c186e0bd3269b56e0b9aae338fcb3bdc1f3dacb365a.json",
+      "experiment": "e2000fs_calib11b_metricwt",
+      "s": 103.87449354693791,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261101T131636039Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_recmo_6/18d0aba8e2f3e90aa373ab8436fe9984b07f316f13c1a60481e1e482b30260d2.json",
+      "experiment": "e2000fs_recmo_6",
+      "s": 103.9341061920309,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T133418396Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_covshift/af1c81842557a92bae8fe7a5981bddf9069eb87191220d5060393b573fa61434.json",
+      "experiment": "e2000fs_budget_covshift",
+      "s": 103.93905905505193,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T022500894Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11b_metricwt/45098ff7a6e47efec72160b5a125388d04245242acc216594c2de719af2881b5.json",
+      "experiment": "e2000fs_calib11b_metricwt",
+      "s": 103.94236398080345,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T110446144Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_pool_bodytail/0718492933ab4abcfe51a72414e662949d2548f647c0583b0a7fba978bf195da.json",
+      "experiment": "e2000fs_calib_pool_bodytail",
+      "s": 103.96475974850622,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T170847000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_primaldual/340488adae730791ff6072342ab4ddc8064ff5fbcbd856053536a9baba87d902.json",
+      "experiment": "e2000fs_budget_primaldual",
+      "s": 103.98802874436115,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T020223953Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_transfer_center/84bb18431d891c569f9be8e327ef507ad948c2632eb544b0fc395d145b4c69de.json",
+      "experiment": "e2000fs_feat30_transfer_center",
+      "s": 104.19534427823532,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T014423420Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_agnostic_v2_context/84d3730254a986af6e8ef9045d045a68e97b064b623843d68baa42127b383281.json",
+      "experiment": "e2000fs_feat30_agnostic_v2_context",
+      "s": 104.30187865431714,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T010948984Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_shape/2ee00e34c9e5daef1d366770fe14e4968494eccf0de18749935b0cb18bf2f9fa.json",
+      "experiment": "e2000fs_feat30_shape",
+      "s": 104.47991132393201,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T105731298Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_wavelet/84bef6fb731283302c5b1b379327271c38724e6d3e333b9f870f37291674b83a.json",
+      "experiment": "e2000fs_feat30_wavelet",
+      "s": 104.6424016340524,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T150922796Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30/8ceaf1ed99d28b700da81a6b57eba0b4973929c60a0e6671fb466b155078cfa1.json",
+      "experiment": "e2000fs_dirmo_24_feat30",
+      "s": 104.74790182327817,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T083641139Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_lgbm_HPO/4e2858ec00fe9eda98840ea3636eabc737804b586be3d76ae1aec1227f1c7bea.json",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm_HPO",
+      "s": 104.92347630851366,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T121253000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib4_detpool_gpd/3cd5af86dc52938cfb71ce4089825bab7d6e5918d5285f804add501cd96f4661.json",
+      "experiment": "e2000fs_calib4_detpool_gpd",
+      "s": 105.07250426271804,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172147000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib10_xgboostlss/1ef3ca59dc083219a64eefd25ce18bce4313583e426b6eb4088698ea89e30d74.json",
+      "experiment": "e2000fs_calib10_xgboostlss",
+      "s": 105.15478811500412,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261101T101540195Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_12/d5302d8d11455a664a8b2018b9f14bb178ae17215489723e569893762d66bc1c.json",
+      "experiment": "e2000fs_dirmo_12",
+      "s": 105.1604280252975,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T085158766Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib10_xgboostlss/3e467291ce1c7272ebf70b5f56d73d90463a126b6b16c6881cce0330c6f92c0e.json",
+      "experiment": "e2000fs_calib10_xgboostlss",
+      "s": 105.21793985628808,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T024809214Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib9_lnmix/755a3784e128f9a302efb2f015226dac05be078c24b70c060c28d440a5eeb70d.json",
+      "experiment": "e2000fs_calib9_lnmix",
+      "s": 105.41082627704236,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261101T094816396Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_transfer_recent_window/fea68ebfc3cb654cca81fb3b057996a563581a4459048b1420b3662f8f7128aa.json",
+      "experiment": "e2000fs_feat30_transfer_recent_window",
+      "s": 105.45344604920552,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T020748406Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib9_lnmix/8aee4f0147fbd81db5001d644d8d363fd674fa86221bea403ee34607c7905d40.json",
+      "experiment": "e2000fs_calib9_lnmix",
+      "s": 105.49215870722603,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T011623084Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib8_qxgb/4a0a4dc3fc4ca0f8a4a0c02f3f12bc0f5b0cc1beba937b78a29e1d461055b939.json",
+      "experiment": "e2000fs_calib8_qxgb",
+      "s": 105.50894184505825,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T030550497Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24/0d596262c0da86b10433a1a622b87c89ca7f1e2c1fc4410834a8ed65b00c6c59.json",
+      "experiment": "e2000fs_dirmo_24",
+      "s": 105.75978801121425,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T184748645Z"
+    },
+    {
+      "path": "results/seongeun/e2000_direct_s42/0c0ef8a2cb06a3f4de34ba41dc0d919a12cecf9dc0edba121e753dfeed1748a1.json",
+      "experiment": "e2000_direct_s42",
+      "s": 106.0496516068369,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T012745903Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_smooth_error_tail/0bf76da3c1467812aa0f473ee581cb1c91b9e80843f7bd6708315f2f7149cdb0.json",
+      "experiment": "e2000fs_feat30_smooth_error_tail",
+      "s": 106.28795686508079,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T124111395Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_smooth_wcrps/8c2ffdb8cfd23dfb1e37483a02567848b8303b05d0dad72529121325f5634c98.json",
+      "experiment": "e2000fs_feat30_smooth_wcrps",
+      "s": 106.34528908002075,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T182640822Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_tweedie15/3916bd8c5d5c67b48571965d3f4ae4b7c2236497b38b4654e474f3c16da99123.json",
+      "experiment": "e2000fs_calib_tweedie15",
+      "s": 106.46540099850432,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T015036765Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_tailcal_crps/a6a891f4587f3461ddaeebafe34a1d0fd69a8032d07233db894f33e614955f3a.json",
+      "experiment": "e2000fs_feat30_tailcal_crps",
+      "s": 106.78525559120523,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T101442577Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib8_qxgb/291c9fd5f23bc5a3b1b6b0cf83cfc495c4911749419a83bffc4bb83d16d81829.json",
+      "experiment": "e2000fs_calib8_qxgb",
+      "s": 106.86586991064925,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172626903Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib_tweedie15/7861a17483e738863c669f4aab19f65afb231953d36793c0bb2a9ffa3df00468.json",
+      "experiment": "e2000fs_calib_tweedie15",
+      "s": 107.07856800307576,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T172050000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11_metricgn/42e1189606e3e569b8e3cab1d47d744f4b8b509d259d1c04c378542642ca2671.json",
+      "experiment": "e2000fs_calib11_metricgn",
+      "s": 107.1919877751888,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261101T125959494Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_lognormal_crps/1dc7b6adfea3981bf4ff99be25838c68013861a20591c24c5e4f7df1b0b3ff3f.json",
+      "experiment": "e2000fs_feat30_lognormal_crps",
+      "s": 107.23613258528312,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T111022975Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_transfer_recent_window/6e52c4b2696f45b474eaac63232bf382a2211e3e3a82f0f0a690e1be89da62fb.json",
+      "experiment": "e2000fs_feat30_transfer_recent_window",
+      "s": 107.341611319969,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T151617000Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib11_metricgn/1c7ad23723eae1d803e36e5cf0733df114b77824d4b4a13cb9419bb3b39c8d96.json",
+      "experiment": "e2000fs_calib11_metricgn",
+      "s": 108.10464559974133,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T101228241Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_lognormal_nll/62552e853bfa4f5100ab36db0ca8b3b6a2d771cc9e1dae2d1cef92d97bb1be53.json",
+      "experiment": "e2000fs_feat30_lognormal_nll",
+      "s": 109.75109749443092,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T121502214Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_tabiclv2_direct/efbbc209a066c3a4e72cee2ba737306b3af8b5c46473a60c733416cc90d31905.json",
+      "experiment": "e2000fs_tabiclv2_direct",
+      "s": 110.00654488198897,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T071443020Z"
+    },
+    {
+      "path": "results/seongeun/e2000_horizon_conditioned_s42/6fdd731a7ebc8a2964b2ecfba1010274faf928b7f925ef79cc5514904eca511c.json",
+      "experiment": "e2000_horizon_conditioned_s42",
+      "s": 111.18796507627857,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T034248963Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_gaussian_pilot/0c9846982929effb0e36048caf115ba16d35feec6d11dfec2013d0848c3de885.json",
+      "experiment": "e2000fs_feat30_gaussian_pilot",
+      "s": 111.69838584217302,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T031720337Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_mc_calibration/ea877756e315355ba734c0adefd93510599a49f5b9d378a3583ed6e2fd9513e5.json",
+      "experiment": "e2000fs_feat30_mc_calibration",
+      "s": 113.19528646944985,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T122708165Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_agnostic_v2_event/9368e37a8687114837e116ccab1ed803a8015fc8b3c33505b422621a522e92d7.json",
+      "experiment": "e2000fs_feat30_agnostic_v2_event",
+      "s": 114.53456804681167,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T021320721Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_hyper_gain/8b1a182a9cb722cf558dfbca6f8899166c85e3a9d287dad39b72b917ece80510.json",
+      "experiment": "e2000fs_feat30_hyper_gain",
+      "s": 116.44564579213375,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T032957456Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_probtraj/c11358a30b5e2c2d8696a15851c71e4a3c365a80d1bdeb033bbef2f229193953.json",
+      "experiment": "e2000fs_feat30_probtraj",
+      "s": 116.67118348968032,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T023650998Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_realmlp_direct/900a6f0f4e6ed723b98cadb4dd81f9471f91a3386b3c0712717c49ba4b7e547a.json",
+      "experiment": "e2000fs_realmlp_direct",
+      "s": 121.44759198487908,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261104T100743428Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_pointweight4_last48/3abeda1645ab87d4fa937f38a60d966cbc9b26318799bbe97df2f755a889949d.json",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last48",
+      "s": 123.14613205842807,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T133712649Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_leaf_refit/7dc7de029ea052095810e3e69c639eb5834d69d0974705cdde957ce0496700b7.json",
+      "experiment": "e2000fs_point4_leaf_refit",
+      "s": 123.42605230621828,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T025345191Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_complexity/0d270c6d183d1f994d29f20288c7c0224d368aff3d76f1909ffb442abb1f8053.json",
+      "experiment": "e2000fs_budget_complexity",
+      "s": 123.46339125588565,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261030T031434082Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_pointweight4_last24/d876f4a791e33ec1d7fdadf2ad708309557b16f32471ec4f83e5958f858d8fab.json",
+      "experiment": "e2000fs_dirmo_24_feat30_pointweight4_last24",
+      "s": 123.52964608949131,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T122348724Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_linear_leaf/14a7624d6ba94332dd94d9dc0a236a293df9278332318fe350d720c3fc6fe467.json",
+      "experiment": "e2000fs_point4_linear_leaf",
+      "s": 123.6760568978681,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T025215947Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_extreme_histprior/7ab20f05984715185461c42c042e7756a05bc3d01120089875f67976858f5639.json",
+      "experiment": "e2000fs_feat30_extreme_histprior",
+      "s": 123.69039278333776,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T013233665Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_calib2_capacity_depth5/0836aa22af559658023eff58926fbabc4ffb29e92b467bd4ff4f9ab5f578c004.json",
+      "experiment": "e2000fs_calib2_capacity_depth5",
+      "s": 123.74733011918248,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261030T235559445Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_blk0prev/96cca83e4ef2e6aec127bb3105ee0003435d12802eed40ca79128b649f9285a2.json",
+      "experiment": "e2000fs_blk0prev",
+      "s": 123.93860127186963,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261030T234634202Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_extreme/b9ec31f54e3f29e5260937bb77ed4215650e592e8021129e920ab64aa4e46cb1.json",
+      "experiment": "e2000fs_feat30_extreme",
+      "s": 124.24517956891502,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T234532753Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_stable_retrain/afad2f6f9899b388f41ba21b1489ca563f769d803179152b65314d996d2fa559.json",
+      "experiment": "e2000fs_point4_stable_retrain",
+      "s": 124.28897686806529,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T025523900Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_high_anchor/5ed22ca330114fdb0c8eca9713a5c532573c6e28b124c9e5ffa2a73427cedba0.json",
+      "experiment": "e2000fs_point4_high_anchor",
+      "s": 124.3050540464987,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T102455610Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_transfer_recency/e9cc51d8ad4601d6a2686fb234e3d5f0144943358b6c9508c898f6bf2e675b4c.json",
+      "experiment": "e2000fs_feat30_transfer_recency",
+      "s": 124.33077131087222,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T025846838Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_high_regret_guard/1008406dd021ae903ec362383e9b564e3c4e6d096419a3ef680173daaa38800a.json",
+      "experiment": "e2000fs_point4_high_regret_guard",
+      "s": 124.36215738609377,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T102937673Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_point4_teacher_trust/b89f8977ee349f9f451ba3ab8b01299e64d79fa1afa0599096bd06c878e95b8c.json",
+      "experiment": "e2000fs_point4_teacher_trust",
+      "s": 124.37297392722206,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T103322574Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_agnostic_v2_context/a26d0ed6aa42373d060c17a2972743247d70895022bb5c868ee3801f097c6b91.json",
+      "experiment": "e2000fs_feat30_agnostic_v2_context",
+      "s": 124.42139331741788,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261028T040343834Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30/ff25cfb2bb0e21f093036f3e9fe2f512ad1e4225f8c985f725a3b9cb84a5aced.json",
+      "experiment": "e2000fs_dirmo_24_feat30",
+      "s": 124.42813340647704,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T140042379Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_primaldual/18dcb2879ee0825fb37a7559c7fbac12c1760d7c13fda056e1da4d9afa162b65.json",
+      "experiment": "e2000fs_budget_primaldual",
+      "s": 124.43518635886522,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261030T034836929Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_lgbm/6e7957584b55c8a518140ebab4054fdee710d0c47b7d2914cf09c4b81f2b1c62.json",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm",
+      "s": 124.46511443541931,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T234135561Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_wavelet/5ff33c461cb01e4277e8a23d5af12752490e21f91c1f959814d65574f43e9fc4.json",
+      "experiment": "e2000fs_feat30_wavelet",
+      "s": 124.64459337033593,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T234400568Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24_feat30_lgbm_HPO/bdd9c9431645c774ce679725d0cbe4e16b5115541c0b7f494b4d52195c490689.json",
+      "experiment": "e2000fs_dirmo_24_feat30_lgbm_HPO",
+      "s": 124.66905938154842,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261028T055839340Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_budget_covshift/054fe469d02e1253dc42fb00d2f7aa61bf8f758cb00aa650f852701bec9455a1.json",
+      "experiment": "e2000fs_budget_covshift",
+      "s": 124.68344051142812,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261030T010508240Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_shape/6456b53cf8ec328381c268e2bb67bb7a91903289e10da47a788dcd80d4906414.json",
+      "experiment": "e2000fs_feat30_shape",
+      "s": 124.86749747815156,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T234303344Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_smooth_wcrps/a2cd0af47e63312b3e4c502c7a952369c56b835ac0f1d91099ae0b644c783822.json",
+      "experiment": "e2000fs_feat30_smooth_wcrps",
+      "s": 124.9600410397183,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T013744848Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_tailcal_crps/0647b5314fd32a8cb66bc87d5413be4a8233f50667edcc7e1f0c653d49422a99.json",
+      "experiment": "e2000fs_feat30_tailcal_crps",
+      "s": 125.05458631899556,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T013904567Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_lognormal_crps/4bfd5ff3f2463d5c7bb8df156877d0957de0359859aad2460c1a4da4380d4f17.json",
+      "experiment": "e2000fs_feat30_lognormal_crps",
+      "s": 125.21722570645407,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T013624180Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_smooth_error_tail/df4cfec9f1a13104387f057b823cc3ac33382c3f5be8346ee4e5f1144757b3f0.json",
+      "experiment": "e2000fs_feat30_smooth_error_tail",
+      "s": 125.59231168516459,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T013347334Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_24/6fc76b1836f3a22669108823c6bf6833082b4d9a74bedf80edd8199f66183037.json",
+      "experiment": "e2000fs_dirmo_24",
+      "s": 125.963798450119,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T045541519Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirrecmo_12/4550ff58ae3d9f7468bd9a971b8c1876affcf6380d0c039b35bfe47aca5054bf.json",
+      "experiment": "e2000fs_dirrecmo_12",
+      "s": 126.04336417087691,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T091134420Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_mimo/78d4cc8c6d8a3616da410abe85626d7d1c51f851d9499457a38b4e76168ec6fa.json",
+      "experiment": "e2000fs_mimo",
+      "s": 126.167096350683,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T035454064Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_lognormal_nll/c2f2097dcc28d4adad605f47e2f362127ebe10e37ea48a1f6d2958a97caa5a05.json",
+      "experiment": "e2000fs_feat30_lognormal_nll",
+      "s": 126.24476304458534,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T013508441Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirrecmo_6/c9dd83a2ebd684551c60c551951f4f98188c6effd0984666fe00882738498c50.json",
+      "experiment": "e2000fs_dirrecmo_6",
+      "s": 126.2559084770693,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T091049997Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_mc_calibration/86f0921d9d3c981af5c92bcd44bbdfb0f199b1904ef1c3e78cc51966e102cb47.json",
+      "experiment": "e2000fs_feat30_mc_calibration",
+      "s": 126.32217527036856,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261028T162819606Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_recmo_24/12418deb76bdcda19a8fedf60ba443922464b62580a4861f023738966e232e66.json",
+      "experiment": "e2000fs_recmo_24",
+      "s": 126.41435494988524,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T042146865Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_rectifymo_24/bd171fb6322878beb6b473aaffe811ae3d783483b1b142ed7ec387cfbca7a092.json",
+      "experiment": "e2000fs_rectifymo_24",
+      "s": 126.46404988717131,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T123056740Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_rectify/f0142d38c7dddd7668e9d5f87fd702dcad5ff729ecf064d9533d3564f8bba207.json",
+      "experiment": "e2000fs_rectify",
+      "s": 126.48028892788797,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T091312621Z"
+    },
+    {
+      "path": "results/seongeun/e1604_hsspeak25/4a0e7bb648ab92c9bb75c76443d5576f5bd4576481edc8161c44f8c0321e7f5b.json",
+      "experiment": "e1604_hsspeak25",
+      "s": 126.48616470174291,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T162836657Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_12/dd80390251b9dffe723176a7b3c0fda7d29dcf8ae99561cbb9e8ef38396754f4.json",
+      "experiment": "e2000fs_dirmo_12",
+      "s": 126.56355327118793,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T043625935Z"
+    },
+    {
+      "path": "results/gjc-main/hsspeak72/eef5f301b253b41369b1b18821e685dc95b5cc9d80d766f5fa06d78d8f5cf965.json",
+      "experiment": "hsspeak72",
+      "s": 126.66056298344913,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T163029687Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_recmo_12/63ef09306aa8dc587edd4910b2283fe9ea8c15fc898a2e5a0fe8aee2d6a3dd24.json",
+      "experiment": "e2000fs_recmo_12",
+      "s": 126.66128573614262,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T040407528Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirmo_6/64526874161d3ea0e652784646a16cde9b9e82ce060cfc2158c3934121abb520.json",
+      "experiment": "e2000fs_dirmo_6",
+      "s": 126.67095389175867,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T042734528Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_gaussian_pilot/3d258331eb213b56ac65b671d13d15d7db743d8dcbc854ad580d91300b4957b6.json",
+      "experiment": "e2000fs_feat30_gaussian_pilot",
+      "s": 126.73735724740189,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261028T163724492Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirrecmo_24/be8ce039fed4d3d3c40a2495337c17b3e9b34692e8c3818ab5e757a2624a565f.json",
+      "experiment": "e2000fs_dirrecmo_24",
+      "s": 126.74802457793612,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T091222703Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_transfer_center/8e47f503db1f05d7d9c4b36a05d057958982206deaac4d374cb8fa9514b2dc3a.json",
+      "experiment": "e2000fs_feat30_transfer_center",
+      "s": 126.82879240956257,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T025710979Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_recmo_6/6de2ce593d600e2cfad77bde4b84c02b371a9cadf38fe38145bfccfd163b0afa.json",
+      "experiment": "e2000fs_recmo_6",
+      "s": 127.10772291970332,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T040123004Z"
+    },
+    {
+      "path": "results/seongeun/e2000_direct_s42/b8ddde1b8d358459784749cb5c918f38b1259d839d3f0e87b57841be2266b43e.json",
+      "experiment": "e2000_direct_s42",
+      "s": 127.80777693037615,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T005615572Z"
+    },
+    {
+      "path": "results/seongeun/xgb_d76_lead_moe_resid_dv_enlil/b8ae672fdb6ff9a6dc85bc5c3f2d8b2acbc9207c98126d39ad1913f24581962c.json",
+      "experiment": "xgb_d76_lead_moe_resid_dv_enlil",
+      "s": 127.89514196977517,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T155639909Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_stratify_dirrecmo_dirrecmo_24/061bf043c4514322ea11157e58a314cb08d93ec7eafd569cd4b0b3c52ba4a622.json",
+      "experiment": "e2000fs_stratify_dirrecmo_dirrecmo_24",
+      "s": 128.0056553123824,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T123148746Z"
+    },
+    {
+      "path": "results/seongeun/e2100_tda_pi_suvi72/615835758567c3c90cc2d4fc9e14b9577b6469186390640c622753a4d1b56091.json",
+      "experiment": "e2100_tda_pi_suvi72",
+      "s": 128.59641636695355,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T090505581Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_probtraj/378ae9d102348bf2307a74188e3085d89f23e5237027111cffa46c04d73efe44.json",
+      "experiment": "e2000fs_feat30_probtraj",
+      "s": 128.65146291654017,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T234704586Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_agnostic_v2_event/e69176c3d4b9f445bced8a384406f674dc542e296a69c043f2ee758f4a89ddce.json",
+      "experiment": "e2000fs_feat30_agnostic_v2_event",
+      "s": 129.30505340719765,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261028T040453078Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_dirrec/59657dc1d10819bb7b600fe8725e2c138c0ff9c7981538a3433bed49e7482c04.json",
+      "experiment": "e2000fs_dirrec",
+      "s": 130.93974737867117,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T005013864Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_kumo_dirrec/e39be4ab896b5f8eb24ba207999739fa9eba29a89d1e5705afe41959e60ce8dd.json",
+      "experiment": "e2000fs_kumo_dirrec",
+      "s": 131.2148459500202,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T130028697Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_kumo_direct/5a6766bb74faa72233e6188a9a2139c1cff1d19cd4e3395b91309135cfc67caf.json",
+      "experiment": "e2000fs_kumo_direct",
+      "s": 131.39737627192167,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T164339822Z"
+    },
+    {
+      "path": "results/seongeun/e2100_tda_pi_suvi72/7894dc3707ac2600a1d8bbd4875781a5ec01522059df1c2cede94b15d6f25708.json",
+      "experiment": "e2100_tda_pi_suvi72",
+      "s": 131.45820657549433,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261031T182427407Z"
+    },
+    {
+      "path": "results/seongeun/e2000_horizon_conditioned_s42/e8a8ea38c97e84381ba467a0244e11a63e8b053eaa77e2086f5ab25940bba85f.json",
+      "experiment": "e2000_horizon_conditioned_s42",
+      "s": 131.9170496892859,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T005744095Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_realmlp_dirrec/33128524456d97dbd2c52509d89c3455731fb8ff3153eb3017716a0dbe289994.json",
+      "experiment": "e2000fs_realmlp_dirrec",
+      "s": 131.94918834717794,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T234305026Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_pointweight4_tcn_lb120_regskip/758c31e5b0eab5a85579c3fd912e47a17da431d1b052fced7b56a1a9d23bfcb1.json",
+      "experiment": "e2000fs_feat30_pointweight4_tcn_lb120_regskip",
+      "s": 132.41886211626348,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T083419385Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_hyper_gain/30771087badebbe19929d2d9804190a71d582ba02835ecbba672d77012f3cdac.json",
+      "experiment": "e2000fs_feat30_hyper_gain",
+      "s": 133.99224242675206,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261028T162704753Z"
+    },
+    {
+      "path": "results/baseline/mean_reversion/095a1fce921eaa40ef3ab29a582af4617eb34dab8327cc7fdd8acdf32560ee66.json",
+      "experiment": "mean_reversion",
+      "s": 134.73271138903135,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T124159011Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_realmlp_direct/2a53bd4cae1d80dbb3c34ccc81d280326647ebdb00fb5da4fe66e8a4928ccf16.json",
+      "experiment": "e2000fs_realmlp_direct",
+      "s": 135.17023058352035,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T065410167Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_tabiclv2_dirrec/f36caedc2d3a1f1de0ecb6c58e27889c57513b1d942cf239b494ffbc0ba6a799.json",
+      "experiment": "e2000fs_tabiclv2_dirrec",
+      "s": 136.40015492625014,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T195204640Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_tabiclv2_direct/28ef9289f144c25fcac4b5794c3c652061915f4f66086e5013cc12d1574a815f.json",
+      "experiment": "e2000fs_tabiclv2_direct",
+      "s": 136.48780804047186,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T210854724Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_kumo_pooled/a5d48ce03ecc81ddf3edb0651949f847db9612044a8350e5bfc5c0ed9a2da9ca.json",
+      "experiment": "e2000fs_kumo_pooled",
+      "s": 137.87066853361662,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T091436234Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_recursive/7d59ac0428d2ec067b81f4fc0b512bf1c1ff859fa8a5ee7ae458a6662e30db32.json",
+      "experiment": "e2000fs_recursive",
+      "s": 138.33809098888574,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T000736628Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_feat30_pointweight4_tcn_lb120/e2aac5d7d7068d0bfd4014995a508fc9c3f42a1e2c2f0a13f3e3bfb3da586221.json",
+      "experiment": "e2000fs_feat30_pointweight4_tcn_lb120",
+      "s": 138.56361891795865,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T072622787Z"
+    },
+    {
+      "path": "results/baseline/seasonal_naive_648/e82281cb844fb18079acceb7579f554d639a65f8e9bba5fd1016b32713f72f77.json",
+      "experiment": "seasonal_naive_648",
+      "s": 142.48041950421552,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T123813820Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_kumo_recursive/7c24ea62d59e14d989b4bd077228e633debb378d2963a2a7b2dfb57484114b0a.json",
+      "experiment": "e2000fs_kumo_recursive",
+      "s": 142.4808965335084,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261103T081324116Z"
+    },
+    {
+      "path": "results/baseline/auto_arima/e176bda8304400115ef8bd0f433c8a4794a646606feb497e075d84877f0fe60f.json",
+      "experiment": "auto_arima",
+      "s": 148.86319279217884,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T124040119Z"
+    },
+    {
+      "path": "results/baseline/ses/1794ffdffc953cf81eaf273a8f84d0df154e58d2b9b2cb6a9fe6ecf69fa4778f.json",
+      "experiment": "ses",
+      "s": 149.10574909857536,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T123926445Z"
+    },
+    {
+      "path": "results/baseline/naive/a73b16dda3144747a5589cd0a34ba56512df8b0e626125c65bdb1e940bc5cb02.json",
+      "experiment": "naive",
+      "s": 149.4443120255125,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261026T123700303Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_kumo_pooled/e278fbdf5292061d8782e6f177a11d25892e7f2ab58f80325b782fbd6f8ea61a.json",
+      "experiment": "e2000fs_kumo_pooled",
+      "s": 161.00255313767133,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T174416034Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_realmlp_pooled/b54bc9987a40d38e620523b30898f0eb8391f9026314e4546d6c89f89e6a5b40.json",
+      "experiment": "e2000fs_realmlp_pooled",
+      "s": 161.4178565560784,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261029T065720295Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_tabiclv2_pooled/ee4c23a14ee5ee83bb1b9c0358553d13a2eed1f1ac55afd2ec326a0c2b0f83e7.json",
+      "experiment": "e2000fs_tabiclv2_pooled",
+      "s": 162.13018989431188,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T213448379Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_tabiclv2_recursive/f83bc396abdbcc909c839e76a3b3f62e935f3e422b80e001ef1d360218ef0b36.json",
+      "experiment": "e2000fs_tabiclv2_recursive",
+      "s": 164.67127540874336,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T181633671Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_kumo_recursive/ff1e0b492145a9a32a9971c0d42a396aac3eebf7791a39ac8884aa1cb03992f3.json",
+      "experiment": "e2000fs_kumo_recursive",
+      "s": 168.25403766703664,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T110236969Z"
+    },
+    {
+      "path": "results/seongeun/e2000fs_realmlp_recursive/0658867923541ef207c3bc8caa576dbcbeaadda5b63764362598c3d45f876570.json",
+      "experiment": "e2000fs_realmlp_recursive",
+      "s": 170.463506177034,
+      "version": "lead-timse-6h-v1",
+      "submitted_utc": "20261027T220847338Z"
+    }
+  ]
+}

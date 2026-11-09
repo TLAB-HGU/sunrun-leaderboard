@@ -1,0 +1,319 @@
+--- research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/experiment.py
++++ research/w50_roundselect_20261108/experiment.py
+@@ -1,8 +1,308 @@
+-"""Frozen single-experiment entrypoint."""
+-from core import main
+-
+-EXPERIMENT = 'drop035_v650_s42'
+-CONFIG = {'exclude_features': ['ch_ch_t035_equatorial_area', 'strip_v650_dark'], 'tail_weight': 4, 'spectral': True, 'offset': True, 'offset_scope': 'horizon', 'offset_window': 336, 'alpha': 0.25, 'block_size': 24, 'clip_component': True, 'clip_final': True, 'seed': 42, 'spectral_hessian_only': False, 'experiment': 'drop035_v650_s42'}
+-
+-if __name__ == "__main__":
+-    main(locked_experiment=EXPERIMENT, locked_config=CONFIG)
++"""Fresh fixed-parent training with training-only first-minimum tree-count selection."""
++from __future__ import annotations
++
++import argparse
++import importlib.util
++import json
++import os
++import platform
++import subprocess
++import sys
++from datetime import UTC, datetime
++from pathlib import Path
++
++for _key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS'):
++    os.environ.setdefault(_key, '1')
++
++import numpy as np
++import pandas as pd
++import xgboost as xgb
++
++CAMPAIGN = Path(__file__).resolve().parent
++REPO = CAMPAIGN.parents[1]
++PARENT = CAMPAIGN.parent / 'drop035_v650_confirm_20261108'
++
++
++def load_module(path, name):
++    spec = importlib.util.spec_from_file_location(name, path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++def parent_modules():
++    """Private globals prevent changing the parent or another imported runner."""
++    baseline = load_module(PARENT / 'baseline.py', 'roundselect_baseline')
++    previous = sys.modules.get('baseline')
++    sys.modules['baseline'] = baseline
++    try:
++        core = load_module(PARENT / 'core.py', 'roundselect_core')
++    finally:
++        if previous is None:
++            del sys.modules['baseline']
++        else:
++            sys.modules['baseline'] = previous
++    return baseline, core
++
++
++def fixed_config(core, seed, experiment):
++    return core.normalize_config({'experiment': experiment, 'seed': seed,
++                                     'exclude_features': ['ch_ch_t035_equatorial_area', 'strip_v650_dark']})
++
++
++def assert_parent_contract(core, config, seed):
++    names = core.feature_names(config)
++    if sum(map(len, names.values())) != 28:
++        raise ValueError('Frozen parent requires exactly 28 source features')
++    for period in ('F1', 'F2', 'F3'):
++        path = PARENT / 'runs' / f'drop035_v650_s{seed}' / f'{period}_metadata.json'
++        parent = json.loads(path.read_text())
++        expected = core.normalize_config(parent['config'])
++        if {k: v for k, v in expected.items() if k != 'experiment'} != {
++                k: v for k, v in config.items() if k != 'experiment'}:
++            raise ValueError(f'{period}: settings differ from matched parent')
++        columns = {str(start): core.expanded_names(names, start, 24) for start in (0, 24, 48)}
++        if names != parent['features'] or columns != parent['expanded_features']:
++            raise ValueError(f'{period}: actual feature order differs from matched parent')
++        if parent['rounds'] != 900 or parent['training_cutoff'] != core.baseline.CUTOFFS[period]:
++            raise ValueError(f'{period}: parent rounds or cutoff differs')
++    return names
++
++
++def score_outputs(core, out, observations):
++    # Every period has frozen complete forecasts before official truth is opened.
++    frame = core.prediction_frame(out)
++    frame.to_parquet(out / 'predictions.parquet', index=False)
++    scorer = load_module(REPO / 'leaderboard/scorer/competition.py', 'roundselect_official_scorer')
++    context = scorer.prepare_context(scorer.load_observations(observations))
++    score = scorer.score_competition(frame, context)
++    aligned = scorer.align_predictions(frame, context)
++    for scope in ('total', 'f1', 'f2', 'f3'):
++        if score[scope]['n_replaced']:
++            raise ValueError('Official scorer replaced forecasts')
++        mask = np.ones(len(aligned), bool) if scope == 'total' else context['period'] == scope.upper()
++        score[scope]['mae'] = float(np.nanmean(np.abs(aligned[mask] - context['truth'][mask])))
++    result = {'competition': score, 'observations': core.file_identity(observations),
++                  'scorer': core.file_identity(scorer.__file__), 'scorer_version': scorer.VERSION}
++    core.write_json(out / 'local_score.json', result)
++    core.write_json(out / 'submission.json', dict(result, local_only=True, published=False))
++    return score
++
++
++EXPECTED_STOPPING = {'F1': 1706, 'F2': 1682, 'F3': 1730}
++ROUNDS = 900
++
++
++def first_minimum(curve, budget):
++    values = np.asarray(curve, dtype=np.float64)
++    if values.shape != (budget,) or not np.isfinite(values).all():
++        raise ValueError('Incomplete or nonfinite native RMSE curve')
++    return int(np.argmin(values)) + 1
++
++
++def fitting_subsets(baseline, origins, period):
++    reference, calibration, boundary = baseline.prior_split(origins)
++    if len(calibration) < 336:
++        raise ValueError('Insufficient original offset rows')
++    offset = calibration[-336:]
++    stopping = calibration[origins[calibration] + pd.Timedelta(hours=144) <= origins[offset[0]]]
++    if len(stopping) != EXPECTED_STOPPING[period]:
++        raise ValueError(f'{period}: stopping count {len(stopping)} != {EXPECTED_STOPPING[period]}')
++    return reference, calibration, stopping, offset, boundary
++
++
++def train_head(core, x, y, config, threads, rounds, stopping=None):
++    matrix = xgb.DMatrix(x, label=y.astype(np.float32), nthread=threads)
++    params = dict(core.baseline.PARAMS, seed=config['seed'], device='cpu',
++                  nthread=threads, num_target=24, base_score=float(y.mean()))
++    history = {}
++    evals = []
++    if stopping is not None:
++        xs, ys = stopping
++        evals = [(xgb.DMatrix(xs, label=ys.astype(np.float32), nthread=threads), 'stopping')]
++    model = xgb.train(params, matrix, num_boost_round=rounds,
++                      obj=core.make_objective(y, config), evals=evals,
++                      evals_result=history, verbose_eval=False)
++    if model.num_boosted_rounds() != rounds:
++        raise ValueError('Fresh model did not retain its complete requested tree budget')
++    return model, history.get('stopping', {}).get('rmse', []), params
++
++
++def check_control(raw, truth, origins, path):
++    with np.load(path) as frozen:
++        if not np.array_equal(origins, frozen['origins']):
++            raise ValueError('Control calibration origins differ from frozen parent')
++        if not np.array_equal(truth, frozen['training_truth']):
++            raise ValueError('Control training targets differ from frozen parent')
++        if raw.shape != frozen['raw'].shape or not np.isfinite(raw).all():
++            raise ValueError('Control calibration prediction shape or finiteness differs')
++        difference = float(np.max(np.abs(raw - frozen['raw'])))
++    if not np.isfinite(difference) or difference > 1e-6:
++        raise ValueError(f'Control prior900 mismatch: maximum absolute difference {difference} > 1e-6')
++    return {'passed': True, 'max_absolute_difference': difference, 'tolerance': 1e-6,
++            'frozen_reference': str(path)}
++
++
++def origin_range(origins, indices):
++    return {'rows': len(indices), 'start': str(origins[indices].min()),
++            'end': str(origins[indices].max())}
++
++
++def run_period(core, config, data, out, period, threads, identity):
++    baseline = core.baseline
++    names = core.feature_names(config)
++    train, y = baseline.load_grid(data, period, names, True)
++    query, query_truth = baseline.load_grid(data, period, names, False)
++    if query_truth is not None:
++        raise ValueError('Query loader must not return evaluation targets')
++    if len(query['origins']) != baseline.QUERY_COUNTS[period] or not np.isfinite(y).all():
++        raise ValueError('Unexpected query grid or nonfinite original training targets')
++    reference, calibration, stopping, offset_rows, boundary = fitting_subsets(
++        baseline, train['origins'], period)
++    model_dir = out / f'{period}_models'
++    (model_dir / 'prior').mkdir(parents=True)
++    (model_dir / 'full').mkdir()
++    cal_origins = train['origins'][calibration].asi8
++    truth = y[calibration]
++    endpoint = np.empty(truth.shape, np.float64)
++    prior = np.empty(truth.shape, np.float64)
++    raw = np.empty((len(query['origins']), 72), np.float64)
++    heads = []
++    # Finish and verify every unchanged prior endpoint before selecting any prefix.
++    for block, start in enumerate((0, 24, 48)):
++        x = core.design(train, start, 24)
++        model, curve, params = train_head(
++            core, x[reference], y[reference, start:start + 24], config, threads, ROUNDS,
++            stopping=(x[stopping], y[stopping, start:start + 24]))
++        model.save_model(model_dir / 'prior' / f'b{block}.ubj')
++        endpoint[:, start:start + 24] = model.inplace_predict(x[calibration])
++        heads.append({'block': block, 'horizon': start + 24, 'native_rmse': curve,
++                      'prior_parameters': params, 'prior_rounds': ROUNDS})
++        core.write_json(model_dir / 'tree_selection.json', heads)
++        print(json.dumps({'period': period, 'stage': 'prior900', 'block': block,
++                          'horizon': start + 24, 'unit': block + 1, 'units': 6}), flush=True)
++        del model, x
++    np.savez_compressed(model_dir / 'prior900_predictions.npz', origins=cal_origins,
++                        raw=endpoint, training_truth=truth)
++    frozen = PARENT / 'runs' / f"drop035_v650_s{config['seed']}" / f'{period}_models/prior_predictions.npz'
++    try:
++        control = check_control(endpoint, truth, cal_origins, frozen)
++    except ValueError as error:
++        core.write_json(model_dir / 'control.json', {'passed': False, 'error': str(error)})
++        raise
++    control['frozen_identity'] = core.file_identity(frozen)
++    core.write_json(model_dir / 'control.json', control)
++    for block, start in enumerate((0, 24, 48)):
++        head = heads[block]
++        selected = first_minimum(head['native_rmse'], ROUNDS)
++        head.update(selected_rounds=selected, inference_iteration_range=[0, selected],
++                    selection_rule='first minimum native unweighted stopping RMSE over rounds 1..900')
++        model = xgb.Booster(params={'nthread': threads, 'device': 'cpu'})
++        model.load_model(model_dir / 'prior' / f'b{block}.ubj')
++        x = core.design(train, start, 24)
++        prior[:, start:start + 24] = model.inplace_predict(x[calibration], iteration_range=(0, selected))
++        del model
++        full, _, params = train_head(core, x, y[:, start:start + 24], config, threads, selected)
++        full.save_model(model_dir / 'full' / f'b{block}.ubj')
++        raw[:, start:start + 24] = full.inplace_predict(core.design(query, start, 24))
++        head['full_parameters'] = params
++        head['full_rounds'] = full.num_boosted_rounds()
++        core.write_json(model_dir / 'tree_selection.json', heads)
++        print(json.dumps({'period': period, 'stage': 'full_selected', 'block': block,
++                          'horizon': start + 24, 'selected_rounds': selected,
++                          'unit': block + 4, 'units': 6}), flush=True)
++        del full, x
++    offset, rows = core.estimate_offset(prior, truth, config)
++    subsets = {name: origin_range(train['origins'], indices) for name, indices in
++               [('reference', reference), ('calibration', calibration), ('stopping', stopping),
++                ('offset', offset_rows), ('full', np.arange(len(y)))]}
++    np.savez_compressed(model_dir / 'fitting_subsets.npz', reference=reference,
++                        calibration=calibration, stopping=stopping, offset=offset_rows,
++                        train_origins=train['origins'].asi8)
++    state = {'policy': 'training-only first-minimum tree selection and frozen horizon offset',
++                 'subsets': subsets, 'split_boundary': str(boundary), 'purge_hours': 144,
++                 'window': 336, 'alpha': .25, 'scope': 'horizon', 'applied': True,
++                 'offset': offset.tolist(), 'offset_rows': rows, 'offset_start': subsets['offset']['start'],
++                 'offset_end': subsets['offset']['end']}
++    core.write_json(model_dir / 'frozen_calibration.json', state)
++    np.savez_compressed(model_dir / 'prior_predictions.npz', origins=cal_origins, raw=prior,
++                        spectral=core.component_values(prior, config), training_truth=truth)
++    prediction, no_offset = core.apply_offset(raw, offset, config)
++    component = core.component_values(raw, config)
++    origins = query['origins'].asi8
++    np.savez_compressed(out / f'{period}_predictions.npz', pred=prediction, origins=origins)
++    np.savez_compressed(out / f'{period}_no_offset_predictions.npz', pred=no_offset, origins=origins)
++    np.savez_compressed(out / f'{period}_raw_predictions.npz', raw=raw, component=component,
++                        preclip=component + offset[None, :], offset=offset, origins=origins)
++    report = {'experiment': config['experiment'], 'period': period, 'config': config, 'seed': config['seed'],
++                  'smoke': False, 'features': names, 'feature_count': 28, 'expanded_feature_count': 212,
++                  'expanded_features': {str(s): core.expanded_names(names, s, 24) for s in (0, 24, 48)},
++                  'prior_rounds': ROUNDS, 'selected_rounds': [h['selected_rounds'] for h in heads],
++                  'tree_selection': heads, 'control': control, 'frozen_state': state,
++                  'training_cutoff': baseline.CUTOFFS[period], 'maturity_hours': 144,
++                  'train_origins': len(y), 'train_start': str(train['origins'].min()),
++                  'train_end': str(train['origins'].max()), 'query_origins': len(origins),
++                  'query_start': str(query['origins'].min()), 'query_end': str(query['origins'].max()),
++                  'fresh_training': True, 'reused_model_or_predictions': False, 'identity': identity}
++    core.write_json(out / f'{period}_metadata.json', report)
++    return report
++
++
++def main(argv=None):
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--seed', type=int, choices=(42, 43, 44), required=True)
++    parser.add_argument('--experiment', required=True)
++    parser.add_argument('--data', type=Path, required=True)
++    parser.add_argument('--observations', type=Path, required=True)
++    parser.add_argument('--out', type=Path, required=True)
++    parser.add_argument('--device', choices=('cpu',), required=True)
++    parser.add_argument('--threads', type=int, choices=(4,), required=True)
++    args = parser.parse_args(argv)
++    if args.experiment != f'roundselect_s{args.seed}':
++        parser.error('experiment must be roundselect_s followed by the selected seed')
++    if os.environ.get('CUDA_VISIBLE_DEVICES') != '':
++        raise ValueError('Fresh GBM training requires CUDA_VISIBLE_DEVICES=""')
++    baseline, core = parent_modules()
++    config = fixed_config(core, args.seed, args.experiment)
++    names = assert_parent_contract(core, config, args.seed)
++    # Require all frozen controls up front, without loading any query observations.
++    for period in baseline.CUTOFFS:
++        frozen = PARENT / 'runs' / f'drop035_v650_s{args.seed}' / f'{period}_models/prior_predictions.npz'
++        if not frozen.is_file():
++            raise FileNotFoundError(f'Frozen prior900 reference missing: {frozen}')
++    args.out.mkdir(parents=True, exist_ok=True)
++    if any(args.out.glob('F*_models')) or (args.out / 'complete.json').exists():
++        raise ValueError('Output contains model artifacts; use a fresh run directory')
++    git = subprocess.run(['git', '-C', str(REPO), 'rev-parse', 'HEAD'], capture_output=True, text=True, check=False)
++    dirty = subprocess.run(['git', '-C', str(REPO), 'status', '--porcelain'], capture_output=True, text=True, check=False)
++    campaign_provenance = json.loads((CAMPAIGN / 'provenance.json').read_text())
++    actual_git = git.stdout.strip() or None
++    identity = {'data': core.file_identity(args.data), 'experiment': core.file_identity(__file__),
++                'baseline': core.file_identity(baseline.__file__), 'shared_core': core.file_identity(core.__file__),
++                'actual_git_commit': actual_git, 'git_commit': actual_git,
++                'source_commit': campaign_provenance['commit'], 'campaign_provenance': campaign_provenance,
++                'git_status': dirty.stdout, 'seed': args.seed,
++                'classification': 'fresh-training training-only tree-count selection ablation',
++                'fresh_training': True, 'reused_model_or_predictions': False,
++                'versions': {'python': platform.python_version(), 'numpy': np.__version__,
++                             'pandas': pd.__version__, 'xgboost': xgb.__version__},
++                'started_utc': datetime.now(UTC).isoformat()}
++    core.write_json(args.out / 'resolved_config.json', config)
++    core.write_json(args.out / 'provenance.json', identity)
++    core.write_json(args.out / 'feature_contract.json', {'features': names, 'unchanged_feature_names': True,
++                    'changed_values': [], 'parent': f'drop035_v650_s{args.seed}'})
++    for period in baseline.CUTOFFS:
++        print(json.dumps({'period': period, 'stage': 'fresh_training', 'unit': 0, 'units': 6}), flush=True)
++        run_period(core, config, args.data, args.out, period, args.threads, identity)
++    core.write_json(args.out / 'predictions_frozen.json', {
++        period: core.file_identity(args.out / f'{period}_predictions.npz') for period in baseline.CUTOFFS})
++    score = score_outputs(core, args.out, args.observations)
++    core.write_json(args.out / 'complete.json', {'status': 'complete', 'exit_code': 0,
++                    'publish': 'not_required', 'publish_reason': 'pending multi-seed evidence gate; local research run',
++                    'total_s': score['total']['s'], 'fresh_training': True, 'seed': args.seed,
++                    'completed_utc': datetime.now(UTC).isoformat()})
++    print(json.dumps({'stage': 'complete', 'seed': args.seed, 'total_s': score['total']['s']}), flush=True)
++
++
++if __name__ == '__main__':
++    main()

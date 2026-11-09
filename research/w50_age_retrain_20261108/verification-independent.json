@@ -1,0 +1,588 @@
+{
+  "checked_utc": "2026-11-08T14:43:58.806432+00:00",
+  "verdict": "PARTIAL",
+  "implementation_verdict": "PASS",
+  "goal_50pct_verdict": "FAIL",
+  "reference_s": 97.49244208059969,
+  "target_s": 48.746221040299844,
+  "tests": "8 passed in 1.03s; pytest -q -p no:cacheprovider research/w50_age_retrain_20261108/test_experiment.py",
+  "model_replay": [
+    {
+      "seed": 42,
+      "period": "F1",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 43,
+      "period": "F1",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 44,
+      "period": "F1",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 42,
+      "period": "F2",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 43,
+      "period": "F2",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 44,
+      "period": "F2",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 42,
+      "period": "F3",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 43,
+      "period": "F3",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    },
+    {
+      "seed": 44,
+      "period": "F3",
+      "models": 6,
+      "rounds": [
+        900,
+        900,
+        900,
+        900,
+        900,
+        900
+      ],
+      "max_prior_difference": 0.0,
+      "max_offset_difference": 0.0,
+      "max_full_raw_difference": 0.0,
+      "max_final_difference": 0.0,
+      "metadata_match": true
+    }
+  ],
+  "actual_matrix_checks": [
+    {
+      "period": "F1",
+      "training": true,
+      "origins": 28297,
+      "changed_column": "img_age_h",
+      "changed_origins": 523,
+      "missing_age_origins": 1270,
+      "max_repaired_age_h": 83.6949462890625,
+      "unchanged_other_inputs": true,
+      "feature_count": 28,
+      "independent_age_equal": true
+    },
+    {
+      "period": "F1",
+      "training": false,
+      "origins": 2089,
+      "changed_column": "img_age_h",
+      "changed_origins": 63,
+      "missing_age_origins": 0,
+      "max_repaired_age_h": 45.844417572021484,
+      "unchanged_other_inputs": true,
+      "feature_count": 28,
+      "independent_age_equal": true
+    },
+    {
+      "period": "F2",
+      "training": true,
+      "origins": 30457,
+      "changed_column": "img_age_h",
+      "changed_origins": 586,
+      "missing_age_origins": 1270,
+      "max_repaired_age_h": 83.6949462890625,
+      "unchanged_other_inputs": true,
+      "feature_count": 28,
+      "independent_age_equal": true
+    },
+    {
+      "period": "F2",
+      "training": false,
+      "origins": 2113,
+      "changed_column": "img_age_h",
+      "changed_origins": 21,
+      "missing_age_origins": 0,
+      "max_repaired_age_h": 16.021333694458008,
+      "unchanged_other_inputs": true,
+      "feature_count": 28,
+      "independent_age_equal": true
+    },
+    {
+      "period": "F3",
+      "training": true,
+      "origins": 32665,
+      "changed_column": "img_age_h",
+      "changed_origins": 604,
+      "missing_age_origins": 1270,
+      "max_repaired_age_h": 83.6949462890625,
+      "unchanged_other_inputs": true,
+      "feature_count": 28,
+      "independent_age_equal": true
+    },
+    {
+      "period": "F3",
+      "training": false,
+      "origins": 2113,
+      "changed_column": "img_age_h",
+      "changed_origins": 104,
+      "missing_age_origins": 0,
+      "max_repaired_age_h": 66.76305389404297,
+      "unchanged_other_inputs": true,
+      "feature_count": 28,
+      "independent_age_equal": true
+    }
+  ],
+  "official_rescores": [
+    {
+      "seed": 42,
+      "arm": "control",
+      "score": {
+        "total": {
+          "s": 97.49244208059969,
+          "rmse": 67.73337040579402,
+          "trmse": 141.25988624129474,
+          "timse": 20765.050441397754,
+          "pooled_mae": 51.48121060073869,
+          "n_replaced": 0
+        },
+        "f1": {
+          "s": 119.90587771724283,
+          "rmse": 83.21682736806639,
+          "trmse": 175.0354331589133,
+          "timse": 32323.21655756937,
+          "pooled_mae": 63.181689504973846,
+          "n_replaced": 0
+        },
+        "f2": {
+          "s": 74.8232238032226,
+          "rmse": 62.15111521940428,
+          "trmse": 90.34693836656506,
+          "timse": 8628.540061396441,
+          "pooled_mae": 48.525173625838235,
+          "n_replaced": 0
+        },
+        "f3": {
+          "s": 60.66322881848529,
+          "rmse": 55.291995408665734,
+          "trmse": 67.53059778564128,
+          "timse": 5035.400041789759,
+          "pooled_mae": 42.60166446457702,
+          "n_replaced": 0
+        }
+      }
+    },
+    {
+      "seed": 42,
+      "arm": "treatment",
+      "score": {
+        "total": {
+          "s": 97.82503916944195,
+          "rmse": 67.84425327944365,
+          "trmse": 142.0033085897924,
+          "timse": 21020.801776098902,
+          "pooled_mae": 51.5342866302671,
+          "n_replaced": 0
+        },
+        "f1": {
+          "s": 120.34421566740886,
+          "rmse": 83.50527478561689,
+          "trmse": 175.8167878010477,
+          "timse": 32691.803661702983,
+          "pooled_mae": 63.3169319380175,
+          "n_replaced": 0
+        },
+        "f2": {
+          "s": 74.97148853431132,
+          "rmse": 62.18593052563819,
+          "trmse": 90.64830371875352,
+          "timse": 8703.752141477027,
+          "pooled_mae": 48.577083498286996,
+          "n_replaced": 0
+        },
+        "f3": {
+          "s": 60.56769529898625,
+          "rmse": 55.232041624452876,
+          "trmse": 67.37912619080497,
+          "timse": 5010.021378926472,
+          "pooled_mae": 42.57279035942848,
+          "n_replaced": 0
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "arm": "control",
+      "score": {
+        "total": {
+          "s": 97.87370833197167,
+          "rmse": 67.4611956103626,
+          "trmse": 142.95149055709595,
+          "timse": 21273.207517266706,
+          "pooled_mae": 51.24214889893322,
+          "n_replaced": 0
+        },
+        "f1": {
+          "s": 120.7151545006415,
+          "rmse": 82.74272063525902,
+          "trmse": 178.37125651885586,
+          "timse": 33543.92133658292,
+          "pooled_mae": 62.73199856122552,
+          "n_replaced": 0
+        },
+        "f2": {
+          "s": 74.39998833905186,
+          "rmse": 61.887053462597365,
+          "trmse": 89.72696789991188,
+          "timse": 8498.19080721011,
+          "pooled_mae": 48.263237260166015,
+          "n_replaced": 0
+        },
+        "f3": {
+          "s": 60.71181401504043,
+          "rmse": 55.291453485827134,
+          "trmse": 67.59990699836506,
+          "timse": 5030.448005229359,
+          "pooled_mae": 42.59854313730466,
+          "n_replaced": 0
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "arm": "treatment",
+      "score": {
+        "total": {
+          "s": 97.9226666910547,
+          "rmse": 67.63070417405785,
+          "trmse": 142.70904506187284,
+          "timse": 21211.842609100873,
+          "pooled_mae": 51.349307225284896,
+          "n_replaced": 0
+        },
+        "f1": {
+          "s": 120.76765413272486,
+          "rmse": 83.1100472544771,
+          "trmse": 177.71964978690735,
+          "timse": 33325.441975688766,
+          "pooled_mae": 63.060805525435136,
+          "n_replaced": 0
+        },
+        "f2": {
+          "s": 74.61451229061956,
+          "rmse": 62.077863373258914,
+          "trmse": 89.96558196902645,
+          "timse": 8545.180704615826,
+          "pooled_mae": 48.43123694942677,
+          "n_replaced": 0
+        },
+        "f3": {
+          "s": 60.412830380853535,
+          "rmse": 55.15498473544654,
+          "trmse": 67.12003739448932,
+          "timse": 4961.130204289149,
+          "pooled_mae": 42.420645422011894,
+          "n_replaced": 0
+        }
+      }
+    },
+    {
+      "seed": 44,
+      "arm": "control",
+      "score": {
+        "total": {
+          "s": 98.07451343718657,
+          "rmse": 67.71368874806346,
+          "trmse": 142.96557930853567,
+          "timse": 21288.652377538187,
+          "pooled_mae": 51.54354939200134,
+          "n_replaced": 0
+        },
+        "f1": {
+          "s": 120.99950367963821,
+          "rmse": 83.0962150326938,
+          "trmse": 178.35217861470878,
+          "timse": 33534.199540397254,
+          "pooled_mae": 63.27872892473948,
+          "n_replaced": 0
+        },
+        "f2": {
+          "s": 74.42035694301755,
+          "rmse": 62.00487794691958,
+          "trmse": 89.5909675483082,
+          "timse": 8487.106589869301,
+          "pooled_mae": 48.423493188507415,
+          "n_replaced": 0
+        },
+        "f3": {
+          "s": 60.59499155416617,
+          "rmse": 55.535652835240654,
+          "trmse": 67.12048464646716,
+          "timse": 4961.559336169466,
+          "pooled_mae": 42.79293005718193,
+          "n_replaced": 0
+        }
+      }
+    },
+    {
+      "seed": 44,
+      "arm": "treatment",
+      "score": {
+        "total": {
+          "s": 97.95989993386527,
+          "rmse": 67.85206755695864,
+          "trmse": 142.35317811799192,
+          "timse": 21100.655336932716,
+          "pooled_mae": 51.64942235332126,
+          "n_replaced": 0
+        },
+        "f1": {
+          "s": 120.65446786429857,
+          "rmse": 83.03506143938506,
+          "trmse": 177.4466248424139,
+          "timse": 33180.33835445294,
+          "pooled_mae": 63.16057490667905,
+          "n_replaced": 0
+        },
+        "f2": {
+          "s": 74.59417755185662,
+          "rmse": 62.36931952822964,
+          "trmse": 89.48234332170782,
+          "timse": 8457.967069854105,
+          "pooled_mae": 48.72656903394194,
+          "n_replaced": 0
+        },
+        "f3": {
+          "s": 60.90767766764702,
+          "rmse": 55.71686407777479,
+          "trmse": 67.56472164242174,
+          "timse": 5023.419653860455,
+          "pooled_mae": 42.92820588248044,
+          "n_replaced": 0
+        }
+      }
+    }
+  ],
+  "scorer_version": "lead-timse-6h-v1",
+  "scorer_path": "leaderboard/scorer/competition.py",
+  "hashes_computed": false,
+  "query_truth_used_for_fit_or_replay": false,
+  "gaps": [
+    "Hash request remains unfulfilled due to prior automatic approval rejection; no digests computed.",
+    "Remote fresh-fit git_commit is null and campaign source_commit was dirty. Current shared core/baseline match all three parent run snapshots byte-for-byte, but the untracked source and bytes/mtime records cannot establish immutable historical source/data identity.",
+    "Historical issue-time public availability and independent corroboration of all features are incomplete.",
+    "Repeated leaderboard exposure and feature selection bias limit inference; no independent unseen-data generalization proof."
+  ],
+  "analysis_validation": {
+    "analysis_exit": 0,
+    "point_scores_match_fresh_official_replay": true,
+    "saved_bootstrap_replicates": 2000,
+    "first_replicates_freshly_replayed": 5,
+    "first_replicates_exact_match": true,
+    "full_saved_quantiles_recomputed": true,
+    "paired_reduction_mean": -0.0009143664613438703,
+    "paired_reduction_ci95": [
+      -0.003279121872472368,
+      0.0005582009712404215
+    ],
+    "candidate_gate_passed": false,
+    "auxiliary_gate_passed": true,
+    "score_50pct_gate_passed": false,
+    "scope": "Source review plus five deterministic draw replays and quantile verification; not a second full 2000-draw rerun."
+  },
+  "lifecycle_checks": [
+    {
+      "seed": 42,
+      "cpu_cuda_hidden": true,
+      "threads": 4,
+      "fit_units": 18,
+      "train_exit": 0,
+      "complete_log": true
+    },
+    {
+      "seed": 43,
+      "cpu_cuda_hidden": true,
+      "threads": 4,
+      "fit_units": 18,
+      "train_exit": 0,
+      "complete_log": true
+    },
+    {
+      "seed": 44,
+      "cpu_cuda_hidden": true,
+      "threads": 4,
+      "fit_units": 18,
+      "train_exit": 0,
+      "complete_log": true
+    }
+  ],
+  "recommendation": "Do not adopt or publish age repair as a performance improvement. Retain frozen parent. Before another fit, finish outcome/failure diagnosis and preregister a distinct physically justified hypothesis; do not tune this repair against official scores.",
+  "stop_condition": "All bounded implementation and score checks finished. No further training, external publication, hash computation, or goal/runtime mutations performed.",
+  "parent_source_byte_comparisons": [
+    {
+      "seed": 42,
+      "file": "core.py",
+      "current_shared_matches_parent_snapshot_bytes": true,
+      "snapshot_bytes": 20521,
+      "recorded_training_bytes": 20521,
+      "snapshot_mtime_ns": 1794106582190706794,
+      "recorded_training_mtime_ns": 1794106582190706794
+    },
+    {
+      "seed": 42,
+      "file": "baseline.py",
+      "current_shared_matches_parent_snapshot_bytes": true,
+      "snapshot_bytes": 6702,
+      "recorded_training_bytes": 6702,
+      "snapshot_mtime_ns": 1794106582190761158,
+      "recorded_training_mtime_ns": 1794106582190761158
+    },
+    {
+      "seed": 43,
+      "file": "core.py",
+      "current_shared_matches_parent_snapshot_bytes": true,
+      "snapshot_bytes": 20521,
+      "recorded_training_bytes": 20521,
+      "snapshot_mtime_ns": 1794106582861660003,
+      "recorded_training_mtime_ns": 1794106582861660019
+    },
+    {
+      "seed": 43,
+      "file": "baseline.py",
+      "current_shared_matches_parent_snapshot_bytes": true,
+      "snapshot_bytes": 6702,
+      "recorded_training_bytes": 6702,
+      "snapshot_mtime_ns": 1794106582861774682,
+      "recorded_training_mtime_ns": 1794106582861774620
+    },
+    {
+      "seed": 44,
+      "file": "core.py",
+      "current_shared_matches_parent_snapshot_bytes": true,
+      "snapshot_bytes": 20521,
+      "recorded_training_bytes": 20521,
+      "snapshot_mtime_ns": 1794106583076479911,
+      "recorded_training_mtime_ns": 1794106583076479981
+    },
+    {
+      "seed": 44,
+      "file": "baseline.py",
+      "current_shared_matches_parent_snapshot_bytes": true,
+      "snapshot_bytes": 6702,
+      "recorded_training_bytes": 6702,
+      "snapshot_mtime_ns": 1794106583076517820,
+      "recorded_training_mtime_ns": 1794106583076517882
+    }
+  ]
+}
