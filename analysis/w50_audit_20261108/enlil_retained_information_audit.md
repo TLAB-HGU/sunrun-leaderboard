@@ -121,7 +121,7 @@ No completed feature-preserving arrival-addition result on today's parent was
 established by this bounded lookup. Waiting/unexecuted conditions are not
 negative results.
 
-`research/followup_feature_axes8/strategy.md:37` separately registers
+`research/followup_feature_axes8_20261109/strategy.md:37` separately registers
 issued speed,width,direction,issue-age (not the issued arrival-time question).
 Its2026 archive is present, but its three issued-CME runs remain blocked_source
 until historical body-version evidence is established. Do not duplicate that

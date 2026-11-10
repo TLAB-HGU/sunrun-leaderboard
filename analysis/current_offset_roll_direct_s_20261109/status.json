@@ -1,0 +1,72 @@
+{
+  "status": "complete",
+  "utc": "2026-11-09T23:59:05.704436+00:00",
+  "runs": {
+    "smoke_A_s42": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:16.353796+00:00",
+      "finished_utc": "2026-11-09T15:31:37.389909+00:00"
+    },
+    "smoke_B_s42": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:16.570831+00:00",
+      "finished_utc": "2026-11-09T15:31:37.392420+00:00"
+    },
+    "smoke_C_s42": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:16.788062+00:00",
+      "finished_utc": "2026-11-09T15:31:37.394680+00:00"
+    },
+    "A_s42": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:37.614760+00:00",
+      "finished_utc": "2026-11-09T18:27:20.629246+00:00"
+    },
+    "B_s42": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:37.831693+00:00",
+      "finished_utc": "2026-11-09T18:16:52.920519+00:00"
+    },
+    "C_s42": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:38.051147+00:00",
+      "finished_utc": "2026-11-09T18:29:39.838310+00:00"
+    },
+    "A_s43": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:38.270220+00:00",
+      "finished_utc": "2026-11-09T18:27:27.054205+00:00"
+    },
+    "B_s43": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:38.504243+00:00",
+      "finished_utc": "2026-11-09T18:16:56.432948+00:00"
+    },
+    "C_s43": {
+      "state": "validated",
+      "started_utc": "2026-11-09T15:31:38.744316+00:00",
+      "finished_utc": "2026-11-09T18:31:11.638220+00:00"
+    },
+    "A_s44": {
+      "state": "validated",
+      "started_utc": "2026-11-09T18:16:56.679009+00:00",
+      "finished_utc": "2026-11-09T19:53:29.181251+00:00"
+    },
+    "B_s44": {
+      "state": "validated",
+      "started_utc": "2026-11-09T18:16:56.916043+00:00",
+      "finished_utc": "2026-11-09T19:50:52.463366+00:00"
+    },
+    "C_s44": {
+      "state": "validated",
+      "started_utc": "2026-11-09T18:27:27.318001+00:00",
+      "finished_utc": "2026-11-09T20:01:29.057814+00:00"
+    }
+  },
+  "results_available": true,
+  "controller_log": "/home/t-lab01/sunrun/research/current_offset_roll_direct_s_20261109/controller.log",
+  "controller_exit_code": 0,
+  "analysis_exit_code": 0,
+  "completed_full_runs": 9,
+  "report": "/home/t-lab01/sunrun/analysis/current_offset_roll_direct_s_20261109/report.md"
+}

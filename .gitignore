@@ -19,7 +19,6 @@
 !/research/*/logs/
 /research/*/weights/
 /research/**/__pycache__/
-# research/{leaderboard experiment}/: experiment.py (the only script), README.md,
 
 # Submitted experiment catalog and maintenance code; artifacts remain local.
 !/experiments/
@@ -70,8 +69,6 @@
 /data-v2/**/*.duckdb
 /data-v2/**/*.parquet
 /data-v2/**/*.nc
-/data-v2/**/*.npz
-/data-v2/**/*.npy
 /data-v2/**/*.bak-*
 /data-v2/**/*.done
 /data-v2/**/logs/
@@ -95,3 +92,20 @@
 !/analysis/w50_audit_20261108/*.json
 !/analysis/w50_audit_20261108/*.csv
 
+# Current published offset-roll diagnostic: source and fixed-sample evidence.
+!/analysis/current_offset_roll_20261109/
+/analysis/current_offset_roll_20261109/*
+!/analysis/current_offset_roll_20261109/*.py
+!/analysis/current_offset_roll_20261109/*.md
+!/analysis/current_offset_roll_20261109/*.json
+!/analysis/current_offset_roll_20261109/*.csv
+!/analysis/current_offset_roll_20261109/*.html
+
+!/analysis/current_offset_roll_direct_s_20261109/
+/analysis/current_offset_roll_direct_s_20261109/*
+!/analysis/current_offset_roll_direct_s_20261109/*.md
+!/analysis/current_offset_roll_direct_s_20261109/*.json
+
+# NumPy arrays are never tracked (2026-11-10)
+*.npy
+*.npz

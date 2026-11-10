@@ -8,7 +8,7 @@
   "f3_training_data_end_utc": "2026-06-29T00:00:00Z",
   "config": {
     "data": {
-      "campaign": "offset_roll_negative_combined_20261107",
+      "campaign": "offset_roll_negative_combined",
       "maturity_hours": 144,
       "parent": "e2000fs_calib_offset_roll",
       "source": "rerun_df_ffill_20261103/input/df_ffill_trainy.parquet",

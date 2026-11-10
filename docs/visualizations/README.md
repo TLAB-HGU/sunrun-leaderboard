@@ -125,13 +125,3 @@ E2000FS 전략 비교(XGBoost)와 Kumo 비교의 나머지 리더보드 기록�
 | e2000fs_calib_offset_roll | 20261104T034835263Z | 98.76 | [시각화](e2000fs_calib_offset_roll/) |
 | e2000fs_budget_spectral | 20261104T035518124Z | 99.75 | [시각화](e2000fs_budget_spectral/fresh-df-20261103/) |
 | e2000fs_calib2_detroute | 20261104T040143309Z | 100.26 | [시각화](e2000fs_calib2_detroute/fresh-df-20261103/) |
-
-## 2026-11-05 추가 — Offset Roll q10/q50/q90 분위수 (미제출 ablation)
-
-`e2000fs_calib_offset_roll`에서 calibration을 빼고, smoothed pinball로 q10/q50/q90을 함께 학습해 q50을 점예측으로 쓴 replacement ablation입니다(seed 42/43/44). **리더보드에 제출하지 않았으므로** board의 visualization 열에는 연결되지 않습니다. 로컬 run의 q50 예측을 공식 채점기로 다시 채점해 저장 기록과 1e-9 이내로 같은 것을 확인한 뒤 그렸습니다. GIF는 seed 42이고, 각 프레임에 q10–q90 구간과 대조군 점예측을 함께 그렸습니다.
-
-| 실험 | Total S (s42 / s43 / s44) | 대조군 A − offset | ΔS 3-seed 평균 (95 % CI) | [q10, q90] coverage | 시각화 |
-| --- | ---: | ---: | ---: | ---: | --- |
-| q50_pinball | 105.58 / 105.44 / 105.10 | 99.75 / 100.91 / 101.31 | +4.72 (+0.97, +8.55) | 0.876 | [시각화](offset_roll_quantile_q50_pinball/) |
-
-RMSE와 MAE는 좋아졌지만, median readout과 꼬리 가중 제거 때문에 고속풍 꼬리 오차(TRMSE +16 ~ +21)가 커져 S가 나빠졌습니다. 사전 기준으로 "점 모형이 낫다"입니다.

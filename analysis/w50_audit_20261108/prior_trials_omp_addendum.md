@@ -7,8 +7,8 @@
 | Campaign | Seeds | Actual training-script export | Requested CLI | Evidence grade |
 | --- | --- | --- | --- | --- |
 | w50_age_retrain_20261108 | 42,43,44 | OMP4, OPENBLAS1, MKL1, CUDA empty | CPU, threads4 | B |
-| w50_roundselect | 42,43,44 | OMP4, OPENBLAS1, MKL1, CUDA empty | CPU, threads4 | B |
-| w50_timeweight | 42,43,44 | OMP4, OPENBLAS1, MKL1, CUDA empty | CPU, threads4 | B |
+| w50_roundselect_20261108 | 42,43,44 | OMP4, OPENBLAS1, MKL1, CUDA empty | CPU, threads4 | B |
+| w50_timeweight_20261109 | 42,43,44 | OMP4, OPENBLAS1, MKL1, CUDA empty | CPU, threads4 | B |
 | Frozen D | 42,43,44 | OMP4, OPENBLAS1, MKL1, CUDA empty | CPU, threads4 | B |
 
 Grade A would require a preserved, identity-bound training-process environment or in-process OpenMP ICV capture. Grade B is a preserved actual launch script, matching launch command, and consistent source snapshots. Grade C is requested-thread metadata or a different process's environment and cannot prove effective fitting threads. This audit has grade B training evidence; it does not promote requested nthread4 or a process's total thread count to grade A.
@@ -16,12 +16,12 @@ Grade A would require a preserved, identity-bound training-process environment o
 All treatment exports are at line4 and actual model commands at line5:
 
 - `research/w50_age_retrain_20261108/runs/age_retrain_s42/train.sh:4`, `age_retrain_s43/train.sh:4`, `age_retrain_s44/train.sh:4`.
-- `research/w50_roundselect/runs/roundselect_s42/train.sh:4`, `roundselect_s43/train.sh:4`, `roundselect_s44/train.sh:4`.
-- `research/w50_timeweight/runs/timeweight180_s42/train.sh:4`, `timeweight180_s43/train.sh:4`, `timeweight180_s44/train.sh:4`.
+- `research/w50_roundselect_20261108/runs/roundselect_s42/train.sh:4`, `roundselect_s43/train.sh:4`, `roundselect_s44/train.sh:4`.
+- `research/w50_timeweight_20261109/runs/timeweight180_s42/train.sh:4`, `timeweight180_s43/train.sh:4`, `timeweight180_s44/train.sh:4`.
 
 Each command before shell redirection was compared with its preserved launch.json command; all nine match exactly. Each provenance.json records XGBoost2.1.4. The sidecar JSON preserves current full script contents, paths, sizes and mtime_ns. These are current-content evidence, not proof against all historical modification.
 
-Baseline D s42 is `research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/run.sh:4`. Original golab2 s43/s44 are `/home/yehwan/sunrun-drop035-v650-confirm-20261108/runs/drop035_v650_s43/run.sh:4` and the analogous s44 path. Their contents were captured by the preceding read-only baseline check in `research/w50_output_strategy/runtime-omp-correction-review.log` and are reproduced in this addendum's JSON; no redundant remote poll was run.
+Baseline D s42 is `research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/run.sh:4`. Original golab2 s43/s44 are `/home/yehwan/sunrun-drop035-v650-confirm-20261108/runs/drop035_v650_s43/run.sh:4` and the analogous s44 path. Their contents were captured by the preceding read-only baseline check in `research/w50_output_strategy_20261109/runtime-omp-correction-review.log` and are reproduced in this addendum's JSON; no redundant remote poll was run.
 
 ## Why other OMP1 strings are not evidence of OMP1 training
 

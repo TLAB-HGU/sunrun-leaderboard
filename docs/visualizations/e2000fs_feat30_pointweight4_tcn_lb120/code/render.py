@@ -2,7 +2,7 @@
 
 Reads only stored artifacts; nothing is retrained or re-post-processed:
 - the submitted forecast `predictions.parquet` and the TCN fit reports/loss logs of
-  research/rerun_df_ffill/runs/e2000fs_feat30_pointweight4_tcn_lb120,
+  research/rerun_df_ffill_20261103/runs/e2000fs_feat30_pointweight4_tcn_lb120,
 - the leaderboard record `submission.json` of that run, and
 - `competition-observations.parquet` at the dataset revision the record was scored against.
 
@@ -37,7 +37,7 @@ from competition import LEADS, VERSION, align_predictions, prepare_context, scor
 
 OUT = Path(__file__).resolve().parents[1]
 EXPERIMENT = "e2000fs_feat30_pointweight4_tcn_lb120"
-RUN = ROOT / "research/rerun_df_ffill/runs" / EXPERIMENT
+RUN = ROOT / "research/rerun_df_ffill_20261103/runs" / EXPERIMENT
 DATASET = "tlabtlab/sunrun-lb-store"
 PERIODS = ("F1", "F2", "F3")
 SCOPES = ("total", "f1", "f2", "f3")

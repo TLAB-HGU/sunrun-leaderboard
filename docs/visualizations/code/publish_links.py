@@ -28,7 +28,7 @@ import board  # noqa: E402
 import lbstatus  # noqa: E402
 import submit  # noqa: E402
 
-LOCK = ROOT / "research/rerun_df_ffill/.publish.lock"
+LOCK = ROOT / "research/rerun_df_ffill_20261103/.publish.lock"
 REPO = "https://github.com/TLAB-HGU/sunrun-leaderboard/tree"
 
 

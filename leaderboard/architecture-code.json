@@ -128,6 +128,42 @@
     },
     {
       "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll",
+      "config_sha256": "ebddffa5aff26298fe3d52c96e4ab42c0e5b75a1ee02beb6a108cec26f4d30a1",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/633a0bfaab14e5434ab95fb12402273e4793777e/research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s42/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_abl2_baseline_mean3",
+      "config_sha256": "01e54e90ac6e8e641c057ed5e6792820473f32b18615729447041e5b67e9f532",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/633a0bfaab14e5434ab95fb12402273e4793777e/research/offset_roll_complete_ablation_20261106/runs/baseline_s42/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_abl2_l1_spectral_c03_mean3",
+      "config_sha256": "c63250d141ab436b06107fa6d621fd5f423dbbdda0bc913fdab7f0ca17cecee4",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/633a0bfaab14e5434ab95fb12402273e4793777e/research/offset_roll_ablation2/lb_publish/abl2/l1_spectral_c03_s42/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_equatorial_mean3",
+      "config_sha256": "607d4942afd5a74fc6618eafd45d21b8dd4532dca84cf93c0bd06ee93aad0acc",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/633a0bfaab14e5434ab95fb12402273e4793777e/research/offset_roll_complete_ablation_20261106/runs/drop_ch_ch_t035_equatorial_area_s42/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_drop_t035_v650_mean3",
+      "config_sha256": "94afad410dd929d592efda331660fb394824d3036255392f968abbd52409493c",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/633a0bfaab14e5434ab95fb12402273e4793777e/research/drop035_v650_confirm_20261108/runs/drop035_v650_s42/experiment.py"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_negative_combined_mean3",
+      "config_sha256": "6f110d11cd8b6036c0ae2486d2ffede1cdce3d5ab007cd2a22519ca999a2d01a",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/633a0bfaab14e5434ab95fb12402273e4793777e/research/offset_roll_negative_combined_20261107/runs/combined_negative_s42/experiment.py"
+    },
+    {
+      "member": "seongeun",
       "experiment": "e2000fs_calib_point4_144h",
       "config_sha256": "23c5e8e20f829e50460253954e24a88b903cfc92c6a4d8e025a4933a26730721",
       "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/b930cc556b626a633c58d8fd74680cbf80f27008/research/e2000fs_calib-20261030/tweedie_lane.py#L85-L90"
