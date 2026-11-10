@@ -1,35 +1,18 @@
-"""e2000fs_calib_offset_roll — board row (S 96.31): drop_t035_v650 + v_lag24/48/72, mean of seeds 42/43/44
+"""e2000fs_calib_offset_roll — board row: point4 tail-weighted L2 only (spectral term removed), mean of seeds 42/43/44
 
-The calib_offset_roll recipe without suvi_t035_equatorial_area and strip_v650_dark,
-plus three constant speed lags (v_lag24, v_lag48, v_lag72). The board row of this name is
-the fixed equal-weight mean of seeds 42/43/44 of this recipe; it was published under the
-original name on user request (2026-11-09), replacing the 2026-11-04 rerun of the original
-recipe (S 98.76). Source runs: research/lag24_48_72_confirm_20261109/runs/lag24_48_72_s4{2,3,4}.
-
-This one file runs the whole experiment, from the raw table to the board forecast:
-  1. data   data-v2/input/df.parquet -> causal per-lead feature forward fill over the
-            train+query union -> training labels forward filled on target_time
-            (query truth is never changed and never read before scoring)
-  2. train  for each seed (42, 43, 44) and period (F1, F2, F3): a prior model on the
-            reference window (origins + 144 h <= last 3 months) and a full model on all
-            training origins; each is 3 lead blocks of 24 x 900 XGBoost rounds
-  3. offset frozen per-lead offset = 0.25 x mean residual of the prior model over the
-            last 336 calibration origins (training data only)
-  4. infer  full-model query forecast, clip [1, 3000], + offset, clip [1, 3000]
-  5. mean3  fixed equal-weight mean of the three seed forecasts (no fitted weights)
-  6. score  official scorer leaderboard/scorer/competition.py; labels are used only here
-
-Outputs (in this folder unless --out is given):
-  weights/F{1,2,3}/s{seed}.npz   one checkpoint per seed x period: prior_b0..2 and
-                                 full_b0..2 boosters (UBJSON bytes) + frozen calibration
-  results/s{seed}/               predictions.parquet, score.json
-  results/mean3/                 predictions.parquet, score.json (the board forecast)
-  logs/*.jsonl                   every step, one JSON object per line
+The calib_offset_roll recipe (suvi_t035_equatorial_area and strip_v650_dark dropped, v_lag24/48/72 added) trained with
+the tail-weighted squared error only: targets >= 550 km/s weigh 4, normalised per lead; gradient = w * error,
+hessian = w. The 0.1 x FFT pseudo-Huber spectral term of the earlier row (S 96.311, 2026-11-09) was removed on user
+request (2026-11-10). Prior model + frozen per-lead offset (0.25 x mean residual of the last 336 calibration origins,
+training data only), clip [1, 3000], three 24-lead XGBoost blocks x 900 rounds. Source runs:
+research/e2000fs_calib_offset_roll_no_spectral_20261110/runs/no_spectral_s4{2,3,4}.
 
 Usage (GBM: CPU only):
-  CUDA_VISIBLE_DEVICES= python experiment.py --threads 4
-  CUDA_VISIBLE_DEVICES= python experiment.py --predict-only --out DIR   # inference from weights/
-  CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR          # 2-round wiring check
+  CUDA_VISIBLE_DEVICES= python experiment.py --threads 4                     # all seeds, F1/F2/F3, mean3, score
+  CUDA_VISIBLE_DEVICES= python experiment.py --predict-only --out DIR        # inference from weights/
+  CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR               # 2-round wiring check
+Outputs: weights/F{1,2,3}/s{seed}.npz, F{n}_metadata.json, results/s{seed}/ and results/mean3/
+(predictions.parquet, score.json), logs/*.jsonl.
 """
 from __future__ import annotations
 
@@ -52,7 +35,7 @@ import pandas as pd
 import xgboost as xgb
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = next(path for path in HERE.parents if (path / 'leaderboard' / 'scorer').is_dir())
 EXPERIMENT = 'e2000fs_calib_offset_roll'
 SEEDS = (42, 43, 44)
 H = 72
@@ -77,7 +60,6 @@ PARAMS = {'max_depth': 3, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_by
 ROUNDS = 900
 BLOCK = 24
 TAIL_THRESHOLD, TAIL_WEIGHT = 550., 4.
-SPECTRAL_COEFFICIENT = .1
 ALPHA = .25
 OFFSET_WINDOW = 336
 PURGE_HOURS = 144
@@ -98,6 +80,7 @@ class Logs:
         line = json.dumps(record, allow_nan=False, default=str)
         with (self.folder / f'{stream}.jsonl').open('a') as handle:
             handle.write(line + '\n')
+        print(line, flush=True)
         print(line, flush=True)
 
 
@@ -250,8 +233,8 @@ def design(grid, start, size):
 
 
 def make_objective(target):
-    """Tail-weighted squared error (targets >= 550 km/s weigh 4, normalised per lead) plus a Huber-like
-    spectral term on the 24-lead error (Hessian = weight + coefficient)."""
+    """Tail-weighted squared error: targets >= 550 km/s weigh 4, normalised per lead; gradient = w * error,
+    hessian = w (no spectral term)."""
     if not np.isfinite(target).all():
         raise ValueError('Training targets must be finite')
     observed = np.isfinite(target)
@@ -261,12 +244,7 @@ def make_objective(target):
     def objective(prediction, matrix):
         prediction = np.asarray(prediction).reshape(target.shape)
         error = np.where(observed, prediction - np.nan_to_num(target), 0.)
-        z = np.fft.fft(error, axis=1, norm='ortho')
-        rho = 1 / np.sqrt(1 + abs(z) ** 2 / 50. ** 2)
-        gradient = (error * weights + SPECTRAL_COEFFICIENT * np.fft.ifft(
-            z * rho, axis=1, norm='ortho').real) * observed
-        hessian = (weights + SPECTRAL_COEFFICIENT) * observed
-        return gradient.astype(np.float32), hessian.astype(np.float32)
+        return (error * weights * observed).astype(np.float32), (weights * observed).astype(np.float32)
     return objective
 
 
@@ -298,7 +276,7 @@ def fit_predict(train, query, target, seed, threads, rounds, logs, stream, perio
             raise ValueError('Saved booster did not exactly reproduce its forecasts/rounds')
         boosters.append(buffer)
         progress['unit'] += 1
-        logs(stream, 'fit', period=period, stage=stage, component='spectral', block=block,
+        logs(stream, 'fit', period=period, stage=stage, component='point4', block=block,
              horizon=start + BLOCK, rounds=rounds, train_rows=len(x), query_rows=len(xq),
              expanded_feature_count=x.shape[1], replay_max_abs_error=replay_error,
              fit_seconds=round(time.perf_counter() - began, 3), **progress)
@@ -398,6 +376,14 @@ def train_period(table, period, seed, args, logs):
     save_checkpoint(checkpoint, prior_boosters, full_boosters, state)
     prediction = apply_offset(raw, offset)
     component = component_values(raw)
+    metadata = dict(experiment=EXPERIMENT, period=period, seed=seed, smoke=args.smoke, rounds=rounds, block=BLOCK,
+                    objective='point4 L2 only (spectral term removed)', parameters=dict(PARAMS, seed=seed),
+                    feature_count=len(CONSTANT) + len(VARYING), constant_features=CONSTANT,
+                    varying_features=VARYING, training_cutoff=CUTOFFS[period], maturity_hours=PURGE_HOURS,
+                    train_origins=len(full), train_start=str(train['origins'][full].min()),
+                    train_end=str(train['origins'][full].max()), query_origins=len(query['origins']),
+                    frozen_calibration=state)
+    (args.out / f'{period}_metadata.json').write_text(json.dumps(metadata, indent=2, allow_nan=False) + '\n')
     logs(stream, 'period_complete', period=period, seed=seed, checkpoint=str(checkpoint),
          frozen_calibration=state, inference_seconds_per_fold=seconds / len(prediction),
          clipping=dict(component_cells=int(np.count_nonzero(raw != component)),
@@ -505,7 +491,7 @@ def main():
                        xgboost=xgb.__version__),
          constant_features=CONSTANT, varying_features=VARYING,
          feature_count=len(CONSTANT) + len(VARYING), parameters=PARAMS, rounds=ROUNDS, block=BLOCK,
-         tail=dict(threshold=TAIL_THRESHOLD, weight=TAIL_WEIGHT), spectral_coefficient=SPECTRAL_COEFFICIENT,
+         tail=dict(threshold=TAIL_THRESHOLD, weight=TAIL_WEIGHT), objective='point4 L2 only (spectral term removed)',
          alpha=ALPHA, offset_window=OFFSET_WINDOW, cutoffs=CUTOFFS, seeds=args.seeds)
     table = load_table(args.data, logs)
     observations = None if args.smoke else observations_path(args.observations)

@@ -1,33 +1,17 @@
-"""e2000fs_no_calib_offset_roll — e2000fs_calib_offset_roll without the frozen-offset calibration
+"""e2000fs_no_calib_offset_roll — board row: calib_offset_roll without calibration, point4 L2 only (spectral removed)
 
-Same recipe as the board row e2000fs_calib_offset_roll (same feature list,
-tail weight 4, spectral coefficient 0.1, depth 3, lr 0.03, 900 rounds, three 24-lead
-XGBoost blocks, feature ffill, training-label ffill) with ONE change: the calibration is
-removed. There is no prior model, no calibration quarter and no per-lead offset; the forecast
-is the full model's query forecast clipped to [1, 3000]. The full model, its seed and its
-training rows are the board row's, so only the offset differs from the parent.
-
-This one file runs the whole experiment, from the raw table to the board forecast:
-  1. data   data-v2/input/df.parquet -> causal per-lead feature forward fill over the
-            train+query union -> training labels forward filled on target_time
-            (query truth is never changed and never read before scoring)
-  2. train  for each seed (42, 43, 44) and period (F1, F2, F3): a full model on all training
-            origins (3 lead blocks of 24 x 900 XGBoost rounds)
-  3. infer  full-model query forecast, clip [1, 3000]
-  4. mean3  fixed equal-weight mean of the three seed forecasts (no fitted weights)
-  5. score  official scorer leaderboard/scorer/competition.py; labels are used only here
-
-Outputs (in this folder unless --out is given):
-  weights/F{1,2,3}/s{seed}.npz   one checkpoint per seed x period: full_b0..2 boosters (UBJSON bytes)
-  F{1,2,3}_metadata.json         per-period completion record (progress display)
-  results/s{seed}/               predictions.parquet, score.json
-  results/mean3/                 predictions.parquet, score.json (the board forecast)
-  logs/*.jsonl                   every step, one JSON object per line
+The e2000fs_calib_offset_roll features and boosting setup with no prior model and no frozen offset (the forecast is
+the full model's query forecast clipped to [1, 3000]), trained with the tail-weighted squared error only: targets
+>= 550 km/s weigh 4, normalised per lead; gradient = w * error, hessian = w. The 0.1 x FFT pseudo-Huber spectral
+term of the earlier row (S 97.254, 2026-11-10) was removed on user request (2026-11-10). Source runs:
+research/e2000fs_no_calib_offset_roll_no_spectral_20261110/runs/nocalib_no_spectral_s4{2,3,4}.
 
 Usage (GBM: CPU only):
-  CUDA_VISIBLE_DEVICES= python experiment.py --threads 4
-  CUDA_VISIBLE_DEVICES= python experiment.py --predict-only --out DIR   # inference from weights/
-  CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR          # 2-round wiring check
+  CUDA_VISIBLE_DEVICES= python experiment.py --threads 4                     # all seeds, F1/F2/F3, mean3, score
+  CUDA_VISIBLE_DEVICES= python experiment.py --predict-only --out DIR        # inference from weights/
+  CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR               # 2-round wiring check
+Outputs: weights/F{1,2,3}/s{seed}.npz, F{n}_metadata.json, results/s{seed}/ and results/mean3/
+(predictions.parquet, score.json), logs/*.jsonl.
 """
 from __future__ import annotations
 
@@ -50,7 +34,7 @@ import pandas as pd
 import xgboost as xgb
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = next(path for path in HERE.parents if (path / 'leaderboard' / 'scorer').is_dir())
 EXPERIMENT = 'e2000fs_no_calib_offset_roll'
 SEEDS = (42, 43, 44)
 H = 72
@@ -75,7 +59,6 @@ PARAMS = {'max_depth': 3, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_by
 ROUNDS = 900
 BLOCK = 24
 TAIL_THRESHOLD, TAIL_WEIGHT = 550., 4.
-SPECTRAL_COEFFICIENT = .1
 PURGE_HOURS = 144
 KEYS = ['origin_last_input_utc', 'horizon_hours']
 
@@ -93,6 +76,7 @@ class Logs:
         line = json.dumps(record, allow_nan=False, default=str)
         with (self.folder / f'{stream}.jsonl').open('a') as handle:
             handle.write(line + '\n')
+        print(line, flush=True)
         print(line, flush=True)
 
 
@@ -232,8 +216,8 @@ def design(grid, start, size):
 
 
 def make_objective(target):
-    """Tail-weighted squared error (targets >= 550 km/s weigh 4, normalised per lead) plus a Huber-like
-    spectral term on the 24-lead error (Hessian = weight + coefficient)."""
+    """Tail-weighted squared error: targets >= 550 km/s weigh 4, normalised per lead; gradient = w * error,
+    hessian = w (no spectral term)."""
     if not np.isfinite(target).all():
         raise ValueError('Training targets must be finite')
     observed = np.isfinite(target)
@@ -243,12 +227,7 @@ def make_objective(target):
     def objective(prediction, matrix):
         prediction = np.asarray(prediction).reshape(target.shape)
         error = np.where(observed, prediction - np.nan_to_num(target), 0.)
-        z = np.fft.fft(error, axis=1, norm='ortho')
-        rho = 1 / np.sqrt(1 + abs(z) ** 2 / 50. ** 2)
-        gradient = (error * weights + SPECTRAL_COEFFICIENT * np.fft.ifft(
-            z * rho, axis=1, norm='ortho').real) * observed
-        hessian = (weights + SPECTRAL_COEFFICIENT) * observed
-        return gradient.astype(np.float32), hessian.astype(np.float32)
+        return (error * weights * observed).astype(np.float32), (weights * observed).astype(np.float32)
     return objective
 
 
@@ -280,7 +259,7 @@ def fit_predict(train, query, target, seed, threads, rounds, logs, stream, perio
             raise ValueError('Saved booster did not exactly reproduce its forecasts/rounds')
         boosters.append(buffer)
         progress['unit'] += 1
-        logs(stream, 'fit', period=period, stage=stage, component='spectral', block=block,
+        logs(stream, 'fit', period=period, stage=stage, component='point4', block=block,
              horizon=start + BLOCK, rounds=rounds, train_rows=len(x), query_rows=len(xq),
              expanded_feature_count=x.shape[1], replay_max_abs_error=replay_error,
              fit_seconds=round(time.perf_counter() - began, 3), **progress)
@@ -449,7 +428,7 @@ def main():
                        xgboost=xgb.__version__),
          constant_features=CONSTANT, varying_features=VARYING,
          feature_count=len(CONSTANT) + len(VARYING), parameters=PARAMS, rounds=ROUNDS, block=BLOCK,
-         tail=dict(threshold=TAIL_THRESHOLD, weight=TAIL_WEIGHT), spectral_coefficient=SPECTRAL_COEFFICIENT,
+         tail=dict(threshold=TAIL_THRESHOLD, weight=TAIL_WEIGHT), objective='point4 L2 only (spectral term removed)',
          calibration='none', cutoffs=CUTOFFS, seeds=args.seeds)
     table = load_table(args.data, logs)
     observations = None if args.smoke else observations_path(args.observations)
