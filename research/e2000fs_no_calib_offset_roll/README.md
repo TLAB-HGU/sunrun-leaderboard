@@ -1,7 +1,7 @@
 # e2000fs_no_calib_offset_roll
 
 - 작성자: `seongeun`
-- 리더보드 제출: 아직 안 함 (3 seed 등가중 평균, mean3)
+- 리더보드 제출: 20261110T054617020Z (3 seed 등가중 평균, mean3)
 
 `e2000fs_calib_offset_roll` 레시피에서 **캘리브레이션(prior 모델 + frozen per-lead offset)만 제거**한 모델의 seed 42/43/44 평균입니다. 예측은 full 모델의 query 예측을 [1, 3000]으로 clip한 값입니다. 특징, 손실(tail weight 4, spectral 0.1), 하이퍼파라미터, seed, 학습 cutoff는 기준선과 같습니다.
 
