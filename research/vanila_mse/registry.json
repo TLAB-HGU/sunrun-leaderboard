@@ -1,0 +1,29 @@
+{
+  "mse_s42": {
+    "experiment": "mse_s42",
+    "name": "mse_s42",
+    "seed": 42,
+    "family": "vanila_mse",
+    "baseline": "A900_point4_spectral",
+    "execution_host": "local",
+    "threads": 6
+  },
+  "mse_s43": {
+    "experiment": "mse_s43",
+    "name": "mse_s43",
+    "seed": 43,
+    "family": "vanila_mse",
+    "baseline": "A900_point4_spectral",
+    "execution_host": "local",
+    "threads": 6
+  },
+  "mse_s44": {
+    "experiment": "mse_s44",
+    "name": "mse_s44",
+    "seed": 44,
+    "family": "vanila_mse",
+    "baseline": "A900_point4_spectral",
+    "execution_host": "local",
+    "threads": 6
+  }
+}

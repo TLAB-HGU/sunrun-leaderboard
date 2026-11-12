@@ -1,0 +1,15 @@
+{
+  "campaign": "vanila_mse",
+  "arms": [
+    "pure_mse"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "control": "A900 point4+spectral; 31 source/215 expanded",
+  "publication": "explicit_user_request",
+  "threads_per_run": 6,
+  "max_concurrent_runs": 3
+}
