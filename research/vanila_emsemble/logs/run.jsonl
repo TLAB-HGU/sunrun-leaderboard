@@ -1,0 +1,6 @@
+{"ts": "2026-11-12T13:49:33.171848+00:00", "experiment": "vanila_emsemble", "event": "assembly_start", "period": "F1", "unit": 0, "units": 4, "device": "cpu", "threads": 2}
+{"ts": "2026-11-12T13:49:43.102348+00:00", "experiment": "vanila_emsemble", "event": "score_complete", "period": "F3", "component": "s42", "unit": 1, "units": 4, "total_s": 97.75620668889741}
+{"ts": "2026-11-12T13:49:43.208212+00:00", "experiment": "vanila_emsemble", "event": "score_complete", "period": "F3", "component": "s43", "unit": 2, "units": 4, "total_s": 97.56333527066063}
+{"ts": "2026-11-12T13:49:43.344809+00:00", "experiment": "vanila_emsemble", "event": "score_complete", "period": "F3", "component": "s44", "unit": 3, "units": 4, "total_s": 97.77357442227205}
+{"ts": "2026-11-12T13:49:43.490628+00:00", "experiment": "vanila_emsemble", "event": "score_complete", "period": "F3", "component": "mean3", "unit": 4, "units": 4, "total_s": 97.60224736930392}
+{"ts": "2026-11-12T13:49:43.503534+00:00", "experiment": "vanila_emsemble", "event": "complete", "period": "F3", "unit": 4, "units": 4, "status": "passed", "fixed_equal_weights": true, "prediction_rows": 454680, "seed_mean_s": 97.69770546061004, "seed_sd_s": 0.11669156139550627, "seed_worst_s": 97.77357442227205, "mean3_total_s": 97.60224736930392, "source_provenance_recorded": true, "official_replacements": 0}
