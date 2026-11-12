@@ -63,7 +63,7 @@
     - 앞으로 진행하는 모든 실험은 로컬·golab2 모두 `sunrun` TUI(`tools/sunrun_monitor.py`, power TUI와 같은 화면 양식)에 자동으로 표시되는 레이아웃으로 띄울 것. 표시되지 않으면 TUI를 실험별로 고치지 말고 실험 쪽 레이아웃을 맞출 것.
     - 실행 프로세스는 python으로 `experiment.py`를 실행하거나 `--experiment {이름}`·`--out {출력 폴더}` 인자를 주고, 장치는 `--device cuda|cpu`, `--threads N`으로 명시한다. GBM/CPU 계열은 `CUDA_VISIBLE_DEVICES=''`로 띄운다(장치 규칙 검사).
     - 출력 폴더는 캠페인 아래 `runs/{이름}/`에 두고 `launch.json`(`family`, `tmux_session`, `started_utc`, `host`/`training_host`)을 실행 전에 기록한다.
-    - 캠페인은 로컬 `research/{캠페인}/registry.json`(+`runtime.json`, `manifest.json`) 또는 golab2 `~/sunrun-{캠페인}/assignment.json`(+`scheduler-state.json`) 구조를 따르고, 서비스 스크립트 이름에 controller/scheduler/collect/publish/monitor 중 하나를 넣는다(대기열·서비스 표시).
+    - 캠페인은 `research/` 밖에 둔다(2026-11-12): 로컬·golab2 모두 `~/sunrun-{캠페인}/assignment.json`(+`scheduler-state.json`) 구조를 따르고, 서비스 스크립트 이름에 controller/scheduler/collect/publish/monitor 중 하나를 넣는다(대기열·서비스 표시).
     - 진행률이 보이도록 `train.log`에 JSON 한 줄 레코드(`period`, `horizon`/`block`/`head`)를 남기고, 기간별 산출물 `F{1,2,3}_predictions.npz` 또는 `F{n}_metadata.json`을 기록한다. 종료 시 `train.exit`(종료 코드), 게시 시 `submission.json`(`competition.total.s`)을 남긴다.
     - 기간 안의 학습 단위가 여러 개면 레코드에 `unit`(완료 수)·`units`(전체 수)를 함께 남긴다(`stage`/`component`/`block`은 표시용).
     - 제출 후보가 아닌 실험(대조군·게이트 미통과)은 `complete.json`에 `"publish": "not_required"`와 `publish_reason`을 기록한다. 그래야 "게시 대기"로 잡히지 않는다.
@@ -73,6 +73,12 @@
 ---
 
 ### 4. 구현 구조
+- **보드 행 전용 레이아웃 (2026-11-12 사용자 지시):** `research/`에는 리더보드에 보이는 행(진행·대기 행 포함)의 폴더만 둔다.
+    - 폴더 이름은 보드에 표시되는 실험 이름과 같게 한다(날짜 접미사·`_mean3` 같은 숨김 접미사를 붙이지 않는다). 제출 ID는 `experiment.py`의 `EXPERIMENT`에 둔다.
+    - 폴더 구성은 `experiment.py`(유일한 `.py`, end-to-end), `README.md`, `logs/`, `results/`, `visualization/`, `weights/`(로컬 전용)뿐이며 그 아래 하위 폴더를 만들지 않는다(repo 기준 깊이 3).
+    - 파일 이름: `results/{s42,s43,s44,mean3}_predictions.parquet`·`_score.json`, `weights/F{n}_s{seed}.npz`, `logs/*.jsonl`과 영수증 json, `visualization/`은 `tools/submission_viz.py` 출력.
+    - controller·publish·테스트 스크립트, `runs/`, `registry.json` 같은 캠페인 실행 파일과 대조군·게이트 미통과 run은 `research/` 밖(`~/sunrun-{캠페인}/`)에 두고, 게시가 끝나면 최종 산출물만 위 레이아웃으로 옮긴다.
+    - 보드 행과 무관한 1회성 스크립트·분석·캐시는 repo에 남기지 않는다.
 - 스크립트 구성:
     - `research/{실험}/`의 단일 `실험.py`에 데이터 로더, 특징 생성, 학습, 검증, 예측 조립 및 아티팩트 기록을 모두 포함할 것.
     - **단일 아키텍처 원칙 (2026-11-05 사용자 지시):** 실험별 `experiment.py`(`runs/{이름}/experiment.py` 포함)에는 그 실험 아키텍처가 실제로 실행하는 코드만 남긴다.
@@ -86,8 +92,8 @@
     - 누적 실험에서는 이전에 채택된 특징 그룹이 실제 입력 행렬에 유지되고 있는지 코드와 특징 목록(Feature list)으로 검증할 것.
     - 특징 개수, 특징 이름, 학습 및 검증 데이터 범위를 아티팩트에 명시적으로 기록할 것.
 
-- 전략 문서 (`strategy.md`):
-    - `research/{실험}/strategy.md`에 참고 문헌, 가설, 기준선 실험 ID, 변경 특징 목록, 유지 특징 목록, 예상 개선 메커니즘, 검증 기준을 실험 실행 전에 작성할 것.
+- 전략 문서 (`README.md`의 전략 섹션, 2026-11-12부터 별도 `strategy.md`를 두지 않음):
+    - `research/{실험}/README.md`에 참고 문헌, 가설, 기준선 실험 ID, 변경 특징 목록, 유지 특징 목록, 예상 개선 메커니즘, 검증 기준을 실험 실행 전에 작성할 것.
     - 실험 종료 후 실제 변경 diff, 실행 상태, 최종 결과, 실패 원인 분석 및 다음 실험 채택 여부를 누적 기록할 것.
 
 ---

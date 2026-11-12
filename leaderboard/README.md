@@ -18,17 +18,6 @@ The private dataset freezes `competition-observations.parquet` and `competition-
 
 Images are published under `leaderboard/assets/metrics/` on GitHub main via a small commit based on the remote head; the board uses commit-pinned raw URLs. Future live submissions need GitHub write credentials (`GH_TOKEN`, `GITHUB_TOKEN`, or a git credential helper) as well as HF credentials. Dry runs upload nothing.
 
-To preview and migrate stored submissions:
-
-```bash
-/home/t-lab01/sunrun/.venv/bin/python leaderboard/lb-maint/migrate_competition.py --out data-v2/metric/leaderboard-v1
-# After reviewing preview.html, apply scores, GitHub images and the HF page:
-/home/t-lab01/sunrun/.venv/bin/python leaderboard/lb-maint/migrate_competition.py --out data-v2/metric/leaderboard-v1 --apply
-/home/t-lab01/sunrun/.venv/bin/python leaderboard/lbstatus.py sync
-```
-
-The migration backs up source results and forecasts at a pinned dataset revision, preserves old metric fields, and commits new scores under a dataset-head lease. Results without stored forecasts remain visible as unscored. Missing forecast hours within available submissions receive persistence, including historical missing intervals.
-
 **Training cutoffs:** predictions for a period must come from a model trained (and tuned) only on data before
 **period start − 72h**: 2025-12-29, 2026-03-29 and 2026-06-29 00:00 UTC for F1, F2 and F3. Declare each in `meta.yaml`
 (`f1_/f2_/f3_training_data_end_utc`, ≤ that time); `submit.py` rejects later values. Like `no_future_leakage`, this is an honour statement.

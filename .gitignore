@@ -9,47 +9,33 @@
 !/docs/
 !/research
 /research/*
-# research/{leaderboard experiment}/: experiment.py (the only script), README.md,
-# results/ (predictions and scores) and logs/ (*.jsonl) are tracked; weights/ stays local.
+# research/{board name}/ (layout of 2026-11-12): experiment.py (the only script), README.md and the flat
+# folders results/, logs/ and visualization/ are tracked; weights/ stays local. No deeper folders.
 !/research/*/
 /research/*/*
 !/research/*/experiment.py
 !/research/*/README.md
 !/research/*/results/
 !/research/*/logs/
+!/research/*/visualization/
 /research/*/weights/
 /research/**/__pycache__/
 
-# Submitted experiment catalog and maintenance code; artifacts remain local.
-!/experiments/
-/experiments/**
-!/experiments/*/
-!/experiments/README.md
-!/experiments/AGENTS.md
-!/experiments/*/README.md
-!/experiments/*/manifest.json
-/experiments/_migration/*
-!/experiments/_tools/*.py
-!/experiments/_migration/CLEANUP_PLAN.md
-!/experiments/_migration/REPORT.md
-/experiments/_shared/
+# Shared visualization tools and the replay scripts submit.py requires on GitHub.
+!/tools/
+/tools/*
+!/tools/submission_viz.py
+!/tools/publish_links.py
+!/scripts/
 
 # leaderboard/ is part of this repository (subtree merge bfd7c9cc2, 2026-10-30;
 # history archived at store/sunrun-single-repo-20261030.bundle). Code, tests,
 # release scripts and receipts are tracked; published-site snapshots, release
 # artifacts, experiment outputs, tool datasets and caches stay local.
 !/leaderboard/
-/leaderboard/experiments/
-/leaderboard/.gjc/
-/leaderboard/**/docs/
-/leaderboard/**/releases/
 /leaderboard/**/__pycache__/
 /leaderboard/**/.pytest_cache/
-/leaderboard/**/.venv
-/leaderboard/**/.venv-fusion
-/leaderboard/lb-maint/data/*.parquet
-/leaderboard/lb-maint/data/*.csv
-/leaderboard/lb-maint/data/raw/
+/leaderboard/.publish.lock
 
 # data-v2 source, configs and manifests are tracked; every data store, download
 # tree and cache stays local (all databases live under data-v2/, user
@@ -81,30 +67,6 @@
 /metric/*
 !/metric/metric.ipynb
 !/onboarding.md
-
-# Audit-first S50 study: preserve reviewable source and compact evidence.
-!/analysis/
-/analysis/*
-!/analysis/w50_audit_20261108/
-/analysis/w50_audit_20261108/*
-!/analysis/w50_audit_20261108/*.py
-!/analysis/w50_audit_20261108/*.md
-!/analysis/w50_audit_20261108/*.json
-!/analysis/w50_audit_20261108/*.csv
-
-# Current published offset-roll diagnostic: source and fixed-sample evidence.
-!/analysis/current_offset_roll_20261109/
-/analysis/current_offset_roll_20261109/*
-!/analysis/current_offset_roll_20261109/*.py
-!/analysis/current_offset_roll_20261109/*.md
-!/analysis/current_offset_roll_20261109/*.json
-!/analysis/current_offset_roll_20261109/*.csv
-!/analysis/current_offset_roll_20261109/*.html
-
-!/analysis/current_offset_roll_direct_s_20261109/
-/analysis/current_offset_roll_direct_s_20261109/*
-!/analysis/current_offset_roll_direct_s_20261109/*.md
-!/analysis/current_offset_roll_direct_s_20261109/*.json
 
 # NumPy arrays are never tracked (2026-11-10)
 *.npy
