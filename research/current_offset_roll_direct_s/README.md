@@ -1,7 +1,7 @@
 # current_offset_roll_direct_s
 
 - 작성자: `seongeun`
-- 2026-11-12 사용자 요청에 따른 게시 준비. 원 실험은 `current_offset_roll_direct_s_20261109`의 B군이다.
+- 2026-11-12 사용자 요청에 따라 `current_offset_roll_direct_s`로 리더보드 게시 완료. 원 실험은 `current_offset_roll_direct_s_20261109`의 B군이다.
 - seed 42/43/44의 고정 등가중 평균이며, 가중치를 적합하거나 최고 seed를 선택하지 않는다.
 
 ## 모델과 손실함수

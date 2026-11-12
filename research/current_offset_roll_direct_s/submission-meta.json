@@ -1,0 +1,100 @@
+{
+  "team_member": "seongeun",
+  "experiment": "current_offset_roll_direct_s",
+  "description": "Direct-S-only replacement ablation B from current_offset_roll_direct_s_20261109. Fresh 900-round models, no tail4 MSE term and no spectral term; fixed equal mean of seeds 42/43/44, existing train-only prior offset retained. Published on explicit user request; not an adopted performance improvement.",
+  "no_future_leakage": true,
+  "config": {
+    "data": {
+      "source": "data-v2/input/df.parquet",
+      "feature_policy": "causal feature ffill; training labels ffill on target time",
+      "features": {
+        "constant": [
+          "v_lag0",
+          "ace_speed_kms_last",
+          "ace_density_cm3_last",
+          "ace_density_cm3_m6",
+          "ace_temperature_k_last",
+          "ace_temperature_k_m24",
+          "ace_bt_nt_last",
+          "ace_bt_nt_m6",
+          "ace_by_gsm_nt_m24",
+          "ace_epam_p_channel3_last",
+          "ace_sis_gt10_flux_last",
+          "suvi_t035_top2_area",
+          "suvi_t035_meridian15_equatorial_area",
+          "suvi_t035_meridian30_equatorial_area",
+          "suvi_t055_meridian15_area",
+          "suvi_t055_meridian30_equatorial_area",
+          "suvi_t055_equatorial_area",
+          "img_age_h",
+          "enlil_n_pending",
+          "enlil_kp",
+          "v_lag24",
+          "v_lag48",
+          "v_lag72"
+        ],
+        "varying": [
+          "rec26",
+          "rec27",
+          "rec28",
+          "rec_mean",
+          "strip_v350_logmed",
+          "strip_v450_logmed",
+          "strip_v550_dark",
+          "strip_v750_logmed"
+        ]
+      },
+      "expanded_feature_count": 215,
+      "training_maturity_hours": 144,
+      "periods": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    "hyperparameters": {
+      "objective": "direct_s_only",
+      "tail_weighted_mse": false,
+      "spectral": false,
+      "strategy": "3 blocks x 24 leads, multi_output_tree",
+      "parameters": {
+        "max_depth": 3,
+        "learning_rate": 0.03,
+        "subsample": 0.8,
+        "colsample_bytree": 0.7,
+        "min_child_weight": 20,
+        "reg_lambda": 5,
+        "objective": "reg:squarederror",
+        "tree_method": "hist",
+        "device": "cpu",
+        "multi_strategy": "multi_output_tree",
+        "eval_metric": "rmse",
+        "verbosity": 0,
+        "nthread": 4
+      },
+      "rounds": 900,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "seed_aggregation": "fixed_equal_mean",
+      "objective_scale": "fixed per block at float32 initial mean prediction; coefficients refreshed every round",
+      "offset": {
+        "scope": "per_lead",
+        "alpha": 0.25,
+        "window": 336,
+        "source": "prior residuals on pre-cutoff calibration training rows"
+      },
+      "clip": [
+        1,
+        3000
+      ]
+    }
+  },
+  "inference_seconds_per_fold": 7.623803055412353e-05,
+  "architecture_url": "https://github.com/TLAB-HGU/sunrun-leaderboard/blob/5d0cf6ca93370df8a31edf8341290e3b43d746c7/research/current_offset_roll_direct_s/experiment.py",
+  "f1_training_data_end_utc": "2025-12-29T00:00:00Z",
+  "f2_training_data_end_utc": "2026-03-29T00:00:00Z",
+  "f3_training_data_end_utc": "2026-06-29T00:00:00Z"
+}
