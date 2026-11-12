@@ -1,0 +1,37 @@
+{"period": "F1", "stage": "prior", "unit": 0, "units": 6}
+{"period": "F1", "stage": "prior", "block": 0, "component": "scap", "event": "block_started", "unit": 0, "units": 6}
+{"period": "F1", "stage": "prior", "block": 0, "horizon": 24, "component": "scap", "fit_seconds": 73.13849560800008, "unit": 1, "units": 6}
+{"period": "F1", "stage": "prior", "block": 1, "component": "scap", "event": "block_started", "unit": 1, "units": 6}
+{"period": "F1", "stage": "prior", "block": 1, "horizon": 48, "component": "scap", "fit_seconds": 77.85538820794318, "unit": 2, "units": 6}
+{"period": "F1", "stage": "prior", "block": 2, "component": "scap", "event": "block_started", "unit": 2, "units": 6}
+{"period": "F1", "stage": "prior", "block": 2, "horizon": 72, "component": "scap", "fit_seconds": 79.99883945204783, "unit": 3, "units": 6}
+{"period": "F1", "stage": "full", "block": 0, "component": "scap", "event": "block_started", "unit": 3, "units": 6}
+{"period": "F1", "stage": "full", "block": 0, "horizon": 24, "component": "scap", "fit_seconds": 79.71825739694759, "unit": 4, "units": 6}
+{"period": "F1", "stage": "full", "block": 1, "component": "scap", "event": "block_started", "unit": 4, "units": 6}
+{"period": "F1", "stage": "full", "block": 1, "horizon": 48, "component": "scap", "fit_seconds": 79.19089559302665, "unit": 5, "units": 6}
+{"period": "F1", "stage": "full", "block": 2, "component": "scap", "event": "block_started", "unit": 5, "units": 6}
+{"period": "F1", "stage": "full", "block": 2, "horizon": 72, "component": "scap", "fit_seconds": 81.79115737194661, "unit": 6, "units": 6}
+{"period": "F2", "stage": "prior", "block": 0, "component": "scap", "event": "block_started", "unit": 0, "units": 6}
+{"period": "F2", "stage": "prior", "block": 0, "horizon": 24, "component": "scap", "fit_seconds": 77.0696615469642, "unit": 1, "units": 6}
+{"period": "F2", "stage": "prior", "block": 1, "component": "scap", "event": "block_started", "unit": 1, "units": 6}
+{"period": "F2", "stage": "prior", "block": 1, "horizon": 48, "component": "scap", "fit_seconds": 78.99290097004268, "unit": 2, "units": 6}
+{"period": "F2", "stage": "prior", "block": 2, "component": "scap", "event": "block_started", "unit": 2, "units": 6}
+{"period": "F2", "stage": "prior", "block": 2, "horizon": 72, "component": "scap", "fit_seconds": 85.90319327800535, "unit": 3, "units": 6}
+{"period": "F2", "stage": "full", "block": 0, "component": "scap", "event": "block_started", "unit": 3, "units": 6}
+{"period": "F2", "stage": "full", "block": 0, "horizon": 24, "component": "scap", "fit_seconds": 83.84993881708942, "unit": 4, "units": 6}
+{"period": "F2", "stage": "full", "block": 1, "component": "scap", "event": "block_started", "unit": 4, "units": 6}
+{"period": "F2", "stage": "full", "block": 1, "horizon": 48, "component": "scap", "fit_seconds": 80.59213213098701, "unit": 5, "units": 6}
+{"period": "F2", "stage": "full", "block": 2, "component": "scap", "event": "block_started", "unit": 5, "units": 6}
+{"period": "F2", "stage": "full", "block": 2, "horizon": 72, "component": "scap", "fit_seconds": 85.1869320460828, "unit": 6, "units": 6}
+{"period": "F3", "stage": "prior", "block": 0, "component": "scap", "event": "block_started", "unit": 0, "units": 6}
+{"period": "F3", "stage": "prior", "block": 0, "horizon": 24, "component": "scap", "fit_seconds": 80.97915777901653, "unit": 1, "units": 6}
+{"period": "F3", "stage": "prior", "block": 1, "component": "scap", "event": "block_started", "unit": 1, "units": 6}
+{"period": "F3", "stage": "prior", "block": 1, "horizon": 48, "component": "scap", "fit_seconds": 85.31407448998652, "unit": 2, "units": 6}
+{"period": "F3", "stage": "prior", "block": 2, "component": "scap", "event": "block_started", "unit": 2, "units": 6}
+{"period": "F3", "stage": "prior", "block": 2, "horizon": 72, "component": "scap", "fit_seconds": 87.13910900102928, "unit": 3, "units": 6}
+{"period": "F3", "stage": "full", "block": 0, "component": "scap", "event": "block_started", "unit": 3, "units": 6}
+{"period": "F3", "stage": "full", "block": 0, "horizon": 24, "component": "scap", "fit_seconds": 72.90989961195737, "unit": 4, "units": 6}
+{"period": "F3", "stage": "full", "block": 1, "component": "scap", "event": "block_started", "unit": 4, "units": 6}
+{"period": "F3", "stage": "full", "block": 1, "horizon": 48, "component": "scap", "fit_seconds": 61.963303224998526, "unit": 5, "units": 6}
+{"period": "F3", "stage": "full", "block": 2, "component": "scap", "event": "block_started", "unit": 5, "units": 6}
+{"period": "F3", "stage": "full", "block": 2, "horizon": 72, "component": "scap", "fit_seconds": 62.56807795900386, "unit": 6, "units": 6}
