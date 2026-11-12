@@ -1,6 +1,6 @@
 # vanila_mse
 
-2026-11-12 사용자 요청에 따른 게시 준비. 31 source / 215 expanded 특징의 offset-roll 구조에서
+2026-11-12 사용자 요청에 따른 게시 완료. 31 source / 215 expanded 특징의 offset-roll 구조에서
 손실만 순수 MSE(gradient=prediction-target, Hessian=1)로 바꿔 새로 학습했다.
 Tail 가중치, spectral 항, direct-S 항은 없다. 각 블록 900 rounds, seed 42/43/44,
 학습 cutoff·144h maturity·prior/full 분리·training-only frozen offset·clip은 유지했다.
