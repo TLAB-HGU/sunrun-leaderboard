@@ -25,5 +25,48 @@
     "baseline": "A900_point4_spectral",
     "execution_host": "local",
     "threads": 6
+  },
+  "vanila_timse": {
+    "experiment": "vanila_timse",
+    "name": "vanila_timse",
+    "family": "vanila_timse",
+    "execution_host": "local",
+    "device": "cpu",
+    "threads": 6,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "state": "queued",
+    "depends_on": [
+      "vanila_mse"
+    ],
+    "kind": "replacement_ablation",
+    "strategy": "/home/t-lab01/sunrun/research/vanila_timse/strategy.md",
+    "execution_status": "preregistered; runner preparation required before dispatch",
+    "publication": "candidate_gate_required"
+  },
+  "vanila_emsemble": {
+    "experiment": "vanila_emsemble",
+    "name": "vanila_emsemble",
+    "family": "vanila_emsemble",
+    "execution_host": "local",
+    "device": "cpu",
+    "threads": 2,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "state": "queued",
+    "depends_on": [
+      "vanila_mse",
+      "vanila_timse"
+    ],
+    "kind": "fixed_prediction_ensemble",
+    "strategy": "/home/t-lab01/sunrun/research/vanila_emsemble/strategy.md",
+    "execution_status": "preregistered; runner preparation required before dispatch",
+    "publication": "candidate_gate_required"
   }
 }
