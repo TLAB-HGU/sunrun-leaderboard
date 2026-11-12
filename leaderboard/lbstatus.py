@@ -33,7 +33,7 @@ import sys
 import threading
 import time
 
-from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, COMPETITION_VERSION, CELL, apply_architecture_links, hidden_before, mark_sign, ranking as _ranking, script_cells
+from board import BOARD_COLUMNS as CURRENT_BOARD_COLUMNS, COMPETITION_VERSION, CELL, apply_architecture_links, experiment_id, hidden_before, mark_sign, ranking as _ranking, script_cells
 
 SPACE = "tlabtlab/sunrun-leaderboard"
 DATASET = "tlabtlab/sunrun-lb-store"
@@ -193,7 +193,7 @@ def hide_ranking_rows(page: str, visibility: dict) -> str:
         if len(cells) != len(cols):
             return row
         values = [html.unescape(re.sub(r"<[^>]+>", "", c.group(2))).strip() for c in cells]
-        experiment = re.sub(r" \((?:진행|대기)\)$", "", values[experiment_col])
+        experiment = re.sub(r" \((?:진행|대기)\)$", "", experiment_id(cells[experiment_col]))
         if (values[member_col], experiment) in hidden:
             return ""
         submitted = re.search(r'^<tr\b[^>]*\bdata-submitted-utc="([^"]*)"', row)
@@ -229,7 +229,7 @@ def bold_experiment_names(page: str, visibility: dict) -> str:
         text = lambda cell: html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
         cell = cells[experiment_col]
         inner = re.sub(r'<strong class="lb-experiment">(.*?)</strong>', r"\1", cell.group(2), flags=re.S)
-        if (text(cells[member_col]), text(cell)) in selected:
+        if (text(cells[member_col]), experiment_id(cell)) in selected:
             inner = f'<strong class="lb-experiment">{inner}</strong>'
         return row[:cell.start(2)] + inner + row[cell.end(2):]
 

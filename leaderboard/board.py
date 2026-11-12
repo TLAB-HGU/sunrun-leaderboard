@@ -23,8 +23,29 @@ BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "visualizati
 # Link columns open a page on GitHub; they are not sortable.
 LINK_COLUMNS = {"lead curves", "visualization"}
 VISUALIZATION_FILE = "visualizations.json"
-VISUALIZATION_URL = re.compile(r"https://github\.com/TLAB-HGU/sunrun-leaderboard/(tree|blob)/[0-9a-f]{40}/docs/visualizations/[^?#\s\"<>]+")
+# Pictures live in research/<experiment>/visualization since 2026-11-12; links pinned to older commits keep the
+# former docs/visualizations/<folder> path.
+VISUALIZATION_URL = re.compile(r"https://github\.com/TLAB-HGU/sunrun-leaderboard/(tree|blob)/[0-9a-f]{40}/"
+                               r"(docs/visualizations/[^?#\s\"<>]+|research/[^/?#\s\"<>]+/visualization)")
 CELL = re.compile(r"<td(\s[^>]*)?>(.*?)</td>", re.S)
+# Name tags dropped from the experiment cell text (user instruction 2026-11-10). The stored identity is unchanged and
+# kept in the cell's data-experiment attribute, which every page edit reads through experiment_id().
+DISPLAY_DROP_SUFFIXES = ("_mean3",)
+
+
+def display_name(experiment: str) -> str:
+    for suffix in DISPLAY_DROP_SUFFIXES:
+        if experiment.endswith(suffix):
+            return experiment[:-len(suffix)]
+    return experiment
+
+
+def experiment_id(cell: re.Match) -> str:
+    """The stored experiment name of a ranking cell: its data-experiment attribute, else its text."""
+    tag = re.search(r'data-experiment="([^"]*)"', cell.group(1) or "")
+    if tag:
+        return html.unescape(tag.group(1))
+    return html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
 
 CSS = """
 :root{--bg:#fff;--fg:#1c1c1e;--mut:#6b6b70;--line:#e3e3e6;--acc:#2b6cb0;--ok:#1a7f4b;--bad:#b3261e;--head:#f6f6f8}
@@ -90,7 +111,7 @@ def apply_architecture_links(page: str, mapping: dict) -> str:
         if len(cells) != len(cols):
             return row
         text = lambda cell: html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
-        member, experiment = text(cells[member_col]), text(cells[experiment_col])
+        member, experiment = text(cells[member_col]), experiment_id(cells[experiment_col])
         cell = cells[code_col]
         tag = re.search(r'data-config="([0-9a-f]{64})"', cell.group(1) or "")
         config = tag.group(1) if tag else None
@@ -132,7 +153,7 @@ def script_cells(page: str) -> list[tuple[str, str]]:
         if len(cells) != len(cols):
             continue
         text = lambda cell: html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
-        experiment = text(cells[experiment_col])
+        experiment = experiment_id(cells[experiment_col])
         if re.search(r"\((진행|대기|완료|실패|중단)\)$", experiment):  # a status row carries dashes, not a code link
             continue
         if text(cells[code_col]) == "architecture":
@@ -283,7 +304,8 @@ def upsert_visualization(mapping: dict, entry: dict) -> dict:
     """Mapping with `entry` replacing any entry for the same submission, newest first."""
     key = (entry["member"], entry["experiment"], entry["submitted_utc"])
     if not VISUALIZATION_URL.fullmatch(entry.get("url", "")):
-        raise ValueError(f"visualization url must be a pinned docs/visualizations path on GitHub: {entry.get('url')}")
+        raise ValueError("visualization url must be a pinned research/<experiment>/visualization path on GitHub: "
+                         f"{entry.get('url')}")
     kept = [e for e in mapping.get("models", []) if (e["member"], e["experiment"], e["submitted_utc"]) != key]
     return {**mapping, "models": [dict(entry)] + kept}
 
@@ -340,10 +362,11 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
         else:
             rank = "unscored"
             rank_attrs = ' data-v="999999" title="No complete score under the current six-hour evaluation metric"'
-        experiment_name = html.escape(r["experiment"])
+        experiment_name = html.escape(display_name(r["experiment"]))
         if (r["team_member"], r["experiment"]) in bold:
             experiment_name = f'<strong class="lb-experiment">{experiment_name}</strong>'
-        cells = [(rank_attrs, rank, None), (' class="l"', experiment_name, None)]
+        experiment_attrs = f' class="l" data-experiment="{html.escape(r["experiment"], quote=True)}"'
+        cells = [(rank_attrs, rank, None), (experiment_attrs, experiment_name, None)]
         for key in ("s", "timse", "rmse"):
             for scope in ("total", "f1", "f2", "f3"):
                 values = metrics[scope] if metrics else {}

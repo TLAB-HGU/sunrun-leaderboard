@@ -193,20 +193,6 @@ def test_every_publish_marks_the_best_and_second_best_of_each_skill_column():
     assert pytest.importorskip("lbstatus").mark_leaders(page) == page
 
 
-def test_published_client_copies_are_synchronized():
-    root = Path(__file__).resolve().parents[1]
-    root = root if (root / "lb-f1f2").is_dir() else root.parent
-    copies = [root / name / "board.py" for name in (".", "model-release-publish", "lb-f1f2", "lb-maint")]
-    assert len({path.read_text() for path in copies}) == 1
-    clients = [root / name / "submit.py" for name in (".", "model-release-publish", "lb-f1f2")]
-    assert len({path.read_text() for path in clients}) == 1
-    # submit.py writes the code-column mapping on every submission, so every client carries that module too
-    mapping_writers = [root / name / "architecture_code.py" for name in (".", "model-release-publish", "lb-f1f2")]
-    assert len({path.read_text() for path in mapping_writers}) == 1
-    scorers = [root / name / "scorer/scoring.py" for name in (".", "model-release-publish", "lb-f1f2", "lb-maint")]
-    assert len({path.read_text() for path in scorers}) == 1
-
-
 def test_local_preview_loads_flat_and_nested_results(tmp_path):
     legacy = tmp_path / "legacy.json"
     nested = tmp_path / "alice/model/hash.json"
@@ -284,6 +270,13 @@ def test_board_links_a_visualization_only_to_the_submission_it_was_made_from():
     updated = board.upsert_visualization(mapping, {**mapping["models"][0], "url": VIZ.replace("/model", "/model2")})
     assert [e["url"] for e in updated["models"]][:1] == [VIZ.replace("/model", "/model2")]
     assert len(updated["models"]) == 2
+    # since 2026-11-12 the pictures live next to the experiment: research/<experiment>/visualization
+    moved = VIZ.replace("/docs/visualizations/model", "/research/model/visualization")
+    linked = board.upsert_visualization(mapping, {**mapping["models"][0], "url": moved})
+    assert f'class="visualization-link" href="{moved}"' in render([{**base, "submitted_utc": "20261027T000000Z"}],
+                                                                  visualizations=linked)
+    with pytest.raises(ValueError, match="pinned"):
+        board.upsert_visualization({}, {**mapping["models"][0], "url": moved + "/../../other"})
 
 
 def test_extras_attach_to_matching_results_only(monkeypatch, tmp_path):

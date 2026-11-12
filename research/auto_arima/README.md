@@ -27,8 +27,12 @@
 python research/auto_arima/experiment.py
 ```
 
-2026-11-09 재작성: 예전 재작성본은 없는 경로(`data-v2/model-inputs/leaderboard-store/…`)와 MSE 시절 grid를 썼습니다. 리더보드에 저장된 예측과 그 점수 기록은 `results/leaderboard/`에 있습니다.
+2026-11-09 재작성: 예전 재작성본은 없는 경로(`data-v2/model-inputs/leaderboard-store/…`)와 MSE 시절 grid를 썼습니다. 리더보드에 저장된 예측과 그 점수 기록은 `results/leaderboard_*`에 있습니다.
 
 ## 리더보드 저장 예측과의 비교
 
-셀 432개가 다릅니다(최대 10.52 km/s). S는 이 스크립트 148.872091, 보드 148.863193(차이 0.0089)입니다. 입력 시계열은 같은 시계열을 쓰는 naive·seasonal_naive_648이 비트 단위로, mean_reversion이 1e-13 이내로 일치합니다. 고정 환경(statsforecast 2.0.3)에서 Python 3.12.3과 3.12.13 모두 같은 결과였으므로, 차이는 원 제출 당시 머신의 statsforecast 적합 수치 차이로 보입니다. 보드 점수는 `results/leaderboard/`의 저장 예측 기준입니다.
+셀 432개가 다릅니다(최대 10.52 km/s). S는 이 스크립트 148.872091, 보드 148.863193(차이 0.0089)입니다. 입력 시계열은 같은 시계열을 쓰는 naive·seasonal_naive_648이 비트 단위로, mean_reversion이 1e-13 이내로 일치합니다. 고정 환경(statsforecast 2.0.3)에서 Python 3.12.3과 3.12.13 모두 같은 결과였으므로, 차이는 원 제출 당시 머신의 statsforecast 적합 수치 차이로 보입니다. 보드 점수는 `results/leaderboard_*`의 저장 예측 기준입니다.
+
+## 2026-11-12 폴더 정리
+
+사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}_s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.

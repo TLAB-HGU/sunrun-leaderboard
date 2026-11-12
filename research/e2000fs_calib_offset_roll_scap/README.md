@@ -32,8 +32,8 @@ seed별 Total S (A900 대비): 42 = 95.557 (96.253, −0.696), 43 = 95.987 (96.9
 ## 폴더 구성
 
 - `experiment.py` — 유일한 스크립트입니다. `data-v2/input/df.parquet` 읽기, 특징 ffill, 학습 라벨 ffill, 3 seed × F1/F2/F3의 A900 학습과 MSE 제약 S continuation, frozen offset, clip, mean3, 공식 scorer 채점까지 모두 들어 있습니다.
-- `weights/F{1,2,3}/s{42,43,44}.npz` — 시드×기간 체크포인트입니다. A900 부스터, stage 부스터, 수용된 α, frozen calibration이 들어 있습니다. 로컬에만 두고 git에는 올리지 않습니다.
-- `results/s{seed}/`, `results/mean3/` — 예측(`predictions.parquet`)과 점수(`score.json`)입니다.
+- `weights/F{1,2,3}_s{42,43,44}.npz` — 시드×기간 체크포인트입니다. A900 부스터, stage 부스터, 수용된 α, frozen calibration이 들어 있습니다. 로컬에만 두고 git에는 올리지 않습니다.
+- `results/s{seed}_*`, `results/mean3_*` — 예측(`*_predictions.parquet`)과 점수(`*_score.json`)입니다.
 - `logs/train_s*.jsonl`, `logs/train_run_s*.jsonl` — 학습 run의 진행 기록, 기간별 metadata, 블록별 continuation 기록(stage별 α·실현 가능 상한·학습 MSE), replay 결과입니다.
 - `logs/{run,data,s*,mean3}.jsonl` — weights 추론과 mean3 기록입니다.
 
@@ -51,3 +51,7 @@ CUDA_VISIBLE_DEVICES= python research/e2000fs_calib_offset_roll_scap/experiment.
 - 이 파일의 학습 경로로 `df.parquet`에서 seed 42 F1 full b0를 다시 continuation하면 stage 부스터 6개가 학습 run과 바이트 단위로 같고 α도 같습니다(수용 5 stage).
 - `--smoke`(2 rounds) exit 0.
 - `--predict-only`로 weights에서 만든 seed 예측 3개가 학습 run 예측과 비트 단위로 같고, mean3 S는 95.498입니다.
+
+## 2026-11-12 폴더 정리
+
+사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}_s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.

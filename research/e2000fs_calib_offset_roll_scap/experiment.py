@@ -25,11 +25,11 @@ This one file runs the whole experiment, from the raw table to the board forecas
   6. score  official scorer leaderboard/scorer/competition.py; labels are used only here
 
 Outputs (in this folder unless --out is given):
-  weights/F{1,2,3}/s{seed}.npz   one checkpoint per seed x period: {prior,full}_b{0..2} A900
+  weights/F{1,2,3}_s{seed}.npz   one checkpoint per seed x period: {prior,full}_b{0..2} A900
                                  boosters, {prior,full}_b{0..2}_stage{0..5} continuation boosters
                                  (UBJSON bytes), accepted alphas and the frozen calibration
-  results/s{seed}/               predictions.parquet, score.json
-  results/mean3/                 predictions.parquet, score.json (the board forecast)
+  results/s{seed}_*               predictions.parquet, score.json
+  results/mean3_*                 predictions.parquet, score.json (the board forecast)
   logs/*.jsonl                   every step, one JSON object per line
 
 Usage (GBM: CPU only):
@@ -604,7 +604,7 @@ def train_period(table, period, seed, args, logs):
                  offset=offset.tolist(), offset_rows=rows,
                  offset_start=str(pd.Timestamp(cal_origins[-rows], tz='UTC')),
                  offset_end=str(pd.Timestamp(cal_origins[-1], tz='UTC')))
-    checkpoint = args.out / 'weights' / period / f's{seed}.npz'
+    checkpoint = args.out / 'weights' / f'{period}_s{seed}.npz'
     save_checkpoint(checkpoint, prior_boosters, full_boosters, state)
     prediction = apply_offset(raw, offset)
     component = component_values(raw)
@@ -617,10 +617,10 @@ def train_period(table, period, seed, args, logs):
 
 
 def predict_period(table, period, seed, args, logs):
-    """Inference only: full-model boosters, alphas and the frozen offset from weights/F{p}/s{seed}.npz."""
+    """Inference only: full-model boosters, alphas and the frozen offset from weights/F{p}_s{seed}.npz."""
     stream, began = f's{seed}', time.perf_counter()
     query, _ = load_grid(table, period, False)
-    checkpoint = args.weights / period / f's{seed}.npz'
+    checkpoint = args.weights / f'{period}_s{seed}.npz'
     blocks, state = load_checkpoint(checkpoint, 'full')
     raw = np.empty((len(query['origins']), H), np.float64)
     for block, start in enumerate(range(0, H, BLOCK)):
@@ -679,11 +679,11 @@ def observations_path(path):
                                 repo_type='dataset'))
 
 
-def write_results(folder, frame, scores):
+def write_results(folder, tag, frame, scores):
     folder.mkdir(parents=True, exist_ok=True)
-    frame.to_parquet(folder / 'predictions.parquet', index=False)
+    frame.to_parquet(folder / f'{tag}_predictions.parquet', index=False)
     if scores is not None:
-        (folder / 'score.json').write_text(json.dumps(scores, indent=2, allow_nan=False) + '\n')
+        (folder / f'{tag}_score.json').write_text(json.dumps(scores, indent=2, allow_nan=False) + '\n')
 
 
 def main():
@@ -731,13 +731,13 @@ def main():
         frames[seed] = prediction_frame(parts)
         complete = not args.smoke and args.periods == list(CUTOFFS)
         scores = score(frames[seed], observations) if complete else None
-        write_results(args.out / 'results' / f's{seed}', frames[seed], scores)
+        write_results(args.out / 'results', f's{seed}', frames[seed], scores)
         logs(f's{seed}', 'seed_complete', seed=seed, rows=len(frames[seed]),
              total_s=scores['competition']['total']['s'] if scores else None)
     if sorted(frames) == list(SEEDS):
         ensemble = mean3([frames[seed] for seed in SEEDS])
         scores = score(ensemble, observations) if observations is not None and args.periods == list(CUTOFFS) else None
-        write_results(args.out / 'results' / 'mean3', ensemble, scores)
+        write_results(args.out / 'results', 'mean3', ensemble, scores)
         logs('mean3', 'mean3_complete', seeds=list(SEEDS), weights=[1 / 3] * 3, rows=len(ensemble),
              total_s=scores['competition']['total']['s'] if scores else None,
              periods={p: scores['competition'][p.lower()]['s'] for p in CUTOFFS} if scores else None)

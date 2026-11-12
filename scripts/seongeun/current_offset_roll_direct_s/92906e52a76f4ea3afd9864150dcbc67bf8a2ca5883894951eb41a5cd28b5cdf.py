@@ -12,4 +12,4 @@ if __name__ == '__main__':
     a.out.mkdir(parents=True,exist_ok=True)
     work=a.out/'run'
     subprocess.run([sys.executable,str(ROOT/'research/current_offset_roll_direct_s/experiment.py'),'--data',a.data,'--observations',a.observations,'--out',str(work),'--threads',str(a.threads)],check=True,env=dict(os.environ,CUDA_VISIBLE_DEVICES=''),cwd=ROOT)
-    shutil.copy(work/'results/mean3/predictions.parquet',a.out/'predictions.parquet')
+    shutil.copy(work/'results/mean3_predictions.parquet',a.out/'predictions.parquet')

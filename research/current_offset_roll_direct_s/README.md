@@ -35,13 +35,46 @@ CUDA_VISIBLE_DEVICES='' .venv/bin/python research/current_offset_roll_direct_s/e
 `--data` 기본값은 `data-v2/input/df.parquet`이다. 별도 출력으로 추론하려면 `--weights research/current_offset_roll_direct_s/weights --out /tmp/direct-s-replay`를 지정한다. 전체 학습 재현은 기존 데이터와 라이브러리 버전을 사용한다(원 실행: Python 3.12.13, NumPy 2.4.6, pandas 2.3.3, XGBoost 2.1.4).
 
 - `experiment.py`: 데이터 준비, 순수 direct-S 학습, 저장 모델 추론, offset, mean3, 공식 채점을 포함하는 단일 architecture 스크립트.
-- `weights/F*/s*.npz`: 기존 54개 prior/full booster와 9개 calibration state. 로컬 재현용이며 원 학습 weights를 다시 학습하지 않고 포장했다.
-- `results/s*/`, `results/mean3/`: 예측 parquet와 공식 score JSON.
-- `provenance.json`: 원 실행 위치, 특징 목록, 기간, 하이퍼파라미터, 라이브러리 버전과 추론 시간.
-- `verification.json`: 목적함수 수치 일치, 예측·부스터·offset 일치와 최종 점수.
+- `weights/F*_s*.npz`: 기존 54개 prior/full booster와 9개 calibration state. 로컬 재현용이며 원 학습 weights를 다시 학습하지 않고 포장했다.
+- `results/s*_*`, `results/mean3_*`: 예측 parquet와 공식 score JSON.
+- `logs/provenance.json`: 원 실행 위치, 특징 목록, 기간, 하이퍼파라미터, 라이브러리 버전과 추론 시간.
+- `logs/verification.json`: 목적함수 수치 일치, 예측·부스터·offset 일치와 최종 점수.
 
 ## 검증
 
 순수 S callback의 값, float32 gradient와 곡률 proxy가 원본 B callback과 정확히 일치한다(독립 난수 입력 3개 크기). 원 raw df에서 `--predict-only` exit 0. seed별 454,680개 예측이 원 B군의 F1/F2/F3 NPZ와 비트 단위로 같고, 저장한 54개 booster byte 배열 및 9개 frozen calibration state도 원본과 정확히 같다. seed별 공식 S도 원 점수와 정확히 같으며 모든 점수의 persistence 대체 수는 0이다. `py_compile` 통과.
 
 이번 게시 준비에서 새 학습은 실행하지 않았다. 전체 학습 경로의 새 end-to-end 실행은 검증하지 않았으며, 실제 게시 예측은 검증된 기존 B weights에서 재현했다. 처음 추론 시 observations 경로 오타로 채점 전에 실패했고, 원 캠페인의 고정 HF snapshot 관측 경로를 사용해 정상 완료했다.
+
+## 전략 문서 (이전 strategy.md)
+
+## Publication packaging plan
+
+2026-11-12: user requested publication as `current_offset_roll_direct_s`.
+The selected architecture is arm B (direct S only) from
+`research/current_offset_roll_direct_s_20261109`, seeds 42/43/44.
+This is packaging of completed runs, not a new hypothesis or training run.
+
+Preserve all 31 source / 215 expanded features, data fill, cutoff, seed,
+900-round model configuration, prior/full split, clipping and frozen offset.
+Remove unrelated objective branches from the self-contained script. Reuse the
+saved 54 boosters and nine frozen calibration states. Verify objective values,
+gradients and curvature proxies against the original pure-S callback before
+inference; then require bitwise equality to all nine saved prediction matrices.
+Create the fixed arithmetic mean of all three seeds without fitting weights,
+and score it with the official scorer and frozen official observations.
+No new model fitting is authorized for this packaging task.
+
+### Packaging outcome
+
+Pure-S value/gradient/curvature parity passed on three independent finite matrices.
+All 54 booster byte arrays and nine frozen calibration states are unchanged.
+Raw-table inference reproduced all three seed forecasts exactly, with original
+seed scores unchanged. Equal-weight mean3 Total S is 97.53022862821581,
+with no persistence replacements. Full training was not rerun. See
+verification.json and provenance.json for detailed evidence. Publication itself
+is handled by the leader after this local package handoff.
+
+## 2026-11-12 폴더 정리
+
+사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}_s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.

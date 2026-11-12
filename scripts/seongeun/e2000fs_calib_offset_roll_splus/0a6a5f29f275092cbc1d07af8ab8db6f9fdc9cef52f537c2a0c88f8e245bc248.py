@@ -18,4 +18,4 @@ if __name__ == "__main__":
     subprocess.run([sys.executable, str(ROOT / "research/e2000fs_calib_offset_roll_splus/experiment.py"),
                     "--data", args.data, "--observations", args.observations, "--out", str(work),
                     "--threads", str(args.threads)], check=True, env=env, cwd=ROOT)
-    shutil.copy(work / "results/mean3/predictions.parquet", args.out / "predictions.parquet")
+    shutil.copy(work / "results/mean3_predictions.parquet", args.out / "predictions.parquet")

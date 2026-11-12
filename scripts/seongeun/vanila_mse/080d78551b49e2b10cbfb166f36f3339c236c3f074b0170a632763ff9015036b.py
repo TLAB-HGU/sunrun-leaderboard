@@ -14,4 +14,4 @@ if __name__ == '__main__':
     subprocess.run([sys.executable,str(ROOT/'research/vanila_mse/experiment.py'),'--data',a.data,
                     '--observations',a.observations,'--out',str(work),'--threads',str(a.threads)],
                    check=True,env=dict(os.environ,CUDA_VISIBLE_DEVICES=''),cwd=ROOT)
-    shutil.copy(work/'results/mean3/predictions.parquet',a.out/'predictions.parquet')
+    shutil.copy(work/'results/mean3_predictions.parquet',a.out/'predictions.parquet')

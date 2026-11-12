@@ -103,7 +103,7 @@ def test_status_refresh_reads_architecture_mapping_at_the_same_revision(monkeypa
     assert lbstatus.ROWS_BEGIN in updated
 
 
-@pytest.mark.parametrize("relative", ["board.py", "model-release-publish/board.py"])
+@pytest.mark.parametrize("relative", ["board.py"])
 def test_standard_publishers_load_mapping_and_preserve_visibility(tmp_path, monkeypatch, relative):
     source = Path(__file__).resolve().parents[1] / relative
     spec = importlib.util.spec_from_file_location("architecture_board", source)

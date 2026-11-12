@@ -10,7 +10,7 @@ Usage (GBM: CPU only):
   CUDA_VISIBLE_DEVICES= python experiment.py --threads 4                     # all seeds, F1/F2/F3, mean3, score
   CUDA_VISIBLE_DEVICES= python experiment.py --predict-only --out DIR        # inference from weights/
   CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR               # 2-round wiring check
-Outputs: weights/F{1,2,3}/s{seed}.npz, F{n}_metadata.json, results/s{seed}/ and results/mean3/
+Outputs: weights/F{1,2,3}_s{seed}.npz, logs/F{n}_metadata.json, results/s{seed}_* and results/mean3_*
 (predictions.parquet, score.json), logs/*.jsonl.
 """
 from __future__ import annotations
@@ -317,7 +317,7 @@ def train_period(table, period, seed, args, logs):
          query_start=str(query['origins'].min()), query_end=str(query['origins'].max()), **progress)
     raw, seconds, full_boosters = fit_predict(subset(train, full), query, y[full], seed,
                                               args.threads, rounds, logs, stream, period, 'full', progress)
-    checkpoint = args.out / 'weights' / period / f's{seed}.npz'
+    checkpoint = args.out / 'weights' / f'{period}_s{seed}.npz'
     save_checkpoint(checkpoint, full_boosters)
     prediction = forecast_values(raw)
     summary = dict(period=period, seed=seed, checkpoint=str(checkpoint), calibration='none',
@@ -325,16 +325,16 @@ def train_period(table, period, seed, args, logs):
                    clipped_cells=int(np.count_nonzero(raw != prediction)),
                    inference_seconds_per_fold=seconds / len(prediction),
                    end_to_end_seconds=round(time.perf_counter() - began, 3))
-    (args.out / f'{period}_metadata.json').write_text(json.dumps(summary, indent=2, allow_nan=False) + '\n')
+    (args.out / 'logs' / f'{period}_metadata.json').write_text(json.dumps(summary, indent=2, allow_nan=False) + '\n')
     logs(stream, 'period_complete', **summary)
     return query['origins'], prediction
 
 
 def predict_period(table, period, seed, args, logs):
-    """Inference only: full boosters from weights/F{p}/s{seed}.npz."""
+    """Inference only: full boosters from weights/F{p}_s{seed}.npz."""
     stream, began = f's{seed}', time.perf_counter()
     query, _ = load_grid(table, period, False)
-    checkpoint = args.weights / period / f's{seed}.npz'
+    checkpoint = args.weights / f'{period}_s{seed}.npz'
     boosters = load_checkpoint(checkpoint)
     raw = np.empty((len(query['origins']), H), np.float64)
     for block, start in enumerate(range(0, H, BLOCK)):
@@ -391,11 +391,11 @@ def observations_path(path):
                                 repo_type='dataset'))
 
 
-def write_results(folder, frame, scores):
+def write_results(folder, tag, frame, scores):
     folder.mkdir(parents=True, exist_ok=True)
-    frame.to_parquet(folder / 'predictions.parquet', index=False)
+    frame.to_parquet(folder / f'{tag}_predictions.parquet', index=False)
     if scores is not None:
-        (folder / 'score.json').write_text(json.dumps(scores, indent=2, allow_nan=False) + '\n')
+        (folder / f'{tag}_score.json').write_text(json.dumps(scores, indent=2, allow_nan=False) + '\n')
 
 
 def main():
@@ -441,13 +441,13 @@ def main():
         frames[seed] = prediction_frame(parts)
         complete = not args.smoke and args.periods == list(CUTOFFS)
         scores = score(frames[seed], observations) if complete else None
-        write_results(args.out / 'results' / f's{seed}', frames[seed], scores)
+        write_results(args.out / 'results', f's{seed}', frames[seed], scores)
         logs(f's{seed}', 'seed_complete', seed=seed, rows=len(frames[seed]),
              total_s=scores['competition']['total']['s'] if scores else None)
     if sorted(frames) == list(SEEDS):
         ensemble = mean3([frames[seed] for seed in SEEDS])
         scores = score(ensemble, observations) if observations is not None and args.periods == list(CUTOFFS) else None
-        write_results(args.out / 'results' / 'mean3', ensemble, scores)
+        write_results(args.out / 'results', 'mean3', ensemble, scores)
         logs('mean3', 'mean3_complete', seeds=list(SEEDS), weights=[1 / 3] * 3, rows=len(ensemble),
              total_s=scores['competition']['total']['s'] if scores else None,
              periods={p: scores['competition'][p.lower()]['s'] for p in CUTOFFS} if scores else None)
