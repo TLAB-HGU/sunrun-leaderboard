@@ -1,6 +1,30 @@
 {
   "models": [
     {
+      "member": "baseline",
+      "experiment": "ses",
+      "submitted_utc": "20261026T123926445Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/bb993ceb6dd1a2c6efbe6cba365839d6583fef8f/research/ses/visualization"
+    },
+    {
+      "member": "baseline",
+      "experiment": "seasonal_naive_648",
+      "submitted_utc": "20261026T123813820Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/bb993ceb6dd1a2c6efbe6cba365839d6583fef8f/research/seasonal_naive_648/visualization"
+    },
+    {
+      "member": "baseline",
+      "experiment": "naive",
+      "submitted_utc": "20261026T123700303Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/bb993ceb6dd1a2c6efbe6cba365839d6583fef8f/research/naive/visualization"
+    },
+    {
+      "member": "baseline",
+      "experiment": "mean_reversion",
+      "submitted_utc": "20261026T124159011Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/bb993ceb6dd1a2c6efbe6cba365839d6583fef8f/research/mean_reversion/visualization"
+    },
+    {
       "member": "seongeun",
       "experiment": "e2000fs_calib_offset_roll_CDF_1p3F",
       "submitted_utc": "20261112T222326500Z",
