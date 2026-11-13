@@ -35,7 +35,7 @@ CUDA_VISIBLE_DEVICES='' .venv/bin/python research/current_offset_roll_direct_s/e
 `--data` 기본값은 `data-v2/input/df.parquet`이다. 별도 출력으로 추론하려면 `--weights research/current_offset_roll_direct_s/weights --out /tmp/direct-s-replay`를 지정한다. 전체 학습 재현은 기존 데이터와 라이브러리 버전을 사용한다(원 실행: Python 3.12.13, NumPy 2.4.6, pandas 2.3.3, XGBoost 2.1.4).
 
 - `experiment.py`: 데이터 준비, 순수 direct-S 학습, 저장 모델 추론, offset, mean3, 공식 채점을 포함하는 단일 architecture 스크립트.
-- `weights/F*_s*.npz`: 기존 54개 prior/full booster와 9개 calibration state. 로컬 재현용이며 원 학습 weights를 다시 학습하지 않고 포장했다.
+- `weights/F*/s*.npz`: 기존 54개 prior/full booster와 9개 calibration state. 로컬 재현용이며 원 학습 weights를 다시 학습하지 않고 포장했다.
 - `results/s*_*`, `results/mean3_*`: 예측 parquet와 공식 score JSON.
 - `logs/provenance.json`: 원 실행 위치, 특징 목록, 기간, 하이퍼파라미터, 라이브러리 버전과 추론 시간.
 - `logs/verification.json`: 목적함수 수치 일치, 예측·부스터·offset 일치와 최종 점수.
@@ -77,7 +77,7 @@ is handled by the leader after this local package handoff.
 
 ## 2026-11-12 폴더 정리
 
-사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}_s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.
+사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}/s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.
 
 ## 2026-11-13 레이아웃 변경 (중복 제거)
 

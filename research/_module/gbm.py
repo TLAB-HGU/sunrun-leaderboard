@@ -7,7 +7,7 @@ row's custom objective. Query forecast = full model, clip [1, 3000] (+ offset, c
 forecast = fixed equal-weight mean of the three seeds; scored by the official scorer.
 
 An experiment.py declares a GBMSpec (features, objective, calibration, optional block fitter) and calls
-main(SPEC, __doc__, HERE). Outputs: see common.output_paths; checkpoints weights/F{n}_s{seed}.npz,
+main(SPEC, __doc__, HERE). Outputs: see common.output_paths; checkpoints weights/F{n}/s{seed}.npz,
 logs/{data,run,s42,s43,s44,mean3}.jsonl and logs/F{n}_s{seed}_metadata.json, results/{s42,s43,s44,mean3}_*.
 """
 from __future__ import annotations
@@ -206,7 +206,7 @@ def train_period(spec, table, period, seed, args, logs):
                      split_boundary=str(boundary), purge_hours=PURGE_HOURS)
     raw, seconds, full_blocks = fit_predict(spec, subset(train, full), query, y[full], context, seed, args,
                                             rounds, logs, stream, period, 'full', progress)
-    checkpoint = args.weights / f'{period}_s{seed}.npz'
+    checkpoint = args.weights / period / f's{seed}.npz'
     if spec.calibrated:
         offset, rows = cal.estimate_offset(prior, truth, spec.offset_window, spec.alpha, smoke=args.smoke)
         state.update(policy=cal.POLICY, **extra, window=spec.offset_window, alpha=spec.alpha, scope='horizon',
@@ -250,10 +250,10 @@ def train_period(spec, table, period, seed, args, logs):
 
 
 def predict_period(spec, table, period, seed, args, logs):
-    """Inference only: full-model boosters (and the frozen offset) from weights/F{p}_s{seed}.npz."""
+    """Inference only: full-model boosters (and the frozen offset) from weights/F{p}/s{seed}.npz."""
     stream, began = f's{seed}', time.perf_counter()
     query, _ = load_grid(table, period, False, spec.constant, spec.varying)
-    checkpoint = args.weights / f'{period}_s{seed}.npz'
+    checkpoint = args.weights / period / f's{seed}.npz'
     blocks, state = load_checkpoint(checkpoint, 'full', H // spec.block)
     predictor = spec.predict_block or predict_block
     raw = np.empty((len(query['origins']), H), np.float64)

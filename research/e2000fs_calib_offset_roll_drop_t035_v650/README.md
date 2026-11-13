@@ -19,7 +19,7 @@ seed별 Total S: 42 = 97.492, 43 = 97.874, 44 = 98.075
 ## 폴더 구성
 
 - `experiment.py` — 유일한 스크립트입니다. `data-v2/input/df.parquet` 읽기, 특징 ffill, 학습 라벨 ffill, 3 seed × F1/F2/F3 학습(prior + full, 24 lead 블록 3개 × 900 rounds), frozen offset, 추론, mean3, 공식 scorer 채점까지 모두 들어 있습니다.
-- `weights/F{1,2,3}_s{42,43,44}.npz` — 시드×기간 체크포인트 하나씩입니다. prior/full 부스터 6개(UBJSON 바이트)와 frozen calibration을 담습니다. 로컬에만 두고 git에는 올리지 않습니다.
+- `weights/F{1,2,3}/s{42,43,44}.npz` — 시드×기간 체크포인트 하나씩입니다. prior/full 부스터 6개(UBJSON 바이트)와 frozen calibration을 담습니다. 로컬에만 두고 git에는 올리지 않습니다.
 - `results/s{seed}_*`, `results/mean3_*` — 예측(`*_predictions.parquet`)과 점수(`*_score.json`). `mean3_score.json`은 리더보드 store 기록입니다.
 - `logs/*.jsonl` — `s{seed}.jsonl`(launch, config, provenance, 블록별 fit, 기간별 metadata, 완료), `mean3.jsonl`(게시 기록). 이관분은 `"source": "migrated"`로 표시합니다.
 
@@ -40,7 +40,7 @@ CUDA_VISIBLE_DEVICES= python research/e2000fs_calib_offset_roll_drop_t035_v650/e
 
 ## 2026-11-12 폴더 정리
 
-사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}_s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.
+사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}/s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.
 폴더 이름은 보드 표시 이름(`e2000fs_calib_offset_roll_drop_t035_v650`)과 같게 바꿨고, 제출 ID는 `e2000fs_calib_offset_roll_drop_t035_v650_mean3` 그대로입니다(`experiment.py`의 `EXPERIMENT`).
 
 ## 2026-11-13 레이아웃 변경 (중복 제거)

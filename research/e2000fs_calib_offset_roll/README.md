@@ -21,7 +21,7 @@ spectral 항을 빼면 3 seed 모두 나빠집니다(사전 기준 "spectral 유
 ## 폴더 구성
 
 - `experiment.py` — 유일한 스크립트입니다. `data-v2/input/df.parquet` 읽기, 특징 ffill, 학습 라벨 ffill, 3 seed × F1/F2/F3 학습, frozen offset, clip, mean3, 공식 scorer 채점까지 모두 들어 있습니다.
-- `weights/F{1,2,3}_s{42,43,44}.npz` — 시드×기간 체크포인트입니다. 로컬에만 두고 git에는 올리지 않습니다.
+- `weights/F{1,2,3}/s{42,43,44}.npz` — 시드×기간 체크포인트입니다. 로컬에만 두고 git에는 올리지 않습니다.
 - `results/s{seed}_*`, `results/mean3_*` — 예측(`*_predictions.parquet`)과 점수(`*_score.json`)입니다.
 - `logs/train_*.jsonl` — 학습 run의 기록(launch, data, 블록별 fit, 기간별 metadata), `logs/{run,data,s*,mean3}.jsonl` — weights 추론과 mean3 기록입니다.
 
@@ -40,7 +40,7 @@ CUDA_VISIBLE_DEVICES= python research/e2000fs_calib_offset_roll/experiment.py --
 
 ## 2026-11-12 폴더 정리
 
-사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}_s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.
+사용자 지시로 repo를 보드 행 전용 레이아웃으로 정리했습니다. 이 폴더에는 `experiment.py`(유일한 스크립트), `README.md`, `logs/`, `results/`, `weights/`(로컬 전용)만 있고 하위 폴더는 없습니다. 결과는 `results/{tag}_predictions.parquet`·`results/{tag}_score.json`, 체크포인트는 `weights/F{n}/s{seed}.npz`입니다. 위 본문이 가리키는 캠페인 폴더(`research/*_2026…`, `analysis/…`, `runs/…`)는 삭제되어 이 폴더의 사본만 남아 있습니다.
 
 ## 2026-11-13 레이아웃 변경 (중복 제거)
 

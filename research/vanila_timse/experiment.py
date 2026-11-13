@@ -8,7 +8,7 @@ Usage (GBM: CPU only; the shared runner is research/_module/gbm.py):
   CUDA_VISIBLE_DEVICES= python experiment.py --threads 4             # all seeds, F1/F2/F3, mean3, score
   CUDA_VISIBLE_DEVICES= python experiment.py --predict-only          # inference from weights/
   CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR       # 2-round wiring check
-Outputs: weights/F{1,2,3}_s{seed}.npz in this folder; results/{s42,s43,s44,mean3}_{predictions.parquet,score.json}
+Outputs: weights/F{1,2,3}/s{seed}.npz in this folder; results/{s42,s43,s44,mean3}_{predictions.parquet,score.json}
 and logs/ (*.jsonl, F{n}_s{seed}_metadata.json) in research/result/vanila_timse/ (or DIR/ with --out DIR).
 """
 from __future__ import annotations

@@ -79,7 +79,7 @@
     - 여러 실험이 쓰는 코드는 `research/_module/`(`common`·`table`·`calibration`·`objectives`·`continuation`·`gbm`·`baseline`)에 두고, `experiment.py`는 `sys.path`에 `research/`를 넣어 import한다. GBM 행은 `gbm.GBMSpec`(특징·목적함수·보정 설정)을 선언하고 `gbm.main`을 호출한다.
     - 산출물은 `research/result/{실험}/results/`(`{s42,s43,s44,mean3}_predictions.parquet`·`_score.json`, 베이스라인은 `predictions.parquet`·`score.json`)와 `research/result/{실험}/logs/`(`*.jsonl`, `F{n}_s{seed}_metadata.json`, 영수증 json)에 둔다. `--out`을 주지 않은 보드 실행의 기본 출력이 이 위치다.
     - `--out DIR`(캠페인 run, `scripts/` 재현 래퍼)이면 `DIR/results/`, `DIR/logs/`, `DIR/weights/`와 sunrun용 `DIR/F{n}_metadata.json`에 쓴다. 이 계약은 LB 재현 스크립트가 의존하므로 바꾸지 않는다.
-    - 파일 이름: `weights/F{n}_s{seed}.npz`, `visualization/`은 `tools/submission_viz.py` 출력.
+    - 파일 이름: `weights/F{n}/s{seed}.npz`(기간별 폴더 `weights/F1/`·`F2/`·`F3/`), `visualization/`은 `tools/submission_viz.py` 출력.
     - module을 고칠 때는 해당 module을 쓰는 모든 보드 행에서 `--predict-only`(기존 `results/`와 완전 일치)와 old/new `--smoke`(예측·checkpoint 배열 일치)를 확인한다.
     - controller·publish·테스트 스크립트, `runs/`, `registry.json` 같은 캠페인 실행 파일과 대조군·게이트 미통과 run은 `research/` 밖(`~/sunrun-{캠페인}/`)에 두고, 게시가 끝나면 최종 산출물만 위 레이아웃으로 옮긴다.
     - 보드 행과 무관한 1회성 스크립트·분석·캐시는 repo에 남기지 않는다.
