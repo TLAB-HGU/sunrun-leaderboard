@@ -72,3 +72,10 @@
 # NumPy arrays are never tracked (2026-11-10)
 *.npy
 *.npz
+
+# Data and record files are never newly tracked (user instruction 2026-11-13). Files already
+# tracked before this rule stay tracked until removed with `git rm --cached`.
+*.jsonl
+*.json
+*.csv
+*.parquet
