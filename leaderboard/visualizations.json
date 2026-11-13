@@ -1,6 +1,36 @@
 {
   "models": [
     {
+      "member": "seongeun",
+      "experiment": "vanila_emsemble",
+      "submitted_utc": "20261112T211458540Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/6e0eeb23557c0c1734e56ca0b8e7d1a4dbb9c283/research/vanila_emsemble/visualization"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "current_offset_roll_direct_s",
+      "submitted_utc": "20261112T061200628Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/6e0eeb23557c0c1734e56ca0b8e7d1a4dbb9c283/research/current_offset_roll_direct_s/visualization"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll",
+      "submitted_utc": "20261110T105156512Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/6e0eeb23557c0c1734e56ca0b8e7d1a4dbb9c283/research/e2000fs_calib_offset_roll/visualization"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_splus",
+      "submitted_utc": "20261112T013948786Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/6e0eeb23557c0c1734e56ca0b8e7d1a4dbb9c283/research/e2000fs_calib_offset_roll_splus/visualization"
+    },
+    {
+      "member": "seongeun",
+      "experiment": "e2000fs_calib_offset_roll_scap",
+      "submitted_utc": "20261112T014659873Z",
+      "url": "https://github.com/TLAB-HGU/sunrun-leaderboard/tree/6e0eeb23557c0c1734e56ca0b8e7d1a4dbb9c283/research/e2000fs_calib_offset_roll_scap/visualization"
+    },
+    {
       "member": "baseline",
       "experiment": "ses",
       "submitted_utc": "20261026T123926445Z",
