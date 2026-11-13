@@ -9,15 +9,16 @@
 !/docs/
 !/research
 /research/*
-# research/{board name}/ (layout of 2026-11-12): experiment.py (the only script), README.md and the flat
-# folders results/, logs/ and visualization/ are tracked; weights/ stays local. No deeper folders.
+# research/{board name}/ (layout of 2026-11-13): experiment.py, README.md and visualization/ are tracked;
+# weights/ stays local. Shared code lives in research/module/*.py; each row's results/ and logs/ live in
+# research/result/{board name}/.
 !/research/*/
 /research/*/*
 !/research/*/experiment.py
 !/research/*/README.md
-!/research/*/results/
-!/research/*/logs/
 !/research/*/visualization/
+!/research/module/*.py
+!/research/result/*/
 /research/*/weights/
 /research/**/__pycache__/
 

@@ -74,3 +74,10 @@ seed별 Total S (기준선 → 1+3F): 42 = 97.104 → 98.280 (+1.176), 43 = 97.1
 ### 다음 실험 채택 여부
 
 채택하지 않는다. 기준선은 계단 point4 그대로 둔다. 가중 모양 축(계단 → 연속)은 w = F(v), w = 1 + 3·F(v) 두 형태 모두 실패했으므로 계수를 바꿔 반복하지 않는다. RMSE·bias가 좋아진 점은 S 기준에서는 쓸 수 없지만, RMSE를 보조 지표로 중시하는 용도라면 참고할 수 있다.
+
+## 2026-11-13 레이아웃 변경 (중복 제거)
+
+- 공용 코드를 `research/module/`로 옮겼습니다. 이 행이 쓰는 모듈: `gbm`, `objectives`. `experiment.py`에는 특징 목록, 목적함수, 보정 설정을 담은 `gbm.GBMSpec`만 남았습니다.
+- `results/`와 `logs/`는 `research/result/e2000fs_calib_offset_roll_CDF_1p3F/`로 옮겼습니다. 위 본문에 나오는 `results/…`, `logs/…` 경로는 이 위치 기준입니다. `weights/`와 `visualization/`은 이 폴더에 그대로 있습니다.
+- `--out`을 주지 않으면 `research/result/e2000fs_calib_offset_roll_CDF_1p3F/`에 씁니다. `--out DIR`을 주면 예전과 같이 `DIR/results`, `DIR/logs`, `DIR/weights`에 씁니다(재현 스크립트 호환).
+- 검증: 새 코드의 `--predict-only`(weights/) 예측이 기존 `results/`의 s42·s43·s44·mean3와 완전히 같고 S도 같습니다. old/new `--smoke` 예측과 checkpoint 배열(부스터 바이트·calibration)도 모두 같습니다.

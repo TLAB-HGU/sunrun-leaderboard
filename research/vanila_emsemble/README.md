@@ -71,3 +71,10 @@ S = (MSE·TIMSE)^¼ 맞교환에서 이득(−3.15 % vs MSE)을 얻는다. 남�
 
 dry-run 공식 scorer 점수는 저장된 mean3 점수와 1e-10 이내로 일치했다. 제출 meta·기록·라이브 행 검증은
 캠페인 폴더 `~/sunrun-vanila-followups/{이름}-submission*.json`, `*-publication-verification.json`에 있다.
+
+## 2026-11-13 레이아웃 변경 (중복 제거)
+
+- 공용 코드를 `research/module/`로 옮겼습니다. 이 행이 쓰는 모듈: `common`.
+- `results/`와 `logs/`는 `research/result/vanila_emsemble/`로 옮겼습니다. 위 본문에 나오는 `results/…`, `logs/…` 경로는 이 위치 기준입니다. `weights/`와 `visualization/`은 이 폴더에 그대로 있습니다.
+- `--out`을 주지 않으면 `research/result/vanila_emsemble/`에 씁니다. `--out DIR`을 주면 예전과 같이 `DIR/results`, `DIR/logs`, `DIR/weights`에 씁니다(재현 스크립트 호환).
+- 입력 기본값이 `research/result/vanila_mse`, `research/result/vanila_timse`로 바뀌었습니다. 검증: 재실행한 s42·s43·s44·mean3 예측과 S가 기존과 같습니다.

@@ -1,28 +1,29 @@
 """Fixed 50:50 average of separately trained MSE and TIMSE cohorts, then mean3.
 
-CPU only. Input roots contain flat results/ and logs/ artifacts for seeds 42/43/44.
-Official observations are loaded only after all four prediction frames are assembled.
+CPU only. Input roots (default research/result/vanila_mse and research/result/vanila_timse) contain
+results/ and logs/ artifacts for seeds 42/43/44. Official observations are loaded only after all four
+prediction frames are assembled. Outputs: results/ and logs/ in research/result/vanila_emsemble/
+(or --out DIR).
+
+Usage: CUDA_VISIBLE_DEVICES= python experiment.py --observations OBS
 """
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
-import importlib.util
 import json
 import os
 from pathlib import Path
-import platform
-import subprocess
+import sys
 
 import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-ROOT = next(p for p in HERE.parents if (p / 'leaderboard/scorer').is_dir())
+sys.path.insert(0, str(HERE.parent))
+from module import common  # noqa: E402
+from module.common import CUTOFFS, KEYS, RESULT, SEEDS, file_identity as identity, write_json  # noqa: E402
+
 EXPERIMENT = 'vanila_emsemble'
-SEEDS = (42, 43, 44)
-KEYS = ['origin_last_input_utc', 'horizon_hours']
-CUTOFFS = {'F1': '2025-12-29', 'F2': '2026-03-29', 'F3': '2026-06-29'}
 MATCH_FIELDS = ('rounds', 'block', 'feature_count', 'expanded_feature_count',
                 'constant_features', 'varying_features', 'expanded_features_by_block',
                 'training_cutoff', 'maturity_hours', 'train_origins', 'train_start',
@@ -31,31 +32,6 @@ MATCH_FIELDS = ('rounds', 'block', 'feature_count', 'expanded_feature_count',
 CALIBRATION_FIELDS = ('policy', 'window', 'alpha', 'scope', 'applied', 'purge_hours',
                       'reference_rows', 'calibration_rows', 'reference_start', 'reference_end',
                       'calibration_start', 'calibration_end', 'offset_rows', 'offset_start', 'offset_end')
-
-
-def write_json(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + '.tmp')
-    temporary.write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
-    temporary.replace(path)
-
-
-def identity(path):
-    stat = path.stat()
-    return {'path': str(path.resolve()), 'bytes': stat.st_size, 'mtime_ns': stat.st_mtime_ns}
-
-
-def event(out, name, **fields):
-    line = json.dumps(dict(ts=datetime.now(timezone.utc).isoformat(), experiment=EXPERIMENT,
-                           event=name, **fields), allow_nan=False)
-    (out / 'logs').mkdir(parents=True, exist_ok=True)
-    with (out / 'logs/run.jsonl').open('a') as stream:
-        stream.write(line + '\n')
-    with (out / 'train.log').open('a') as stream:
-        stdout, target = os.fstat(1), os.fstat(stream.fileno())
-        if (stdout.st_dev, stdout.st_ino) != (target.st_dev, target.st_ino):
-            stream.write(line + '\n')
-    print(line, flush=True)
 
 
 def validate_frame(frame):
@@ -127,60 +103,58 @@ def assemble(mse_root, timse_root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--experiment', choices=[EXPERIMENT], default=EXPERIMENT)
-    parser.add_argument('--mse-root', type=Path, default=ROOT / 'research/vanila_mse')
-    parser.add_argument('--timse-root', type=Path, required=True)
-    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--mse-root', type=Path, default=RESULT / 'vanila_mse')
+    parser.add_argument('--timse-root', type=Path, default=RESULT / 'vanila_timse')
+    parser.add_argument('--out', type=Path, help='run folder (default: research/result/vanila_emsemble)')
     parser.add_argument('--observations', type=Path, required=True)
     parser.add_argument('--device', choices=['cpu'], default='cpu')
     parser.add_argument('--threads', type=int, default=2)
     args = parser.parse_args()
     if os.environ.get('CUDA_VISIBLE_DEVICES') != '' or args.threads < 1:
         raise ValueError('Require CUDA_VISIBLE_DEVICES="" and positive --threads')
-    out = args.out.resolve()
+    board = common.output_paths(args, HERE, EXPERIMENT)
+    out = args.out
+    logs = common.run_logs(args, EXPERIMENT)
     if out in (args.mse_root.resolve(), args.timse_root.resolve()):
         raise ValueError('Output must not overwrite either source experiment')
     if (out / 'results').exists() and any((out / 'results').iterdir()):
         raise ValueError('Refusing to overwrite existing results')
-    event(out, 'assembly_start', period='F1', unit=0, units=4, device='cpu', threads=args.threads)
+    logs('run', 'assembly_start', period='F1', unit=0, units=4, device='cpu', threads=args.threads)
     frames, sources, metadata = assemble(args.mse_root, args.timse_root)
     (out / 'results').mkdir(parents=True, exist_ok=True)
     for tag, frame in frames.items():
         frame.to_parquet(out / 'results' / f'{tag}_predictions.parquet', index=False)
     provenance = dict(experiment=EXPERIMENT, source_weights=[.5, .5], seeds=list(SEEDS),
                       seed_weights=[1/3]*3, source_artifacts=sources,
-                      git_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-                      versions=dict(python=platform.python_version(), numpy=np.__version__, pandas=pd.__version__),
+                      git_commit=common.git_commit(),
+                      versions=common.versions(),
                       implementation=identity(Path(__file__)))
     write_json(out / 'logs/provenance.json', provenance)
     # Official truth is first accessed only after all predictions are frozen on disk.
-    spec = importlib.util.spec_from_file_location('competition', ROOT / 'leaderboard/scorer/competition.py')
-    scorer = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(scorer)
-    context = scorer.prepare_context(scorer.load_observations(args.observations))
     scores = {}
     for unit, (tag, frame) in enumerate(frames.items(), 1):
-        scores[tag] = scorer.score_competition(frame, context)
-        if scores[tag]['total']['n_replaced']:
-            raise ValueError('Official scorer replaced missing predictions')
-        record = dict(competition=scores[tag], scorer_version=scorer.VERSION,
-                      scorer=identity(Path(spec.origin)), observations=identity(args.observations))
+        record = common.score(frame, args.observations)
+        scores[tag] = record['competition']
         write_json(out / 'results' / f'{tag}_score.json', record)
-        event(out, 'score_complete', period='F3', component=tag, unit=unit, units=4,
+        logs('run', 'score_complete', period='F3', component=tag, unit=unit, units=4,
               total_s=scores[tag]['total']['s'])
     for period, source_metadata in metadata.items():
-        write_json(out / f'{period}_metadata.json', dict(experiment=EXPERIMENT, period=period,
-                   seeds=list(SEEDS), weights=[.5, .5], source_metadata=source_metadata,
-                   competition=scores['mean3'][period.lower()]))
+        record = dict(experiment=EXPERIMENT, period=period, seeds=list(SEEDS), weights=[.5, .5],
+                      source_metadata=source_metadata, competition=scores['mean3'][period.lower()])
+        write_json(out / 'logs' / f'{period}_metadata.json', record)
+        if not board:  # campaign run: period completion for the sunrun TUI
+            write_json(out / f'{period}_metadata.json', record)
     seed_scores = np.array([scores[f's{s}']['total']['s'] for s in SEEDS])
     verification = dict(status='passed', fixed_equal_weights=True, prediction_rows=len(frames['mean3']),
                         seed_mean_s=float(seed_scores.mean()), seed_sd_s=float(seed_scores.std(ddof=1)),
                         seed_worst_s=float(seed_scores.max()), mean3_total_s=scores['mean3']['total']['s'],
                         source_provenance_recorded=True, official_replacements=0)
     write_json(out / 'logs/verification.json', verification)
-    write_json(out / 'complete.json', dict(status='complete', experiment=EXPERIMENT,
-               competition=scores['mean3'], publish='not_required',
-               publish_reason='Execution and scoring requested; publication/adoption gate not yet evaluated.'))
-    event(out, 'complete', period='F3', unit=4, units=4, **verification)
+    if not board:
+        write_json(out / 'complete.json', dict(status='complete', experiment=EXPERIMENT,
+                   competition=scores['mean3'], publish='not_required',
+                   publish_reason='Execution and scoring requested; publication/adoption gate not yet evaluated.'))
+    logs('run', 'complete', period='F3', unit=4, units=4, **verification)
 
 
 if __name__ == '__main__':

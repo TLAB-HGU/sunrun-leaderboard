@@ -6,7 +6,7 @@
 
 ```
 data-v2/  (DB)   raw/<소스> -> notebooks/raw_to_input_df.ipynb -> input/df.parquet
-research/        df.parquet -> experiment.py -> results/predictions.parquet
+research/        df.parquet -> {row}/experiment.py (+ module/) -> result/{row}/results/*_predictions.parquet
 ```
 
 - 의존 방향은 한쪽뿐입니다. research 코드는 `df.parquet`만 읽고, `data-v2/`는 `research/`를 import하거나 읽지 않습니다.
