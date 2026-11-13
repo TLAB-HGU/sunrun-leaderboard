@@ -82,19 +82,46 @@ def stored_submission(member: str, experiment: str, submitted_utc: str) -> tuple
     raise LookupError(f"no stored {member}/{experiment} result submitted at {submitted_utc}")
 
 
-def load(member: str, experiment: str, submitted_utc: str) -> dict:
-    record, pred_path = stored_submission(member, experiment, submitted_utc)
-    observations = pd.read_parquet(hf_hub_download(DATASET, "competition-observations.parquet", repo_type="dataset",
-                                                   revision=record["competition_dataset_revision"]))
-    context = prepare_context(observations)
-    pred_frame = pd.read_parquet(pred_path)
-    recomputed = score_competition(pred_frame, context)
-    assert recomputed["version"] == record["competition"]["version"] == VERSION
+def mismatch(recomputed: dict, record: dict) -> str | None:
+    """First field where the recomputed scores differ from the stored record (1e-9), or None."""
+    if not recomputed["version"] == record["competition"]["version"] == VERSION:
+        return f"version {recomputed['version']!r} != {record['competition']['version']!r}"
     for scope in SCOPES:
         for metric in METRICS:
             a, b = recomputed[scope][metric], record["competition"][scope][metric]
-            assert abs(a - b) < 1e-9, f"{scope}.{metric}: recomputed {a!r} != record {b!r}"
-        assert recomputed[scope]["n_pairs"] == record["competition"][scope]["n_pairs"]
+            if not abs(a - b) < 1e-9:
+                return f"{scope}.{metric}: recomputed {a!r} != record {b!r}"
+        if recomputed[scope]["n_pairs"] != record["competition"][scope]["n_pairs"]:
+            return f"{scope}.n_pairs differs"
+    return None
+
+
+def observation_revisions(record: dict) -> list[str]:
+    """The revision the record was scored against; records older than that field (the baseline rows, rescored
+    2026-10-31) get every dataset commit, newest first, and load() keeps the first that reproduces the record."""
+    if record.get("competition_dataset_revision"):
+        return [record["competition_dataset_revision"]]
+    return [c.commit_id for c in HfApi().list_repo_commits(DATASET, repo_type="dataset")]
+
+
+def load(member: str, experiment: str, submitted_utc: str) -> dict:
+    record, pred_path = stored_submission(member, experiment, submitted_utc)
+    pred_frame = pd.read_parquet(pred_path)
+    seen, reason = set(), "no dataset revision tried"
+    for revision in observation_revisions(record):
+        path = Path(hf_hub_download(DATASET, "competition-observations.parquet", repo_type="dataset",
+                                    revision=revision))
+        if path.resolve() in seen:  # same file content as a revision already tried
+            continue
+        seen.add(path.resolve())
+        observations = pd.read_parquet(path)
+        context = prepare_context(observations)
+        recomputed = score_competition(pred_frame, context)
+        reason = mismatch(recomputed, record)
+        if reason is None:
+            break
+    else:
+        raise AssertionError(reason)
     predicted = align_predictions(pred_frame, context)
     replaced = ~np.isfinite(predicted) | (predicted <= 0)
     predicted = np.where(replaced, context["persistence"][:, None], predicted)  # the scorer's own replacement rule
@@ -110,7 +137,8 @@ def load(member: str, experiment: str, submitted_utc: str) -> dict:
     trimmed.loc[pd.to_datetime(trimmed["timestamp_utc"], utc=True).isin(pd.to_datetime(list(F3_PEAKS), utc=True)),
                 "speed_kms"] = np.nan
     without_peaks = score_competition(pred_frame, prepare_context(trimmed))["f3"]["by_lead"]
-    return dict(record=record, recomputed=recomputed, origins=origins, period=context["period"],
+    return dict(record=record, observation_revision=revision, recomputed=recomputed, origins=origins,
+                period=context["period"],
                 predicted=predicted, replaced=replaced, truth=context["truth"], history=history,
                 without_peaks=without_peaks, months=np.asarray((origins + pd.Timedelta(hours=1)).strftime("%Y-%m")))
 
@@ -236,7 +264,7 @@ def readme(args, data: dict, diagnostic: dict, outputs: list) -> str:
 
 작성자 **{args.member}**의 `{args.experiment}`입니다(제출 `{args.submitted_utc}`). {rank}Total S **{sc['total']['s']:.2f}**입니다.
 
-이 페이지는 리더보드 dataset에 저장된 **제출 예측 자체**를 리더보드 채점기(`leaderboard/scorer/competition.py`, `{VERSION}`)로 다시 채점해 그렸습니다. 관측은 기록이 채점된 dataset revision `{rec['competition_dataset_revision'][:10]}`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
+이 페이지는 리더보드 dataset에 저장된 **제출 예측 자체**를 리더보드 채점기(`leaderboard/scorer/competition.py`, `{VERSION}`)로 다시 채점해 그렸습니다. 관측은 기록이 채점된 dataset revision `{data['observation_revision'][:10]}`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
 
 | 구간 | S | TIMSE | RMSE | tRMSE | bias | 채점 origin | 유효 pair | persistence 대체 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -248,7 +276,7 @@ def readme(args, data: dict, diagnostic: dict, outputs: list) -> str:
 
 > {description}
 
-{arch_line}- 학습 데이터 종료: F1 {rec['f1_training_data_end_utc']}, F2 {rec['f2_training_data_end_utc']}, F3 {rec['f3_training_data_end_utc']}
+{arch_line}- 학습 데이터 종료: F1 {rec.get('f1_training_data_end_utc', '—')}, F2 {rec.get('f2_training_data_end_utc', '—')}, F3 {rec.get('f3_training_data_end_utc', '—')}
 
 ## Lead 곡선
 
@@ -314,7 +342,7 @@ def main() -> None:
         "board": {"rank": args.rank, "ranked_rows": args.rank_total, "space_revision": args.board_revision},
         "sources": {"dataset": DATASET, "record_and_predictions": "stored result record and its prediction parquet",
                     "observations": {"file": "competition-observations.parquet",
-                                     "revision": rec["competition_dataset_revision"]}},
+                                     "revision": data["observation_revision"]}},
         "verification": {
             "tolerance": 1e-9, "all_equal_to_record": True,
             "scores": {s: {m: data["recomputed"][s][m] for m in METRICS + ("n_pairs", "n_origins",
