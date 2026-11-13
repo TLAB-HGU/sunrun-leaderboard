@@ -20,8 +20,8 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from module import common  # noqa: E402
-from module.common import CUTOFFS, KEYS, RESULT, SEEDS, file_identity as identity, write_json  # noqa: E402
+from _module import common  # noqa: E402
+from _module.common import CUTOFFS, KEYS, RESULT, SEEDS, file_identity as identity, write_json  # noqa: E402
 
 EXPERIMENT = 'vanila_emsemble'
 MATCH_FIELDS = ('rounds', 'block', 'feature_count', 'expanded_feature_count',

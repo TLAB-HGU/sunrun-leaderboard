@@ -12,7 +12,7 @@ This one file runs the whole baseline end to end:
   4. score  official scorer leaderboard/scorer/competition.py; labels are used only here
 
 There are no trained weights: the forecast is a fixed formula of the input series.
-Outputs (research/result/mean_reversion/ unless --out is given; runner research/module/baseline.py):
+Outputs (research/result/mean_reversion/ unless --out is given; runner research/_module/baseline.py):
   results/predictions.parquet, results/score.json
   logs/run.jsonl   every step, one JSON object per line
 
@@ -32,7 +32,7 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
-from module import baseline  # noqa: E402
+from _module import baseline  # noqa: E402
 
 EXPERIMENT = 'mean_reversion'
 HORIZON_HOURS = 72

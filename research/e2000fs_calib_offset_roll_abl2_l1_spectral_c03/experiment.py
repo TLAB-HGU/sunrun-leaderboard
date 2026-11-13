@@ -3,7 +3,7 @@
 The calib_offset_roll recipe (30 features) with the spectral loss coefficient raised from
 0.1 to 0.3. Source runs: golab2 sunrun-offset-roll-ablation2-20261105/runs/l1_spectral_c03_s4{2,3,4}.
 
-Usage (GBM: CPU only; the shared runner is research/module/gbm.py):
+Usage (GBM: CPU only; the shared runner is research/_module/gbm.py):
   CUDA_VISIBLE_DEVICES= python experiment.py --threads 4             # all seeds, F1/F2/F3, mean3, score
   CUDA_VISIBLE_DEVICES= python experiment.py --predict-only          # inference from weights/
   CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR       # 2-round wiring check
@@ -22,7 +22,7 @@ for _key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS'):
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
-from module import gbm, objectives  # noqa: E402
+from _module import gbm, objectives  # noqa: E402
 
 EXPERIMENT = 'e2000fs_calib_offset_roll_abl2_l1_spectral_c03_mean3'
 CONSTANT = ['v_lag0', 'ace_speed_kms_last', 'ace_density_cm3_last', 'ace_density_cm3_m6',

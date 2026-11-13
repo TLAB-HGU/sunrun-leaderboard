@@ -10,14 +10,14 @@
 !/research
 /research/*
 # research/{board name}/ (layout of 2026-11-13): experiment.py, README.md and visualization/ are tracked;
-# weights/ stays local. Shared code lives in research/module/*.py; each row's results/ and logs/ live in
+# weights/ stays local. Shared code lives in research/_module/*.py; each row's results/ and logs/ live in
 # research/result/{board name}/.
 !/research/*/
 /research/*/*
 !/research/*/experiment.py
 !/research/*/README.md
 !/research/*/visualization/
-!/research/module/*.py
+!/research/_module/*.py
 !/research/result/*/
 /research/*/weights/
 /research/**/__pycache__/

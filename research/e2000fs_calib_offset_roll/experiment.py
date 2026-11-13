@@ -7,7 +7,7 @@ request (2026-11-10). Prior model + frozen per-lead offset (0.25 x mean residual
 training data only), clip [1, 3000], three 24-lead XGBoost blocks x 900 rounds. Source runs:
 research/e2000fs_calib_offset_roll_no_spectral_20261110/runs/no_spectral_s4{2,3,4}.
 
-Usage (GBM: CPU only; the shared runner is research/module/gbm.py):
+Usage (GBM: CPU only; the shared runner is research/_module/gbm.py):
   CUDA_VISIBLE_DEVICES= python experiment.py --threads 4             # all seeds, F1/F2/F3, mean3, score
   CUDA_VISIBLE_DEVICES= python experiment.py --predict-only          # inference from weights/
   CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR       # 2-round wiring check
@@ -26,7 +26,7 @@ for _key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS'):
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
-from module import gbm, objectives  # noqa: E402
+from _module import gbm, objectives  # noqa: E402
 
 EXPERIMENT = 'e2000fs_calib_offset_roll'
 PARENT_CONSTANT = ['v_lag0', 'ace_speed_kms_last', 'ace_density_cm3_last', 'ace_density_cm3_m6',

@@ -37,7 +37,7 @@ python research/naive/experiment.py
 
 ## 2026-11-13 레이아웃 변경 (중복 제거)
 
-- 공용 코드를 `research/module/`로 옮겼습니다. 이 행이 쓰는 모듈: `baseline`.
+- 공용 코드를 `research/_module/`로 옮겼습니다. 이 행이 쓰는 모듈: `baseline`.
 - `results/`와 `logs/`는 `research/result/naive/`로 옮겼습니다. 위 본문에 나오는 `results/…`, `logs/…` 경로는 이 위치 기준입니다. `weights/`와 `visualization/`은 이 폴더에 그대로 있습니다.
 - `--out`을 주지 않으면 `research/result/naive/`에 씁니다. `--out DIR`을 주면 예전과 같이 `DIR/results`, `DIR/logs`, `DIR/weights`에 씁니다(재현 스크립트 호환).
 - 검증: 재실행한 `predictions.parquet`이 기존과 완전히 같고 S도 같습니다. 예전 생성본 `leaderboard_predictions.parquet`·`leaderboard_score.json`은 삭제했습니다.

@@ -4,7 +4,7 @@ Fresh 900-round XGBoost models use training-only TIMSE coefficients with
 per-lead mean-one Hessian scale. The 31-source / 215-expanded-feature offset-roll inputs, prior/full
 split, training-only frozen per-lead offset and clipping are retained.
 
-Usage (GBM: CPU only; the shared runner is research/module/gbm.py):
+Usage (GBM: CPU only; the shared runner is research/_module/gbm.py):
   CUDA_VISIBLE_DEVICES= python experiment.py --threads 4             # all seeds, F1/F2/F3, mean3, score
   CUDA_VISIBLE_DEVICES= python experiment.py --predict-only          # inference from weights/
   CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR       # 2-round wiring check
@@ -23,7 +23,7 @@ for _key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS'):
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
-from module import gbm  # noqa: E402
+from _module import gbm  # noqa: E402
 
 EXPERIMENT = 'vanila_timse'
 PARENT_CONSTANT = ['v_lag0', 'ace_speed_kms_last', 'ace_density_cm3_last', 'ace_density_cm3_m6',
@@ -40,7 +40,7 @@ VARYING = ['rec26', 'rec27', 'rec28', 'rec_mean', 'strip_v350_logmed', 'strip_v4
 
 import numpy as np  # noqa: E402
 
-from module.objectives import timse_coefficients  # noqa: E402
+from _module.objectives import timse_coefficients  # noqa: E402
 
 
 def make_objective(target):

@@ -8,7 +8,7 @@ gradient = w * error, hessian = w. sigma and scale are the loc = 0 maximum-likel
 (unfilled) targets of each period's own training rows, so every period has its own pre-cutoff CDF
 (function form from analysis/solar_wind_cdf_approx_2025_2026.ipynb; its 2025-2026 constants are not used).
 
-Usage (GBM: CPU only; the shared runner is research/module/gbm.py):
+Usage (GBM: CPU only; the shared runner is research/_module/gbm.py):
   CUDA_VISIBLE_DEVICES= python experiment.py --threads 4             # all seeds, F1/F2/F3, mean3, score
   CUDA_VISIBLE_DEVICES= python experiment.py --predict-only          # inference from weights/
   CUDA_VISIBLE_DEVICES= python experiment.py --smoke --out DIR       # 2-round wiring check
@@ -27,7 +27,7 @@ for _key in ('OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'OMP_NUM_THREADS'):
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
-from module import gbm, objectives  # noqa: E402
+from _module import gbm, objectives  # noqa: E402
 
 EXPERIMENT = 'e2000fs_calib_offset_roll_CDF_1p3F'
 PARENT_CONSTANT = ['v_lag0', 'ace_speed_kms_last', 'ace_density_cm3_last', 'ace_density_cm3_m6',

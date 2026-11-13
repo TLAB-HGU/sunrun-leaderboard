@@ -73,10 +73,10 @@
 ---
 
 ### 4. 구현 구조
-- **보드 행 전용 레이아웃 (2026-11-12 사용자 지시, 2026-11-13 module/result 분리):** `research/`에는 리더보드에 보이는 행(진행·대기 행 포함)의 폴더와, 공용 코드 `research/module/`, 산출물 `research/result/`만 둔다.
+- **보드 행 전용 레이아웃 (2026-11-12 사용자 지시, 2026-11-13 module/result 분리):** `research/`에는 리더보드에 보이는 행(진행·대기 행 포함)의 폴더와, 공용 코드 `research/_module/`, 산출물 `research/result/`만 둔다.
     - 폴더 이름은 보드에 표시되는 실험 이름과 같게 한다(날짜 접미사·`_mean3` 같은 숨김 접미사를 붙이지 않는다). 제출 ID는 `experiment.py`의 `EXPERIMENT`에 둔다.
     - 실험 폴더 `research/{실험}/` 구성은 `experiment.py`(그 실험 고유 부분만), `README.md`, `visualization/`, `weights/`(로컬 전용)뿐이며 하위 폴더를 더 만들지 않는다.
-    - 여러 실험이 쓰는 코드는 `research/module/`(`common`·`table`·`calibration`·`objectives`·`continuation`·`gbm`·`baseline`)에 두고, `experiment.py`는 `sys.path`에 `research/`를 넣어 import한다. GBM 행은 `gbm.GBMSpec`(특징·목적함수·보정 설정)을 선언하고 `gbm.main`을 호출한다.
+    - 여러 실험이 쓰는 코드는 `research/_module/`(`common`·`table`·`calibration`·`objectives`·`continuation`·`gbm`·`baseline`)에 두고, `experiment.py`는 `sys.path`에 `research/`를 넣어 import한다. GBM 행은 `gbm.GBMSpec`(특징·목적함수·보정 설정)을 선언하고 `gbm.main`을 호출한다.
     - 산출물은 `research/result/{실험}/results/`(`{s42,s43,s44,mean3}_predictions.parquet`·`_score.json`, 베이스라인은 `predictions.parquet`·`score.json`)와 `research/result/{실험}/logs/`(`*.jsonl`, `F{n}_s{seed}_metadata.json`, 영수증 json)에 둔다. `--out`을 주지 않은 보드 실행의 기본 출력이 이 위치다.
     - `--out DIR`(캠페인 run, `scripts/` 재현 래퍼)이면 `DIR/results/`, `DIR/logs/`, `DIR/weights/`와 sunrun용 `DIR/F{n}_metadata.json`에 쓴다. 이 계약은 LB 재현 스크립트가 의존하므로 바꾸지 않는다.
     - 파일 이름: `weights/F{n}_s{seed}.npz`, `visualization/`은 `tools/submission_viz.py` 출력.
@@ -84,7 +84,7 @@
     - controller·publish·테스트 스크립트, `runs/`, `registry.json` 같은 캠페인 실행 파일과 대조군·게이트 미통과 run은 `research/` 밖(`~/sunrun-{캠페인}/`)에 두고, 게시가 끝나면 최종 산출물만 위 레이아웃으로 옮긴다.
     - 보드 행과 무관한 1회성 스크립트·분석·캐시는 repo에 남기지 않는다.
 - 스크립트 구성:
-    - `research/{실험}/experiment.py`는 `research/module/`의 공용 코드와 함께 데이터 로더, 특징 생성, 학습, 검증, 예측 조립 및 아티팩트 기록을 end-to-end로 실행할 것.
+    - `research/{실험}/experiment.py`는 `research/_module/`의 공용 코드와 함께 데이터 로더, 특징 생성, 학습, 검증, 예측 조립 및 아티팩트 기록을 end-to-end로 실행할 것.
     - **단일 아키텍처 원칙 (2026-11-05 사용자 지시):** 실험별 `experiment.py`(`runs/{이름}/experiment.py` 포함)에는 그 실험 아키텍처가 실제로 실행하는 코드만 남긴다.
         - 다른 실험의 분기(`if experiment == ...`/`endswith(...)`), 미사용 컴포넌트·헬퍼·상수·import, 여러 실험을 고르는 `SUPPORTED` 목록을 넣지 않는다. `--experiment`는 해당 실험 이름 하나만 받는다(기본값으로 지정 가능).
         - 공용 러너(예: `pooling.py`, `calib11.py`)에서 실험을 떼어낼 때는 그 실험의 실행 경로만 복사하고, 정리 전 코드와 smoke 실행 예측·상태 산출물이 동일한지 확인한 뒤 교체한다.
