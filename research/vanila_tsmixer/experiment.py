@@ -1,11 +1,14 @@
-"""vanila_tsmixer — TSMixer on 5-day hourly sequences, unweighted MSE, mean of seeds 42/43/44.
+"""vanila_tsmixer — TSMixer on 5-day hourly sequences plus the XGBoost summary features, unweighted MSE,
+seeds 42/43/44.
 
-PyTorch auxiliary-model experiment (replacement ablation of vanila_mse: architecture + input representation).
-Input (data-v2/input/df_ts.parquet): for each origin one (120 h x 38 channel) tensor of ACE in-situ series, the
-27-day recurrence, ENLIL arrival features and the longitude sweep of one SUVI frame. Two mixer blocks alternate
-time-mixing and feature-mixing MLPs (Chen et al. 2023, arXiv 2303.06053) and a temporal projection gives the 72-lead
-speed forecast. Implementation: the `pytorch-tsmixer` package (torchtsmixer.TSMixer).
-The vanila_mse protocol is retained: prior/full split, training-only frozen per-lead offset and clipping.
+PyTorch auxiliary-model experiment (replaced on the board 2026-11-17; the first version is described in README.md).
+Inputs: the 120 h x 38 channel tensor from data-v2/input/df_ts.parquet (ACE in-situ series, 27-day recurrence, ENLIL
+arrival features, longitude sweep of one SUVI frame) and the 31 summary features of the XGBoost row vanila_mse
+(research/_module/summary.py). The extended TSMixer with auxiliary information (Chen et al. 2023, arXiv 2303.06053;
+torchtsmixer.TSMixerExt from pytorch-tsmixer 0.2.0) takes the 8 per-lead features as known future features and the 23
+constants as static features (two mixer blocks, ff_dim 64, hidden 64, dropout 0.7, batch norm). The forecast is the
+last observed speed plus its output (persistence residual). vanila_mse protocol: prior/full split, training-only
+frozen per-lead offset, clip.
 
 Usage (DL: GPU only; the shared runner is research/_module/seq.py):
   CUDA_VISIBLE_DEVICES=0 python experiment.py --device cuda --threads 2    # all seeds, F1/F2/F3, mean3, score
@@ -23,27 +26,30 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
 import torch  # noqa: E402
-from torchtsmixer import TSMixer  # noqa: E402
+from torchtsmixer import TSMixerExt  # noqa: E402
 
-from _module import seq  # noqa: E402
+from _module import seq, summary  # noqa: E402
 
 EXPERIMENT = 'vanila_tsmixer'
-HYPERPARAMETERS = dict(num_blocks=2, ff_dim=64, dropout_rate=0.3, activation_fn='relu', normalize_before=True,
-                       norm_type='batch', output_channels=1)
+CONSTANTS, LEAD_FEATURES = len(summary.CONSTANT), len(summary.VARYING)
+HYPERPARAMETERS = dict(num_blocks=2, ff_dim=64, dropout_rate=0.7, activation_fn='relu', normalize_before=True,
+                       norm_type='batch', output_channels=1, hidden_channels=64, extra_channels=LEAD_FEATURES,
+                       static_channels=CONSTANTS)
 
 
 class Model(torch.nn.Module):
     def __init__(self, channels, speed):
         super().__init__()
-        self.net = TSMixer(sequence_length=seq.LOOKBACK, prediction_length=seq.H, input_channels=channels,
-                           **HYPERPARAMETERS)
+        self.net = TSMixerExt(sequence_length=seq.LOOKBACK, prediction_length=seq.H, input_channels=channels,
+                              **HYPERPARAMETERS)
 
-    def forward(self, x):
-        return self.net(x)[:, :, 0]
+    def forward(self, x, constant, lead):
+        history = lead.new_zeros(len(x), seq.LOOKBACK, LEAD_FEATURES)
+        return self.net(x, history, lead, constant)[:, :, 0]
 
 
 SPEC = seq.SeqSpec(experiment=EXPERIMENT, family='tsmixer', build_model=Model, hyperparameters=HYPERPARAMETERS,
-                   libraries=('pytorch-tsmixer',))
+                   libraries=('pytorch-tsmixer',), persistence_residual=True, summary=True)
 
 
 if __name__ == '__main__':

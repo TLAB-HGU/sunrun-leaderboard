@@ -17,6 +17,13 @@ With SeqSpec.persistence_residual the forecast is the last observed speed of the
 (the network learns the departure from persistence); without it the network outputs the speed itself.
 With SeqSpec.tail_weight the squared error of targets >= 550 km/s weighs 4 (objectives.tail_weights, normalised to
 mean 1 per lead), in training and in the early-stopping criterion on the calibration window.
+With SeqSpec.summary the model also receives the XGBoost rows' summary features (research/_module/summary.py):
+model(x, constant (B, 23), per lead (B, 72, 8)) instead of model(x).
+With SeqSpec.swa_start the network is the running average of the epoch-end weights from that epoch on
+(torch.optim.swa_utils.AveragedModel, batch-norm statistics recomputed on the training rows); early stopping and the
+full model use the averaged weights. With SeqSpec.lead_checkpoints each lead bucket (h1-6, h7-24, h25-48, h49-72)
+gets its own early-stopping epoch on the calibration window; the full model keeps a snapshot at each of those epochs
+and the forecast of a bucket comes from its snapshot.
 
 For each seed (42, 43, 44) and period (F1, F2, F3), the vanila_mse protocol with a network in place of the boosters:
 a prior model on the reference window (origins + 144 h <= last 3 months) with epoch early stopping on the calibration
@@ -47,6 +54,7 @@ import pandas as pd
 import torch
 
 from . import calibration as cal
+from . import summary as summary_features
 from .objectives import tail_weights
 from .common import (CUTOFFS, H, QUERY_COUNTS, ROOT, SEEDS, file_identity, git_commit, launch, mean3,
                      observations_path, output_paths, prediction_frame, run_logs, score, versions, write_json,
@@ -88,6 +96,9 @@ class SeqSpec:
     libraries: tuple = ()                # extra distributions whose versions are recorded
     persistence_residual: bool = False   # forecast = last observed speed + network output
     tail_weight: bool = False            # squared error of targets >= 550 km/s weighs 4 (objectives.tail_weights)
+    summary: bool = False                # model(x, constant, per-lead) with the XGBoost rows' summary features
+    swa_start: int | None = None         # average the epoch-end weights from this epoch on (SWA)
+    lead_checkpoints: bool = False       # one early-stopping epoch and weight snapshot per lead bucket
     alpha: float = cal.ALPHA
     offset_window: int = cal.OFFSET_WINDOW
     threads: int = 2
@@ -101,7 +112,7 @@ def strip_columns(stat):
 class Table:
     """df_ts.parquet as hourly arrays: unscaled series channels, stripe cube, frame walk-back and filled labels."""
 
-    def __init__(self, path, logs):
+    def __init__(self, path, logs, summary=False):
         began = time.perf_counter()
         columns = ['time', 'train_origin', 'query_origin', 'period', *[f'fit_{p}' for p in CUTOFFS], 'y',
                    *ACE, *ENLIL, 'img_age_h', *[c for stat in STRIP_STATS for c in strip_columns(stat)]]
@@ -131,10 +142,17 @@ class Table:
         self.frame_age = np.where((latest >= 0) & (position - latest <= WALK_BACK), position - latest, -1)
         observed = frame['y'].to_numpy(np.float64)
         self.y_filled = pd.Series(observed).ffill().to_numpy()
+        self.summary = None
+        if summary:
+            first = int(np.flatnonzero(frame['train_origin'].to_numpy() | frame['query_origin'].to_numpy())[0])
+            constant, varying = summary_features.build(path, first)
+            self.summary = (summary_features.scaled(constant).astype(np.float32), varying)
         logs('data', 'table_ready', source=file_identity(path), rows=len(frame), start=str(self.time[0]),
              end=str(self.time[-1]), channels=CHANNELS, channel_count=len(CHANNELS),
              frames_present=float(have.mean()), frame_within_walk_back=float((self.frame_age >= 0).mean()),
              y_missing=float(np.isnan(observed).mean()),
+             **(dict(summary_constant=summary_features.CONSTANT, summary_varying=summary_features.VARYING,
+                     summary_log10=summary_features.LOG10) if summary else {}),
              policy=f'ACE causal ffill <= {FILL_LIMIT} h, log10 of {ACE_LOG}; recurrence = filled speed at '
                     f't + {H} h - 26/27/28 d; image = stripes 0..{LOOKBACK - 1} of the bin-O frame or of the latest frame '
                     f'within {WALK_BACK} h shifted by its age; training y ffill on the target time; '
@@ -176,6 +194,13 @@ class Windows:
         self.steps = torch.arange(-(LOOKBACK - 1), 1, device=device)
         self.sweep = torch.arange(LOOKBACK - 1, -1, -1, device=device) - STRIP_FIRST_K
         self.y_mean, self.y_std = float(norm['y_mean']), float(norm['y_std'])
+        self.summary = None
+        if 'summary' in norm:
+            stats = {key: np.asarray(value, np.float32) for key, value in norm['summary'].items()}
+            constant = (table.summary[0] - stats['constant_mean'][None]) / stats['constant_std'][None]
+            varying = (table.summary[1] - stats['varying_mean'][None, None]) / stats['varying_std'][None, None]
+            self.summary = (torch.from_numpy(np.nan_to_num(constant, nan=0.)).to(device),
+                            torch.from_numpy(np.nan_to_num(varying, nan=0.)).to(device))
         # last-step speed channel -> standardized target units
         self.speed_scale = float(std[SPEED]) / self.y_std
         self.speed_shift = (float(mean[SPEED]) - self.y_mean) / self.y_std
@@ -193,6 +218,15 @@ class Windows:
         return torch.cat([series, image, mask], 2)
 
 
+def inputs(windows, index):
+    """Model inputs of a batch of origins: (x,) or, with summary features, (x, constant, per lead)."""
+    x = windows.batch(index)
+    if windows.summary is None:
+        return (x,)
+    index = torch.as_tensor(index, device=windows.device)
+    return x, windows.summary[0][index], windows.summary[1][index]
+
+
 def fit_norm(table, index):
     """Channel and target statistics of the training span only (first lookback step .. last training origin)."""
     first, last = index.min() - (LOOKBACK - 1), index.max()
@@ -207,8 +241,17 @@ def fit_norm(table, index):
     if not np.isfinite(mean).all() or not np.isfinite(std).all() or (std <= 0).any():
         raise ValueError('Degenerate channel statistics')
     targets = table.targets(index)
-    return dict(channels=CHANNELS, mean=mean.tolist(), std=std.tolist(), y_mean=float(targets.mean()),
+    norm = dict(channels=CHANNELS, mean=mean.tolist(), std=std.tolist(), y_mean=float(targets.mean()),
                 y_std=float(targets.std()), span_start=str(table.time[first]), span_end=str(table.time[last]))
+    if table.summary is not None:
+        # statistics over the training origins only
+        constant, varying = (values[index].astype(np.float64) for values in table.summary)
+        stats = dict(constant_mean=np.nanmean(constant, 0), constant_std=np.nanstd(constant, 0),
+                     varying_mean=np.nanmean(varying, (0, 1)), varying_std=np.nanstd(varying, (0, 1)))
+        if not all(np.isfinite(v).all() for v in stats.values()) or any((stats[k] <= 0).any() for k in stats if k.endswith('std')):
+            raise ValueError('Degenerate summary-feature statistics')
+        norm['summary'] = {key: value.tolist() for key, value in stats.items()}
+    return norm
 
 
 def seed_everything(seed):
@@ -227,15 +270,59 @@ def load_state(model, arrays, device):
     return model.to(device).eval()
 
 
-def forward(spec, model, windows, x):
-    """Standardized 72-lead forecast of one batch; adds the window's last observed speed for residual rows."""
-    output = model(x)
+def forward(spec, model, windows, batch):
+    """Standardized 72-lead forecast of one batch of inputs(); adds the window's last observed speed for residual rows."""
+    x = batch[0]
+    output = model(*batch)
     if spec.persistence_residual:
         output = output + (x[:, -1, SPEED] * windows.speed_scale + windows.speed_shift)[:, None]
     return output
 
 
 LEAD_BUCKETS = {'h1_6': slice(0, 6), 'h7_24': slice(6, 24), 'h25_48': slice(24, 48), 'h49_72': slice(48, 72)}
+
+
+class LeadComposite(torch.nn.Module):
+    """One network per lead bucket; the forecast of a bucket's leads comes from that bucket's network."""
+
+    def __init__(self, networks):
+        super().__init__()
+        self.networks = torch.nn.ModuleList(networks)
+
+    def forward(self, *batch):
+        outputs = [network(*batch) for network in self.networks]
+        return torch.cat([output[:, leads] for output, leads in zip(outputs, LEAD_BUCKETS.values())], 1)
+
+
+def network(spec):
+    """The inference network of a row: one model, or one per lead bucket for lead_checkpoints rows."""
+    if spec.lead_checkpoints:
+        return LeadComposite([spec.build_model(len(CHANNELS), SPEED) for _ in LEAD_BUCKETS])
+    return spec.build_model(len(CHANNELS), SPEED)
+
+
+def composite_state(states):
+    """State arrays of a LeadComposite from one state per lead bucket."""
+    return {f'networks.{i}.{name}': value for i, state in enumerate(states) for name, value in state.items()}
+
+
+@torch.no_grad()
+def update_batch_norm(spec, model, windows, rows, batch_size):
+    """Recompute batch-norm running statistics of averaged weights on the training rows (cumulative average, as
+    torch.optim.swa_utils.update_bn) without touching the random stream of the training loop."""
+    norms = [m for m in model.modules() if isinstance(m, torch.nn.modules.batchnorm._BatchNorm)]
+    if not norms:
+        return
+    momenta = {m: m.momentum for m in norms}
+    for m in norms:
+        m.reset_running_stats()
+        m.momentum = None
+    with torch.random.fork_rng(devices=[windows.device] if windows.device.type == 'cuda' else []):
+        model.train()
+        for start in range(0, len(rows), batch_size):
+            forward(spec, model, windows, inputs(windows, rows[start:start + batch_size]))
+    for m in norms:
+        m.momentum = momenta[m]
 
 
 def by_lead(squared):
@@ -246,7 +333,7 @@ def by_lead(squared):
 @torch.no_grad()
 def predict(spec, model, windows, index, batch_size=1024):
     model.eval()
-    parts = [forward(spec, model, windows, windows.batch(index[start:start + batch_size]))
+    parts = [forward(spec, model, windows, inputs(windows, index[start:start + batch_size]))
              for start in range(0, len(index), batch_size)]
     values = torch.cat(parts).double().cpu().numpy() * windows.y_std + windows.y_mean
     if values.shape != (len(index), H) or not np.isfinite(values).all():
@@ -256,10 +343,22 @@ def predict(spec, model, windows, index, batch_size=1024):
 
 def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, record):
     """MSE training. With a holdout: early stopping, returns the best-epoch weights and E*. Without: exactly
-    `epochs` epochs, returns the final weights."""
+    `epochs` epochs, returns the final weights. With swa_start the weights are the running average of the epoch-end
+    weights from that epoch on. With lead_checkpoints, E* is one epoch per lead bucket ({bucket: epoch}) and the
+    weights are a LeadComposite of the snapshots at those epochs; `epochs` is then that mapping for the full model."""
     settings = spec.training
     seed_everything(seed)
     model = spec.build_model(len(CHANNELS), SPEED).to(windows.device)
+    buckets = list(LEAD_BUCKETS)
+    snapshots = None
+    if spec.lead_checkpoints and holdout is None:
+        snapshots, epochs = dict(epochs), max(epochs.values())
+    averaged, swa_start = None, None
+    if spec.swa_start is not None:
+        swa_start = min(spec.swa_start, epochs)
+        averaged = torch.optim.swa_utils.AveragedModel(model)
+    lead_best = {name: (np.inf, 0, None) for name in buckets}
+    saved = {}
     optimizer = torch.optim.AdamW(model.parameters(), lr=settings['learning_rate'],
                                   weight_decay=settings['weight_decay'])
     target = torch.from_numpy(((table.targets(index) - windows.y_mean) / windows.y_std).astype(np.float32)).to(windows.device)
@@ -282,7 +381,7 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
             pick = order[start:start + settings['batch_size']]
             if len(pick) < 2:
                 continue
-            output = forward(spec, model, windows, windows.batch(rows[pick]))
+            output = forward(spec, model, windows, inputs(windows, rows[pick]))
             if weights is None:
                 loss = torch.nn.functional.mse_loss(output, target[pick])
             else:
@@ -295,25 +394,56 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
         entry = dict(epoch=epoch, train_mse=total / count)
         if not np.isfinite(entry['train_mse']):
             raise ValueError('Training diverged')
-        if holdout is not None:
-            model.eval()
+        current = model
+        if averaged is not None:
+            if epoch < swa_start:
+                current = None
+            else:
+                averaged.update_parameters(model)
+                update_batch_norm(spec, averaged.module, windows, rows, settings['batch_size'])
+                current = averaged.module
+                entry['averaged_epochs'] = epoch - swa_start + 1
+        if snapshots is not None:
+            for name in buckets:
+                if snapshots[name] == epoch:
+                    saved[name] = copy.deepcopy(state_arrays(current))
+        if holdout is not None and current is not None:
+            current.eval()
             with torch.no_grad():
-                error = torch.cat([(forward(spec, model, windows, windows.batch(holdout[s:s + 1024]))
+                error = torch.cat([(forward(spec, current, windows, inputs(windows, holdout[s:s + 1024]))
                                     - held[s:s + 1024]) ** 2 for s in range(0, len(holdout), 1024)])
             entry['holdout_mse'] = float(error.mean())
             entry['holdout_by_lead'] = by_lead(error)
             criterion = entry['holdout_mse']
             if held_weights is not None:
                 entry['holdout_loss'] = criterion = float((held_weights * error).mean())
-            if criterion < best:
-                best, best_epoch, best_state = criterion, epoch, copy.deepcopy(state_arrays(model))
+            if spec.lead_checkpoints:
+                for name in buckets:
+                    if entry['holdout_by_lead'][name] < lead_best[name][0]:
+                        lead_best[name] = (entry['holdout_by_lead'][name], epoch, copy.deepcopy(state_arrays(current)))
+            elif criterion < best:
+                best, best_epoch, best_state = criterion, epoch, copy.deepcopy(state_arrays(current))
         history.append(entry)
+        if spec.lead_checkpoints and holdout is not None:
+            logs(stream, 'epoch', **record, **entry, best_epoch={n: lead_best[n][1] or None for n in buckets},
+                 seconds=round(time.perf_counter() - began, 3))
+            if all(epoch - lead_best[n][1] >= settings['patience'] for n in buckets if lead_best[n][1]) \
+                    and all(lead_best[n][1] for n in buckets):
+                break
+            continue
         logs(stream, 'epoch', **record, **entry, best_epoch=best_epoch or None,
              seconds=round(time.perf_counter() - began, 3))
-        if holdout is not None and epoch - best_epoch >= settings['patience']:
+        started = best_epoch if swa_start is None else max(best_epoch, swa_start - 1)
+        if holdout is not None and epoch - started >= settings['patience']:
             break
     if holdout is None:
-        return state_arrays(model), epochs, history
+        if snapshots is not None:
+            return composite_state([saved[name] for name in buckets]), dict(snapshots), history
+        final = model if averaged is None else averaged.module
+        return state_arrays(final), epochs, history
+    if spec.lead_checkpoints:
+        return (composite_state([lead_best[name][2] for name in buckets]),
+                {name: lead_best[name][1] for name in buckets}, history)
     return best_state, best_epoch, history
 
 
@@ -329,8 +459,10 @@ def fit_report(spec, table, windows, model, reference, calibration, prior, histo
         last = windows.batch(index)[:, -1, SPEED].double().cpu().numpy() * windows.speed_scale + windows.speed_shift
         report[name] = dict(model=by_lead(((forecast - windows.y_mean) / windows.y_std - truth) ** 2),
                             persistence=by_lead((last[:, None] - truth) ** 2), training_mean=by_lead(truth ** 2))
-    chosen = history[best_epoch - 1]['holdout_by_lead']
-    report['holdout_over_own_minimum'] = {name: chosen[name] / min(entry['holdout_by_lead'][name] for entry in history)
+    scored = [entry for entry in history if 'holdout_by_lead' in entry]
+    chosen = {name: (history[(best_epoch[name] if isinstance(best_epoch, dict) else best_epoch) - 1]
+                     ['holdout_by_lead'][name]) for name in LEAD_BUCKETS}
+    report['holdout_over_own_minimum'] = {name: chosen[name] / min(entry['holdout_by_lead'][name] for entry in scored)
                                           for name in LEAD_BUCKETS}
     report['epoch'] = best_epoch
     return report
@@ -386,7 +518,7 @@ def train_period(spec, table, period, seed, args, logs, device):
     prior_state, best_epoch, prior_history = train(spec, table, windows, train_index[reference],
                                                    train_index[calibration], max_epochs, seed, logs, stream,
                                                    record('prior'))
-    model = load_state(spec.build_model(len(CHANNELS), SPEED), prior_state, device)
+    model = load_state(network(spec), prior_state, device)
     prior = predict(spec, model, windows, train_index[calibration])
     truth = table.targets(train_index[calibration])
     fit_check = fit_report(spec, table, windows, model, train_index[reference], train_index[calibration], prior,
@@ -394,7 +526,7 @@ def train_period(spec, table, period, seed, args, logs, device):
     offset, rows = cal.estimate_offset(prior, truth, spec.offset_window, spec.alpha, smoke=args.smoke)
     progress['unit'] += 1
     logs(stream, 'fit', **record('prior'), epochs=best_epoch, train_rows=len(reference),
-         holdout_rows=len(calibration), holdout_mse=min(e['holdout_mse'] for e in prior_history),
+         holdout_rows=len(calibration), holdout_mse=min(e['holdout_mse'] for e in prior_history if 'holdout_mse' in e),
          fit_seconds=round(time.perf_counter() - began, 3))
     state = dict(calibration_rows=len(calibration), reference_rows=len(reference),
                  reference_start=str(origins[reference].min()), reference_end=str(origins[reference].max()),
@@ -407,7 +539,7 @@ def train_period(spec, table, period, seed, args, logs, device):
     stage_began = time.perf_counter()
     full_state, epochs, full_history = train(spec, table, windows, train_index[full], None, best_epoch, seed, logs,
                                              stream, record('full'))
-    model = load_state(spec.build_model(len(CHANNELS), SPEED), full_state, device)
+    model = load_state(network(spec), full_state, device)
     tick = time.perf_counter()
     raw = predict(spec, model, windows, query_index)
     seconds = time.perf_counter() - tick
@@ -418,7 +550,7 @@ def train_period(spec, table, period, seed, args, logs, device):
     checkpoint = args.weights / period / f's{seed}.npz'
     save_checkpoint(checkpoint, dict(prior=prior_state, full=full_state), norm, state, epochs)
     weights, saved_norm, _ = load_checkpoint(checkpoint, 'full')
-    replay = predict(spec, load_state(spec.build_model(len(CHANNELS), SPEED), weights, device),
+    replay = predict(spec, load_state(network(spec), weights, device),
                      Windows(table, saved_norm, device), query_index)
     replay_error = float(np.max(np.abs(replay - raw)))
     if replay_error > 1e-3:
@@ -430,6 +562,11 @@ def train_period(spec, table, period, seed, args, logs, device):
     metadata = dict(experiment=spec.experiment, family=spec.family, period=period, seed=seed, smoke=args.smoke,
                     objective=spec.training['loss'], hyperparameters=spec.hyperparameters,
                     persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight, fit_check=fit_check,
+                    **(dict(swa_start=spec.swa_start) if spec.swa_start is not None else {}),
+                    **(dict(lead_buckets={k: [v.start + 1, v.stop] for k, v in LEAD_BUCKETS.items()})
+                       if spec.lead_checkpoints else {}),
+                    **(dict(summary_constant=summary_features.CONSTANT, summary_varying=summary_features.VARYING)
+                       if spec.summary else {}),
                     training=dict(spec.training, seed=seed), epochs=epochs, prior_history=prior_history,
                     full_history=full_history, parameter_count=int(sum(v.size for v in full_state.values())),
                     lookback_hours=LOOKBACK, channel_count=len(CHANNELS), channels=CHANNELS,
@@ -461,7 +598,7 @@ def predict_period(spec, table, period, seed, args, logs, device):
     weights, norm, state = load_checkpoint(checkpoint, 'full')
     if norm['channels'] != CHANNELS:
         raise ValueError('Checkpoint channels differ from this runner')
-    model = load_state(spec.build_model(len(CHANNELS), SPEED), weights, device)
+    model = load_state(network(spec), weights, device)
     tick = time.perf_counter()
     raw = predict(spec, model, Windows(table, norm, device), query_index)
     seconds = time.perf_counter() - tick
@@ -499,11 +636,12 @@ def main(spec, doc, here):
     logs = run_logs(args, spec.experiment)
     launch(logs, args, mode='predict_only' if args.predict_only else ('smoke' if args.smoke else 'train'),
            versions=library_versions(spec), family=spec.family, hyperparameters=spec.hyperparameters,
-           persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight,
+           persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight, summary=spec.summary,
+           swa_start=spec.swa_start, lead_checkpoints=spec.lead_checkpoints,
            training=spec.training, lookback_hours=LOOKBACK, channels=CHANNELS, channel_count=len(CHANNELS),
            alpha=spec.alpha, offset_window=spec.offset_window, cutoffs=CUTOFFS, seeds=args.seeds,
            cuda_visible_devices=os.environ['CUDA_VISIBLE_DEVICES'], gpu=torch.cuda.get_device_name(0))
-    table = Table(args.data, logs)
+    table = Table(args.data, logs, spec.summary)
     observations = None if args.smoke else observations_path(args.observations)
     frames = {}
     for seed in args.seeds:

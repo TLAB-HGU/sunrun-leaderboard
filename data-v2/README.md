@@ -75,10 +75,11 @@ cd /home/t-lab01/sunrun
 - **분할 열**: `train_origin`, `query_origin`, `period`, `fit_F1/F2/F3`. 정의는 `df.parquet`의 `set`/`period`/`fit_P`와 같습니다.
 - **`y`**: 행 `time` = T 라벨의 SWEPAM 속도(status 0, 채움 없음). origin O의 리드 h 정답은 행 O + h의 `y`입니다.
 - **ACE 22열** `ace_*`: 칸 값(라벨 T−1h 행)이고 `df.parquet`의 `_last`와 같은 값입니다. `_m6`/`_m24`·lag 같은 요약은 없습니다(모델이 시계열로 봅니다).
-- **SUVI**: `img_age_h`, `suvi_disk_log_median`, 그리고 칸 T 프레임 한 장의 **경도 stripe 프로파일** `suvi_strip_{logmed,dark,cover}_k{m072…p143}` 648열.
+- **SUVI**: `img_age_h`, `suvi_disk_log_median`, 그리고 칸 T 프레임 한 장의 **경도 stripe 프로파일** `suvi_strip_{logmed,dark,cover}_k{m072…p143}` 648열. 전체 표는 36,503행 × 1,012열이고, 전체 빌드는 worker 20개로 약 1시간 50분 걸립니다.
   - stripe k의 영역은 |경도 − 0.55°/h × (k − `img_age_h`)| ≤ 5°, |위도| ≤ 30°입니다. 서쪽이 +이고, k는 "칸 시각보다 k시간 전에 중앙 자오선을 지난 경도"입니다(k < 0은 앞으로 지날 경도).
   - `logmed`는 유효 픽셀 log1p radiance 중앙값, `dark`는 디스크 중앙값 0.5배 미만 비율, `cover`는 유효 픽셀 비율입니다. `df.parquet`의 `strip_v*`(15° 셀 겹침 가중 평균, h·속도별)와 달리 픽셀에서 직접 계산한 프레임 고유 값입니다.
 - **ENLIL 5열**: `df.parquet`와 같은 정의를 매시 칸에 적용한 값입니다.
+- **프레임 요약 327열**(2026-11-17 추가): 칸 T 프레임의 셀 통계 147열 `suvi_disk_*`/`suvi_lonII_latJ_*`와 어두운 영역 면적 180열 `suvi_t035/t045/t055_*`. `df.parquet`와 같은 코드·같은 이름이고, 둘 다 프레임이 있는 칸에서 값이 같습니다. h별 `strip_v*`는 `lat1` 셀 통계와 `img_age_h`의 함수라 표에 넣지 않고 `research/_module/summary.py`가 계산합니다.
 - **처리하지 않는 것**: `df.parquet`와 같습니다. 앞값 채움, 결측 마스크, 표준화, 프레임 되돌아가기는 `research/_module/seq.py`가 합니다.
 - 노트북의 검증 셀이 같은 origin의 ACE·`img_age_h`·ENLIL·fit 마스크·`y`가 `df.parquet`와 일치하는지 확인합니다.
 

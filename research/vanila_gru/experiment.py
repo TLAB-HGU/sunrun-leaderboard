@@ -1,10 +1,13 @@
-"""vanila_gru — a plain GRU on 5-day hourly sequences, unweighted MSE, mean of seeds 42/43/44.
+"""vanila_gru — GRU on 5-day hourly sequences plus the XGBoost summary features, unweighted MSE, seeds 42/43/44.
 
-PyTorch auxiliary-model experiment (replacement ablation of vanila_mse: architecture + input representation).
-Input (data-v2/input/df_ts.parquet): for each origin one (120 h x 38 channel) tensor of ACE in-situ series, the
-27-day recurrence, ENLIL arrival features and the longitude sweep of one SUVI frame. A two-layer GRU reads the
-sequence and a linear head maps its last hidden state to the 72 leads. The vanila_mse protocol is retained: prior/full
-split, training-only frozen per-lead offset and clipping.
+PyTorch auxiliary-model experiment (replaced on the board 2026-11-17; the first version is described in README.md).
+Inputs: the 120 h x 38 channel tensor from data-v2/input/df_ts.parquet (ACE in-situ series, 27-day recurrence, ENLIL
+arrival features, longitude sweep of one SUVI frame) and the 31 summary features of the XGBoost row vanila_mse
+(23 per-origin constants, 8 per-lead features x 72 leads; research/_module/summary.py). A two-layer GRU (hidden 128,
+dropout 0.1 on the input, 0.5 between the layers) reads the sequence; the flattened summary features pass one hidden
+layer (128, ReLU); both are concatenated, dropped out (0.5) and mapped to the 72 leads. The forecast is the last
+observed speed plus that output (persistence residual). vanila_mse protocol: prior/full split, training-only frozen
+per-lead offset, clip.
 
 Usage (DL: GPU only; the shared runner is research/_module/seq.py):
   CUDA_VISIBLE_DEVICES=0 python experiment.py --device cuda --threads 2    # all seeds, F1/F2/F3, mean3, score
@@ -23,24 +26,35 @@ sys.path.insert(0, str(HERE.parent))
 
 import torch  # noqa: E402
 
-from _module import seq  # noqa: E402
+from _module import seq, summary  # noqa: E402
 
 EXPERIMENT = 'vanila_gru'
-HYPERPARAMETERS = dict(hidden_size=128, num_layers=2, dropout=0.1, head='linear(last hidden state -> 72 leads)')
+CONSTANTS, LEAD_FEATURES = len(summary.CONSTANT), len(summary.VARYING)
+HYPERPARAMETERS = dict(hidden_size=128, num_layers=2, input_dropout=0.1, dropout=0.5, head_dropout=0.5,
+                       head='linear([last hidden state, summary hidden] -> 72 leads)',
+                       output='last observed speed + network output', summary_hidden=128)
 
 
 class GRU(torch.nn.Module):
     def __init__(self, channels, speed):
         super().__init__()
-        self.gru = torch.nn.GRU(channels, HYPERPARAMETERS['hidden_size'], HYPERPARAMETERS['num_layers'],
-                                batch_first=True, dropout=HYPERPARAMETERS['dropout'])
-        self.head = torch.nn.Linear(HYPERPARAMETERS['hidden_size'], seq.H)
+        hidden = HYPERPARAMETERS['hidden_size']
+        self.input_dropout = torch.nn.Dropout(HYPERPARAMETERS['input_dropout'])
+        self.gru = torch.nn.GRU(channels, hidden, HYPERPARAMETERS['num_layers'], batch_first=True,
+                                dropout=HYPERPARAMETERS['dropout'])
+        self.summary = torch.nn.Sequential(
+            torch.nn.Linear(CONSTANTS + seq.H * LEAD_FEATURES, HYPERPARAMETERS['summary_hidden']), torch.nn.ReLU())
+        self.head_dropout = torch.nn.Dropout(HYPERPARAMETERS['head_dropout'])
+        self.head = torch.nn.Linear(hidden + HYPERPARAMETERS['summary_hidden'], seq.H)
 
-    def forward(self, x):
-        return self.head(self.gru(x)[0][:, -1])
+    def forward(self, x, constant, lead):
+        state = self.gru(self.input_dropout(x))[0][:, -1]
+        extra = self.summary(torch.cat([constant, lead.flatten(1)], 1))
+        return self.head(self.head_dropout(torch.cat([state, extra], 1)))
 
 
-SPEC = seq.SeqSpec(experiment=EXPERIMENT, family='gru', build_model=GRU, hyperparameters=HYPERPARAMETERS)
+SPEC = seq.SeqSpec(experiment=EXPERIMENT, family='gru', build_model=GRU, hyperparameters=HYPERPARAMETERS,
+                   persistence_residual=True, summary=True)
 
 
 if __name__ == '__main__':
