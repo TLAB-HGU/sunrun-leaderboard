@@ -62,3 +62,13 @@ git 210883179, xgboost 2.1.4. 산출물은 `~/sunrun-vanila-mse-l27/`에 있고 
   h ≥ 6에서는 제거한 ACE·SUVI·ENLIL·추가 lag 특징이 S를 크게 낮춘다.
 - 판정: 사전 예상대로 B가 A보다 나쁘다(replacement ablation, 기준선 승격 없음). 지속성과 27일 재귀만으로는
   vanila_mse S의 약 81 %(100.8/124.6) 수준이며, 남은 차이는 제거된 특징의 기여다.
+
+## 게시 (2026-11-17, 사용자 요청)
+
+사용자 요청으로 리더보드에 게시했다. 게이트(기존 최고 대비 개선)와는 무관한 replacement ablation이며 기준선을 승격하지 않는다.
+
+- 제출 `20261117T121636072Z`, 공개 보드 22위 / 29 (Space `71177e17cc`), Total S 124.561.
+- 아키텍처 링크: GitHub `bf53a953b` (`research/vanila_mse_l27/experiment.py`), replay 래퍼 `scripts/seongeun/vanila_mse_l27/`.
+- 산출물: weights는 `research/vanila_mse_l27/weights/F{n}/s{seed}.npz`(로컬 전용), results·logs는 `research/result/vanila_mse_l27/`.
+  보드 모드 `--predict-only` 예측이 학습 run 예측과 s42/s43/s44/mean3 모두 완전히 일치했다.
+  submit dry-run의 S와 실제 제출 S가 같고, `visualization/`은 저장된 제출을 다시 채점해 1e-9 이내로 일치할 때만 그렸다.
