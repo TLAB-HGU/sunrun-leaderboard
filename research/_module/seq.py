@@ -13,6 +13,8 @@ Input: data-v2/input/df_ts.parquet (one row per hour bin). For an origin O every
 Channels are standardized with statistics of the period's training span only (stored in the checkpoint).
 
 Target: speed at O+1..O+72; training labels are forward filled on the target time (as vanila_mse). Loss: unweighted MSE.
+With SeqSpec.persistence_residual the forecast is the last observed speed of the window plus the network output
+(the network learns the departure from persistence); without it the network outputs the speed itself.
 
 For each seed (42, 43, 44) and period (F1, F2, F3), the vanila_mse protocol with a network in place of the boosters:
 a prior model on the reference window (origins + 144 h <= last 3 months) with epoch early stopping on the calibration
@@ -81,6 +83,7 @@ class SeqSpec:
     build_model: Callable                # (number of channels, speed channel index) -> nn.Module: (B, 120, C) -> (B, 72)
     hyperparameters: dict                # architecture hyperparameters for logs and metadata
     libraries: tuple = ()                # extra distributions whose versions are recorded
+    persistence_residual: bool = False   # forecast = last observed speed + network output
     alpha: float = cal.ALPHA
     offset_window: int = cal.OFFSET_WINDOW
     threads: int = 2
@@ -169,6 +172,9 @@ class Windows:
         self.steps = torch.arange(-(LOOKBACK - 1), 1, device=device)
         self.sweep = torch.arange(LOOKBACK - 1, -1, -1, device=device) - STRIP_FIRST_K
         self.y_mean, self.y_std = float(norm['y_mean']), float(norm['y_std'])
+        # last-step speed channel -> standardized target units
+        self.speed_scale = float(std[SPEED]) / self.y_std
+        self.speed_shift = (float(mean[SPEED]) - self.y_mean) / self.y_std
         self.device = device
 
     def batch(self, index):
@@ -217,10 +223,27 @@ def load_state(model, arrays, device):
     return model.to(device).eval()
 
 
+def forward(spec, model, windows, x):
+    """Standardized 72-lead forecast of one batch; adds the window's last observed speed for residual rows."""
+    output = model(x)
+    if spec.persistence_residual:
+        output = output + (x[:, -1, SPEED] * windows.speed_scale + windows.speed_shift)[:, None]
+    return output
+
+
+LEAD_BUCKETS = {'h1_6': slice(0, 6), 'h7_24': slice(6, 24), 'h25_48': slice(24, 48), 'h49_72': slice(48, 72)}
+
+
+def by_lead(squared):
+    """Mean squared error of a (rows x 72) array per lead bucket."""
+    return {name: float(squared[:, leads].mean()) for name, leads in LEAD_BUCKETS.items()}
+
+
 @torch.no_grad()
-def predict(model, windows, index, batch_size=1024):
+def predict(spec, model, windows, index, batch_size=1024):
     model.eval()
-    parts = [model(windows.batch(index[start:start + batch_size])) for start in range(0, len(index), batch_size)]
+    parts = [forward(spec, model, windows, windows.batch(index[start:start + batch_size]))
+             for start in range(0, len(index), batch_size)]
     values = torch.cat(parts).double().cpu().numpy() * windows.y_std + windows.y_mean
     if values.shape != (len(index), H) or not np.isfinite(values).all():
         raise ValueError('Nonfinite or misshaped forecasts')
@@ -250,7 +273,7 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
             pick = order[start:start + settings['batch_size']]
             if len(pick) < 2:
                 continue
-            loss = torch.nn.functional.mse_loss(model(windows.batch(rows[pick])), target[pick])
+            loss = torch.nn.functional.mse_loss(forward(spec, model, windows, windows.batch(rows[pick])), target[pick])
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), settings['gradient_clip'])
@@ -262,9 +285,10 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
         if holdout is not None:
             model.eval()
             with torch.no_grad():
-                error = torch.cat([(model(windows.batch(holdout[s:s + 1024])) - held[s:s + 1024]) ** 2
-                                   for s in range(0, len(holdout), 1024)])
+                error = torch.cat([(forward(spec, model, windows, windows.batch(holdout[s:s + 1024]))
+                                    - held[s:s + 1024]) ** 2 for s in range(0, len(holdout), 1024)])
             entry['holdout_mse'] = float(error.mean())
+            entry['holdout_by_lead'] = by_lead(error)
             if entry['holdout_mse'] < best:
                 best, best_epoch, best_state = entry['holdout_mse'], epoch, copy.deepcopy(state_arrays(model))
         history.append(entry)
@@ -275,6 +299,25 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
     if holdout is None:
         return state_arrays(model), epochs, history
     return best_state, best_epoch, history
+
+
+def fit_report(spec, table, windows, model, reference, calibration, prior, history, best_epoch):
+    """Training-data-only fit check of the prior model at its early-stopping epoch, per lead bucket (standardized MSE):
+    a 4,000-origin sample of the reference window and the calibration holdout, each next to persistence and to the
+    training-mean forecast, plus the holdout error relative to its own minimum over the epochs."""
+    sample = reference[np.linspace(0, len(reference) - 1, min(len(reference), 4000)).astype(int)]
+    report = {}
+    for name, index, forecast in (('train_sample', sample, predict(spec, model, windows, sample)),
+                                  ('holdout', calibration, prior)):
+        truth = (table.targets(index) - windows.y_mean) / windows.y_std
+        last = windows.batch(index)[:, -1, SPEED].double().cpu().numpy() * windows.speed_scale + windows.speed_shift
+        report[name] = dict(model=by_lead(((forecast - windows.y_mean) / windows.y_std - truth) ** 2),
+                            persistence=by_lead((last[:, None] - truth) ** 2), training_mean=by_lead(truth ** 2))
+    chosen = history[best_epoch - 1]['holdout_by_lead']
+    report['holdout_over_own_minimum'] = {name: chosen[name] / min(entry['holdout_by_lead'][name] for entry in history)
+                                          for name in LEAD_BUCKETS}
+    report['epoch'] = best_epoch
+    return report
 
 
 def save_checkpoint(path, stages, norm, state, epochs):
@@ -328,8 +371,10 @@ def train_period(spec, table, period, seed, args, logs, device):
                                                    train_index[calibration], max_epochs, seed, logs, stream,
                                                    record('prior'))
     model = load_state(spec.build_model(len(CHANNELS), SPEED), prior_state, device)
-    prior = predict(model, windows, train_index[calibration])
+    prior = predict(spec, model, windows, train_index[calibration])
     truth = table.targets(train_index[calibration])
+    fit_check = fit_report(spec, table, windows, model, train_index[reference], train_index[calibration], prior,
+                           prior_history, best_epoch)
     offset, rows = cal.estimate_offset(prior, truth, spec.offset_window, spec.alpha, smoke=args.smoke)
     progress['unit'] += 1
     logs(stream, 'fit', **record('prior'), epochs=best_epoch, train_rows=len(reference),
@@ -348,7 +393,7 @@ def train_period(spec, table, period, seed, args, logs, device):
                                              stream, record('full'))
     model = load_state(spec.build_model(len(CHANNELS), SPEED), full_state, device)
     tick = time.perf_counter()
-    raw = predict(model, windows, query_index)
+    raw = predict(spec, model, windows, query_index)
     seconds = time.perf_counter() - tick
     progress['unit'] += 1
     logs(stream, 'fit', **record('full'), epochs=epochs, train_rows=len(full), query_rows=len(query_index),
@@ -357,7 +402,7 @@ def train_period(spec, table, period, seed, args, logs, device):
     checkpoint = args.weights / period / f's{seed}.npz'
     save_checkpoint(checkpoint, dict(prior=prior_state, full=full_state), norm, state, epochs)
     weights, saved_norm, _ = load_checkpoint(checkpoint, 'full')
-    replay = predict(load_state(spec.build_model(len(CHANNELS), SPEED), weights, device),
+    replay = predict(spec, load_state(spec.build_model(len(CHANNELS), SPEED), weights, device),
                      Windows(table, saved_norm, device), query_index)
     replay_error = float(np.max(np.abs(replay - raw)))
     if replay_error > 1e-3:
@@ -368,6 +413,7 @@ def train_period(spec, table, period, seed, args, logs, device):
                     final_cells=int(np.count_nonzero(component + offset[None, :] != prediction)))
     metadata = dict(experiment=spec.experiment, family=spec.family, period=period, seed=seed, smoke=args.smoke,
                     objective=spec.training['loss'], hyperparameters=spec.hyperparameters,
+                    persistence_residual=spec.persistence_residual, fit_check=fit_check,
                     training=dict(spec.training, seed=seed), epochs=epochs, prior_history=prior_history,
                     full_history=full_history, parameter_count=int(sum(v.size for v in full_state.values())),
                     lookback_hours=LOOKBACK, channel_count=len(CHANNELS), channels=CHANNELS,
@@ -401,7 +447,7 @@ def predict_period(spec, table, period, seed, args, logs, device):
         raise ValueError('Checkpoint channels differ from this runner')
     model = load_state(spec.build_model(len(CHANNELS), SPEED), weights, device)
     tick = time.perf_counter()
-    raw = predict(model, Windows(table, norm, device), query_index)
+    raw = predict(spec, model, Windows(table, norm, device), query_index)
     seconds = time.perf_counter() - tick
     prediction = cal.apply_offset(raw, np.asarray(state['offset'], np.float64))
     logs(stream, 'predict_only', period=period, seed=seed, checkpoint=str(checkpoint),
@@ -437,6 +483,7 @@ def main(spec, doc, here):
     logs = run_logs(args, spec.experiment)
     launch(logs, args, mode='predict_only' if args.predict_only else ('smoke' if args.smoke else 'train'),
            versions=library_versions(spec), family=spec.family, hyperparameters=spec.hyperparameters,
+           persistence_residual=spec.persistence_residual,
            training=spec.training, lookback_hours=LOOKBACK, channels=CHANNELS, channel_count=len(CHANNELS),
            alpha=spec.alpha, offset_window=spec.offset_window, cutoffs=CUTOFFS, seeds=args.seeds,
            cuda_visible_devices=os.environ['CUDA_VISIBLE_DEVICES'], gpu=torch.cuda.get_device_name(0))
