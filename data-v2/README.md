@@ -5,14 +5,16 @@
 ## 레이어 규칙
 
 ```
-data-v2/  (DB)   raw/<소스> -> notebooks/raw_to_input_df.ipynb -> input/df.parquet
-research/        df.parquet -> {row}/experiment.py (+ module/) -> result/{row}/results/*_predictions.parquet
+data-v2/  (DB)   raw/<소스> -> notebooks/raw_to_input_df.ipynb    -> input/df.parquet
+                              -> notebooks/raw_to_input_df_ts.ipynb -> input/df_ts.parquet
+research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> result/{row}/results/*_predictions.parquet
+                 df_ts.parquet -> {row}/experiment.py (+ _module/seq.py) -> result/{row}/results/*_predictions.parquet
 ```
 
-- 의존 방향은 한쪽뿐입니다. research 코드는 `df.parquet`만 읽고, `data-v2/`는 `research/`를 import하거나 읽지 않습니다.
+- 의존 방향은 한쪽뿐입니다. research 코드는 `df.parquet`(GBM 행)나 `df_ts.parquet`(시계열 DL 행)만 읽고, `data-v2/`는 `research/`를 import하거나 읽지 않습니다.
 - 최상위는 데이터 종류이고 그 아래가 소스입니다(`raw/<소스>/`). 소스 전체를 합친 모델 입력 `input/`은 최상위에 둡니다.
   - `raw/`: 웹에서 받은 원문 파일. `fetch.py`만 씁니다.
-  - `input/`: `notebooks/raw_to_input_df.ipynb`만 씁니다.
+  - `input/`: `notebooks/raw_to_input_df.ipynb`(`df.parquet`, `MANIFEST.json`)와 `notebooks/raw_to_input_df_ts.ipynb`(`df_ts.parquet`, `MANIFEST_ts.json`)만 씁니다.
 - 중간 가공 폴더(`processed/`)는 없습니다(2026-11-02 사용자 삭제). 노트북은 실행할 때마다 raw에서 다시 계산하고, 캐시를 남기지 않습니다.
 - 해당 내용이 없는 폴더는 만들지 않습니다.
 
@@ -26,6 +28,8 @@ research/        df.parquet -> {row}/experiment.py (+ module/) -> result/{row}/r
 | `raw/ENLIL/donki/` | WSA-Enlil 실행 JSON(월별 파일, 2022-07부터). 출처 https://ccmc.gsfc.nasa.gov/DONKI/WS/get/WSAEnlilSimulations |
 | `notebooks/raw_to_input_df.ipynb` | raw → `df.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df.parquet") |
 | `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
+| `notebooks/raw_to_input_df_ts.ipynb` | raw → `df_ts.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df_ts.parquet") |
+| `input/df_ts.parquet` | 시계열 모델 입력. 매시 칸 1행, `MANIFEST_ts.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
 
 ## df.parquet
 
@@ -56,6 +60,27 @@ cd /home/t-lab01/sunrun
   - ENLIL 5열과 h별 `enlil_dt_target`.
   - 재귀 `rec26/27/28`, `rec_mean`.
 - **이전 df(2026-11-01)와의 관계**: 이전 df는 frozen 번들에서 만든 30개 피처 표였고, 새 df로 덮어썼습니다. 그래서 `research/e2000fs_calib_point4_144h/experiment.py`(열 이름 `ch_ch_*`, 이전 값으로 공식 예측 재현)는 새 df로는 그대로 실행되지 않습니다.
+
+## df_ts.parquet
+
+```bash
+cd /home/t-lab01/sunrun
+.venv/bin/jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=-1 data-v2/notebooks/raw_to_input_df_ts.ipynb
+# DF_SMOKE=1 DF_OUT=<dir>: 짧은 구간만 <dir>에 씀 / DF_WORKERS=N: SUVI 추출 worker 수 (기본 12)
+```
+
+시계열 DL 행(`vanila_gru`, `vanila_itransformer`, `vanila_tsmixer`)의 입력입니다(2026-11-17). `df.parquet`와 같은 raw·같은 시간 칸 규칙·같은 `y` 정의를 쓰고, 형식만 다릅니다.
+
+- **형식**: 한 행은 매시 칸 `time`입니다. 첫 ACE 칸(2022-08-01T01Z)부터 마지막 query origin + 72h까지 빈칸 없이 이어집니다.
+- **분할 열**: `train_origin`, `query_origin`, `period`, `fit_F1/F2/F3`. 정의는 `df.parquet`의 `set`/`period`/`fit_P`와 같습니다.
+- **`y`**: 행 `time` = T 라벨의 SWEPAM 속도(status 0, 채움 없음). origin O의 리드 h 정답은 행 O + h의 `y`입니다.
+- **ACE 22열** `ace_*`: 칸 값(라벨 T−1h 행)이고 `df.parquet`의 `_last`와 같은 값입니다. `_m6`/`_m24`·lag 같은 요약은 없습니다(모델이 시계열로 봅니다).
+- **SUVI**: `img_age_h`, `suvi_disk_log_median`, 그리고 칸 T 프레임 한 장의 **경도 stripe 프로파일** `suvi_strip_{logmed,dark,cover}_k{m072…p143}` 648열.
+  - stripe k의 영역은 |경도 − 0.55°/h × (k − `img_age_h`)| ≤ 5°, |위도| ≤ 30°입니다. 서쪽이 +이고, k는 "칸 시각보다 k시간 전에 중앙 자오선을 지난 경도"입니다(k < 0은 앞으로 지날 경도).
+  - `logmed`는 유효 픽셀 log1p radiance 중앙값, `dark`는 디스크 중앙값 0.5배 미만 비율, `cover`는 유효 픽셀 비율입니다. `df.parquet`의 `strip_v*`(15° 셀 겹침 가중 평균, h·속도별)와 달리 픽셀에서 직접 계산한 프레임 고유 값입니다.
+- **ENLIL 5열**: `df.parquet`와 같은 정의를 매시 칸에 적용한 값입니다.
+- **처리하지 않는 것**: `df.parquet`와 같습니다. 앞값 채움, 결측 마스크, 표준화, 프레임 되돌아가기는 `research/_module/seq.py`가 합니다.
+- 노트북의 검증 셀이 같은 origin의 ACE·`img_age_h`·ENLIL·fit 마스크·`y`가 `df.parquet`와 일치하는지 확인합니다.
 
 ## 원문과 정답에 관한 주의
 
