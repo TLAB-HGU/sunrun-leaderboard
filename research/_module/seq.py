@@ -15,6 +15,8 @@ Channels are standardized with statistics of the period's training span only (st
 Target: speed at O+1..O+72; training labels are forward filled on the target time (as vanila_mse). Loss: unweighted MSE.
 With SeqSpec.persistence_residual the forecast is the last observed speed of the window plus the network output
 (the network learns the departure from persistence); without it the network outputs the speed itself.
+With SeqSpec.tail_weight the squared error of targets >= 550 km/s weighs 4 (objectives.tail_weights, normalised to
+mean 1 per lead), in training and in the early-stopping criterion on the calibration window.
 
 For each seed (42, 43, 44) and period (F1, F2, F3), the vanila_mse protocol with a network in place of the boosters:
 a prior model on the reference window (origins + 144 h <= last 3 months) with epoch early stopping on the calibration
@@ -45,6 +47,7 @@ import pandas as pd
 import torch
 
 from . import calibration as cal
+from .objectives import tail_weights
 from .common import (CUTOFFS, H, QUERY_COUNTS, ROOT, SEEDS, file_identity, git_commit, launch, mean3,
                      observations_path, output_paths, prediction_frame, run_logs, score, versions, write_json,
                      write_results)
@@ -84,6 +87,7 @@ class SeqSpec:
     hyperparameters: dict                # architecture hyperparameters for logs and metadata
     libraries: tuple = ()                # extra distributions whose versions are recorded
     persistence_residual: bool = False   # forecast = last observed speed + network output
+    tail_weight: bool = False            # squared error of targets >= 550 km/s weighs 4 (objectives.tail_weights)
     alpha: float = cal.ALPHA
     offset_window: int = cal.OFFSET_WINDOW
     threads: int = 2
@@ -262,6 +266,11 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
     rows = torch.from_numpy(index).to(windows.device)
     if holdout is not None:
         held = torch.from_numpy(((table.targets(holdout) - windows.y_mean) / windows.y_std).astype(np.float32)).to(windows.device)
+    weights = held_weights = None
+    if spec.tail_weight:
+        weights = torch.from_numpy(tail_weights(table.targets(index))[1].astype(np.float32)).to(windows.device)
+        if holdout is not None:
+            held_weights = torch.from_numpy(tail_weights(table.targets(holdout))[1].astype(np.float32)).to(windows.device)
     generator = torch.Generator().manual_seed(seed)
     best, best_epoch, best_state, history = np.inf, 0, None, []
     for epoch in range(1, epochs + 1):
@@ -273,7 +282,11 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
             pick = order[start:start + settings['batch_size']]
             if len(pick) < 2:
                 continue
-            loss = torch.nn.functional.mse_loss(forward(spec, model, windows, windows.batch(rows[pick])), target[pick])
+            output = forward(spec, model, windows, windows.batch(rows[pick]))
+            if weights is None:
+                loss = torch.nn.functional.mse_loss(output, target[pick])
+            else:
+                loss = (weights[pick] * (output - target[pick]) ** 2).mean()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), settings['gradient_clip'])
@@ -289,8 +302,11 @@ def train(spec, table, windows, index, holdout, epochs, seed, logs, stream, reco
                                     - held[s:s + 1024]) ** 2 for s in range(0, len(holdout), 1024)])
             entry['holdout_mse'] = float(error.mean())
             entry['holdout_by_lead'] = by_lead(error)
-            if entry['holdout_mse'] < best:
-                best, best_epoch, best_state = entry['holdout_mse'], epoch, copy.deepcopy(state_arrays(model))
+            criterion = entry['holdout_mse']
+            if held_weights is not None:
+                entry['holdout_loss'] = criterion = float((held_weights * error).mean())
+            if criterion < best:
+                best, best_epoch, best_state = criterion, epoch, copy.deepcopy(state_arrays(model))
         history.append(entry)
         logs(stream, 'epoch', **record, **entry, best_epoch=best_epoch or None,
              seconds=round(time.perf_counter() - began, 3))
@@ -413,7 +429,7 @@ def train_period(spec, table, period, seed, args, logs, device):
                     final_cells=int(np.count_nonzero(component + offset[None, :] != prediction)))
     metadata = dict(experiment=spec.experiment, family=spec.family, period=period, seed=seed, smoke=args.smoke,
                     objective=spec.training['loss'], hyperparameters=spec.hyperparameters,
-                    persistence_residual=spec.persistence_residual, fit_check=fit_check,
+                    persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight, fit_check=fit_check,
                     training=dict(spec.training, seed=seed), epochs=epochs, prior_history=prior_history,
                     full_history=full_history, parameter_count=int(sum(v.size for v in full_state.values())),
                     lookback_hours=LOOKBACK, channel_count=len(CHANNELS), channels=CHANNELS,
@@ -483,7 +499,7 @@ def main(spec, doc, here):
     logs = run_logs(args, spec.experiment)
     launch(logs, args, mode='predict_only' if args.predict_only else ('smoke' if args.smoke else 'train'),
            versions=library_versions(spec), family=spec.family, hyperparameters=spec.hyperparameters,
-           persistence_residual=spec.persistence_residual,
+           persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight,
            training=spec.training, lookback_hours=LOOKBACK, channels=CHANNELS, channel_count=len(CHANNELS),
            alpha=spec.alpha, offset_window=spec.offset_window, cutoffs=CUTOFFS, seeds=args.seeds,
            cuda_visible_devices=os.environ['CUDA_VISIBLE_DEVICES'], gpu=torch.cuda.get_device_name(0))
