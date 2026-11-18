@@ -1,4 +1,4 @@
-"""Reproduce e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam: retrain the base row, then apply the calibration-selected block-seam smoothing.
+"""Reproduce e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam: retrain the base row, then apply the xf8 block-seam smoothing.
 Run from this repository. All fitting is CPU-only and uses the official training cutoffs.
 """
 import argparse
@@ -30,7 +30,6 @@ if __name__ == '__main__':
                     '--device', 'cpu', '--threads', str(args.threads), '--donki', str(donki)],
                    check=True, env=env, cwd=ROOT)
     subprocess.run([sys.executable, str(ROOT / 'research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam/experiment.py'), '--base', str(base),
-                    '--data', args.data, '--observations', args.observations, '--out', str(work),
-                    '--threads', str(args.threads), '--donki', str(donki)],
+                    '--observations', args.observations, '--out', str(work)],
                    check=True, env=env, cwd=ROOT)
     shutil.copy2(work / 'results/mean3_predictions.parquet', args.out / 'predictions.parquet')
