@@ -1,23 +1,23 @@
 # e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam — lead 곡선 · F1–F3 월별 예측 GIF
 
-작성자 **seongeun**의 `e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam`입니다(제출 `20261118T043451683Z`). Total S **93.42**입니다.
+작성자 **seongeun**의 `e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam`입니다(제출 `20261118T073059412Z`). Total S **93.37**입니다.
 
-이 페이지는 리더보드 dataset에 저장된 **제출 예측 자체**를 리더보드 채점기(`leaderboard/scorer/competition.py`, `lead-timse-6h-v1`)로 다시 채점해 그렸습니다. 관측은 기록이 채점된 dataset revision `f30de18f9b`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
+이 페이지는 리더보드 dataset에 저장된 **제출 예측 자체**를 리더보드 채점기(`leaderboard/scorer/competition.py`, `lead-timse-6h-v1`)로 다시 채점해 그렸습니다. 관측은 기록이 채점된 dataset revision `98a8443b54`의 `competition-observations.parquet`입니다. Total/F1/F2/F3의 S·TIMSE·RMSE·tRMSE·bias가 저장 기록과 **1e-9 이내로 같을 때만** 그림을 그립니다([manifest.json](manifest.json)). 재학습이나 후처리는 하지 않았습니다.
 
 | 구간 | S | TIMSE | RMSE | tRMSE | bias | 채점 origin | 유효 pair | persistence 대체 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| **Total** | 93.42 | 17,724.7 | 67.18 | 130.82 | +17.8 | 1,052 | 52,619 | 0.00% |
-| F1 (2026-01..03) | 113.62 | 26,757.0 | 82.03 | 159.48 | +21.0 | 348 | 17,674 | 0.00% |
-| F2 (2026-04..06) | 74.12 | 8,087.4 | 63.09 | 87.53 | +15.8 | 352 | 17,473 | 0.00% |
-| F3 (2026-07..09) | 58.84 | 4,564.2 | 54.03 | 64.89 | +16.6 | 352 | 17,472 | 0.00% |
+| **Total** | 93.37 | 17,672.5 | 67.22 | 130.60 | +17.8 | 1,052 | 52,619 | 0.00% |
+| F1 (2026-01..03) | 113.52 | 26,616.2 | 82.12 | 159.02 | +21.0 | 348 | 17,674 | 0.00% |
+| F2 (2026-04..06) | 74.08 | 8,081.7 | 63.03 | 87.53 | +15.8 | 352 | 17,473 | 0.00% |
+| F3 (2026-07..09) | 58.88 | 4,565.6 | 54.11 | 64.90 | +16.6 | 352 | 17,472 | 0.00% |
 
 단위는 km/s(TIMSE는 (km/s)²)입니다. 채점 origin은 00/06/12/18 UTC이고, 정답은 ACE status 0 관측을 채우지 않고 씁니다. 그래서 1,052 × 72 = 75,744 pair 중 69.5%만 유효합니다.
 
 ## 제출 설명 (제출자 작성, 원문)
 
-> smooth_tail_nospec row plus block-seam smoothing, no retraining. The 3x24-lead block forecast jumps about 10x at h24|25 and h48|49; nine fixed seam transforms (moving average ma1-6, linear jump taper xf3/6/12) were pre-registered and one is chosen per period on the training-internal calibration window (F1 xf12, F2 xf6, F3 xf12). Applied to each seed, fixed mean of seeds 42/43/44. Mean3 S improves 0.221%, all seeds and periods better, below the 1% gate. Published by explicit user request; no baseline promotion.
+> smooth_tail_nospec row plus block-seam smoothing xf8, no retraining. The 3x24-lead block forecast jumps about 10x at h24|25 and h48|49; xf8 removes the jump beyond the local slope half from each side with a linear taper over 8 leads, on every seed and period, then the fixed mean of seeds 42/43/44. k = 8 was chosen from a leaderboard sweep of xf1-xf24 on explicit user request, so the score is LB-tuned. Mean3 S improves 0.274%, all seeds and periods better, below the 1% gate; no baseline promotion.
 
-- 모델 정의 코드: [architecture](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/4bc76188baebc8bc51fa4f63746b5badda568666/research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam/experiment.py)
+- 모델 정의 코드: [architecture](https://github.com/TLAB-HGU/sunrun-leaderboard/blob/abfc9787c36e09e118037b4856a9c8194c54e725/research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam/experiment.py)
 - 학습 데이터 종료: F1 2025-12-29T00:00:00Z, F2 2026-03-29T00:00:00Z, F3 2026-06-29T00:00:00Z
 
 ## Lead 곡선
@@ -26,7 +26,7 @@
 
 리더보드 lead curves 열과 같은 값을 이 페이지에서 직접 다시 채점해 그렸습니다([lead_metrics.csv](lead_metrics.csv), lead를 6으로 나눈 나머지별 평균은 [lead_residue.csv](lead_residue.csv)).
 
-F3 TIMSE는 lead 6의 배수(6, 12, …, 72)에서 평균 **9,918.0**이고, 그 밖의 lead에서는 2,912.7–4,048.8입니다. 채점 origin이 00/06/12/18 UTC라서, lead 6·k의 목표 시각도 00/06/12/18 UTC에만 놓입니다. F3에서 가장 빠른 관측 두 개(743.4 km/s, 2026-09-15 18:00 UTC · 690.0 km/s, 2026-07-23 18:00 UTC)도 이 시각에 있어서, lead 6·k의 정답 모집단에만 들어갑니다. 두 관측을 정답에서 빼고 다시 계산하면(점수가 아닌 진단값) F3 lead 6·k TIMSE는 **4,556.4**입니다.
+F3 TIMSE는 lead 6의 배수(6, 12, …, 72)에서 평균 **9,922.8**이고, 그 밖의 lead에서는 2,918.7–4,060.9입니다. 채점 origin이 00/06/12/18 UTC라서, lead 6·k의 목표 시각도 00/06/12/18 UTC에만 놓입니다. F3에서 가장 빠른 관측 두 개(743.4 km/s, 2026-09-15 18:00 UTC · 690.0 km/s, 2026-07-23 18:00 UTC)도 이 시각에 있어서, lead 6·k의 정답 모집단에만 들어갑니다. 두 관측을 정답에서 빼고 다시 계산하면(점수가 아닌 진단값) F3 lead 6·k TIMSE는 **4,560.8**입니다.
 
 ## 월별 예측 GIF
 
@@ -48,7 +48,7 @@ GIF 한 장의 프레임은 채점 origin 하나입니다. 각 프레임은 orig
 
 ```bash
 /home/t-lab01/sunrun/.venv/bin/python tools/submission_viz.py --member seongeun \
-    --experiment e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam --submitted-utc 20261118T043451683Z --out research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam/visualization
+    --experiment e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam --submitted-utc 20261118T073059412Z --out research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam/visualization
 ```
 
 CPU만 씁니다. 입력은 리더보드 dataset `tlabtlab/sunrun-lb-store`에 저장된 이 제출의 결과 기록·예측 parquet과 `competition-observations.parquet`뿐입니다. [leaderboard-result.json](leaderboard-result.json)은 저장 기록에서 제출 키와 그 키를 담은 URL을 뺀 사본입니다.
