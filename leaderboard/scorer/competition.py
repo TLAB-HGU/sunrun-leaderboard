@@ -19,7 +19,8 @@ PERIODS = {
     "F3": ("2026-07-01", "2026-09-30"),
 }
 # F1' (scope "f1p") = F1 without the forecasts issued inside this window, both ends inclusive (user request
-# 2026-11-24): 14 six-hour origins, 334 of 348 remain. Display only; the ranking and Total/F1/F2/F3 are unchanged.
+# 2026-11-24): 14 six-hour origins, 334 of 348 remain. Total' (scope "totalp") pools F1' + F2 + F3 (1038 origins).
+# Display only; the ranking and Total/F1/F2/F3 are unchanged.
 F1P_EXCLUDED_ORIGINS = ("2026-01-16T12:00:00Z", "2026-01-19T18:00:00Z")
 
 
@@ -91,7 +92,8 @@ def prepare_context(observations: pd.DataFrame, periods: dict | None = None) -> 
     scopes = {}
     excluded = (origins >= pd.Timestamp(F1P_EXCLUDED_ORIGINS[0])) & (origins <= pd.Timestamp(F1P_EXCLUDED_ORIGINS[1]))
     for name, selected in [("total", np.ones(len(origins), dtype=bool))] + [
-            (name.lower(), period == name) for name in PERIODS] + [("f1p", (period == "F1") & ~excluded)]:
+            (name.lower(), period == name) for name in PERIODS] + [
+            ("f1p", (period == "F1") & ~excluded), ("totalp", ~excluded)]:
         population = truth[selected]
         leads = []
         for column, lead in enumerate(LEADS):

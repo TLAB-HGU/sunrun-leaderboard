@@ -195,6 +195,8 @@ def test_f1_prime_drops_only_window_origins_and_keeps_official_scopes():
     dropped = context["origins"][f1 & ~f1p]
     assert list(dropped) == list(pd.date_range("2026-01-16T12:00Z", "2026-01-19T18:00Z", freq="6h"))
     assert not (f1p & ~f1).any()
-    assert list(context["scopes"]) == ["total", "f1", "f2", "f3", "f1p"]
+    assert list(context["scopes"]) == ["total", "f1", "f2", "f3", "f1p", "totalp"]
+    totalp = context["scopes"]["totalp"]["selected"]
+    assert int(totalp.sum()) == 1038 and list(context["origins"][~totalp]) == list(dropped)
     result = score_competition(predictions(context), context)
-    assert result["f1p"]["n_origins"] == 334
+    assert result["f1p"]["n_origins"] == 334 and result["totalp"]["n_origins"] == 1038

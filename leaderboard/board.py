@@ -17,8 +17,10 @@ HIGHER_IS_BETTER = re.compile(r"^(CSI|skill vs naive)$")
 # The regime columns of older pages were skill.
 LOWER_IS_BETTER = re.compile(r"MSE|MAE|≥\d+|^(low|high)_(low|high)_(low|high)$")
 COMPETITION_VERSION = "lead-timse-6h-v1"
-# F1' = F1 without the forecasts issued 2026-01-16 12:00 .. 01-19 18:00 UTC (scorer scope "f1p"); display only.
-METRIC_SCOPES = (("Total", "total"), ("F1", "f1"), ("F1'", "f1p"), ("F2", "f2"), ("F3", "f3"))
+# F1' = F1 without the forecasts issued 2026-01-16 12:00 .. 01-19 18:00 UTC (scorer scope "f1p"); Total' = F1' + F2 + F3
+# pooled like Total (scope "totalp"). Display only.
+PRIME_SCOPES = ("f1p", "totalp")
+METRIC_SCOPES = (("Total", "total"), ("Total'", "totalp"), ("F1", "f1"), ("F1'", "f1p"), ("F2", "f2"), ("F3", "f3"))
 METRIC_COLUMNS = [f"{label} {metric}" for metric in ("S", "TIMSE", "RMSE") for label, _ in METRIC_SCOPES]
 BOARD_COLUMNS = ["#", "experiment", *METRIC_COLUMNS, "lead curves", "visualization", "member", "code"]
 # Link columns open a page on GitHub; they are not sortable.
@@ -218,12 +220,12 @@ def competition_metrics(r: dict) -> dict | None:
     return metrics
 
 
-def f1p_metrics(r: dict) -> dict | None:
-    """F1' values: the scorer's `f1p` scope, else the backfilled `extras.competition_f1p` of rows scored before the
-    scope existed, else None. Never affects the ranking."""
+def prime_metrics(r: dict, scope: str) -> dict | None:
+    """F1'/Total' values: the scorer's `f1p`/`totalp` scope, else the backfilled `extras.competition_<scope>` of rows
+    scored before the scope existed, else None. Never affects the ranking."""
     if competition_metrics(r) is None:
         return None
-    for values in (r["competition"].get("f1p"), (r.get("extras") or {}).get("competition_f1p")):
+    for values in (r["competition"].get(scope), (r.get("extras") or {}).get(f"competition_{scope}")):
         if isinstance(values, dict) and all(
                 not isinstance(values.get(key), bool) and isinstance(values.get(key), (int, float))
                 and math.isfinite(values[key]) and values[key] >= 0 for key in ("s", "timse", "rmse")):
@@ -233,8 +235,8 @@ def f1p_metrics(r: dict) -> dict | None:
 
 def scope_values(r: dict, scope: str) -> dict:
     """The displayed metric dict of one scope ({} when not scored)."""
-    if scope == "f1p":
-        return f1p_metrics(r) or {}
+    if scope in PRIME_SCOPES:
+        return prime_metrics(r, scope) or {}
     return (competition_metrics(r) or {}).get(scope, {})
 
 
@@ -440,7 +442,7 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
 <h1>Solar wind 72h leaderboard</h1>
 <p class="sub">Forecasts issued every 6 hours at 00, 06, 12 and 18 UTC; leads 1–72h.
 <b>F1</b>: targets 2026-01-01 .. 03-31; <b>F2</b>: 2026-04-01 .. 06-30; <b>F3</b>: 2026-07-01 .. 09-29.
-<b>F1&#x27;</b>: F1 without the forecasts issued 2026-01-16 12:00 .. 01-19 18:00 UTC (334 of 348 forecasts); shown only, not used for ranking.
+<b>F1&#x27;</b>: F1 without the forecasts issued 2026-01-16 12:00 .. 01-19 18:00 UTC (334 of 348 forecasts); <b>Total&#x27;</b>: F1&#x27; + F2 + F3 pooled like Total (1038 forecasts); both shown only, not used for ranking.
 Only forecasts whose full 72h window lies within one period are evaluated. Rank = <b>Total S</b>, lower is better. {html.escape(note)}</p>
 <div class="wrap"><table data-metric-version="{COMPETITION_VERSION}"><thead><tr>{th}</tr></thead><tbody>{"".join(body)}</tbody></table></div>
 <footer>Each displayed S, TIMSE and RMSE is the arithmetic mean of its 72 lead-specific values.

@@ -27,7 +27,7 @@ def test_metrics_order_units_images_and_identity_survive_status_refresh(monkeypa
     page = board.render([record()], architecture={})
     headers = [label for label, _ in board.ranking(page)[2]]
     assert headers == ["#", "experiment", *[f"{p} {m}" for m in ("S", "TIMSE", "RMSE")
-                                           for p in ("Total", "F1", "F1'", "F2", "F3")],
+                                           for p in ("Total", "Total'", "F1", "F1'", "F2", "F3")],
                        "lead curves", "visualization", "member", "code"]
     assert "(km/s)²" in page and "every 6 hours" in page
     assert "<img " not in page and 'class="lead-curves-link"' in page
@@ -161,8 +161,10 @@ def test_f1_prime_columns_use_scope_then_extras_and_never_unrank(monkeypatch):
     monkeypatch.setattr(board, "visibility_policy", lambda: {})
     scored = record("scored", 10.0)
     scored["competition"]["f1p"] = {"s": 7.25, "timse": 70.5, "rmse": 6.75}
+    scored["competition"]["totalp"] = {"s": 5.25, "timse": 50.5, "rmse": 4.75}
     backfilled = {**record("backfilled", 20.0),
-                  "extras": {"competition_f1p": {"s": 8.5, "timse": 80.25, "rmse": 7.5}}}
+                  "extras": {"competition_f1p": {"s": 8.5, "timse": 80.25, "rmse": 7.5},
+                             "competition_totalp": {"s": 6.5, "timse": 60.25, "rmse": 5.5}}}
     missing = record("missing", 30.0)
     page = board.render([missing, backfilled, scored], architecture={})
     start, stop, cols = board.ranking(page)
@@ -173,5 +175,7 @@ def test_f1_prime_columns_use_scope_then_extras_and_never_unrank(monkeypatch):
     f1p = [labels.index(f"F1' {m}") for m in ("S", "TIMSE", "RMSE")]
     assert [row[f1p[0]] for row in cells] == ["7.25", "8.50", "–"]
     assert [row[f1p[1]] for row in cells] == ["70.50", "80.25", "–"]
+    assert [row[labels.index("Total' S")] for row in cells] == ["5.25", "6.50", "–"]
+    assert board.mark_sign("Total' S") == 1
     assert board.mark_sign("F1' S") == 1
     assert lbstatus.trim_ranking_columns(page) == page
