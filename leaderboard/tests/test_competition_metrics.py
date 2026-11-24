@@ -184,3 +184,17 @@ def test_raw_observations_mask_status_and_invalid_values(tmp_path):
     canonical = tmp_path / "observations.parquet"
     loaded.to_parquet(canonical)
     pd.testing.assert_frame_equal(load_observations(canonical), loaded)
+
+
+def test_f1_prime_drops_only_window_origins_and_keeps_official_scopes():
+    times = pd.date_range("2025-12-30", "2026-10-01", freq="h", tz="UTC")
+    observations = pd.DataFrame({"timestamp_utc": times, "speed_kms": 400 + np.arange(len(times)) % 199})
+    context = prepare_context(observations)
+    f1, f1p = context["scopes"]["f1"]["selected"], context["scopes"]["f1p"]["selected"]
+    assert int(f1.sum()) == 348 and int(f1p.sum()) == 334
+    dropped = context["origins"][f1 & ~f1p]
+    assert list(dropped) == list(pd.date_range("2026-01-16T12:00Z", "2026-01-19T18:00Z", freq="6h"))
+    assert not (f1p & ~f1).any()
+    assert list(context["scopes"]) == ["total", "f1", "f2", "f3", "f1p"]
+    result = score_competition(predictions(context), context)
+    assert result["f1p"]["n_origins"] == 334

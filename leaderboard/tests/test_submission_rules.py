@@ -1,3 +1,4 @@
+import html
 import json
 import re
 from pathlib import Path
@@ -161,9 +162,9 @@ def test_board_keeps_total_and_period_competition_columns():
     metric = {"team_member": "alice", "submitted_utc": "20260101T000000Z"}
     page = render([{**metric, "experiment": "scored", "competition": _competition(10.0),
                     "extras": {"end_to_end_seconds": 7200}}])
-    labels = re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)
+    labels = [html.unescape(label) for label in re.findall(r"<th(?:\s[^>]*)?>(.*?)</th>", page)]
     assert labels == ["#", "experiment", *[f"{p} {m}" for m in ("S", "TIMSE", "RMSE")
-                                           for p in ("Total", "F1", "F2", "F3")],
+                                           for p in ("Total", "F1", "F1'", "F2", "F3")],
                       "lead curves", "visualization", "member", "code"]
     assert "end-to-end" not in page
     assert "10.00" in page and "100.00" in page

@@ -27,7 +27,7 @@ def test_metrics_order_units_images_and_identity_survive_status_refresh(monkeypa
     page = board.render([record()], architecture={})
     headers = [label for label, _ in board.ranking(page)[2]]
     assert headers == ["#", "experiment", *[f"{p} {m}" for m in ("S", "TIMSE", "RMSE")
-                                           for p in ("Total", "F1", "F2", "F3")],
+                                           for p in ("Total", "F1", "F1'", "F2", "F3")],
                        "lead curves", "visualization", "member", "code"]
     assert "(km/s)²" in page and "every 6 hours" in page
     assert "<img " not in page and 'class="lead-curves-link"' in page
@@ -155,3 +155,23 @@ def test_submission_cutoff_does_not_guess_age_of_legacy_html():
     from test_lbstatus import PAGE
     policy = {"hidden_before": [{"member": "s", "submitted_utc": "20261103T052654000Z"}]}
     assert lbstatus.hide_ranking_rows(PAGE, policy) == PAGE
+
+
+def test_f1_prime_columns_use_scope_then_extras_and_never_unrank(monkeypatch):
+    monkeypatch.setattr(board, "visibility_policy", lambda: {})
+    scored = record("scored", 10.0)
+    scored["competition"]["f1p"] = {"s": 7.25, "timse": 70.5, "rmse": 6.75}
+    backfilled = {**record("backfilled", 20.0),
+                  "extras": {"competition_f1p": {"s": 8.5, "timse": 80.25, "rmse": 7.5}}}
+    missing = record("missing", 30.0)
+    page = board.render([missing, backfilled, scored], architecture={})
+    start, stop, cols = board.ranking(page)
+    labels = [label for label, _ in cols]
+    rows = re.findall(r"<tr data-submitted-utc.*?</tr>", page[start:stop], re.S)
+    cells = [[re.sub(r"<[^>]+>", "", c) for c in re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)] for row in rows]
+    assert [row[0] for row in cells] == ["1", "2", "3"]
+    f1p = [labels.index(f"F1' {m}") for m in ("S", "TIMSE", "RMSE")]
+    assert [row[f1p[0]] for row in cells] == ["7.25", "8.50", "–"]
+    assert [row[f1p[1]] for row in cells] == ["70.50", "80.25", "–"]
+    assert board.mark_sign("F1' S") == 1
+    assert lbstatus.trim_ranking_columns(page) == page
