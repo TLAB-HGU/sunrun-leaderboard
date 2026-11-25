@@ -10,6 +10,8 @@
 
 재현에는 `data-v2/input/df.parquet`(457열, `enlil_earth_speed`는 NOAA open-data S3 실행만)를 쓴다.
 
+`experiment.py`는 한 파일로 끝까지 실행된다(2026-11-25, 사용자 요청): df.parquet 읽기, 인과 앞값 채움, (origin × 72 lead) 격자, 블록 설계(305/308/283열), smooth-tail A 단계 600트리 + S-cap continuation 6 × 30트리, prior/full과 동결 offset, checkpoint, seam xf8 → 위상 전진 → seed 합의 uplift, 세 seed 평균, 공식 채점기까지 들어 있고 부모 실험이나 `research/_module`을 import하지 않는다. 이전의 부모 체인 import 버전과 smoke 예측·checkpoint 배열이 bit 단위로 같고, NCEI 판 checkpoint를 `--predict-only`로 돌리면 게시했던 Total S 89.34587910011088과 예측이 그대로 재현된다.
+
 ```sh
 CUDA_VISIBLE_DEVICES='' .venv/bin/python research/fianl_v1/experiment.py --threads 6
 ```
