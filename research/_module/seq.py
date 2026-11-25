@@ -66,7 +66,7 @@ LOOKBACK = 120
 FILL_LIMIT = LOOKBACK - 1
 WALK_BACK = 24
 ACE_LINEAR = ['ace_speed_kms', 'ace_bx_gsm_nt', 'ace_by_gsm_nt', 'ace_bz_gsm_nt', 'ace_bt_nt', 'ace_lat_gsm_deg',
-              'ace_lon_gsm_deg', 'ace_x_gse_re', 'ace_y_gse_re', 'ace_z_gse_re']
+              'ace_lon_gsm_deg']
 ACE_LOG = ['ace_density_cm3', 'ace_temperature_k', 'ace_epam_e_channel1', 'ace_epam_e_channel2',
            'ace_epam_p_channel1', 'ace_epam_p_channel2', 'ace_epam_p_channel3', 'ace_epam_p_channel4',
            'ace_epam_p_channel5', 'ace_sis_gt10_flux', 'ace_sis_gt30_flux']

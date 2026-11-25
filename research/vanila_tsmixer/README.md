@@ -207,3 +207,8 @@ E*는 prior 단계에서 조기 종료로 정한 epoch 수, holdout MSE는 표�
 - **긴 리드는 과적합.** E* 이후 학습 표본의 h25–72 오차는 계속 내려가는데 holdout은 올라간다(40 epoch 행).
 - 조기 종료 기준이 72리드 전체 MSE라서 E*는 긴 리드의 과적합이 시작되는 시점에 잡히고, 그때 짧은 리드는 아직 과소적합이다. epoch 수 하나로 두 구간을 함께 맞출 수 없다.
 - 잔차 연결 probe(예측 = 마지막 관측 속도 + 망 출력, 나머지 동일)는 h1–6을 persistence 수준 이하로 내리고 긴 리드는 거의 바꾸지 않는다. 즉 짧은 리드 과소적합은 출력 구조로 해결되고, 긴 리드의 일반화 격차는 별도 문제로 남는다. probe 곡선은 같은 폴더의 `fit-diagnostic-residual-probe_F1_s42.json`, `…_F3_s42.json`에 있다. 이 probe는 진단이며 보드 행에는 반영하지 않았다.
+
+## 입력 변경: ACE 위치 3열 제거 (2026-11-25)
+- `data-v2/raw/ACE/monthly-txt/*_ace_loc_1h.txt`를 지우면서 `df_ts.parquet`의 `ace_{x,y,z}_gse_re` 3열과 `_module/seq.py`의 `ACE_LINEAR` 3항목을 뺐습니다.
+- 보드에 게시된 결과와 `weights/`는 이 3열이 들어간 입력으로 학습한 것입니다. 입력 채널 수가 바뀌어 지금 코드로는 기존 weights를 `--predict-only`로 재현할 수 없고, 재현하려면 다시 학습해야 합니다. 게시 결과는 바꾸지 않았습니다.
+- 지금 코드의 `--smoke` 실행은 정상입니다(vanila_gru, 2026-11-25).

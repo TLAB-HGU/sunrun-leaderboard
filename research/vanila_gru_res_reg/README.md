@@ -131,3 +131,8 @@ fit 상태는 더 손볼 곳이 없으므로, 남은 격차는 목적함수 쪽�
 - h1–6만 XGBoost와 같은 수준이다.
 
 자료: `research/result/vanila_gru_res_reg/logs/train-test-gap_s42.json`. 평가 쪽은 모든 시간별 query origin의 관측값 기준이라 공식 6시간 격자 점수와 값이 조금 다르다.
+
+## 입력 변경: ACE 위치 3열 제거 (2026-11-25)
+- `data-v2/raw/ACE/monthly-txt/*_ace_loc_1h.txt`를 지우면서 `df_ts.parquet`의 `ace_{x,y,z}_gse_re` 3열과 `_module/seq.py`의 `ACE_LINEAR` 3항목을 뺐습니다.
+- 보드에 게시된 결과와 `weights/`는 이 3열이 들어간 입력으로 학습한 것입니다. 입력 채널 수가 바뀌어 지금 코드로는 기존 weights를 `--predict-only`로 재현할 수 없고, 재현하려면 다시 학습해야 합니다. 게시 결과는 바꾸지 않았습니다.
+- 지금 코드의 `--smoke` 실행은 정상입니다(vanila_gru, 2026-11-25).
