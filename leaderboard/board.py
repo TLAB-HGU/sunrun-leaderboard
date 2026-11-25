@@ -390,8 +390,7 @@ def render(results: list[dict], note: str = "", architecture: dict | None = None
             experiment_name = f'<strong class="lb-experiment">{experiment_name}</strong>'
         experiment_attrs = f' class="l" data-experiment="{html.escape(r["experiment"], quote=True)}"'
         if disclosure := r.get("tuning_cutoff_exception"):
-            details = html.escape(disclosure, quote=True)
-            experiment_name += f' <small title="{details}">(탐색)</small>'
+            experiment_attrs += f' title="{html.escape(disclosure, quote=True)}"'
         cells = [(rank_attrs, rank, None), (experiment_attrs, experiment_name, None)]
         for key in ("s", "timse", "rmse"):
             for _, scope in METRIC_SCOPES:
