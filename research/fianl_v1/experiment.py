@@ -1,17 +1,19 @@
-"""Retrain plus7 after dropping unused lead columns and two block-specific inputs, without ridge."""
+"""Retrain plus7 after dropping unused lead columns and two block-specific inputs, without ridge.
+
+Reads data-v2/input/df.parquet (enlil_earth_speed from NOAA open-data S3 runs only); --data names another table
+with the same columns.
+"""
 from __future__ import annotations
 
 import argparse
 import dataclasses
 import importlib.util
 from pathlib import Path
-import sys
 
 
 HERE = Path(__file__).resolve().parent
 EXPERIMENT = 'fianl_v1'
 PARENT = 'e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam_union9_lbsel_plus7'
-ARCHIVED_DATA = Path.home() / 'sunrun-union9-plus7/input/model-table-union9-plus7.parquet'
 
 loader = importlib.util.spec_from_file_location('fianl_v1_parent', HERE.parent / PARENT / 'experiment.py')
 parent = importlib.util.module_from_spec(loader)
@@ -97,7 +99,7 @@ SPEC = FinalSpec(**fields)
 
 def main():
     parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument('--data', type=Path)
+    parser.add_argument('--data', type=Path, default=common.DATA)
     parser.add_argument('--out', type=Path)
     parser.add_argument('--weights', type=Path)
     parser.add_argument('--observations', type=Path)
@@ -108,10 +110,6 @@ def main():
     if '-h' in rest or '--help' in rest:
         gbm.main(SPEC, __doc__, HERE)
         return
-    if args.data is None:
-        if not ARCHIVED_DATA.is_file():
-            parser.error('--data must name the archived plus7 input table with the original ENLIL values')
-        sys.argv.extend(('--data', str(ARCHIVED_DATA)))
 
     # The runner writes offset-calibrated predictions per seed. Score only after
     # applying the common postprocessing to the complete set of three seeds.
