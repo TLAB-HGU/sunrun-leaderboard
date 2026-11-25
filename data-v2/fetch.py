@@ -61,7 +61,7 @@ NC_DIR = DATA / "raw/SUVI/nc"
 UA = "sunrun-data-v2/1.0"
 ACE_URL = "https://sohoftp.nascom.nasa.gov/sdb/goes/ace/monthly/"
 ACE_START = "2022-08"
-ACE_COLUMNS = {"swepam": 10, "mag": 13, "epam": 16, "sis": 10, "loc": 9}  # whitespace-separated fields of a data row
+ACE_COLUMNS = {"swepam": 10, "mag": 13, "epam": 16, "sis": 10}  # whitespace-separated fields of a data row
 ACE_NAME = re.compile(r"^(\d{4})(\d{2})_ace_([a-z]+)_1h\.txt$")
 DATA_ROW = re.compile(rb"\d{4}\s")
 

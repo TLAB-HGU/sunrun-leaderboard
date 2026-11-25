@@ -23,7 +23,7 @@ research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> resu
 | 경로 | 내용 |
 | --- | --- |
 | `fetch.py` | raw 신규분 insert 도구(아래 "raw 갱신" 참고). `raw/`만 씁니다 |
-| `raw/ACE/monthly-txt/` | NASA ACE 월별 원문: `{YYYYMM}_ace_{swepam,mag,epam,sis,loc}_1h.txt`, 2022-08부터. 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/monthly/ |
+| `raw/ACE/monthly-txt/` | NASA ACE 월별 원문: `{YYYYMM}_ace_{swepam,mag,epam,sis}_1h.txt`, 2022-08부터. 위치 파일 `loc`는 쓰는 행이 없어 2026-11-25에 지웠습니다. 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/monthly/ |
 | `raw/SUVI/nc/g18/YYYY/DOY/` | `fetch.py`가 받은 GOES-18 SUVI Fe195 L1b NetCDF. 시간 H당 1개이고 파일의 `obs_end`가 `[H-1h, H)` 안에 있습니다. **이 파일이 프레임 선택의 유일한 기록입니다** |
 | `raw/ENLIL/donki/` | WSA-Enlil 실행 JSON(월별 파일, 2022-07부터). 출처 https://ccmc.gsfc.nasa.gov/DONKI/WS/get/WSAEnlilSimulations |
 | `raw/DONKI/notifications/` | DONKI CME 알림(발행 월별 JSON, 2022-01부터). 출처 https://ccmc.gsfc.nasa.gov/DONKI-API/get/notifications |
@@ -31,7 +31,7 @@ research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> resu
 | `raw/ACE/daily-txt/swepam/` | ACE SWEPAM 1분 일별 원문(2022-08-01부터, `:Created:`가 공개 시각). 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/daily/ |
 | `raw/ENLIL/wsa-s3/` | NOAA WSA-Enlil open-data 버킷의 `evo.earth.nc`와 `listing.json`(LastModified). 출처 https://noaa-wsa-enlil-pds.s3.amazonaws.com |
 | `notebooks/raw_to_input_df.ipynb` | raw → `df.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df.parquet") |
-| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 2026-11-25 빌드(466열, NCEI 제거판)는 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
+| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 현재 파일은 457열입니다(2026-11-25 ACE `loc` 9열 제거). 그 직전 466열 빌드(NCEI 제거판)는 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
 | `notebooks/raw_to_input_df_ts.ipynb` | raw → `df_ts.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df_ts.parquet") |
 | `input/df_ts.parquet` | 시계열 모델 입력. 매시 칸 1행, `MANIFEST_ts.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
 
@@ -58,7 +58,7 @@ cd /home/t-lab01/sunrun
   - ACE 1h 행은 라벨 시각 + 1h 칸, SUVI는 `obs_end`의 칸, ENLIL은 `modelCompletionTime`의 칸입니다.
 - **`y`**: target_time T 라벨의 SWEPAM 속도입니다. 시각을 이동하지 않으며, `status == 0`이고 유한한 양수일 때만 값이 있고 나머지는 NaN입니다(공식 채점과 같음).
 - **피처**: raw에서 나오는 전체입니다. 열 이름에 `ch`를 쓰지 않습니다.
-  - ACE 22개 변수의 `_last`/`_m6`/`_m24`. `status ≠ 0`이거나 결측 표시값이면 NaN입니다.
+  - ACE 19개 변수의 `_last`/`_m6`/`_m24`. `status ≠ 0`이거나 결측 표시값이면 NaN입니다.
   - 속도 파생 `v_lag*`, `v_m*`, `v_sd*`, `speed_d24`, `epam_p1_d6`.
   - SUVI: `img_age_h`, 셀 통계 148열 `suvi_disk_*`/`suvi_lonII_latJ_*`, 어두운 영역 면적 180열 `suvi_t035_*`/`suvi_t045_*`/`suvi_t055_*`, h별 strip 15열 `strip_v*`.
   - ENLIL 5열과 h별 `enlil_dt_target`.
@@ -66,7 +66,7 @@ cd /home/t-lab01/sunrun
   - **추가 20열(6b절, 2026-11-25)**: `e2000fs_…_union9_lbsel_plus7` 행의 입력 중 446열 밖에 있던 열입니다. DONKI 알림 8열 `pub_*`, ACE 파생 3열, SRS·예보 토의 2열, SUVI 파생 2열, `cme_phase_rec27`, `rec27_ramp`, `rec54_consensus`, `enlil_earth_speed`, `onset700_hazard`. 정의는 노트북 6b절 표에 있습니다.
   - 이 20열은 원 정의를 그대로 따르므로 위의 "처리하지 않는 것"의 예외입니다. 공개 시각이 origin 이전인 원문만 쓰고, 결측은 `-999`이며, `ace_proton_ram_pressure_npa`는 h별 앞값 채움 뒤의 n, v로 계산합니다. `onset700_hazard`는 2025-09-23 이전 학습 y로 적합한 보조 XGBoost(threads 1)의 출력입니다.
   - `enlil_earth_speed`는 NOAA open-data S3(`noaa-wsa-enlil-pds`) 실행만 씁니다. NCEI archive(개당 약 145 MB, 공개가 실행 후 약 25 h)는 실시간 예측에서 같은 시점에 받을 수 없어 2026-11-25에 원천에서 뺐습니다. 그 결과 값이 있는 칸이 F1 78.7 %→37.7 %, F2 90.0 %→81.4 %, F3 98.8 %→72.1 %로 줄었고(나머지는 더 이른 S3 실행 값 또는 `-999`), 다른 465열은 그대로입니다.
-  - 지금 `df.parquet`(466열)는 2026-11-02 빌드의 446열에 6b절 셀로 20열을 더한 것입니다. 이전 파일: NCEI 포함판 `input/*.prev-ncei`(frozen plus7 입력 표와 전 열·전 행이 같음), 446열판 `input/*.prev-20261125`. 노트북 전체 연결은 `DF_SMOKE=1`로 확인했습니다.
+  - `df.parquet`는 2026-11-02 빌드의 446열에 6b절 셀로 20열을 더한 466열에서, 2026-11-25에 ACE 위치 9열 `ace_{x,y,z}_gse_re_{last,m6,m24}`(`df_ts`는 3열)을 뺀 457열입니다. 위치 열은 `raw/ACE/monthly-txt/*_ace_loc_1h.txt`와 함께 지웠고, 나머지 열은 전 행 bit 단위로 같습니다(수정 전/후 `DF_SMOKE=1` 결과와 전체 파일 모두 확인). 직전 파일은 `input/*.prev-loc`입니다. NCEI 원천 폴더 `raw/ENLIL/noaa/`도 같은 날 지웠습니다. 이전 파일: NCEI 포함판 `input/*.prev-ncei`(frozen plus7 입력 표와 전 열·전 행이 같음), 446열판 `input/*.prev-20261125`. 노트북 전체 연결은 `DF_SMOKE=1`로 확인했습니다.
 - **이전 df(2026-11-01)와의 관계**: 이전 df는 frozen 번들에서 만든 30개 피처 표였고, 새 df로 덮어썼습니다. 그래서 `research/e2000fs_calib_point4_144h/experiment.py`(열 이름 `ch_ch_*`, 이전 값으로 공식 예측 재현)는 새 df로는 그대로 실행되지 않습니다.
 
 ## df_ts.parquet
@@ -82,8 +82,8 @@ cd /home/t-lab01/sunrun
 - **형식**: 한 행은 매시 칸 `time`입니다. 첫 ACE 칸(2022-08-01T01Z)부터 마지막 query origin + 72h까지 빈칸 없이 이어집니다.
 - **분할 열**: `train_origin`, `query_origin`, `period`, `fit_F1/F2/F3`. 정의는 `df.parquet`의 `set`/`period`/`fit_P`와 같습니다.
 - **`y`**: 행 `time` = T 라벨의 SWEPAM 속도(status 0, 채움 없음). origin O의 리드 h 정답은 행 O + h의 `y`입니다.
-- **ACE 22열** `ace_*`: 칸 값(라벨 T−1h 행)이고 `df.parquet`의 `_last`와 같은 값입니다. `_m6`/`_m24`·lag 같은 요약은 없습니다(모델이 시계열로 봅니다).
-- **SUVI**: `img_age_h`, `suvi_disk_log_median`, 그리고 칸 T 프레임 한 장의 **경도 stripe 프로파일** `suvi_strip_{logmed,dark,cover}_k{m072…p143}` 648열. 전체 표는 36,503행 × 1,012열이고, 전체 빌드는 worker 20개로 약 1시간 50분 걸립니다.
+- **ACE 19열** `ace_*`: 칸 값(라벨 T−1h 행)이고 `df.parquet`의 `_last`와 같은 값입니다. `_m6`/`_m24`·lag 같은 요약은 없습니다(모델이 시계열로 봅니다).
+- **SUVI**: `img_age_h`, `suvi_disk_log_median`, 그리고 칸 T 프레임 한 장의 **경도 stripe 프로파일** `suvi_strip_{logmed,dark,cover}_k{m072…p143}` 648열. 전체 표는 36,503행 × 1,009열이고, 전체 빌드는 worker 20개로 약 1시간 50분 걸립니다.
   - stripe k의 영역은 |경도 − 0.55°/h × (k − `img_age_h`)| ≤ 5°, |위도| ≤ 30°입니다. 서쪽이 +이고, k는 "칸 시각보다 k시간 전에 중앙 자오선을 지난 경도"입니다(k < 0은 앞으로 지날 경도).
   - `logmed`는 유효 픽셀 log1p radiance 중앙값, `dark`는 디스크 중앙값 0.5배 미만 비율, `cover`는 유효 픽셀 비율입니다. `df.parquet`의 `strip_v*`(15° 셀 겹침 가중 평균, h·속도별)와 달리 픽셀에서 직접 계산한 프레임 고유 값입니다.
 - **ENLIL 5열**: `df.parquet`와 같은 정의를 매시 칸에 적용한 값입니다.
@@ -125,7 +125,7 @@ cd /home/t-lab01/sunrun
   - 시간당 FITS 헤더를 약 59개 읽어야 해서 워커가 적으면 느립니다(워커 2개는 분당 4개).
   - NetCDF는 2024년 5월 전까지 약 5MB, 그 뒤로 약 1.9MB입니다.
   - 회선은 3~4MB/s에서 막혀 있고, 이를 넘기면 이 컴퓨터의 DNS까지 실패하니 더 늘리지 마세요(2026-11-01 측정).
-- 진행 중인 달의 ACE 행은 처음 받은 값으로 고정됩니다. `loc` 파일에는 아직 오지 않은 시간의 예측 위치도 들어 있습니다.
+- 진행 중인 달의 ACE 행은 처음 받은 값으로 고정됩니다.
 - `metric/metric.ipynb`는 예외입니다. Run All 하면 `raw/ACE/monthly-txt/`의 SWEPAM 최신 월 파일을 통째로 다시 받아 덮어씁니다.
 - `input/df.parquet`는 갱신하지 않습니다. raw를 추가한 뒤 노트북을 다시 실행하세요.
 
