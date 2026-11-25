@@ -31,7 +31,7 @@ research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> resu
 | `raw/ACE/daily-txt/swepam/` | ACE SWEPAM 1분 일별 원문(2022-08-01부터, `:Created:`가 공개 시각). 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/daily/ |
 | `raw/ENLIL/wsa-s3/` | NOAA WSA-Enlil open-data 버킷의 `evo.earth.nc`와 `listing.json`(LastModified). 출처 https://noaa-wsa-enlil-pds.s3.amazonaws.com |
 | `notebooks/raw_to_input_df.ipynb` | raw → `df.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df.parquet") |
-| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 현재 파일은 457열입니다(2026-11-25 ACE `loc` 9열 제거). 그 직전 466열 빌드(NCEI 제거판)는 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
+| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 현재 파일은 457열입니다(2026-11-25 ACE `loc` 9열 제거). 이 457열 파일은 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
 | `notebooks/raw_to_input_df_ts.ipynb` | raw → `df_ts.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df_ts.parquet") |
 | `input/df_ts.parquet` | 시계열 모델 입력. 매시 칸 1행, `MANIFEST_ts.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
 
