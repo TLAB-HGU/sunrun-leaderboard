@@ -1,8 +1,9 @@
-"""fianl_v1 — plus7 with unused lead columns and two block-specific inputs removed, no ridge; mean of seeds 42/43/44.
+"""fianl_v1 — plus7 with unused lead columns and two block-specific inputs removed, no ridge, no uplift; mean of
+seeds 42/43/44.
 
 End to end in this file: data-v2/input/df.parquet -> causal feature fill -> (origin x 72-lead) grids -> three
-24-lead XGBoost blocks per model -> training-only frozen offset -> seam / phase / uplift post-processing -> mean of
-three seeds -> official scorer.
+24-lead XGBoost blocks per model -> training-only frozen offset -> seam / phase post-processing -> mean of three seeds
+-> official scorer.
 
 Per seed (42, 43, 44) and period (F1, F2, F3; training origins + 144 h <= cutoff):
   inputs   38 origin constants and 13 lead-varying features of df.parquet (enlil_earth_speed from NOAA open-data S3
@@ -13,8 +14,8 @@ Per seed (42, 43, 44) and period (F1, F2, F3; training origins + 144 h <= cutoff
            accepted with an exact Armijo line search that keeps every lead's training MSE <= 1.01 x the A stage's.
   offset   a prior model on the origins up to 144 h before the last three training months; 0.25 x its mean
            residual over the last 336 calibration origins is added to the full model's forecast; clip [1, 3000].
-  post     seam xf8 at h24/25 and h48/49 -> 3 h same-issue phase advance in h25-71 -> seed-agreement uplift
-           (<= 40 km/s in h25-72) -> fixed equal-weight mean of the three seeds.
+  post     seam xf8 at h24/25 and h48/49 -> 3 h same-issue phase advance in h25-71 -> fixed equal-weight mean of
+           the three seeds (the seed-agreement uplift of the parent rows is not applied).
 
 CPU only:
   CUDA_VISIBLE_DEVICES='' python experiment.py --threads 6             # train all seeds and periods, score
@@ -112,7 +113,7 @@ OFFSET_WINDOW = 336
 PURGE_HOURS = 144
 POLICY = 'training-only frozen calibration; official labels used only for scoring'
 SEAMS, TAPER = (24, 48), 8
-POSTPROCESS = ['seam xf8', 'phase advance 3 h', 'seed-agreement uplift 40']
+POSTPROCESS = ['seam xf8', 'phase advance 3 h']
 
 
 class Logs:
@@ -773,20 +774,9 @@ def phase_advance(forecast):
     return np.clip(forecast + weight[None, :] * (forecast[:, ahead - 1] - forecast), 1., 3000.)
 
 
-def uplift(forecasts):
-    """Raise h25-72 by up to 40 km/s where the three seeds agree (std < 5) on a mean between 500 and 650 km/s."""
-    stack = np.stack(forecasts)
-    mean, spread = stack.mean(0), stack.std(0, ddof=1)
-    lead = np.clip((np.arange(1, H + 1) - 24) / 24, 0, 1)
-    agree = np.clip(1 - spread / 5, 0, 1)
-    band = np.clip(np.minimum((mean - 500) / 50, (650 - mean) / 50), 0, 1)
-    delta = 40 * lead[None, :] * agree * band
-    return [np.where(delta > 0, np.clip(f + delta, 1., 3000.), f) for f in stack]
-
-
 def postprocess(raw):
-    """Per seed: seam xf8 -> phase advance; then the seed-agreement uplift across the three seeds."""
-    return uplift([phase_advance(seam_smooth(profile)) for profile in raw])
+    """Per seed: seam xf8 -> phase advance."""
+    return [phase_advance(seam_smooth(profile)) for profile in raw]
 
 
 # 7. results ----------------------------------------------------------------------------------------------------------
