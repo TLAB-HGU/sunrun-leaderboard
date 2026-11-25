@@ -30,9 +30,8 @@ research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> resu
 | `raw/NOAA/srs/`, `raw/NOAA/discussion/{txt,hdr}/` | NOAA Solar Region Summary(2022-09-25부터)와 SWPC forecast discussion 원문·응답 헤더(2024-03부터). 출처 https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/ |
 | `raw/ACE/daily-txt/swepam/` | ACE SWEPAM 1분 일별 원문(2022-08-01부터, `:Created:`가 공개 시각). 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/daily/ |
 | `raw/ENLIL/wsa-s3/` | NOAA WSA-Enlil open-data 버킷의 `evo.earth.nc`와 `listing.json`(LastModified). 출처 https://noaa-wsa-enlil-pds.s3.amazonaws.com |
-| `raw/ENLIL/noaa/` | NCEI WSA-Enlil archive 목록, Wayback 근거, 노트북 규칙이 쓰는 archive마다 `*.suball.nc`에서 읽은 시간 칸 지구 궤적(`compact/{archive}.json`). 출처 https://archive.data.noaa.gov/satellite-spaceweather/SWPC/Models/ENLIL/ |
 | `notebooks/raw_to_input_df.ipynb` | raw → `df.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df.parquet") |
-| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 2026-11-25 빌드(466열)는 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
+| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 2026-11-25 빌드(466열, NCEI 제거판)는 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
 | `notebooks/raw_to_input_df_ts.ipynb` | raw → `df_ts.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df_ts.parquet") |
 | `input/df_ts.parquet` | 시계열 모델 입력. 매시 칸 1행, `MANIFEST_ts.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
 
@@ -66,7 +65,8 @@ cd /home/t-lab01/sunrun
   - 재귀 `rec26/27/28`, `rec_mean`.
   - **추가 20열(6b절, 2026-11-25)**: `e2000fs_…_union9_lbsel_plus7` 행의 입력 중 446열 밖에 있던 열입니다. DONKI 알림 8열 `pub_*`, ACE 파생 3열, SRS·예보 토의 2열, SUVI 파생 2열, `cme_phase_rec27`, `rec27_ramp`, `rec54_consensus`, `enlil_earth_speed`, `onset700_hazard`. 정의는 노트북 6b절 표에 있습니다.
   - 이 20열은 원 정의를 그대로 따르므로 위의 "처리하지 않는 것"의 예외입니다. 공개 시각이 origin 이전인 원문만 쓰고, 결측은 `-999`이며, `ace_proton_ram_pressure_npa`는 h별 앞값 채움 뒤의 n, v로 계산합니다. `onset700_hazard`는 2025-09-23 이전 학습 y로 적합한 보조 XGBoost(threads 1)의 출력입니다.
-  - 지금 `df.parquet`(466열)는 2026-11-02 빌드의 446열에 6b절 셀로 20열을 더한 것이고, frozen plus7 입력 표(`~/sunrun-union9-plus7/input/model-table-union9-plus7.parquet`)와 전 열·전 행이 같습니다(2026-11-25 확인, 이전 파일은 `input/*.prev-20261125`). 노트북 전체 연결은 `DF_SMOKE=1`로 확인했습니다.
+  - `enlil_earth_speed`는 NOAA open-data S3(`noaa-wsa-enlil-pds`) 실행만 씁니다. NCEI archive(개당 약 145 MB, 공개가 실행 후 약 25 h)는 실시간 예측에서 같은 시점에 받을 수 없어 2026-11-25에 원천에서 뺐습니다. 그 결과 값이 있는 칸이 F1 78.7 %→37.7 %, F2 90.0 %→81.4 %, F3 98.8 %→72.1 %로 줄었고(나머지는 더 이른 S3 실행 값 또는 `-999`), 다른 465열은 그대로입니다.
+  - 지금 `df.parquet`(466열)는 2026-11-02 빌드의 446열에 6b절 셀로 20열을 더한 것입니다. 이전 파일: NCEI 포함판 `input/*.prev-ncei`(frozen plus7 입력 표와 전 열·전 행이 같음), 446열판 `input/*.prev-20261125`. 노트북 전체 연결은 `DF_SMOKE=1`로 확인했습니다.
 - **이전 df(2026-11-01)와의 관계**: 이전 df는 frozen 번들에서 만든 30개 피처 표였고, 새 df로 덮어썼습니다. 그래서 `research/e2000fs_calib_point4_144h/experiment.py`(열 이름 `ch_ch_*`, 이전 값으로 공식 예측 재현)는 새 df로는 그대로 실행되지 않습니다.
 
 ## df_ts.parquet
@@ -102,7 +102,7 @@ cd /home/t-lab01/sunrun
 
 ```bash
 /home/t-lab01/sunrun/.venv/bin/python data-v2/fetch.py [SOURCE ...] [--full] [--dry-run] [--workers N]
-# SOURCE: ace enlil suvi donki srs discussion ace-daily wsa noaa-enlil (기본: 전부, wsa를 noaa-enlil보다 먼저)
+# SOURCE: ace enlil suvi donki srs discussion ace-daily wsa (기본: 전부)
 ```
 
 수동 실행 전용이고 타이머는 없습니다. **insert-only**입니다. 없는 기록만 추가하고, 이미 저장한 기록은 웹 값이 달라져도 바꾸지 않으며 이력도 남기지 않습니다.
@@ -117,7 +117,6 @@ cd /home/t-lab01/sunrun
 | discussion | 2024-03 ~ 이번 달 목록에서 로컬에 없는 파일 | 원문 + 응답 헤더 |
 | ace-daily | 2022-08-01 ~ 그저께(다음 날이 닫힌 날만) 중 로컬에 없는 날 | 파일 |
 | wsa | 버킷 전체 목록, 로컬에 없는 `evo.earth.nc` | key(LastModified는 처음 본 값 유지) |
-| noaa-enlil | 2025-12 ~ 2026-09 목록, 노트북 규칙이 쓰는 archive 중 로컬에 없는 것 | archive의 지구 궤적 JSON 1개 (`*.suball.nc`는 저장하지 않음) |
 
 - SUVI 프레임 선택: G18 Fe195의 `[H-1h, H)` 프레임 중 `obs_end + 2s <= H`인 것에서 일식 없는 프레임 > 긴 노출(0.1초 단위) > 최신 순입니다. 후보가 없거나 S3에 `.nc`가 없으면 아무것도 저장하지 않습니다. 다른 위성으로 대체하지 않습니다.
 - 지금 있는 33,842개(2022-11-22 22시 칸 ~ 2026-11-01)는 2026-11-01~02에 S3 업로드 시각 조건을 더 걸어서 받은 것입니다. 이 조건은 2026-11-02에 없앴고, insert-only라 기존 파일은 그대로 둡니다. 다음 `fetch.py suvi` 실행은 파일이 없는 시간(2022-08-22~11-22, 그 뒤 약 720시간)을 새 조건으로 다시 확인하므로 일부가 채워질 수 있습니다.
@@ -128,8 +127,6 @@ cd /home/t-lab01/sunrun
   - 회선은 3~4MB/s에서 막혀 있고, 이를 넘기면 이 컴퓨터의 DNS까지 실패하니 더 늘리지 마세요(2026-11-01 측정).
 - 진행 중인 달의 ACE 행은 처음 받은 값으로 고정됩니다. `loc` 파일에는 아직 오지 않은 시간의 예측 위치도 들어 있습니다.
 - `metric/metric.ipynb`는 예외입니다. Run All 하면 `raw/ACE/monthly-txt/`의 SWEPAM 최신 월 파일을 통째로 다시 받아 덮어씁니다.
-- `noaa-enlil`은 archive(약 150 MB)를 끝까지 stream으로 받아, 그 안의 `*.suball.nc`(137 MB)에서 시간 칸 지구 궤적만 JSON으로 남깁니다. NCEI 서버는 연결 수와 관계없이 전체 약 0.8 MB/s라 처음부터 받으면 164개(24 GB)에 약 8시간 걸립니다(2026-11-25 측정).
-- 이 컴퓨터의 `raw/ENLIL/noaa/compact/` 164개는 2026-11-23 캠페인(`~/sunrun-discrimination10`)이 같은 archive에서 같은 규칙으로 만든 기록을 복사한 것입니다. 2026-11-25에 다시 받은 27개 archive로 `fetch.py`의 변환 결과가 이 기록과 같음을 확인했습니다. 공개 시각 근거 중 Wayback 55건은 `fetch.py`의 `WAYBACK` 상수(2026-11-23 footer 판독)입니다.
 - `input/df.parquet`는 갱신하지 않습니다. raw를 추가한 뒤 노트북을 다시 실행하세요.
 
 ## 삭제한 레거시
