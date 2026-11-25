@@ -1,4 +1,4 @@
-"""Reproduce the three-seed fianl_v1 forecast from the archived plus7 data table."""
+"""Reproduce the three-seed fianl_v1 forecast from data-v2/input/df.parquet."""
 import os
 from pathlib import Path
 import sys
