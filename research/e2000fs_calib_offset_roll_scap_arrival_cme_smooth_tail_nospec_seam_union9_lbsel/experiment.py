@@ -331,7 +331,12 @@ def ram_pressure(n, v):
 
 
 def add_features(source, destination, srs, discussion):
-    """Copy the table row group by row group and append the five columns."""
+    """Copy the table row group by row group and append the five columns. When the table already has them
+    (df.parquet since 2026-11-25, data-v2 notebook section 6b), they must equal the recomputed values and are kept."""
+    names = pq.ParquetFile(source).schema_arrow.names
+    present = set(ADDED).intersection(names)
+    if present and present != set(ADDED):
+        raise ValueError('source table has only some of the union9 columns')
     raw = pd.read_parquet(source, columns=['origin', 'h', 'ace_density_cm3_last', 'ace_bt_nt_last'])
     per = raw[raw.h.eq(1)].groupby('origin')[['ace_density_cm3_last', 'ace_bt_nt_last']]
     if (per.nunique(dropna=False) > 1).any().any():
@@ -358,7 +363,12 @@ def add_features(source, destination, srs, discussion):
         columns['ace_log_proton_entropy'] = entropy(table['ace_temperature_k_last'].to_numpy(zero_copy_only=False),
                                                     table['ace_density_cm3_last'].to_numpy(zero_copy_only=False))
         for name in ADDED:
-            table = table.append_column(name, pa.array(columns[name], type=pa.float32()))
+            value = np.asarray(columns[name], np.float32)
+            if present:
+                if not np.array_equal(table[name].to_numpy(), value, equal_nan=True):
+                    raise ValueError(f'stored {name} differs from the recomputed values')
+            else:
+                table = table.append_column(name, pa.array(value, type=pa.float32()))
         writer = writer or pq.ParquetWriter(destination, table.schema, compression='zstd')
         writer.write_table(table, row_group_size=table.num_rows)
     writer.close()
