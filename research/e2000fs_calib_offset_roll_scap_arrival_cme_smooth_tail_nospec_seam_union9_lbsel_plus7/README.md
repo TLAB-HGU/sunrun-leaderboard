@@ -34,12 +34,50 @@
 입력 51열은 모두 `data-v2/input/df.parquet`에 들어 있다. `data-v2/fetch.py`가 원문을 `data-v2/raw/`에 받고, `data-v2/notebooks/raw_to_input_df.ipynb`의 6b절이 446열 밖에 있던 20열을 만든다.
 
 ```bash
-.venv/bin/python data-v2/fetch.py                 # 원문 (wsa를 noaa-enlil보다 먼저)
+.venv/bin/python data-v2/fetch.py                 # 원문
 .venv/bin/jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=-1 data-v2/notebooks/raw_to_input_df.ipynb
 CUDA_VISIBLE_DEVICES='' .venv/bin/python research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam_union9_lbsel_plus7/experiment.py --threads 6
 ```
 
-- 새 df는 캠페인 입력 표 `~/sunrun-union9-plus7/input/model-table-union9-plus7.parquet`와 466열·2,816,784행이 모두 같다.
-- 캠페인 checkpoint로 `--predict-only`(`--data` 없음)를 실행하면 seed 42/43/44와 mean3 예측이 캠페인 결과와 같고, mean3 S는 90.17361022099254다.
-- `enlil_earth_speed`의 NCEI 공개 시각 일부는 Wayback 그림을 사람이 판독한 값(`fetch.py`의 `WAYBACK`)이다. NCEI archive는 처음부터 받으면 약 24 GB, 8시간이 걸린다.
+- 2026-11-25 이전 기록: NCEI 포함 df는 캠페인 입력 표 `~/sunrun-union9-plus7/input/model-table-union9-plus7.parquet`와 466열·2,816,784행이 모두 같았고, mean3 S는 90.17361022099254였다.
+- 지금 df(NCEI 제거판)와 checkpoint로 `--predict-only`(`--data` 없음)를 실행하면 seed 42/43/44와 mean3 예측이 아래 재학습 결과와 같고, mean3 S는 91.56316183549588이다.
 
+## NCEI 제거 재학습 (2026-11-25)
+
+NCEI WSA-Enlil archive(실행 후 약 25 h 공개, tarball 개당 약 145 MB)는 라이브에서 쓸 수 없어 데이터 파이프라인에서 뺐다.
+`enlil_earth_speed`는 이제 NOAA open-data S3 `noaa-wsa-enlil-pds` 실행(597개)만으로 만든다. 그 밖의 코드·설정·후처리는 같고,
+frozen ridge(`union9_lbsel`의 `ridge.npz`)를 그대로 쓰며 GBM 3기간 × 3 seed만 다시 학습했다. 기록은 `~/sunrun-plus7-noncei/`.
+
+- 입력 변화: 노트북 6b만 다시 실행했고 `enlil_earth_speed` 밖의 465열은 이전 df와 값이 완전히 같다.
+  `enlil_earth_speed`가 바뀐 칸(origin × lead 기준)은 다음과 같다. 원래 S3 값이던 칸은 변하지 않았다.
+
+  | 기간 | 값 있는 비율 (이전 → 지금) | 바뀐 칸 | -999가 된 칸 | 다른 S3 실행으로 바뀐 칸 |
+  |---|---|---|---|---|
+  | 학습 | 18.1 % → 14.8 % | | | |
+  | F1 | 78.7 % → 37.7 % | 50.8 % | 41.0 % | 9.8 % |
+  | F2 | 90.0 % → 81.4 % | 20.1 % | 8.6 % | 11.5 % |
+  | F3 | 98.8 % → 72.1 % | 39.1 % | 26.7 % | 12.4 % |
+
+- 결과(공식 scorer, mean3): **S 91.563 (이전 90.174, ΔS +1.390, +1.54 %)**. seed 42/43/44는 91.419 / 91.727 / 91.899(이전 90.033 / 90.128 / 90.778)로 세 seed 모두 나빠졌다.
+
+  | | Total | F1 | F2 | F3 |
+  |---|---|---|---|---|
+  | S (지금) | 91.563 | 109.703 | 73.929 | 60.121 |
+  | S (NCEI 포함) | 90.174 | 107.346 | 73.823 | 59.843 |
+  | TIMSE (지금 / 이전) | 14295 / 13437 | 22059 / 20056 | 6391 / 6578 | 4150 / 3977 |
+  | RMSE (지금 / 이전) | 72.08 / 72.43 | 84.70 / 86.05 | 70.68 / 69.46 | 59.06 / 59.87 |
+
+- 해석: 악화는 커버리지가 가장 많이 줄어든 F1(ΔS +2.36)에 몰려 있고(F2 +0.11, F3 +0.28), TIMSE가 커졌다. RMSE는 거의 같다.
+  ENLIL 지구 풍속 예보가 고속류 도달 시각 표현에 기여했던 부분이 S3 실행의 불규칙한 공개(월 8–22일, 최대 13일 공백)로 줄었다.
+  NCEI 포함 점수는 라이브에서 재현할 수 없는 입력에 기댄 값이므로 이 행은 NCEI 제거판으로 교체한다.
+- 검증: 세 seed `train.exit` 0, 기간별 checkpoint·metadata 9개, 학습 입력 `data-v2/input/df.parquet`(220,093,500 bytes),
+  `--predict-only` 재실행 예측이 seed별·mean3 모두 완전히 같다.
+
+
+## ridge 제거 ablation (2026-11-25, 채점 후 진단, NCEI 포함 df 기준)
+
+- 후처리에서 ridge 5 % 결합 단계 하나만 빼고 GBM raw 예측과 나머지 단계는 그대로 두었다. 기록은 `~/sunrun-plus7-noridge/`.
+  A를 재조립한 결과는 저장된 mean3와 비트 단위로 같았다.
+- mean3 S 90.174 → 90.094(ΔS −0.080, −0.089 %), CI [−0.22, +0.33]이고 seed별 ΔS는 −0.096 / −0.062 / −0.037이다.
+  RMSE +0.38 %, TIMSE −1.12 %, F1 / F2 / F3 S +0.06 / −0.09 / +0.14 %다.
+- 판정은 ridge 기여 미검출(중립)이다. 이 행에서 ridge는 RMSE를 조금 낮추고 TIMSE를 높이는 수축 효과만 낸다. 구성은 바꾸지 않는다.
