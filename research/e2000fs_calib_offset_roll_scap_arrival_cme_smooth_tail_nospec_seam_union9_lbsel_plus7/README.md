@@ -28,3 +28,18 @@
 ## 실행 상태
 
 실행 전 사전 등록. `experiment.py`는 기존 plus4를 읽어 디자인 prefix를 보존하고 세 입력만 추가한다. 기존 실행기와 공용 모듈은 변경하지 않는다. 학습·채점·실패 분석·채택 여부는 캠페인 완료 후 기록한다.
+
+## 재현 (2026-11-25)
+
+입력 51열은 모두 `data-v2/input/df.parquet`에 들어 있다. `data-v2/fetch.py`가 원문을 `data-v2/raw/`에 받고, `data-v2/notebooks/raw_to_input_df.ipynb`의 6b절이 446열 밖에 있던 20열을 만든다.
+
+```bash
+.venv/bin/python data-v2/fetch.py                 # 원문 (wsa를 noaa-enlil보다 먼저)
+.venv/bin/jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=-1 data-v2/notebooks/raw_to_input_df.ipynb
+CUDA_VISIBLE_DEVICES='' .venv/bin/python research/e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam_union9_lbsel_plus7/experiment.py --threads 6
+```
+
+- 새 df는 캠페인 입력 표 `~/sunrun-union9-plus7/input/model-table-union9-plus7.parquet`와 466열·2,816,784행이 모두 같다.
+- 캠페인 checkpoint로 `--predict-only`(`--data` 없음)를 실행하면 seed 42/43/44와 mean3 예측이 캠페인 결과와 같고, mean3 S는 90.17361022099254다.
+- `enlil_earth_speed`의 NCEI 공개 시각 일부는 Wayback 그림을 사람이 판독한 값(`fetch.py`의 `WAYBACK`)이다. NCEI archive는 처음부터 받으면 약 24 GB, 8시간이 걸린다.
+

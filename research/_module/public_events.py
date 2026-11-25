@@ -15,6 +15,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import re
+import shutil
 import time
 import urllib.request
 from pathlib import Path
@@ -251,15 +252,31 @@ def features_at_origins(messages, origins):
 
 
 def augment(source: Path, corpus: Path, destination: Path) -> dict:
-    """Copy source (df.parquet) row group by row group and append the T and K columns per origin."""
+    """Copy source (df.parquet) row group by row group and append the T and K columns per origin.
+
+    Since 2026-11-25 df.parquet already carries these columns (data-v2 notebook section 6b): they are recomputed from
+    the corpus, must equal the stored values exactly, and the source is then copied unchanged."""
     messages = json.loads(Path(corpus).read_text())
     parquet = pq.ParquetFile(source)
     names = parquet.schema_arrow.names
-    if set(FEATURES).intersection(names):
-        raise ValueError('source table already has DONKI feature columns')
+    present = set(FEATURES).intersection(names)
+    if present and present != set(FEATURES):
+        raise ValueError('source table has only some of the DONKI feature columns')
     origins = pd.DatetimeIndex(pq.read_table(source, columns=['origin'])['origin'].to_pandas()).unique().sort_values()
     features = features_at_origins(messages, origins)
     index = pd.DatetimeIndex(features.origin)
+    if present:
+        stored = pq.read_table(source, columns=['origin', *FEATURES]).to_pandas()
+        position = index.get_indexer(pd.DatetimeIndex(stored.origin))
+        for name in FEATURES:
+            if not np.array_equal(stored[name].to_numpy(np.float32), features[name].to_numpy(np.float32)[position]):
+                raise ValueError(f'stored {name} differs from the corpus replay')
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+        return dict(corpus=str(corpus), messages=len(messages), origins=len(origins), features=FEATURES,
+                    source_columns_verified=True,
+                    next_forecast_active=float(features[FEATURES[0]].ne(MISSING).mean()),
+                    next_kinematics_active=float(features[K_FEATURES[0]].ne(MISSING).mean()))
     destination.parent.mkdir(parents=True, exist_ok=True)
     writer = None
     for i in range(parquet.num_row_groups):

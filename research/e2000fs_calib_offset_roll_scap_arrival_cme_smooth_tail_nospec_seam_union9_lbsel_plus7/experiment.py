@@ -1,6 +1,7 @@
 """Union9 plus4 with ENLIL Earth speed, onset hazard, and rec54 consensus.
 
-Supply the preassembled feature table with --data. The complete three-seed run
+Reads data-v2/input/df.parquet, which holds every input column since 2026-11-25 (notebook section 6b); --data names
+another table with the same columns. The complete three-seed run
 retains union9's seam, ridge, phase advance, and seed-agreement uplift unchanged.
 Partial-seed runs and --smoke produce unscored raw GBM predictions; finalize with
 --predict-only --seeds 42 43 44 using all GBM and frozen ridge checkpoints.
@@ -52,7 +53,7 @@ SPEC = PlusSevenSpec(**_fields)
 
 def main():
     parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument('--data', type=Path)
+    parser.add_argument('--data', type=Path, default=common.DATA)
     parser.add_argument('--out', type=Path)
     parser.add_argument('--weights', type=Path)
     parser.add_argument('--observations', type=Path)
@@ -64,8 +65,6 @@ def main():
     if '--help' in rest or '-h' in rest:
         gbm.main(SPEC, __doc__, HERE)
         return
-    if args.data is None:
-        parser.error('--data must name the preassembled union9-plus7 table')
     common.output_paths(args, HERE, EXPERIMENT)
     original_score = gbm.score
     try:
