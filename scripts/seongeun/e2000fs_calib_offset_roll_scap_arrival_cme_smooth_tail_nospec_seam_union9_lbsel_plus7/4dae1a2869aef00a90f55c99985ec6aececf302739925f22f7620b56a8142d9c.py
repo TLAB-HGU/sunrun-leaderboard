@@ -1,4 +1,4 @@
-"""Train and score plus7 from its preassembled model table."""
+"""Train and score plus7 from data-v2/input/df.parquet (NCEI removed; enlil_earth_speed from NOAA open-data S3 runs only)."""
 import argparse
 import os
 from pathlib import Path
