@@ -146,3 +146,8 @@ Model inputs come from the shared Drive folder **sun-db**
 - Evaluation covers every day from June on: tune on 2025-08 .. 2026-05 only and submit finished models.
 
 Maintenance code (data refresh, fold/label building, baseline generation, Gradio app) is kept at git tag `full-2026-09-30`.
+
+A disclosed exploratory submission may use `--allow-cutoff-exception` with a
+`tuning_cutoff_exception` statement in its metadata when specifically requested.
+This statement is included in the ranking description. The three training end
+fields still record actual model fitting limits and must pass the fit cutoffs.

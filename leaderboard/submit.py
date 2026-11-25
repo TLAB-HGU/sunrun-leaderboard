@@ -111,7 +111,7 @@ def architecture_location(meta: dict) -> str:
     return url
 
 
-def validate_meta(meta: dict) -> tuple[dict, str, float, str]:
+def validate_meta(meta: dict, *, allow_cutoff_exception: bool = False) -> tuple[dict, str, float, str]:
     if not isinstance(meta, dict):
         raise SystemExit("meta must be a YAML mapping")
     missing = [k for k in REQUIRED_META if k not in meta or meta[k] is None or meta[k] == ""]
@@ -125,6 +125,11 @@ def validate_meta(meta: dict) -> tuple[dict, str, float, str]:
     for field in ("team_member", "experiment"):
         if not isinstance(meta[field], str) or not SAFE_NAME.fullmatch(meta[field]):
             raise SystemExit(f"meta.{field} must match {SAFE_NAME.pattern}")
+    exception = meta.get("tuning_cutoff_exception")
+    if exception is not None and (
+        not allow_cutoff_exception or not isinstance(exception, str) or not exception.strip()
+    ):
+        raise SystemExit("tuning_cutoff_exception requires a disclosure and --allow-cutoff-exception")
     ends = {}
     for period, limit in TRAIN_END.items():
         field = f"{period}_training_data_end_utc"
@@ -308,8 +313,9 @@ def store_submission(api: HfApi, repo: str, rec: dict, pred_bytes: bytes, replac
 
 
 def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPACE, dry_run: bool = False,
-           replace: bool = False) -> dict:
-    config, config_sha, seconds, f1_end, train_ends = validate_meta(meta)
+           replace: bool = False, *, allow_cutoff_exception: bool = False) -> dict:
+    config, config_sha, seconds, f1_end, train_ends = validate_meta(
+        meta, allow_cutoff_exception=allow_cutoff_exception)
     code_url = require_script(meta["team_member"], meta["experiment"], config_sha, remote=not dry_run)
     architecture_url = architecture_location(meta)
     if not dry_run and not architecture_code.reachable(architecture_url):
@@ -331,6 +337,9 @@ def submit(pred_path: str, meta: dict, dataset: str = DATASET, space: str = SPAC
            "f3_training_data_end_utc": train_ends["f3"], "config": config, "config_sha256": config_sha, "inference_seconds_per_fold": seconds,
            "code_url": code_url, "architecture_url": architecture_url, "competition": competition,
            "competition_dataset_revision": data_revision}
+    if exception := meta.get("tuning_cutoff_exception"):
+        rec["tuning_cutoff_exception"] = exception
+        rec["description"] += f" | 탐색 제출: {exception}"
     if not dry_run:
         rec = publish_plots([rec], HERE / "assets" / "metrics")[0]
         # One Hub commit keeps the keyed prediction and its score consistent.
@@ -353,6 +362,8 @@ if __name__ == "__main__":
     ap.add_argument("--show", action="store_true", help="print the current leaderboard and exit")
     ap.add_argument("--push-policy", action="store_true",
                     help="upload the local visibility.json as the Space policy, re-render the page and exit")
+    ap.add_argument("--allow-cutoff-exception", action="store_true",
+                    help="accept a disclosed evaluation-period tuning exception; fit cutoffs still apply")
     a = ap.parse_args()
     if a.push_policy:
         require_token()
@@ -364,7 +375,8 @@ if __name__ == "__main__":
         raise SystemExit(0)
     if not (a.predictions and a.meta):
         ap.error("predictions and meta are required (or use --show)")
-    r = submit(a.predictions, yaml.safe_load(Path(a.meta).read_text()), a.dataset, a.space, a.dry_run, a.replace)
+    r = submit(a.predictions, yaml.safe_load(Path(a.meta).read_text()), a.dataset, a.space, a.dry_run, a.replace,
+               allow_cutoff_exception=a.allow_cutoff_exception)
     for scope in ("total", "f1", "f2", "f3"):
         metrics = r["competition"][scope]
         print(f"{scope.upper()}: S={metrics['s']:.3f} TIMSE={metrics['timse']:.3f} "
