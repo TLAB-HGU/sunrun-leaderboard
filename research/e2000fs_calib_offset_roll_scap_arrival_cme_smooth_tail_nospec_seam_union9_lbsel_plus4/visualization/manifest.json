@@ -1,0 +1,187 @@
+{
+  "experiment": "e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam_union9_lbsel_plus4",
+  "member": "seongeun",
+  "submitted_utc": "20261125T012908299Z",
+  "created_at_utc": "2026-11-25T01:44:23.614292+00:00",
+  "metric_version": "lead-timse-6h-v1",
+  "board": {
+    "rank": 2,
+    "ranked_rows": 34,
+    "space_revision": "aba514c0e9"
+  },
+  "sources": {
+    "dataset": "tlabtlab/sunrun-lb-store",
+    "record_and_predictions": "stored result record and its prediction parquet",
+    "observations": {
+      "file": "competition-observations.parquet",
+      "revision": "5aebe80f3c60d8f7386ea23e340e974cf91f7304"
+    }
+  },
+  "verification": {
+    "tolerance": 1e-09,
+    "all_equal_to_record": true,
+    "scores": {
+      "total": {
+        "s": 91.17845947919972,
+        "timse": 15601.3653107831,
+        "rmse": 68.21654539576187,
+        "trmse": 123.03745869061504,
+        "bias": 20.333555298192834,
+        "n_pairs": 52619,
+        "n_origins": 1052,
+        "replacement_fraction": 0.0
+      },
+      "f1": {
+        "s": 109.66678355947727,
+        "timse": 23157.483125595674,
+        "rmse": 82.44788398088677,
+        "trmse": 148.36205371516024,
+        "bias": 25.457437961230656,
+        "n_pairs": 17674,
+        "n_origins": 348,
+        "replacement_fraction": 0.0
+      },
+      "f2": {
+        "s": 72.55220637085095,
+        "timse": 7473.508331874323,
+        "rmse": 62.82445305287172,
+        "trmse": 84.32929568499645,
+        "bias": 14.957673331779722,
+        "n_pairs": 17473,
+        "n_origins": 352,
+        "replacement_fraction": 0.0
+      },
+      "f3": {
+        "s": 60.76805009029663,
+        "timse": 4566.751676226371,
+        "rmse": 57.401725573802224,
+        "trmse": 65.11124596553647,
+        "bias": 20.52662325907915,
+        "n_pairs": 17472,
+        "n_origins": 352,
+        "replacement_fraction": 0.0
+      }
+    },
+    "scored_origins": 1052,
+    "rendered_frames": 1052,
+    "complete": true,
+    "persistence_replaced_leads": 0
+  },
+  "lead_diagnostic": {
+    "f3_timse_lead_6k": 9379.194,
+    "f3_timse_other_min": 3049.117,
+    "f3_timse_other_max": 4369.155,
+    "f3_timse_lead_6k_without_peaks": 4603.948694591288,
+    "peaks_left_out": [
+      "2026-09-15T18:00:00Z",
+      "2026-07-23T18:00:00Z"
+    ],
+    "note": "diagnostic only; not a leaderboard score"
+  },
+  "config": {
+    "width": 1000,
+    "height": 500,
+    "frame_ms": 250,
+    "input_hours": 168,
+    "forecast_hours": 72,
+    "y_limits_kms": [
+      200.0,
+      850.0
+    ],
+    "month_grouping": "UTC month of origin + 1 hour",
+    "frames": "every scored origin (00/06/12/18 UTC) of F1/F2/F3"
+  },
+  "footer": "seongeun · e2000fs_calib_offset_roll_scap_arrival_cme_smooth_tail_nospec_seam_union9_lbsel_plus4 · submitted 20261125T012908299Z · scored 00/06/12/18 UTC origins · truth = ACE status 0, unfilled · Y 200–850 km/s",
+  "outputs": [
+    {
+      "month": "2026-01",
+      "period": "F1",
+      "file": "forecast_2026-01.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-01-01T00:00:00+00:00",
+      "last_origin_utc": "2026-01-31T18:00:00+00:00",
+      "bytes": 2642865,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-02",
+      "period": "F1",
+      "file": "forecast_2026-02.gif",
+      "frames": 112,
+      "first_origin_utc": "2026-02-01T00:00:00+00:00",
+      "last_origin_utc": "2026-02-28T18:00:00+00:00",
+      "bytes": 2334672,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-03",
+      "period": "F1",
+      "file": "forecast_2026-03.gif",
+      "frames": 112,
+      "first_origin_utc": "2026-03-01T00:00:00+00:00",
+      "last_origin_utc": "2026-03-28T18:00:00+00:00",
+      "bytes": 2359911,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-04",
+      "period": "F2",
+      "file": "forecast_2026-04.gif",
+      "frames": 120,
+      "first_origin_utc": "2026-04-01T00:00:00+00:00",
+      "last_origin_utc": "2026-04-30T18:00:00+00:00",
+      "bytes": 2567785,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-05",
+      "period": "F2",
+      "file": "forecast_2026-05.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-05-01T00:00:00+00:00",
+      "last_origin_utc": "2026-05-31T18:00:00+00:00",
+      "bytes": 2651560,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-06",
+      "period": "F2",
+      "file": "forecast_2026-06.gif",
+      "frames": 108,
+      "first_origin_utc": "2026-06-01T00:00:00+00:00",
+      "last_origin_utc": "2026-06-27T18:00:00+00:00",
+      "bytes": 2280209,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-07",
+      "period": "F3",
+      "file": "forecast_2026-07.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-07-01T00:00:00+00:00",
+      "last_origin_utc": "2026-07-31T18:00:00+00:00",
+      "bytes": 2693196,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-08",
+      "period": "F3",
+      "file": "forecast_2026-08.gif",
+      "frames": 124,
+      "first_origin_utc": "2026-08-01T00:00:00+00:00",
+      "last_origin_utc": "2026-08-31T18:00:00+00:00",
+      "bytes": 2666469,
+      "frame_ms": 250
+    },
+    {
+      "month": "2026-09",
+      "period": "F3",
+      "file": "forecast_2026-09.gif",
+      "frames": 104,
+      "first_origin_utc": "2026-09-01T00:00:00+00:00",
+      "last_origin_utc": "2026-09-26T18:00:00+00:00",
+      "bytes": 2262115,
+      "frame_ms": 250
+    }
+  ]
+}
