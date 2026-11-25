@@ -1,14 +1,15 @@
-"""fianl_v1 — plus7 with unused lead columns and two block-specific inputs removed, no ridge, no uplift; mean of
-seeds 42/43/44.
+"""fianl_v1 — plus7 with unused lead columns, two block-specific inputs and onset700_hazard removed, no ridge, no uplift;
+mean of seeds 42/43/44.
 
 End to end in this file: data-v2/input/df.parquet -> causal feature fill -> (origin x 72-lead) grids -> three
 24-lead XGBoost blocks per model -> training-only frozen offset -> seam / phase post-processing -> mean of three seeds
 -> official scorer.
 
 Per seed (42, 43, 44) and period (F1, F2, F3; training origins + 144 h <= cutoff):
-  inputs   38 origin constants and 13 lead-varying features of df.parquet (enlil_earth_speed from NOAA open-data S3
-           runs only). Block designs keep 305 / 308 / 283 columns: the 96 lead columns unused by every split of the
-           first fianl_v1 models, enlil_earth_speed in h1-24 and rec54_consensus in h49-72 are left out.
+  inputs   38 origin constants and 12 lead-varying features of df.parquet (enlil_earth_speed from NOAA open-data S3
+           runs only; plus7's onset700_hazard is not used). Block designs keep 284 / 304 / 283 columns: the lead
+           columns unused by every split of the first fianl_v1 models, enlil_earth_speed in h1-24 and rec54_consensus
+           in h49-72 are left out.
   model    per 24-lead block: 600 multi-output trees on a smooth-tail weighted squared error (A stage), then 6 stages
            x 30 direct-S proposal trees (S = sum_h (MSE_h * TIMSE_h)^(1/4) on the training rows), each stage
            accepted with an exact Armijo line search that keeps every lead's training MSE <= 1.01 x the A stage's.
@@ -60,7 +61,7 @@ KEYS = ['origin_last_input_utc', 'horizon_hours']
 MISSING = -999.  # "not available" marker of the event and union columns
 
 # Design order of one block: BASE_CONSTANT, the 8 BASE_VARYING per lead, LAG_CONSTANT, DONKI, UNION_GLOBAL,
-# UNION_LATE (h49-72 only), then per lead the 2 PLUS4_VARYING, SUVI_LATE (h49-72 only), per lead the 3 PLUS7_VARYING.
+# UNION_LATE (h49-72 only), then per lead the 2 PLUS4_VARYING, SUVI_LATE (h49-72 only), per lead the 2 PLUS7_VARYING.
 BASE_CONSTANT = ['v_lag0', 'ace_speed_kms_last', 'ace_density_cm3_last', 'ace_density_cm3_m6',
                  'ace_temperature_k_last', 'ace_temperature_k_m24', 'ace_bt_nt_last', 'ace_bt_nt_m6',
                  'ace_by_gsm_nt_m24', 'ace_epam_p_channel3_last', 'ace_sis_gt10_flux_last',
@@ -77,7 +78,7 @@ SUVI_LATE = ['suvi_t055_lowlat_top1_lon_width_cap67_deg', 'suvi_ballistic_dark_c
 BASE_VARYING = ['rec26', 'rec27', 'rec28', 'rec_mean', 'strip_v350_logmed', 'strip_v450_logmed', 'strip_v550_dark',
                 'strip_v750_logmed']
 PLUS4_VARYING = ['cme_phase_rec27', 'rec27_ramp']
-PLUS7_VARYING = ['enlil_earth_speed', 'onset700_hazard', 'rec54_consensus']
+PLUS7_VARYING = ['enlil_earth_speed', 'rec54_consensus']
 CONSTANT = BASE_CONSTANT + LAG_CONSTANT + DONKI + UNION_GLOBAL + UNION_LATE + SUVI_LATE
 VARYING = BASE_VARYING + PLUS4_VARYING + PLUS7_VARYING
 LATE_START = 48
@@ -86,15 +87,14 @@ LATE_START = 48
 # with zero weight do not count. BLOCK_REMOVALS drop a feature for all 24 leads of one block.
 UNUSED_LEADS = {
     0: {'strip_v550_dark': (7, 8, 9, 10), 'strip_v750_logmed': (14, 15, 16, 17),
-        'strip_v350_logmed': (22, 23, 24), 'strip_v450_logmed': (23, 24), 'onset700_hazard': (4, 5, 6)},
+        'strip_v350_logmed': (22, 23, 24), 'strip_v450_logmed': (23, 24)},
     24: {'strip_v550_dark': (35, 36, 37), 'strip_v750_logmed': (41, 42, 43, 44), 'strip_v350_logmed': (45, 47, 48),
-         'cme_phase_rec27': (32, 33, 38, 39, 43, 44, 45), 'onset700_hazard': range(29, 49)},
+         'cme_phase_rec27': (32, 33, 38, 39, 43, 44, 45)},
     48: {'strip_v450_logmed': (53, 54), 'strip_v550_dark': (60, 62, 63, 64), 'strip_v750_logmed': range(68, 73),
-         'strip_v350_logmed': (72,), 'cme_phase_rec27': (50, 51, 52, 55, 56, 57, 62),
-         'onset700_hazard': range(49, 73)},
+         'strip_v350_logmed': (72,), 'cme_phase_rec27': (50, 51, 52, 55, 56, 57, 62)},
 }
 BLOCK_REMOVALS = {0: ('enlil_earth_speed',), 24: (), 48: ('rec54_consensus',)}
-BLOCK_WIDTHS = (305, 308, 283)
+BLOCK_WIDTHS = (284, 304, 283)
 
 PARAMS = {'max_depth': 3, 'learning_rate': 0.03, 'subsample': 0.8, 'colsample_bytree': 0.7,
           'min_child_weight': 20, 'reg_lambda': 5, 'objective': 'reg:squarederror',
@@ -216,7 +216,7 @@ def fill_training_labels(metadata):
 
 
 def load_table(path, logs):
-    """Metadata plus the 51 input columns of df.parquet, causally filled."""
+    """Metadata plus the 50 input columns of df.parquet, causally filled."""
     began = time.perf_counter()
     features = CONSTANT + VARYING
     table = pd.read_parquet(path, columns=[*METADATA, *features])
@@ -292,7 +292,7 @@ def lead_names(names, start, size):
 
 
 def full_design(grid, start, size):
-    """All 345 / 345 / 350 candidate columns of one block, in design order (see full_names)."""
+    """All 321 / 321 / 326 candidate columns of one block, in design order (see full_names)."""
     n, constant, varying = len(grid['C']), grid['C'], grid['E'][:, start:start + size]
     base = len(BASE_CONSTANT)
     union_end = base + len(LAG_CONSTANT) + len(DONKI) + len(UNION_GLOBAL) + len(UNION_LATE)
