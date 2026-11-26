@@ -31,7 +31,7 @@ research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> resu
 | `raw/ACE/daily-txt/swepam/` | ACE SWEPAM 1분 일별 원문(2022-08-01부터, `:Created:`가 공개 시각). 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/daily/ |
 | `raw/ENLIL/wsa-s3/` | NOAA WSA-Enlil open-data 버킷의 `evo.earth.nc`와 `listing.json`(LastModified). 출처 https://noaa-wsa-enlil-pds.s3.amazonaws.com |
 | `notebooks/raw_to_input_df.ipynb` | raw → `df.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df.parquet") |
-| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 현재 파일은 457열입니다(2026-11-25 ACE `loc` 9열 제거). 이 457열 파일은 GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에 `MANIFEST.json`과 함께 첨부했습니다 |
+| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 로컬 파일은 아직 457열입니다(2026-11-25 ACE `loc` 9열 제거). 노트북은 2026-11-26부터 `fianl_v2` 입력 55열(메타 9 + 입력 46)을 만듭니다. GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에는 2026-11-26 55열 빌드의 `df.parquet`·`MANIFEST.json`만 있습니다(이전 457열 파일은 같은 날 release에서 지움) |
 | `notebooks/raw_to_input_df_ts.ipynb` | raw → `df_ts.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df_ts.parquet") |
 | `input/df_ts.parquet` | 시계열 모델 입력. 매시 칸 1행, `MANIFEST_ts.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
 
@@ -43,7 +43,7 @@ cd /home/t-lab01/sunrun
 # DF_SMOKE=1 DF_OUT=<dir>: 짧은 구간만 <dir>에 씀 / DF_WORKERS=N: SUVI 추출 worker 수 (기본 12)
 ```
 
-전체 실행은 SUVI NetCDF 33,842개를 모두 읽으므로 1시간 안팎 걸립니다. 길게 돌릴 때는 `systemd-run --user`로 띄웁니다.
+전체 실행은 SUVI NetCDF 33,842개를 모두 읽으므로 12 worker로 1시간 반 안팎 걸립니다. 길게 돌릴 때는 `systemd-run --user`로 띄웁니다.
 
 - **형식**
   - 한 행은 (`set`, `origin`, `h`)이고 origin 하나가 h = 1…72의 72행입니다.
@@ -57,16 +57,21 @@ cd /home/t-lab01/sunrun
   - 한 칸에 여러 개면 가장 늦은 것을 씁니다. origin O는 칸 ≤ O만 씁니다.
   - ACE 1h 행은 라벨 시각 + 1h 칸, SUVI는 `obs_end`의 칸, ENLIL은 `modelCompletionTime`의 칸입니다.
 - **`y`**: target_time T 라벨의 SWEPAM 속도입니다. 시각을 이동하지 않으며, `status == 0`이고 유한한 양수일 때만 값이 있고 나머지는 NaN입니다(공식 채점과 같음).
-- **피처**: raw에서 나오는 전체입니다. 열 이름에 `ch`를 쓰지 않습니다.
-  - ACE 19개 변수의 `_last`/`_m6`/`_m24`. `status ≠ 0`이거나 결측 표시값이면 NaN입니다.
-  - 속도 파생 `v_lag*`, `v_m*`, `v_sd*`, `speed_d24`, `epam_p1_d6`.
-  - SUVI: `img_age_h`, 셀 통계 148열 `suvi_disk_*`/`suvi_lonII_latJ_*`, 어두운 영역 면적 180열 `suvi_t035_*`/`suvi_t045_*`/`suvi_t055_*`, h별 strip 15열 `strip_v*`.
-  - ENLIL 5열과 h별 `enlil_dt_target`.
-  - 재귀 `rec26/27/28`, `rec_mean`.
-  - **추가 20열(6b절, 2026-11-25)**: `e2000fs_…_union9_lbsel_plus7` 행의 입력 중 446열 밖에 있던 열입니다. DONKI 알림 8열 `pub_*`, ACE 파생 3열, SRS·예보 토의 2열, SUVI 파생 2열, `cme_phase_rec27`, `rec27_ramp`, `rec54_consensus`, `enlil_earth_speed`, `onset700_hazard`. 정의는 노트북 6b절 표에 있습니다.
-  - 이 20열은 원 정의를 그대로 따르므로 위의 "처리하지 않는 것"의 예외입니다. 공개 시각이 origin 이전인 원문만 쓰고, 결측은 `-999`이며, `ace_proton_ram_pressure_npa`는 h별 앞값 채움 뒤의 n, v로 계산합니다. `onset700_hazard`는 2025-09-23 이전 학습 y로 적합한 보조 XGBoost(threads 1)의 출력입니다.
-  - `enlil_earth_speed`는 NOAA open-data S3(`noaa-wsa-enlil-pds`) 실행만 씁니다. NCEI archive(개당 약 145 MB, 공개가 실행 후 약 25 h)는 실시간 예측에서 같은 시점에 받을 수 없어 2026-11-25에 원천에서 뺐습니다. 그 결과 값이 있는 칸이 F1 78.7 %→37.7 %, F2 90.0 %→81.4 %, F3 98.8 %→72.1 %로 줄었고(나머지는 더 이른 S3 실행 값 또는 `-999`), 다른 465열은 그대로입니다.
-  - `df.parquet`는 2026-11-02 빌드의 446열에 6b절 셀로 20열을 더한 466열에서, 2026-11-25에 ACE 위치 9열 `ace_{x,y,z}_gse_re_{last,m6,m24}`(`df_ts`는 3열)을 뺀 457열입니다. 위치 열은 `raw/ACE/monthly-txt/*_ace_loc_1h.txt`와 함께 지웠고, 나머지 열은 전 행 bit 단위로 같습니다(수정 전/후 `DF_SMOKE=1` 결과와 전체 파일 모두 확인). 직전 파일은 `input/*.prev-loc`입니다. NCEI 원천 폴더 `raw/ENLIL/noaa/`도 같은 날 지웠습니다. 이전 파일: NCEI 포함판 `input/*.prev-ncei`(frozen plus7 입력 표와 전 열·전 행이 같음), 446열판 `input/*.prev-20261125`. 노트북 전체 연결은 `DF_SMOKE=1`로 확인했습니다.
+- **피처**: `research/fianl_v2/experiment.py`가 쓰는 46열만 만듭니다(2026-11-26부터). `fianl_v1`의 입력 50열에서 `ace_speed_kms_last`(`v_lag0`과 같은 값)와, 사용자 요청으로 `suvi_t055_lowlat_top1_lon_width_cap67_deg`, `suvi_ballistic_dark_contrast`, `enlil_earth_speed`를 뺐습니다. 열 이름에 `ch`를 쓰지 않습니다. 열별 설명은 저장소 루트의 `delay.md`(로컬 파일, git 제외)에 있습니다.
+  - ACE 13열: `v_lag{0,24,48,72}`, `ace_density_cm3_last/_m6`, `ace_temperature_k_last/_m24`, `ace_bt_nt_last/_m6`, `ace_by_gsm_nt_m24`, `ace_epam_p_channel3_last`, `ace_sis_gt10_flux_last`. `status ≠ 0`이거나 결측 표시값이면 NaN입니다. `ace_speed_kms_last`는 `v_lag0`과 같은 값이라 만들지 않습니다.
+  - SUVI 7열과 h별 strip 4열: `img_age_h`, 어두운 영역 면적 6열(`suvi_t035_top2_area`, `suvi_t035_meridian{15,30}_equatorial_area`, `suvi_t055_meridian15_area`, `suvi_t055_meridian30_equatorial_area`, `suvi_t055_equatorial_area`), `strip_v350_logmed`, `strip_v450_logmed`, `strip_v550_dark`, `strip_v750_logmed`.
+  - ENLIL 2열: `enlil_n_pending`, `enlil_kp`.
+  - 재귀 4열(h별): `rec26/27/28`, `rec_mean`.
+  - **6b절 16열**: DONKI 알림 8열 `pub_*`, ACE 파생 3열(`ace_log_proton_entropy`, `ace_nb_cocompression_6h`, `ace_proton_ram_pressure_npa`), `swpc_hss_coverage49_72`, `srs_earthward_eruptive_area`, h별 `cme_phase_rec27`, `rec27_ramp`, `rec54_consensus`. 정의는 노트북 6b절 표에 있습니다.
+  - 6b절 16열은 원 정의를 그대로 따르므로 위의 "처리하지 않는 것"의 예외입니다. 공개 시각이 origin 이전인 원문만 쓰고, 결측은 `-999`이며, `ace_proton_ram_pressure_npa`는 h별 앞값 채움 뒤의 n, v로 계산합니다.
+  - `enlil_earth_speed`는 2026-11-26에 노트북에서 뺐습니다. 그래서 `raw/ENLIL/wsa-s3/`(`fetch.py wsa`)를 읽는 코드가 노트북에 없습니다. 원문 폴더는 지우지 않았습니다. 이 열은 2026-11-25부터 NOAA open-data S3 실행만 썼고, NCEI archive는 실시간에 같은 시점에 받을 수 없어 그 전에 원천에서 뺐습니다.
+- **fianl_v1 전용으로 줄인 일(2026-11-26)**: 노트북에서 fianl_v1이 쓰지 않는 열과 그 생성 코드를 지웠습니다.
+  - 지운 것: ACE 나머지 `_last/_m6/_m24`·`v_lag1..120`·`v_m*`·`v_sd*`·`speed_d24`·`epam_p1_d6`, SUVI 셀 통계 148열·임계 0.45·면적 나머지, strip 나머지 10열, ENLIL `next_arr_h`·`since_arr_h`·`glancing`·`enlil_dt_target`, `onset700_hazard`(보조 XGBoost), `ace_speed_kms_last`. 같은 날 사용자 요청으로 fianl_v1 입력 중 `suvi_t055_lowlat_top1_lon_width_cap67_deg`, `suvi_ballistic_dark_contrast`, `enlil_earth_speed`와 이들만 쓰던 중간 값(SUVI 0.55배 최대 영역 면적·위치·폭, 유효 비율, `strip_v450_dark`), WSA-Enlil S3 셀도 지웠습니다.
+  - 남긴 46열의 계산식은 그대로입니다. SUVI 추출은 NetCDF 306개에서 수정 전 코드와 남긴 30개 값이 bit 단위로 같고, `DF_SMOKE=1` 결과도 저장된 457열 df와 같습니다(smoke 구간 때문에 `ace_nb_cocompression_6h`만 다름).
+  - 그래서 이 표로는 fianl_v1(뺀 3열을 읽음), 다른 research 행, `raw_to_input_df_ts.ipynb`의 df 교차 확인 셀이 실행되지 않습니다.
+  - 2026-11-26 전체 빌드(fetch 뒤 raw)를 457열 파일과 비교하면 41열은 전 행이 같고, SUVI 11열은 새로 받은 프레임 자리에서 NaN 대신 값이 들어간 것만 다릅니다(origin 1,554개: 학습 1,409, query 145).
+  - 로컬 `input/df.parquet`는 아직 이전 빌드(457열)입니다. 교체할 때 이전 파일은 `input/*.prev-457`로 남깁니다.
+- **이전 빌드 이력**: 2026-11-02 빌드 446열 → 2026-11-25 6b절 20열 추가(466열) → 같은 날 ACE 위치 9열 제거(457열, `input/*.prev-loc`가 직전 파일). NCEI 포함판은 `input/*.prev-ncei`(frozen plus7 입력 표와 전 열·전 행이 같음), 446열판은 `input/*.prev-20261125`입니다.
 - **이전 df(2026-11-01)와의 관계**: 이전 df는 frozen 번들에서 만든 30개 피처 표였고, 새 df로 덮어썼습니다. 그래서 `research/e2000fs_calib_point4_144h/experiment.py`(열 이름 `ch_ch_*`, 이전 값으로 공식 예측 재현)는 새 df로는 그대로 실행되지 않습니다.
 
 ## df_ts.parquet
