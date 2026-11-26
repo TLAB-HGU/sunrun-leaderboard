@@ -1,6 +1,6 @@
-"""fianl_v2_new_param — fianl_v2 with new XGBoost parameters (user request 2026-11-26): max_depth 3, 450 A-stage
-rounds, learning_rate 0.0151, min_child_weight 27.7, reg_lambda 6.26, subsample 0.85, colsample_bytree 0.88 (A stage
-and continuation share PARAMS). Everything else as fianl_v2.
+"""fianl_v2_new_param — fianl_v2 with new XGBoost parameters (user request 2026-11-26, second set): max_depth 2,
+300 A-stage rounds, learning_rate 0.0408, min_child_weight 31.1, reg_lambda 11.18, subsample 0.69, colsample_bytree 0.70
+(A stage and continuation share PARAMS). Everything else as fianl_v2.
 
 fianl_v2 — fianl_v1 without ace_speed_kms_last (a copy of v_lag0), suvi_t055_lowlat_top1_lon_width_cap67_deg,
 suvi_ballistic_dark_contrast and enlil_earth_speed (user request 2026-11-26); everything else as fianl_v1 (no ridge, no
@@ -14,7 +14,7 @@ Per seed (42, 43, 44) and period (F1, F2, F3; training origins + 144 h <= cutoff
   inputs   35 origin constants and 11 lead-varying features of df.parquet (the 55-column fianl_v1-only build of
            data-v2/notebooks/raw_to_input_df.ipynb). Block designs keep 283 / 279 / 256 columns: the lead columns
            unused by every split of the first fianl_v1 models and rec54_consensus in h49-72 are left out.
-  model    per 24-lead block: 450 multi-output trees on a smooth-tail weighted squared error (A stage), then 6 stages
+  model    per 24-lead block: 300 multi-output trees on a smooth-tail weighted squared error (A stage), then 6 stages
            x 30 direct-S proposal trees (S = sum_h (MSE_h * TIMSE_h)^(1/4) on the training rows), each stage
            accepted with an exact Armijo line search that keeps every lead's training MSE <= 1.01 x the A stage's.
   offset   a prior model on the origins up to 144 h before the last three training months; 0.25 x its mean
@@ -99,11 +99,11 @@ UNUSED_LEADS = {
 BLOCK_REMOVALS = {0: (), 24: (), 48: ('rec54_consensus',)}
 BLOCK_WIDTHS = (283, 279, 256)
 
-PARAMS = {'max_depth': 3, 'learning_rate': 0.0151, 'subsample': 0.85, 'colsample_bytree': 0.88,
-          'min_child_weight': 27.7, 'reg_lambda': 6.26, 'objective': 'reg:squarederror',
+PARAMS = {'max_depth': 2, 'learning_rate': 0.0408, 'subsample': 0.69, 'colsample_bytree': 0.70,
+          'min_child_weight': 31.1, 'reg_lambda': 11.18, 'objective': 'reg:squarederror',
           'tree_method': 'hist', 'device': 'cpu', 'multi_strategy': 'multi_output_tree',
           'eval_metric': 'rmse', 'seed': 42, 'verbosity': 0}
-ROUNDS = 450            # A-stage trees per block
+ROUNDS = 300            # A-stage trees per block
 BLOCK = 24
 PROPOSAL_ROUNDS = 180   # continuation trees per block, in stages of STAGE_ROUNDS
 STAGE_ROUNDS = 30
