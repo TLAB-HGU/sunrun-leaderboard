@@ -28,9 +28,16 @@ class Continuation:
     armijo: float = 1e-4
     mse_cap: float | None = None
 
+    proposal_max_depth: int = 3
+
+    def __post_init__(self):
+        if type(self.proposal_max_depth) is not int or self.proposal_max_depth <= 0:
+            raise ValueError("proposal_max_depth must be a positive integer")
+
     def launch_record(self):
         record = dict(objective=self.objective, proposal_rounds=self.proposal_rounds,
-                      stage_rounds=self.stage_rounds, step_sizes=self.step_sizes, armijo=self.armijo)
+                      stage_rounds=self.stage_rounds, step_sizes=self.step_sizes, armijo=self.armijo,
+                      proposal_max_depth=self.proposal_max_depth)
         if self.mse_cap is not None:
             record['mse_cap'] = self.mse_cap
         return record
@@ -61,14 +68,14 @@ class Continuation:
     def predict_block(artifact, xq, threads):
         return block_forecast(artifact['reference'], artifact['stages'], artifact['alphas'], xq, threads)
 
-    def continue_block(self, reference, x, xq, y, seed, threads, proposal_rounds):
+    def continue_block(self, reference, x, xq, y, seed, threads, proposal_rounds, diagnostic_callback=None):
         """Continue one A900 booster on its training rows. Returns the query forecast (A900 + sum of
         accepted alpha x stage forecast), the stage boosters' UBJSON bytes and the stage records."""
         loss = TrainingLoss(y, self.spectral_coefficient, self.spectral_scale)
         current = reference.inplace_predict(x).astype(np.float64).reshape(y.shape)
         query = reference.inplace_predict(xq).astype(np.float64).reshape(len(xq), y.shape[1])
         budget = None if self.mse_cap is None else self.mse_cap * np.mean((current - y) ** 2, axis=0)
-        settings = dict(PARAMS, device='cpu', nthread=threads, num_target=y.shape[1], base_score=0.)
+        settings = dict(PARAMS, device='cpu', nthread=threads, num_target=y.shape[1], base_score=0., max_depth=self.proposal_max_depth)
         matrix = xgb.DMatrix(x, label=y.astype(np.float32), nthread=threads)
         initial = loss.summary(current)
         buffers, stages, used = [], [], 0
@@ -84,6 +91,9 @@ class Continuation:
             model = xgb.train(settings, matrix, num_boost_round=rounds, obj=objective)
             direction = model.inplace_predict(x).astype(np.float64).reshape(y.shape)
             alpha, decision = self.choose_step(loss, current, direction, budget)
+            if diagnostic_callback is not None:
+                diagnostic_callback(stage=stage, loss=loss, base=base, direction=direction,
+                                    alpha=alpha, budget=budget, model=model, decision=decision)
             if alpha:
                 current += alpha * direction
                 query += alpha * model.inplace_predict(xq).astype(np.float64).reshape(len(xq), y.shape[1])
