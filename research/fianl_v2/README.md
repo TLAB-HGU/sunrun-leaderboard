@@ -1,0 +1,40 @@
+# fianl_v2
+
+`fianl_v1`(보드 행, df.parquet 판 Mean3 Total S 91.1788)에서 입력 4열을 뺀 재학습이다(2026-11-26, 사용자 요청). 나머지 설정은 `fianl_v1`과 같다.
+
+## 바꾼 것
+
+| 뺀 열 | fianl_v1에서 쓰던 리드 | 이유 |
+|---|---|---|
+| `ace_speed_kms_last` | 전체(상수) | `v_lag0`과 같은 ACE 칸 값이다(df 2,816,784행 전체에서 NaN 위치까지 같음) |
+| `suvi_t055_lowlat_top1_lon_width_cap67_deg` | h49–72(상수) | 사용자 요청 |
+| `suvi_ballistic_dark_contrast` | h49–72(상수) | 사용자 요청 |
+| `enlil_earth_speed` | h25–72(리드별) | 사용자 요청 |
+
+- 상수 입력은 38 → 35개, 리드별 입력은 12 → 11개(`rec54_consensus`만 plus7 리드별 입력으로 남음)이다.
+- 블록 폭은 284 / 304 / 283 → 283 / 279 / 256열이다.
+- 블록 0에서 `enlil_earth_speed`를 빼던 `BLOCK_REMOVALS` 항목과, h49–72에 SUVI 2열을 붙이던 코드 경로는 지웠다.
+- 그대로 둔 것은 다음과 같다.
+  - `fianl_v1` 첫 모델에서 정한 미사용 리드 열 목록(`UNUSED_LEADS`), h49–72의 `rec54_consensus` 제거.
+  - 600라운드 smooth-tail A 단계, S-cap continuation 6 × 30트리, prior/full과 동결 offset(α 0.25, 336 origin).
+  - seam xf8 → 위상 전진 3 h, seed 42/43/44의 동일 가중 Mean3.
+- 입력 표는 `data-v2/notebooks/raw_to_input_df.ipynb`의 55열 빌드다(메타 9 + 입력 46).
+  - 노트북은 같은 날 fianl_v1 입력만 만들도록 줄였고, 위 4열도 만들지 않는다.
+  - 계산식은 이전 457열 df와 같다. 2026-11-26 fetch 뒤 전체 빌드(12:18 KST)와 기존 457열 df를 비교했더니 41열은 전 행이 같았다. 나머지 SUVI 11열은 새로 받은 프레임 자리에서 NaN 대신 값이 들어간 것만 달랐다(값→값, 값→NaN 변화 0).
+  - **raw 변경**: 같은 날 01:30–02:18 UTC에 `fetch.py`가 비어 있던 과거 SUVI 시간을 채웠다. 그 결과 df에서 SUVI 11열이 NaN에서 값으로 바뀐 origin이 1,554개다(학습 1,409, 대부분 2022-10~11; query 145 = F1 63, F2 5, F3 77). fianl_v2 df는 그 뒤의 raw(NetCDF 36,463개)로 만들었다.
+  - 그래서 fianl_v1과의 차이에는 입력 4열 제거와 이 SUVI 추가분이 함께 들어 있다. 두 효과는 이 결과만으로 나눌 수 없다.
+
+## 가설과 판정
+
+- 개선 가설이 아니라 입력 정리다.
+  - `ace_speed_kms_last`는 중복이라 효과가 없을 것으로 본다.
+  - 나머지 3열은 h25–72의 늦은 리드에만 들어가 있었다.
+  - 효과는 4열을 한 번에 뺀 합으로만 측정되고, 각 열의 효과는 나뉘지 않는다.
+- 비교 기준은 `fianl_v1` df.parquet 판 Mean3이다: Total S 91.1788, F1 109.2320, F2 73.6802, F3 60.3221.
+- 기록할 것: 3 seed 각각과 Mean3의 S, RMSE, TIMSE, 기간별 값.
+- 사용자 요청에 따라 결과와 상관없이 보드 행 `fianl_v2`로 게시한다. `fianl_v1` 행은 그대로 둔다.
+- 부모 `fianl_v1`의 구성은 이전 F1–F3 결과를 참고해 정해졌다. 따라서 이 결과도 탐색적이다.
+
+```sh
+CUDA_VISIBLE_DEVICES='' .venv/bin/python research/fianl_v2/experiment.py --threads 6
+```
