@@ -85,10 +85,39 @@ All 20 trials (drawn once, before any fit):
   - The run never downloads observations or scores. It writes the unscored per-seed forecasts, and the replay script
     applies the fianl_v2 post-processing.
 
-Reproduce: `python scripts/jsy301/fianl_v2_hpo_t14/34c8893d….py --data data-v2/input/df.parquet --out OUT`.
-It trains all seeds and periods with this experiment.py, then applies seam xf8 -> 3 h phase advance per seed and
-the 3-seed mean. Any trial runs through `FIANL_HPO_TRIAL='{json}'`. The fold-scoring harness is not tracked;
-the research layout keeps only experiment.py and README.md.
+## Reproduce
 
-The submitted file was trained one seed per process (`--seeds N`, 10 threads each), which gives the same
-deterministic per-seed forecasts.
+Environment of the submitted run: Python 3.12.14, numpy 2.4.6, pandas 2.3.3, pyarrow 25.0.1, xgboost 2.1.4 (CPU),
+scipy 1.15.3. Data: the release asset `df.parquet` of `data-v2-df-20261125` uploaded 2026-11-26 06:44 UTC,
+235,272,537 bytes, sha256 `085683704e2f67894f08e4ea96d7a970772ffa3d82faf51218f72629d0da17d3`. It can be used as
+downloaded: live rows are ignored and query y is never read.
+
+1. **Board forecast.** This trains all seeds and periods with this experiment.py, then applies seam xf8 -> 3 h phase
+   advance per seed and the 3-seed mean. The output should equal the submitted file exactly.
+   - Determinism check. A fresh clone of this commit, run on the downloaded asset as is at 30 threads, wrote
+     weights byte-identical to the submitted run (10 threads, live rows dropped). This was checked for seed 42
+     F1/F2/F3 and seed 43 F1.
+   - Seed 42 F1 at 16 threads was also identical.
+   - The replay post-processing reproduces the submitted file with difference 0.
+   - Runtime: use 8-10 threads. Each fit has only ~30k rows, and more threads is slower: at 30 threads one
+     seed-period took ~15 min, so all 9 seed-periods take ~2 h 15 m. At 10 threads a fit takes 60-90 s.
+
+   ```sh
+   python scripts/jsy301/fianl_v2_hpo_t14/34c8893d8662f4b75dfaee9d38a971ae0d73c5b3c4f6316cd21a720f2e951b62.py \
+       --data df.parquet --out OUT --threads 8
+   ```
+
+2. **The search.** `scripts/jsy301/fianl_v2_hpo_t14/hpo.py` is the fold-scoring harness. The research layout keeps
+   only experiment.py and README.md, so it lives there.
+
+   ```sh
+   python hpo.py make-trials-shallow RUN       # writes RUN/trials.json, the 20 trials above (rng 20261127)
+   CUDA_VISIBLE_DEVICES='' python hpo.py work RUN --data df.parquet \
+       --experiment research/fianl_v2_hpo/experiment.py --threads 8 [--worker K]   # run several workers in parallel
+   python hpo.py report RUN                    # the table above (fold S, bias, change vs trial 0)
+   ```
+
+   - `work` reads training rows only and scores the official lead-first S on unfilled training y inside the folds.
+     Workers claim trials through lock files, so any number of them can run side by side.
+   - A full run took 1 h 27 m on 4 workers x 8 threads.
+   - Any single trial can be trained on the board periods with `FIANL_HPO_TRIAL='{...json...}'`.
