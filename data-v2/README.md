@@ -31,7 +31,7 @@ research/        df.parquet    -> {row}/experiment.py (+ _module/gbm.py) -> resu
 | `raw/ACE/daily-txt/swepam/` | ACE SWEPAM 1분 일별 원문(2022-08-01부터, `:Created:`가 공개 시각). 출처 https://sohoftp.nascom.nasa.gov/sdb/goes/ace/daily/ |
 | `raw/ENLIL/wsa-s3/` | NOAA WSA-Enlil open-data 버킷의 `evo.earth.nc`와 `listing.json`(LastModified). 출처 https://noaa-wsa-enlil-pds.s3.amazonaws.com |
 | `notebooks/raw_to_input_df.ipynb` | raw → `df.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df.parquet") |
-| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않고, 로컬 파일은 아직 457열입니다(2026-11-25 ACE `loc` 9열 제거). 노트북은 2026-11-26부터 `fianl_v2` 입력 55열(메타 9 + 입력 46)을 만듭니다. GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)에는 2026-11-26 55열 빌드의 `df.parquet`·`MANIFEST.json`만 있습니다(이전 457열 파일은 같은 날 release에서 지움) |
+| `input/df.parquet` | 모델 입력. (`set`, `origin`, `h`) 긴 형식, `MANIFEST.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다. 노트북은 2026-11-26부터 `fianl_v2` 입력 55열(메타 9 + 입력 46)을 만듭니다. GitHub Release [`data-v2-df-20261125`](https://github.com/TLAB-HGU/sunrun-leaderboard/releases/tag/data-v2-df-20261125)와 로컬 파일은 2026-11-26 15:40 KST부터 457열 빌드(fetch 뒤 raw, `set = live` 포함, 아래 "457열 + live 빌드")입니다. 이 표는 457열 노트북의 55열을 모두 담고 있어 `fianl_v2`도 그대로 실행됩니다 |
 | `notebooks/raw_to_input_df_ts.ipynb` | raw → `df_ts.parquet`. 모든 로직이 노트북 안에 있습니다(아래 "df_ts.parquet") |
 | `input/df_ts.parquet` | 시계열 모델 입력. 매시 칸 1행, `MANIFEST_ts.json`에 행·열·규칙이 있습니다. 데이터라 git에 올리지 않습니다 |
 
@@ -70,7 +70,12 @@ cd /home/t-lab01/sunrun
   - 남긴 46열의 계산식은 그대로입니다. SUVI 추출은 NetCDF 306개에서 수정 전 코드와 남긴 30개 값이 bit 단위로 같고, `DF_SMOKE=1` 결과도 저장된 457열 df와 같습니다(smoke 구간 때문에 `ace_nb_cocompression_6h`만 다름).
   - 그래서 이 표로는 fianl_v1(뺀 3열을 읽음), 다른 research 행, `raw_to_input_df_ts.ipynb`의 df 교차 확인 셀이 실행되지 않습니다.
   - 2026-11-26 전체 빌드(fetch 뒤 raw)를 457열 파일과 비교하면 41열은 전 행이 같고, SUVI 11열은 새로 받은 프레임 자리에서 NaN 대신 값이 들어간 것만 다릅니다(origin 1,554개: 학습 1,409, query 145).
-  - 로컬 `input/df.parquet`는 아직 이전 빌드(457열)입니다. 교체할 때 이전 파일은 `input/*.prev-457`로 남깁니다.
+  - **457열 + live 빌드(2026-11-26, 현재 release·로컬 파일)**: 457열 노트북(commit 891a72e6f)을 fetch 뒤 raw에 돌리고 `set = live`를 더한 표입니다. 2,920,608행 × 457열.
+    - `set = live`: origin 2026-09-27T00Z ~ 2026-11-26T01Z(raw의 마지막 ACE 칸), 1,442개. `period`는 비어 있고 `fit_F*`는 False, `y`는 관측값만(마지막 target 2026-11-26T00Z). 피처 규칙은 train·query와 같습니다(관측·발행 시각 ≤ origin, 입수지연 미반영).
+    - SUVI 추출은 2026-11-25 빌드 이후 새로 생긴 칸(2,919개: 범위 안 1,486, live 1,433)만 했고, 나머지 프레임 값과 `strip_*`는 같은 파일·같은 코드로 만든 2026-11-25 빌드에서 가져왔습니다. 나머지 셀은 그대로 실행했습니다.
+    - 2026-11-25 457열 파일과 비교(train·query 행): ACE·ENLIL·DONKI·SRS·메타·`y`는 bit 단위로 같습니다. SUVI·strip·`img_age_h` 345열은 origin 1,554개(고유 1,486)에서 NaN→값만 바뀌었습니다. 파생 3열 `suvi_t055_lowlat_top1_lon_width_cap67_deg`·`suvi_ballistic_dark_contrast`(-999→값)와 `onset700_hazard`(채워진 SUVI로 다시 적합, 323,092행)는 값이 바뀌었습니다.
+    - 55열 전체 빌드(fianl_v2 입력, 같은 raw)와 겹치는 55열은 train·query 전 행에서 bit 단위로 같습니다.
+    - 이전 457열 파일은 로컬 `input/*.prev-rebuild`로 남겼습니다. 그 표로 학습한 기존 보드 행(plus7 등)을 재현할 때 씁니다.
 - **이전 빌드 이력**: 2026-11-02 빌드 446열 → 2026-11-25 6b절 20열 추가(466열) → 같은 날 ACE 위치 9열 제거(457열, `input/*.prev-loc`가 직전 파일). NCEI 포함판은 `input/*.prev-ncei`(frozen plus7 입력 표와 전 열·전 행이 같음), 446열판은 `input/*.prev-20261125`입니다.
 - **이전 df(2026-11-01)와의 관계**: 이전 df는 frozen 번들에서 만든 30개 피처 표였고, 새 df로 덮어썼습니다. 그래서 `research/e2000fs_calib_point4_144h/experiment.py`(열 이름 `ch_ch_*`, 이전 값으로 공식 예측 재현)는 새 df로는 그대로 실행되지 않습니다.
 
