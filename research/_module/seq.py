@@ -24,6 +24,8 @@ With SeqSpec.swa_start the network is the running average of the epoch-end weigh
 full model use the averaged weights. With SeqSpec.lead_checkpoints each lead bucket (h1-6, h7-24, h25-48, h49-72)
 gets its own early-stopping epoch on the calibration window; the full model keeps a snapshot at each of those epochs
 and the forecast of a bucket comes from its snapshot.
+With SeqSpec.base_forecast (a folder of {period}.parquet raw 72-lead forecasts per origin, e.g. out-of-fold XGBoost on
+the training origins and the full model on the query origins) the forecast is that base plus the network output.
 
 For each seed (42, 43, 44) and period (F1, F2, F3), the vanila_mse protocol with a network in place of the boosters:
 a prior model on the reference window (origins + 144 h <= last 3 months) with epoch early stopping on the calibration
@@ -99,6 +101,7 @@ class SeqSpec:
     summary: bool = False                # model(x, constant, per-lead) with the XGBoost rows' summary features
     swa_start: int | None = None         # average the epoch-end weights from this epoch on (SWA)
     lead_checkpoints: bool = False       # one early-stopping epoch and weight snapshot per lead bucket
+    base_forecast: str | None = None     # folder of {period}.parquet base forecasts; forecast = base + network
     alpha: float = cal.ALPHA
     offset_window: int = cal.OFFSET_WINDOW
     threads: int = 2
@@ -183,7 +186,7 @@ class Table:
 class Windows:
     """GPU copy of the standardized table; batch(index) gathers (B, 120, C) inputs on the device."""
 
-    def __init__(self, table, norm, device):
+    def __init__(self, table, norm, device, base=None):
         mean, std = np.asarray(norm['mean'], np.float32), np.asarray(norm['std'], np.float32)
         count = len(SERIES)
         series = (table.series - mean[None, :count]) / std[None, :count]
@@ -194,6 +197,9 @@ class Windows:
         self.steps = torch.arange(-(LOOKBACK - 1), 1, device=device)
         self.sweep = torch.arange(LOOKBACK - 1, -1, -1, device=device) - STRIP_FIRST_K
         self.y_mean, self.y_std = float(norm['y_mean']), float(norm['y_std'])
+        self.base = None
+        if base is not None:
+            self.base = torch.from_numpy(((base - self.y_mean) / self.y_std).astype(np.float32)).to(device)
         self.summary = None
         if 'summary' in norm:
             stats = {key: np.asarray(value, np.float32) for key, value in norm['summary'].items()}
@@ -221,10 +227,14 @@ class Windows:
 def inputs(windows, index):
     """Model inputs of a batch of origins: (x,) or, with summary features, (x, constant, per lead)."""
     x = windows.batch(index)
-    if windows.summary is None:
-        return (x,)
     index = torch.as_tensor(index, device=windows.device)
-    return x, windows.summary[0][index], windows.summary[1][index]
+    batch = (x,) if windows.summary is None else (x, windows.summary[0][index], windows.summary[1][index])
+    if windows.base is not None:
+        base = windows.base[index]
+        if not torch.isfinite(base).all():
+            raise ValueError('Base forecast missing for some origins')
+        batch = (*batch, base)
+    return batch
 
 
 def fit_norm(table, index):
@@ -273,6 +283,8 @@ def load_state(model, arrays, device):
 def forward(spec, model, windows, batch):
     """Standardized 72-lead forecast of one batch of inputs(); adds the window's last observed speed for residual rows."""
     x = batch[0]
+    if spec.base_forecast is not None:
+        return model(*batch[:-1]) + batch[-1]
     output = model(*batch)
     if spec.persistence_residual:
         output = output + (x[:, -1, SPEED] * windows.speed_scale + windows.speed_shift)[:, None]
@@ -468,6 +480,20 @@ def fit_report(spec, table, windows, model, reference, calibration, prior, histo
     return report
 
 
+def load_base(spec, table, period):
+    """(time x 72) raw base forecasts of one period on the df_ts time axis (NaN where the folder has no origin)."""
+    if spec.base_forecast is None:
+        return None, None
+    path = Path(spec.base_forecast) / f'{period}.parquet'
+    frame = pd.read_parquet(path)
+    position = table.time.get_indexer(pd.DatetimeIndex(pd.to_datetime(frame['origin'], utc=True)))
+    if (position < 0).any():
+        raise ValueError('Base forecast origins outside df_ts')
+    base = np.full((len(table.time), H), np.nan)
+    base[position] = frame[[f'b{h}' for h in range(1, H + 1)]].to_numpy(np.float64)
+    return base, dict(file=file_identity(path), rows=len(frame), sets=frame['set'].value_counts().to_dict())
+
+
 def save_checkpoint(path, stages, norm, state, epochs):
     """{stage}__{parameter} arrays of the prior and full networks, normalization, calibration and epoch count."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -507,7 +533,8 @@ def train_period(spec, table, period, seed, args, logs, device):
         full = np.linspace(0, len(train_index) - 1, min(len(train_index), 640)).astype(int)
         query_index, max_epochs = query_index[:8], 2
     norm = fit_norm(table, train_index)
-    windows = Windows(table, norm, device)
+    base, base_record = load_base(spec, table, period)
+    windows = Windows(table, norm, device, base)
     progress = dict(unit=0, units=2)
     record = lambda stage: dict(period=period, stage=stage, component=spec.family, **progress)  # noqa: E731
     logs(stream, 'period_start', period=period, seed=seed, smoke=args.smoke, training_cutoff=CUTOFFS[period],
@@ -551,7 +578,7 @@ def train_period(spec, table, period, seed, args, logs, device):
     save_checkpoint(checkpoint, dict(prior=prior_state, full=full_state), norm, state, epochs)
     weights, saved_norm, _ = load_checkpoint(checkpoint, 'full')
     replay = predict(spec, load_state(network(spec), weights, device),
-                     Windows(table, saved_norm, device), query_index)
+                     Windows(table, saved_norm, device, base), query_index)
     replay_error = float(np.max(np.abs(replay - raw)))
     if replay_error > 1e-3:
         raise ValueError(f'Saved network did not reproduce its forecasts (max abs error {replay_error})')
@@ -563,6 +590,7 @@ def train_period(spec, table, period, seed, args, logs, device):
                     objective=spec.training['loss'], hyperparameters=spec.hyperparameters,
                     persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight, fit_check=fit_check,
                     **(dict(swa_start=spec.swa_start) if spec.swa_start is not None else {}),
+                    **(dict(base_forecast=base_record) if base_record else {}),
                     **(dict(lead_buckets={k: [v.start + 1, v.stop] for k, v in LEAD_BUCKETS.items()})
                        if spec.lead_checkpoints else {}),
                     **(dict(summary_constant=summary_features.CONSTANT, summary_varying=summary_features.VARYING)
@@ -600,7 +628,7 @@ def predict_period(spec, table, period, seed, args, logs, device):
         raise ValueError('Checkpoint channels differ from this runner')
     model = load_state(network(spec), weights, device)
     tick = time.perf_counter()
-    raw = predict(spec, model, Windows(table, norm, device), query_index)
+    raw = predict(spec, model, Windows(table, norm, device, load_base(spec, table, period)[0]), query_index)
     seconds = time.perf_counter() - tick
     prediction = cal.apply_offset(raw, np.asarray(state['offset'], np.float64))
     logs(stream, 'predict_only', period=period, seed=seed, checkpoint=str(checkpoint),
@@ -637,7 +665,7 @@ def main(spec, doc, here):
     launch(logs, args, mode='predict_only' if args.predict_only else ('smoke' if args.smoke else 'train'),
            versions=library_versions(spec), family=spec.family, hyperparameters=spec.hyperparameters,
            persistence_residual=spec.persistence_residual, tail_weight=spec.tail_weight, summary=spec.summary,
-           swa_start=spec.swa_start, lead_checkpoints=spec.lead_checkpoints,
+           swa_start=spec.swa_start, lead_checkpoints=spec.lead_checkpoints, base_forecast=spec.base_forecast,
            training=spec.training, lookback_hours=LOOKBACK, channels=CHANNELS, channel_count=len(CHANNELS),
            alpha=spec.alpha, offset_window=spec.offset_window, cutoffs=CUTOFFS, seeds=args.seeds,
            cuda_visible_devices=os.environ['CUDA_VISIBLE_DEVICES'], gpu=torch.cuda.get_device_name(0))
